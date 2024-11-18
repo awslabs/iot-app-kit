@@ -18,13 +18,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install and Build
         run: |
-          npm ci
-          npm run build
+          npm run publish-packages
 
       - name: Publish @iot-app-kit/core
         uses: JS-DevTools/npm-publish@v3
@@ -32,22 +31,10 @@ jobs:
           package: './packages/core/package.json'
           token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @iot-app-kit/components
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          package: './packages/components/package.json'
-          token: ${{ secrets.NPM_TOKEN }}
-
       - name: Publish @iot-app-kit/source-iotsitewise
         uses: JS-DevTools/npm-publish@v3
         with:
           package: './packages/source-iotsitewise/package.json'
-          token: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @iot-app-kit/related-table
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          package: './packages/related-table/package.json'
           token: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @iot-app-kit/react-components

@@ -1,11 +1,10 @@
-import React from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
-import KnowledgeGraphDecorator from './graphDecorator';
 import {
   KnowledgeGraphContainer,
-  KnowledgeGraphInterface,
+  type KnowledgeGraphInterface,
 } from '../../src/components/knowledge-graph/KnowledgeGraphPanel';
 import { colors } from '../../src/components/knowledge-graph/graph/cytoscape-cloudscape-theme';
+import KnowledgeGraphDecorator from './graphDecorator';
 import { response, response3 } from './sample-responses';
 
 const Template = (props: KnowledgeGraphInterface) => (

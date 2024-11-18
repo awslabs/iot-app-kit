@@ -1,4 +1,3 @@
-import React from 'react';
 import type { FC } from 'react';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';

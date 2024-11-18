@@ -1,29 +1,38 @@
 import {
-  DataPoint,
-  DataStream,
-  Threshold,
-  ThresholdValue,
+  type DataPoint,
+  type Threshold,
+  type ThresholdValue,
 } from '@iot-app-kit/core';
 import {
-  ChartRef,
+  type ChartRef,
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { ChartDataQuality, ChartOptions, ChartStyleSettings } from '../types';
+import {
+  type ChartDataQuality,
+  type ChartOptions,
+  type ChartStyleSettings,
+} from '../types';
 import { useXAxis } from './axes/xAxis';
 import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
+import { uniqWith } from 'lodash';
 import {
   getDefaultChartOption,
   DEFAULT_DATA_ZOOM,
   PERFORMANCE_MODE_THRESHOLD,
 } from '../eChartsConstants';
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
-import { SeriesOption } from 'echarts';
-import { GenericSeries } from '../../../echarts/types';
+import { type SeriesOption } from 'echarts';
+import { type GenericSeries } from '../../../echarts/types';
+import { type useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
+import { type ChartAlarms } from '../hooks/useChartAlarms';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
 
-const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
+const toDataStreamIdentifiers = (
+  dataStreams: ReturnType<typeof useNormalizedDataStreams>
+) =>
   dataStreams.map(
     ({
       id,
@@ -35,6 +44,9 @@ const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
       unit,
       data,
       assetName,
+      latestAlarmStateValue,
+      assetId,
+      alarmName,
     }) => ({
       id,
       name,
@@ -44,6 +56,9 @@ const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
       detailedName,
       unit,
       latestValue: data.at(-1)?.y,
+      latestAlarmStateValue,
+      assetId,
+      alarmName,
       assetName,
     })
   );
@@ -64,6 +79,9 @@ const toDataStreamMetaData = (
       unit,
       assetName,
       latestValue,
+      latestAlarmStateValue,
+      assetId,
+      alarmName,
     }) => {
       const foundSeries = series.find(
         ({ id: seriesId }) => seriesId === id
@@ -83,6 +101,9 @@ const toDataStreamMetaData = (
         unit,
         assetName,
         latestValue,
+        latestAlarmStateValue,
+        assetId,
+        alarmName,
       };
     }
   );
@@ -99,11 +120,14 @@ type ChartConfigurationOptions = Pick<
   | 'defaultVisualizationType'
   | 'timeZone'
 > & { group: string } & { isLoading: boolean } & {
-  dataStreams: DataStream[];
+  dataStreams: ReturnType<typeof useNormalizedDataStreams>;
 } & { visibleData: DataPoint[] } & {
   thresholds: Threshold<ThresholdValue>[];
 } & { chartWidth: number } & ChartDataQuality & {
     gestures: boolean;
+  } & {
+    alarms: ChartAlarms;
+    showAlarmIcons?: boolean;
   };
 
 export type DataStreamMetaData = ReturnType<
@@ -123,6 +147,8 @@ export const useChartConfiguration = (
     group,
     isLoading,
     dataStreams,
+    alarms,
+    showAlarmIcons = true,
     visibleData,
     id,
     axis,
@@ -176,8 +202,16 @@ export const useChartConfiguration = (
   }, [chartRef, timeZone]);
 
   const performanceMode = useMemo(
-    () => visibleData.length > PERFORMANCE_MODE_THRESHOLD,
-    [visibleData.length]
+    () =>
+      visibleData.length > PERFORMANCE_MODE_THRESHOLD &&
+      (alarms.length === 0 || !showAlarmIcons),
+    [alarms, showAlarmIcons, visibleData.length]
+  );
+
+  const alarmThresholds = useMemo(
+    () =>
+      uniqWith(createNonNullableList(alarms.map((a) => a.thresholds)), isEqual),
+    [alarms]
   );
 
   const xAxis = useXAxis(axis);
@@ -188,9 +222,11 @@ export const useChartConfiguration = (
     significantDigits,
     axis,
     thresholds,
+    alarmThresholds,
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   });
 
   const tooltip = useTooltip({
@@ -198,6 +234,7 @@ export const useChartConfiguration = (
     series,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   });
 
   /*
@@ -222,6 +259,7 @@ export const useChartConfiguration = (
       ? undefined
       : { replaceMerge: ['series'] };
     previousDataStreamIdentifiers.current = dataSteamIdentifiers;
+    // prevAlarmsSeries.current = alarmSeries;
 
     setDataStreamMetaData(
       toDataStreamMetaData(dataSteamIdentifiers, series, styleSettings)
@@ -253,6 +291,7 @@ export const useChartConfiguration = (
     series,
     gestures,
     yAxis,
+    thresholds,
     dataSteamIdentifiers,
   ]);
 

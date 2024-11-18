@@ -1,12 +1,13 @@
 import {
-  DataStream,
-  Primitive,
-  StyledThreshold,
-  ThresholdSettings,
-  TimeSeriesDataQuery,
-  Viewport,
+  type DataStream,
+  type Primitive,
+  type StyledThreshold,
+  type ThresholdSettings,
+  type Viewport,
 } from '@iot-app-kit/core';
-import { OptionId } from 'echarts/types/src/util/types';
+import { type OptionId } from 'echarts/types/src/util/types';
+import { type AssistantProperty } from '../../common/assistantProps';
+import type { ComponentQuery } from '../../common/chartTypes';
 
 export type YAxisOptions = {
   yLabel?: string;
@@ -25,7 +26,8 @@ type ChartLegendContent =
   | 'visibility'
   | 'maxValue'
   | 'minValue'
-  | 'latestValue';
+  | 'latestValue'
+  | 'latestAlarmStateValue';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';
@@ -94,8 +96,12 @@ export type ChartDataQuality = {
   showUncertainDataIcons?: boolean;
 };
 
+export type ChartAlarms = {
+  showAlarmIcons?: boolean;
+};
+
 export type ChartOptions = {
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   defaultVisualizationType?: Visualization;
   size?: SizeConfig;
   styleSettings?: ChartStyleSettings;
@@ -112,10 +118,10 @@ export type ChartOptions = {
   theme?: string;
   id?: string;
   dataQuality?: ChartDataQuality;
+  assistant?: AssistantProperty;
   onChartOptionsChange?: (
     options: Pick<ChartOptions, 'legend' | 'dataQuality'>
   ) => void;
-  /** @deprecated */
   titleText?: string;
   timeZone?: string;
 };

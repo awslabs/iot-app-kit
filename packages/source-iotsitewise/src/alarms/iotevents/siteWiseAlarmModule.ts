@@ -1,4 +1,4 @@
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { EventsClient } from './client';
 import { Cache } from './cache';
 import { getAlarmModelName } from './util/getAlarmModelName';
@@ -6,7 +6,10 @@ import { parseAlarmData } from './util/parseAlarmData';
 import { getPropertyId } from './util/getPropertyId';
 import { COMPARISON_SYMBOL } from './constants';
 import { toValue } from '../../time-series-data/util/toDataPoint';
-import { SiteWiseAssetModule, SiteWiseAssetSession } from '../../asset-modules';
+import {
+  type SiteWiseAssetModule,
+  type SiteWiseAssetSession,
+} from '../../asset-modules';
 import { getAlarmSourceProperty } from './util/getAlarmSourceProperty';
 import type { Alarm, AlarmModel } from './types';
 

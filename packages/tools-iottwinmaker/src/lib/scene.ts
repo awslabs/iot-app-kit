@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fsPromises from 'fs/promises';
 
 import { getDefaultAwsClients as aws } from './aws-clients';
-import { ListScenesCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type ListScenesCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 /**
  * Scene import function used for TMDT deployment

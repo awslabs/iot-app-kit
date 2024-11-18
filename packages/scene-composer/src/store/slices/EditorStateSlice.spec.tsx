@@ -1,10 +1,10 @@
 import { Object3D, Vector3 } from 'three';
-import { StoreApi } from 'zustand';
+import { type StoreApi } from 'zustand';
 
-import { CameraControlsType, KnownComponentType } from '../../interfaces';
-import { ISceneNodeInternal, RootState } from '..';
-import { DisplayMessageCategory, IEditorConfig } from '../internalInterfaces';
-import { TransformControls } from '../../three/TransformControls';
+import { type CameraControlsType, KnownComponentType } from '../../interfaces';
+import { type ISceneNodeInternal, type RootState } from '..';
+import { DisplayMessageCategory, type IEditorConfig } from '../internalInterfaces';
+import { type TransformControls } from '../../three/TransformControls';
 
 import { createEditStateSlice, exportsForTesting } from './EditorStateSlice';
 

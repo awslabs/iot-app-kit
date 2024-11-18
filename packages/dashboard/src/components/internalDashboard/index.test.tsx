@@ -1,19 +1,17 @@
-import * as React from 'react';
-import { Provider } from 'react-redux';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 
-import InternalDashboard from './index';
 import { configureDashboardStore } from '~/store';
-import { useDashboardPlugins } from '../../customization/api';
-import { DashboardWidgetsConfiguration } from '~/types';
 import { initialState } from '~/store/state';
+import { type DashboardWidgetsConfiguration } from '~/types';
+import { useDashboardPlugins } from '../../customization/api';
+import InternalDashboard from './index';
 
 import { AppKitConfig } from '@iot-app-kit/react-components';
 // FIXME: Export DEFAULT_APP_KIT_CONFIG from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
-import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
@@ -161,9 +159,7 @@ it.skip('empty state within the dashboard when no widget is selected', function 
   };
 
   render(
-    <AppKitConfig
-      customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}
-    >
+    <AppKitConfig>
       <Provider store={configureDashboardStore(args)}>
         <DndProvider
           backend={HTML5Backend}

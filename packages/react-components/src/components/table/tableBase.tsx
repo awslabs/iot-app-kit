@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import {
   Pagination,
   PropertyFilter,
@@ -7,8 +7,9 @@ import {
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import type { FunctionComponent } from 'react';
-import type { TableProps } from './types';
-import { DEFAULT_PAGE_SIZE } from './constants';
+import type { TableItemHydrated, TableProps } from './types';
+import { ASSISTANT_SELECTION_LIMITATION, DEFAULT_PAGE_SIZE } from './constants';
+import { useAssistant } from '../../hooks/useAssistant/useAssistant';
 
 export const TableBase: FunctionComponent<TableProps> = (props) => {
   const {
@@ -22,6 +23,9 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     pageSize,
     empty,
   } = props;
+  const [selectedItems, setSelectedItems] = useState<Array<TableItemHydrated>>(
+    []
+  );
   const { items, collectionProps, propertyFilterProps, paginationProps } =
     useCollection(userItems, {
       sorting,
@@ -32,11 +36,24 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     userColumnDefinitions,
     precision
   );
+
   const pagination = {
     ...(paginationEnabled && {
       pagination: <Pagination {...paginationProps} />,
     }),
   };
+
+  const { actionsByComponent, clearActions } = useAssistant({});
+
+  useEffect(() => {
+    if (props.assistant?.componentId) {
+      const componentAction = actionsByComponent[props.assistant?.componentId];
+      if (componentAction?.action === 'clear-selection') {
+        setSelectedItems([]);
+        clearActions(props.assistant?.componentId);
+      }
+    }
+  }, [actionsByComponent, props.assistant, setSelectedItems, clearActions]);
 
   return (
     <Table
@@ -55,6 +72,31 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
           />
         )
       }
+      selectionType={
+        props.assistant && props.assistant.enabled ? 'multi' : undefined
+      }
+      isItemDisabled={(item: TableItemHydrated) => {
+        if (selectedItems.length === ASSISTANT_SELECTION_LIMITATION) {
+          const found =
+            selectedItems.find((i) => i.id === item.id) !== undefined;
+          return !found;
+        }
+
+        return false;
+      }}
+      onSelectionChange={(event) => {
+        setSelectedItems(event.detail.selectedItems);
+        if (props.onTableSelection) {
+          const indexesSelected = event.detail.selectedItems.map(
+            (selectedItem) => {
+              return items.findIndex((i) => i.id === selectedItem.id);
+            }
+          );
+          props.onTableSelection(indexesSelected);
+        }
+      }}
+      selectedItems={selectedItems}
+      trackBy='id'
     />
   );
 };

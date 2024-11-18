@@ -1,4 +1,4 @@
-import { DataStreamQuery } from '../types';
+import { type DataStreamQuery } from '../types';
 
 export type QueryRequestSettings = {
   requestSettings: { refreshRate?: number };

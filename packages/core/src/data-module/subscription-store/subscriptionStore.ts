@@ -1,5 +1,5 @@
-import { DataCache } from '../data-cache/dataCacheWrapped';
-import DataSourceStore from '../data-source-store/dataSourceStore';
+import { type DataCache } from '../data-cache/dataCacheWrapped';
+import type DataSourceStore from '../data-source-store/dataSourceStore';
 import RequestScheduler from '../request-scheduler/requestScheduler';
 import { viewportEndDate } from '../../common/viewport';
 import { maxCacheDuration } from '../data-cache/caching/caching';

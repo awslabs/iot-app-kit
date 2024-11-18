@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 import {
   Button,
@@ -18,9 +18,9 @@ import {
 
 import ColorPicker from '../shared/colorPicker';
 import {
-  LineStyles,
-  StyledAssetPropertyQuery,
-  YAxisOptions,
+  type LineStyles,
+  type StyledAssetPropertyQuery,
+  type YAxisOptions,
 } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
@@ -231,10 +231,7 @@ const YAxisPropertyConfig = ({
           >
             Show Y-axis controls
           </Toggle>
-          <FormField
-            description='Leave empty to auto-calculate based on all the values'
-            label='Range'
-          >
+          <FormField description='Leave empty to auto calculate.' label='Range'>
             <SpaceBetween size='m' direction='horizontal'>
               <SpaceBetween size='s' direction='horizontal'>
                 <label htmlFor='y-axis-min'>Min</label>

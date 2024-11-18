@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { DataBase, TimeSeriesData, Primitive, DurationViewport } from '@iot-app-kit/core';
+import { type DataBase, type TimeSeriesData, type Primitive, type DurationViewport } from '@iot-app-kit/core';
 import { isEmpty } from 'lodash';
-import { ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
+import { type ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IValueDataBinding } from '../interfaces';
+import { type IValueDataBinding } from '../interfaces';
 import { useViewOptionState } from '../store';
 import useLogger from '../logger/react-logger/hooks/useLogger';
 

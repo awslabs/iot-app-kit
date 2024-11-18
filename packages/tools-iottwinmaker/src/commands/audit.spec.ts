@@ -3,8 +3,8 @@ import {
   IoTTwinMakerClient,
   ResourceNotFoundException,
 } from '@aws-sdk/client-iottwinmaker';
-import { handler, Options } from './audit';
-import { Arguments } from 'yargs';
+import { handler, type Options } from './audit';
+import { type Arguments } from 'yargs';
 import { mockClient } from 'aws-sdk-client-mock';
 
 const twinmakerMock = mockClient(IoTTwinMakerClient);

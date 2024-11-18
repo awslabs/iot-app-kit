@@ -1,16 +1,19 @@
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { Chart, useViewport } from '@iot-app-kit/react-components';
-// FIXME: Export ChartOptions from @iot-app-kit/react-components
-// FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
-// eslint-disable-next-line no-restricted-imports
 import {
-  ChartOptions,
-  ChartStyleSettingsOptions,
-} from '@iot-app-kit/react-components/src/components/chart/types';
-
+  Chart,
+  useViewport,
+  type ChartOptions,
+  type ChartStyleSettingsOptions,
+} from '@iot-app-kit/react-components';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQueries } from '~/components/dashboard/queryContext';
+import WidgetTile from '~/components/widgets/tile/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
+import { onUpdateWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
+import NoChartData from '../components/no-chart-data';
 import type {
   AssetPropertyStyles,
   ChartAxisOptions,
@@ -19,16 +22,9 @@ import type {
   LineStyles,
   SymbolStyles,
 } from '../types';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { getAggregation } from '../utils/widgetAggregationUtils';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import { useChartSize } from '~/hooks/useChartSize';
-import WidgetTile from '~/components/widgets/tile/tile';
-import NoChartData from '../components/no-chart-data';
-import { default as lineSvgDark } from './line-dark.svg';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
-import { onUpdateWidgetsAction } from '~/store/actions';
+import { getAggregation } from '../utils/widgetAggregationUtils';
+import { default as lineSvgDark } from './line-dark.svg';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
@@ -162,13 +158,22 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
     symbol,
     legend,
     significantDigits: widgetSignificantDigits,
+    assistant,
   } = widget.properties;
 
   const query = queryConfig.query;
+
   const queries = useQueries(query);
 
-  const mappedQuery = assetModelQueryToSiteWiseAssetQuery(query);
-  const styleSettings = useAdaptedStyleSettings({ line, symbol }, mappedQuery);
+  const { assetModels = [], assets = [] } = query ?? {};
+  const combinedAssets = assetModelQueryToSiteWiseAssetQuery({
+    assetModels,
+    assets,
+  });
+  const styleSettings = useAdaptedStyleSettings(
+    { line, symbol },
+    { ...query, assets: combinedAssets }
+  );
 
   const aggregation = getAggregation(widget);
 
@@ -177,9 +182,9 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
 
   const convertedAxis = useConvertedAxis(axis);
 
-  // the 44 is from the widget tile header and top, bottom boder lines height
+  // the 4 is from the bottom boder lines height
   // the 8 is from the left and right border lines width
-  const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
+  const size = { width: chartSize.width - 8, height: chartSize.height - 4 };
 
   const onChartOptionsChange = (options: Pick<ChartOptions, 'legend'>) => {
     dispatch(
@@ -200,17 +205,17 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
     return (
-      <WidgetTile widget={widget}>
+      <WidgetTile widget={widget} title={title}>
         <NoChartData
           icon={lineSvgDark}
-          emptyStateText='Browse and select to add your asset properties in your line widget.'
+          emptyStateText='Browse assets and add asset properties to the line widget.'
         />
       </WidgetTile>
     );
   }
 
   return (
-    <WidgetTile widget={widget} title={title}>
+    <WidgetTile widget={widget}>
       <Chart
         id={widget.id}
         queries={queries}
@@ -227,6 +232,8 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
           line?.connectionStyle
         )}
         timeZone={dashboardTimeZone}
+        assistant={assistant}
+        titleText={title}
       />
     </WidgetTile>
   );

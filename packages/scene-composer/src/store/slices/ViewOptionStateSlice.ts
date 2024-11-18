@@ -1,9 +1,9 @@
-import { SetState } from 'zustand';
-import { Viewport } from '@iot-app-kit/core';
+import { type SetState } from 'zustand';
+import { type Viewport } from '@iot-app-kit/core';
 
-import { ITagSettings, KnownComponentType } from '../../interfaces';
+import { type ITagSettings, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { RootState } from '../Store';
+import { type RootState } from '../Store';
 
 export interface IViewOptionStateSlice {
   componentVisibilities: Partial<{

@@ -1,5 +1,5 @@
 import { isDefined } from '../../common/predicates';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { DataStreamsStore, DataStreamStore } from './types';
 
 // i.e. [12, -21, 0, 13] => [-21, 0, 12, 13]

@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 
 export const disableAdd = (
   selectedWidgets: DashboardWidget<Record<string, unknown>>[],

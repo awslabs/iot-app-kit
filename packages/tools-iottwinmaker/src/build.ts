@@ -1,4 +1,4 @@
-import { exec, ExecException } from 'child_process';
+import { exec, type ExecException } from 'child_process';
 import * as os from 'os';
 
 function puts(_error: ExecException | null, stdout: string, _stderr: string) {

@@ -2,7 +2,7 @@ import type {
   DescribeAlarmModelRequest,
   DescribeAlarmModelResponse,
 } from '@aws-sdk/client-iot-events';
-import { RequestFunction } from './common';
+import { type RequestFunction } from './common';
 
 /**
  * First-class function for requesting a single IoT Events alarm model summary

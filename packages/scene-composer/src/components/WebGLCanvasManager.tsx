@@ -1,33 +1,33 @@
-import * as THREE from 'three';
 import * as awsui from '@cloudscape-design/design-tokens';
-import React, { useContext, useEffect, useRef } from 'react';
-import { GizmoHelper, GizmoViewport } from '@react-three/drei';
-import { ThreeEvent, useThree } from '@react-three/fiber';
 import { MatterportModel } from '@matterport/r3f/dist';
+import { GizmoHelper, GizmoViewport } from '@react-three/drei';
+import { type ThreeEvent, useThree } from '@react-three/fiber';
+import { useContext, useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
-import { KnownSceneProperty, COMPOSER_FEATURES } from '../interfaces';
-import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { useEditorState, useSceneDocument, accessStore } from '../store';
-import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { hexColorFromDesignToken } from '../utils/styleUtils';
-import { Layers, ROOT_OBJECT_3D_NAME, MAX_CLICK_DISTANCE } from '../common/constants';
-import { getGlobalSettings } from '../common/GlobalSettings';
 import { ViewCursorWidget } from '../augmentations/components/three-fiber/viewpoint/ViewCursorWidget';
-import { getIntersectionTransform } from '../utils/raycastUtils';
-import { createNodeWithPositionAndNormal } from '../utils/nodeUtils';
+import { Layers, MAX_CLICK_DISTANCE, ROOT_OBJECT_3D_NAME } from '../common/constants';
+import { getGlobalSettings } from '../common/GlobalSettings';
 import { EnvironmentLoadingManager } from '../common/loadingManagers';
+import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import useMatterportViewer from '../hooks/useMatterportViewer';
+import { COMPOSER_FEATURES, KnownSceneProperty } from '../interfaces';
+import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
+import { accessStore, useEditorState, useSceneDocument } from '../store';
+import { createNodeWithPositionAndNormal } from '../utils/nodeUtils';
+import { getIntersectionTransform } from '../utils/raycastUtils';
+import { hexColorFromDesignToken } from '../utils/styleUtils';
 
+import IntlProvider from './IntlProvider';
+import { EditorMainCamera } from './three-fiber/EditorCamera';
+import { EditorTransformControls } from './three-fiber/EditorTransformControls';
+import EntityGroup from './three-fiber/EntityGroup';
 import Environment, { presets } from './three-fiber/Environment';
 import Fog from './three-fiber/Fog';
 import GroundPlane from './three-fiber/GroundPlane';
-import { StatsWindow } from './three-fiber/StatsWindow';
-import EntityGroup from './three-fiber/EntityGroup';
-import { EditorMainCamera } from './three-fiber/EditorCamera';
-import { EditorTransformControls } from './three-fiber/EditorTransformControls';
-import { SceneInfoView } from './three-fiber/SceneInfoView';
 import SceneBackground from './three-fiber/SceneBackground';
-import IntlProvider from './IntlProvider';
+import { SceneInfoView } from './three-fiber/SceneInfoView';
+import { StatsWindow } from './three-fiber/StatsWindow';
 
 const GIZMO_MARGIN: [number, number] = [72, 72];
 
@@ -79,12 +79,12 @@ export const WebGLCanvasManager: React.FC = () => {
   }, [gridHelperRef.current]);
 
   return (
-    <React.Fragment>
+    <>
       {sceneAppearanceEnabled && (
-        <React.Fragment>
+        <>
           <Fog />
           <SceneBackground />
-        </React.Fragment>
+        </>
       )}
       <EditorMainCamera />
       {environmentPreset && environmentPreset in presets && (
@@ -99,7 +99,7 @@ export const WebGLCanvasManager: React.FC = () => {
       </group>
       <GroundPlane />
       {isEditing() && (
-        <React.Fragment>
+        <>
           <EditorTransformControls />
           <GizmoHelper alignment='bottom-right' margin={GIZMO_MARGIN} renderPriority={0}>
             <GizmoViewport
@@ -111,7 +111,7 @@ export const WebGLCanvasManager: React.FC = () => {
             />
           </GizmoHelper>
           <ViewCursorWidget />
-          <React.Fragment>
+          <>
             <gridHelper
               ref={gridHelperRef}
               position={new THREE.Vector3(0, 0.001, 0)}
@@ -123,14 +123,14 @@ export const WebGLCanvasManager: React.FC = () => {
               ]}
             />
             {enableMatterportViewer && <MatterportModel onClick={onClick} />}
-          </React.Fragment>
+          </>
           <IntlProvider locale={getGlobalSettings().locale}>
             <SceneInfoView />
           </IntlProvider>
 
           {getGlobalSettings().debugMode && <StatsWindow parent={domRef} />}
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
+    </>
   );
 };

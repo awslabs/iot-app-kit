@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { create } from 'react-test-renderer';
 
 import { ErrorCode, ErrorLevel, SceneComposerRuntimeError } from '../../..';

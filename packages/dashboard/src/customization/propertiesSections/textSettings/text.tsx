@@ -1,5 +1,3 @@
-import type { FC, MouseEventHandler, ReactNode } from 'react';
-import React, { useState } from 'react';
 import type {
   NonCancelableCustomEvent,
   SelectProps,
@@ -11,12 +9,18 @@ import {
   spaceScaledS,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
+import {
+  useState,
+  type FC,
+  type MouseEventHandler,
+  type ReactNode,
+} from 'react';
 import ColorPicker from '../shared/colorPicker';
 
 import type { TextWidget } from '~/customization/widgets/types';
 
-import './text.css';
 import { StyledExpandableSection } from '../components/styledComponents';
+import './text.css';
 
 interface ButtonWithStateProps {
   checked: boolean;

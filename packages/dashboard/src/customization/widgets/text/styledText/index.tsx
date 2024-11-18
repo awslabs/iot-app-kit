@@ -1,10 +1,8 @@
-import type { CSSProperties, PointerEventHandler } from 'react';
-import React from 'react';
-import { defaultFontSettings } from './defaultFontSettings';
-
-import './index.css';
-import type { TextWidget } from '../../types';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import type { CSSProperties, PointerEventHandler } from 'react';
+import type { TextWidget } from '../../types';
+import { defaultFontSettings } from './defaultFontSettings';
+import './index.css';
 
 type StyledTextProps = TextWidget & {
   onPointerDown?: PointerEventHandler;

@@ -143,6 +143,24 @@ export type SidePanelMessages = {
   };
 };
 
+export type AssistantMessages = {
+  floatingMenu: {
+    propertySelection: string;
+    error: {
+      ariaLabel: string;
+      propertyLimitHeader: string;
+      propertyLimitMessage: string;
+    };
+    buttonClearAll: string;
+    buttonGenerateSummary: string;
+    buttonGenerateSummaryPopover: string;
+    buttonAIAssistant: string;
+  };
+  chatbot: {
+    initialMessage: string;
+  };
+};
+
 export type DashboardMessages = {
   toolbar: ToolbarMessages;
   widgets: WidgetsMessages;
@@ -150,6 +168,7 @@ export type DashboardMessages = {
   viewport: ViewportMessages;
   resourceExplorer: ResourceExplorerMessages;
   sidePanel: SidePanelMessages;
+  assistant: AssistantMessages;
 };
 
 export const DefaultDashboardMessages: DashboardMessages = {
@@ -287,6 +306,27 @@ export const DefaultDashboardMessages: DashboardMessages = {
       title: 'Input',
       addOptionLabel: 'Add',
       optionPlaceholder: 'Add option',
+    },
+  },
+  assistant: {
+    floatingMenu: {
+      propertySelection:
+        'Select the checkboxes from the widgets below to include them in the AI generate summary action.',
+      error: {
+        ariaLabel: 'error',
+        propertyLimitHeader: 'Property limit reached',
+        propertyLimitMessage:
+          'You can select up to 3 properties to summarize using generative AI for now. More options are coming soon.',
+      },
+      buttonClearAll: 'Clear all',
+      buttonGenerateSummary: 'Generate summary',
+      buttonGenerateSummaryPopover:
+        'Select the widgets or properties below to include them to generate an AI summary.',
+      buttonAIAssistant: 'AI Assistant',
+    },
+    chatbot: {
+      initialMessage:
+        'Hello, I am your AWS IoT SiteWise Assistant. Please ask me anything about your dashboard.',
     },
   },
 };

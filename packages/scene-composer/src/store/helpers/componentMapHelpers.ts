@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
-import { ISceneNodeInternal } from '../internalInterfaces';
-import { KnownComponentType } from '../../interfaces';
+import { type ISceneNodeInternal } from '../internalInterfaces';
+import { type KnownComponentType } from '../../interfaces';
 
 export function deleteNodeFromComponentNodeMap(
   map: { [type in KnownComponentType | string]?: Record<string, string[]> },

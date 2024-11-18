@@ -1,5 +1,4 @@
 import Box from '@cloudscape-design/components/box';
-import React from 'react';
 import EmptyPanelSvg from './assets/emptyPanel.svg';
 import { SpaceBetween } from '@cloudscape-design/components';
 import './emptyPanel.css';

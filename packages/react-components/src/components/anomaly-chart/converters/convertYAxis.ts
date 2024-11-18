@@ -1,5 +1,5 @@
 import { ANOMALY_Y_AXIS } from '../constants';
-import { ConfigurationOptions } from '../hooks/types';
+import { type ConfigurationOptions } from '../hooks/types';
 
 export const convertYAxis = ({ axis }: Pick<ConfigurationOptions, 'axis'>) => {
   const show = axis?.showY ?? true;

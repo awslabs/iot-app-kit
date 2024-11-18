@@ -1,4 +1,4 @@
-import { expect, test } from '../test';
+import { test, expect } from '@playwright/test';
 import { gridUtil } from '../utils/grid';
 import {
   ASSET_MODEL_TAB,

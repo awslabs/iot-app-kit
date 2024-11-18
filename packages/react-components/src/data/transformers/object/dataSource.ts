@@ -1,5 +1,5 @@
-import { DataSource } from '../../types';
-import { ObjectDataSourceValue } from './input';
+import { type DataSource } from '../../types';
+import { type ObjectDataSourceValue } from './input';
 
 export type ObjectDataSource<
   SpecificObjectDataValue extends ObjectDataSourceValue

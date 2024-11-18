@@ -1,12 +1,12 @@
-import { isNumber } from 'lodash';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { Spinner } from '@cloudscape-design/components';
+import { isNumber } from 'lodash';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, accessStore } from '../../store';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { DEFAULT_PARENT_RELATIONSHIP_NAME, MAX_QUERY_HOP } from '../../common/entityModelConstants';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { accessStore, useSceneDocument } from '../../store';
 
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 

@@ -1,4 +1,4 @@
-import { AnomalyData } from '../../../data';
+import { type AnomalyData } from '../../../data';
 import { SORT_TRANSFORM } from '../constants';
 
 const isEmptyDataSet = (data: AnomalyData | undefined) =>

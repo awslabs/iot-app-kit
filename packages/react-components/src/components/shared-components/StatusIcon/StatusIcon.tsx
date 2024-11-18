@@ -1,7 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
 import type { StatusIconType } from '@iot-app-kit/core';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
+import styled from 'styled-components';
 import { getIcons } from '../../../common/iconUtils';
 
 const Icon = styled.div`

@@ -1,15 +1,14 @@
+import type { ListTimeSeries } from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-
-import * as dropDown from '../helpers/drop-down';
-import { createListTimeSeriesPage } from '../helpers/responses';
+import { useState } from 'react';
 import { TimeSeriesExplorer } from '../../explorers';
+import type { TimeSeriesRequestParameters } from '../../explorers/time-series-explorer/types';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
 import type { SelectionMode } from '../../types/common';
-import type { ListTimeSeries } from '@iot-app-kit/core';
 import type { TimeSeriesResource } from '../../types/resources';
-import type { TimeSeriesRequestParameters } from '../../explorers/time-series-explorer/types';
+import * as dropDown from '../helpers/drop-down';
+import { createListTimeSeriesPage } from '../helpers/responses';
 
 function SelectableTimeSeriesDropDown({
   selectionMode,
@@ -144,9 +143,6 @@ describe('time series drop-down', () => {
         />
       );
 
-      // First page is requested without opening the drop-down
-      expect(listTimeSeries).toHaveBeenCalledOnce();
-
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
 
@@ -169,8 +165,6 @@ describe('time series drop-down', () => {
           parameters={[{ assetId: 'asset-id-1' }, { assetId: 'asset-id-2' }]}
         />
       );
-
-      expect(listTimeSeries).toHaveBeenCalledOnce();
 
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();

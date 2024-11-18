@@ -108,4 +108,12 @@ describe('useIoTSiteWiseClient tests', () => {
       iotSiteWiseClient.describeAssetModel as DescribeAssetModel
     ).toBeDefined();
   });
+
+  it('useIoTSiteWiseClient handles an undefined SiteWise client', async () => {
+    const { result } = renderHook(() =>
+      useIoTSiteWiseClient({ iotSiteWiseClient: undefined })
+    );
+
+    expect(result.current).toStrictEqual({});
+  });
 });

@@ -1,5 +1,4 @@
 import { getByLabelText, render, screen } from '@testing-library/react';
-import React from 'react';
 import DecimalPlaces from './index';
 import userEvent from '@testing-library/user-event';
 

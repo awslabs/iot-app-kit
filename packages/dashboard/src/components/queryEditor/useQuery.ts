@@ -1,10 +1,10 @@
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { useDispatch } from 'react-redux';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { DashboardWidget, IoTSiteWiseDataStreamQuery } from '~/types';
+import { type DashboardWidget, type IoTSiteWiseDataStreamQuery } from '~/types';
 import { applyDefaultStylesToQuery } from '~/customization/widgets/utils/assetQuery/applyDefaultStylesToQuery';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
-import { QueryWidget } from '~/customization/widgets/types';
+import { type QueryWidget } from '~/customization/widgets/types';
 import { assignDefaultRefId } from '~/customization/widgets/utils/assetQuery/assignDefaultRefId';
 import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
@@ -18,16 +18,22 @@ export const styledQueryWidgetOnDrop = (
   updatedQuery: IoTSiteWiseDataStreamQuery,
   widget: QueryWidget
 ) => {
+  const { aggregation, resolution } = getCurrentAggregationResolution(widget);
+
   const mergedQuery = {
     assets: [],
     properties: [],
     assetModels: [],
+    alarms: [],
+    alarmModels: [],
+    requestSettings: {
+      aggregationType: aggregation,
+      resolution: resolution,
+    },
     ...updatedQuery,
   };
 
   const queryWithRefIds = assignDefaultRefId(mergedQuery);
-
-  const { aggregation, resolution } = getCurrentAggregationResolution(widget);
 
   const queryWithAggregation = applyAggregationToQuery(
     queryWithRefIds,

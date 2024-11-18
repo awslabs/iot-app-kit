@@ -1,25 +1,34 @@
-import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
-import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
+import {
+  type DataPoint,
+  type DataStream,
+  type Threshold,
+} from '@iot-app-kit/core';
+import {
+  type BarSeriesOption,
+  type SeriesOption,
+  type YAXisComponentOption,
+} from 'echarts';
 
 import {
-  ChartAxisOptions,
-  ChartDataQuality,
-  ChartOptions,
-  ChartStyleSettingsOptions,
-  Visualization,
+  type ChartAxisOptions,
+  type ChartDataQuality,
+  type ChartOptions,
+  type ChartStyleSettingsOptions,
+  type Visualization,
 } from '../../types';
 import { convertStyles } from '../style/convertStyles';
 import { convertYAxis as convertChartYAxis } from '../axes/yAxis';
 import { convertThresholds } from '../convertThresholds';
 import {
-  ChartStyleSettingsWithDefaults,
-  Emphasis,
+  type ChartStyleSettingsWithDefaults,
+  type Emphasis,
 } from '../../utils/getStyles';
 import {
+  createAlarmLabel,
   DEEMPHASIZE_OPACITY,
   EMPHASIZE_SCALE_CONSTANT,
 } from '../../eChartsConstants';
-import { GenericSeries } from '../../../../echarts/types';
+import { type GenericSeries } from '../../../../echarts/types';
 import { useMemo } from 'react';
 import { useVisibleDataStreams } from '../../hooks/useVisibleDataStreams';
 import { useHighlightedDataStreams } from '../../hooks/useHighlightedDataStreams';
@@ -91,7 +100,12 @@ const convertSeries = (
     index,
     showBadDataIcons,
     showUncertainDataIcons,
-  }: { performanceMode?: boolean; index?: number } & ChartDataQuality
+    showAlarmIcons,
+  }: {
+    performanceMode?: boolean;
+    index?: number;
+    showAlarmIcons?: boolean;
+  } & ChartDataQuality
 ) => {
   let opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
   if (hidden) {
@@ -139,6 +153,8 @@ const convertSeries = (
     animation: false,
     appKitSignificantDigits: significantDigits,
     appKitColor: color,
+
+    label: createAlarmLabel(significantDigits, showAlarmIcons),
   } as GenericSeries;
 
   return addVisualizationSpecificOptions(visualizationType, genericSeries);
@@ -179,7 +195,12 @@ export const convertSeriesAndYAxis =
       index,
       showBadDataIcons,
       showUncertainDataIcons,
-    }: { performanceMode?: boolean; index: number } & ChartDataQuality = {
+      showAlarmIcons,
+    }: {
+      performanceMode?: boolean;
+      index: number;
+      showAlarmIcons?: boolean;
+    } & ChartDataQuality = {
       performanceMode: false,
       index: 0,
     }
@@ -190,6 +211,7 @@ export const convertSeriesAndYAxis =
       index,
       showBadDataIcons,
       showUncertainDataIcons,
+      showAlarmIcons,
     });
     const yAxis = convertYAxis(styles);
 
@@ -258,9 +280,11 @@ export const useSeriesAndYAxis = (
     styleSettings,
     axis,
     thresholds,
+    alarmThresholds,
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   }: Pick<
     ChartOptions,
     'defaultVisualizationType' | 'styleSettings' | 'significantDigits'
@@ -268,6 +292,8 @@ export const useSeriesAndYAxis = (
     thresholds: Threshold[];
     axis?: ChartAxisOptions;
     performanceMode?: boolean;
+    showAlarmIcons?: boolean;
+    alarmThresholds: Threshold[];
   } & ChartDataQuality
 ) => {
   const { isDataStreamHidden } = useVisibleDataStreams();
@@ -276,7 +302,8 @@ export const useSeriesAndYAxis = (
 
   return useMemo(() => {
     const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
-    const convertedThresholds = convertThresholds(thresholds);
+    const allThresholds = [...(thresholds ?? []), ...alarmThresholds];
+    const convertedThresholds = convertThresholds(allThresholds);
 
     const shouldUseEmphasis = highlightedDataStreams.length > 0;
 
@@ -309,6 +336,7 @@ export const useSeriesAndYAxis = (
           index,
           showBadDataIcons,
           showUncertainDataIcons,
+          showAlarmIcons,
         })(datastream);
       })
       .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
@@ -330,10 +358,12 @@ export const useSeriesAndYAxis = (
     styleSettings,
     performanceMode,
     thresholds,
+    alarmThresholds,
     highlightedDataStreams,
     isDataStreamHighlighted,
     isDataStreamHidden,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   ]);
 };

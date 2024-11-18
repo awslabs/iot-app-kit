@@ -1,4 +1,3 @@
-import React from 'react';
 import LineScatterChartWidgetComponent from './component';
 import LineIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
@@ -40,6 +39,7 @@ export const lineScatterChartPlugin: DashboardPlugin = {
             unit: true,
             asset: true,
             latestValue: true,
+            latestAlarmStateValue: true,
             maxValue: false,
             minValue: false,
           },

@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import { MutableRefObject, useEffect, useRef } from 'react';
+import type * as THREE from 'three';
+import { type MutableRefObject, useEffect, useRef } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 
 import { accessStore } from '../store';

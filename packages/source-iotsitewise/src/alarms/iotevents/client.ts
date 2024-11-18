@@ -1,8 +1,8 @@
 import {
-  IoTEventsClient,
+  type IoTEventsClient,
   DescribeAlarmModelCommand,
+  type DescribeAlarmModelResponse,
 } from '@aws-sdk/client-iot-events';
-import type { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
 
 export class EventsClient {
   private readonly eventsSdk: IoTEventsClient;

@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { Button, Popover, StatusIndicator } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
+import { useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import { KnownComponentType } from '../../../interfaces';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { ISceneNodeInternal, accessStore } from '../../../store';
-import useMatterportTags from '../../../hooks/useMatterportTags';
 import useMatterportObserver from '../../../hooks/useMatterportObserver';
-import { DisplayMessageCategory, IDisplayMessage } from '../../../store/internalInterfaces';
+import useMatterportTags from '../../../hooks/useMatterportTags';
+import { KnownComponentType } from '../../../interfaces';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { type ISceneNodeInternal, accessStore } from '../../../store';
+import { DisplayMessageCategory, type IDisplayMessage } from '../../../store/internalInterfaces';
 
 export const MatterportTagSync: React.FC = () => {
   const logger = useLifecycleLogging('MatterportTagSync');
@@ -126,7 +126,7 @@ export const MatterportTagSync: React.FC = () => {
   ]);
 
   return (
-    <React.Fragment>
+    <>
       <Popover
         dismissButton={false}
         position='top'
@@ -146,6 +146,6 @@ export const MatterportTagSync: React.FC = () => {
           {intl.formatMessage({ defaultMessage: 'Sync Matterport Tags', description: 'matterport tag sync button' })}
         </Button>
       </Popover>
-    </React.Fragment>
+    </>
   );
 };

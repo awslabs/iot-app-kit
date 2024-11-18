@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import type * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { onSelectWidgetsAction } from '~/store/actions';
 import { getSelectedWidgets, pointSelect, selectedRect } from '~/util/select';

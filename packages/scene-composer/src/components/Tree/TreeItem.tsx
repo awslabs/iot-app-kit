@@ -1,5 +1,5 @@
 import { Button } from '@cloudscape-design/components';
-import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
+import { forwardRef, type ComponentPropsWithRef, type FC, type ReactNode, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
 import RadioButton from '../RadioButton';
@@ -75,7 +75,7 @@ const TreeItemInner: FC<TreeItemInnerProps & { children: ReactNode }> = ({
 
 TreeItemInner.displayName = 'TreeItemInner';
 
-const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
+const TreeItem = forwardRef<HTMLLIElement, TreeItemProps>(
   (
     {
       className = '',

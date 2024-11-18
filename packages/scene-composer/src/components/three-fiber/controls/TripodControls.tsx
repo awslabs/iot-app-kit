@@ -1,6 +1,6 @@
-import { EventManager, ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
-import { Camera } from 'three';
-import React, { forwardRef, useContext, useEffect, useMemo } from 'react';
+import { type EventManager, type ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
+import { type Camera } from 'three';
+import { forwardRef, useContext, useEffect, useMemo } from 'react';
 
 import { TripodControlsImpl } from '../../../three/TripodControlsImpl';
 import { useEditorState } from '../../../store';

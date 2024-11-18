@@ -1,22 +1,22 @@
-import React, { useCallback, useContext, useState, useEffect } from 'react';
-import { useIntl } from 'react-intl';
 import { Button, FormField, Input, SpaceBetween } from '@cloudscape-design/components';
+import { useCallback, useContext, useEffect, useState, type FC } from 'react';
+import { useIntl } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
   COMPOSER_FEATURES,
   DEFAULT_SCENE_BACKGROUND_COLOR,
-  ISceneBackgroundSetting,
+  type ISceneBackgroundSetting,
   KnownSceneProperty,
   TextureFileTypeList,
 } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { accessStore } from '../../../store';
-import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
+import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 
-export const SceneBackgroundSettingsEditor: React.FC = () => {
+export const SceneBackgroundSettingsEditor: FC = () => {
   useLifecycleLogging('SceneBackgroundSettingsEditor');
   const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];
 
@@ -96,7 +96,7 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
   }, [internalColor]);
 
   return (
-    <React.Fragment>
+    <>
       <FormField label={intl.formatMessage({ defaultMessage: 'Scene Background', description: 'Form Field label' })}>
         <SpaceBetween size='s' direction='vertical'>
           {!!backgroundSettings && (!backgroundSettings.textureUri || !texturesEnabled) && (
@@ -131,6 +131,6 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
           )}
         </SpaceBetween>
       </FormField>
-    </React.Fragment>
+    </>
   );
 };

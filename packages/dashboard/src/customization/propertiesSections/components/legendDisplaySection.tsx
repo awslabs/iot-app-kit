@@ -1,11 +1,10 @@
 import type { FC } from 'react';
-import React from 'react';
 import FormField from '@cloudscape-design/components/form-field';
 import Checkbox, {
-  CheckboxProps,
+  type CheckboxProps,
 } from '@cloudscape-design/components/checkbox';
-import { NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
-import { ChartLegend } from '~/customization/widgets/types';
+import { type NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
+import { type ChartLegend } from '~/customization/widgets/types';
 import { dropdownConsts } from '../constants';
 
 type LegendDisplaySectionProps = {

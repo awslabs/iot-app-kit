@@ -1,7 +1,14 @@
 import merge from 'lodash.merge';
-import { AnomalyChart, AnomalyChartMessageKeys } from './anomalyWidget';
-import { Messages } from './types';
-import { Echarts, EchartsMessageKeys } from './echarts';
+import { AnomalyChart, type AnomalyChartMessageKeys } from './anomalyWidget';
+import { Echarts, type EchartsMessageKeys } from './echarts';
+import {
+  AssistantActionPanel,
+  type AssistantActionPanelMessageKeys,
+  AssistantResultPanel,
+  type AssistantResultPanelMessageKeys,
+} from './assistantActionPanel/messages';
+import { type Messages } from './types';
+import { Table, type TableMessageKeys } from './table/messages';
 
 /**
  * In order to add messages to the intl instance
@@ -19,11 +26,22 @@ import { Echarts, EchartsMessageKeys } from './echarts';
  */
 
 // List of all of the keys for all components
-export type MessageKeys = AnomalyChartMessageKeys | EchartsMessageKeys;
+export type MessageKeys =
+  | AnomalyChartMessageKeys
+  | EchartsMessageKeys
+  | AssistantActionPanelMessageKeys
+  | AssistantResultPanelMessageKeys
+  | TableMessageKeys;
 export type AllMessages = Messages<MessageKeys>;
 
 // List of all component messages to be merged by locale.
-const componentMessages = [AnomalyChart, Echarts];
+const componentMessages = [
+  AnomalyChart,
+  Echarts,
+  AssistantActionPanel,
+  AssistantResultPanel,
+  Table,
+];
 
 // All merged messages
 export const mergedMessages = componentMessages.reduce(

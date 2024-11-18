@@ -1,3 +1,10 @@
+export { mockAlarmData } from './data/mockAlarmData';
+export {
+  mockSinWaveData,
+  mockSinWaveDataAggregated,
+  mockSinWaveDataWithQuality,
+  mockTimeSeriesStringLiveStream,
+} from './data/mockSinWaveData';
 export {
   mockTimeSeriesDataQuery,
   mockTimeSeriesDataQueryLoading,

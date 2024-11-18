@@ -1,9 +1,9 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
-import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
-import { S3Client } from '@aws-sdk/client-s3';
-import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
+import { type KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
+import { type S3Client } from '@aws-sdk/client-s3';
+import { type SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { QueryClient } from '@tanstack/query-core';
 
 import {
@@ -19,11 +19,13 @@ import { SceneMetadataModule } from './scene-module/SceneMetadataModule';
 import { KGDataModule } from './knowledgeGraph-module/KGDataModule';
 import { VideoDataImpl } from './video-data/VideoData';
 import {
-  DataBase,
-  ErrorDetails,
-  Query,
+  type DataBase,
+  type ErrorDetails,
+  type Query,
   TimeSeriesDataModule,
-  DataRequest,
+  type DataRequest,
+  type TimeSeriesDataQuery,
+  type TimeSeriesDataRequest,
 } from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import { createDataSource } from './time-series-data/data-source';
@@ -31,15 +33,11 @@ import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModu
 import type { Credentials, CredentialProvider } from '@aws-sdk/types';
 import type { VideoDataProps } from './types';
 import type { TwinMakerDataStreamQuery } from './time-series-data/types';
-import type {
-  TimeSeriesDataQuery,
-  TimeSeriesDataRequest,
-} from '@iot-app-kit/core';
-import { TwinMakerErrorCode } from './common/error';
+import { type TwinMakerErrorCode } from './common/error';
 import { createEntityPropertyBindingProvider } from './data-binding-provider/createEntityPropertyBindingProvider';
 import {
-  TwinMakerHistoryQuery,
-  TwinMakerPropertyValueQuery,
+  type TwinMakerHistoryQuery,
+  type TwinMakerPropertyValueQuery,
 } from './common/queryTypes';
 import { TwinMakerPropertyValueDataProvider } from './property-value/provider';
 

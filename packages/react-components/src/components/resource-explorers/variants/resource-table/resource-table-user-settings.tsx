@@ -1,15 +1,12 @@
 import CloudscapeCollectionPreferences, {
   type CollectionPreferencesProps as CloudscapeCollectionPreferencesProps,
 } from '@cloudscape-design/components/collection-preferences';
-
 import { DEFAULT_SUPPORTED_PAGE_SIZES } from '../../constants/defaults';
-
-import React from 'react';
-import { ResourceName } from '../../types/common';
+import { type ResourceName } from '../../types/common';
 import {
-  OnUpdateTableUserCustomization,
-  TableResourceField,
-  UserCustomization,
+  type OnUpdateTableUserCustomization,
+  type TableResourceField,
+  type UserCustomization,
 } from '../../types/table';
 
 export interface ResourceTableUserSettingsProps<Resource> {

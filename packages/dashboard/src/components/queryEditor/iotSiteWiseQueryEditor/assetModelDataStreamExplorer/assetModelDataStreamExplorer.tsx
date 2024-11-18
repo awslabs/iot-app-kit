@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { useEffect, useState } from 'react';
+import type { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 import Box from '@cloudscape-design/components/box';
 
@@ -19,15 +19,21 @@ import {
   useSelectedAsset,
 } from './useSelectedAsset';
 import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
-import { getAssetModelQueryInformation } from './getAssetModelQueryInformation';
 import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
 import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { DashboardWidget } from '~/types';
-import { AssetResource } from '@iot-app-kit/react-components';
-import { useAssetsForAssetModel } from './assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
+import { type DashboardWidget } from '~/types';
+import {
+  AlarmExplorer,
+  type AlarmExplorerProps,
+  type AssetResource,
+} from '@iot-app-kit/react-components';
+import { ExpandableSection } from '@cloudscape-design/components';
+import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
+import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
+import { createAlarmModelQuery } from './createAlarmModelQuery';
 
 export interface AssetModelDataStreamExplorerProps {
   iotSiteWiseClient: IoTSiteWise;
@@ -36,6 +42,7 @@ export interface AssetModelDataStreamExplorerProps {
   correctSelectionMode: 'single' | 'multi';
   timeZone?: string;
   significantDigits?: number;
+  currentSelectedAsset?: AssetSummary;
 }
 
 export const AssetModelDataStreamExplorer = ({
@@ -45,8 +52,12 @@ export const AssetModelDataStreamExplorer = ({
   correctSelectionMode,
   timeZone,
   significantDigits,
+  currentSelectedAsset,
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
+
+  const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
+
   const {
     assetModelId,
     assetIds,
@@ -54,19 +65,7 @@ export const AssetModelDataStreamExplorer = ({
     updateSelectedAsset,
   } = useModelBasedQuery();
 
-  const { assetSummaries } = useAssetsForAssetModel({
-    assetModelId,
-    iotSiteWiseClient,
-    fetchAll: true,
-  });
-
-  const currentSelectedAsset = assetSummaries.find(
-    ({ id }) => id === assetIds?.at(0)
-  );
-
-  const { assetModels, updateAssetModels } = useModelBasedQuerySelection();
-
-  const { propertyIds } = getAssetModelQueryInformation(assetModels);
+  const { updateModelQueries } = useModelBasedQuerySelection();
 
   const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(
     createInitialAssetModelResource(assetModelId)
@@ -84,9 +83,11 @@ export const AssetModelDataStreamExplorer = ({
   );
 
   const [selectedAssetModelProperties, selectAssetModelProperties] =
-    useSelectedAssetModelProperties(
-      createInitialAssetModelProperties(propertyIds)
-    );
+    useSelectedAssetModelProperties(createInitialAssetModelProperties([]));
+
+  const [selectedAlarms, setSelectedAlarms] = useState<
+    NonNullable<AlarmExplorerProps['selectedAlarms']>
+  >([]);
 
   /**
    * update every model based query widget
@@ -94,39 +95,38 @@ export const AssetModelDataStreamExplorer = ({
    */
   useEffect(() => {
     updateSelectedAsset(selectedAsset[0]);
-  }, [updateSelectedAsset, selectedAsset]);
-
-  useEffect(() => {
-    if (currentSelectedAsset)
-      selectAsset([
-        {
-          ...currentSelectedAsset,
-          assetId: currentSelectedAsset?.id,
-        } as AssetResource,
-      ]);
-  }, [currentSelectedAsset, selectAsset]);
+    selectAssetModelProperties([]); // if selectedAsset changes, dont keep state from old selection in RE
+  }, [updateSelectedAsset, selectedAsset, selectAssetModelProperties]);
 
   const onReset = () => {
     selectAssetModel([]);
     selectAsset([]);
     selectAssetModelProperties([]);
+    setSelectedAlarms([]);
     clearModelBasedWidgets();
   };
 
   const onSave = () => {
     if (
-      selectedAssetModel[0].assetModelId &&
-      selectedAssetModelProperties.length > 0
+      (selectedAssetModel[0].assetModelId &&
+        selectedAssetModelProperties.length > 0) ||
+      selectedAlarms.length > 0
     ) {
-      updateAssetModels(
-        createAssetModelQuery({
+      updateModelQueries({
+        alarmModels: createAlarmModelQuery({
+          assetModelId: selectedAssetModel[0].assetModelId,
+          assetId: selectedAsset?.at(0)?.assetId,
+          alarms: selectedAlarms,
+        }),
+        assetModels: createAssetModelQuery({
           assetModelId: selectedAssetModel[0].assetModelId,
           assetId: selectedAsset?.at(0)?.assetId,
           assetModelPropertyIds: createNonNullableList(
             selectedAssetModelProperties.map(({ propertyId }) => propertyId)
           ),
-        })
-      );
+        }),
+      });
+
       metricsRecorder?.record({
         metricName: 'AssetModelDataStreamAdd',
         metricValue: 1,
@@ -161,16 +161,70 @@ export const AssetModelDataStreamExplorer = ({
             <HorizontalDivider />
           </Box>
 
-          <AssetModelPropertiesExplorer
-            {...assetModelPropertiesExplorerProps}
-          />
+          {alarmsFeatureOn ? (
+            <>
+              <ExpandableSection
+                headerText={
+                  <ExpandableSectionHeading headerText='Data streams' />
+                }
+                defaultExpanded
+              >
+                <AssetModelPropertiesExplorer
+                  {...assetModelPropertiesExplorerProps}
+                />
+              </ExpandableSection>
+              <ExpandableSection
+                headerText={
+                  <ExpandableSectionHeading headerText='Alarm data streams' />
+                }
+              >
+                <AlarmExplorer
+                  iotSiteWiseClient={iotSiteWiseClient}
+                  parameters={
+                    selectedAsset.length > 0
+                      ? selectedAsset
+                      : selectedAssetModel
+                  }
+                  selectionMode={correctSelectionMode}
+                  onSelectAlarm={setSelectedAlarms}
+                  selectedAlarms={selectedAlarms}
+                  tableSettings={{
+                    isFilterEnabled: true,
+                    isUserSettingsEnabled: true,
+                  }}
+                  ariaLabels={{
+                    resizerRoleDescription: 'Resize button',
+                    itemSelectionLabel: (
+                      { selectedItems },
+                      modeledDataStream
+                    ) =>
+                      alarmSelectionLabel(
+                        [...selectedItems],
+                        modeledDataStream
+                      ),
+                  }}
+                  description='Select an alarm to add to a selected widget.'
+                  timeZone={timeZone}
+                  significantDigits={significantDigits}
+                />
+              </ExpandableSection>
+            </>
+          ) : (
+            <AssetModelPropertiesExplorer
+              {...assetModelPropertiesExplorerProps}
+            />
+          )}
 
           <ResourceExplorerFooter
             addDisabled={addButtonDisabled}
-            onReset={() => selectAssetModelProperties([])}
+            onReset={() => {
+              selectAssetModelProperties([]);
+              setSelectedAlarms([]);
+            }}
             onAdd={() => {
               onSave();
               selectAssetModelProperties([]); //clear table after adding it to widget
+              setSelectedAlarms([]);
             }}
           />
         </>

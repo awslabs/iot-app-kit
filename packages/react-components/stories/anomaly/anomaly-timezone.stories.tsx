@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '../../src/queries';
 import { AnomalyChart } from '../../src/components/anomaly-chart';

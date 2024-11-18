@@ -1,5 +1,4 @@
 import CloudscapeBox from '@cloudscape-design/components/box';
-import React from 'react';
 
 import type { PluralResourceName } from '../../types/common';
 

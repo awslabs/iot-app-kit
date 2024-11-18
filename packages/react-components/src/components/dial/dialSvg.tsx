@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorConfigurations } from './constants';
 import { useArcs } from './useArcs';
 import type { DialSettings } from './types';

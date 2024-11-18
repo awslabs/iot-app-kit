@@ -1,7 +1,7 @@
-import { Node, Object3DNode } from '@react-three/fiber';
+import { type Node, type Object3DNode } from '@react-three/fiber';
 
-import { Anchor } from './three';
-import { WidgetSprite, WidgetVisual } from './three/visuals';
+import { type Anchor } from './three';
+import { type WidgetSprite, type WidgetVisual } from './three/visuals';
 
 export type AnchorProps = Object3DNode<Anchor, typeof Anchor>;
 

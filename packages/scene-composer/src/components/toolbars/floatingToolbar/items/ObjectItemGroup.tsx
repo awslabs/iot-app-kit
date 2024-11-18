@@ -1,13 +1,13 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { DeleteSvg, RotateIconSvg, ScaleIconSvg, TranslateIconSvg } from '../../../../assets/svgs';
-import { KnownComponentType, TransformControlMode } from '../../../../interfaces';
+import { KnownComponentType, type TransformControlMode } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState, useSceneDocument, accessStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
-import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
+import { type ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
 import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';

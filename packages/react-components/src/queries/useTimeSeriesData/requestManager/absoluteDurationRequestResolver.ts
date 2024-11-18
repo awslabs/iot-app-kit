@@ -4,12 +4,12 @@ import {
   divideInterval,
   requestRange,
 } from '../intervals';
-import { Viewport } from '../types';
+import { type Viewport } from '../types';
 import {
-  ResolveOptions,
+  type ResolveOptions,
   TimeSeriesDataRequestResolver,
 } from './requestResolver';
-import { RequestSettings } from './types';
+import { type RequestSettings } from './types';
 
 export class AbsoluteDurationTimeSeriesDataRequestResolver<
   Request,

@@ -1,6 +1,6 @@
-import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { ThreeEvent, extend } from '@react-three/fiber';
-import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { type IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { type ThreeEvent, extend } from '@react-three/fiber';
+import { type ReactElement, Suspense, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 import {
@@ -18,15 +18,20 @@ import useRuleResult from '../../../../hooks/useRuleResult';
 import useTagSettings from '../../../../hooks/useTagSettings';
 import {
   DefaultAnchorStatus,
-  INavLink,
-  ITagSettings,
-  IValueDataBinding,
+  type INavLink,
+  type ITagSettings,
+  type IValueDataBinding,
   KnownComponentType,
   SceneResourceType,
   SelectedAnchor,
 } from '../../../../interfaces';
-import { IIconLookup } from '../../../../models/SceneModels';
-import { IAnchorComponentInternal, ISceneNodeInternal, accessStore, useViewOptionState } from '../../../../store';
+import { type IIconLookup } from '../../../../models/SceneModels';
+import {
+  type IAnchorComponentInternal,
+  type ISceneNodeInternal,
+  accessStore,
+  useViewOptionState,
+} from '../../../../store';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
@@ -329,9 +334,9 @@ export function AsyncLoadedAnchorWidget({
 
 export const AnchorWidget: React.FC<AnchorWidgetProps> = (props: AnchorWidgetProps) => {
   return (
-    <React.Suspense fallback={null}>
+    <Suspense fallback={null}>
       <AsyncLoadedAnchorWidget {...props} />
-    </React.Suspense>
+    </Suspense>
   );
 };
 

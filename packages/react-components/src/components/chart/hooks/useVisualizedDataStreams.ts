@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  DataStream,
-  StyledThreshold,
-  Threshold,
-  TimeSeriesDataQuery,
-  Viewport,
+  type DataStream,
+  type StyledThreshold,
+  type Threshold,
+  type TimeSeriesDataQuery,
+  type Viewport,
   getVisibleData,
 } from '@iot-app-kit/core';
 import isEqual from 'lodash.isequal';

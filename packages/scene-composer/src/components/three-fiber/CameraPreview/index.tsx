@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
+import { useFrame } from '@react-three/fiber';
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
-import { findComponentByType } from '../../../utils/nodeUtils';
-import { KnownComponentType } from '../../../interfaces';
-import { ICameraComponentInternal, accessStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
+import { KnownComponentType } from '../../../interfaces';
+import { type ICameraComponentInternal, accessStore } from '../../../store';
 import { getCameraSettings } from '../../../utils/cameraUtils';
+import { findComponentByType } from '../../../utils/nodeUtils';
 
 type CanvasSize = {
   height: number;

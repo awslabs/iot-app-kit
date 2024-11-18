@@ -2,9 +2,9 @@ import type { StyleSettingsMap } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import type { QueryWidget } from '../types';
 import { isDefined } from '~/util/isDefined';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 import { getCurrentAggregationResolution } from './widgetAggregationUtils';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { colorerFromStyleSettings } from './assetQuery/defaultColors';
 
 type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
@@ -15,6 +15,8 @@ const assignDefaults = (
     assets = [],
     properties = [],
     assetModels = [],
+    alarms = [],
+    alarmModels = [],
   }: IoTSiteWiseDataStreamQuery,
   resAndAggr: { aggregation?: AggregateType; resolution?: string },
   getId: () => string = uuid
@@ -43,6 +45,11 @@ const assignDefaults = (
       refId: propertyQuery.refId || getId(),
     })),
   })),
+  alarms,
+  alarmModels,
+  requestSettings: {
+    ...resAndAggr,
+  },
 });
 
 const assignDefaultColors = (

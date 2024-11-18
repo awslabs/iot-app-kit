@@ -1,7 +1,6 @@
 import { isHotkey } from 'is-hotkey';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import './option.css';
 import {
   borderRadiusDropdown,
   colorBackgroundControlDisabled,
@@ -11,6 +10,7 @@ import {
   spaceScaledXs,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import './option.css';
 
 export type ContextMenuOptionProps = {
   disabled: boolean;

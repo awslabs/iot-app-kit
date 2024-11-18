@@ -1,6 +1,5 @@
-import { DataPoint } from '@iot-app-kit/core';
-import { ConvertSymbolOptions, convertSymbol } from './convertSymbol';
-import { BAD_DATA_ICON, UNCERTAIN_DATA_ICON } from '../../eChartsConstants';
+import { type DataPoint } from '@iot-app-kit/core';
+import { type ConvertSymbolOptions, convertSymbol } from './convertSymbol';
 
 const DEFAULT_ECHARTS_PARAMS = {
   componentType: '',
@@ -56,14 +55,14 @@ describe('convertSymbol', () => {
   it('returns the bad data path if the quality is BAD', () => {
     const convertSymbol = setup();
     expect(convertSymbol(BAD_POINT, DEFAULT_ECHARTS_PARAMS)).toEqual(
-      BAD_DATA_ICON
+      'emptyCircle'
     );
   });
 
   it('returns the uncertain data path if the quality is UNCERTAIN', () => {
     const convertSymbol = setup();
     expect(convertSymbol(UNCERTAIN_POINT, DEFAULT_ECHARTS_PARAMS)).toEqual(
-      UNCERTAIN_DATA_ICON
+      'triangle'
     );
   });
 

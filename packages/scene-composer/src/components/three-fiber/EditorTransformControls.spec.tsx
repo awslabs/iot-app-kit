@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React from 'react';
 import { act, render } from '@testing-library/react';
 
 import { MockTransformControls } from '../../../tests/__mocks__/MockTransformControls';

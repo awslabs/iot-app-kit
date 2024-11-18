@@ -1,11 +1,17 @@
 import { Button, FormField, SpaceBetween, TextContent, TextFilter } from '@cloudscape-design/components';
-import { IconDefinition, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
+import {
+  type IconDefinition,
+  type IconLookup,
+  type IconName,
+  type IconPrefix,
+  library,
+} from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isEmpty } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { IIconPicker } from '../interface';
+import { type IIconPicker } from '../interface';
 import './IconPickerUtils/IconPicker-aws-overrides.scss';
 
 import { IconGridLayout, tmIconPickerContainer, tmIconPickerPopover } from './IconPickerUtils/IconPickerStyles';

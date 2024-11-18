@@ -1,8 +1,8 @@
 import {
   DATA_TYPE,
   STATUS_ICON_TYPE,
-  Threshold,
-  DataStream,
+  type Threshold,
+  type DataStream,
   COMPARISON_OPERATOR,
 } from '@iot-app-kit/core';
 import { DAY_IN_MS } from '../utils/time';

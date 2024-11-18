@@ -1,5 +1,5 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SOURCE as IoTEventsSource } from '../alarms/iotevents';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type SOURCE as IoTEventsSource } from '../alarms/iotevents';
 import type {
   CacheSettings,
   DataStreamQuery,
@@ -63,6 +63,12 @@ export type AssetModelQuery = {
   properties: AssetModelPropertyQuery[];
 };
 
+export type AlarmAssetModelQuery = {
+  assetModelId: AssetModelId;
+  assetIds?: AssetId[]; // can map multiple assets
+  alarmComponents: AlarmComponentQuery[];
+};
+
 export type AlarmComponentQuery = {
   /**
    * Asset composite model id for alarm.
@@ -101,13 +107,21 @@ export type SiteWiseAssetModelQuery = DataStreamQuery & {
   requestSettings?: RequestSettings;
 };
 
+export type SiteWiseAlarmAssetModelQuery = {
+  alarmModels: AlarmAssetModelQuery[];
+  requestSettings?: RequestSettings;
+};
+
 /**
  * configure queries for alarms explicitly
  * by assetId + alarm compositeModelId
  */
 export type SiteWiseAlarmQuery = {
   alarms: AlarmQuery[];
-  requestSettings?: RequestSettings;
+  requestSettings?: RequestSettings & {
+    aggregationType?: AggregateType;
+    resolution?: string;
+  };
 };
 
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &

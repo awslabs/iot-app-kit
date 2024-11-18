@@ -1,8 +1,8 @@
-import { IntlShape, defineMessages } from 'react-intl';
+import { type IntlShape, defineMessages } from 'react-intl';
 
-import { IDataOverlayComponent, KnownComponentType } from '../interfaces';
+import { type IDataOverlayComponent, KnownComponentType } from '../interfaces';
 import { Component } from '../models/SceneModels';
-import { ISceneComponentInternal } from '../store';
+import { type ISceneComponentInternal } from '../store';
 
 export const i18nKnownComponentTypesStrings = defineMessages({
   [KnownComponentType.ModelRef]: {

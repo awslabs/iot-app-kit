@@ -1,10 +1,9 @@
-import React from 'react';
 import { round } from '@iot-app-kit/core-util';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import type { DataPoint } from '@iot-app-kit/core';
 
 import {
-  TableProps as CloudscapeTableProps,
+  type TableProps as CloudscapeTableProps,
   Icon,
 } from '@cloudscape-design/components';
 
@@ -17,6 +16,8 @@ import {
   spaceStaticS,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
+import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
+import { isAlarmState } from '../../hooks/useAlarms/transformers';
 
 const dataQuality = ({ quality }: { quality: DataPoint['quality'] }) => {
   const color =
@@ -100,6 +101,11 @@ export const getDefaultColumnDefinitions: (
           </div>
         );
       }
+
+      if (typeof value === 'string' && isAlarmState(value)) {
+        return <AlarmStateText alarmState={value} />;
+      }
+
       return (
         <div
           className='iot-table-cell'

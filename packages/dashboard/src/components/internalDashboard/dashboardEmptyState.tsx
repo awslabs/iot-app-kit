@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   colorBorderSegmentDefault,
   colorTextBodyDefault,
@@ -30,7 +29,7 @@ const DashboardEmptyState: React.FC = () => {
           src={lineSvg}
           alt='Line widget light icon'
         />
-        <div>Drag and drop your widget to the canvas.</div>
+        <div>Drag and drop your widget in the canvas.</div>
       </div>
     </div>
   );

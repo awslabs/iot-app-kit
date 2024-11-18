@@ -1,7 +1,6 @@
-import React from 'react';
 import { act, render, waitFor } from '@testing-library/react';
 import flushPromises from 'flush-promises';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { accessStore } from '../../store';
 import {

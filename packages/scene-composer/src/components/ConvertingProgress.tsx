@@ -1,8 +1,7 @@
 import { Box, Container, ProgressBar } from '@cloudscape-design/components';
-import React from 'react';
+import * as awsui from '@cloudscape-design/design-tokens';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
-import * as awsui from '@cloudscape-design/design-tokens';
 
 const ConvertingProgressContainer = styled(Container)`
   width: 100%;

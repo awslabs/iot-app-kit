@@ -1,6 +1,6 @@
-import { GetState, SetState, StoreApi } from 'zustand';
+import { type GetState, type SetState, type StoreApi } from 'zustand';
 
-import { RootState } from '../Store';
+import { type RootState } from '../Store';
 
 export interface INodeErrorStateSlice {
   nodeErrorMap: { [nodeRef: string]: string };

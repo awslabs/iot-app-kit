@@ -1,4 +1,3 @@
-import React from 'react';
 import KPIWidgetComponent from './component';
 import KPIIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';

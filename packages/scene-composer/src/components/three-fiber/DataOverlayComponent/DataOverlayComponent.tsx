@@ -1,11 +1,11 @@
-import React, { ReactElement, useContext, useEffect, useRef } from 'react';
+import { type ReactElement, useContext, useEffect, useRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { Group } from 'three';
+import { type Group } from 'three';
 
-import { ISceneNodeInternal } from '../../../store';
+import { type ISceneNodeInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
+import { type IAnchorComponentInternal, type IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
 import useSelectedNode from '../../../hooks/useSelectedNode';

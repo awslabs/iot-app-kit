@@ -1,10 +1,10 @@
-import { AdditionalComponentData, KnownComponentType, IDataBindingTemplate } from '../interfaces';
+import { type AdditionalComponentData, KnownComponentType, type IDataBindingTemplate } from '../interfaces';
 import {
-  IAnchorComponentInternal,
-  IDataOverlayComponentInternal,
-  IEntityBindingComponentInternal,
-  ISceneNodeInternal,
-  ISubModelRefComponentInternal,
+  type IAnchorComponentInternal,
+  type IDataOverlayComponentInternal,
+  type IEntityBindingComponentInternal,
+  type ISceneNodeInternal,
+  type ISubModelRefComponentInternal,
 } from '../store';
 
 import { getAdditionalComponentData } from './eventDataUtils';

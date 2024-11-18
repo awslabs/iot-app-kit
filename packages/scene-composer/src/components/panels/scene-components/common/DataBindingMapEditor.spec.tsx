@@ -1,13 +1,12 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { act, render } from '@testing-library/react';
-import React from 'react';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
 import { Component } from '../../../../models/SceneModels';
-import { IDataOverlayComponentInternal } from '../../../../store';
+import { type IDataOverlayComponentInternal } from '../../../../store';
 
 import { DataBindingMapEditor } from './DataBindingMapEditor';
-import { IValueDataBindingBuilderProps } from './ValueDataBindingBuilder';
+import { type IValueDataBindingBuilderProps } from './ValueDataBindingBuilder';
 
 jest.mock('@cloudscape-design/components', () => ({
   ...jest.requireActual('@cloudscape-design/components'),

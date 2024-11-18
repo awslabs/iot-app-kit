@@ -1,8 +1,11 @@
 {
   "extends": "@iot-app-kit/ts-config/base.json",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "rootDir": "./src",
+    "sourceMap": true
   },
   "include": ["src"],
+  "exclude": ["node_modules", "dist", "coverage"],
   "files": ["global.d.ts"]
 }

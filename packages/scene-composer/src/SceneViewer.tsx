@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 
-import { COMPOSER_FEATURES, ISelectedDataBinding, KnownComponentType, SceneViewerProps } from './interfaces';
+import { COMPOSER_FEATURES, type ISelectedDataBinding, KnownComponentType, type SceneViewerProps } from './interfaces';
 import { SceneComposerInternal, useSceneComposerApi } from './components/SceneComposerInternal';
 
 const SceneComposerContainer = styled.div`

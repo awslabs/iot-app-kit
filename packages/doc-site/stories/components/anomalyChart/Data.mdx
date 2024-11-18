@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source } from '@storybook/blocks';
 import * as AnomalyChartStories from './AnomalyChart.stories';
 
 <Meta of={AnomalyChartStories} />
@@ -37,7 +37,7 @@ It has the following properties:
 
 ## Example 
 
-```
+<Source dark="true" code={`
 {
   state: 'success',
   value: {
@@ -83,7 +83,7 @@ It has the following properties:
     ],
   },
 };
-```
+`} />
 
 In this example, the state is `success`, indicating a successful data load. 
 The value object contains two diagnostic events, each with a timestamp and an array of diagnostic objects. Each diagnostic object has a name and a value between `0` and `1`. 
@@ -125,7 +125,7 @@ An object containing the raw data and optional style overrides. It has the follo
 
 Here's an example of the Anomaly chart data structure:
 
-```
+<Source dark="true" code={`
 {
   state: 'success',
   value: {
@@ -171,6 +171,6 @@ Here's an example of the Anomaly chart data structure:
     }
   },
 };
-```
+`} />
 
 In this example, the state is 'success', indicating that the data was loaded successfully. The value object contains four diagnostic events, represented by index across the values of each field. Each diagnostic field object has a name and values between 0 and 1. The styles object overrides the global color palette for rendering the diagnostics, specifying an array of colors (['pink', 'blue', 'green', 'red']).

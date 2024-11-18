@@ -1,4 +1,4 @@
-import { ChartOptions, ChartStyleSettingsOptions } from '../types';
+import { type ChartOptions, type ChartStyleSettingsOptions } from '../types';
 
 export type Emphasis = 'none' | 'emphasize' | 'de-emphasize';
 

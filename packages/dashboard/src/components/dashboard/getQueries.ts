@@ -1,6 +1,6 @@
 import {
-  DashboardClientConfiguration,
-  DashboardIotSiteWiseQueries,
+  type DashboardClientConfiguration,
+  type DashboardIotSiteWiseQueries,
 } from '~/types';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { getClients } from './getClients';
@@ -8,10 +8,12 @@ import { type EdgeMode } from '@iot-app-kit/core';
 
 export const getQueries = (
   dashboardClientConfiguration: DashboardClientConfiguration,
+  region: string,
   edgeMode?: EdgeMode
 ): DashboardIotSiteWiseQueries => {
   const { iotEventsClient, iotSiteWiseClient } = getClients(
-    dashboardClientConfiguration
+    dashboardClientConfiguration,
+    region
   );
 
   if (!iotEventsClient || !iotSiteWiseClient) {

@@ -1,5 +1,5 @@
 import {
-  TrendCursorAction,
+  type TrendCursorAction,
   addTrendCursor,
   addTrendCursorToGroup,
   connectUpdaterToGroup,
@@ -9,7 +9,7 @@ import {
   setTrendCursorValues,
   updateTrendCursor,
 } from './actions';
-import { TrendCursorsData } from './state';
+import { type TrendCursorsData } from './state';
 import {
   executeConnectedUpdaters,
   getConnectedUpdaters,

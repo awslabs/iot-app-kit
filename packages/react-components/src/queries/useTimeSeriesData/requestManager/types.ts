@@ -1,4 +1,4 @@
-import { Viewport } from '../types';
+import { type Viewport } from '../types';
 
 export type RequestSettings = {
   requestBuffer?: number;

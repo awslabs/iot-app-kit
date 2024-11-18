@@ -1,9 +1,7 @@
+import CloudscapeMultiSelect from '@cloudscape-design/components/multiselect';
 import CloudscapeSelect, {
   type SelectProps as CloudscapeSelectProps,
 } from '@cloudscape-design/components/select';
-import CloudscapeMultiSelect from '@cloudscape-design/components/multiselect';
-import React from 'react';
-
 import type { ResourceDropDownProps } from '../../types/drop-down';
 
 export function ResourceDropDown<Resource>({
@@ -16,13 +14,11 @@ export function ResourceDropDown<Resource>({
   },
   resources,
   isResourceDisabled,
-  isLoading,
+  isLoadingResources,
   error,
   selectionMode,
   selectedResources,
   onSelectResource,
-  hasNextPage,
-  onScrollNextPage,
   isFilterEnabled,
 }: ResourceDropDownProps<Resource>) {
   const sharedCloudscapeSelectProps = {
@@ -35,18 +31,11 @@ export function ResourceDropDown<Resource>({
       disabled: isResourceDisabled(resource),
     })),
 
-    statusType: error
-      ? 'error'
-      : isLoading
-      ? 'loading'
-      : hasNextPage
-      ? 'pending'
-      : 'finished',
+    statusType: error ? 'error' : isLoadingResources ? 'loading' : 'finished',
     empty: `No ${pluralResourceName.toLowerCase()}.`,
     errorText: error ? error.message : undefined,
     loadingText: `Loading ${pluralResourceName.toLowerCase()}...`,
     finishedText: `Finished loading ${pluralResourceName.toLowerCase()}.`,
-    onLoadItems: onScrollNextPage,
 
     filteringType: isFilterEnabled ? 'auto' : 'none',
     filteringPlaceholder: `Filter ${pluralResourceName.toLowerCase()}`,

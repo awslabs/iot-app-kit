@@ -1,13 +1,13 @@
-import { Color, Texture } from 'three';
-import { FC, useCallback, useContext, useEffect, useRef } from 'react';
+import { Color, type Texture } from 'three';
+import { type FC, useCallback, useContext, useEffect, useRef } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { accessStore } from '../../store';
-import { COMPOSER_FEATURES, ISceneBackgroundSetting, KnownSceneProperty } from '../../interfaces';
+import { COMPOSER_FEATURES, type ISceneBackgroundSetting, KnownSceneProperty } from '../../interfaces';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
-import { ResponseContentType } from '../../three/types';
+import { type ResponseContentType } from '../../three/types';
 
 const SceneBackground: FC = () => {
   const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];

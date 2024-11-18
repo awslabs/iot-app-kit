@@ -1,12 +1,11 @@
-import * as React from 'react';
 import { act, create } from 'react-test-renderer';
 import { cleanup, renderHook } from '@testing-library/react-hooks';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
-import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { Object3D, type Event, Mesh, MeshBasicMaterial, Color } from 'three';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
-import { useSceneComposerApi, SceneComposerApi } from '..';
+import { useSceneComposerApi, type SceneComposerApi } from '..';
 import { testScenes } from '../../tests/testData';
 import { accessStore } from '../store';
 

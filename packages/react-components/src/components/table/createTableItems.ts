@@ -8,8 +8,14 @@ import { getDataBeforeDate } from '@iot-app-kit/core';
 import { breachedThreshold } from '../../utils/breachedThreshold';
 import { createCellItem } from './createCellItem';
 import { isTableItemRef } from './typePredicates';
-import type { CellItem, TableItem, TableItemHydrated } from './types';
+import type {
+  AlarmItem,
+  CellItem,
+  TableItem,
+  TableItemHydrated,
+} from './types';
 import type { TableMessages } from './messages';
+import { getBreachedThreshold } from '../../utils/thresholdUtils';
 
 export const createTableItems: (
   config: {
@@ -17,13 +23,87 @@ export const createTableItems: (
     items: TableItem[];
     viewport: Viewport;
     thresholds?: Threshold[];
+    alarms?: AlarmItem[];
   },
   messageOverrides: TableMessages
 ) => TableItemHydrated[] = (
-  { dataStreams, viewport, items, thresholds = [] },
+  { dataStreams, viewport, items, thresholds = [], alarms = [] },
   messageOverrides
 ) => {
-  return items.map((item) => {
+  /**
+   * Because alarm items are injected explicitly in
+   * the component based on the queries option, we
+   * do not need to dynamically map them like we
+   * do other items for the table. This is why
+   * they are mapped this way below.
+   */
+  const alarmItemsWithData = alarms.map((alarm) => {
+    const isLoading = alarm.isLoading;
+    return {
+      id: alarm.id as Primitive,
+      assetId: createCellItem(
+        {
+          value: alarm.assetId,
+        },
+        messageOverrides
+      ),
+      alarmName: createCellItem(
+        {
+          value: alarm.alarmName,
+          isLoading,
+        },
+        messageOverrides
+      ),
+      alarmExpression: createCellItem(
+        {
+          value: alarm.alarmExpression,
+          isLoading,
+        },
+        messageOverrides
+      ),
+      alarmState: createCellItem(
+        {
+          value: alarm.state,
+          isLoading,
+        },
+        messageOverrides
+      ),
+      property: createCellItem(
+        {
+          value: alarm.property,
+          isLoading,
+        },
+        messageOverrides
+      ),
+      alarmSeverity: createCellItem(
+        {
+          value: alarm.severity,
+          isLoading,
+        },
+        messageOverrides
+      ),
+      value: createCellItem(
+        {
+          value: alarm.value,
+          threshold:
+            alarm.value && alarm.threshold
+              ? getBreachedThreshold(alarm.value, [alarm.threshold])
+              : undefined,
+          isLoading,
+        },
+        messageOverrides
+      ),
+      unit: createCellItem(
+        {
+          value: alarm.unit,
+          isLoading,
+        },
+        messageOverrides
+      ),
+    };
+  });
+
+  const itemsWithData = items.map((item) => {
     const keys = Object.keys(item);
     const keyDataPairs = keys.map<{ key: string; data: CellItem }>((key) => {
       const itemRef = item[key];
@@ -37,7 +117,10 @@ export const createTableItems: (
           if (dataStream.resolution !== $cellRef.resolution) {
             return {
               key,
-              data: createCellItem({ error, isLoading }, messageOverrides),
+              data: createCellItem(
+                { error, isLoading, refId: dataStream?.refId },
+                messageOverrides
+              ),
             };
           }
 
@@ -55,7 +138,14 @@ export const createTableItems: (
             return {
               key,
               data: createCellItem(
-                { value, error, isLoading, threshold, quality },
+                {
+                  value,
+                  error,
+                  isLoading,
+                  threshold,
+                  quality,
+                  refId: dataStream?.refId,
+                },
                 messageOverrides
               ),
             };
@@ -74,7 +164,14 @@ export const createTableItems: (
           return {
             key,
             data: createCellItem(
-              { value, error, isLoading, threshold, quality },
+              {
+                value,
+                error,
+                isLoading,
+                threshold,
+                quality,
+                refId: dataStream?.refId,
+              },
               messageOverrides
             ),
           };
@@ -90,12 +187,18 @@ export const createTableItems: (
       };
     });
 
-    return keyDataPairs.reduce(
-      (previous, { key, data }) => ({
-        ...previous,
-        [key]: data,
-      }),
-      {}
-    );
+    const [first] = keyDataPairs;
+    return {
+      id: first.data.value as Primitive,
+      ...keyDataPairs.reduce(
+        (previous, { key, data }) => ({
+          ...previous,
+          [key]: data,
+        }),
+        {}
+      ),
+    };
   });
+
+  return [...alarmItemsWithData, ...itemsWithData];
 };

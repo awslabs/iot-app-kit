@@ -18,7 +18,6 @@ jest.doMock('./components/SceneComposerInternal', () => {
   }
 });
 
-import * as React from 'react';
 import { act, create } from 'react-test-renderer';
 import { SceneViewer } from './SceneViewer';
 import { KnownComponentType } from './interfaces';

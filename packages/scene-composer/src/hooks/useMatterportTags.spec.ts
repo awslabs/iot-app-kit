@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { MpSdk } from '@matterport/r3f/dist';
+import { type MpSdk } from '@matterport/r3f/dist';
 
 import { generateUUID } from '../utils/mathUtils';
-import { IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../store';
-import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
+import { type IAnchorComponent, type ISceneNode, KnownComponentType } from '../interfaces';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../store';
+import { type MattertagItem, type TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
 
 import useMatterportTags from './useMatterportTags';

@@ -1,6 +1,11 @@
-import { MutableRefObject, useCallback, useEffect, useReducer } from 'react';
-import { DataZoomComponentOption, EChartsType } from 'echarts';
-import { Viewport, viewportManager } from '@iot-app-kit/core';
+import {
+  type MutableRefObject,
+  useCallback,
+  useEffect,
+  useReducer,
+} from 'react';
+import { type DataZoomComponentOption, type EChartsType } from 'echarts';
+import { type Viewport, viewportManager } from '@iot-app-kit/core';
 import { useViewport } from '../../../hooks/useViewport';
 import { ECHARTS_GESTURE } from '../../../common/constants';
 import {

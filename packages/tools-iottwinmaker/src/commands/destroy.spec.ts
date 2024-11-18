@@ -1,5 +1,5 @@
-import { handler, Options } from './destroy';
-import { Arguments } from 'yargs';
+import { handler, type Options } from './destroy';
+import { type Arguments } from 'yargs';
 import { mockClient } from 'aws-sdk-client-mock';
 import * as prompts from 'prompts';
 import {

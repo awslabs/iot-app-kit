@@ -1,9 +1,9 @@
-import React, { useEffect, Fragment } from 'react';
-import { Mesh, Vector3, Euler } from 'three';
+import { useEffect, Fragment } from 'react';
+import { type Mesh, Vector3, Euler } from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../store';
-import { ISubModelRefComponent } from '../../../interfaces';
+import { type ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../store';
+import { type ISubModelRefComponent } from '../../../interfaces';
 
 const SubModelComponent = ({ component, node }: { component: ISubModelRefComponent; node: ISceneNodeInternal }) => {
   const sceneComposerId = useSceneComposerId();

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { useEffect, useMemo, useState } from 'react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -10,7 +10,7 @@ import {
   useGetAssetPropertyValueHistory,
 } from '../../src/queries';
 import { getEnvCredentials, getRegion } from '../utils/query';
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { sub } from 'date-fns';
 import { useSiteWiseAnomalyDataSource } from '../../src/queries/useSiteWiseAnomalyDataSource';
 import { TimeSelection, TimeSync, useViewport } from '../../src';
@@ -18,12 +18,13 @@ import { isDurationViewport } from '../../src/utils/isDurationViewport';
 import { useLatestAssetPropertyValues } from '../../src/queries/useLatestAssetPropertyValues/useLatestAssetPropertyValues';
 import { useHistoricalAssetPropertyValues } from '../../src/queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
 import { useAlarms } from '../../src/hooks/useAlarms';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
 
 const ASSET_MODEL_ID = '4c8e3da0-d3ec-4818-86b3-44a1e6b98531';
 const ASSET_MODEL_COMPOSITE_MODEL_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
 
-const ASSET_ID = 'b1267cc2-feec-489a-a738-52b06f8777db';
-const ASSET_COMPOSITE_MODEL_ID = 'a0bdbad9-a7ea-49c4-a2f4-c9e3bb3afb18';
+const ASSET_ID = '8ca28842-687c-45ac-ac74-6db7cf61a80a';
+const ASSET_COMPOSITE_MODEL_ID = '5ee3794d-19b3-4b53-9902-702334a437c2';
 const PROPERTY_ID = '3a985085-ea71-4ae6-9395-b65990f58a05';
 
 const PREDICTION_DEFINITION_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
@@ -69,17 +70,36 @@ export default {
 } as ComponentMeta<typeof RenderQueries>;
 
 export const UseAlarms: ComponentStory<FC> = () => {
+  const timeSeriesData = useMemo(() => {
+    return initialize({
+      iotEventsClient,
+      iotSiteWiseClient: client,
+    }).query.timeSeriesData;
+  }, []);
+
+  const viewport = useMemo(
+    () => ({
+      duration: '1hr',
+    }),
+    []
+  );
+
   const alarmDataList = useAlarms({
+    timeSeriesData,
     iotSiteWiseClient: client,
     iotEventsClient,
+    viewport,
     requests: [
       {
         assetId: ASSET_ID,
         assetCompositeModelId: ASSET_COMPOSITE_MODEL_ID,
       },
     ],
+    settings: {
+      fetchInputPropertyData: true,
+      // fetchOnlyLatest: true,
+    },
   });
-  console.log(alarmDataList);
 
   return <RenderQueries json={alarmDataList} />;
 };

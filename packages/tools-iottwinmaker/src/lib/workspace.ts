@@ -1,6 +1,6 @@
 import {
-  CreateWorkspaceCommandOutput,
-  GetWorkspaceCommandOutput,
+  type CreateWorkspaceCommandOutput,
+  type GetWorkspaceCommandOutput,
   ResourceNotFoundException,
   ValidationException,
 } from '@aws-sdk/client-iottwinmaker';
@@ -11,19 +11,19 @@ import { WORKSPACE_DASHBOARD_ROLE_ASSUME_POLICY } from './policy/workspace-dashb
 import { workspaceRolePolicyTemplate } from './policy/workspace-role-policy';
 import { workspaceDashboardRolePolicyTemplate } from './policy/workspace-dashboard-role-policy';
 import {
-  CreatePolicyCommandOutput,
-  CreateRoleCommandOutput,
+  type CreatePolicyCommandOutput,
+  type CreateRoleCommandOutput,
   EntityAlreadyExistsException,
-  GetRoleCommandOutput,
+  type GetRoleCommandOutput,
   NoSuchEntityException,
 } from '@aws-sdk/client-iam';
 import {
-  BucketLocationConstraint,
-  CreateBucketCommandOutput,
-  CreateBucketRequest,
-  GetBucketLoggingCommandOutput,
-  ListObjectVersionsCommandOutput,
-  ListObjectsV2CommandOutput,
+  type BucketLocationConstraint,
+  type CreateBucketCommandOutput,
+  type CreateBucketRequest,
+  type GetBucketLoggingCommandOutput,
+  type ListObjectVersionsCommandOutput,
+  type ListObjectsV2CommandOutput,
   NoSuchBucket,
 } from '@aws-sdk/client-s3';
 

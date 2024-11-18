@@ -1,6 +1,8 @@
 import {
   BatchGetAssetPropertyValueCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
+  type BatchGetAssetPropertyValueErrorEntry,
+  type BatchGetAssetPropertyValueSuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
@@ -12,10 +14,6 @@ import {
   NO_LIMIT_BATCH,
 } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
-import type {
-  BatchGetAssetPropertyValueErrorEntry,
-  BatchGetAssetPropertyValueSuccessEntry,
-} from '@aws-sdk/client-iotsitewise';
 import {
   type OnSuccessCallback,
   type ErrorCallback,
@@ -140,6 +138,15 @@ const sendRequest = ({
           nextToken,
         });
       }
+    })
+    .catch((e) => {
+      Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
+        onError({
+          entryId,
+          errorCode: e.$metadata.httpStatusCode,
+          errorMessage: e.message,
+        });
+      });
     });
 };
 

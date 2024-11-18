@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
 import { FormField } from '@cloudscape-design/components';
-import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
+import { useCallback } from 'react';
+import { useIntl } from 'react-intl';
 
-import { Component } from '../../../../models/SceneModels';
+import { type Component } from '../../../../models/SceneModels';
 import { TextInput } from '../../CommonPanelComponents';
 
 interface IDataBindingMapNameEditorProps {

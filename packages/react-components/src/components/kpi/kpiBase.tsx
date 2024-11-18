@@ -1,22 +1,26 @@
-import React from 'react';
-import Alert from '@cloudscape-design/components/alert';
-import Spinner from '@cloudscape-design/components/spinner';
-import Box from '@cloudscape-design/components/box';
-import omitBy from 'lodash.omitby';
-
-import { DEFAULT_KPI_SETTINGS } from './constants';
-import { Value } from '../shared-components';
-import type { KPIBaseProperties, KPISettings } from './types';
-import './kpi.css';
-import { highContrastColor } from './highContrastColor';
-import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 import {
+  colorBorderDividerSecondary,
   colorTextHeadingDefault,
   fontSizeBodyS,
+  spaceStaticXs,
 } from '@cloudscape-design/design-tokens';
-import { DataQualityText } from '../data-quality/data-quality-text';
+import omitBy from 'lodash.omitby';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
-import { formatDate } from '../../utils/time';
+import { Title } from '../../common/title';
+import { getAggregationFrequency } from '../../utils/aggregationFrequency';
+import { DEFAULT_KPI_SETTINGS } from './constants';
+import { highContrastColor } from './highContrastColor';
+import './kpi.css';
+import {
+  AggregationResolutionText,
+  AlarmHeader,
+  DataQuality,
+  ErrorText,
+  NameAndUnit,
+  TimestampText,
+  ValueText,
+} from './kpiTextFragments';
+import type { KPIBaseProperties, KPISettings } from './types';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -30,6 +34,10 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   significantDigits = DEFAULT_DECIMAL_PLACES,
   propertyThreshold,
   timeZone,
+  titleText,
+  alarmContent,
+  alarmStatus,
+  assistant,
 }) => {
   const {
     showUnit,
@@ -59,6 +67,11 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   const fontColor = showFilledThreshold
     ? highContrastColor(propertyThreshold.color)
     : nonThresholdFontColor;
+  const borderColor = showFilledThreshold
+    ? highContrastColor(propertyThreshold.color)
+    : settings.backgroundColor
+    ? nonThresholdFontColor
+    : colorBorderDividerSecondary;
 
   const point = propertyPoint;
   const aggregationResolutionString = getAggregationFrequency(
@@ -77,27 +90,22 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
           color: nonThresholdFontColor,
         }}
       >
-        {error && (
-          <Box margin={{ vertical: 's', horizontal: 's' }}>
-            <Alert statusIconAriaLabel='Error' type='error'>
-              {error}
-            </Alert>
-          </Box>
-        )}
+        <Title
+          text={titleText}
+          style={{
+            fontSize: `${secondaryFontSize}px`,
+            color: fontColor,
+            paddingLeft: `${spaceStaticXs}`,
+          }}
+        />
+        <ErrorText
+          {...{
+            error,
+          }}
+        />
       </div>
     );
   }
-
-  const nameAndUnit = (showName || showUnit) && (
-    <div
-      className='property-name'
-      data-testid='kpi-name-and-unit'
-      style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-    >
-      {showName && <span>{isLoading ? '-' : name} </span>}
-      {showUnit && <span>{!isLoading && unit && `(${unit})`}</span>}
-    </div>
-  );
 
   return (
     <div
@@ -107,21 +115,50 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
-          {nameAndUnit}
-          <div
-            className='value'
-            data-testid='kpi-value'
-            style={{ fontSize: `${fontSize}px`, color: fontColor }}
-          >
-            {isLoading ? (
-              <Spinner data-testid='loading' />
-            ) : (
-              <Value value={point?.y} precision={significantDigits} />
-            )}
-          </div>
-          {!isLoading && showDataQuality && (
-            <DataQualityText quality={point?.quality} />
-          )}
+          <Title
+            text={titleText}
+            style={{
+              fontSize: `${secondaryFontSize}px`,
+              color: fontColor,
+              paddingLeft: `${spaceStaticXs}`,
+            }}
+          />
+          <AlarmHeader
+            {...{
+              fontColor,
+              borderColor,
+              alarmContent,
+              alarmStatus,
+              showFilledThreshold,
+              backgroundColor: settings.backgroundColor,
+              assistant,
+            }}
+          />
+          <NameAndUnit
+            {...{
+              titleText,
+              showName,
+              name,
+              showUnit,
+              unit,
+              isLoading,
+              fontColor,
+              secondaryFontSize,
+            }}
+          />
+          <ValueText
+            {...{ isLoading, fontSize, fontColor, point, significantDigits }}
+          />
+          <DataQuality
+            {...{
+              fontColor,
+              showFilledThreshold,
+              point,
+              backgroundColor: settings.backgroundColor,
+              showDataQuality,
+              isLoading,
+            }}
+          />
         </div>
         {point && (
           <div
@@ -131,29 +168,16 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
               color: fontColor,
             }}
           >
-            {showAggregationAndResolution && aggregationResolutionString && (
-              <div className='aggregation' data-testid='kpi-aggregation'>
-                {isLoading ? '-' : aggregationResolutionString}
-              </div>
-            )}
-            {showTimestamp && (
-              <>
-                <div
-                  className='timestamp-border'
-                  style={{
-                    backgroundColor: fontColor,
-                  }}
-                />
-                <div className='timestamp' data-testid='kpi-timestamp'>
-                  {isLoading
-                    ? '-'
-                    : formatDate(point.x, {
-                        timeZone,
-                        pattern: 'M/dd/yyyy, h:mm:ss aa',
-                      })}
-                </div>
-              </>
-            )}
+            <AggregationResolutionText
+              {...{
+                showAggregationAndResolution,
+                aggregationResolutionString,
+                isLoading,
+              }}
+            />
+            <TimestampText
+              {...{ showTimestamp, point, borderColor, isLoading, timeZone }}
+            />
           </div>
         )}
       </div>

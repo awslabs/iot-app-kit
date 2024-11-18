@@ -4,22 +4,26 @@ import type {
   Provider,
 } from '@aws-sdk/types';
 import {
-  TreeQuery,
-  TimeSeriesDataRequest,
-  TimeSeriesDataQuery,
+  type TreeQuery,
+  type TimeSeriesDataRequest,
+  type TimeSeriesDataQuery as TimeSeriesDataQueryCore,
   TimeSeriesDataModule,
-  Viewport,
-  DataStream,
-  TimeSeriesDataRequestSettings,
+  type Viewport,
+  type DataStream,
+  type TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
 import {
-  BranchReference,
+  type BranchReference,
   SiteWiseAssetModule,
   SiteWiseAssetTreeSession,
+  type RootedSiteWiseAssetTreeQueryArguments,
+  type SiteWiseAssetDataSource,
+  type SiteWiseAssetTreeNode,
+  type SiteWiseAssetTreeQueryArguments,
 } from './asset-modules';
 import { SiteWiseComponentSession } from './component-session';
 import { createSiteWiseAssetDataSource } from './asset-modules/asset-data-source';
@@ -32,15 +36,13 @@ import type {
   SiteWiseDataSourceSettings,
   SiteWiseDataStreamQuery,
 } from './time-series-data/types';
-import type {
-  RootedSiteWiseAssetTreeQueryArguments,
-  SiteWiseAssetDataSource,
-  SiteWiseAssetTreeNode,
-  SiteWiseAssetTreeQueryArguments,
-} from './asset-modules';
 import { fetchTimeSeriesData } from './time-series-data/fetchTimeSeriesData';
 
 const SOURCE = 'iotsitewise';
+
+export type TimeSeriesDataQuery = TimeSeriesDataQueryCore & {
+  query?: SiteWiseDataStreamQuery;
+};
 
 export type AnomalyDataQuery = {
   query: SiteWiseAnomalyDataStreamQuery;
@@ -51,6 +53,7 @@ export type AlarmDataQuery = {
   query: SiteWiseAlarmDataStreamQuery;
   iotSiteWiseClient: IoTSiteWiseClient;
   iotEventsClient: IoTEventsClient;
+  timeSeriesData: (query: SiteWiseDataStreamQuery) => TimeSeriesDataQuery;
 };
 
 export type SiteWiseDataSourceInitInputs = {
@@ -107,32 +110,35 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
     siteWiseAssetModule
   );
 
+  const timeSeriesData = (
+    query: SiteWiseDataStreamQuery
+  ): TimeSeriesDataQuery => ({
+    toQueryString: () =>
+      JSON.stringify({
+        source: SOURCE,
+        queryType: 'time-series-data',
+        query,
+      }),
+    build: (sessionId: string, params: TimeSeriesDataRequest) =>
+      new SiteWiseTimeSeriesDataProvider(
+        new SiteWiseComponentSession({
+          componentId: sessionId,
+          siteWiseTimeSeriesModule,
+          siteWiseAssetModule,
+          siteWiseAlarmModule,
+        }),
+        {
+          queries: [query],
+          request: params,
+        }
+      ),
+    query,
+  });
+
   return {
     query: {
       fetchTimeSeriesData: fetchTimeSeriesData(siteWiseTimeSeriesModule),
-      timeSeriesData: (
-        query: SiteWiseDataStreamQuery
-      ): TimeSeriesDataQuery => ({
-        toQueryString: () =>
-          JSON.stringify({
-            source: SOURCE,
-            queryType: 'time-series-data',
-            query,
-          }),
-        build: (sessionId: string, params: TimeSeriesDataRequest) =>
-          new SiteWiseTimeSeriesDataProvider(
-            new SiteWiseComponentSession({
-              componentId: sessionId,
-              siteWiseTimeSeriesModule,
-              siteWiseAssetModule,
-              siteWiseAlarmModule,
-            }),
-            {
-              queries: [query],
-              request: params,
-            }
-          ),
-      }),
+      timeSeriesData,
       anomalyData: (query: SiteWiseAnomalyDataStreamQuery) => ({
         query,
         iotSiteWiseClient: siteWiseClient,
@@ -141,6 +147,11 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
         query,
         iotSiteWiseClient: siteWiseClient,
         iotEventsClient: iotEventsClient,
+        /**
+         * This will allow useAlarms to call
+         * timeSeriesData for the input properties
+         */
+        timeSeriesData,
       }),
       assetTree: {
         fromRoot: (

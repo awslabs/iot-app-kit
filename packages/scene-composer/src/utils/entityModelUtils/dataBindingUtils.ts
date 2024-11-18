@@ -1,9 +1,12 @@
-import { DataValue } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
-import { ITwinMakerDataBindingContext, ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
+import { type DataValue } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
+import {
+  type ITwinMakerDataBindingContext,
+  type ITwinMakerEntityDataBindingContext,
+} from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 
-import { ValueDataBinding } from '../../models/SceneModels';
+import { type ValueDataBinding } from '../../models/SceneModels';
 
 enum DataBindingPropertyKey {
   EntityId = 'entityId',

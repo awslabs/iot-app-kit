@@ -1,5 +1,5 @@
-import { DataSource } from '../../../types';
-import { AnomalyObjectDataSource } from './datasource';
+import { type DataSource } from '../../../types';
+import { type AnomalyObjectDataSource } from './datasource';
 import { AnomalyObjectDataSourceTransformer } from './transformer';
 
 const validDataSource: AnomalyObjectDataSource = {

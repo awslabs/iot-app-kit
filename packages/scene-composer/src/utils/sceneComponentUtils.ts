@@ -1,6 +1,6 @@
 import { KnownComponentType } from '../interfaces';
 import { Component } from '../models/SceneModels';
-import { IMotionIndicatorComponentInternal, ISceneNodeInternal } from '../store/internalInterfaces';
+import { type IMotionIndicatorComponentInternal, type ISceneNodeInternal } from '../store/internalInterfaces';
 
 export function isLinearPlaneMotionIndicator(node: ISceneNodeInternal): boolean {
   const indicatorComponent = node.components.find(

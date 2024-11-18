@@ -1,4 +1,3 @@
-import React from 'react';
 import { I18nProvider } from '@cloudscape-design/components/i18n';
 import messages from '@cloudscape-design/components/i18n/messages/all.all';
 

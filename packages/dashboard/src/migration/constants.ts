@@ -1,4 +1,8 @@
-import { MonitorWidgetType, MonitorMetric, MonitorAnnotations } from './types';
+import {
+  type MonitorWidgetType,
+  type MonitorMetric,
+  type MonitorAnnotations,
+} from './types';
 
 export const defaultDisplaySettings = {
   numRows: 100,

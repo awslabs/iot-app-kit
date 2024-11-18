@@ -1,10 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { Component } from '../../../../models/SceneModels';
 import { DataOverlayDataRow } from '../DataOverlayDataRow';
 import { accessStore } from '../../../../store';
-import { IDataInput } from '../../../../interfaces';
+import { type IDataInput } from '../../../../interfaces';
 
 jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ 'prop-1': 'ACTIVE' }] }));
 

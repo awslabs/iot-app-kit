@@ -40,7 +40,7 @@ export const toDashboardState = (
     dashboardConfiguration;
   const { numRows, numColumns, cellSize } = displaySettings;
 
-  return {
+  const state: RecursivePartial<DashboardState> = {
     grid: {
       height: numRows,
       width: numColumns,
@@ -49,8 +49,13 @@ export const toDashboardState = (
     dashboardConfiguration: {
       widgets,
       querySettings,
-      defaultViewport: JSON.stringify(defaultViewport),
     },
     significantDigits: dashboardConfiguration.displaySettings.significantDigits,
   };
+
+  const viewportString = JSON.stringify(defaultViewport);
+  if (state.dashboardConfiguration && viewportString) {
+    state.dashboardConfiguration.defaultViewport = viewportString;
+  }
+  return state;
 };

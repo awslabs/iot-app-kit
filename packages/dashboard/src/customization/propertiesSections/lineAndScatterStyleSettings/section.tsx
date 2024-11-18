@@ -1,18 +1,17 @@
-import React from 'react';
+import { getPlugin } from '@iot-app-kit/core';
+import { type PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
-  ChartLegend,
-  LineScatterChartWidget,
-  LineStyles,
-  SymbolStyles,
+  type ChartLegend,
+  type LineScatterChartWidget,
+  type LineStyles,
+  type SymbolStyles,
 } from '~/customization/widgets/types';
-import { DashboardWidget } from '~/types';
-import { LineStyleSection } from './lineStyleSection';
+import { type DashboardWidget } from '~/types';
+import { maybeWithDefault } from '~/util/maybe';
 import { YAxisSection } from '../yAxisSettings';
 import { LegendSection } from './legendSection';
-import { maybeWithDefault } from '~/util/maybe';
-import { PropertyLens } from '~/customization/propertiesSection';
-import { getPlugin } from '@iot-app-kit/core';
+import { LineStyleSection } from './lineStyleSection';
 
 const isLineAndScatterWidget = (
   w: DashboardWidget

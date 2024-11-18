@@ -1,12 +1,18 @@
 import { useSelection } from '~/customization/propertiesSection';
-import { QueryConfigWidget, isQueryWidget } from './findModelBasedQueryWidgets';
-import { QueryProperties } from '~/customization/widgets/types';
+import {
+  type QueryConfigWidget,
+  isQueryWidget,
+} from './findModelBasedQueryWidgets';
+import { type QueryProperties } from '~/customization/widgets/types';
 import { isJust, maybeWithDefault } from '~/util/maybe';
 import { noop } from 'lodash';
-import { AssetModelQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  type AssetModelQuery,
+  type AlarmAssetModelQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import { styledQueryWidgetOnDrop } from '~/components/queryEditor/useQuery';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 
 const mergeAssetModelProperties = (
   currentQuery: QueryConfigWidget['properties']['queryConfig']['query'],
@@ -28,6 +34,32 @@ const mergeAssetModelProperties = (
       return {
         ...currentProperty,
         ...property,
+      };
+    }),
+  }));
+};
+
+const mergeAlarmModelCompositeModelIds = (
+  currentQuery: QueryConfigWidget['properties']['queryConfig']['query'],
+  updatedAlarmModels: AlarmAssetModelQuery[] | undefined = []
+) => {
+  const currentAlarmModels = currentQuery?.alarmModels ?? [];
+  return updatedAlarmModels.map((alarmModel) => ({
+    ...alarmModel,
+    alarmComponents: alarmModel.alarmComponents.map((alarm) => {
+      const currentAlarm = currentAlarmModels
+        .find(
+          (currentAssetModel) =>
+            currentAssetModel.assetModelId === alarmModel.assetModelId
+        )
+        ?.alarmComponents.find(
+          (currentAlarmModelAlarm) =>
+            currentAlarmModelAlarm.assetCompositeModelId ===
+            alarm.assetCompositeModelId
+        );
+      return {
+        ...currentAlarm,
+        ...alarm,
       };
     }),
   }));
@@ -55,9 +87,13 @@ export const useModelBasedQuerySelection = () => {
     ? maybeWithDefault(defaultQuery, propertiesMaybe) ?? defaultQuery
     : defaultQuery;
 
-  const updateAssetModels = (
-    updatedAssetModels: AssetModelQuery[] | undefined
-  ) => {
+  const updateModelQueries = ({
+    alarmModels: updatedAlarmModels,
+    assetModels: updatedAssetModels,
+  }: {
+    alarmModels: AlarmAssetModelQuery[] | undefined;
+    assetModels: AssetModelQuery[] | undefined;
+  }) => {
     // Only allow updates for a single widget type at a time.
     // This is necessary because xy-plot query config has a different structure
     if (!selectionType || !isJust(selectionType)) return;
@@ -73,6 +109,11 @@ export const useModelBasedQuerySelection = () => {
         {
           ...compositeWidgetForAggregationInformation.properties.queryConfig
             .query,
+          alarmModels: mergeAlarmModelCompositeModelIds(
+            compositeWidgetForAggregationInformation.properties.queryConfig
+              .query,
+            updatedAlarmModels
+          ),
           assetModels: mergeAssetModelProperties(
             compositeWidgetForAggregationInformation.properties.queryConfig
               .query,
@@ -87,6 +128,8 @@ export const useModelBasedQuerySelection = () => {
           ...properties.queryConfig,
           query: {
             ...properties.queryConfig.query,
+            alarmModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery)
+              .alarmModels,
             assetModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery)
               .assetModels,
           },
@@ -102,6 +145,11 @@ export const useModelBasedQuerySelection = () => {
             query: {
               ...compositeWidgetForAggregationInformation.properties.queryConfig
                 .query,
+              alarmModels: mergeAlarmModelCompositeModelIds(
+                compositeWidgetForAggregationInformation.properties.queryConfig
+                  .query,
+                updatedAlarmModels
+              ),
               assetModels: mergeAssetModelProperties(
                 compositeWidgetForAggregationInformation.properties.queryConfig
                   .query,
@@ -122,7 +170,7 @@ export const useModelBasedQuerySelection = () => {
   const assetModels = properties.queryConfig.query?.assetModels ?? [];
 
   return {
-    updateAssetModels,
+    updateModelQueries,
     assetModels,
     modelBasedWidgetsSelected: !!selection,
   };

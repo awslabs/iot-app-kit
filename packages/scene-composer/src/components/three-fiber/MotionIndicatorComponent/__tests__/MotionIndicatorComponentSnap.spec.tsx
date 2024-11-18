@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import React from 'react';
 
 import { SceneResourceType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';

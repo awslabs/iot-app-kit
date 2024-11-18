@@ -1,11 +1,11 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Object3D, Color, Mesh } from 'three';
+import { type FC, useCallback, useState } from 'react';
+import { type Object3D, Color, Mesh } from 'three';
 
 import useMaterialEffect from '../../../../../hooks/useMaterialEffect';
 import { generateUUID } from '../../../../../utils/mathUtils';
 import Tree, { TreeItem } from '../../../../Tree';
-import { ISubModelRefComponent, KnownComponentType } from '../../../../../interfaces';
-import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../../../store';
+import { type ISubModelRefComponent, KnownComponentType } from '../../../../../interfaces';
+import { type ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../../../store';
 import { useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 

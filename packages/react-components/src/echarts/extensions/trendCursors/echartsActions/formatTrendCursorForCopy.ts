@@ -4,8 +4,8 @@
 // TC timestamp
 // Cop timestamp
 
-import { TrendCursorModel } from '../model';
-import { TrendCursorValue } from '../store';
+import { type TrendCursorModel } from '../model';
+import { type TrendCursorValue } from '../store';
 
 // Series name : value
 export const formatTrendCursorForCopy = (

@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-
+import { useEffect } from 'react';
 import type { XYCoord } from 'react-dnd';
 import { useDragLayer } from 'react-dnd';
 
-import { ItemTypes } from './itemTypes';
 import DashboardWidget from './components/widget';
+import { ItemTypes } from './itemTypes';
 
-import './index.css';
 import { DefaultDashboardMessages } from '~/messages';
+import './index.css';
 
 const getItemStyles = (
   initialOffset: XYCoord | null,

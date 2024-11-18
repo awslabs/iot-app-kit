@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StateCreator, create } from 'zustand';
+import { type StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 export interface TimeSeriesDataSync {

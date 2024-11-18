@@ -1,6 +1,6 @@
-import { PositionableMenu, PositionableMenuProps } from './positionable';
-import { Menu, MenuProps } from './menu';
-import { MenuOption, MenuOptionProps } from './option';
+import { PositionableMenu, type PositionableMenuProps } from './positionable';
+import { Menu, type MenuProps } from './menu';
+import { MenuOption, type MenuOptionProps } from './option';
 
 export { PositionableMenu, Menu, MenuOption };
 

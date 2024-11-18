@@ -1,4 +1,4 @@
-import * as SceneModels from '../models/SceneModels';
+import type * as SceneModels from '../models/SceneModels';
 
 /************************************************
  * General data types

@@ -1,6 +1,3 @@
-import React, { PointerEventHandler, PropsWithChildren, useState } from 'react';
-import { isHotkey } from 'is-hotkey';
-
 import {
   borderRadiusDropdown,
   colorBackgroundControlDisabled,
@@ -11,7 +8,12 @@ import {
   spaceScaledXs,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-
+import { isHotkey } from 'is-hotkey';
+import {
+  type PointerEventHandler,
+  type PropsWithChildren,
+  useState,
+} from 'react';
 import './option.css';
 
 const isPointerEvent = (

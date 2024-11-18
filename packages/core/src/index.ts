@@ -1,23 +1,23 @@
+export * from './common/types';
 export * from './data-module/data-cache/requestTypes';
 export * from './data-module/types';
-export * from './common/types';
 
 export { combineProviders } from './common/combineProviders';
-export { round } from './common/number';
+export { isNumeric, round } from './common/number';
 
 // Data utilities
 export {
-  getVisibleData,
   getDataBeforeDate,
+  getVisibleData,
   pointBisector,
 } from './common/dataFilters';
 export { toSiteWiseAssetProperty } from './common/dataStreamId';
 
 // Viewport utilities
+export { isDurationViewport, isHistoricalViewport } from './common/predicates';
 export { parseDuration } from './common/time';
-export { viewportManager } from './viewportManager/viewportManager';
-export { isHistoricalViewport, isDurationViewport } from './common/predicates';
 export { viewportEndDate, viewportStartDate } from './common/viewport';
+export { viewportManager } from './viewportManager/viewportManager';
 
 // Edge utilities
 export { isEdgeModeEnabled, type EdgeMode } from './edge/types';
@@ -26,10 +26,10 @@ export { isEdgeModeEnabled, type EdgeMode } from './edge/types';
 export { TimeSeriesDataModule } from './data-module/TimeSeriesDataModule';
 
 export {
-  DATA_TYPE,
-  STREAM_TYPE,
   COMPARISON_OPERATOR,
+  DATA_TYPE,
   STATUS_ICON_TYPE,
+  STREAM_TYPE,
 } from './common/constants';
 
 export const NANO_SECOND_IN_MS = 1 / 1000000;
@@ -43,28 +43,28 @@ export type {
   Metric,
   MetricsRecorder,
 } from './metricRecorder/metricsRecorder.interface';
-export { registerPlugin, getPlugin } from './plugins/pluginsRegistry';
+export { getPlugin, registerPlugin } from './plugins/pluginsRegistry';
 
 // Request functions
 export type {
+  BatchGetAssetPropertyValue,
+  BatchGetAssetPropertyValueHistory,
+  DescribeAlarmModel,
+  DescribeAsset,
+  DescribeAssetModel,
+  ExecuteQuery,
+  GetAssetPropertyValue,
+  GetAssetPropertyValueHistory,
+  ListAssetModelProperties,
+  ListAssetModels,
+  ListAssetProperties,
+  ListAssets,
+  ListAssociatedAssets,
+  ListTimeSeries,
   PickRequestParameters,
   RequestFunction,
   RequestFunctions,
   RequestParameters,
   RequestResponse,
   RequestTimeout,
-  GetAssetPropertyValue,
-  BatchGetAssetPropertyValue,
-  GetAssetPropertyValueHistory,
-  BatchGetAssetPropertyValueHistory,
-  ExecuteQuery,
-  ListAssetModels,
-  ListAssetModelProperties,
-  ListAssets,
-  ListAssociatedAssets,
-  ListTimeSeries,
-  ListAssetProperties,
-  DescribeAsset,
-  DescribeAssetModel,
-  DescribeAlarmModel,
 } from './requestFunctions';

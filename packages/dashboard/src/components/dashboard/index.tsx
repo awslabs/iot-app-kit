@@ -1,42 +1,45 @@
-import React, { memo } from 'react';
-import { Provider } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { TouchBackend } from 'react-dnd-touch-backend';
-import { Viewport, type EdgeMode } from '@iot-app-kit/core';
+import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { memo, useMemo } from 'react';
+import { DndProvider } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { Provider } from 'react-redux';
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore, toDashboardState } from '~/store';
 
 import { useDashboardPlugins } from '~/customization/api';
 import type {
+  AssistantConfiguration,
   DashboardClientConfiguration,
   DashboardConfiguration,
   DashboardConfigurationChange,
   DashboardSave,
-  ViewportChange,
   DashboardToolbar,
+  ViewportChange,
 } from '~/types';
 import { ClientContext } from './clientContext';
-import { QueryContext } from './queryContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
+import { QueryContext } from './queryContext';
 
 import '@cloudscape-design/global-styles/index.css';
-import '../../styles/variables.css';
-import { queryClient } from '~/data/query-client';
-import { PropertiesPanel } from '~/customization/propertiesSections';
-import { FpsView } from 'react-fps';
 import { TimeSync } from '@iot-app-kit/react-components';
 import { debounce } from 'lodash';
+import { FpsView } from 'react-fps';
+import { PropertiesPanel } from '~/customization/propertiesSections';
+import { queryClient } from '~/data/query-client';
+import { useAWSRegion } from '~/hooks/useAWSRegion';
+import '../../styles/variables.css';
 
 export type DashboardProperties = {
   onDashboardConfigurationChange?: DashboardConfigurationChange;
   onSave?: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
+  assistantConfiguration?: AssistantConfiguration;
   edgeMode?: EdgeMode;
   toolbar?: DashboardToolbar;
   initialViewMode?: 'preview' | 'edit';
@@ -45,6 +48,7 @@ export type DashboardProperties = {
   currentViewport?: Viewport;
   timeZone?: string;
 };
+
 const showFPSMonitor = localStorage.getItem('DASHBOARD_SHOW_FPS');
 
 const Dashboard: React.FC<DashboardProperties> = ({
@@ -59,30 +63,52 @@ const Dashboard: React.FC<DashboardProperties> = ({
   onViewportChange,
   onDashboardConfigurationChange,
   timeZone,
+  assistantConfiguration,
 }) => {
   useDashboardPlugins();
   const debounceOnViewportChange = onViewportChange
     ? debounce(onViewportChange, 100)
     : undefined;
 
-  const readOnly = initialViewMode && initialViewMode === 'preview';
+  const readOnly = useMemo(() => {
+    return initialViewMode && initialViewMode === 'preview';
+  }, [initialViewMode]);
+
+  const initialStore = useMemo(() => {
+    return configureDashboardStore({
+      ...toDashboardState(dashboardConfiguration),
+      readOnly,
+      isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
+      timeZone: timeZone,
+      assistant: {
+        state: assistantConfiguration?.state ?? 'DISABLED',
+      },
+    });
+  }, [
+    dashboardConfiguration,
+    edgeMode,
+    readOnly,
+    timeZone,
+    assistantConfiguration?.state,
+  ]);
+
+  const { region } = useAWSRegion(clientConfiguration);
+  const clients = useMemo(
+    () => getClients(clientConfiguration, region),
+    [clientConfiguration, region]
+  );
+  const queries = useMemo(
+    () => getQueries(clientConfiguration, region, edgeMode),
+    [clientConfiguration, edgeMode, region]
+  );
 
   return (
     <>
       {showFPSMonitor && <FpsView height={50} width={80} />}
-      <ClientContext.Provider value={getClients(clientConfiguration)}>
-        <QueryContext.Provider
-          value={getQueries(clientConfiguration, edgeMode)}
-        >
+      <ClientContext.Provider value={clients}>
+        <QueryContext.Provider value={queries}>
           <QueryClientProvider client={queryClient}>
-            <Provider
-              store={configureDashboardStore({
-                ...toDashboardState(dashboardConfiguration),
-                readOnly,
-                isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
-                timeZone: timeZone,
-              })}
-            >
+            <Provider store={initialStore}>
               <DndProvider
                 backend={TouchBackend}
                 options={{
@@ -112,7 +138,10 @@ const Dashboard: React.FC<DashboardProperties> = ({
                 </TimeSync>
               </DndProvider>
             </Provider>
-            <ReactQueryDevtools initialIsOpen={false} />
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              buttonPosition='bottom-left'
+            />
           </QueryClientProvider>
         </QueryContext.Provider>
       </ClientContext.Provider>

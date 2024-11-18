@@ -1,7 +1,6 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
-import { ChartLegend } from '~/customization/widgets/types';
+import { type ChartLegend } from '~/customization/widgets/types';
 import { LegendSection } from './legendSection';
 import { YAxisSection } from './yAxis';
 

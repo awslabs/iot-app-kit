@@ -1,4 +1,4 @@
-import { AggregateType, Quality } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType, type Quality } from '@aws-sdk/client-iotsitewise';
 import type {
   TimeSeriesDataRequest,
   Viewport,

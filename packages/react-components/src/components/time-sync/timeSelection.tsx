@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Button from '@cloudscape-design/components/button';
 import DateRangePicker from '@cloudscape-design/components/date-range-picker';
 import FormField from '@cloudscape-design/components/form-field';

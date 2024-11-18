@@ -1,4 +1,5 @@
 import CloudscapeHeader from '@cloudscape-design/components/header';
+import CloudscapeSpinner from '@cloudscape-design/components/spinner';
 import React from 'react';
 
 export interface ResourceTableTitleProps {
@@ -7,6 +8,7 @@ export interface ResourceTableTitleProps {
   pluralResourceName: string;
   titleExtension?: React.ReactNode;
   description?: string;
+  isLoadingResources?: boolean;
 }
 
 export function ResourceTableTitle({
@@ -15,10 +17,12 @@ export function ResourceTableTitle({
   pluralResourceName,
   titleExtension,
   description,
+  isLoadingResources,
 }: ResourceTableTitleProps) {
   return (
     <>
       <CloudscapeHeader
+        actions={isLoadingResources && <CloudscapeSpinner size='normal' />}
         variant='h3'
         counter={
           selectedResourceCount > 0

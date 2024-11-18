@@ -2,9 +2,9 @@
  * This file contains the model of the scene file stored in database.
  * Changes to this file should be backward compatible.
  */
-import { IValueDataBinding } from '@iot-app-kit/source-iottwinmaker';
+import { type IValueDataBinding } from '@iot-app-kit/source-iottwinmaker';
 
-import { TargetMetadata } from '../interfaces';
+import { type TargetMetadata } from '../interfaces';
 
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;

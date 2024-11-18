@@ -1,15 +1,17 @@
 import {
-  AssetModelProperty,
-  AssetProperty,
-  AssetPropertyValue,
-  IoTSiteWiseClient,
+  type AggregateType,
+  type AssetModelProperty,
+  type AssetProperty,
+  type AssetPropertyValue,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import {
-  DescribeAlarmModelResponse,
-  IoTEventsClient,
+  type DescribeAlarmModelResponse,
+  type IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
 
-import { Viewport } from '@iot-app-kit/core';
+import type { DataStream, ResolutionConfig, Viewport } from '@iot-app-kit/core';
+import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 
 /**
  * Execution status of the alarms queries
@@ -19,7 +21,7 @@ export type AlarmDataStatus = {
   isRefetching: boolean; // will be true whenever subsequent api calls are being executed
   isSuccess: boolean;
   isError: boolean;
-  errors?: Error[];
+  error?: Error;
 };
 
 /**
@@ -53,7 +55,10 @@ export type AlarmData = {
    *
    * This is undefined if the SiteWise alarm type is "EXTERNAL".
    */
-  inputProperty?: (AssetProperty | AssetModelProperty)[];
+  inputProperty?: {
+    property: AssetProperty | AssetModelProperty;
+    dataStream?: DataStream;
+  }[];
 
   /**
    * The id for the SiteWise alarm composite model.
@@ -110,6 +115,22 @@ export type AlarmData = {
    */
   status: AlarmDataStatus;
 };
+
+/**
+ * AlarmData with additional fields for internal processing
+ */
+export type AlarmDataInternal = {
+  /**
+   * The alarm request which spawned the alarm.
+   */
+  request?: AlarmRequest;
+
+  /**
+   * The list of asset or assetModel properties on the alarm's asset.
+   * Used to assign a property object to the inputProperty field.
+   */
+  properties?: (AssetProperty | AssetModelProperty)[];
+} & AlarmData;
 
 /**
  * Request data for a single alarm by its composite model id.
@@ -174,6 +195,11 @@ export type AlarmRequest =
  * Settings for the useAlarms hook
  */
 export interface UseAlarmsHookSettings {
+  /**
+   * Fetch all the input property time series data
+   */
+  fetchInputPropertyData?: boolean; // default false
+
   fetchThresholds?: boolean; // default false
   /**
    * Limit the GET apis to size one, fetching most recent before end of viewport.
@@ -185,6 +211,12 @@ export interface UseAlarmsHookSettings {
    * Related to the @iot-app-kit/core `QueryRequestSettings` type.
    */
   refreshRate?: number;
+}
+
+export interface UseAlarmsInputPropertyTimeSeriesDataSettings {
+  aggregationType?: AggregateType;
+  resolution?: string;
+  resolutionConfig?: ResolutionConfig;
 }
 
 /**
@@ -202,6 +234,8 @@ export interface UseAlarmsOptions<T = AlarmData> {
 
   iotEventsClient?: IoTEventsClient;
 
+  timeSeriesData?: AlarmDataQuery['timeSeriesData'];
+
   requests?: AlarmRequest[];
 
   viewport?: Viewport;
@@ -211,6 +245,12 @@ export interface UseAlarmsOptions<T = AlarmData> {
    * so we don't overfetch and improve performance.
    */
   settings?: UseAlarmsHookSettings;
+
+  /**
+   * Allow consumers to specify settings for
+   * fetching input property time series data
+   */
+  inputPropertyTimeSeriesDataSettings?: UseAlarmsInputPropertyTimeSeriesDataSettings;
 
   /**
    * Used to transform part of the data from the Events alarm model.

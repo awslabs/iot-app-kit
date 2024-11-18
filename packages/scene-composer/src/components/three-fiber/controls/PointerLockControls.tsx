@@ -1,7 +1,6 @@
 /* istanbul ignore file */
-import { EventManager, ReactThreeFiber, RootState, useThree, useFrame } from '@react-three/fiber';
-import { DomEvent } from '@react-three/fiber/dist/declarations/src/core/events';
-import * as React from 'react';
+import { type EventManager, type ReactThreeFiber, type RootState, useThree, useFrame } from '@react-three/fiber';
+import { type DomEvent } from '@react-three/fiber/dist/declarations/src/core/events';
 import { forwardRef, useMemo, useEffect, useCallback, useRef } from 'react';
 import * as THREE from 'three';
 

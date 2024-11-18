@@ -1,25 +1,25 @@
 import {
-  ComponentRequest,
-  ComponentUpdateRequest,
-  DataValue,
-  GetEntityCommandOutput,
+  type ComponentRequest,
+  type ComponentUpdateRequest,
+  type DataValue,
+  type GetEntityCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isFinite } from 'lodash';
 
 import {
-  IComponentSettingsMap,
-  IDataBindingConfig,
-  IOverlaySettings,
-  IRuleBasedMap,
-  IRuleStatement,
-  ISceneDocument,
-  ITagSettings,
+  type IComponentSettingsMap,
+  type IDataBindingConfig,
+  type IOverlaySettings,
+  type IRuleBasedMap,
+  type IRuleStatement,
+  type ISceneDocument,
+  type ITagSettings,
   KnownComponentType,
   KnownSceneProperty,
 } from '../../interfaces';
 import { SCENE_COMPONENT_TYPE_ID, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { CURRENT_VERSION, DEFAULT_DISTANCE_UNIT, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../common/constants';
-import { ISceneDocumentInternal } from '../../store';
+import { type ISceneDocumentInternal } from '../../store';
 
 enum SceneComponentProperty {
   SpecVersion = 'specVersion',

@@ -1,17 +1,15 @@
-import React from 'react';
-
 import { Box, SpaceBetween } from '@cloudscape-design/components';
 
 import './section.css';
 
-import { isNumeric } from '@iot-app-kit/core/dist/es/common/number';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
+import { isNumeric } from '@iot-app-kit/core';
+import DecimalPlaces from '~/components/decimalPlaces';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import {
   FormLabel,
   StyledExpandableSection,
 } from '../components/styledComponents';
-import DecimalPlaces from '~/components/decimalPlaces';
 
 export const DecimalPlacesSection = ({
   significantDigits,

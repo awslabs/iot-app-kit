@@ -1,4 +1,4 @@
-import { IoTEvents } from '@aws-sdk/client-iot-events';
+import { type IoTEvents } from '@aws-sdk/client-iot-events';
 
 export const describeAlarmModelMock = jest.fn();
 export const iotEventsClientMock = {

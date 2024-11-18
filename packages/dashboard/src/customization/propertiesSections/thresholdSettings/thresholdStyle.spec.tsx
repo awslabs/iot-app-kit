@@ -1,9 +1,7 @@
-import React from 'react';
-
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { ThresholdStyleSettings } from './thresholdStyle';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { ThresholdStyleType } from '@iot-app-kit/core';
+import { type ThresholdStyleType } from '@iot-app-kit/core';
 import {
   convertOptionToThresholdStyle,
   convertThresholdStyleToOption,
@@ -32,13 +30,23 @@ describe('thresholdStyleSettings', () => {
     expect(elem);
   });
 
-  it('calls update functions when option changes', () => {
-    const { container } = render(component);
-    const cloudscapeWrapper = wrapper(container);
+  it('calls update functions when option changes', async () => {
+    const { container, getByText, queryAllByText } = render(component);
+    const cloudscapeWrapper = await waitFor(() => wrapper(container));
 
-    const select = cloudscapeWrapper.findSelect();
+    const select = await waitFor(() => cloudscapeWrapper.findSelect());
+
+    await waitFor(() =>
+      expect(getByText('Show thresholds')).toBeInTheDocument()
+    );
     select?.openDropdown();
+    await waitFor(() =>
+      expect(queryAllByText('As lines').length).toBeGreaterThan(0)
+    );
     select?.selectOptionByValue('2');
+    await waitFor(() =>
+      expect(queryAllByText('As filled region').length).toBeGreaterThan(0)
+    );
     expect(mockUpdateAllThresholdStyles).toBeCalled();
   });
 });

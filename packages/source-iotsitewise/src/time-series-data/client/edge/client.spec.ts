@@ -1,6 +1,6 @@
 import {
   AggregateType,
-  ResourceNotFoundException,
+  type ResourceNotFoundException,
 } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClientEdge } from './client';
 import {

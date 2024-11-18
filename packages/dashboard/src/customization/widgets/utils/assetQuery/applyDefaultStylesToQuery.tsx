@@ -1,10 +1,12 @@
-import { StyledAssetQuery } from '../../types';
+import { type StyledAssetQuery } from '../../types';
 import { colorerFromStyledQuery } from './defaultColors';
 
 export const applyDefaultStylesToQuery = ({
   assets = [],
   properties = [],
   assetModels = [],
+  alarms = [],
+  alarmModels = [],
 }: StyledAssetQuery) => {
   const assignDefaultColor = colorerFromStyledQuery({
     assets,
@@ -26,5 +28,7 @@ export const applyDefaultStylesToQuery = ({
         assignDefaultColor(propertyQuery)
       ),
     })),
+    alarms,
+    alarmModels,
   };
 };

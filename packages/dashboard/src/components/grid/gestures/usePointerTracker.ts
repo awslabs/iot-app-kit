@@ -1,5 +1,5 @@
-import { PointerEventHandler, useState } from 'react';
-import { PointClickEvent } from './types';
+import { type PointerEventHandler, useState } from 'react';
+import { type PointClickEvent } from './types';
 import {
   DASHBOARD_CONTAINER_ID,
   getDashboardPosition,

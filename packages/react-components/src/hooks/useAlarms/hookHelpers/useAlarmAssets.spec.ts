@@ -1,85 +1,25 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import {
-  AssetCompositeModel,
-  AssetModelCompositeModel,
-  AssetModelProperty,
-  AssetProperty,
-  DescribeAssetModelResponse,
-  DescribeAssetResponse,
-} from '@aws-sdk/client-iotsitewise';
 import { useAlarmAssets } from './useAlarmAssets';
-import {
-  AlarmAssetModelRequest,
-  AlarmAssetRequest,
+import type {
   AlarmCompositeModelRequest,
-  AlarmData,
   AlarmInputPropertyRequest,
 } from '../types';
 import { queryClient } from '../../../queries';
 import {
   MOCK_ALARM_INPUT_PROPERTY_ID,
   MOCK_ASSET_ID,
-  MOCK_ASSET_MODEL_ID,
   MOCK_COMPOSITE_MODEL_ID,
-  MOCK_COMPOSITE_MODEL_ID_2,
-  MOCK_COMPOSITE_MODEL_NAME_2,
   describeAssetMock,
   describeAssetModelMock,
   iotSiteWiseClientMock,
   mockAlarmCompositeModel,
-  mockAlarmCompositeModel2,
-  mockAlarmDataDescribeAsset,
-  mockAlarmDataDescribeAssetModel,
-  mockAlarmModelCompositeModel,
-  mockAlarmModelCompositeModel2,
   mockInputProperty,
 } from '../../../testing/alarms';
-
-const mockDescribeAssetResponse = ({
-  assetId = MOCK_ASSET_ID,
-  compositeModels = [],
-  assetProperties = [],
-}: {
-  assetId?: string;
-  compositeModels?: AssetCompositeModel[];
-  assetProperties?: AssetProperty[];
-}): DescribeAssetResponse => ({
-  assetModelId: MOCK_ASSET_MODEL_ID,
-  assetId,
-  assetArn: 'assetArn',
-  assetName: 'assetName',
-  assetProperties,
-  assetHierarchies: [],
-  assetCreationDate: new Date(),
-  assetLastUpdateDate: new Date(),
-  assetStatus: {
-    state: 'ACTIVE',
-  },
-  assetCompositeModels: compositeModels,
-});
-
-const mockDescribeAssetModelResponse = ({
-  assetModelId = MOCK_ASSET_MODEL_ID,
-  compositeModels = [],
-  assetModelProperties = [],
-}: {
-  assetModelId?: string;
-  compositeModels?: AssetModelCompositeModel[];
-  assetModelProperties?: AssetModelProperty[];
-}): DescribeAssetModelResponse => ({
-  assetModelId,
-  assetModelArn: 'assetModelArn',
-  assetModelName: 'assetModelName',
-  assetModelDescription: 'assetModelDescription',
-  assetModelProperties,
-  assetModelHierarchies: [],
-  assetModelCreationDate: new Date(),
-  assetModelLastUpdateDate: new Date(),
-  assetModelStatus: {
-    state: 'ACTIVE',
-  },
-  assetModelCompositeModels: compositeModels,
-});
+import { mockDescribeAssetResponse } from '../../../testing/alarms/mockDescribeAsset';
+import {
+  mockLoadingStatus,
+  mockSuccessStatus,
+} from '../../../testing/alarms/mockStatuses';
 
 describe('useAlarmAssets', () => {
   beforeEach(() => {
@@ -87,27 +27,95 @@ describe('useAlarmAssets', () => {
     queryClient.clear();
   });
 
-  it('should return AlarmData with content for one alarm in an alarm composite model request', async () => {
+  it('should have the correct status', async () => {
+    const onSummarizeAlarmsMock = jest.fn();
+
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
     );
 
-    const alarmCompositeModelRequest: AlarmCompositeModelRequest = {
+    const alarmAssetRequest = {
+      assetId: MOCK_ASSET_ID,
+    };
+
+    const alarmCompositeModelRequest = {
       assetId: MOCK_ASSET_ID,
       assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
     };
 
-    const { result: alarmDataResults } = renderHook(() =>
+    renderHook(() =>
       useAlarmAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        requests: [alarmCompositeModelRequest],
+        requests: [alarmAssetRequest, alarmCompositeModelRequest],
+        onSummarizeAlarms: onSummarizeAlarmsMock,
       })
     );
 
     await waitFor(() => {
-      expect(alarmDataResults.current.length).toBe(1);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAsset
+      expect(onSummarizeAlarmsMock).toBeCalledWith(
+        expect.objectContaining({
+          assetSummaries: expect.arrayContaining([
+            expect.objectContaining({
+              request: alarmAssetRequest,
+              status: mockLoadingStatus,
+            }),
+            expect.objectContaining({
+              request: alarmCompositeModelRequest,
+              status: mockLoadingStatus,
+            }),
+          ]),
+        })
+      );
+    });
+
+    await waitFor(() => {
+      expect(onSummarizeAlarmsMock).toBeCalledWith(
+        expect.objectContaining({
+          assetSummaries: expect.arrayContaining([
+            expect.objectContaining({
+              request: alarmAssetRequest,
+              status: mockSuccessStatus,
+            }),
+            expect.objectContaining({
+              request: alarmCompositeModelRequest,
+              status: mockSuccessStatus,
+            }),
+          ]),
+        })
+      );
+    });
+  });
+
+  it('should return AlarmData with content for one alarm in an alarm composite model request', async () => {
+    const onSummarizeAlarmsMock = jest.fn();
+
+    describeAssetMock.mockResolvedValue(
+      mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
+    );
+
+    const alarmCompositeModelRequest = {
+      assetId: MOCK_ASSET_ID,
+      assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
+    } satisfies AlarmCompositeModelRequest;
+
+    renderHook(() =>
+      useAlarmAssets({
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        requests: [alarmCompositeModelRequest],
+        onSummarizeAlarms: onSummarizeAlarmsMock,
+      })
+    );
+
+    await waitFor(() => {
+      expect(onSummarizeAlarmsMock).toBeCalledWith(
+        expect.objectContaining({
+          assetSummaries: expect.arrayContaining([
+            expect.objectContaining({
+              request: alarmCompositeModelRequest,
+              status: mockLoadingStatus,
+            }),
+          ]),
+        })
       );
     });
 
@@ -116,201 +124,43 @@ describe('useAlarmAssets', () => {
   });
 
   it('should return AlarmData with content for one alarm in an alarm input property request', async () => {
+    const onSummarizeAlarmsMock = jest.fn();
+
+    const mockProperties = [mockInputProperty];
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({
         compositeModels: [mockAlarmCompositeModel],
-        assetProperties: [mockInputProperty],
+        assetProperties: mockProperties,
       })
     );
 
-    const alarmInputPropertyRequest: AlarmInputPropertyRequest = {
+    const alarmInputPropertyRequest = {
       assetId: MOCK_ASSET_ID,
       inputPropertyId: MOCK_ALARM_INPUT_PROPERTY_ID,
-    };
+    } satisfies AlarmInputPropertyRequest;
 
-    const expectedAlarmData: AlarmData = {
-      ...mockAlarmDataDescribeAsset,
-      inputProperty: [mockInputProperty],
-    };
-
-    const { result: alarmDataResults } = renderHook(() =>
+    renderHook(() =>
       useAlarmAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
         requests: [alarmInputPropertyRequest],
+        onSummarizeAlarms: onSummarizeAlarmsMock,
       })
     );
 
     await waitFor(() => {
-      expect(alarmDataResults.current.length).toBe(1);
-      expect(alarmDataResults.current[0]).toMatchObject(expectedAlarmData);
-    });
-
-    expect(describeAssetMock).toBeCalled();
-    expect(describeAssetModelMock).not.toBeCalled();
-  });
-
-  it('should return AlarmData with content for multiple alarms in an alarm asset request', async () => {
-    describeAssetMock.mockResolvedValue(
-      mockDescribeAssetResponse({
-        compositeModels: [mockAlarmCompositeModel, mockAlarmCompositeModel2],
-      })
-    );
-
-    const mockAlarmDataDescribeAsset2: AlarmData = {
-      ...mockAlarmDataDescribeAsset,
-      compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
-      compositeModelName: MOCK_COMPOSITE_MODEL_NAME_2,
-    };
-
-    const alarmAssetRequest: AlarmAssetRequest = {
-      assetId: MOCK_ASSET_ID,
-    };
-
-    const { result: alarmDataResults } = renderHook(() =>
-      useAlarmAssets({
-        iotSiteWiseClient: iotSiteWiseClientMock,
-        requests: [alarmAssetRequest],
-      })
-    );
-
-    await waitFor(() => {
-      expect(alarmDataResults.current.length).toBe(2);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAsset
-      );
-      expect(alarmDataResults.current[1]).toMatchObject(
-        mockAlarmDataDescribeAsset2
+      expect(onSummarizeAlarmsMock).toBeCalledWith(
+        expect.objectContaining({
+          assetSummaries: expect.arrayContaining([
+            expect.objectContaining({
+              request: alarmInputPropertyRequest,
+              status: mockLoadingStatus,
+            }),
+          ]),
+        })
       );
     });
 
     expect(describeAssetMock).toBeCalled();
-    expect(describeAssetModelMock).not.toBeCalled();
-  });
-
-  it('should return AlarmData with content for multiple alarms in an alarm asset model request', async () => {
-    describeAssetModelMock.mockResolvedValue(
-      mockDescribeAssetModelResponse({
-        compositeModels: [
-          mockAlarmModelCompositeModel,
-          mockAlarmModelCompositeModel2,
-        ],
-      })
-    );
-
-    const alarmAssetModelRequest: AlarmAssetModelRequest = {
-      assetModelId: MOCK_ASSET_MODEL_ID,
-    };
-
-    const mockAlarmDataDescribeAssetModel2: AlarmData = {
-      ...mockAlarmDataDescribeAssetModel,
-      compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
-      compositeModelName: MOCK_COMPOSITE_MODEL_NAME_2,
-    };
-
-    const { result: alarmDataResults } = renderHook(() =>
-      useAlarmAssets({
-        iotSiteWiseClient: iotSiteWiseClientMock,
-        requests: [alarmAssetModelRequest],
-      })
-    );
-
-    await waitFor(() => {
-      expect(alarmDataResults.current.length).toBe(2);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAssetModel
-      );
-      expect(alarmDataResults.current[1]).toMatchObject(
-        mockAlarmDataDescribeAssetModel2
-      );
-    });
-
-    expect(describeAssetMock).not.toBeCalled();
-    expect(describeAssetModelMock).toBeCalled();
-  });
-
-  it('should return no AlarmData when there are no alarms on an asset', async () => {
-    describeAssetMock.mockResolvedValue(mockDescribeAssetResponse({}));
-
-    const alarmAssetRequest: AlarmAssetRequest = {
-      assetId: MOCK_ASSET_ID,
-    };
-
-    const { result: alarmDataResults } = renderHook(() =>
-      useAlarmAssets({
-        iotSiteWiseClient: iotSiteWiseClientMock,
-        requests: [alarmAssetRequest],
-      })
-    );
-
-    await waitFor(() => expect(alarmDataResults.current.length).toBe(0));
-
-    expect(describeAssetMock).toBeCalled();
-    expect(describeAssetModelMock).not.toBeCalled();
-  });
-
-  it('should return no AlarmData when there are no alarms on an asset model', async () => {
-    describeAssetModelMock.mockResolvedValue(
-      mockDescribeAssetModelResponse({})
-    );
-
-    const alarmAssetModelRequest: AlarmAssetModelRequest = {
-      assetModelId: MOCK_ASSET_MODEL_ID,
-    };
-
-    const { result: alarmDataResults } = renderHook(() =>
-      useAlarmAssets({
-        iotSiteWiseClient: iotSiteWiseClientMock,
-        requests: [alarmAssetModelRequest],
-      })
-    );
-
-    await waitFor(() => expect(alarmDataResults.current.length).toBe(0));
-
-    expect(describeAssetMock).not.toBeCalled();
-    expect(describeAssetModelMock).toBeCalled();
-  });
-
-  it('should return AlarmData with content for multiple alarms in multiple requests', async () => {
-    describeAssetMock.mockResolvedValue(
-      mockDescribeAssetResponse({
-        compositeModels: [mockAlarmCompositeModel, mockAlarmCompositeModel2],
-      })
-    );
-
-    const alarmCompositeModelRequest1: AlarmCompositeModelRequest = {
-      assetId: MOCK_ASSET_ID,
-      assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
-    };
-
-    const alarmCompositeModelRequest2: AlarmCompositeModelRequest = {
-      assetId: MOCK_ASSET_ID,
-      assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
-    };
-
-    const mockAlarmDataDescribeAsset2: AlarmData = {
-      ...mockAlarmDataDescribeAsset,
-      compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
-      compositeModelName: MOCK_COMPOSITE_MODEL_NAME_2,
-    };
-
-    const { result: alarmDataResults } = renderHook(() =>
-      useAlarmAssets({
-        iotSiteWiseClient: iotSiteWiseClientMock,
-        requests: [alarmCompositeModelRequest1, alarmCompositeModelRequest2],
-      })
-    );
-
-    await waitFor(() => {
-      expect(alarmDataResults.current.length).toBe(2);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAsset
-      );
-      expect(alarmDataResults.current[1]).toMatchObject(
-        mockAlarmDataDescribeAsset2
-      );
-    });
-
-    expect(describeAssetMock).toBeCalledTimes(1);
     expect(describeAssetModelMock).not.toBeCalled();
   });
 });

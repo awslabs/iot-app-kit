@@ -1,9 +1,16 @@
-import React, { FC } from 'react';
+import { type FC } from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
 import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
-import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
-import { ChartOptions, Visualization } from '../../src/components/chart/types';
+import {
+  getIotSiteWiseQuery,
+  getTimeSeriesDataQuery,
+  queryConfigured,
+} from '../utils/query';
+import {
+  type ChartOptions,
+  type Visualization,
+} from '../../src/components/chart/types';
 
 const chartTypes: Visualization[] = [
   'line',
@@ -125,7 +132,7 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
   };
 
   return (
-    <TimeSync>
+    <TimeSync initialViewport={VIEWPORT}>
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
         <br />
@@ -135,11 +142,49 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
               {...options}
               key={index}
               defaultVisualizationType={chartType}
-              queries={[getTimeSeriesDataQuery()]}
+              queries={[
+                getTimeSeriesDataQuery(),
+                getIotSiteWiseQuery().alarmData({
+                  alarms: [
+                    {
+                      assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+                      alarmComponents: [
+                        {
+                          assetCompositeModelId:
+                            '5ee3794d-19b3-4b53-9902-702334a437c2',
+                        },
+                      ],
+                    },
+                  ],
+                }),
+              ]}
             />
           ))
         ) : (
-          <Chart {...options} queries={[getTimeSeriesDataQuery()]} />
+          <Chart
+            {...options}
+            viewport={VIEWPORT}
+            queries={[
+              // getTimeSeriesDataQuery(),
+              getIotSiteWiseQuery().alarmData({
+                alarms: [
+                  {
+                    assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+                    alarmComponents: [
+                      {
+                        assetCompositeModelId:
+                          'fe72d2d7-5e37-486a-8b00-a1e4e7f40b3a',
+                      },
+                      {
+                        assetCompositeModelId:
+                          '5ee3794d-19b3-4b53-9902-702334a437c2',
+                      },
+                    ],
+                  },
+                ],
+              }),
+            ]}
+          />
         )}
       </div>
     </TimeSync>

@@ -1,13 +1,13 @@
-import * as THREE from 'three';
-import React, { useRef, useEffect, useState } from 'react';
-import { ThreeEvent, useFrame } from '@react-three/fiber';
 import { Plane } from '@react-three/drei';
+import { type ThreeEvent, useFrame } from '@react-three/fiber';
+import { useEffect, useRef, useState } from 'react';
+import type * as THREE from 'three';
 
 import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useAddWidget from '../../../hooks/useAddWidget';
 import useTwinMakerTextureLoader from '../../../hooks/useTwinMakerTextureLoader';
-import { IPlaneGeometryComponentInternal, ISceneNodeInternal, useEditorState } from '../../../store';
+import { type IPlaneGeometryComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../store';
 import { acceleratedRaycasting, getComponentGroupName } from '../../../utils/objectThreeUtils';
 
 export interface PlaneGeometryComponentProps {

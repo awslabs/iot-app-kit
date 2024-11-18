@@ -1,4 +1,4 @@
-import { StylesObject } from '../input';
+import { type StylesObject } from '../input';
 
 export enum FieldType {
   time = 'time',

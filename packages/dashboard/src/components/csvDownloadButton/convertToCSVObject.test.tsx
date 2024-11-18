@@ -1,13 +1,13 @@
-import { DataStream, DataType } from '@iot-app-kit/core';
+import { type DataStream, type DataType } from '@iot-app-kit/core';
 import { convertToCSVObject } from './convertToCSVObject';
 import {
-  StyledAssetQuery,
-  StyledSiteWiseQueryConfig,
+  type StyledAssetQuery,
+  type StyledSiteWiseQueryConfig,
 } from '~/customization/widgets/types';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 import {
-  IoTSiteWiseClient,
-  PropertyDataType,
+  type IoTSiteWiseClient,
+  type PropertyDataType,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
 

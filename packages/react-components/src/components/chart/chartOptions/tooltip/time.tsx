@@ -1,4 +1,3 @@
-import React from 'react';
 import { fontWeightHeadingS } from '@cloudscape-design/design-tokens';
 import { FULL_DATE, formatDate } from '../../../../utils/time';
 import useDataStore from '../../../../store';

@@ -1,6 +1,6 @@
 import { toId } from '../../../time-series-data/util/dataStreamId';
 import { constructAlarmThresholds } from './constructAlarmThresholds';
-import { SiteWiseAlarmModule } from '../siteWiseAlarmModule';
+import { type SiteWiseAlarmModule } from '../siteWiseAlarmModule';
 import { isDefined } from '../../../common/predicates';
 import type { Alarms } from '../types';
 import type { Threshold } from '@iot-app-kit/core';

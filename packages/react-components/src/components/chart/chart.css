@@ -36,6 +36,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.base-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+}
+
 .base-chart-container,
 .chart-rightlegend-container {
   display: flex;

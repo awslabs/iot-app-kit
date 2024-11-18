@@ -1,4 +1,4 @@
-import { MonitorWidget } from './types';
+import { type MonitorWidget } from './types';
 
 /**
  * The logic for this collision algorithm has been uplifted from the

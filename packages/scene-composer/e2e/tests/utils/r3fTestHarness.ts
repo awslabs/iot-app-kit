@@ -1,4 +1,4 @@
-import { Object3D } from 'three';
+import { type Object3D } from 'three';
 
 export default class R3FTestHarness {
   scene;

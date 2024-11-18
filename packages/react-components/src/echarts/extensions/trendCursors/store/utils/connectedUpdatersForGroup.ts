@@ -1,9 +1,9 @@
-import { TrendCursorsData } from '../state';
+import { type TrendCursorsData } from '../state';
 import {
-  TrendCursor,
-  TrendCursorGroupId,
-  Updater,
-  UpdaterAction,
+  type TrendCursor,
+  type TrendCursorGroupId,
+  type Updater,
+  type UpdaterAction,
 } from '../types';
 
 export const getConnectedUpdaters = (

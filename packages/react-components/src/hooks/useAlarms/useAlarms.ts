@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { SetRequired } from 'type-fest';
-import {
+import type { SetRequired } from 'type-fest';
+import type {
   AlarmData,
   UseAlarmsOptions,
   UseAlarmOptionsWithoutTransform,
@@ -8,9 +8,13 @@ import {
 import {
   useAlarmAssets,
   useAlarmModels,
-  useLatestAlarmPropertyValue,
+  useAlarmState,
+  useAlarmThreshold,
 } from './hookHelpers';
-import { filterAlarmsMatchingInputProperties } from './utils/alarmModelUtils';
+import { useInputPropertyTimeSeriesData } from './hookHelpers/useInputPropertyTimeSeriesData/useInputPropertyTimeSeriesData';
+import { useAlarmsState } from './state';
+import { useAlarmSources } from './hookHelpers/useAlarmSources';
+import { useAlarmTypes } from './hookHelpers/useAlarmTypes';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -40,37 +44,60 @@ function useAlarms<T>(
  * useAlarms implementation which branches based on the 2 scenarios above.
  * If transform is defined, the output is T[], dictated by the second signature above.
  * If transform is undefined, the output is AlarmData[], dicatated by the first signature above.
+ *
+ * Given a list of AlarmRequests, fetch all available data for the alarms.
+ *
+ * @experimental Do not use in production
  */
 function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
-  const { iotSiteWiseClient, iotEventsClient, requests, transform } =
-    options ?? {};
+  const {
+    iotSiteWiseClient,
+    iotEventsClient,
+    timeSeriesData,
+    requests,
+    viewport,
+    settings,
+    inputPropertyTimeSeriesDataSettings,
+    transform,
+  } = options ?? {};
+
+  const {
+    state,
+    alarmDatas,
+    onSummarizeAlarms,
+    onUpdateAlarmSourceData,
+    onUpdateAlarmTypeData,
+    onSummarizeAlarmModels,
+    onUpdateAlarmInputPropertyData,
+    onUpdateAlarmStateData,
+    onUpdateAlarmThresholdData,
+  } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
    * (e.g. all alarms for an asset or assetModel)
    */
-  const assetAlarmData = useAlarmAssets({
+  useAlarmAssets({
     iotSiteWiseClient,
     requests,
-  });
-
-  /**
-   * Fetch latest asset property values for alarms with a state property.
-   * Data should be available for all alarms fetched for an asset.
-   */
-  const statePropertyAlarmData = useLatestAlarmPropertyValue({
-    iotSiteWiseClient,
-    alarmDataList: assetAlarmData,
-    alarmPropertyFieldName: 'state',
+    onSummarizeAlarms,
   });
 
   /**
    * Fetch latest asset property values for alarms with a type property.
    * Data should be available for all alarms fetched for an asset.
    */
-  const typePropertyAlarmData = useLatestAlarmPropertyValue({
+  useAlarmTypes({
     iotSiteWiseClient,
-    alarmDataList: statePropertyAlarmData,
-    alarmPropertyFieldName: 'type',
+    /**
+     * alarm datas are populated by onSummarizeAlarms
+     */
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        assetId: alarmData.assetId,
+        type: alarmData.type,
+      }))
+    ),
+    onUpdateAlarmTypeData,
   });
 
   /**
@@ -78,10 +105,18 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Data should be available for all alarms fetched for an asset, where
    * the alarm type is "IOT_EVENTS".
    */
-  const sourcePropertyAlarmData = useLatestAlarmPropertyValue({
+  useAlarmSources({
     iotSiteWiseClient,
-    alarmDataList: typePropertyAlarmData,
-    alarmPropertyFieldName: 'source',
+    /**
+     * alarm datas are populated by onSummarizeAlarms
+     */
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        assetId: alarmData.assetId,
+        source: alarmData.source,
+      }))
+    ),
+    onUpdateAlarmSourceData,
   });
 
   /**
@@ -89,29 +124,79 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Only supported for alarms with type "IOT_EVENTS"
    * and data available for the source asset property.
    */
-  const alarmModelAlarmData = useAlarmModels({
+  useAlarmModels({
     iotEventsClient,
-    alarmDataList: sourcePropertyAlarmData,
+    onSummarizeAlarmModels,
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        source: alarmData.source,
+      }))
+    ),
+  });
+
+  useInputPropertyTimeSeriesData({
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        inputProperty: alarmData.inputProperty,
+        assetId: alarmData.assetId,
+      }))
+    ),
+    onUpdateAlarmInputPropertyData,
+    timeSeriesData,
+    viewport,
+    ...settings,
+    ...inputPropertyTimeSeriesDataSettings,
   });
 
   /**
-   * If an inputProperty is in an AlarmRequest then all alarms for
-   * the property's asset is fetched. After the IoT Events alarm models
-   * are fetched for each alarm we can verify which alarm on the asset
-   * is actually associated with an inputProperty.
+   * Fetch latest asset property values for alarms with a state property.
+   * Data should be available for all alarms fetched for an asset.
    */
-  const filterAlarmInputProperties = useMemo(
-    () => filterAlarmsMatchingInputProperties(alarmModelAlarmData),
-    [alarmModelAlarmData]
-  );
+  useAlarmState({
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        state: alarmData.state,
+        assetId: alarmData.assetId,
+      }))
+    ),
+    onUpdateAlarmStateData,
+    iotSiteWiseClient,
+    viewport,
+    ...settings,
+  });
+
+  /**
+   * Fetch alarm threshold values from the alarm model or from a
+   * SiteWise asset property.
+   */
+  useAlarmThreshold({
+    iotSiteWiseClient,
+    onUpdateAlarmThresholdData,
+    /**
+     * Only request thresholds for alarms
+     * that don't have static thresholds defined.
+     * Static thresholds set on summarize alarm models
+     */
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas
+        .filter((alarm) => (alarm.thresholds ?? []).length === 0)
+        .map((alarmData) => ({
+          assetId: alarmData.assetId,
+          models: alarmData.models,
+        }))
+    ),
+    viewport,
+    ...settings,
+    refreshRate: Infinity, // Only fetch thresholds once, require page refresh
+  });
 
   // Apply the transform callback if it exists, otherwise return the AlarmData
   return useMemo(
     () =>
       transform
-        ? filterAlarmInputProperties?.map(transform)
-        : filterAlarmInputProperties?.map(alarmDataIdentity),
-    [transform, filterAlarmInputProperties]
+        ? alarmDatas?.map(transform)
+        : alarmDatas?.map(alarmDataIdentity),
+    [transform, alarmDatas]
   );
 }
 

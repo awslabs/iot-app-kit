@@ -1,12 +1,11 @@
 /* eslint-disable import/first */
-import React from 'react';
 import * as THREE from 'three';
 import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { CameraType } from '../../../models/SceneModels';
 import { DEFAULT_CAMERA_SETTINGS } from '../../../common/constants';
-import { ICameraComponentInternal, accessStore } from '../../../store';
+import { type ICameraComponentInternal, accessStore } from '../../../store';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import CameraComponentEditor from './CameraComponentEditor';

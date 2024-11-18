@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import { FC, useContext, useEffect } from 'react';
+import { type FC, useContext, useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import { accessStore } from '../../store';
-import { IFogSettings, KnownSceneProperty } from '../../interfaces';
+import { type IFogSettings, KnownSceneProperty } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 
 const Fog: FC = () => {

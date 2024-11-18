@@ -1,14 +1,14 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { type TilesGroup } from '3d-tiles-renderer';
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
-import { Mesh as THREEMesh, Object3D as THREEObject3D, Vector3 as THREEVector3 } from 'three';
+import { Suspense, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { type Mesh as THREEMesh, type Object3D as THREEObject3D, Vector3 as THREEVector3 } from 'three';
 import { SVGLoader } from 'three-stdlib';
-import { TilesGroup } from '3d-tiles-renderer';
 
-import { convertSvgToMesh, getDataUri } from '../../../../utils/svgUtils';
-import { getIntersectionTransform } from '../../../../utils/raycastUtils';
+import { ViewCursorEditSvgString, ViewCursorMoveSvgString } from '../../../../assets/svgs';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
-import { ViewCursorEditSvgString, ViewCursorMoveSvgString } from '../../../../assets/svgs';
+import { getIntersectionTransform } from '../../../../utils/raycastUtils';
+import { convertSvgToMesh, getDataUri } from '../../../../utils/svgUtils';
 
 export const INIT_SVG_SCALE = 0.003;
 export const INIT_SVG_VECTOR = new THREEVector3(INIT_SVG_SCALE, INIT_SVG_SCALE, INIT_SVG_SCALE);
@@ -80,8 +80,8 @@ export const ViewCursorWidget = (): React.JSX.Element => {
   }, [addingWidget]);
 
   return (
-    <React.Suspense fallback={null}>
+    <Suspense fallback={null}>
       {cursorVisible && <primitive ref={ref} object={shape} name='ViewCursorWidget' />}
-    </React.Suspense>
+    </Suspense>
   );
 };

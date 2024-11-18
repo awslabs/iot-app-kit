@@ -1,14 +1,13 @@
-import * as React from 'react';
 import { StatusTimeline, useViewport } from '@iot-app-kit/react-components';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
-import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { type DashboardState } from '~/store/state';
 import NoChartData from '../components/no-chart-data';
+import { type StatusTimelineWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 import { default as timelineSvgDark } from './timeline-dark.svg';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
@@ -41,14 +40,14 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
       <WidgetTile widget={widget}>
         <NoChartData
           icon={timelineSvgDark}
-          emptyStateText='Browse and select to add your asset properties in your status timeline widget.'
+          emptyStateText='Browse assets and add asset properties to the status timeline widget.'
         />
       </WidgetTile>
     );
   }
 
   return (
-    <WidgetTile widget={widget} title={title} key={key}>
+    <WidgetTile widget={widget} key={key}>
       <StatusTimeline
         queries={queries}
         viewport={viewport}
@@ -57,6 +56,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
         thresholds={thresholds}
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
+        titleText={title}
       />
     </WidgetTile>
   );

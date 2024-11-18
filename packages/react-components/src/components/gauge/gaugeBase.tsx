@@ -1,12 +1,11 @@
-// eslint-disable-next-line import/default
-import React from 'react';
-import { useECharts, useLoadableEChart } from '../../hooks/useECharts';
-import { GaugeBaseProperties } from './types';
+import { Title } from '../../common/title';
+import { useECharts } from '../../hooks/useECharts';
+import './gauge.css';
+import { GaugeText } from './gaugeText';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
 import { useResizableGauge } from './hooks/useResizableGauge';
-import { GaugeErrorText } from './gaugeErrorText';
-import { GaugeText } from './gaugeText';
-import './gauge.css';
+import { type GaugeBaseProperties } from './types';
+import { thresholdsToColor } from './utils/thresholdsToColor';
 
 /**
  * Renders a base gauge component.
@@ -31,6 +30,10 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   isLoading,
   significantDigits,
   error,
+  titleText,
+  alarmContent,
+  assistant,
+  alarmStatus,
   ...options
 }) => {
   const gaugeValue = propertyPoint?.y;
@@ -39,15 +42,11 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
 
-  // apply loading animation to echart instance
-  useLoadableEChart(chartRef, isLoading);
-
   useGaugeConfiguration(
     chartRef,
     {
-      isLoading,
-      thresholds,
-      gaugeValue,
+      thresholds: thresholds,
+      gaugeValue: gaugeValue,
       name,
       settings,
       unit,
@@ -66,7 +65,12 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
       data-testid={
         !error ? 'gauge-base-component' : 'gauge-base-component-error'
       }
+      style={{
+        width: size?.width,
+        height: size?.height,
+      }}
     >
+      <Title text={titleText} />
       <div
         ref={ref}
         className='gauge-base'
@@ -76,15 +80,25 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
           height: size?.height,
         }}
       />
-      <GaugeErrorText error={error} />
-      {!isLoading && (
-        <GaugeText
-          settings={settings}
-          name={name}
-          error={error}
-          quality={quality}
-        />
-      )}
+      <GaugeText
+        valueColor={thresholdsToColor({
+          gaugeValue,
+          thresholds,
+          defaultColor: settings?.color,
+        })}
+        isLoading={isLoading}
+        alarmStatus={alarmStatus}
+        unit={unit}
+        error={error}
+        settings={settings}
+        name={name}
+        quality={quality}
+        value={gaugeValue}
+        significantDigits={significantDigits}
+        titleText={titleText}
+        alarmContent={alarmContent}
+        assistant={assistant}
+      />
     </div>
   );
 };

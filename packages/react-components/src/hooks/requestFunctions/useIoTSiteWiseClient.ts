@@ -1,4 +1,7 @@
-import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type IoTSiteWise,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { useMemo } from 'react';
 import {
   createBatchGetAssetPropertyValue,
@@ -56,7 +59,7 @@ export function useIoTSiteWiseClient({
       } as IoTSiteWise;
     }
 
-    return iotSiteWiseClient;
+    return iotSiteWiseClient ?? ({} as IoTSiteWise);
   }, [iotSiteWiseClient]);
 
   return iotSiteWise as IoTSiteWise;

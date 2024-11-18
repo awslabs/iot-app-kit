@@ -1,9 +1,9 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type ComponentRequest, type ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 
-import { ISubModelRefComponent, KnownComponentType } from '../../interfaces';
+import { type ISubModelRefComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { ISubModelRefComponentInternal } from '../../store';
+import { type ISubModelRefComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
 import { resetProperties } from './updateNodeEntity';

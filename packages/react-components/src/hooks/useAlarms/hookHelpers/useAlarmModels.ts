@@ -1,14 +1,20 @@
-import { useMemo } from 'react';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { getAlarmModelNameFromAlarmSourceProperty } from '../utils/alarmModelUtils';
-import { AlarmData, AlarmProperty } from '../types';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { getAlarmModelNameFromAlarmSourceProperty } from '../utils/parseAlarmModels';
+import type { AlarmData } from '../types';
 import { useDescribeAlarmModels } from '../../../queries';
-import { getStatusForQuery } from '../utils/queryUtils';
+import { getStatusForQuery } from '../utils/queryStatus';
+import type { QueryOptionsGlobal } from '../../../queries/common/types';
+import {
+  type OnSummarizeAlarmModelsAction,
+  useRequestSelector,
+} from '../state';
+import { useReactQueryEffect } from './useReactQueryEffect';
 
-export interface UseAlarmModelsOptions {
+export type UseAlarmModelsOptions = {
   iotEventsClient?: IoTEventsClient;
-  alarmDataList?: AlarmData[];
-}
+  requests?: Pick<AlarmData, 'source'>[];
+  onSummarizeAlarmModels: OnSummarizeAlarmModelsAction;
+} & QueryOptionsGlobal;
 
 /**
  * useAlarmModels is a hook used to describe the IoT Events alarm model
@@ -20,66 +26,33 @@ export interface UseAlarmModelsOptions {
  */
 export function useAlarmModels({
   iotEventsClient,
-  alarmDataList = [],
-}: UseAlarmModelsOptions): AlarmData[] {
-  // Filter AlarmData with a source property and data
-  const alarmModelRequests = alarmDataList
-    .filter(
-      (alarmData) =>
-        alarmData.source &&
-        alarmData.source.data &&
-        alarmData.source.data.length > 0
-    )
-    .map((alarmData) => ({
-      alarmModelName: getAlarmModelNameFromAlarmSourceProperty(
-        alarmData.source
-      ),
-    }));
+  requests = [],
+  retry,
+  onSummarizeAlarmModels,
+}: UseAlarmModelsOptions) {
+  const alarmModelRequests = useRequestSelector(
+    requests,
+    (alarmSourceRequests) =>
+      alarmSourceRequests.map((request) => ({
+        alarmModelName: getAlarmModelNameFromAlarmSourceProperty(
+          request.source
+        ),
+      }))
+  );
 
   const alarmModelQueries = useDescribeAlarmModels({
     iotEventsClient,
     requests: alarmModelRequests,
+    retry,
   });
 
-  return useMemo(() => {
-    /**
-     * Walk through the alarmDataList to inject the alarm models for a matching request.
-     *
-     * filteredIndex tracks progress through the filtered request list and associated query responses.
-     *
-     * Both lists have the same order, where the alarmDataList may have more elements than the filtered list.
-     */
-    let filteredIndex = 0;
-    return (
-      alarmDataList?.map((alarmData) => {
-        // Try to access AlarmData alarm source property
-        const sourceProperty: AlarmProperty | undefined = alarmData.source;
-        if (
-          sourceProperty &&
-          sourceProperty.data &&
-          filteredIndex < alarmModelRequests.length &&
-          // Look up if AlarmData alarm source matches the alarm model request
-          alarmModelRequests[filteredIndex].alarmModelName ===
-            getAlarmModelNameFromAlarmSourceProperty(sourceProperty)
-        ) {
-          const alarmModel = alarmModelQueries[filteredIndex].data;
-          const status = getStatusForQuery(
-            alarmModelQueries[filteredIndex],
-            alarmData.status
-          );
-          filteredIndex++;
-
-          // Inject alarm asset property data into the AlarmData
-          return {
-            ...alarmData,
-            // Right now only support the latest version of the alarm model
-            models: alarmModel ? [alarmModel] : undefined,
-            status,
-          };
-        } else {
-          return alarmData;
-        }
-      }) ?? []
-    );
-  }, [alarmDataList, alarmModelRequests, alarmModelQueries]);
+  useReactQueryEffect(() => {
+    onSummarizeAlarmModels({
+      alarmModelSummaries: alarmModelQueries.map((query, index) => ({
+        request: alarmModelRequests[index],
+        status: getStatusForQuery(query),
+        data: query.data,
+      })),
+    });
+  }, [alarmModelQueries]);
 }

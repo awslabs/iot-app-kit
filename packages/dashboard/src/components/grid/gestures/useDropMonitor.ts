@@ -1,6 +1,6 @@
 import { useDrop } from 'react-dnd';
-import { DropEvent } from './types';
-import { ComponentPaletteDraggable } from '~/components/palette/types';
+import { type DropEvent } from './types';
+import { type ComponentPaletteDraggable } from '~/components/palette/types';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { DASHBOARD_CONTAINER_ID } from '../getDashboardPosition';
 

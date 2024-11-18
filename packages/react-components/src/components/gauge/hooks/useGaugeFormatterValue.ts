@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { getPreciseValue } from '../../../utils/getPreciseValue';
-import { GaugeProps } from '../types';
+import { type GaugeProps } from '../types';
 
 export const useGaugeFormatterValue = ({
   unit,

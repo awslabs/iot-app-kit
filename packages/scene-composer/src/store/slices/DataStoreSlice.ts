@@ -1,7 +1,7 @@
-import { GetState, SetState, StoreApi } from 'zustand';
+import { type GetState, type SetState, type StoreApi } from 'zustand';
 
-import { IDataInput, IDataBindingTemplate } from '../../interfaces';
-import { RootState } from '../Store';
+import { type IDataInput, type IDataBindingTemplate } from '../../interfaces';
+import { type RootState } from '../Store';
 
 export interface IDataStoreSlice {
   dataInput?: IDataInput;

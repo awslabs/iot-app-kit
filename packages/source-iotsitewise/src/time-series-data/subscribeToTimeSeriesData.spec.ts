@@ -1,8 +1,8 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
 import { TimeSeriesDataModule } from '@iot-app-kit/core';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
 import flushPromises from 'flush-promises';
 import { createDataSource } from './data-source';
 import {

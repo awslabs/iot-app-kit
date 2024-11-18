@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
-import Dashboard, { DashboardProperties } from './index';
+import Dashboard, { type DashboardProperties } from './index';
 
 export const DashboardWrapper: React.FC<DashboardProperties> = ({
   onSave,
@@ -14,6 +14,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
   toolbar,
   onDashboardConfigurationChange,
   timeZone,
+  assistantConfiguration,
 }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const stableOnViewportChange = useMemo(() => onViewportChange, []);
@@ -48,6 +49,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
       onDashboardConfigurationChange={onStableDashboardConfigurationChange}
       toolbar={stableToolbar}
       timeZone={timeZone}
+      assistantConfiguration={assistantConfiguration}
     />
   );
 };

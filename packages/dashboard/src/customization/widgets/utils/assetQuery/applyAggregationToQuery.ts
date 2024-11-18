@@ -1,11 +1,14 @@
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 
 export const applyAggregationToQuery = (
   {
     assets = [],
     properties = [],
     assetModels = [],
+    alarms = [],
+    alarmModels = [],
+    requestSettings = {},
   }: IoTSiteWiseDataStreamQuery,
   aggregationType: AggregateType | undefined
 ) => ({
@@ -27,4 +30,10 @@ export const applyAggregationToQuery = (
       aggregationType,
     })),
   })),
+  alarms,
+  alarmModels,
+  requestSettings: {
+    ...requestSettings,
+    aggregationType,
+  },
 });

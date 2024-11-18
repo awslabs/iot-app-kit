@@ -1,6 +1,6 @@
-import { DataSource, DataSourceTransformer } from '../../types';
-import { ArrowDataSource } from './dataSource';
-import { ArrowDataSourceValue, FieldType } from './input';
+import { type DataSource, type DataSourceTransformer } from '../../types';
+import { type ArrowDataSource } from './dataSource';
+import { type ArrowDataSourceValue, FieldType } from './input';
 
 /**
  * Abstract arrow transformer

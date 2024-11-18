@@ -1,6 +1,6 @@
-import * as THREE from 'three';
+import type * as THREE from 'three';
 
-import { Vector3 } from '../../../interfaces';
+import { type Vector3 } from '../../../interfaces';
 
 export interface MotionIndicatorProps {
   speed: number;

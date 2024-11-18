@@ -1,13 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import type { ExecuteQuery, ListAssets } from '@iot-app-kit/core';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AssetExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import * as table from '../helpers/table';
+import type { SelectionMode } from '../../types/common';
+import type { AssetResource } from '../../types/resources';
 import { createListAssetsPage } from '../helpers/responses';
-import { SelectionMode } from '../../types/common';
-import { ExecuteQuery, ListAssets } from '@iot-app-kit/core';
-import { AssetResource } from '../../types/resources';
+import * as table from '../helpers/table';
 
 function SelectableAssetTable({
   selectionMode,
@@ -159,12 +159,12 @@ describe('asset table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssets).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listAssets).toHaveBeenCalledTimes(2);
+      expect(screen.getByText('(20)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssets).toHaveBeenCalledTimes(2);
       expect(screen.getByText('(20)')).toBeInTheDocument();
@@ -186,7 +186,7 @@ describe('asset table', () => {
       expect(table.getNextPageButton()).toBeDisabled();
     });
 
-    it.skip('requests multiple lists of pages of assets correctly', async () => {
+    it('requests multiple lists of pages of assets correctly', async () => {
       const listAssociatedAssets = jest
         .fn()
         .mockResolvedValueOnce(createListAssetsPage(10, 0, 'next-token-1'))
@@ -203,19 +203,19 @@ describe('asset table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssociatedAssets).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listAssociatedAssets).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
-      expect(listAssociatedAssets).toHaveBeenCalledTimes(3);
-      expect(screen.getByText('(20)')).toBeInTheDocument();
+      expect(listAssociatedAssets).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).not.toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssociatedAssets).toHaveBeenCalledTimes(4);
       expect(screen.getByText('(30)')).toBeInTheDocument();
@@ -703,6 +703,66 @@ describe('asset table', () => {
 
       expect(screen.getByText('Name')).toBeVisible();
       expect(screen.getByText('Description')).toBeVisible();
+    });
+  });
+
+  describe('errors', () => {
+    // hide errors in test output
+    const realConsoleError = console.error;
+    beforeAll(() => {
+      console.error = () => {};
+    });
+    afterAll(() => {
+      console.error = realConsoleError;
+    });
+
+    test('user experiences an error when listing assets', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <AssetExplorer
+          iotSiteWiseClient={{
+            listAssets: jest.fn().mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+      const assetTable = screen.getByRole('table');
+
+      expect(within(assetTable).getByText(errorMessage)).toBeVisible();
+    });
+
+    test('user experiences an error when listing associated assets', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <AssetExplorer
+          parameters={[{ assetId: 'asset-id-1' }]}
+          iotSiteWiseClient={{
+            listAssociatedAssets: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+      const assetTable = screen.getByRole('table');
+
+      expect(within(assetTable).getByText(errorMessage)).toBeVisible();
+    });
+
+    test('user experiences an error when searching assets', async () => {
+      const errorMessage = 'Failed to request resources';
+      const executeQuery = jest.fn().mockRejectedValue(new Error(errorMessage));
+      render(
+        <AssetExplorer
+          iotSiteWiseClient={{ executeQuery }}
+          tableSettings={{ isSearchEnabled: true }}
+        />
+      );
+      await table.typeSearchStatement('Asset');
+      await table.clickSearch();
+      const assetTable = screen.getByRole('table');
+
+      expect(within(assetTable).getByText(errorMessage)).toBeVisible();
     });
   });
 });

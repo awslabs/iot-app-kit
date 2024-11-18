@@ -1,12 +1,12 @@
 import { SpaceBetween } from '@cloudscape-design/components';
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { accessStore } from '../../../store';
-import { IEntityBindingComponentInternal } from '../../../store/internalInterfaces';
-import { IComponentEditorProps } from '../ComponentEditor';
+import { type IEntityBindingComponentInternal } from '../../../store/internalInterfaces';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
-import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
+import { type ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
 export interface IEntityBindingComponentEditorProps extends IComponentEditorProps {
   component: IEntityBindingComponentInternal;

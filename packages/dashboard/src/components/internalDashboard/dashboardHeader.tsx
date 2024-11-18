@@ -1,4 +1,4 @@
-import React, { ReactNode, memo } from 'react';
+import { type ReactNode, memo } from 'react';
 
 import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { TimeSelection, useViewport } from '@iot-app-kit/react-components';
@@ -6,7 +6,7 @@ import { TimeSelection, useViewport } from '@iot-app-kit/react-components';
 import Actions from '../actions';
 import type { DashboardSave, DashboardToolbar } from '~/types';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 import isEqual from 'lodash/isEqual';
 
@@ -23,7 +23,10 @@ type DefaultDashboardHeaderProps = DashboardHeaderProps & {
 
 const HeaderContainer = ({ children }: { children: ReactNode }) => {
   return (
-    <div style={{ height: '68px', maxHeight: '68px', boxSizing: 'border-box' }}>
+    <div
+      style={{ height: '68px', maxHeight: '68px', boxSizing: 'border-box' }}
+      data-testid='iot-app-kit-dashboard-header'
+    >
       {children}
     </div>
   );

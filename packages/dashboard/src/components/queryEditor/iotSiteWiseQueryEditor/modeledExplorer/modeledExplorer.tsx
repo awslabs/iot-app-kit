@@ -1,22 +1,27 @@
-import { Box } from '@cloudscape-design/components';
+import { Box, ExpandableSection } from '@cloudscape-design/components';
 import {
+  AlarmExplorer,
+  type AlarmExplorerProps,
+  type AlarmResource,
   AssetExplorer,
-  AssetExplorerProps,
+  type AssetExplorerProps,
   AssetPropertyExplorer,
-  AssetPropertyExplorerProps,
-  AssetPropertyResource,
-  AssetResource,
-  SelectionMode,
+  type AssetPropertyExplorerProps,
+  type AssetPropertyResource,
+  type AssetResource,
+  type SelectionMode,
 } from '@iot-app-kit/react-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { isModeledPropertyInvalid } from '../../helpers/isModeledPropertyInvalid';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
 import { getPlugin } from '@iot-app-kit/core';
-import { useQuery } from '../../useQuery';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { DashboardWidget } from '~/types';
+import { type useQuery } from '../../useQuery';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
+import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
+import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
 
 type ModeledExplorerProps = {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
@@ -45,30 +50,74 @@ export const ModeledExplorer = ({
     NonNullable<AssetPropertyExplorerProps['selectedAssetProperties']>
   >([]);
 
+  const [selectedAlarms, setSelectedAlarms] = useState<
+    NonNullable<AlarmExplorerProps['selectedAlarms']>
+  >([]);
+
+  const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
+
   const metricsRecorder = getPlugin('metricsRecorder');
+
+  const resetPropertiesAndAlarms = () => {
+    setSelectedAssetProperties([]);
+    setSelectedAlarms([]);
+  };
 
   function handleSelectAssets(
     assets: NonNullable<AssetExplorerProps['selectedAssets']>
   ) {
     setSelectedAssets(assets);
-    setSelectedAssetProperties([]);
+    resetPropertiesAndAlarms();
   }
 
   function handleClickAddModeledDataStreams(
-    newModeledDataStreams: readonly AssetPropertyResource[]
+    newModeledDataStreams: readonly AssetPropertyResource[],
+    newAlarmDataStreams: readonly AlarmResource[]
   ) {
     onUpdateQuery((currentQuery) => {
-      const queryExtender = new QueryExtender(currentQuery);
-      const updatedQuery = queryExtender.extendAssetQueries(
-        newModeledDataStreams
-      );
+      const extendtedAssetQuery = new QueryExtender(
+        currentQuery
+      ).extendAssetQueries(newModeledDataStreams);
 
-      return updatedQuery;
+      const extendedAlarmQuery = new QueryExtender(
+        extendtedAssetQuery
+      ).extendAlarmQueries(newAlarmDataStreams);
+
+      return extendedAlarmQuery;
     });
   }
 
+  const AssetExplorerComponent = (
+    <AssetPropertyExplorer
+      iotSiteWiseClient={iotSiteWiseClient}
+      parameters={selectedAssets}
+      selectionMode={correctSelectionMode}
+      onSelectAssetProperty={setSelectedAssetProperties}
+      selectedAssetProperties={selectedAssetProperties}
+      tableSettings={{
+        isFilterEnabled: true,
+        isUserSettingsEnabled: true,
+      }}
+      isAssetPropertyDisabled={(item) =>
+        isModeledPropertyInvalid(item.dataType, selectedWidgets.at(0)?.type)
+      }
+      ariaLabels={{
+        resizerRoleDescription: 'Resize button',
+        itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
+          propertySelectionLabel(
+            [...selectedItems],
+            modeledDataStream,
+            selectedWidgets
+          ),
+      }}
+      description='Select a modeled data stream to add to a widget.'
+      timeZone={timeZone}
+      significantDigits={significantDigits}
+    />
+  );
+
   return (
-    <Box padding={{ horizontal: 's' }}>
+    <Box padding={{ horizontal: 's', bottom: 'm' }}>
       <AssetExplorer
         iotSiteWiseClient={iotSiteWiseClient}
         onSelectAsset={handleSelectAssets}
@@ -79,7 +128,7 @@ export const ModeledExplorer = ({
           isFilterEnabled: true,
           isUserSettingsEnabled: true,
         }}
-        description='Browse through your asset hierarchy and select an asset to view its associated data streams.'
+        description='Browse through your assets to select an asset, and view its associated data streams.'
         ariaLabels={{
           resizerRoleDescription: 'Resize button',
           itemSelectionLabel: (isNotSelected, asset: AssetResource) =>
@@ -88,44 +137,68 @@ export const ModeledExplorer = ({
               : `Deselect asset ${asset.name}`,
         }}
       />
-      {selectedAssets.length > 0 && (
-        <AssetPropertyExplorer
-          iotSiteWiseClient={iotSiteWiseClient}
-          parameters={selectedAssets}
-          selectionMode={correctSelectionMode}
-          onSelectAssetProperty={setSelectedAssetProperties}
-          selectedAssetProperties={selectedAssetProperties}
-          tableSettings={{
-            isFilterEnabled: true,
-            isUserSettingsEnabled: true,
-          }}
-          isAssetPropertyDisabled={(item) =>
-            isModeledPropertyInvalid(item.dataType, selectedWidgets.at(0)?.type)
-          }
-          ariaLabels={{
-            resizerRoleDescription: 'Resize button',
-            itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
-              propertySelectionLabel(
-                [...selectedItems],
-                modeledDataStream,
-                selectedWidgets
-              ),
-          }}
-          description='Select a modeled datastream to add to a selected widget'
-          timeZone={timeZone}
-          significantDigits={significantDigits}
-        />
-      )}
+      {selectedAssets.length > 0 &&
+        (alarmsFeatureOn ? (
+          <>
+            <ExpandableSection
+              headerText={
+                <ExpandableSectionHeading headerText='Data streams' />
+              }
+              defaultExpanded
+            >
+              {AssetExplorerComponent}
+            </ExpandableSection>
+            <ExpandableSection
+              headerText={
+                <ExpandableSectionHeading headerText='Alarm data streams' />
+              }
+            >
+              <AlarmExplorer
+                iotSiteWiseClient={iotSiteWiseClient}
+                parameters={selectedAssets}
+                selectionMode={correctSelectionMode}
+                onSelectAlarm={setSelectedAlarms}
+                selectedAlarms={selectedAlarms}
+                tableSettings={{
+                  isFilterEnabled: true,
+                  isUserSettingsEnabled: true,
+                }}
+                ariaLabels={{
+                  resizerRoleDescription: 'Resize button',
+                  itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
+                    alarmSelectionLabel([...selectedItems], modeledDataStream),
+                }}
+                description='Select an alarm to add to a selected widget.'
+                timeZone={timeZone}
+                significantDigits={significantDigits}
+              />
+            </ExpandableSection>
+          </>
+        ) : (
+          AssetExplorerComponent
+        ))}
       <ResourceExplorerFooter
         addDisabled={addButtonDisabled}
-        onReset={() => setSelectedAssetProperties([])}
+        onReset={resetPropertiesAndAlarms}
         onAdd={() => {
-          handleClickAddModeledDataStreams(selectedAssetProperties);
-          setSelectedAssetProperties([]); //clear table after adding it to widget
-          metricsRecorder?.record({
-            metricName: 'ModeledDataStreamAdd',
-            metricValue: 1,
-          });
+          handleClickAddModeledDataStreams(
+            selectedAssetProperties,
+            selectedAlarms
+          );
+          if (selectedAssetProperties.length > 0) {
+            metricsRecorder?.record({
+              metricName: 'ModeledDataStreamAdd',
+              metricValue: 1,
+            });
+          }
+          if (selectedAlarms.length > 0) {
+            metricsRecorder?.record({
+              metricName: 'AlarmStreamAdd',
+              metricValue: 1,
+            });
+          }
+
+          resetPropertiesAndAlarms();
         }}
       />
     </Box>

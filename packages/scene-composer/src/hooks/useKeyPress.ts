@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 
-import { Key } from './useKeyMap';
+import { type Key } from './useKeyMap';
 
 function isKey(key: string | number | Key): key is Key {
   return !!(key as Key).key;

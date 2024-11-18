@@ -5,10 +5,12 @@ import {
 } from '@iot-app-kit/testing-util';
 
 import { DashboardWrapper as Dashboard } from './wrapper';
-import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { RefreshRate } from '../refreshRate/types';
+import {
+  IoTSiteWise,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import { type RefreshRate } from '../refreshRate/types';
 
 const config = {
   credentials: {
@@ -19,8 +21,20 @@ const config = {
   region: 'test-region',
 };
 
-it('renders', function () {
-  const { queryByText, queryByTestId } = render(
+const clients = {
+  iotEventsClient: createMockIoTEventsSDK(),
+  iotSiteWiseClient: {
+    ...createMockSiteWiseSDK(),
+    config,
+  } as unknown as IoTSiteWiseClient,
+  iotTwinMakerClient: {
+    send: jest.fn(),
+  } as unknown as IoTTwinMakerClient,
+  iotSiteWise: new IoTSiteWise(),
+};
+
+it('renders', async () => {
+  const { queryByText, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -31,26 +45,17 @@ it('renders', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-      }}
+      clientConfiguration={clients}
     />
   );
 
+  expect(await findByTestId(/dashboard-actions/i)).toBeInTheDocument();
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/dashboard-actions/i)).toBeInTheDocument();
-  expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
 });
 
-it('renders in readonly initially', function () {
-  const { baseElement, queryByText, queryByTestId } = render(
+it('renders in readonly initially', async () => {
+  const { queryByTestId, queryByText, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -61,34 +66,20 @@ it('renders in readonly initially', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-      }}
+      clientConfiguration={clients}
       initialViewMode='preview'
     />
   );
 
-  expect(
-    baseElement.querySelector('[data-test-id="read-only-mode-dashboard"]')
-  ).toBeTruthy();
-  expect(
-    baseElement.querySelector('[data-test-id="edit-mode-dashboard"]')
-  ).not.toBeTruthy();
-
+  expect(await findByTestId(/read-only-mode-dashboard/i)).toBeInTheDocument();
+  expect(queryByTestId(/edit-mode-dashboard/i)).toBeNull();
+  expect(await findByTestId(/dashboard-actions/i)).toBeInTheDocument();
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/dashboard-actions/i)).toBeInTheDocument();
-  expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
 });
 
-it('renders in edit initially', function () {
-  const { baseElement } = render(
+it('renders in edit initially', async () => {
+  const { findByTestId, queryByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -99,26 +90,13 @@ it('renders in edit initially', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-      }}
+      clientConfiguration={clients}
       initialViewMode='edit'
     />
   );
 
-  expect(
-    baseElement.querySelector('[data-test-id="read-only-mode-dashboard"]')
-  ).not.toBeTruthy();
-  expect(
-    baseElement.querySelector('[data-test-id="edit-mode-dashboard"]')
-  ).toBeTruthy();
+  expect(await findByTestId(/edit-mode-dashboard/i)).toBeInTheDocument();
+  expect(queryByTestId(/read-only-mode-dashboard/i)).toBeNull();
 });
 
 it('passes the correct viewMode to onSave', function () {
@@ -141,16 +119,7 @@ it('passes the correct viewMode to onSave', function () {
     <Dashboard
       onSave={onSave}
       dashboardConfiguration={savedConfig}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-      }}
+      clientConfiguration={clients}
       initialViewMode='edit'
     />
   );
@@ -166,8 +135,8 @@ it('passes the correct viewMode to onSave', function () {
   expect(onSave).toBeCalledWith(savedConfig, 'preview');
 });
 
-it('renders dashboard name', function () {
-  const { queryByText } = render(
+it('renders dashboard name', async () => {
+  const { findByText } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -179,24 +148,15 @@ it('renders dashboard name', function () {
         viewport: { duration: '5m' },
       }}
       name='Test dashboard'
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-      }}
+      clientConfiguration={clients}
     />
   );
 
-  expect(queryByText(/Test dashboard/i)).toBeInTheDocument();
+  expect(await findByText(/Test dashboard/i)).toBeInTheDocument();
 });
 
-it('renders without dashboard name', function () {
-  const { queryByText } = render(
+it('renders without dashboard name', async () => {
+  const { queryByText, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -207,18 +167,81 @@ it('renders without dashboard name', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
+      clientConfiguration={clients}
+    />
+  );
+
+  expect(await findByTestId(/dashboard-actions/i)).toBeInTheDocument();
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
+  expect(queryByText(/Test dashboard/i)).not.toBeInTheDocument();
+});
+
+it('assistant disabled by default in the dashboard', async () => {
+  const { queryByTestId, findByTestId } = render(
+    <Dashboard
+      onSave={() => Promise.resolve()}
+      dashboardConfiguration={{
+        displaySettings: {
+          numColumns: 100,
+          numRows: 100,
+        },
+        widgets: [],
+        viewport: { duration: '5m' },
+      }}
+      clientConfiguration={clients}
+      initialViewMode='preview'
+    />
+  );
+
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
+  expect(queryByTestId('dashboard-chatbot')).toBeNull();
+});
+
+it('assistant enabled in the dashboard when state is PASSIVE', async () => {
+  const { findByRole } = render(
+    <Dashboard
+      onSave={() => Promise.resolve()}
+      dashboardConfiguration={{
+        displaySettings: {
+          numColumns: 100,
+          numRows: 100,
+        },
+        widgets: [],
+        viewport: { duration: '5m' },
+      }}
+      clientConfiguration={clients}
+      initialViewMode='preview'
+      assistantConfiguration={{
+        state: 'PASSIVE',
       }}
     />
   );
 
-  expect(queryByText(/Test dashboard/i)).not.toBeInTheDocument();
+  expect(
+    await findByRole('button', { name: 'AI Assistant' })
+  ).toBeInTheDocument();
+});
+
+it('assistant disabled in the dashboard when state is DISABLED', async () => {
+  const { queryByRole, findByTestId } = render(
+    <Dashboard
+      onSave={() => Promise.resolve()}
+      dashboardConfiguration={{
+        displaySettings: {
+          numColumns: 100,
+          numRows: 100,
+        },
+        widgets: [],
+        viewport: { duration: '5m' },
+      }}
+      clientConfiguration={clients}
+      initialViewMode='preview'
+      assistantConfiguration={{
+        state: 'DISABLED',
+      }}
+    />
+  );
+
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
+  expect(queryByRole('button', { name: 'AI Assistant' })).toBeNull();
 });

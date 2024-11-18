@@ -1,4 +1,4 @@
-import React, { Component, ContextType, ReactNode } from 'react';
+import { Component, type ContextType, type ReactNode } from 'react';
 
 import LoggingContext from '../../contexts/logging';
 

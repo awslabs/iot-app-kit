@@ -1,18 +1,17 @@
-import { useMemo } from 'react';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AlarmData, AlarmRequest } from '../types';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import type { AlarmRequest } from '../types';
 import { useDescribeAssetModels, useDescribeAssets } from '../../../queries';
-import {
-  buildFromAssetModelResponse,
-  buildFromAssetResponse,
-} from '../utils/alarmDataUtils';
-import { getStatusForQuery } from '../utils/queryUtils';
+import { getStatusForQuery } from '../utils/queryStatus';
 import { isAssetModelRequest, isAssetRequest } from './predicates';
+import type { QueryOptionsGlobal } from '../../../queries/common/types';
+import { type OnSummarizeAlarmAction, useRequestSelector } from '../state';
+import { useReactQueryEffect } from './useReactQueryEffect';
 
-export interface UseAlarmAssetsOptions {
+export type UseAlarmAssetsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient;
   requests?: AlarmRequest[];
-}
+  onSummarizeAlarms: OnSummarizeAlarmAction;
+} & QueryOptionsGlobal;
 
 /**
  * useAlarmAssets is a hook used to describe the asset or assetModel
@@ -25,56 +24,41 @@ export interface UseAlarmAssetsOptions {
 export function useAlarmAssets({
   iotSiteWiseClient,
   requests = [],
-}: UseAlarmAssetsOptions): AlarmData[] {
+  retry,
+  onSummarizeAlarms,
+}: UseAlarmAssetsOptions) {
   // Fetch an asset model for request with an assetModelId
-  const assetModelRequests = requests.filter(isAssetModelRequest);
+  const assetModelRequests = useRequestSelector(requests, (allRequests) =>
+    allRequests.filter(isAssetModelRequest)
+  );
   const assetModelQueries = useDescribeAssetModels({
     iotSiteWiseClient,
     requests: assetModelRequests,
+    retry,
   });
 
   // Fetch an asset for each request with an assetId
-  const assetRequests = requests.filter(isAssetRequest);
+  const assetRequests = useRequestSelector(requests, (allRequests) =>
+    allRequests.filter(isAssetRequest)
+  );
   const assetQueries = useDescribeAssets({
     iotSiteWiseClient,
     requests: assetRequests,
+    retry,
   });
 
-  // Build AlarmData for all alarms from assetModels
-  const assetModelAlarms = useMemo(
-    () =>
-      assetModelRequests
-        .map((request, index) => {
-          const status = getStatusForQuery(assetModelQueries[index]);
-          return buildFromAssetModelResponse({
-            request,
-            status,
-            assetModelResponse: assetModelQueries[index].data,
-          });
-        })
-        .flat(),
-    [assetModelRequests, assetModelQueries]
-  );
-
-  // Build AlarmData for all alarms from assets
-  const assetAlarms = useMemo(
-    () =>
-      assetRequests
-        .map((request, index) => {
-          const status = getStatusForQuery(assetQueries[index]);
-          return buildFromAssetResponse({
-            request,
-            status,
-            assetResponse: assetQueries[index].data,
-          });
-        })
-        .flat(),
-    [assetRequests, assetQueries]
-  );
-
-  // We will not maintain the order of alarms based on the requests
-  return useMemo(
-    () => [...assetModelAlarms, ...assetAlarms],
-    [assetModelAlarms, assetAlarms]
-  );
+  useReactQueryEffect(() => {
+    onSummarizeAlarms({
+      assetModelSummaries: assetModelQueries.map((query, index) => ({
+        data: query.data,
+        request: assetModelRequests[index],
+        status: getStatusForQuery(query),
+      })),
+      assetSummaries: assetQueries.map((query, index) => ({
+        data: query.data,
+        request: assetRequests[index],
+        status: getStatusForQuery(query),
+      })),
+    });
+  }, [assetModelQueries, assetQueries]);
 }

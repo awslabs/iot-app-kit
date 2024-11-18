@@ -1,12 +1,12 @@
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 import { cloneDeep, isEmpty, isString } from 'lodash';
-import { GetState, SetState } from 'zustand';
+import { type GetState, type SetState } from 'zustand';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import {
   COMPOSER_FEATURES,
-  IOverlaySettings,
-  ISceneNode,
+  type IOverlaySettings,
+  type ISceneNode,
   KnownComponentType,
   KnownSceneProperty,
 } from '../../interfaces';
@@ -14,21 +14,21 @@ import DebugLogger from '../../logger/DebugLogger';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { mergeDeep } from '../../utils/objectUtils';
-import { RecursivePartial } from '../../utils/typeUtils';
-import { RootState } from '../Store';
+import { type RecursivePartial } from '../../utils/typeUtils';
+import { type RootState } from '../Store';
 import { addComponentToComponentNodeMap, deleteComponentFromComponentNodeMap } from '../helpers/componentMapHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import interfaceHelpers from '../helpers/interfaceHelpers';
 import { appendSceneNode, removeNode, renderSceneNodes, updateSceneNode } from '../helpers/sceneDocumentHelpers';
-import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
+import serializationHelpers, { type IDeserializeOptions } from '../helpers/serializationHelpers';
 import {
   DisplayMessageCategory,
-  IDataBoundSceneComponentInternal,
-  IRuleBasedMapInternal,
-  ISceneComponentInternal,
-  ISceneDocumentInternal,
-  ISceneNodeInternal,
-  ISerializationErrorDetails,
+  type IDataBoundSceneComponentInternal,
+  type IRuleBasedMapInternal,
+  type ISceneComponentInternal,
+  type ISceneDocumentInternal,
+  type ISceneNodeInternal,
+  type ISerializationErrorDetails,
   SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';

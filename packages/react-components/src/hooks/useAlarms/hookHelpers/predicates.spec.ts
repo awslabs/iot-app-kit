@@ -5,7 +5,7 @@ import {
   MOCK_COMPOSITE_MODEL_ID,
   mockStateAssetProperty,
 } from '../../../testing/alarms';
-import { AlarmProperty, AlarmRequest } from '../types';
+import type { AlarmProperty, AlarmRequest } from '../types';
 import {
   isAlarmProperty,
   isAssetModelRequest,

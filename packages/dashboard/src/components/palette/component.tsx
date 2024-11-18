@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef, type FC } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../dragLayer/itemTypes';
@@ -15,7 +15,7 @@ type PaletteComponentProps = {
   onAddWidget: (componentTag: string) => void;
 };
 
-const PaletteComponent: React.FC<PaletteComponentProps> = ({
+const PaletteComponent: FC<PaletteComponentProps> = ({
   componentTag,
   name,
   IconComponent,

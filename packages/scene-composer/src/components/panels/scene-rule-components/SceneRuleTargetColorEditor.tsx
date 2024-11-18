@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Input, Grid } from '@cloudscape-design/components';
-import { ColorRepresentation } from 'three';
+import { Grid, Input } from '@cloudscape-design/components';
+import { type FC, useCallback, useState } from 'react';
+import { type ColorRepresentation } from 'three';
 
 import { colors } from '../../../utils/styleUtils';
 import { ColorPicker } from '../ColorPicker/ColorPicker';

@@ -2,9 +2,9 @@ import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
 import {
-  IDataBindingConfig,
-  IDataFieldOption,
-  IValueDataBindingProviderState,
+  type IDataBindingConfig,
+  type IDataFieldOption,
+  type IValueDataBindingProviderState,
 } from './types';
 import flushPromises from 'flush-promises';
 

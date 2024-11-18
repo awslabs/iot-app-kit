@@ -1,4 +1,4 @@
-import { ISceneDocument } from '../interfaces';
+import { type ISceneDocument } from '../interfaces';
 
 export const emptyScene: ISceneDocument = {
   specVersion: '1.0',

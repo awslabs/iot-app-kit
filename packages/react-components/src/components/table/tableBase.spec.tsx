@@ -1,4 +1,3 @@
-import React from 'react';
 import type { DataStream, Viewport } from '@iot-app-kit/core';
 import { COMPARISON_OPERATOR, STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { createTableItems } from './createTableItems';

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { TimeSeriesDataCacheClient } from './cacheClient';
+import { type TimeSeriesDataCacheClient } from './cacheClient';
 // import { Viewport } from "./types";
 import { useQueries } from '@tanstack/react-query';
 // import { IntervalTransformer } from "./intervals";

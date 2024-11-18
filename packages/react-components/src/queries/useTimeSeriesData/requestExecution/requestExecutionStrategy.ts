@@ -1,4 +1,4 @@
-import { SendOptions } from './types';
+import { type SendOptions } from './types';
 
 export type OnRequestSuccessCallback<Request, Data> = (
   request: Request,

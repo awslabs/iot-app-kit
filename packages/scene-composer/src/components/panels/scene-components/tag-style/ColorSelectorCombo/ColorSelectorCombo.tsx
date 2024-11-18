@@ -1,14 +1,22 @@
-import { Button, FormField, Icon, Input, InputProps, SpaceBetween, TextContent } from '@cloudscape-design/components';
-import { NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
-import React, { useCallback, useEffect, useState } from 'react';
-import { CirclePicker, ColorResult } from 'react-color';
+import {
+  Button,
+  FormField,
+  Icon,
+  Input,
+  type InputProps,
+  SpaceBetween,
+  TextContent,
+} from '@cloudscape-design/components';
+import { type NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
+import { useCallback, useEffect, useState } from 'react';
+import { CirclePicker, type ColorResult } from 'react-color';
 import { useIntl } from 'react-intl';
 import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
-import { ColorRepresentation } from 'three';
+import { type ColorRepresentation } from 'three';
 
 import { colors } from '../../../../../utils/styleUtils';
 import { isValidHexCode } from '../../../../../utils/colorUtils';
-import { IColorPickerProps } from '../interface';
+import { type IColorPickerProps } from '../interface';
 import { ColorPicker } from '../../../ColorPicker/ColorPicker';
 import { hexString } from '../../../ColorPicker/ColorPickerHelpers';
 

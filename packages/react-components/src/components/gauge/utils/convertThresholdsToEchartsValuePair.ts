@@ -1,7 +1,7 @@
 import { getThresholdRangeFromMinMax } from './getThresholdRangeFromMinMax';
-import { GaugeProps, GaugeSettings } from '../types';
+import { type GaugeProps, type GaugeSettings } from '../types';
 import { DEFAULT_GAUGE_PROGRESS_COLOR } from '../constants';
-import { ComparisonOperator } from '@iot-app-kit/core';
+import { type ComparisonOperator } from '@iot-app-kit/core';
 
 type ThresholdRange = {
   start?: number;

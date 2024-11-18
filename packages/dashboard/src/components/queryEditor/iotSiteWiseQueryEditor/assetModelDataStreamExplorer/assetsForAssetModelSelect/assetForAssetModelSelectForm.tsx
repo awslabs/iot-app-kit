@@ -1,9 +1,7 @@
-import React from 'react';
-
 import FormField from '@cloudscape-design/components/form-field';
 import {
   AssetForAssetModelSelect,
-  AssetForAssetModelSelectOptions,
+  type AssetForAssetModelSelectOptions,
 } from './assetForAssetModelSelect';
 
 export const AssetForAssetModelSelectForm = (
@@ -11,7 +9,7 @@ export const AssetForAssetModelSelectForm = (
 ) => (
   <FormField
     label='Default asset'
-    description='This asset will be the default view in both edit and preview mode.'
+    description='This asset is the default view in both Edit and Preview modes.'
   >
     <AssetForAssetModelSelect {...props} />
   </FormField>

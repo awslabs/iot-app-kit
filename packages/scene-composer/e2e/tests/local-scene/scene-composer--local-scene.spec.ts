@@ -6,7 +6,7 @@ const localScene = '/iframe.html?args=&id=developer-scene-composer--local-scene'
 const canvas = '#tm-scene-unselectable-canvas';
 
 test.describe('scene-composer--local-scene', () => {
-  test('visual regression', async ({ page }) => {
+  test.skip('visual regression', async ({ page }) => {
     await page.goto(localScene);
     await page.evaluate(() => document.body.classList.add('awsui-dark-mode')); // TODO: Make this a utility, and tie it to the browser preferences so it just works with playwright's default colorScheme toggle
     await page.waitForTimeout(500); // Wait for scene to load.

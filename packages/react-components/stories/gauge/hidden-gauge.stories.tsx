@@ -1,6 +1,5 @@
-import React from 'react';
 import { Gauge } from '../../src';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY } from './mock-data';
 import { DEFAULT_GAUGE_STYLES } from '../../src/components/gauge/constants';
 

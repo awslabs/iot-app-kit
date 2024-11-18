@@ -1,9 +1,9 @@
-import { EntitySummary } from '@aws-sdk/client-iottwinmaker';
+import { type EntitySummary } from '@aws-sdk/client-iottwinmaker';
 import {
   isDataBindingTemplate,
   undecorateDataBindingTemplate,
 } from '../../utils/dataBindingTemplateUtils';
-import { IDataBindingTemplate, IDataFieldOption } from '../types';
+import { type IDataBindingTemplate, type IDataFieldOption } from '../types';
 
 export function createIdenticalLabelOption(value: string): IDataFieldOption {
   return { label: value, value };

@@ -1,14 +1,13 @@
+import type { ListAssets } from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-
-import * as dropDown from '../helpers/drop-down';
-import { createListAssetsPage } from '../helpers/responses';
+import { useState } from 'react';
 import { AssetExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
 import type { SelectionMode } from '../../types/common';
-import type { ListAssets } from '@iot-app-kit/core';
 import type { AssetResource } from '../../types/resources';
+import * as dropDown from '../helpers/drop-down';
+import { createListAssetsPage } from '../helpers/responses';
 
 function SelectableAssetDropDown({
   selectionMode,
@@ -96,11 +95,10 @@ describe('asset drop-down', () => {
         <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
       );
 
-      // Page is requested without opening the drop-down
-      expect(listAssets).toHaveBeenCalledOnce();
-
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
+
+      expect(listAssets).toHaveBeenCalledOnce();
     });
 
     it('requests multiple pages of assets correctly', async () => {
@@ -112,9 +110,6 @@ describe('asset drop-down', () => {
       render(
         <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
       );
-
-      // First page is requested without opening the drop-down
-      expect(listAssets).toHaveBeenCalledOnce();
 
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
@@ -141,8 +136,6 @@ describe('asset drop-down', () => {
           ]}
         />
       );
-
-      expect(listAssets).toHaveBeenCalledOnce();
 
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();

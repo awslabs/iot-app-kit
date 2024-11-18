@@ -1,4 +1,3 @@
-import React from 'react';
 import { default as textSvg } from './text.svg';
 import { default as textSvgDark } from './text-dark.svg';
 import WidgetIcon from '../components/widgetIcon';

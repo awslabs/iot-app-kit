@@ -1,10 +1,10 @@
-import React from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
+import { BoxGeometry, Group, Mesh, MeshBasicMaterial } from 'three';
 
-import { accessStore } from '../store';
 import { setFeatureConfig } from '../common/GlobalSettings';
+import { accessStore } from '../store';
 
 import { WebGLCanvasManager } from './WebGLCanvasManager';
 

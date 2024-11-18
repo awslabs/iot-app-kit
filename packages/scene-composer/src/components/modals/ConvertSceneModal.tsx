@@ -1,18 +1,18 @@
-import { isEmpty } from 'lodash';
 import { Alert, Box, Button, Header, SpaceBetween } from '@cloudscape-design/components';
-import React, { useCallback, useContext, useState } from 'react';
+import { isEmpty } from 'lodash';
+import { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 
+import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ISceneNodeInternal, accessStore } from '../../store';
 import { KnownSceneProperty } from '../../interfaces';
+import { type ISceneNodeInternal, accessStore } from '../../store';
 import {
   checkIfEntityExists,
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
 } from '../../utils/entityModelUtils/sceneUtils';
-import { getGlobalSettings } from '../../common/GlobalSettings';
 import CenteredContainer from '../CenteredContainer';
 import { ConvertingProgress } from '../ConvertingProgress';
 

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useReducer } from 'react';
-import { Object3D, Mesh } from 'three';
+import { type Object3D, Mesh } from 'three';
 
 import {
   addMaterial,
   backUpOriginalMaterial,
   initialMaterialMaps,
   materialReducer,
-  MaterialMapLayer,
+  type MaterialMapLayer,
   removeMaterial,
 } from '../reducers/materialReducer';
 

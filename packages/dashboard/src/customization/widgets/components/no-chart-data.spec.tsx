@@ -1,4 +1,3 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import NoChartData from './no-chart-data';
@@ -23,7 +22,7 @@ describe('NoChartData', () => {
         <WidgetTile widget={MOCK_LINE_CHART_WIDGET}>
           <NoChartData
             icon={lineSvgDark}
-            emptyStateText='Browse and select to add your asset properties in your line widget.'
+            emptyStateText='Browse assets and add asset properties to the line widget.'
           />
         </WidgetTile>
         ;
@@ -32,7 +31,7 @@ describe('NoChartData', () => {
 
     const icon = getByAltText('empty widget icon');
     const emptyStateText = getByText(
-      'Browse and select to add your asset properties in your line widget.'
+      'Browse assets and add asset properties to the line widget.'
     );
 
     expect(icon).toBeInTheDocument();

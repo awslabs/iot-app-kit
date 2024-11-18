@@ -1,4 +1,3 @@
-import React from 'react';
 import { default as KPISvg } from './KPI.svg';
 import { default as KPISvgDark } from './KPI-dark.svg';
 import WidgetIcon from '../components/widgetIcon';

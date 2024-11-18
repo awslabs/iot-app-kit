@@ -1,15 +1,13 @@
-import React from 'react';
-
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
-  SelectedAssetModelProperties,
-  UpdateSelectedAssetModelProperties,
+  type SelectedAssetModelProperties,
+  type UpdateSelectedAssetModelProperties,
 } from '../useSelectedAssetModelProperties';
 import { AssetPropertyExplorer } from '@iot-app-kit/react-components';
-import { SelectedAsset } from '../useSelectedAsset';
+import { type SelectedAsset } from '../useSelectedAsset';
 import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
 import { propertySelectionLabel } from '~/components/queryEditor/helpers/propertySelectionLabel';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 
 export interface AssetExplorerProps {
   selectedAssetModelProperties: SelectedAssetModelProperties;
@@ -19,6 +17,7 @@ export interface AssetExplorerProps {
   selectedWidgets: DashboardWidget[];
   timeZone?: string;
   significantDigits?: number;
+  correctSelectionMode: 'single' | 'multi';
 }
 
 export const AssetModelPropertiesExplorer = ({
@@ -29,12 +28,13 @@ export const AssetModelPropertiesExplorer = ({
   selectedWidgets,
   timeZone,
   significantDigits,
+  correctSelectionMode,
 }: AssetExplorerProps) => {
   return (
     <AssetPropertyExplorer
       iotSiteWiseClient={iotSiteWiseClient}
       parameters={selectedAsset}
-      selectionMode='multi'
+      selectionMode={correctSelectionMode}
       onSelectAssetProperty={selectAssetModelProperties}
       selectedAssetProperties={selectedAssetModelProperties}
       tableSettings={{

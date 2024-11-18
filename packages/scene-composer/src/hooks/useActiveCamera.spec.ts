@@ -2,7 +2,7 @@ import { MathUtils } from 'three';
 
 import { useEditorState } from '../store';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { CameraSettings } from '../interfaces';
+import { type CameraSettings } from '../interfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_TARGET } from '../common/constants';
 
 import useActiveCamera from './useActiveCamera';

@@ -1,4 +1,7 @@
-import { ProviderWithViewport, TimeSeriesData } from '@iot-app-kit/core';
+import {
+  type ProviderWithViewport,
+  type TimeSeriesData,
+} from '@iot-app-kit/core';
 
 type ProviderMap = { [key in string]: ProviderWithViewport<TimeSeriesData[]> };
 const providerStore = () => {

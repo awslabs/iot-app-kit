@@ -1,12 +1,12 @@
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { Object3D } from 'three';
+import { Fragment, type FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { type Object3D } from 'three';
 
-import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
+import type ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
 import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
-import { DropHandler } from '../../../../../hooks/useDropMonitor';
+import { type DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
 import { KnownComponentType } from '../../../../../interfaces';
-import { IModelRefComponentInternal, useSceneDocument } from '../../../../../store';
+import { type IModelRefComponentInternal, useSceneDocument } from '../../../../../store';
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 import { sceneComposerIdContext } from '../../../../../common/sceneComposerIdContext';
 import { ModelType } from '../../../../../models/SceneModels';
@@ -117,11 +117,11 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       {expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
           {childNodes.map((node, index) => (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {!isSearching && (
                 <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
           {showSubModel && !isSearching && (
             <SubModelTree parentRef={key} expanded={false} object3D={model!} componentRef={componentRef!} selectable />

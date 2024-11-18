@@ -1,0 +1,191 @@
+name: Validate
+on:
+  pull_request:
+  push:
+    branches:
+      - sophon
+      - rc
+env:
+  PW_TEST_HTML_REPORT_OPEN: 'never'
+jobs:
+  repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          lfs: 'true'
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: node_modules cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
+
+      - name: Stylelint
+        run: npm run test:stylelint
+
+      - name: Git
+        run: npm run test:git
+
+  unit:
+    needs: repo
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          [
+            core,
+            core-util,
+            dashboard,
+            doc-site,
+            react-components,
+            scene-composer,
+            source-iotsitewise,
+            source-iottwinmaker,
+            tools-iottwinmaker,
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: node_modules cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-unit-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-unit-${{ matrix.package}}-
+
+      - name: Test and lint cache
+        uses: actions/cache@v4
+        with:
+          path: '**/.cache'
+          key: ${{ runner.os }}-test-lint-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-test-lint-${{ matrix.package}}-
+
+      - name: Validate
+        run: npx turbo run build:cjs build:es lint test --filter=@iot-app-kit/${{ matrix.package }}
+
+  playwright:
+    needs: repo
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [dashboard, react-components, scene-composer]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: node_modules cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-playwright-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-playwright-${{ matrix.package}}-
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "::set-output name=version::$(npm info @playwright/test version)"
+
+      - name: Playwright cache
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright with dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Install Playwright's dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
+
+      - name: Playwright
+        run: npx turbo run test:ui:ci --filter=@iot-app-kit/${{matrix.package}}
+
+      - name: Failure report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: ${{ matrix.package }}-test-results
+          path: packages/**/test-results
+          retention-days: 30
+
+      - name: Test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.package }}-playwright-report
+          path: packages/**/playwright-report
+          retention-days: 30

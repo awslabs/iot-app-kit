@@ -7,7 +7,7 @@ import {
   ALARM,
 } from '../../__mocks__/alarm';
 import type { DataStream } from '@iot-app-kit/core';
-import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import { type PropertyDataType } from '@aws-sdk/client-iotsitewise';
 
 const PROPERTY_STREAM = {
   id: 'alarm-asset-id---input-property-id',

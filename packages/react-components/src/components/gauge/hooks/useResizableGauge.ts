@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ChartRef } from '../../../hooks/useECharts';
+import { type ChartRef } from '../../../hooks/useECharts';
 
 export const useResizableGauge = (
   chartRef: ChartRef,

@@ -1,4 +1,4 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
 import {

@@ -1,23 +1,35 @@
+import { test, expect } from '@playwright/test';
 import { NEW_PROPERTY_NAME } from '../constants';
-import { expect, test } from '../test';
 import { getDecimalPlaces } from '../utils/getDecimalPlaces';
+import { createNewDashboardWithWidget } from '../createDashboardWidget';
+import { ResourceExplorer } from '../resourceExplorer/ResourceExplorer';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
 
 // TODO: once MSW supports unit on Table add tests to ensure unit is correct
 
 test.describe('Test Table Widget', () => {
   test('Table widget can be added to the dashboard', async ({
-    dashboardWithTableWidget,
+    page,
+    browser,
   }) => {
+    const dashboardWithTableWidget = await createNewDashboardWithWidget(
+      'table',
+      page,
+      browser
+    );
     const widgetEmptyState = dashboardWithTableWidget.gridArea.getByTestId(
       'table-widget-component'
     );
     await expect(widgetEmptyState).toBeVisible();
   });
 
-  test('Can add property to Table widget', async ({
-    dashboardWithTableWidget,
-    resourceExplorer,
-  }) => {
+  test('Can add property to Table widget', async ({ page, browser }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithTableWidget = await createNewDashboardWithWidget(
+      'table',
+      page,
+      browser
+    );
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     const widget = dashboardWithTableWidget.gridArea.getByTestId(
       'table-widget-component'
@@ -26,9 +38,15 @@ test.describe('Test Table Widget', () => {
   });
 
   test('Can multiselect add property to Table widget', async ({
-    dashboardWithTableWidget,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithTableWidget = await createNewDashboardWithWidget(
+      'table',
+      page,
+      browser
+    );
     //select 3 properties
     await resourceExplorer.addModeledProperties([
       'Max Temperature',
@@ -44,10 +62,16 @@ test.describe('Test Table Widget', () => {
   });
 
   test('Table Widget supports significant digits', async ({
-    resourceExplorer,
-    dashboardWithTableWidget,
-    configPanel,
+    page,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithTableWidget = await createNewDashboardWithWidget(
+      'table',
+      page,
+      browser
+    );
     // add property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
 
@@ -76,12 +100,14 @@ test.describe('Test Table Widget', () => {
     expect(getDecimalPlaces(updatedWidgetValue)).toBeLessThanOrEqual(1);
   });
 
-  test('Table Widget supports thresholds', async ({
-    page,
-    resourceExplorer,
-    dashboardWithTableWidget,
-    configPanel,
-  }) => {
+  test('Table Widget supports thresholds', async ({ page, browser }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithTableWidget = await createNewDashboardWithWidget(
+      'table',
+      page,
+      browser
+    );
     // add a property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
 
@@ -121,12 +147,14 @@ test.describe('Test Table Widget', () => {
     await expect(widget).toHaveCSS('color', 'rgb(246, 56, 4)');
   });
 
-  test('Table widget can change label', async ({
-    page,
-    resourceExplorer,
-    configPanel,
-    dashboardWithTableWidget,
-  }) => {
+  test('Table widget can change label', async ({ page, browser }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithTableWidget = await createNewDashboardWithWidget(
+      'table',
+      page,
+      browser
+    );
     //add property and open config panel
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     await configPanel.collapsedButton.click();
@@ -142,7 +170,7 @@ test.describe('Test Table Widget', () => {
     await configPanel.page.getByRole('button', { name: 'Label' }).click();
 
     // uncheck default value
-    await configPanel.page.getByText('Use default datastream name').click();
+    await configPanel.page.getByText('Use default data stream name').click();
     await page.waitForTimeout(1000);
 
     // click and change input value

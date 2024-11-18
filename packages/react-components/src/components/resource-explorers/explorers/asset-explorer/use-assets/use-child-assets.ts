@@ -1,4 +1,4 @@
-import { ChildAssetsRequestParameters } from '../types';
+import { type ChildAssetsRequestParameters } from '../types';
 import { transformListAssetsResponse } from '../../../helpers/response-transformers';
 import { useMultipleListRequests } from '../../../requests';
 import type {

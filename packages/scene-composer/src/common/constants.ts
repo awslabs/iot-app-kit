@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { REVISION } from 'three';
 
-import { Component, LightType } from '../models/SceneModels';
+import { type Component, LightType } from '../models/SceneModels';
 import {
   InfoIconSvgString,
   WarningIconSvgString,
@@ -10,14 +10,14 @@ import {
   CustomIconSvgString,
 } from '../assets';
 import {
-  IValueDataBindingProviderState,
+  type IValueDataBindingProviderState,
   DefaultAnchorStatus,
-  DistanceUnit,
-  Vector3,
-  ITagSettings,
-  IOverlaySettings,
+  type DistanceUnit,
+  type Vector3,
+  type ITagSettings,
+  type IOverlaySettings,
 } from '../interfaces';
-import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
+import { type MapControls as MapControlsImpl, type OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 
 /******************************************************************************
  * Document Constants

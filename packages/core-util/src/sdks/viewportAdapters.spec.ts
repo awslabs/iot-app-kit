@@ -8,39 +8,39 @@ import {
 describe('dateRangeToViewport', () => {
   it('can convert a relative date range option to the correct viewport', () => {
     expect(dateRangeToViewport(relativeViewportOptions[0])).toEqual({
-      duration: '1 minute',
+      duration: '1m',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[1])).toEqual({
-      duration: '5 minute',
+      duration: '5m',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[2])).toEqual({
-      duration: '10 minute',
+      duration: '10m',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[3])).toEqual({
-      duration: '30 minute',
+      duration: '30m',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[4])).toEqual({
-      duration: '1 hour',
+      duration: '1h',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[5])).toEqual({
-      duration: '1 day',
+      duration: '24h',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[6])).toEqual({
-      duration: '7 day',
+      duration: '168h',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[7])).toEqual({
-      duration: '30 day',
+      duration: '720h',
     });
 
     expect(dateRangeToViewport(relativeViewportOptions[8])).toEqual({
-      duration: '90 day',
+      duration: '2160h',
     });
   });
 
@@ -51,7 +51,7 @@ describe('dateRangeToViewport', () => {
         unit: 'minute',
         type: 'relative',
       })
-    ).toEqual({ duration: '20 minute' });
+    ).toEqual({ duration: '20m' });
 
     expect(
       dateRangeToViewport({
@@ -59,7 +59,7 @@ describe('dateRangeToViewport', () => {
         unit: 'month',
         type: 'relative',
       })
-    ).toEqual({ duration: '3 month' });
+    ).toEqual({ duration: '2160h' });
   });
 
   it('can convert an absolute date range to the correct viewport', () => {

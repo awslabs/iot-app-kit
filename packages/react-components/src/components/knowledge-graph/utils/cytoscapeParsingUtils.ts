@@ -1,5 +1,9 @@
-import { ElementDefinition, NodeDefinition, EdgeDefinition } from 'cytoscape';
-import { NodeData, EdgeData } from '../graph/types';
+import {
+  type ElementDefinition,
+  type NodeDefinition,
+  type EdgeDefinition,
+} from 'cytoscape';
+import { type NodeData, type EdgeData } from '../graph/types';
 
 export function getElementsDefinition(
   nodeData: NodeData[],

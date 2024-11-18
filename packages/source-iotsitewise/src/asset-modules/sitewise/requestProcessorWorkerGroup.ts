@@ -1,4 +1,4 @@
-import { Observable, Subscriber } from 'rxjs';
+import { type Observable, type Subscriber } from 'rxjs';
 import { RequestProcessorWorker } from './requestProcessorWorker';
 
 export class RequestProcessorWorkerGroup<TQuery, TResult> {

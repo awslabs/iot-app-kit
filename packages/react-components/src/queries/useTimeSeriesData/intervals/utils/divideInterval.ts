@@ -1,4 +1,4 @@
-import { Interval } from '../../types';
+import { type Interval } from '../../types';
 import { sortIntervals } from './sort';
 import { subtractIntervals } from './subtractIntervals';
 

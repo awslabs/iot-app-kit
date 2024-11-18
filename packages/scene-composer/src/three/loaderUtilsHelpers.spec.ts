@@ -2,7 +2,7 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module';
 
 import { THREE_PATH } from '../common/constants';
 import { getGlobalSettings } from '../common/GlobalSettings';
-import { BasisuDecoderConfig, DracoDecoderConfig } from '../interfaces';
+import { type BasisuDecoderConfig, type DracoDecoderConfig } from '../interfaces';
 
 import { setupBasisuSupport, setupDracoSupport, setupFileLoader } from './loaderUtilsHelpers';
 

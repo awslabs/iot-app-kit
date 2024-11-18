@@ -1,19 +1,10 @@
-import React from 'react';
-
-import type { AssetModelExplorerProps } from './types';
-import {
-  ResourceDropDown,
-  ResourceTable,
-  ResourceExplorerVariant,
-} from '../../variants';
-import { useUserCustomization } from '../../helpers/use-user-customization';
 import {
   DEFAULT_ASSET_MODEL_RESOURCE_NAME,
   DEFAULT_DEFAULT_PAGE_SIZE,
   DEFAULT_IS_RESOURCE_DISABLED,
+  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_FILTER_ENABLED,
   DEFAULT_IS_TABLE_USER_SETTINGS_ENABLED,
-  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_ON_SELECT_RESOURCE,
   DEFAULT_PLURAL_ASSET_MODEL_RESOURCE_NAME,
   DEFAULT_RESOURCE_EXPLORER_VARIANT,
@@ -22,9 +13,16 @@ import {
   DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   createDefaultTableUserSettings,
 } from '../../constants/defaults';
-import type { AssetModelResource } from '../../types/resources';
-import { DEFAULT_ASSET_MODEL_TABLE_DEFINITION } from '../../constants/table-resource-definitions';
 import { DEFAULT_ASSET_MODEL_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
+import { DEFAULT_ASSET_MODEL_TABLE_DEFINITION } from '../../constants/table-resource-definitions';
+import { useUserCustomization } from '../../helpers/use-user-customization';
+import type { AssetModelResource } from '../../types/resources';
+import {
+  ResourceDropDown,
+  ResourceExplorerVariant,
+  ResourceTable,
+} from '../../variants';
+import type { AssetModelExplorerProps } from './types';
 import { useAssetModels } from './use-asset-models';
 
 export function InternalAssetModelExplorer({
@@ -58,10 +56,10 @@ export function InternalAssetModelExplorer({
     shouldPersistUserCustomization,
   });
 
-  const { assetModels, isLoading, error, hasNextPage, nextPage } =
+  const { assetModels, isLoadingFirstPage, isLoadingResources, error } =
     useAssetModels({
       parameters: parameters,
-      pageSize: userCustomization.pageSize,
+      pageSize: 250,
       listAssetModels:
         iotSiteWiseClient?.listAssetModels?.bind(iotSiteWiseClient),
     });
@@ -77,13 +75,12 @@ export function InternalAssetModelExplorer({
           resources={assetModels}
           createResourceKey={createResourceKey}
           isResourceDisabled={isAssetModelDisabled}
-          isLoading={isLoading}
+          isLoadingFirstPage={isLoadingFirstPage}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAssetModels}
           onSelectResource={onSelectAssetModel}
-          hasNextPage={hasNextPage}
-          onClickNextPage={nextPage}
           userCustomization={userCustomization}
           onUpdateUserCustomization={setUserCutomization}
           isTitleEnabled={isTitleEnabled}
@@ -98,13 +95,11 @@ export function InternalAssetModelExplorer({
           resourceDefinition={dropDownResourceDefinition}
           resources={assetModels}
           isResourceDisabled={isAssetModelDisabled}
-          isLoading={isLoading}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAssetModels}
           onSelectResource={onSelectAssetModel}
-          hasNextPage={hasNextPage}
-          onScrollNextPage={nextPage}
           isFilterEnabled={isDropDownFilterEnabled}
         />
       }

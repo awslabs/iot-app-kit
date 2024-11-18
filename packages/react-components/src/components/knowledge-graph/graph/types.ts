@@ -11,7 +11,7 @@ import type {
   UserInputDeviceEventName,
   UserInputDeviceEventNameExt,
 } from 'cytoscape';
-import { INodeResults } from '../interfaces/kgDataSourceInterfaces';
+import { type INodeResults } from '../interfaces/kgDataSourceInterfaces';
 import type { ValueOf } from 'type-fest';
 
 export type layoutTypes =

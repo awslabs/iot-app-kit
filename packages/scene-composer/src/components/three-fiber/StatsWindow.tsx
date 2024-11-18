@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import * as React from 'react';
-import { addEffect, addAfterEffect } from '@react-three/fiber';
+import { addAfterEffect, addEffect } from '@react-three/fiber';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import StatsImpl from 'stats.js';
+import styled from 'styled-components';
 
 type Props = {
   showPanel?: number;
@@ -20,12 +20,12 @@ type Props = {
  * @see https://github.com/pmndrs/drei/blob/master/src/core/Stats.tsx
  */
 function Stats({ showPanel = 0, className, parent }: Props): null {
-  const [stats, setStats] = React.useState<StatsImpl>();
-  React.useLayoutEffect(() => {
+  const [stats, setStats] = useState<StatsImpl>();
+  useLayoutEffect(() => {
     const value = new StatsImpl();
     setStats(value);
   }, []);
-  React.useEffect(() => {
+  useEffect(() => {
     if (stats) {
       const node = (parent && parent.current) || document.body;
       stats.showPanel(showPanel);

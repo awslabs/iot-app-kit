@@ -1,5 +1,4 @@
 /* eslint-disable */
-import * as React from 'react';
 import { render } from '@testing-library/react';
 import { useQuery } from '@tanstack/react-query';
 

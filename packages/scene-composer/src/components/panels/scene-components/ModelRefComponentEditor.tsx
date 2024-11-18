@@ -1,13 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
 import { Checkbox, FormField, Input, Select, SpaceBetween } from '@cloudscape-design/components';
-import { useIntl, defineMessages } from 'react-intl';
+import { useCallback, useMemo } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { IModelRefComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { DistanceUnits } from '../../../interfaces';
-import { NumericInput } from '../CommonPanelComponents';
+import { type IModelRefComponentInternal, type ISceneComponentInternal, accessStore } from '../../../store';
 import { parseFloatOrDefault } from '../../../utils/mathUtils';
+import { NumericInput } from '../CommonPanelComponents';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
 const None = 'none';
 const Custom = 'custom';

@@ -1,7 +1,6 @@
-import React from 'react';
 import { Chart } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
-import { ComponentMeta } from '@storybook/react';
+import { type ComponentMeta } from '@storybook/react';
 
 export default {
   title: 'Widgets/Base Chart',
@@ -35,6 +34,7 @@ export const DefaultBaseChart = () => {
         defaultVisualizationType='line'
         viewport={VIEWPORT}
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+        titleText='Data streams'
       />
     </div>
   );

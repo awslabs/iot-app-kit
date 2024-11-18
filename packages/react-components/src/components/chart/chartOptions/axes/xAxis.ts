@@ -1,4 +1,4 @@
-import { ChartAxisOptions } from '../../types';
+import { type ChartAxisOptions } from '../../types';
 import { DEFAULT_X_AXIS } from '../../eChartsConstants';
 import { useMemo } from 'react';
 

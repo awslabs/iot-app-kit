@@ -6,6 +6,9 @@ www/
 loader/
 coverage/
 screenshot
+.turbo
+.tsbuildinfo
+.cache
 
 *~
 *.sw[mnpcod]

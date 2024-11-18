@@ -1,6 +1,6 @@
 import { Object3D, Mesh, MeshBasicMaterial, Color } from 'three';
 
-import { MeshStyle } from '../interfaces/';
+import { type MeshStyle } from '../interfaces/';
 
 import { createMaterialFromStyle } from './objectThreeStyleUtils';
 

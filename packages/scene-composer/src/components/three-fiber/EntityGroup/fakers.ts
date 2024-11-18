@@ -1,4 +1,4 @@
-import { ISceneNodeInternal, IModelRefComponentInternal } from '../../../store';
+import { type ISceneNodeInternal, type IModelRefComponentInternal } from '../../../store';
 
 export const fakeSceneNode = (ref: string, childRefs: string[] = []): ISceneNodeInternal => {
   return {

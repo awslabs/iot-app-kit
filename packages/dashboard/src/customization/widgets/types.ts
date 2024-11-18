@@ -8,6 +8,8 @@ import type {
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
   SiteWiseAssetModelQuery,
+  SiteWiseAlarmQuery,
+  SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type {
@@ -17,10 +19,11 @@ import type {
   ThresholdWithId,
 } from '../settings';
 import type {
+  AssistantProperty,
   TableColumnDefinition,
   TableItem,
 } from '@iot-app-kit/react-components';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -29,9 +32,11 @@ export type QueryConfig<S, T> = {
 
 export type SiteWiseQueryConfig = QueryConfig<
   'iotsitewise',
-  | (Partial<SiteWiseAssetQuery> &
+  | ((Partial<SiteWiseAssetQuery> &
       Partial<SiteWisePropertyAliasQuery> &
-      Partial<SiteWiseAssetModelQuery>)
+      Partial<SiteWiseAssetModelQuery>) &
+      Partial<SiteWiseAlarmQuery> &
+      Partial<SiteWiseAlarmAssetModelQuery>)
   | undefined
 >;
 
@@ -54,6 +59,7 @@ export type KPIProperties = QueryProperties & {
   thresholds?: StyledThreshold[];
   backgroundColor?: string;
   significantDigits?: number;
+  assistant?: AssistantProperty;
 };
 
 export type KPIPropertiesKeys = keyof KPIProperties;
@@ -142,6 +148,16 @@ export type StyledAssetQuery = {
     assetIds?: SiteWiseAssetModelQuery['assetModels'][number]['assetIds'];
     properties: StyledAssetPropertyQuery[];
   }[];
+  alarms?: {
+    assetId: SiteWiseAlarmQuery['alarms'][number]['assetId'];
+    alarmComponents: SiteWiseAlarmQuery['alarms'][number]['alarmComponents'];
+  }[];
+  alarmModels?: {
+    assetModelId: SiteWiseAlarmAssetModelQuery['alarmModels'][number]['assetModelId'];
+    assetIds?: SiteWiseAlarmAssetModelQuery['alarmModels'][number]['assetIds'];
+    alarmComponents: SiteWiseAlarmQuery['alarms'][number]['alarmComponents'];
+  }[];
+  requestSettings?: SiteWiseAlarmQuery['requestSettings'];
 };
 
 type YAxisRange = {
@@ -164,7 +180,8 @@ type ChartLegendContent =
   | 'unit'
   | 'asset'
   | 'minValue'
-  | 'maxValue';
+  | 'maxValue'
+  | 'latestAlarmStateValue';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';
@@ -184,6 +201,7 @@ export type LineScatterChartProperties = LineAndScatterStyles & {
   axis?: ChartAxisOptions;
   legend?: ChartLegend;
   queryConfig: StyledSiteWiseQueryConfig;
+  assistant?: AssistantProperty;
 };
 
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;
@@ -208,6 +226,7 @@ export type TableProperties = QueryProperties & {
   columnDefinitions?: TableColumnDefinition[];
   significantDigits?: number;
   pageSize?: number;
+  assistant?: AssistantProperty;
 };
 
 export type TablePropertiesKeys = keyof TableProperties;
@@ -251,6 +270,7 @@ export type GaugeProperties = QueryProperties & {
   yMax?: number;
   thresholds?: StyledThreshold[];
   significantDigits?: number;
+  assistant?: AssistantProperty;
 };
 
 type ChartPropertiesUnion =

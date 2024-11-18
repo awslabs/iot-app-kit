@@ -1,4 +1,3 @@
-import React from 'react';
 import { Object3D } from 'three';
 import { unmountComponentAtNode, render } from 'react-dom';
 import { act } from 'react-dom/test-utils';

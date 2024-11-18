@@ -1,6 +1,6 @@
-import { LineSeriesOption } from 'echarts';
-import { BAD_DATA_ICON, UNCERTAIN_DATA_ICON } from '../../eChartsConstants';
-import { ChartDataQuality } from '../../types';
+import { type LineSeriesOption } from 'echarts';
+// import { BAD_DATA_ICON, UNCERTAIN_DATA_ICON } from '../../eChartsConstants';
+import { type ChartDataQuality } from '../../types';
 
 export type ConvertSymbolOptions = {
   symbolStyle: string;
@@ -15,9 +15,9 @@ export const convertSymbol =
   (value) => {
     const quality = value.quality;
     if (showUncertainDataIcons && quality === 'UNCERTAIN') {
-      return UNCERTAIN_DATA_ICON;
+      return 'triangle';
     } else if (showBadDataIcons && quality === 'BAD') {
-      return BAD_DATA_ICON;
+      return 'emptyCircle';
     }
 
     return symbolStyle;

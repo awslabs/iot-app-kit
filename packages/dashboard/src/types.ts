@@ -1,20 +1,24 @@
+import { type IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
+import {
+  type DescribeDashboardRequest,
+  type DescribeDashboardResponse,
+  type IoTSiteWise,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import type { Viewport } from '@iot-app-kit/core';
 import {
-  IoTSiteWiseClient,
-  DescribeDashboardRequest,
-  DescribeDashboardResponse,
-} from '@aws-sdk/client-iotsitewise';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
-import {
-  SiteWiseAssetModelQuery,
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
-  SiteWiseQuery,
+  type SiteWiseAlarmAssetModelQuery,
+  type SiteWiseAlarmQuery,
+  type SiteWiseAssetModelQuery,
+  type SiteWiseAssetQuery,
+  type SiteWisePropertyAliasQuery,
+  type SiteWiseQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import { RefreshRate } from './components/refreshRate/types';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { ReactElement } from 'react';
+import { type ReactElement } from 'react';
+import { type RefreshRate } from './components/refreshRate/types';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
@@ -25,6 +29,8 @@ export type DashboardIotSiteWiseClients = {
   iotSiteWiseClient: IoTSiteWiseClient;
   iotEventsClient: IoTEventsClient;
   iotTwinMakerClient: IoTTwinMakerClient;
+  iotSiteWise: IoTSiteWise;
+  iotSiteWisePrivateClient?: InternalIoTSiteWise;
 };
 
 export type DashboardIotSiteWiseQueries = {
@@ -32,7 +38,11 @@ export type DashboardIotSiteWiseQueries = {
 };
 
 export type IoTSiteWiseDataStreamQuery = Partial<
-  SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAssetModelQuery
+  SiteWiseAssetQuery &
+    SiteWisePropertyAliasQuery &
+    SiteWiseAssetModelQuery &
+    SiteWiseAlarmQuery &
+    SiteWiseAlarmAssetModelQuery
 >;
 
 export type DashboardClientConfiguration =
@@ -50,6 +60,12 @@ export type ViewportChange = (viewport: Viewport) => void;
 export type DashboardConfigurationChange = (
   dashboardConfiguration: DashboardConfiguration
 ) => void;
+
+export type AssistantStateTypes = 'DISABLED' | 'PASSIVE';
+
+export type AssistantConfiguration = {
+  state?: AssistantStateTypes;
+};
 
 export type DashboardWidget<
   Properties extends Record<string, unknown> = Record<string, unknown>

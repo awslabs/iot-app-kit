@@ -1,5 +1,4 @@
 /* eslint-disable import/first,import/order */
-import React from 'react';
 import { create } from 'react-test-renderer';
 import { render } from '@testing-library/react';
 

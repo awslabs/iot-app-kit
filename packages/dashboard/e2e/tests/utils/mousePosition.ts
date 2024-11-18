@@ -1,4 +1,4 @@
-import { BoundingBox } from './locator';
+import { type BoundingBox } from './locator';
 
 /**
  *

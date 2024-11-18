@@ -1,14 +1,14 @@
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 import { isEqual } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  QueryConfigWidget,
+  type QueryConfigWidget,
   findModelBasedQueryWidgets,
   hasModelBasedQuery,
 } from './findModelBasedQueryWidgets';
 import { useCallback, useMemo } from 'react';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { AssetResource } from '@iot-app-kit/react-components';
+import { type AssetResource } from '@iot-app-kit/react-components';
 
 export const useModelBasedQuery = () => {
   const dispatch = useDispatch();
@@ -27,6 +27,10 @@ export const useModelBasedQuery = () => {
   );
   const assetModel = useMemo(
     () => (firstWidget?.properties.queryConfig.query?.assetModels ?? []).at(0),
+    [firstWidget]
+  );
+  const alarmAssetModel = useMemo(
+    () => (firstWidget?.properties.queryConfig.query?.alarmModels ?? []).at(0),
     [firstWidget]
   );
 
@@ -52,6 +56,7 @@ export const useModelBasedQuery = () => {
             query: {
               ...properties.queryConfig.query,
               assetModels: [],
+              alarmModels: [],
             },
           },
         },
@@ -81,6 +86,12 @@ export const useModelBasedQuery = () => {
                   ...assetModel,
                   assetIds: [id],
                 })),
+                alarmModels: (
+                  properties.queryConfig.query?.alarmModels ?? []
+                ).map((alarmModel) => ({
+                  ...alarmModel,
+                  assetIds: [id],
+                })),
               },
             },
           },
@@ -93,8 +104,8 @@ export const useModelBasedQuery = () => {
   );
 
   return {
-    assetModelId: assetModel?.assetModelId,
-    assetIds: assetModel?.assetIds,
+    assetModelId: assetModel?.assetModelId ?? alarmAssetModel?.assetModelId,
+    assetIds: assetModel?.assetIds ?? alarmAssetModel?.assetIds,
     hasModelBasedQuery: hasModelBasedQueryWidgets,
     modelBasedWidgets,
     updateModelBasedWidgets,

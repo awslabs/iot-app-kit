@@ -1,7 +1,6 @@
 /* eslint-disable import/first */
-import React from 'react';
 import { render } from '@testing-library/react';
-import * as THREE from 'three';
+import type * as THREE from 'three';
 
 import { calculateCenterPosition, LoadingProgress } from '../../../src/components/three-fiber/LoadingProgress';
 

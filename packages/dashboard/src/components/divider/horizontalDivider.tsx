@@ -1,7 +1,4 @@
-import React from 'react';
-
 import { colorBorderDividerDefault } from '@cloudscape-design/design-tokens';
-
 import './horizontalDivider.css';
 
 export const HorizontalDivider = ({

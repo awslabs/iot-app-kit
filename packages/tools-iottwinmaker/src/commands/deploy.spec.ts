@@ -1,4 +1,4 @@
-import { Arguments } from 'yargs';
+import { type Arguments } from 'yargs';
 import {
   workspaceId,
   s3BucketArn,
@@ -41,7 +41,7 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import * as fsPromises from 'fs/promises';
-import { handler, Options } from './deploy';
+import { handler, type Options } from './deploy';
 import * as fs from 'fs';
 import * as prompts from 'prompts';
 import {

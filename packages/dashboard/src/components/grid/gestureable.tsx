@@ -1,10 +1,13 @@
-import React from 'react';
 import type { PropsWithChildren } from 'react';
-import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import type { DashboardState } from '~/store/state';
-import { SizedGrid } from './sizedGrid';
+import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
+import {
+  type DragEvent,
+  type DropEvent,
+  type PointClickEvent,
+} from './gestures/types';
 import { useGridDragAndDrop } from './gestures/useGridDragAndDrop';
-import { PointClickEvent, DragEvent, DropEvent } from './gestures/types';
+import { SizedGrid } from './sizedGrid';
 
 export type GesturableGridProps = PropsWithChildren<{
   readOnly: boolean;

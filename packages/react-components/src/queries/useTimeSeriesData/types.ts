@@ -1,4 +1,7 @@
-import { DurationViewport, HistoricalViewport } from '@iot-app-kit/core';
+import {
+  type DurationViewport,
+  type HistoricalViewport,
+} from '@iot-app-kit/core';
 
 export type LiveDataConfiguration = {
   duration: number;

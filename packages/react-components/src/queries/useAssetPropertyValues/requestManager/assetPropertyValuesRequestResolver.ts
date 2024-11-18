@@ -1,10 +1,10 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import {
-  RequestResolverStrategy,
-  RequestSettings,
-  Viewport,
+  type RequestResolverStrategy,
+  type RequestSettings,
+  type Viewport,
 } from '../../useTimeSeriesData';
-import { AssetPropertyValuesRequest } from '../types';
+import { type AssetPropertyValuesRequest } from '../types';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 
 const SITEWISE_PREVIEW_DATE = new Date(2018, 0, 1);

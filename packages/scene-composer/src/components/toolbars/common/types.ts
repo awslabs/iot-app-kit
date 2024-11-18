@@ -1,6 +1,6 @@
-import { IconProps } from '@cloudscape-design/components';
+import { type IconProps } from '@cloudscape-design/components';
 
-import { COMPOSER_FEATURES } from '../../../interfaces';
+import { type COMPOSER_FEATURES } from '../../../interfaces';
 
 export type ToolbarItemIconProps = Omit<IconProps, 'variant'> & {
   isMirrored?: boolean;

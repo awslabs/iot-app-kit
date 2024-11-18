@@ -1,13 +1,13 @@
 import {
-  GetAssetPropertyValue,
-  BatchGetAssetPropertyValue,
-  RequestParameters,
-  RequestResponse,
+  type GetAssetPropertyValue,
+  type BatchGetAssetPropertyValue,
+  type RequestParameters,
+  type RequestResponse,
 } from '@iot-app-kit/core';
-import { UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { QueryOptionsGlobal } from '../common/types';
+import { type UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
+import { type QueryOptionsGlobal } from '../common/types';
 
-export type QueryFnClient = {
+export type LatestValueQueryFnClient = {
   getAssetPropertyValue?: GetAssetPropertyValue;
   batchGetAssetPropertyValue?: BatchGetAssetPropertyValue;
 };

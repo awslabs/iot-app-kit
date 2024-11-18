@@ -1,4 +1,4 @@
-import React from 'react';
+import type * as React from 'react';
 import type { Position } from '~/types';
 
 export const DASHBOARD_CONTAINER_ID = 'container';

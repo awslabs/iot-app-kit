@@ -1,12 +1,18 @@
-import React, { useCallback, useContext } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  type CheckboxProps,
+  type NonCancelableCustomEvent,
+} from '@cloudscape-design/components';
+import { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Box, Button, Checkbox, CheckboxProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
-import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
+import { accessStore } from '../../../store';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../../../utils/entityModelUtils/sceneLayerUtils';
+import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
 export const ConvertSceneSettings: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);

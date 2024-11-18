@@ -1,25 +1,34 @@
 // TODO: Remove exports of mocks. Do not use.
 export * from './__mocks__';
 
-export { initialize } from './initialize';
+export {
+  IoTEventsToSynchroChartsComparisonOperator,
+  type PascalCaseStateName,
+} from './alarms/iotevents';
+export type { HierarchyGroup } from './asset-modules';
 export { BranchReference } from './asset-modules/sitewise-asset-tree/types';
-export { toId, fromId } from './time-series-data/util/dataStreamId';
+export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
+export { initialize } from './initialize';
 export type {
+  AlarmDataQuery,
+  AnomalyDataQuery,
   SiteWiseDataSourceInitInputs,
   SiteWiseQuery,
-  AnomalyDataQuery,
-  AlarmDataQuery,
+  TimeSeriesDataQuery,
 } from './initialize';
-export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
-export type { HierarchyGroup } from './asset-modules';
 export type {
-  SiteWiseDataStreamQuery,
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
-  SiteWiseAssetModelQuery,
+  AlarmAssetModelQuery,
+  AlarmQuery,
   AssetModelQuery,
   AssetPropertyQuery,
-  PropertyAliasQuery,
   AssetQuery,
-  AlarmQuery,
+  PropertyAliasQuery,
+  SiteWiseAlarmAssetModelQuery,
+  SiteWiseAlarmDataStreamQuery,
+  SiteWiseAlarmQuery,
+  SiteWiseAssetModelQuery,
+  SiteWiseAssetQuery,
+  SiteWiseDataStreamQuery,
+  SiteWisePropertyAliasQuery,
 } from './time-series-data/types';
+export { fromId, toId } from './time-series-data/util/dataStreamId';

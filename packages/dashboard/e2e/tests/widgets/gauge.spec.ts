@@ -1,10 +1,19 @@
-import { expect, test } from '../test';
+import { test, expect } from '@playwright/test';
 import { getDecimalPlaces } from '../utils/getDecimalPlaces';
+import { createNewDashboardWithWidget } from '../createDashboardWidget';
+import { ResourceExplorer } from '../resourceExplorer/ResourceExplorer';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
 
 test.describe('validate gauge widget behavior', () => {
   test('gauge widget can be added to the dashboard', async ({
-    dashboardWithGaugeWidget,
+    page,
+    browser,
   }) => {
+    const dashboardWithGaugeWidget = await createNewDashboardWithWidget(
+      'gauge',
+      page,
+      browser
+    );
     const widgetEmptyState = dashboardWithGaugeWidget.gridArea.locator(
       '.gauge-widget-empty-state'
     );
@@ -12,8 +21,17 @@ test.describe('validate gauge widget behavior', () => {
   });
 
   test('gauge widget renders value when a property is added', async ({
-    dashboardWithGaugeWidgetWithProperty,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
     const widget = dashboardWithGaugeWidgetWithProperty.gridArea.locator(
       '[data-gesture=widget]'
     );
@@ -26,10 +44,16 @@ test.describe('validate gauge widget behavior', () => {
   });
 
   test('cannot add more than 1 property to gauge widget', async ({
-    dashboardWithGaugeWidget,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
     // add property
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidget = await createNewDashboardWithWidget(
+      'gauge',
+      page,
+      browser
+    );
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     dashboardWithGaugeWidget.gridArea.getByTestId('gauge-base-component');
     // select 2 more properties
@@ -41,9 +65,18 @@ test.describe('validate gauge widget behavior', () => {
   });
 
   test('update title reflects on the guage widget', async ({
-    dashboardWithGaugeWidgetWithProperty,
-    configPanel,
+    page,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
     await configPanel.collapsedButton.click();
     expect(await configPanel.container.isVisible()).toBeTruthy();
 
@@ -56,10 +89,18 @@ test.describe('validate gauge widget behavior', () => {
   });
 
   test('deleting a property is reflected on the chart', async ({
-    dashboardWithGaugeWidgetWithProperty,
-    configPanel,
     page,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
     // Remove exising property and validate its not on the widget
     await configPanel.collapsedButton.click();
     await configPanel.container.getByText('Properties').click();
@@ -75,38 +116,49 @@ test.describe('validate gauge widget behavior', () => {
   });
 
   test('gauge widget supports significant digits', async ({
-    dashboardWithGaugeWidgetWithProperty,
-    configPanel,
+    page,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
     const widget = dashboardWithGaugeWidgetWithProperty.gridArea.locator(
       '[data-gesture=widget]'
     );
 
-    const gaugeValue = widget
-      .locator('g')
-      .locator('text[fill="#7d2105"]')
-      .first();
-    const value = await gaugeValue.textContent();
-    expect(getDecimalPlaces(value)).toBe(4);
+    const gaugeText = await widget.textContent();
+    const gaugeValue = gaugeText?.match('\\d+\\.*\\d*')?.at(0);
+    expect(getDecimalPlaces(gaugeValue)).toBe(4);
 
     // change sig digits to 1 and validate rendered value is correct
     await configPanel.collapsedButton.click();
     await configPanel.decimalPlaceInput.fill('1');
 
-    const updatedGaugeValue = widget
-      .locator('g')
-      .locator('text[fill="#7d2105"]')
-      .first();
+    const updatedText = await widget.textContent();
+    const updatedValue = updatedText?.match('\\d+\\.*\\d*')?.at(0);
 
-    const updatedValue = await updatedGaugeValue.textContent();
     expect(getDecimalPlaces(updatedValue)).toBe(1);
   });
 
   test('renders a single threshold with correct color', async ({
     page,
-    dashboardWithGaugeWidgetWithProperty,
-    configPanel,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
     // open threshold panel
     await configPanel.collapsedButton.click();
     await configPanel.container
@@ -147,9 +199,17 @@ test.describe('validate gauge widget behavior', () => {
 
   test('renders multiple thresholds with correct colors', async ({
     page,
-    dashboardWithGaugeWidgetWithProperty,
-    configPanel,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
     // open threshold panel
     await configPanel.collapsedButton.click();
     await configPanel.container

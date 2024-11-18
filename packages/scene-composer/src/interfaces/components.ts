@@ -1,10 +1,10 @@
-import * as SceneModels from '../models/SceneModels';
+import type * as SceneModels from '../models/SceneModels';
 
 /************************************************
  * Components
  ************************************************/
 
-import { DistanceUnit, INavLink, IValueDataBinding, Vector3 } from './dataTypes';
+import { type DistanceUnit, type INavLink, type IValueDataBinding, type Vector3 } from './dataTypes';
 
 export enum KnownComponentType {
   ModelRef = 'ModelRef',

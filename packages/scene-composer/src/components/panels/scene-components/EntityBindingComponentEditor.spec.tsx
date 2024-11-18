@@ -1,9 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { KnownComponentType } from '../../../interfaces';
-import { IEntityBindingComponentInternal, ISceneNodeInternal, accessStore } from '../../../store';
+import { type IEntityBindingComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
 
 import { EntityBindingComponentEditor } from './EntityBindingComponentEditor';
 

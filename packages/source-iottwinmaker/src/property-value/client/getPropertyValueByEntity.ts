@@ -1,10 +1,10 @@
 import {
   GetPropertyValueCommand,
-  GetPropertyValueResponse,
-  IoTTwinMakerClient,
+  type GetPropertyValueResponse,
+  type IoTTwinMakerClient,
 } from '@aws-sdk/client-iottwinmaker';
-import { DataType, DataStreamBase } from '@iot-app-kit/core';
-import { TwinMakerStaticDataQuery } from '../types';
+import { type DataType, type DataStreamBase } from '@iot-app-kit/core';
+import { type TwinMakerStaticDataQuery } from '../types';
 import { toValue } from '../../utils/propertyValueUtils';
 import { isNumber } from 'lodash';
 

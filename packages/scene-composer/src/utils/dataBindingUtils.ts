@@ -1,18 +1,18 @@
-import { Primitive } from '@iot-app-kit/core';
+import { type Primitive } from '@iot-app-kit/core';
 import jexl from 'jexl';
 import { isEqual, pick } from 'lodash';
 
 import { DataBindingLabelKeys } from '../common/constants';
 import {
   DataFieldTimeType,
-  IDataBindingTemplate,
-  IDataField,
-  IDataFrame,
-  IDataInput,
-  IRuleBasedMap,
-  IValueDataBinding,
+  type IDataBindingTemplate,
+  type IDataField,
+  type IDataFrame,
+  type IDataInput,
+  type IRuleBasedMap,
+  type IValueDataBinding,
   IotTwinMakerNumberNamespace,
-  TargetMetadata,
+  type TargetMetadata,
 } from '../interfaces';
 import DebugLogger from '../logger/DebugLogger';
 

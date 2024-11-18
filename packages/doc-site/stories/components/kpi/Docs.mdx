@@ -1,66 +1,26 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
-
+import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
 import * as KpiStories from './Kpi.stories';
 
 # KPI
 
 The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. 
-This overview provides critical insights into the overall performance of your devices, equipment, and processes. 
+This overview provides critical insights into the overall performance of your devices, equipment, and processes.
 The KPI component lets you can interact with IoT data from one or more data sources.
 
-<Canvas sourceState="none" story={{height : '70px' }} of={KpiStories.Standard} />
+<Canvas sourceState="hidden" story={{ height : '70px' }} of={KpiStories.Standard} />
+
+<Meta of={KpiStories} />
 
 ## KPI Properties
 
 The KPI component contains the following customizable properties.
 
-#### viewport (object, optional): 
+#### query
+##### (object, required)
+This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-This specifies the interval of time the widget visualizes. If not present, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
-If a ViewportManager, and a `viewport` is not defined, the default value is `{ duration: '10d' }`.
-Learn about the [viewport](/docs/core-viewport--docs).
-
-#### thresholds (optional): 
-
-A styled threshold defines rules that effect how the data is visualized. It's based on if the data breaches the threshold as well as how the threshold is styled.
-Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
-
-**timeZone** (string, optional): 
-
-Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart displays all dates in the provided timezone. If not provided, it uses the browsers local timezone.
-
-#### query (object, optional): 
-
-This query specifies the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
-
-#### settings (object, optional): 
-
-This specifies the settings to customize the appearance of the widget. The settings object contains the following properties:
-
-  * `showTimestamp` (boolean, optional): Displays the timestamp of the data being displayed. Defaults to true.
-  * `showAggregationAndResolution` (boolean, optional): Displays the ggregation and resolution of the data being displayed. Defaults to true.
-  * `showName` (boolean, optional): Displays the name of the data being displayed. Defaults to true.
-  * `showUnit` (boolean, optional): Displays the unit if present. Defaults to true.
-  * `fontSize` (number, optional): Displays the font size in pixels for the value. Defaults to 30.
-  * `secondaryFontSize` (number, optional): Displays the font size in pixels for the title. Defaults to 15.
-
-  The following settings properties are deprecated:
-  * `color` (string, optional): Specifies the color to display. Defaults to `black`. It is overriden by thresholds and alarms. The value must be a `css` string.
-  * `showIcon`(boolean, optional): Display the icon if present. Defaults to true.
-  * `aggregationFontSize` (number, optional): Display the font size in pixels for aggregation and resolution.
-
-#### styles (object, optional): 
-
-This contains a map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs).
-It has the following style settings that are customizable:
-
-  * `name` (string, optional): This specifies a name to replace the name of the data set given by its source.
-  * `unit` (string, optional): This specifies the units for the data (for example, `"m/s"` and `"count"`).
-  * `detailedName` (string, optional): This specifies the detailed name presented in the tooltip.
-
-### Examples
-
-```jsx
+Example for time series data.
+<Source dark="true" code={`
 <KPI
   query={
     query.timeSeriesData({
@@ -70,22 +30,171 @@ It has the following style settings that are customizable:
       }]
     })
  }
-
  styles={{ 'my-property': { name: 'My Cool Property' }}}
 />
+`} />
 
-```
+Example for alarm data.
+<Source dark="true" code={`
+<KPI
+  query={
+    query.alarmData({
+      alarms: [{
+        assetId: 'id',
+        alarmComponents: [{ assetCompositeModelId: 'asset-composite-model-id' }]
+      }]
+    })
+ }
+/>
+`} />
 
+#### viewport
+##### (object, optional)
+This specifies the interval of time the widget visualizes. If not present, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If a ViewportManager, and a `viewport` is not defined, the default value is `{ duration: '10d' }`.
+Learn about the [viewport](/docs/core-viewport--docs).
 
-<Meta of={KpiStories} />
+#### thresholds
+##### (array of object, optional)
+A styled threshold defines rules that effect how the data is visualized. It's based on if the data breaches the threshold as well as how the threshold is styled.
+Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
+
+#### titleText 
+##### (string, optional)
+This specifies the a title for the KPI component. Default value is `undefined`.
+
+#### timeZone 
+##### (string, optional)
+Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart displays all dates in the provided timezone. If not provided, it uses the browsers local timezone.
+
+#### settings 
+##### (object, optional)
+This specifies the settings to customize the appearance of the widget. The settings object contains the following properties:
+
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`showName\` | boolean, optional | true | Displays the name of the data being displayed. |
+| \`showUnit\` | boolean, optional | true | Displays the unit if present. |
+| \`showTimestamp\` | boolean, optional   | true | Displays the timestamp of the data being displayed. |
+| \`showDataQuality\` | boolean, optional | true | Show the quality of the information fetched from data source. The quality can be: Bad, Good or Uncertain. |
+| \`showAggregationAndResolution\` | boolean, optional   | true | Displays the ggregation and resolution of the data being displayed. |
+| \`fontSize\` | number, optional | 30 | Displays the font size in pixels for the value. |
+| \`secondaryFontSize\` | number, optional | 15 | Displays the font size in pixels for the title. |
+| \`backgroundColor\` | string, optional | - | Specifies the background color to display |
+| ** The properies below are DEPRECATED** |||
+| \`color\` | string, optional | black | Specifies the color to display. It is overriden by thresholds and alarms. The value must be a \`css\` string. |
+| \`showIcon\` | boolean, optional | true | Display the icon if present. |
+| \`aggregationFontSize\` | number, optional | - | Display the font size in pixels for aggregation and resolution. |
+`}
+</Markdown>
+
+**Example for `showDataQuality` as true.**
+<Canvas sourceState="hidden" story={{ height : '70px' }} of={KpiStories.BadDataQuality} />
+
+#### styles
+##### (object, optional) 
+This contains a map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs).
+It has the following style settings that are customizable:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`name\` | string, optional | - | This specifies a name to replace the name of the data set given by its source. |
+| \`unit\` | string, optional | - | This specifies the units for the data (for example, \`"m/s"\` and \`"count"\`). |
+| \`detailedName\` | string, optional | - | This specifies the detailed name presented in the tooltip.|
+`}
+</Markdown>
+
+#### significantDigits
+##### (number, optional)
+Number of digits after the decimal point. Must be in the range 0 - 20. Example: for a property with value as `10.12345` and significantDigits as 4, the value display will ne `10.1235`.
+For more information, [Number.toFixed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed)
+
+<Canvas sourceState="hidden" story={{ height : '70px' }} of={KpiStories.SignificantDigits} />
+
+#### assistant
+##### (object, optional)
+This specifies settings to enable the IoT Sitewise AI assistant within the component. Please refer to the [AWS documentation for more details about IoT Sitewise AI assistant](#). 
+
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`client\` | object, required | - | Specifies an instantiated assistant client \`IoTSitewiseAssistantClient\`, the assistant client is responsible for interfacing with the Assistant API.|
+| \`conversationId\` | string, required | - | Defines a conversation ID to be used as unique identifier for conversations with the assistant, the conversation ID can be the same for multiple components or unique, depending on use cases. |
+| \`componentId\` | string, required | - | Each component **must define an unique ID** which will be used by the assistant to manage state and assistant results. |
+| \`target\` | object, required | - | Defines the target for the assistant actions, the target options are \`dashboard\` and \`widget\`. For target \`dashboard\` all assistant results will be broadcasted to the Dashboard component, for target \`widget\` the assistant results will be display next to the component. |
+| \`enabled\` | boolean, optional | true | Allows to disable or enable the assistant at the component level. |
+| \`onAction\` | event, optional | - | Allows to pass a callback function to listen for any assistant action within the component. |
+`}
+</Markdown>
+
+<Canvas sourceState="none" story={{ height : '550px' }} of={KpiStories.Assistant} />
+<Source dark="true" code={`import React, { useEffect } from 'react';
+import { KPI, useAssistant } from '@iot-app-kit/react-components';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+
+export const KPIWithAssistant = () => {
+  const client = new IoTSitewiseAssistantClient({
+    iotSiteWiseClient
+  });
+
+  const { generateSummary } = useAssistant({
+    assistantClient: client,
+  });
+
+  useEffect(() => {
+    generateSummary({
+      componentId: 'my-kpi-component-id',
+      conversationId: 'my-conversation-id',
+      target: 'widget',
+      utterance: 'generate a summary and return the response in markdown format.',
+    });
+  }, []);
+
+  return (
+    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+      <KPI
+        query: sitewise,
+        settings: {
+          showUnit: true,
+          showName: true,
+          showTimestamp: true,
+          showAggregationAndResolution: true,
+          fontSize: 30,
+          secondaryFontSize: 12,
+          backgroundColor: '#ffffff',
+        }
+        assistant={{
+          client,
+          componentId: 'my-kpi-component-id',
+          conversationId: 'my-conversation-id',
+          target: 'widget',
+        }}
+      />
+    </div>
+  );
+};`} />
+
+## Alarms
+
+<Canvas sourceState='hidden' of={KpiStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the KPI the alarm's state will be displayed as a label, and the alarm's threshold will be added.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be displayed on the KPI as well.
+
+## More Examples
 
 Below are some examples of the KPI visualizations.
 
-## Empty
+### Empty
 <Canvas sourceState="none"   of={KpiStories.Empty} />
 
-## Loading
+### Loading
 <Canvas sourceState="none"  of={KpiStories.Loading} />
 
-## Error
+### Error
 <Canvas sourceState="none"   of={KpiStories.Error} />

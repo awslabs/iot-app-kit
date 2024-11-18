@@ -1,9 +1,9 @@
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
 
+import { getLocalizedComponentType } from '../../common/componentTypeStings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { accessStore } from '../../store';
-import { getLocalizedComponentType } from '../../common/componentTypeStings';
 
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 

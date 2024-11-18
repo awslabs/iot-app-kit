@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Autosuggest } from '@cloudscape-design/components';
 import { defineMessages, useIntl } from 'react-intl';
 

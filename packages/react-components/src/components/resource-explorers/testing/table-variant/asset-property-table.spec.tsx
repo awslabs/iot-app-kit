@@ -1,23 +1,23 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-import { AssetPropertyExplorer } from '../../explorers';
-import { resourceExplorerQueryClient } from '../../requests';
-import * as table from '../helpers/table';
-import {
-  createListAssetModelPropertiesPage,
-  createListAssetPropertiesPage,
-} from '../helpers/responses';
-import { SelectionMode } from '../../types/common';
-import {
+import type {
   BatchGetAssetPropertyValue,
   ExecuteQuery,
   ListAssetModelProperties,
   ListAssetProperties,
 } from '@iot-app-kit/core';
-import { AssetPropertyResource } from '../../types/resources';
-import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { formatDate } from '../../../../utils/time';
+import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
+import { AssetPropertyExplorer } from '../../explorers';
+import { resourceExplorerQueryClient } from '../../requests';
+import type { SelectionMode } from '../../types/common';
+import type { AssetPropertyResource } from '../../types/resources';
+import {
+  createListAssetModelPropertiesPage,
+  createListAssetPropertiesPage,
+} from '../helpers/responses';
+import * as table from '../helpers/table';
 
 function SelectableAssetPropertyTable({
   selectionMode,
@@ -252,13 +252,13 @@ describe('asset property table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssetProperties).toHaveBeenCalledOnce();
+      expect(listAssetProperties).toHaveBeenCalledTimes(2);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(screen.getByText('(20)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssetProperties).toHaveBeenCalledTimes(2);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
@@ -310,21 +310,21 @@ describe('asset property table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssetProperties).toHaveBeenCalledOnce();
+      expect(listAssetProperties).toHaveBeenCalledTimes(4);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
-      expect(listAssetProperties).toHaveBeenCalledTimes(3);
+      expect(listAssetProperties).toHaveBeenCalledTimes(4);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
-      expect(screen.getByText('(20)')).toBeInTheDocument();
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).not.toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssetProperties).toHaveBeenCalledTimes(4);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
@@ -1118,6 +1118,73 @@ describe('asset property table', () => {
       expect(screen.getByText('Name')).toBeVisible();
       expect(screen.getByText('Unit')).toBeVisible();
       expect(screen.getByText('Data type')).toBeVisible();
+    });
+  });
+
+  describe('errors', () => {
+    // hide errors in test output
+    const realConsoleError = console.error;
+    beforeAll(() => {
+      console.error = () => {};
+    });
+    afterAll(() => {
+      console.error = realConsoleError;
+    });
+
+    test('user experiences an error when listing asset properties', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <AssetPropertyExplorer
+          parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
+          iotSiteWiseClient={{
+            listAssetProperties: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+            listAssetModelProperties: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+
+      const assetPropertyTable = screen.getByRole('table');
+
+      expect(within(assetPropertyTable).getByText(errorMessage)).toBeVisible();
+    });
+
+    test('user experiences an error when listing asset model properties', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <AssetPropertyExplorer
+          parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
+          iotSiteWiseClient={{
+            listAssetModelProperties: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+      const assetPropertyTable = screen.getByRole('table');
+
+      expect(within(assetPropertyTable).getByText(errorMessage)).toBeVisible();
+    });
+
+    test('user experiences an error when searching asset properties', async () => {
+      const errorMessage = 'Failed to request resources';
+      const executeQuery = jest.fn().mockRejectedValue(new Error(errorMessage));
+      render(
+        <AssetPropertyExplorer
+          iotSiteWiseClient={{ executeQuery }}
+          tableSettings={{ isSearchEnabled: true }}
+        />
+      );
+      await table.typeSearchStatement('Asset Property');
+      await table.clickSearch();
+      const assetPropertyTable = screen.getByRole('table');
+
+      expect(within(assetPropertyTable).getByText(errorMessage)).toBeVisible();
     });
   });
 });

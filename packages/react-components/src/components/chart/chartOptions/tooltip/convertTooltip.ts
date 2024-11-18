@@ -1,9 +1,13 @@
-import { SeriesOption, TooltipComponentOption } from 'echarts';
+import { type SeriesOption, type TooltipComponentOption } from 'echarts';
 
-import { ChartDataQuality, ChartOptions } from '../../types';
+import {
+  type ChartAlarms,
+  type ChartDataQuality,
+  type ChartOptions,
+} from '../../types';
 import { useMemo } from 'react';
 import { formatter } from './formatter';
-import { GenericSeries } from '../../../../echarts/types';
+import { type GenericSeries } from '../../../../echarts/types';
 
 type ColorMap = { [key in string]: string };
 const useColorMap = (series: SeriesOption[]) => {
@@ -21,10 +25,12 @@ export const useTooltip = ({
   series,
   showBadDataIcons,
   showUncertainDataIcons,
+  showAlarmIcons,
 }: {
   significantDigits: ChartOptions['significantDigits'];
   series: SeriesOption[];
-} & ChartDataQuality) => {
+} & ChartDataQuality &
+  ChartAlarms) => {
   // We need to derive colors from series because the tooltip
   // params only include the itemStyling
   // This may be different than the series color because data quality
@@ -38,8 +44,15 @@ export const useTooltip = ({
         colorMap,
         showBadDataIcons,
         showUncertainDataIcons,
+        showAlarmIcons,
       }),
     }),
-    [significantDigits, colorMap, showBadDataIcons, showUncertainDataIcons]
+    [
+      significantDigits,
+      colorMap,
+      showBadDataIcons,
+      showUncertainDataIcons,
+      showAlarmIcons,
+    ]
   );
 };

@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
+import type * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { onMoveWidgetsAction } from '~/store/actions';
 import { toGridPosition } from '~/util/position';

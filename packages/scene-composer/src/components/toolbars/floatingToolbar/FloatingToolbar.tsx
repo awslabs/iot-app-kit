@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { colorBackgroundDropdownItemDefault } from '@cloudscape-design/design-tokens';
 

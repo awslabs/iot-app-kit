@@ -1,7 +1,7 @@
 import { Euler, Quaternion, Vector3 } from 'three';
 
-import { ICameraComponentInternal } from '../store';
-import { CameraSettings, ICameraBasics } from '../interfaces';
+import { type ICameraComponentInternal } from '../store';
+import { type CameraSettings, type ICameraBasics } from '../interfaces';
 import { DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_SETTINGS } from '../common/constants';
 import { CameraType } from '../models/SceneModels';
 

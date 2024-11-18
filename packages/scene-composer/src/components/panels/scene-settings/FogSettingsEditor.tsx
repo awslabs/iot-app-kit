@@ -1,13 +1,13 @@
-import React, { useCallback, useContext, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { FormField, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
+import { useCallback, useContext, useState } from 'react';
+import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
   DEFAULT_FOG_COLOR,
   DEFAULT_FOG_FAR,
   DEFAULT_FOG_NEAR,
-  IFogSettings,
+  type IFogSettings,
   KnownSceneProperty,
 } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
@@ -103,7 +103,7 @@ export const FogSettingsEditor: React.FC = () => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>
         <Toggle data-testid='enable-fog-toggle' checked={!!fogSettings} onChange={(e) => onToggleFog(e.detail.checked)}>
           {intl.formatMessage({ description: 'Toggle label', defaultMessage: 'Enable Fog' })}
@@ -147,6 +147,6 @@ export const FogSettingsEditor: React.FC = () => {
           </>
         )}
       </SpaceBetween>
-    </React.Fragment>
+    </>
   );
 };

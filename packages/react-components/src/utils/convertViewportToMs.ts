@@ -1,4 +1,4 @@
-import { Viewport, parseDuration } from '@iot-app-kit/core';
+import { type Viewport, parseDuration } from '@iot-app-kit/core';
 import { isDurationViewport } from './isDurationViewport';
 
 // TODO: test this once echarts live mode is supported

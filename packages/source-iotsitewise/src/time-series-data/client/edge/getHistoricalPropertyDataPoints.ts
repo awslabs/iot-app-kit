@@ -1,15 +1,15 @@
 import {
   GetAssetPropertyValueHistoryCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   TimeOrdering,
 } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId } from '../../types';
+import { type AssetId, type AssetPropertyId } from '../../types';
 import { toDataPoint } from '../../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 import {
-  OnSuccessCallback,
-  ErrorCallback,
-  RequestInformationAndRange,
+  type OnSuccessCallback,
+  type ErrorCallback,
+  type RequestInformationAndRange,
   toSiteWiseAssetProperty,
 } from '@iot-app-kit/core';
 import { toId } from '../../util/dataStreamId';

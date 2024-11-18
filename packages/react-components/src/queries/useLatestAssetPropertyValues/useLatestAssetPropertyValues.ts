@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { QueryFunctionContext, useQueries } from '@tanstack/react-query';
+import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
 import { useIoTSiteWiseClient } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
@@ -12,9 +12,9 @@ import {
 } from '../predicates';
 
 import {
-  LatestAssetPropertyValueRequest,
-  QueryFnClient,
-  UseLatestAssetPropertyValuesOptions,
+  type LatestAssetPropertyValueRequest,
+  type LatestValueQueryFnClient,
+  type UseLatestAssetPropertyValuesOptions,
 } from './types';
 import { LatestAssetPropertyValueKeyFactory } from './latestAssetPropertyValueKeyFactory';
 import {
@@ -22,8 +22,8 @@ import {
   LatestAssetPropertyValueBatcher,
 } from './requestExecution';
 import {
-  BatchGetAssetPropertyValue,
-  GetAssetPropertyValue,
+  type BatchGetAssetPropertyValue,
+  type GetAssetPropertyValue,
 } from '@iot-app-kit/core';
 import { useSyncTimeSeriesDataQueries } from '../utils/useTimeSeriesDataQuerySync';
 
@@ -40,7 +40,7 @@ const requestIsValid = ({
 const clientIsValid = ({
   getAssetPropertyValue,
   batchGetAssetPropertyValue,
-}: QueryFnClient = {}) =>
+}: LatestValueQueryFnClient = {}) =>
   hasRequestFunction<GetAssetPropertyValue>(getAssetPropertyValue) ||
   hasRequestFunction<BatchGetAssetPropertyValue>(batchGetAssetPropertyValue);
 
@@ -121,7 +121,7 @@ export const useLatestAssetPropertyValues = ({
 };
 
 export const createLatestAssetPropertyValueQueryFn = (
-  client?: QueryFnClient
+  client?: LatestValueQueryFnClient
 ) => {
   return async ({
     queryKey: [{ assetId, propertyId, propertyAlias }],

@@ -1,4 +1,4 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { parseDuration } from '../../common/time';
 import type { DataStreamsStore, DataStreamStore } from './types';
 

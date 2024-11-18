@@ -1,4 +1,4 @@
-import { DurationViewport, Viewport } from '@iot-app-kit/core';
+import { type DurationViewport, type Viewport } from '@iot-app-kit/core';
 
 export const isDurationViewport = (
   viewport: Viewport

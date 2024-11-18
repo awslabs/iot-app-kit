@@ -1,8 +1,13 @@
-import React, { Fragment, useCallback } from 'react';
+import { Fragment, useCallback } from 'react';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { ModelType } from '../../../models/SceneModels';
-import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useNodeErrorState } from '../../../store';
+import {
+  type IModelRefComponentInternal,
+  type ISceneNodeInternal,
+  useEditorState,
+  useNodeErrorState,
+} from '../../../store';
 import LogProvider from '../../../logger/react-logger/log-provider';
 
 import { TilesModelComponent } from './TilesModelComponent';

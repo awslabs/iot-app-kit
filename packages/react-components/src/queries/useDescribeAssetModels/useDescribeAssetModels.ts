@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 import {
-  DescribeAssetModelRequest,
-  IoTSiteWise,
-  IoTSiteWiseClient,
+  type DescribeAssetModelRequest,
+  type IoTSiteWise,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { DescribeAssetModel } from '@iot-app-kit/core';
-import { QueryFunctionContext, useQueries } from '@tanstack/react-query';
+import { type DescribeAssetModel } from '@iot-app-kit/core';
+import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { queryClient } from '../queryClient';
 import { DescribeAssetModelCacheKeyFactory } from './describeAssetModelQueryKeyFactory';
 import { hasRequestFunction, isAssetModelId } from '../predicates';
 import { useIoTSiteWiseClient } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { QueryOptionsGlobal } from '../common/types';
+import { type QueryOptionsGlobal } from '../common/types';
 
 export type UseDescribeAssetModelsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient | IoTSiteWise;

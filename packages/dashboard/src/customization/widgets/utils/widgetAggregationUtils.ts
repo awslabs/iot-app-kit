@@ -1,5 +1,5 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { LineScatterChartWidget, QueryWidget } from '../types';
+import { type LineScatterChartWidget, type QueryWidget } from '../types';
 
 export const WidgetDefaultAggregation: Record<
   string,
@@ -62,6 +62,14 @@ export const getAggregation = (
     'resolution' in widget.properties
   ) {
     return widget.properties.aggregationType;
+  }
+
+  if (
+    widget.properties.queryConfig.query != null &&
+    widget.properties.queryConfig.query.requestSettings != null &&
+    'aggregationType' in widget.properties.queryConfig.query.requestSettings
+  ) {
+    return widget.properties.queryConfig.query.requestSettings.aggregationType;
   }
 
   const firstProperty = getFirstProperty(widget.properties.queryConfig);

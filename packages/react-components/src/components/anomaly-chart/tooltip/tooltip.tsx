@@ -1,9 +1,8 @@
-import React from 'react';
 import { TooltipDate } from './date';
-import { TooltipSort } from '../types';
+import { type TooltipSort } from '../types';
 import { TooltipDiagnostics } from './diagnostics';
 import {
-  AnomalyChartTooltipData,
+  type AnomalyChartTooltipData,
   formatTooltipData,
 } from './formatTooltipData';
 import {

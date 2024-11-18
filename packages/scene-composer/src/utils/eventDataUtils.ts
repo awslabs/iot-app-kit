@@ -1,16 +1,16 @@
 import {
-  IAnchorComponentInternal,
-  IEntityBindingComponentInternal,
-  IDataOverlayComponentInternal,
-  ISceneNodeInternal,
+  type IAnchorComponentInternal,
+  type IEntityBindingComponentInternal,
+  type IDataOverlayComponentInternal,
+  type ISceneNodeInternal,
 } from '../store';
 import {
-  IDataOverlayInfo,
-  ITagData,
-  IEntityBindingInfo,
-  IDataBindingTemplate,
+  type IDataOverlayInfo,
+  type ITagData,
+  type IEntityBindingInfo,
+  type IDataBindingTemplate,
   KnownComponentType,
-  AdditionalComponentData,
+  type AdditionalComponentData,
 } from '../interfaces';
 
 import { applyDataBindingTemplate } from './dataBindingTemplateUtils';

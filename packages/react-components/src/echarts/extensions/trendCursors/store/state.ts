@@ -1,9 +1,9 @@
-import { TrendCursorAction } from './actions';
+import { type TrendCursorAction } from './actions';
 import {
-  TrendCursorGrouping,
-  TrendCursorGroupingMap,
-  TrendCursorMap,
-  TrendCursorValueMap,
+  type TrendCursorGrouping,
+  type TrendCursorGroupingMap,
+  type TrendCursorMap,
+  type TrendCursorValueMap,
 } from './types';
 
 export type TrendCursorsData = {

@@ -1,7 +1,7 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { KPI } from '../../src/components/kpi/kpi';
 import {
+  getSingleValueAlarmDataQuery,
   getSingleValueTimeSeriesDataQuery,
   queryConfigured,
 } from '../utils/query';
@@ -22,6 +22,8 @@ export default {
 } as ComponentMeta<typeof KPI>;
 
 export const ConnectedKPIWidget: ComponentStory<typeof KPI> = () => {
+  const hasAlarmIds = process.env.ALARM_COMPOSITE_MODEL_ID_1 !== null;
+
   if (!queryConfigured()) {
     return (
       <div>
@@ -49,6 +51,14 @@ export const ConnectedKPIWidget: ComponentStory<typeof KPI> = () => {
           query={getSingleValueTimeSeriesDataQuery()}
         />
       </div>
+      {hasAlarmIds && (
+        <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+          <KPI
+            viewport={{ duration: '5m' }}
+            query={getSingleValueAlarmDataQuery()}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,12 +1,12 @@
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 import {
-  FilterPredicate,
-  RenderSection,
+  type FilterPredicate,
+  type RenderSection,
   useSelection,
 } from './propertiesSection';
 
 export type PropertiesSectionProps<W extends DashboardWidget> = {
-  isVisible: FilterPredicate<W>;
+  isVisible?: FilterPredicate<W> | undefined;
   render: RenderSection<W>;
 };
 

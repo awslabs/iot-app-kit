@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
-import MessageModal from '../components/modals/MessageModal';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { accessStore } from '../store';
 import ConvertSceneModal from '../components/modals/ConvertSceneModal';
-import DeleteNodeModal from '../components/modals/DeleteNodeModal';
 import DeleteComponentModal from '../components/modals/DeleteComponentModal';
+import DeleteNodeModal from '../components/modals/DeleteNodeModal';
+import MessageModal from '../components/modals/MessageModal';
+import { accessStore } from '../store';
 
 const useSceneModal = (): React.JSX.Element | null => {
   const sceneComposerId = useContext(sceneComposerIdContext);

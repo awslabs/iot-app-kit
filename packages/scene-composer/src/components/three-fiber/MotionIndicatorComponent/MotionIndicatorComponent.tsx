@@ -1,12 +1,17 @@
-import { Primitive } from '@iot-app-kit/core';
-import React, { useMemo } from 'react';
+import { type Primitive } from '@iot-app-kit/core';
+import { useMemo } from 'react';
 import { Color } from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useBindingData from '../../../hooks/useBindingData';
-import { IValueDataBinding, KnownComponentType, SceneResourceType } from '../../../interfaces';
+import { type IValueDataBinding, KnownComponentType, SceneResourceType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { IMotionIndicatorComponentInternal, ISceneNodeInternal, accessStore, useViewOptionState } from '../../../store';
+import {
+  type IMotionIndicatorComponentInternal,
+  type ISceneNodeInternal,
+  accessStore,
+  useViewOptionState,
+} from '../../../store';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';

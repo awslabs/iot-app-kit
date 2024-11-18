@@ -1,7 +1,5 @@
-import React from 'react';
-
 import { colorBackgroundHomeHeader } from '@cloudscape-design/design-tokens';
-import { Button, ButtonProps } from '@cloudscape-design/components';
+import { Button, type ButtonProps } from '@cloudscape-design/components';
 
 import './index.css';
 

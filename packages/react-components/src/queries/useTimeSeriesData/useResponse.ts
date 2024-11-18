@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { TimeSeriesDataCacheClient } from './cacheClient';
-import { useTimeSeriesBisectedData } from './useBisectedData';
-import { useTimeSeriesDataRequestStatus } from './useRequestStatus';
+import { type TimeSeriesDataCacheClient } from './cacheClient';
+import { type useTimeSeriesBisectedData } from './useBisectedData';
+import { type useTimeSeriesDataRequestStatus } from './useRequestStatus';
 
 export type UseTimeSeriesDataResponseOptions<Request, Data> = {
   cacheClient: TimeSeriesDataCacheClient<Request, Data>;

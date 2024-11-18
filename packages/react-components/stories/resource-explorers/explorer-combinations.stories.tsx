@@ -1,19 +1,20 @@
 import { type Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
+import {
+  AlarmExplorer,
+  AssetExplorer,
+  AssetModelExplorer,
+  AssetPropertyExplorer,
+  TimeSeriesExplorer,
+  type AssetExplorerProps,
+  type AssetModelExplorerProps,
+} from '../../src/components/resource-explorers';
+import { client, eventsClient } from './data-source';
 import {
   StoryWithClearedResourceCache,
   StoryWithTanstackDevTools,
 } from './decorators';
-import { client } from './data-source';
-import {
-  AssetModelExplorer,
-  AssetExplorer,
-  AssetPropertyExplorer,
-  TimeSeriesExplorer,
-  type AssetModelExplorerProps,
-  type AssetExplorerProps,
-} from '../../src/components/resource-explorers';
 
 export default {
   title: 'Resource Explorers/Combinations',
@@ -211,6 +212,58 @@ export function AssetModelExplorerPlusAssetExplorerPlusTimeSeriesExplorer() {
           isFilterEnabled: true,
           isUserSettingsEnabled: true,
         }}
+      />
+    </>
+  );
+}
+
+export function AssetExplorerPlusAlarmExplorer() {
+  const [selectedAssets, setSelectedAssets] = useState<
+    NonNullable<AssetExplorerProps['selectedAssets']>
+  >([]);
+
+  console.log(selectedAssets);
+
+  return (
+    <>
+      <AssetExplorer
+        iotSiteWiseClient={client}
+        onSelectAsset={setSelectedAssets}
+        selectedAssets={selectedAssets}
+        selectionMode='multi'
+      />
+
+      <AlarmExplorer
+        iotSiteWiseClient={client}
+        iotEventsClient={eventsClient}
+        parameters={selectedAssets}
+        tableSettings={{
+          isUserSettingsEnabled: true,
+        }}
+      />
+    </>
+  );
+}
+
+export function AssetModelExplorerPlusAlarmExplorer() {
+  const [selectedAssetModels, setSelectedAssetModels] = useState<
+    NonNullable<AssetModelExplorerProps['selectedAssetModels']>
+  >([]);
+
+  return (
+    <>
+      <AssetModelExplorer
+        iotSiteWiseClient={client}
+        onSelectAssetModel={setSelectedAssetModels}
+        selectedAssetModels={selectedAssetModels}
+        selectionMode='multi'
+      />
+
+      <AlarmExplorer
+        iotSiteWiseClient={client}
+        iotEventsClient={eventsClient}
+        parameters={selectedAssetModels}
+        tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />
     </>
   );

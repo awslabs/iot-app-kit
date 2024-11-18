@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks';
+import { Meta, Source } from '@storybook/blocks';
 
 <Meta title="Components/TimeSync" />
 
@@ -9,84 +9,102 @@ in one or more groups, and provides the ability for components to send updates t
 See a live demo at [SynchroCharts demo](https://synchrocharts.com/#/Features/Synchronization). This example
 demonstrates 3 line charts within the same viewport group - when you pan one chart, it communicates it's updated viewport to the entire group. This is the functionality that the `<TimeSync />` enables.
 
-### Example
+## Examples
 
 Use this component by wrapping the components to use in a viewport. See the example below:
 
-```jsx
-import { LineChart, TimeSync } from '@iot-app-kit/react-components
+<Source dark="true" code={`
+import { Chart, KPI, TimeSync } from '@iot-app-kit/react-components';
 
- <TimeSync initialViewport={{ duration: '5m' }}}>
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
-  </TimeSync>
-```
+const Page = () => {
+  return (
+    <TimeSync initialViewport={{ duration: '5m' }}}>
+      <Chart ... />
+      <KPI ... />
+      <KPI ... />
+    </TimeSync>
+  );
+}
+`} />
 
 To have multiple viewport groups,  use the TimeSync components in multiple locations, like the example below:
 
-```jsx
-import { LineChart, TimeSync } from '@iot-app-kit/react-components
+<Source dark="true" code={`
+import { Chart, KPI, TimeSync } from '@iot-app-kit/react-components';
 
- <TimeSync initialViewport={{ duration: '5m' }}}>
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
-  </TimeSync>
- <TimeSync initialViewport={{ duration: '5m' }}}>
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
- </TimeSync>
- <TimeSync initialViewport={{ duration: '5m' }}}>
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
-  </TimeSync>
-```
+const Page = () => {
+  return (
+    <>
+    <TimeSync initialViewport={{ duration: '5m' }}}>
+        <Chart ... />
+        <KPI ... />
+        <Chart ... />
+      </TimeSync>
+    <TimeSync initialViewport={{ duration: '5m' }}}>
+        <KPI ... />
+        <Chart ... />
+        <Chart ... />
+    </TimeSync>
+    <TimeSync initialViewport={{ duration: '5m' }}}>
+        <Chart ... />
+        <Chart ... />
+        <KPI ... />
+      </TimeSync>
+    </>
+  );
+}
+`} />
 
 To support different viewport groups in your application that cannot be wrapped in a single TimeSync component, specify a `group` 
 attribute that is common between them.  To have multiple viewport groups, use TimeSync in multiple locations, like in the example below:
 
-```jsx
-import { LineChart, TimeSync } from '@iot-app-kit/react-components
+<Source dark="true" code={`
+import { Chart, KPI, TimeSync } from '@iot-app-kit/react-components';
 
- <TimeSync group="my-group" initialViewport={{ duration: '5m' }}}>
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
-  </TimeSync>
- <TimeSync group="my-group">
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
-  </TimeSync>
- <TimeSync group="my-group">
-    <LineChart ... />
-    <LineChart ... />
-    <LineChart ... />
-  </TimeSync>
-```
+const Page = () => {
+  return (
+    <>
+      <TimeSync group="my-group" initialViewport={{ duration: '5m' }}}>
+          <Chart ... />
+          <Chart ... />
+          <Chart ... />
+        </TimeSync>
+      <TimeSync group="my-group">
+          <Chart ... />
+          <Chart ... />
+          <Chart ... />
+        </TimeSync>
+      <TimeSync group="my-group">
+          <Chart ... />
+          <Chart ... />
+          <Chart ... />
+        </TimeSync>
+    </>
+  );
+}
+`} />
 
-## TimeSync API Summary
+## Properties
 
-#### group (string, optional):
+#### group
+##### (string, optional)
 
 This attribute specifies the name of the viewport group that TimeSync propagates to it's contained components. If empty, the TimeSync component 
 assigns an unique string by default. All viewports across all TimeSync components in the same group, will stay in sync.
 Any updates to the viewport group, are shared to all consumers of the viewport group.
 
-#### initialViewport (object, optional):
+#### initialViewport
+##### (object, optional)
 
 This attribute specifies the initial value for the viewport group, if a viewport is not associated with the given viewport group. 
 If the viewport group has a viewport associated with it, the `initialViewport` is ignored.
 
-### Utilizing the synchronized time across IoT App Kit components
+## Utilizing the synchronized time across IoT App Kit components
 
 The synchronized time is utilized and updated within components by using the `useViewport` hook.
 Learn more about [useViewport](https://github.com/awslabs/iot-app-kit/tree/main/docs/useViewport.md).
 
-### Programmatically control your viewports (without JS React)
+## Programmatically control your viewports (without JS React)
 
 An alternate way to manage viewports is through an exposed utility `viewportManager` within `@iot-app-kit/core`. This 
 allows the management of your viewport groups with plain javascript.

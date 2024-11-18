@@ -1,8 +1,9 @@
-import { SceneLoader, TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
-import { DataStream, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { type SceneLoader, type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type DataStream, type TimeSeriesDataQuery, type Viewport } from '@iot-app-kit/core';
+import { type AssistantProperty } from '@iot-app-kit/react-components';
 
-import { IDataBindingTemplate, ISelectedDataBinding, IValueDataBindingProvider } from './dataBinding';
-import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
+import { type IDataBindingTemplate, type ISelectedDataBinding, type IValueDataBindingProvider } from './dataBinding';
+import { type SelectionChangedEventCallback, type WidgetClickEventCallback } from './components';
 
 export interface BasisuDecoderConfig {
   enable: boolean;
@@ -94,6 +95,11 @@ export interface SceneViewerPropsShared {
    * When selectedDataBinding is set this is ignored in favor of focusing on the selected item.
    */
   activeCamera?: string;
+
+  /**
+   * Integrate with an AI assistant
+   */
+  assistant?: AssistantProperty;
 }
 
 export type SceneViewerProps = SceneViewerPropsShared;

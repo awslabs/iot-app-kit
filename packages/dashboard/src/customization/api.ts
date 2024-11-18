@@ -1,15 +1,12 @@
-import React from 'react';
+import type * as React from 'react';
+import plugins from '~/customization/pluginsConfiguration';
+import type { DashboardWidget } from '~/types';
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
 } from './componentLibraryComponentMap';
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
-import type { DashboardWidget } from '~/types';
-import plugins from '~/customization/pluginsConfiguration';
-import { rectanglePlugin } from './widgets';
-import { useHasFeatureFlag } from '@iot-app-kit/react-components';
-import { linePlugin } from './widgets/lineSymbol/plugin';
 
 type RenderFunc<T extends DashboardWidget> = (widget: T) => React.ReactElement;
 
@@ -77,13 +74,6 @@ const resetMaps = () => {
 };
 
 export const useDashboardPlugins = () => {
-  const hasSymbolLibraryFeatureFlag = useHasFeatureFlag(
-    'ENABLE_SYMBOL_LIBRARY'
-  );
   resetMaps();
   plugins.forEach((plugin) => plugin.install({ registerWidget }));
-  if (hasSymbolLibraryFeatureFlag) {
-    rectanglePlugin.install({ registerWidget });
-    linePlugin.install({ registerWidget });
-  }
 };

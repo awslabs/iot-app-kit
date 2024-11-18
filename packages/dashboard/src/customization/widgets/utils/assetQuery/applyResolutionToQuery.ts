@@ -1,10 +1,13 @@
-import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 
 export const applyResolutionToQuery = (
   {
     assets = [],
     properties = [],
     assetModels = [],
+    alarms = [],
+    alarmModels = [],
+    requestSettings = {},
   }: IoTSiteWiseDataStreamQuery,
   resolution: string | undefined
 ) => ({
@@ -26,4 +29,10 @@ export const applyResolutionToQuery = (
       resolution,
     })),
   })),
+  alarms,
+  alarmModels,
+  requestSettings: {
+    ...requestSettings,
+    resolution,
+  },
 });

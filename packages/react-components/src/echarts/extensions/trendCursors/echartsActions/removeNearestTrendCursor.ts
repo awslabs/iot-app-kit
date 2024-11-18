@@ -1,4 +1,4 @@
-import { ElementEvent, Payload } from 'echarts';
+import { type ElementEvent, type Payload } from 'echarts';
 
 export const RemoveNearestTrendCursorActionType =
   'REMOVE_NEAREST_TREND_CURSOR' as const;

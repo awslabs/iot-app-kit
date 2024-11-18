@@ -1,4 +1,4 @@
-import { AnomalyEventDiagnostic } from './types';
+import { type AnomalyEventDiagnostic } from './types';
 
 const parseDiagnostic = (diagnostic: AnomalyEventDiagnostic) => {
   const { name, value } = diagnostic;

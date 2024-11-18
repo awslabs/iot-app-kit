@@ -1,16 +1,11 @@
-import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-
-import { render } from '@testing-library/react';
-
-import { screen } from '@testing-library/dom';
-
-import WidgetTile from './tile';
 import { configureDashboardStore } from '~/store';
 import {
   MOCK_BAR_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
+import WidgetTile from './tile';
 
 describe('WidgetTile', () => {
   it('should render widget content', function () {
@@ -34,9 +29,17 @@ describe('WidgetTile', () => {
 
   it('displays titlewhen widget type is "bar-chart"', () => {
     const { getByText } = render(
-      <WidgetTile widget={MOCK_BAR_WIDGET} title='Test Title'>
-        Test Children
-      </WidgetTile>
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [MOCK_LINE_CHART_WIDGET],
+          },
+        })}
+      >
+        <WidgetTile widget={MOCK_BAR_WIDGET} title='Test Title'>
+          Test Children
+        </WidgetTile>
+      </Provider>
     );
     const titleElement = getByText('Test Title');
     expect(titleElement).toBeInTheDocument();

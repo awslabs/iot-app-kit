@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import type { TableColumnDefinition, TableItemHydrated } from './types';

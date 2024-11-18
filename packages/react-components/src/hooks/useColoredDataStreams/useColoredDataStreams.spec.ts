@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useColoredDataStreams } from './useColoredDataStreams';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
 
 const PALETTE = [

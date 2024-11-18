@@ -1,4 +1,3 @@
-import React from 'react';
 import { default as timelineSvg } from './timeline.svg';
 import { default as timelineSvgDark } from './timeline-dark.svg';
 import WidgetIcon from '../components/widgetIcon';

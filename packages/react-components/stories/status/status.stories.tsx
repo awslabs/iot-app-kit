@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Status } from '../../src/components/status/status';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 

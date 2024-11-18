@@ -1,4 +1,4 @@
-import { IValueDataBindingProviderState } from './types';
+import { type IValueDataBindingProviderState } from './types';
 
 export enum DataField {
   ENTITY_ID,

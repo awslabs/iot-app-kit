@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh';
 
-import { IModelRefComponentInternal } from '../store';
+import { type IModelRefComponentInternal } from '../store';
 
 export function getEntityGroupName(nodeRef: string) {
   return `ENTITY_GROUP_${nodeRef}`;

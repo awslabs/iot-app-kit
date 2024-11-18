@@ -1,7 +1,13 @@
-import { useChildAssets } from './use-child-assets';
-import { useRootAssets } from './use-root-assets';
-import { useAssetModelAssets } from './use-asset-model-assets';
-import { useAssetSearch } from './use-asset-search';
+import type {
+  ExecuteQuery,
+  ListAssets,
+  ListAssociatedAssets,
+} from '@iot-app-kit/core';
+import type {
+  UseListAPIBaseOptions,
+  UseListAPIBaseResult,
+} from '../../../types/requests';
+import type { AssetResource } from '../../../types/resources';
 import {
   isAssetModelAssetsParameters,
   isChildAssetsParameters,
@@ -13,16 +19,10 @@ import type {
   ChildAssetsRequestParameters,
   SearchedAssetsRequestParameters,
 } from '../types';
-import type {
-  ExecuteQuery,
-  ListAssets,
-  ListAssociatedAssets,
-} from '@iot-app-kit/core';
-import type {
-  UseListAPIBaseOptions,
-  UseListAPIBaseResult,
-} from '../../../types/requests';
-import type { AssetResource } from '../../../types/resources';
+import { useAssetModelAssets } from './use-asset-model-assets';
+import { useAssetSearch } from './use-asset-search';
+import { useChildAssets } from './use-child-assets';
+import { useRootAssets } from './use-root-assets';
 
 export interface UseAssetsOptions extends UseListAPIBaseOptions {
   parameters?: AssetResourcesRequestParameters;
@@ -91,10 +91,9 @@ export function useAssets({
     ? rootAssetsQueryResult
     : {
         assets: [],
-        isLoading: false,
+        isLoadingFirstPage: false,
+        isLoadingResources: false,
         error: undefined,
-        hasNextPage: false,
-        nextPage: () => {},
       };
 
   return queryResult;

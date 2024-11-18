@@ -1,23 +1,26 @@
 import {
-  StyleSettingsMap,
-  Threshold,
-  TimeQuery,
-  TimeSeriesData,
-  TimeSeriesDataRequest,
-  Viewport,
-  Primitive,
+  type StyleSettingsMap,
+  type Threshold,
+  type Viewport,
+  type Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
+import { type AssistantProperty } from '../../common/assistantProps';
+import type { ComponentQuery } from '../../common/chartTypes';
+import type { AlarmContent } from '../alarm-components/alarm-content/types';
+import { type AlarmDataStatus } from '../../hooks/useAlarms';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
-  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  query: ComponentQuery;
   viewport?: Viewport;
   thresholds?: Threshold[];
+  titleText?: string;
   styles?: StyleSettingsMap;
   settings?: GaugeSettings;
   significantDigits?: number;
   theme?: string;
+  assistant?: AssistantProperty;
 };
 
 export type GaugeBaseProperties = WidgetSettings &
@@ -26,6 +29,9 @@ export type GaugeBaseProperties = WidgetSettings &
     'thresholds' | 'settings' | 'significantDigits' | 'theme' | 'size'
   > & {
     isLoading?: boolean;
+    alarmContent?: AlarmContent;
+    assistant?: AssistantProperty;
+    alarmStatus?: AlarmDataStatus;
   };
 export type GaugeSettings = {
   gaugeThickness?: number;

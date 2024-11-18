@@ -1,6 +1,6 @@
 import { isBefore } from 'date-fns';
 import { sortIntervals } from './sort';
-import { Interval } from '../../types';
+import { type Interval } from '../../types';
 import isEqual from 'lodash.isequal';
 
 /**

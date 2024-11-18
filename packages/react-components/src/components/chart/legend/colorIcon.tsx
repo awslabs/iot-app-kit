@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './colorIcon.css';
 
 export const ColorIcon = ({ color }: { color?: string }) => (

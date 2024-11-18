@@ -1,17 +1,17 @@
 import DataLoader from 'dataloader';
 import {
-  ExecuteRequestStrategy,
-  OnRequestSuccessCallback,
-  SendOptions,
+  type ExecuteRequestStrategy,
+  type OnRequestSuccessCallback,
+  type SendOptions,
 } from '../../../useTimeSeriesData';
 import {
-  AssetPropertyValueHistoryRequest,
-  AssetPropertyValuesData,
-  BatchGetAssetPropertyValueHistoryRequestFunction,
-  BatchGetAssetPropertyValueHistoryRequestResponse,
+  type AssetPropertyValueHistoryRequest,
+  type AssetPropertyValuesData,
+  type BatchGetAssetPropertyValueHistoryRequestFunction,
+  type BatchGetAssetPropertyValueHistoryRequestResponse,
 } from '../../types';
 import { anySignal } from '../utils/anySignal';
-import { BatchGetRequest, BatchGetRequestManager } from './requestManager';
+import { type BatchGetRequest, BatchGetRequestManager } from './requestManager';
 import { createNonNullableList } from '../../../../utils/createNonNullableList';
 
 export type AssetPropertyValueHistoryLoaderOptions = {

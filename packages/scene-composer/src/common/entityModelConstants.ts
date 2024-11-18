@@ -1,4 +1,4 @@
-import { KnownComponentType } from '../interfaces';
+import { type KnownComponentType } from '../interfaces';
 
 // Backend limits
 export const MAX_PROPERTY_STRING_LENGTH = 2048;

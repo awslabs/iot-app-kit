@@ -1,5 +1,5 @@
-import { DataFrame, FieldType } from '../../arrow';
-import { AnomalyArrowDataSource } from './datasource';
+import { type DataFrame, FieldType } from '../../arrow';
+import { type AnomalyArrowDataSource } from './datasource';
 import { AnomalyArrowDataSourceTransformer } from './transformer';
 
 const validAnomalyDataFrame: DataFrame = {

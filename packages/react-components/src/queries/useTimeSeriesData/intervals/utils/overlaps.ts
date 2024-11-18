@@ -1,4 +1,4 @@
-import { Interval, areIntervalsOverlapping } from 'date-fns';
+import { type Interval, areIntervalsOverlapping } from 'date-fns';
 
 /**
  * do the 2 given intervals overlap

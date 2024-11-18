@@ -7,7 +7,6 @@ import {
   fontWeightHeadingXs,
   spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
-import React from 'react';
 
 import './resource-table-filter.css';
 

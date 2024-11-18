@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon } from '@cloudscape-design/components';
 
 import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';

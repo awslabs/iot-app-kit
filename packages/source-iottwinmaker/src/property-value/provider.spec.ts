@@ -1,5 +1,5 @@
 import { TwinMakerPropertyValueDataProvider } from './provider';
-import { GetPropertyValueCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type GetPropertyValueCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { MINUTE_IN_MS } from '../common/timeConstants';
 
 import flushPromises from 'flush-promises';

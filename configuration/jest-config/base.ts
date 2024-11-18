@@ -1,20 +1,18 @@
-
 export default {
   setupFilesAfterEnv: ['jest-extended/all'],
   maxWorkers: '50%',
-  collectCoverageFrom: ["./src/**"],
+  cacheDirectory: '.cache/jest',
+  collectCoverageFrom: ['./src/**'],
   collectCoverage: true,
   moduleFileExtensions: ['js', 'ts'],
   transform: {
-    '.*\\.(ts|js)$': [
-      '@swc/jest',
-    ],
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
   },
   transformIgnorePatterns: [],
   roots: ['./src'],
-  "coverageThreshold": {
-    "global": {
-      "lines": 50
-    }
-  }
+  coverageThreshold: {
+    global: {
+      lines: 50,
+    },
+  },
 };

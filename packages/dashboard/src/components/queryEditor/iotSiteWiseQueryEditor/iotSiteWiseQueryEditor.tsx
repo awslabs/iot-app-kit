@@ -1,12 +1,14 @@
-import React from 'react';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetSummary,
+  type IoTSiteWise,
+} from '@aws-sdk/client-iotsitewise';
 import Tabs from '@cloudscape-design/components/tabs';
 import { useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
-import { useQuery } from '../useQuery';
+import { type useQuery } from '../useQuery';
 import { AssetModelDataStreamExplorer } from './assetModelDataStreamExplorer/assetModelDataStreamExplorer';
 import { ModeledExplorer } from './modeledExplorer/modeledExplorer';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 import { UnmodeledExplorer } from './timeSeriesExplorer/timeSeriesExplorer';
 
 export interface IoTSiteWiseQueryEditorProps {
@@ -15,6 +17,7 @@ export interface IoTSiteWiseQueryEditorProps {
   selectedWidgets: DashboardWidget[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
+  currentSelectedAsset?: AssetSummary;
 }
 
 export function IoTSiteWiseQueryEditor({
@@ -23,6 +26,7 @@ export function IoTSiteWiseQueryEditor({
   selectedWidgets,
   addButtonDisabled,
   correctSelectionMode,
+  currentSelectedAsset,
 }: IoTSiteWiseQueryEditorProps) {
   const isEdgeModeEnabled = useSelector(
     (state: DashboardState) => state.isEdgeModeEnabled
@@ -76,6 +80,7 @@ export function IoTSiteWiseQueryEditor({
         selectedWidgets={selectedWidgets}
         timeZone={timeZone}
         significantDigits={significantDigits}
+        currentSelectedAsset={currentSelectedAsset}
       />
     ),
   };

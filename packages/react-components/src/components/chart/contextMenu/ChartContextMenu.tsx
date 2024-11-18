@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Menu, MenuOptionProps } from '../../menu';
-
+import { useEffect, useState } from 'react';
+import { Menu, type MenuOptionProps } from '../../menu';
 import { CONTEXT_MENU_Z_INDEX } from '../eChartsConstants';
 
 type ContextMenuAction = (offsetX: number) => void;

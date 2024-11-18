@@ -1,5 +1,8 @@
-import { type TimeSeriesResource } from '@iot-app-kit/react-components/dist/es/components/resource-explorers/types/resources';
-import { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
+import type {
+  AlarmResource,
+  AssetPropertyResource,
+  TimeSeriesResource,
+} from '@iot-app-kit/react-components';
 import { QueryExtender } from './queryExtender';
 
 describe(QueryExtender.name, () => {
@@ -20,7 +23,7 @@ describe(QueryExtender.name, () => {
           assetId: 'asset-2',
           propertyId: 'property-2',
         },
-      ] as ModeledDataStream[];
+      ] as AssetPropertyResource[];
 
       const extendedQuery =
         queryExtender.extendAssetQueries(modeledDataStreams);
@@ -59,7 +62,7 @@ describe(QueryExtender.name, () => {
           assetId: 'asset-1',
           propertyId: 'property-2',
         },
-      ] as ModeledDataStream[];
+      ] as AssetPropertyResource[];
 
       const extendedQuery =
         queryExtender.extendAssetQueries(modeledDataStreams);
@@ -175,5 +178,121 @@ describe(QueryExtender.name, () => {
     const extendedQuery = queryExtender.extendPropertyAliasQueries([]);
 
     expect(extendedQuery).toEqual(currentQuery);
+  });
+
+  describe('extendAlarmQueries', () => {
+    it('should extend the current query with new alarm queries', () => {
+      const currentQuery = {
+        alarms: [
+          {
+            assetId: 'asset-1',
+            alarmComponents: [{ assetCompositeModelId: 'alarm-1' }],
+          },
+        ],
+        assets: [
+          {
+            assetId: 'asset-1',
+            properties: [{ propertyId: 'property-1' }],
+          },
+        ],
+        properties: [{ propertyAlias: 'property-1' }],
+      };
+      const queryExtender = new QueryExtender(currentQuery);
+      const modeledAlarmStreams = [
+        {
+          assetId: 'asset-2',
+          assetCompositeModelId: 'alarm-2',
+        },
+      ] as AlarmResource[];
+
+      const extendedQuery =
+        queryExtender.extendAlarmQueries(modeledAlarmStreams);
+
+      expect(extendedQuery).toEqual({
+        alarms: [
+          {
+            assetId: 'asset-1',
+            alarmComponents: [{ assetCompositeModelId: 'alarm-1' }],
+          },
+          {
+            assetId: 'asset-2',
+            alarmComponents: [{ assetCompositeModelId: 'alarm-2' }],
+          },
+        ],
+        assets: [
+          {
+            assetId: 'asset-1',
+            properties: [{ propertyId: 'property-1' }],
+          },
+        ],
+        properties: [{ propertyAlias: 'property-1' }],
+      });
+    });
+
+    it('should dedupe alarm queries with properties', () => {
+      const currentQuery = {
+        alarms: [
+          {
+            assetId: 'asset-1',
+            alarmComponents: [{ assetCompositeModelId: 'alarm-1' }],
+          },
+        ],
+      };
+      const queryExtender = new QueryExtender(currentQuery);
+      const modeledAlarmStreams = [
+        {
+          assetId: 'asset-1',
+          assetCompositeModelId: 'alarm-1',
+        },
+        {
+          assetId: 'asset-1',
+          assetCompositeModelId: 'alarm-2',
+        },
+      ] as AlarmResource[];
+
+      const extendedQuery =
+        queryExtender.extendAlarmQueries(modeledAlarmStreams);
+
+      expect(extendedQuery).toEqual({
+        alarms: [
+          {
+            assetId: 'asset-1',
+            alarmComponents: [
+              { assetCompositeModelId: 'alarm-1' },
+              { assetCompositeModelId: 'alarm-2' },
+            ],
+          },
+        ],
+      });
+    });
+
+    it('should initialize with an empty query when no argument is passed', () => {
+      const queryExtender = new QueryExtender();
+      const extendedQuery = queryExtender.extendAlarmQueries([]);
+
+      expect(extendedQuery).toEqual({ alarms: [] });
+    });
+
+    it('should return the current query when an empty array is passed to extendAssetQueries', () => {
+      const currentQuery = {
+        alarms: [
+          {
+            assetId: 'asset-1',
+            alarmComponents: [{ assetCompositeModelId: 'alarm-1' }],
+          },
+        ],
+        assets: [
+          {
+            assetId: 'asset-1',
+            properties: [{ propertyId: 'property-1' }],
+          },
+        ],
+        properties: [{ propertyAlias: 'property-1' }],
+      };
+      const queryExtender = new QueryExtender(currentQuery);
+      const extendedQuery = queryExtender.extendAlarmQueries([]);
+
+      expect(extendedQuery).toEqual(currentQuery);
+    });
   });
 });

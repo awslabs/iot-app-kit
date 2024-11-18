@@ -1,5 +1,5 @@
-import { DEFAULT_GROUPING, TrendCursorsData } from '../../state';
-import { TrendCursor, TrendCursorMap } from '../../types';
+import { DEFAULT_GROUPING, type TrendCursorsData } from '../../state';
+import { type TrendCursor, type TrendCursorMap } from '../../types';
 
 export type DeleteTrendCursorAction = {
   type: 'DELETE_TREND_CURSOR';

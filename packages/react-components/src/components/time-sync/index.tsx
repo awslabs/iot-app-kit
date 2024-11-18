@@ -1,13 +1,13 @@
-import { v4 as uuid } from 'uuid';
-import React, {
+import { viewportManager, type Viewport } from '@iot-app-kit/core';
+import {
   createContext,
   useCallback,
   useEffect,
-  useState,
   useRef,
+  useState,
+  type ReactNode,
 } from 'react';
-import { Viewport, viewportManager } from '@iot-app-kit/core';
-import type { ReactNode } from 'react';
+import { v4 as uuid } from 'uuid';
 
 export interface IViewportContext {
   viewport?: Viewport;

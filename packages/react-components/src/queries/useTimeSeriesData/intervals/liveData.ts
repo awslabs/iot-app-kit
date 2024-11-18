@@ -1,5 +1,5 @@
 import { parseDuration } from '@iot-app-kit/core';
-import { LiveDataConfiguration, Viewport } from '../types';
+import { type LiveDataConfiguration, type Viewport } from '../types';
 
 /**
  * Since each of these interval requests run on their own promise

@@ -1,5 +1,5 @@
 import { useIntl } from 'react-intl';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
 import { SceneCapabilities, SceneMetadataMapKeys } from '../common/sceneModelConstants';

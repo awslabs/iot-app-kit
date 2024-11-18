@@ -1,25 +1,14 @@
-import {
-  DashboardConfiguration,
-  DashboardWidget,
-  MigrateDashboard,
-} from '../types';
-import {
-  DashboardWidgetType,
-  MonitorWidgetType,
-  SiteWiseWidgetType,
-  MonitorMetric,
-  SiteWiseMonitorDashboardDefinition,
-  MonitorAnnotations,
-  MonitorWidget,
-  QueryConfig,
-  AssetMap,
-} from './types';
 import { nanoid } from 'nanoid';
+import {
+  type DashboardConfiguration,
+  type DashboardWidget,
+  type MigrateDashboard,
+} from '../types';
+import { removeCollisions } from './collision-logic';
 import {
   appCellPerMonitorSquareHeight,
   appCellsPerMonitorSquareWidth,
   defaultDisplaySettings,
-  defaultResolution,
   minHeight,
   minWidth,
 } from './constants';
@@ -29,7 +18,17 @@ import {
   getStaticProperties,
   getStyleSettings,
 } from './getters';
-import { removeCollisions } from './collision-logic';
+import {
+  DashboardWidgetType,
+  MonitorWidgetType,
+  SiteWiseWidgetType,
+  type AssetMap,
+  type MonitorAnnotations,
+  type MonitorMetric,
+  type MonitorWidget,
+  type QueryConfig,
+  type SiteWiseMonitorDashboardDefinition,
+} from './types';
 
 const convertType = (monitorChartType: string) => {
   switch (monitorChartType) {
@@ -75,27 +74,6 @@ const convertX = (x: number) => {
 
 const convertY = (y: number) => {
   return y * appCellPerMonitorSquareHeight;
-};
-
-export const convertResolution = (
-  widgetType: MonitorWidgetType | SiteWiseWidgetType,
-  resolution?: string
-) => {
-  if (
-    widgetType === MonitorWidgetType.StatusTimeline ||
-    widgetType === MonitorWidgetType.Table
-  ) {
-    // Timeline has resolution set to 0
-    return '0';
-  }
-
-  if (resolution) {
-    if (resolution === 'raw') {
-      return defaultResolution;
-    }
-    return resolution;
-  }
-  return defaultResolution;
 };
 
 const convertThresholds = (monitorAnnotations?: MonitorAnnotations) => {

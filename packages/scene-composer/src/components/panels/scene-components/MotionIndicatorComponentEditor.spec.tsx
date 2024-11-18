@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-import { IMotionIndicatorComponentInternal, accessStore } from '../../../store';
+import { type IMotionIndicatorComponentInternal, accessStore } from '../../../store';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';

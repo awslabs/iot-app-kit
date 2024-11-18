@@ -3,30 +3,41 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "10.13.1",
+  "version": "11.0.0",
   "engines": {
     "node": ">=16",
     "npm": ">=8"
   },
-  "main": "src/build.ts",
-  "module": "./dist/es/build.js",
-  "types": "./dist/es/build.d.ts",
+  "main": "./dist/cjs/build.js",
+  "module": "./dist/esm/build.js",
+  "types": "./dist/esm/build.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "bin": {
     "tmdt": "./dist/cjs/cli.js"
   },
   "scripts": {
-    "build": "npm run clean && npm run build:es && npm run build:cjs && npm run package",
-    "build-global": "npm run clean && npm run build:cjs && npm run build:es && npm run package && npm install -g",
-    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
-    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
-    "clean": "rm -rf dist && rm tmdt_local || true && npm uninstall -g tmdt || true",
-    "dev": "npm-watch build",
-    "lint": "eslint . --max-warnings=0",
-    "fix": "eslint --fix .",
-    "test": "npm run test:jest && npm run test:typescript",
-    "test-functional": "TZ=UTC jest --silent -c jest.config.functional.ts",
-    "test.watch": "TZ=UTC jest --watchAll",
-    "test:jest": "TZ=UTC jest --silent",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && npm run package",
+    "build-global": "npm run clean && npm run build && npm run package && npm install -g",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json && npm run package",
+    "build:es": "tsc -b ./tsconfig.esm.json",
+    "clean": "rimraf dist coverage tmdt_local .turbo .cache && npm uninstall -g tmdt || true",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
+    "dev:dashboard": "npm run dev",
+    "dev:react-components": "npm run dev",
+    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
+    "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
+    "test": "npm run test:jest",
+    "test-functional": "TZ=UTC jest --silent -c jest.config.functional.ts --cacheDirectory .cache/jest",
+    "test:watch": "TZ=UTC jest --watchAll --cacheDirectory .cache/jest",
+    "test:jest": "TZ=UTC jest --silent --cacheDirectory .cache/jest",
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
@@ -42,8 +53,8 @@
     "@types/yargs": "^17.0.24",
     "aws-sdk-client-mock": "^3.1.0",
     "jest-extended": "^3.2.4",
-    "npm-watch": "^0.11.0",
     "pkg": "^5.8.0",
+    "rimraf": "^5.0.1",
     "typescript": "^4.9.5"
   },
   "dependencies": {

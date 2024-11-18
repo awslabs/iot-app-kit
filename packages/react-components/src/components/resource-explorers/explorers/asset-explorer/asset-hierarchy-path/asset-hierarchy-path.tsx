@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { ResourceRelationshipPath } from './resource-relationship-path';
 import { useAncestorAssets } from './use-ancestor-assets';

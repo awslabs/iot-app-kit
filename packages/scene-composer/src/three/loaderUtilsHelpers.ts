@@ -1,13 +1,13 @@
 import { DRACOLoader, KTX2Loader } from 'three-stdlib';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module';
-import { WebGLRenderer } from 'three';
+import { type WebGLRenderer } from 'three';
 
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { THREE_PATH } from '../common/constants';
 
 import { TwinMakerFileLoader } from './TwinMakerFileLoader';
 import { TwinMakerTextureLoader } from './TwinMakerTextureLoader';
-import { GLTFLoader, GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
+import { type GLTFLoader, type GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
 
 export const setupDracoSupport = (loader: GLTFLoader, dracoLoader: DRACOLoader = new DRACOLoader()): void => {
   const { dracoDecoder, getSceneObjectFunction } = getGlobalSettings();

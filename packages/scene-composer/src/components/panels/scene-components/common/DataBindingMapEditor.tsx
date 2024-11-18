@@ -1,12 +1,12 @@
 import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
-import { Component } from '../../../../models/SceneModels';
-import { ISceneComponentInternal } from '../../../../store';
+import { type IValueDataBinding, type IValueDataBindingProvider } from '../../../../interfaces';
+import { type Component } from '../../../../models/SceneModels';
+import { type ISceneComponentInternal } from '../../../../store';
 import { Divider } from '../../../Divider';
 import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
 

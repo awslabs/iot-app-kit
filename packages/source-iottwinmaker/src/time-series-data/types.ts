@@ -1,5 +1,5 @@
 import type { DataStreamQuery } from '@iot-app-kit/core';
-import { TwinMakerHistoryQuery } from '../common/queryTypes';
+import { type TwinMakerHistoryQuery } from '../common/queryTypes';
 
 export type TwinMakerDataStreamQuery = TwinMakerHistoryQuery & {
   workspaceId: string;

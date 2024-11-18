@@ -1,8 +1,8 @@
-import { Browser, Locator, Page } from '@playwright/test';
+import { type Browser, type Locator, type Page } from '@playwright/test';
 import { TEST_PAGE } from '../constants';
 
-export const DEFAULT_WIDGET_POS_X = 600;
-export const DEFAULT_WIDGET_POS_Y = 300;
+const DEFAULT_WIDGET_POS_X = 600;
+const DEFAULT_WIDGET_POS_Y = 300;
 
 export class DashboardPage {
   readonly page: Page;

@@ -1,10 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { SceneNodeInspectorPanel } from '../SceneNodeInspectorPanel';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { ISceneNodeInternal, accessStore } from '../../../store';
+import { type ISceneNodeInternal, accessStore } from '../../../store';
 import { setFeatureConfig } from '../../../common/GlobalSettings';
 
 const getSceneNodeByRef = jest.fn();

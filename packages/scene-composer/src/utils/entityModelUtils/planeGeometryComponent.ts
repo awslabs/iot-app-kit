@@ -1,9 +1,9 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type ComponentRequest, type ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 
-import { IPlaneGeometryComponent, KnownComponentType } from '../../interfaces';
+import { type IPlaneGeometryComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { IPlaneGeometryComponentInternal } from '../../store';
+import { type IPlaneGeometryComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
 import { resetProperties } from './updateNodeEntity';

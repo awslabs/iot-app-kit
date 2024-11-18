@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { DataStream } from '@iot-app-kit/core';
+import { useMemo } from 'react';
+import { type DataStream } from '@iot-app-kit/core';
 import { useVisibleDataStreams } from '../../../../hooks/useVisibleDataStreams';
-import { DataStreamInformation } from '../../types';
+import { type DataStreamInformation } from '../../types';
 
 export const MaximumCell = ({ id, maxValue }: DataStreamInformation) => {
   const { isDataStreamHidden } = useVisibleDataStreams();

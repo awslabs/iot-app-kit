@@ -58,4 +58,12 @@ describe('useIoTEventsClient tests', () => {
       iotEventsClient.describeAlarmModel as DescribeAlarmModel
     ).toBeDefined();
   });
+
+  it('useIoTEventsClient handles an undefined IoTEventsClient', async () => {
+    const { result } = renderHook(() =>
+      useIoTEventsClient({ iotEventsClient: undefined })
+    );
+
+    expect(result.current).toStrictEqual({});
+  });
 });

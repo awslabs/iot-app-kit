@@ -1,12 +1,12 @@
 import {
-  AssetModelQuery,
-  SiteWiseAssetQuery,
+  type AssetModelQuery,
+  type SiteWiseAssetQuery,
 } from '@iot-app-kit/source-iotsitewise';
 
 import unionBy from 'lodash/unionBy';
 import uniq from 'lodash/uniq';
 
-import { SiteWiseQueryConfig } from '../types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 
 type AssetModelQueryWithAssetId = Required<AssetModelQuery>;
 const assetModelWithAssetId = (
@@ -42,10 +42,10 @@ const combineAssets = (
   });
 };
 
-export const assetModelQueryToSiteWiseAssetQuery = (
-  query: SiteWiseQueryConfig['query']
-) => {
-  const assetModels = query?.assetModels ?? [];
+export const assetModelQueryToSiteWiseAssetQuery = ({
+  assetModels = [],
+  assets = [],
+}: Pick<IoTSiteWiseDataStreamQuery, 'assetModels' | 'assets'>) => {
   const assetModelQueriesWithAssetId = assetModels.filter(
     assetModelWithAssetId
   );
@@ -54,10 +54,5 @@ export const assetModelQueryToSiteWiseAssetQuery = (
     assetModelQueryToAssetQuery
   );
 
-  const assetQuery = query?.assets ?? [];
-
-  return {
-    ...query,
-    assets: combineAssets(assetQuery, mappedAssetModelQuery),
-  };
+  return combineAssets(assets, mappedAssetModelQuery);
 };

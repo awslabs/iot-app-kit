@@ -1,12 +1,11 @@
-import React from 'react';
 import { Gauge } from '../../src';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY } from './mock-data';
 import {
   DEFAULT_GAUGE_PROGRESS_COLOR,
   DEFAULT_GAUGE_STYLES,
 } from '../../src/components/gauge/constants';
-import { GaugeSettings } from '../../src/components/gauge/types';
+import { type GaugeSettings } from '../../src/components/gauge/types';
 
 export default {
   title: 'Widgets/Gauge',
@@ -68,6 +67,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
         significantDigits={significantDigits}
         query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
         settings={settings as GaugeSettings}
+        titleText='Average Speed'
       />
     </div>
   );

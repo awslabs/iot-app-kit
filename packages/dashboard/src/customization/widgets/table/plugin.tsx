@@ -1,4 +1,3 @@
-import React from 'react';
 import TableWidgetComponent from './component';
 import TableIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';

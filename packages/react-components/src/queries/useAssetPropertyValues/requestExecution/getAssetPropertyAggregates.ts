@@ -1,14 +1,14 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import {
-  AssetPropertyAggregatesRequest,
-  AssetPropertyValuesData,
-  GetAssetPropertyAggregatesRequestFunction,
+  type AssetPropertyAggregatesRequest,
+  type AssetPropertyValuesData,
+  type GetAssetPropertyAggregatesRequestFunction,
 } from '../types';
-import { SendOptions } from '../../useTimeSeriesData/requestExecution/types';
-import { RequestResponse } from '@iot-app-kit/core';
+import { type SendOptions } from '../../useTimeSeriesData/requestExecution/types';
+import { type RequestResponse } from '@iot-app-kit/core';
 import {
-  ExecuteRequestStrategy,
-  OnRequestSuccessCallback,
+  type ExecuteRequestStrategy,
+  type OnRequestSuccessCallback,
 } from '../../useTimeSeriesData/requestExecution/requestExecutionStrategy';
 import takeRight from 'lodash.takeright';
 import { aggregateToDataPoint } from '../utils/toDataPoint';

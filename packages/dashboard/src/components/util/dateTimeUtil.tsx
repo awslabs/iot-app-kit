@@ -1,4 +1,8 @@
-import { HistoricalViewport, Viewport, parseDuration } from '@iot-app-kit/core';
+import {
+  type HistoricalViewport,
+  type Viewport,
+  parseDuration,
+} from '@iot-app-kit/core';
 
 // Format Date object to get date and time to display MM/DD/YY HH:MM:SS format
 const formatDateTime = (rawDate: Date) => {

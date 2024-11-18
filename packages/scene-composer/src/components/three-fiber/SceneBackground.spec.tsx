@@ -4,9 +4,8 @@ jest.doMock('@react-three/fiber', () => ({
   useThree: jest.fn(),
 }));
 import { useThree } from '@react-three/fiber';
-import React from 'react';
 
-import { COMPOSER_FEATURES, ISceneBackgroundSetting } from '../../interfaces';
+import { COMPOSER_FEATURES, type ISceneBackgroundSetting } from '../../interfaces';
 import { accessStore } from '../../store';
 
 const getScenePropertyMock = jest.fn();

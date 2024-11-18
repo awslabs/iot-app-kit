@@ -1,6 +1,7 @@
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import {
-  SiteWiseDataStreamQuery,
+  type SiteWiseAlarmDataStreamQuery,
+  type SiteWiseDataStreamQuery,
   initialize,
 } from '@iot-app-kit/source-iotsitewise';
 
@@ -67,7 +68,7 @@ export const getTimeSeriesDataQuery = (
     return getIotSiteWiseQuery().timeSeriesData(dataStreamQuery);
   }
 
-  const { assetId, propertyId1, propertyId2, propertyId3 } = getAssetQuery();
+  const { assetId, propertyId1, propertyId2 } = getAssetQuery();
 
   return getIotSiteWiseQuery().timeSeriesData({
     assets: [
@@ -88,7 +89,7 @@ export const getTimeSeriesDataQuery = (
           },
           {
             refId: '3',
-            propertyId: propertyId3,
+            propertyId: '3179e83f-6d3b-41fd-b131-5f21ff01a7b3',
             aggregationType: 'AVERAGE',
             resolution: '1m',
           },
@@ -121,6 +122,35 @@ export const getSingleValueTimeSeriesDataQuery = (
         ],
       },
     ],
+  });
+};
+
+export const getSingleValueAlarmDataQuery = (
+  alarmStreamQuery?: SiteWiseAlarmDataStreamQuery
+) => {
+  if (alarmStreamQuery) {
+    return getIotSiteWiseQuery().alarmData(alarmStreamQuery);
+  }
+
+  const { assetId } = getAssetQuery();
+  const alarmId1 = process.env.ALARM_COMPOSITE_MODEL_ID_1;
+
+  if (!alarmId1) return getIotSiteWiseQuery().alarmData({});
+
+  return getIotSiteWiseQuery().alarmData({
+    alarms: [
+      {
+        assetId: assetId,
+        alarmComponents: [
+          {
+            assetCompositeModelId: alarmId1,
+          },
+        ],
+      },
+    ],
+    requestSettings: {
+      refreshRate: 5000,
+    },
   });
 };
 

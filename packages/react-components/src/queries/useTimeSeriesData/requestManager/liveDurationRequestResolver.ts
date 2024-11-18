@@ -5,13 +5,13 @@ import {
   sortIntervals,
   requestRange,
 } from '../intervals';
-import { Viewport } from '../types';
+import { type Viewport } from '../types';
 import {
-  RequestResolverOptions,
-  ResolveOptions,
+  type RequestResolverOptions,
+  type ResolveOptions,
   TimeSeriesDataRequestResolver,
 } from './requestResolver';
-import { RequestSettings } from './types';
+import { type RequestSettings } from './types';
 
 export type LiveDurationTimeSeriesDataRequestResolverOptions<Request, Data> =
   RequestResolverOptions<Request, Data> & {

@@ -1,9 +1,8 @@
-import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
-import { MpSdk } from '@matterport/r3f/dist';
+import { type MpSdk } from '@matterport/r3f/dist';
 
-import { ISceneNodeInternal, accessStore } from '../../../store';
-import { MattertagItem, TagItem } from '../../../utils/matterportTagUtils';
+import { type ISceneNodeInternal, accessStore } from '../../../store';
+import { type MattertagItem, type TagItem } from '../../../utils/matterportTagUtils';
 
 import { MatterportTagSync } from './MatterportTagSync';
 

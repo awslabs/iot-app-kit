@@ -16,8 +16,16 @@ import type { BringWidgetsToFrontAction } from './bringToFront';
 import type { SendWidgetsToBackAction } from './sendToBack';
 import type { UpdateWidgetsAction } from './updateWidget';
 import type { UpdateSignificantDigitsAction } from './updateSignificantDigits';
-import { UpdateRefreshRateAction } from './changeRefreshRate';
-import { UpdateDefaultViewportAction } from './updateDefaultViewport';
+import { type UpdateRefreshRateAction } from './changeRefreshRate';
+import { type UpdateDefaultViewportAction } from './updateDefaultViewport';
+import { type ToggleChatbotAction } from './toggleChatbot';
+import { type ToggleAssistantModeAction } from './toggleAssistantMode';
+import {
+  type AssistantSelectWidgetsAction,
+  type AssistantDeselectWidgetsAction,
+  type AssistantCleanWidgetsSelectionAction,
+} from './assistantWidgetsSelection';
+import { type CleanAssistantAction } from './cleanAssistant';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -34,6 +42,10 @@ export * from './toggleReadOnly';
 export * from './updateSignificantDigits';
 export * from './changeRefreshRate';
 export * from './updateDefaultViewport';
+export * from './toggleChatbot';
+export * from './toggleAssistantMode';
+export * from './assistantWidgetsSelection';
+export * from './cleanAssistant';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -53,4 +65,10 @@ export type DashboardAction =
   | ChangeDashboardGridEnabledAction
   | UpdateSignificantDigitsAction
   | UpdateRefreshRateAction
-  | UpdateDefaultViewportAction;
+  | UpdateDefaultViewportAction
+  | ToggleChatbotAction
+  | ToggleAssistantModeAction
+  | AssistantSelectWidgetsAction
+  | AssistantDeselectWidgetsAction
+  | AssistantCleanWidgetsSelectionAction
+  | CleanAssistantAction;

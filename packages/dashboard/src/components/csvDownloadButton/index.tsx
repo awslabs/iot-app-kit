@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { Button, ButtonProps } from '@cloudscape-design/components';
+import { Button, type ButtonProps } from '@cloudscape-design/components';
 
 import { unparse } from 'papaparse';
-import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { useViewport } from '@iot-app-kit/react-components';
 import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
@@ -78,11 +78,18 @@ export const CSVDownloadButton = ({
 
     // since fetchTimeSeriesData is async it'll wait for future viewports to be in cache
     // to avoid this, if viewport is in the future we dont request time series data
-    const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
+    const { assetModels = [], assets = [] } = queryConfig.query ?? {};
+    const combinedAssets = assetModelQueryToSiteWiseAssetQuery({
+      assetModels,
+      assets,
+    });
     const dataStreams = isViewportInFuture
       ? []
       : await fetchTimeSeriesData({
-          query: mappedQuery,
+          query: {
+            ...queryConfig.query,
+            assets: combinedAssets,
+          },
           viewport: calculatedViewport,
           // since bar chart doesnt do raw data we need to pass a custom resolution mapping to handle auto select resolution mode
           settings:

@@ -1,5 +1,8 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type QueryFunctionContext,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { AssetPropertyValueHistoryCacheKeyFactory } from './getAssetPropertyValueHistoryQueryKeyFactory';
 import { GetGetAssetPropertyValueHistoryRequest } from './getGetAssetPropertyValueHistoryRequest';

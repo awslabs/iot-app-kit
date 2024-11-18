@@ -1,7 +1,7 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 
-import { SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
+import { type SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
 import { getEndpointPovider, DEFAULT_REGION } from './endpointProvider';
 
 const subDomain = 'iotevents';

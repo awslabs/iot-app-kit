@@ -1,5 +1,5 @@
-import { DEFAULT_GROUPING, TrendCursorsData } from '../state';
-import { TrendCursorGroupId } from '../types';
+import { DEFAULT_GROUPING, type TrendCursorsData } from '../state';
+import { type TrendCursorGroupId } from '../types';
 
 export const trendCursorValuesForGroup = (
   group: TrendCursorGroupId,

@@ -1,17 +1,14 @@
 {
   "extends": "@iot-app-kit/ts-config/react-library.json",
-  "include": [
-    "./src",
-    "./stories"
-  ],
+  "include": ["src", "stories"],
   "compilerOptions": {
-    "jsx": "react",
-    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "baseUrl": "./",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ]
-    }
+      "~/*": ["./src/*"]
+    },
+    "sourceMap": true
   },
+  "exclude": ["node_modules", "dist", "coverage"],
   "files": ["./global.d.ts", "custom.d.ts"]
 }

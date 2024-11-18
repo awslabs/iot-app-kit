@@ -1,4 +1,4 @@
-import { useRef, useEffect, MutableRefObject } from 'react';
+import { useRef, useEffect, type MutableRefObject } from 'react';
 import { init } from 'echarts';
 import type { ECharts } from 'echarts';
 import { configureEchartsPlugins } from '../../echarts';

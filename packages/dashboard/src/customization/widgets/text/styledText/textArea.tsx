@@ -1,16 +1,16 @@
 import type { CSSProperties } from 'react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
 import { useClickOutside } from '~/hooks/useClickOutside';
 import { useKeyPress } from '~/hooks/useKeyPress';
 import { defaultFontSettings } from './defaultFontSettings';
 
-import './textArea.css';
-import type { TextWidget } from '../../types';
 import {
   colorTextLinkDefault,
   spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
+import type { TextWidget } from '../../types';
+import './textArea.css';
 
 type StyledTextAreaProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;

@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { useState } from 'react';
+import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { registerPlugin } from '@iot-app-kit/core';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 
 import { Dashboard, DashboardView } from '../../src';
 
 import {
-  DashboardClientConfiguration,
-  DashboardConfiguration,
+  type DashboardClientConfiguration,
+  type DashboardConfiguration,
 } from '../../src/types';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { getEndpoints } from '../../testing/getEndpoints';
 
 const DASHBOARD_STORAGE_NAMESPACE = 'edge-dashboard';
-
-const endpoint = getEndpoints().edgeGatewayEndpoint;
-const clientConfig = {
-  endpoint,
-  credentials: getEnvCredentials(),
-  region: 'edge',
-  disableHostPrefix: true,
-};
-const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
-const iotEventsClient = new IoTEventsClient(clientConfig);
-const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
 
 const DEFAULT_DASHBOARD_CONFIG = {
   displaySettings: {
@@ -37,10 +26,26 @@ const DEFAULT_DASHBOARD_CONFIG = {
   viewport: { duration: '10m' },
 };
 
-const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
-  iotSiteWiseClient,
-  iotEventsClient,
-  iotTwinMakerClient,
+const getClientConfig = () => {
+  const clientConfig = {
+    endpoint: getEndpoints().edgeGatewayEndpoint,
+    credentials: getEnvCredentials(),
+    region: 'edge',
+    disableHostPrefix: true,
+  };
+  const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
+  const iotEventsClient = new IoTEventsClient(clientConfig);
+  const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
+  const iotSiteWise = new IoTSiteWise(clientConfig);
+
+  const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
+    iotSiteWiseClient,
+    iotEventsClient,
+    iotTwinMakerClient,
+    iotSiteWise,
+  };
+
+  return CLIENT_CONFIGURATION;
 };
 
 registerPlugin('metricsRecorder', {
@@ -86,9 +91,11 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
     return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
   };
 
+  const clientConfig = getClientConfig();
+
   return (
     <Dashboard
-      clientConfiguration={CLIENT_CONFIGURATION}
+      clientConfiguration={clientConfig}
       onSave={onSave}
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
@@ -97,13 +104,16 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
   );
 };
 
-export const View: ComponentStory<typeof DashboardView> = () => (
-  <DashboardView
-    clientConfiguration={CLIENT_CONFIGURATION}
-    dashboardConfiguration={getInitialDashboardConfig()}
-    edgeMode='enabled'
-  />
-);
+export const View: ComponentStory<typeof DashboardView> = () => {
+  const clientConfig = getClientConfig();
+  return (
+    <DashboardView
+      clientConfiguration={clientConfig}
+      dashboardConfiguration={getInitialDashboardConfig()}
+      edgeMode='enabled'
+    />
+  );
+};
 
 export default {
   title: 'Dashboard/Edge Connected',

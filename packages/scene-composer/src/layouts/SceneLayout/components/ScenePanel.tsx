@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { Direction } from './utils';
+import { type Direction } from './utils';
 import FoldableContainer from './FoldableContainer';
 import TabbedPanelContainer from './TabbedPanelContainer';
 import './ScenePanel.scss';

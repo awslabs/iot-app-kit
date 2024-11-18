@@ -19,13 +19,34 @@ jobs:
         with:
           lfs: 'true'
 
-      - name: Set node version 
+      - name: Set node version
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
-      - name: Install and Build 🔧
-        run: npm run bootstrap
+      - name: Cache npm packages
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-doc-site-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-doc-site-
+
+      - name: Build
+        run: npx turbo run build --filter=@iot-app-kit/doc-site
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -35,6 +56,7 @@ jobs:
         with:
           # Upload folder
           path: packages/doc-site/storybook-static
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

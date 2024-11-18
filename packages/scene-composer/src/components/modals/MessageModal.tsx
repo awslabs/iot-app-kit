@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Box, Button, Header, Icon, SpaceBetween, StatusIndicator, TextContent } from '@cloudscape-design/components';
-import React, { Fragment, useContext, useMemo } from 'react';
+import { Fragment, useContext, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 
 import { AWS_USER_GUIDE_DOC_URL } from '../../common/constants';

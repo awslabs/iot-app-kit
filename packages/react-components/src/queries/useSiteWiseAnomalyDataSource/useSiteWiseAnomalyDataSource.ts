@@ -1,5 +1,5 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { useDescribeAssetModelCompositeModel } from '../useDescribeAssetModelCompositeModel';
 import { useGetAssetPropertyValueHistory } from '../useGetAssetPropertyValueHistory';
 import { useDescribeAsset } from '../useDescribeAsset';
@@ -8,8 +8,8 @@ import { getAnomalyResultProperty } from './getAnomalyResultProperty';
 import { parseAnomalyEvents } from './parseAnomaly/parseAnomalyEvents';
 import { extractDiagnoticProperties } from './parseAnomaly/extractDiagnoticProperties';
 import { completeAnomalyEvents } from './parseAnomaly/completeAnomalyEvents';
-import { AnomalyObjectDataSource } from '../../data';
-import { DataSource } from '../../data/types';
+import { type AnomalyObjectDataSource } from '../../data';
+import { type DataSource } from '../../data/types';
 import { useAnomalyEventsViewport } from './useAnomalyEventsViewport';
 import { useViewport } from '../../hooks/useViewport';
 

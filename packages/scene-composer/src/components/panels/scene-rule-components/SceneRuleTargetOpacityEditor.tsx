@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Input, Grid } from '@cloudscape-design/components';
+import { Grid, Input } from '@cloudscape-design/components';
+import { useCallback, useState } from 'react';
 
 interface ISceneRuleTargetOpacityEditorProps {
   targetValue: string;

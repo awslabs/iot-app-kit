@@ -1,5 +1,6 @@
 import type { DropDownResourceDefinition } from '../types/drop-down';
 import type {
+  AlarmResource,
   AssetModelResource,
   AssetPropertyResource,
   AssetResource,
@@ -23,6 +24,12 @@ export const DEFAULT_ASSET_DROP_DOWN_DEFINITION: DropDownResourceDefinition<Asse
 export const DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION: DropDownResourceDefinition<AssetPropertyResource> =
   {
     selectResourceId: ({ propertyId }) => propertyId,
+    renderResourceName: ({ name }) => name,
+  };
+
+export const DEFAULT_ALARM_DROP_DOWN_DEFINITION: DropDownResourceDefinition<AlarmResource> =
+  {
+    selectResourceId: ({ assetCompositeModelId }) => assetCompositeModelId,
     renderResourceName: ({ name }) => name,
   };
 

@@ -14,12 +14,6 @@
   width: 100%;
 }
 
-.kpi .property-name {
-  font-weight: bold;
-  color: #000716;
-  padding: 8px 8px 2px;
-}
-
 .kpi .asset-name {
   color: #414d5c;
   padding: 8px 8px 2px;
@@ -36,11 +30,10 @@
 
 .kpi .timestamp-border {
   height: 2px;
-  background-color: #e9ebed;
 }
 
 .kpi .timestamp {
-  padding: 6px;
+  padding: 8px;
   height: 18px;
 }
 
@@ -54,5 +47,9 @@
 }
 
 .aggregation {
-  padding: 6px;
+  padding: 8px;
+}
+
+.kpi .property-name {
+  padding: 8px 0 0 8px;
 }

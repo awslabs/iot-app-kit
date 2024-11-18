@@ -1,5 +1,5 @@
-import { DataStream } from '@iot-app-kit/core';
-import { StateCreator } from 'zustand';
+import { type DataStream } from '@iot-app-kit/core';
+import { type StateCreator } from 'zustand';
 
 export type DataStreamIdentity = Pick<DataStream, 'id'>;
 

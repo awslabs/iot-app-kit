@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { AnomalyChartOptions } from './types';
+import { useEffect } from 'react';
+import { type AnomalyChartOptions } from './types';
 import {
   AnomalyObjectDataSourceTransformer,
   AnomalyArrowDataSourceTransformer,

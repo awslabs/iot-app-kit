@@ -1,5 +1,9 @@
-import { ISceneComponent, ISceneNode } from '../../interfaces';
-import { ISceneComponentInternal, ISceneNodeInternal, isISceneComponentInternal } from '../internalInterfaces';
+import { type ISceneComponent, type ISceneNode } from '../../interfaces';
+import {
+  type ISceneComponentInternal,
+  type ISceneNodeInternal,
+  isISceneComponentInternal,
+} from '../internalInterfaces';
 import { generateUUID } from '../../utils/mathUtils';
 
 function createSceneComponentInternal(component: ISceneComponent): ISceneComponentInternal | undefined {
