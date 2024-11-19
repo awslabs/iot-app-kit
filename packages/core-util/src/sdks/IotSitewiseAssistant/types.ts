@@ -2,7 +2,7 @@ import type {
   ResponseStream,
   IoTSiteWise,
   InvokeAssistantRequest,
-} from '@amzn/iot-black-pearl-internal-v3';
+} from '@aws-sdk/client-iotsitewise';
 
 export type AssistantClientInstanceParams = {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;

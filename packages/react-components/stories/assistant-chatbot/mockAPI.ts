@@ -1,7 +1,7 @@
 import {
   type InvokeAssistantCommandInput,
   type InvokeAssistantCommandOutput,
-} from '@amzn/iot-black-pearl-internal-v3';
+} from '@aws-sdk/client-iotsitewise';
 import {
   mockedInvokeAssistantResponse1,
   mockedInvokeAssistantResponse2,

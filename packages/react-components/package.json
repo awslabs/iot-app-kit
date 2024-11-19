@@ -171,7 +171,7 @@
     "zustand": "^4.3.9"
   },
   "peerDependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.456.0",
+    "@aws-sdk/client-iotsitewise": "^3.696.0",
     "cytoscape": "^3.25",
     "react": "^18",
     "react-dom": "^18"

@@ -48,7 +48,8 @@
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
     "test:ui": "npx playwright test",
     "test:ui:ci": "npx playwright test",
-    "test:ui:watch": "npx playwright test --ui"
+    "test:ui:watch": "npx playwright test --ui",
+    "pack": "npm pack"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.2.0",
@@ -133,7 +134,7 @@
   },
   "peerDependencies": {
     "@aws-sdk/client-iot-events": "^3.354.0",
-    "@aws-sdk/client-iotsitewise": "^3.456.0",
+    "@aws-sdk/client-iotsitewise": "^3.696.0",
     "@aws-sdk/client-iottwinmaker": "^3.354.0",
     "react": "^18",
     "react-dom": "^18"

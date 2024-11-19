@@ -1,4 +1,4 @@
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { type DataStream } from '@iot-app-kit/core';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';

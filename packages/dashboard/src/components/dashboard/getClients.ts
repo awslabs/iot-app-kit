@@ -1,7 +1,10 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import {
+  IoTSiteWiseClient,
+  IoTSiteWise,
+  IoTSiteWise as InternalIoTSiteWise,
+} from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { type DashboardClientConfiguration } from '~/types';
 import { type DashboardClientContext } from './clientContext';
 import { isCredentials } from '~/hooks/useAWSRegion';

@@ -2,7 +2,7 @@ import {
   type InvokeAssistantCommandInput,
   type InvokeAssistantCommandOutput,
   type ResponseStream,
-} from '@amzn/iot-black-pearl-internal-v3';
+} from '@aws-sdk/client-iotsitewise';
 
 export const mockedInvokeAssistantResponse1: ResponseStream = {
   trace: {
