@@ -1,4 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useProgress > should update state when DefaultLoadingManager onError 1`] = `
+{
+  "errors": [
+    "Previous Errors",
+    "new Error",
+  ],
+}
+`;
 
 exports[`useProgress should update state when DefaultLoadingManager onError 1`] = `
 {

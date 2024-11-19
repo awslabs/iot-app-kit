@@ -5,10 +5,14 @@
   "private": true,
   "files": [
     "base.json",
-    "react-library.json"
+    "react-library.json",
+    "tsconfig.base.json",
+    "tsconfig.cjs.json",
+    "tsconfig.esm.json",
+    "tsconfig.react.json"
   ],
   "devDependencies": {
     "@types/node": "^18.16.18",
-    "typescript": "^4.9.5"
+    "typescript": "^5.5.4"
   }
 }

@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 
 export function createSelectLoadingResources(pluralResourceType: string) {
   return function selectLoadingResources() {
@@ -24,7 +24,7 @@ export function getPreviousPageButton() {
 }
 
 export async function clickPreviousPageButton() {
-  await userEvent.click(getPreviousPageButton());
+  await ue.click(getPreviousPageButton());
 }
 
 export function getNextPageButton() {
@@ -32,12 +32,12 @@ export function getNextPageButton() {
 }
 
 export async function clickNextPageButton() {
-  await userEvent.click(getNextPageButton());
+  await ue.click(getNextPageButton());
 }
 
 export async function clickNextPageButtonWithLoading() {
   await waitFor(() => {
-    userEvent.click(getNextPageButton());
+    ue.click(getNextPageButton());
     expect(screen.getByText(/Loading/)).toBeVisible();
   });
 
@@ -47,11 +47,11 @@ export async function clickNextPageButtonWithLoading() {
 }
 
 export async function openFilterControls() {
-  await userEvent.click(screen.getByLabelText('Filter'));
+  await ue.click(screen.getByLabelText('Filter'));
 }
 
 export async function openUserSettings() {
-  await userEvent.click(screen.getByRole('button', { name: 'Preferences' }));
+  await ue.click(screen.getByRole('button', { name: 'Preferences' }));
 }
 
 export function getColumnDisplayCheckbox(columnName: string) {
@@ -71,12 +71,12 @@ export function querySearchField() {
 }
 
 export async function typeSearchStatement(searchStatement: string) {
-  await userEvent.type(getSearchField(), searchStatement);
+  await ue.type(getSearchField(), searchStatement);
 }
 
 export async function clickSearch() {
   await waitFor(() => {
-    userEvent.click(screen.getByRole('button', { name: 'Search' }));
+    ue.click(screen.getByRole('button', { name: 'Search' }));
     expect(screen.getByText(/Loading/)).toBeVisible();
   });
 
@@ -87,7 +87,7 @@ export async function clickSearch() {
 
 export async function pressReturnKeyToSearch() {
   await waitFor(() => {
-    userEvent.keyboard('{Enter}');
+    ue.keyboard('{Enter}');
     expect(screen.getByText(/Loading/)).toBeVisible();
   });
 

@@ -1,4 +1,100 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<Tree /> > should render appropriate structure 1`] = `
+<div>
+  <ol
+    class="tm-tree"
+    role="tree"
+  >
+    <li
+      class="tm-tree-item"
+      role="treeitem"
+    >
+      <label
+        aria-selected="false"
+        class="tm-tree-item-inner"
+      >
+        <input
+          type="radio"
+          value="Level 1"
+        />
+        <div
+          data-mocked="SceneNodeLabel"
+        >
+          {"objectRef":"","labelText":"Level 1","componentTypes":[""]}
+        </div>
+      </label>
+      <ol
+        class="tm-tree"
+        role="tree"
+      >
+        <li
+          class="tm-tree-item"
+          role="treeitem"
+        >
+          <label
+            aria-selected="false"
+            class="tm-tree-item-inner"
+          >
+            <input
+              type="radio"
+              value="Level 2"
+            />
+            <div
+              data-mocked="SceneNodeLabel"
+            >
+              {"objectRef":"","labelText":"Level 2","componentTypes":[""]}
+            </div>
+          </label>
+          <ol
+            class="tm-tree"
+            role="tree"
+          >
+            <li
+              class="tm-tree-item"
+              role="treeitem"
+            >
+              <label
+                aria-selected="false"
+                class="tm-tree-item-inner"
+              >
+                <input
+                  type="radio"
+                  value="Level 3"
+                />
+                <div
+                  data-mocked="SceneNodeLabel"
+                >
+                  {"objectRef":"","labelText":"Level 3","componentTypes":[""]}
+                </div>
+              </label>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li
+      class="tm-tree-item"
+      role="treeitem"
+    >
+      <label
+        aria-selected="false"
+        class="tm-tree-item-inner"
+      >
+        <input
+          type="radio"
+          value="Level 1 Sibling"
+        />
+        <div
+          data-mocked="SceneNodeLabel"
+        >
+          {"objectRef":"","labelText":"Level 1 Sibling","componentTypes":[""]}
+        </div>
+      </label>
+    </li>
+  </ol>
+</div>
+`;
 
 exports[`<Tree /> should render appropriate structure 1`] = `
 <div>

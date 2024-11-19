@@ -1,4 +1,30 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<SceneHierarchyPanelLayout /> > should render appropriate structure 1`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-toolbar"
+    >
+      Search Box
+      <div
+        class="tm-action-bar"
+      >
+        Tools
+      </div>
+    </div>
+    <div
+      class="tm-main"
+      id="tm-main"
+      role="radioGroup"
+    >
+      Main
+    </div>
+  </div>
+</div>
+`;
 
 exports[`<SceneHierarchyPanelLayout /> should render appropriate structure 1`] = `
 <div>

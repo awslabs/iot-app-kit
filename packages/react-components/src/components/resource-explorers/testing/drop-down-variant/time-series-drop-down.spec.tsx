@@ -1,6 +1,6 @@
 import type { ListTimeSeries } from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { useState } from 'react';
 import { TimeSeriesExplorer } from '../../explorers';
 import type { TimeSeriesRequestParameters } from '../../explorers/time-series-explorer/types';
@@ -72,7 +72,7 @@ describe('time series drop-down', () => {
         ...timeSeries3,
         alias: 'time-series-alias',
       };
-      const listTimeSeries = jest.fn().mockResolvedValue({
+      const listTimeSeries = vi.fn().mockResolvedValue({
         TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3WithAlias],
       });
       render(
@@ -111,7 +111,7 @@ describe('time series drop-down', () => {
 
   describe('request handling', () => {
     it('requests a single page of time series correctly', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValue(createListTimeSeriesPage(3));
       render(
@@ -130,7 +130,7 @@ describe('time series drop-down', () => {
     });
 
     it('requests multiple pages of time series correctly', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValueOnce(createListTimeSeriesPage(1, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListTimeSeriesPage(1, 10, 'next-token-2'))
@@ -151,7 +151,7 @@ describe('time series drop-down', () => {
     });
 
     it('requests multiple lists of pages of time series correctly', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValueOnce(createListTimeSeriesPage(1, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListTimeSeriesPage(1, 10))
@@ -179,10 +179,8 @@ describe('time series drop-down', () => {
       const {
         TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
       } = listTimeSeriesResponse;
-      const listTimeSeries = jest
-        .fn()
-        .mockResolvedValue(listTimeSeriesResponse);
-      const user = userEvent.setup();
+      const listTimeSeries = vi.fn().mockResolvedValue(listTimeSeriesResponse);
+      const user = ue.setup();
       render(
         <SelectableTimeSeriesDropDown
           listTimeSeries={listTimeSeries}
@@ -214,10 +212,10 @@ describe('time series drop-down', () => {
         const {
           TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
         } = listTimeSeriesResponse;
-        const listTimeSeries = jest
+        const listTimeSeries = vi
           .fn()
           .mockResolvedValue(listTimeSeriesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
 
         render(
           <SelectableTimeSeriesDropDown
@@ -248,10 +246,10 @@ describe('time series drop-down', () => {
         const {
           TimeSeriesSummaries: [timeSeries1, timeSeries2],
         } = listTimeSeriesResponse;
-        const listTimeSeries = jest
+        const listTimeSeries = vi
           .fn()
           .mockResolvedValue(listTimeSeriesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
 
         render(
           <SelectableTimeSeriesDropDown
@@ -283,10 +281,10 @@ describe('time series drop-down', () => {
         const {
           TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
         } = listTimeSeriesResponse;
-        const listTimeSeries = jest
+        const listTimeSeries = vi
           .fn()
           .mockResolvedValue(listTimeSeriesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableTimeSeriesDropDown
             selectionMode='multi'
@@ -319,10 +317,10 @@ describe('time series drop-down', () => {
         const {
           TimeSeriesSummaries: [timeSeries1, timeSeries2],
         } = listTimeSeriesResponse;
-        const listTimeSeries = jest
+        const listTimeSeries = vi
           .fn()
           .mockResolvedValue(listTimeSeriesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableTimeSeriesDropDown
             selectionMode='multi'
@@ -376,10 +374,10 @@ describe('time series drop-down', () => {
       const timeSeries3 = {
         timeSeriesId: 'different-time-series-id-3',
       };
-      const listTimeSeries = jest.fn().mockResolvedValue({
+      const listTimeSeries = vi.fn().mockResolvedValue({
         TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
       });
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <TimeSeriesExplorer
           variant='drop-down'

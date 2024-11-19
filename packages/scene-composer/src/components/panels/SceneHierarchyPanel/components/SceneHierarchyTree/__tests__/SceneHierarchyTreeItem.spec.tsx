@@ -1,48 +1,48 @@
-import { useCallback } from 'react';
 import { render } from '@testing-library/react';
+import { useCallback } from 'react';
 
 // eslint-disable-next-line import/order
 import mockComponent from '../../../../../../../__mocks__/mockComponent';
 
-jest.doMock('../constants', () => ({
+vi.doMock('../constants', () => ({
   EnhancedTree: mockComponent('EnhancedTree'),
   EnhancedTreeItem: mockComponent('EnhancedTreeItem'),
   AcceptableDropTypes: 'AcceptableDropTypes',
 }));
-jest.doMock('../../SubModelTree', () => mockComponent('SubModelTree'));
-jest.doMock('../SceneNodeLabel', () => mockComponent('SceneNodeLabel'));
+vi.doMock('../../SubModelTree', () => mockComponent('SubModelTree'));
+vi.doMock('../SceneNodeLabel', () => mockComponent('SceneNodeLabel'));
 
-import { useSceneHierarchyData, useChildNodes } from '../../../SceneHierarchyDataProvider';
-import SceneHierarchyTreeItem from '../SceneHierarchyTreeItem';
 import { KnownComponentType } from '../../../../../../interfaces';
 import { isDynamicScene } from '../../../../../../utils/entityModelUtils/sceneUtils';
+import { useChildNodes, useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
+import SceneHierarchyTreeItem from '../SceneHierarchyTreeItem';
 
-jest.mock('../../../../../../enhancers/draggable', () => (item: any) => item);
-jest.mock('../../../../../../enhancers/droppable', () => (item: any) => item);
-jest.mock('../../../SceneHierarchyDataProvider');
+vi.mock('../../../../../../enhancers/draggable', () => (item: any) => item);
+vi.mock('../../../../../../enhancers/droppable', () => (item: any) => item);
+vi.mock('../../../SceneHierarchyDataProvider');
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn(),
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useCallback: vi.fn(),
 }));
 
-jest.mock('../../../../../../utils/entityModelUtils/sceneUtils');
+vi.mock('../../../../../../utils/entityModelUtils/sceneUtils');
 
 describe('SceneHierarchyTreeItem', () => {
-  const select = jest.fn();
-  const unselect = jest.fn();
-  const activate = jest.fn();
-  const move = jest.fn();
-  const getObject3DBySceneNodeRef = jest.fn();
-  const getSceneNodeByRef = jest.fn();
-  const remove = jest.fn();
-  const isViewing = jest.fn();
+  const select = vi.fn();
+  const unselect = vi.fn();
+  const activate = vi.fn();
+  const move = vi.fn();
+  const getObject3DBySceneNodeRef = vi.fn();
+  const getSceneNodeByRef = vi.fn();
+  const remove = vi.fn();
+  const isViewing = vi.fn();
   let callbacks: any[] = [];
 
   beforeEach(() => {
     callbacks = [];
 
-    (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
+    (useSceneHierarchyData as unknown as vi.Mock).mockImplementation(() => {
       return {
         selected: '1',
         select,
@@ -58,13 +58,13 @@ describe('SceneHierarchyTreeItem', () => {
       };
     });
 
-    (useChildNodes as unknown as jest.Mock).mockImplementation(() => [[]]);
+    (useChildNodes as unknown as vi.Mock).mockImplementation(() => [[]]);
 
-    (useCallback as jest.Mock).mockImplementation((cb) => callbacks.push(cb));
+    (useCallback as vi.Mock).mockImplementation((cb) => callbacks.push(cb));
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should unselect when toggled off', () => {
@@ -122,10 +122,10 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should render SubModelTree when item has a model, and not in view mode', () => {
-    const mockGetObject3D = getObject3DBySceneNodeRef as jest.Mock;
+    const mockGetObject3D = getObject3DBySceneNodeRef as vi.Mock;
 
     mockGetObject3D.mockImplementation(() => ({
-      getObjectByName: jest.fn(() => ({ scene: 'scene' })),
+      getObjectByName: vi.fn(() => ({ scene: 'scene' })),
     }));
 
     isViewing.mockImplementationOnce(() => false);
@@ -139,7 +139,7 @@ describe('SceneHierarchyTreeItem', () => {
 
   it('should render dynamic node with drag and drop', () => {
     isViewing.mockImplementationOnce(() => false);
-    (isDynamicScene as jest.Mock).mockReturnValueOnce(true);
+    (isDynamicScene as vi.Mock).mockReturnValueOnce(true);
 
     const { container } = render(
       <SceneHierarchyTreeItem objectRef='1' name='Label 1' componentTypes={[KnownComponentType.Tag]} />,

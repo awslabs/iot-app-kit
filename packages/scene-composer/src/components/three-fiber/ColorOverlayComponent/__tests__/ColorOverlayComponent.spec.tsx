@@ -2,35 +2,35 @@ import { act, render } from '@testing-library/react';
 import * as THREE from 'three';
 
 import ColorOverlayComponent from '..';
-import { accessStore } from '../../../../store';
-import { getComponentsGroupName } from '../../../../utils/objectThreeUtils';
-import { DefaultAnchorStatus, SceneResourceType } from '../../../../interfaces';
-import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
-import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import useMaterialEffect from '../../../../hooks/useMaterialEffect';
+import { DefaultAnchorStatus, SceneResourceType } from '../../../../interfaces';
+import { accessStore } from '../../../../store';
+import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
+import { getComponentsGroupName } from '../../../../utils/objectThreeUtils';
+import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 
-jest.mock('../../../../utils/sceneResourceUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/sceneResourceUtils');
+vi.mock('../../../../utils/sceneResourceUtils', async () => {
+  const originalModule = await vi.importActual('../../../../utils/sceneResourceUtils');
   return {
     ...originalModule,
-    getSceneResourceInfo: jest.fn(),
+    getSceneResourceInfo: vi.fn(),
   };
 });
 
-jest.mock('../../../../utils/dataBindingUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/dataBindingUtils');
+vi.mock('../../../../utils/dataBindingUtils', async () => {
+  const originalModule = await vi.importActual('../../../../utils/dataBindingUtils');
   return {
     ...originalModule,
-    dataBindingValuesProvider: jest.fn(),
-    ruleEvaluator: jest.fn(),
+    dataBindingValuesProvider: vi.fn(),
+    ruleEvaluator: vi.fn(),
   };
 });
 
-jest.mock('../../../../hooks/useMaterialEffect');
+vi.mock('../../../../hooks/useMaterialEffect');
 
 describe('ColorOverlayComponent', () => {
-  const mockGetSceneRuleMapById = jest.fn();
-  const mockGetObject3DBySceneNodeRef = jest.fn();
+  const mockGetSceneRuleMapById = vi.fn();
+  const mockGetObject3DBySceneNodeRef = vi.fn();
 
   const baseState = {
     getSceneRuleMapById: mockGetSceneRuleMapById,
@@ -48,21 +48,21 @@ describe('ColorOverlayComponent', () => {
   const originalColor = 0xffff00;
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
-    (getSceneResourceInfo as jest.Mock).mockReturnValue({
+    (getSceneResourceInfo as vi.Mock).mockReturnValue({
       type: SceneResourceType.Icon,
       value: DefaultAnchorStatus.Info,
     });
-    (dataBindingValuesProvider as jest.Mock).mockReturnValue({});
-    (ruleEvaluator as jest.Mock).mockReturnValue('info');
+    (dataBindingValuesProvider as vi.Mock).mockReturnValue({});
+    (ruleEvaluator as vi.Mock).mockReturnValue('info');
   });
 
   it('should change color', async () => {
     accessStore('default').setState(baseState);
-    const transform = jest.fn();
-    const restore = jest.fn();
-    (useMaterialEffect as jest.Mock).mockImplementation(() => [transform, restore]);
+    const transform = vi.fn();
+    const restore = vi.fn();
+    (useMaterialEffect as vi.Mock).mockImplementation(() => [transform, restore]);
 
     const { rerender, unmount } = render(<ColorOverlayComponent node={mockNode} component={mockComponent} />);
 
@@ -74,7 +74,7 @@ describe('ColorOverlayComponent', () => {
     const mockObject = new THREE.Object3D();
     mockObject.add(mockMesh);
     mockGetObject3DBySceneNodeRef.mockReturnValue(mockObject);
-    (getSceneResourceInfo as jest.Mock).mockReturnValue({ type: SceneResourceType.Color, value: 'rgba(100%,0%,0%,2)' });
+    (getSceneResourceInfo as vi.Mock).mockReturnValue({ type: SceneResourceType.Color, value: 'rgba(100%,0%,0%,2)' });
 
     act(() => {
       accessStore('default').setState({ ...baseState, dataInput: {} as any });
@@ -93,8 +93,8 @@ describe('ColorOverlayComponent', () => {
 
   it('should not change color when there is no mesh', async () => {
     accessStore('default').setState(baseState);
-    const transform = jest.fn();
-    const restore = jest.fn();
+    const transform = vi.fn();
+    const restore = vi.fn();
 
     const mockPoint = new THREE.Points(
       new THREE.BoxGeometry(1, 1, 1),
@@ -104,8 +104,8 @@ describe('ColorOverlayComponent', () => {
     const mockObject = new THREE.Object3D();
     mockObject.add(mockPoint);
 
-    (useMaterialEffect as jest.Mock).mockImplementation(() => [transform, restore]);
-    (ruleEvaluator as jest.Mock).mockImplementation(() => '');
+    (useMaterialEffect as vi.Mock).mockImplementation(() => [transform, restore]);
+    (ruleEvaluator as vi.Mock).mockImplementation(() => '');
 
     const { rerender } = render(<ColorOverlayComponent node={mockNode} component={mockComponent} />);
 

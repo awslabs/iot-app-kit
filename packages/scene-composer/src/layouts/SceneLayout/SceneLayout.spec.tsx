@@ -1,14 +1,13 @@
 /* eslint-disable import/first */
 /* eslint-disable import/order */
-import { create } from 'react-test-renderer';
-
+import { render } from '@/tests/testing-library';
 import { SceneLayout } from '.';
-import { accessStore } from '../../store';
-import { KnownComponentType } from '../../interfaces';
 import useSelectedNode from '../../hooks/useSelectedNode';
+import { KnownComponentType } from '../../interfaces';
+import { accessStore } from '../../store';
 
-jest.mock('.', () => {
-  const originalModule = jest.requireActual('.');
+vi.mock('.', async () => {
+  const originalModule = await vi.importActual('.');
   return {
     ...originalModule,
     LeftPanel: 'LeftPanel',
@@ -16,36 +15,36 @@ jest.mock('.', () => {
   };
 });
 
-jest.mock('../../components/panels/TopBar', () => {
-  const originalModule = jest.requireActual('../../components/panels/TopBar');
+vi.mock('../../components/panels/TopBar', async () => {
+  const originalModule = await vi.importActual('../../components/panels/TopBar');
   return {
     ...originalModule,
     TopBar: 'TopBar',
   };
 });
 
-jest.mock('../../hooks/useSelectedNode', () => jest.fn());
+vi.mock('../../hooks/useSelectedNode', () => ({ default: vi.fn() }));
 
-jest.mock('../../hooks/useSceneModal', () => jest.fn());
+vi.mock('../../hooks/useSceneModal', () => ({ default: vi.fn() }));
 
 class ResizeObserver {
-  observe = jest.fn();
-  unobserve = jest.fn();
-  disconnect = jest.fn();
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
 }
 
 describe('SceneLayout', () => {
   window.ResizeObserver = ResizeObserver;
-  const getComponentRefByTypeMock = jest.fn();
+  const getComponentRefByTypeMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     accessStore('default').setState({
       getComponentRefByType: getComponentRefByTypeMock,
       document: { componentNodeMap: {} } as any,
     });
     getComponentRefByTypeMock.mockReturnValue({});
-    (useSelectedNode as jest.Mock).mockReturnValue({
+    (useSelectedNode as vi.Mock).mockReturnValue({
       selectedSceneNode: {
         ref: 'test-ref',
         name: 'Test Node',
@@ -63,7 +62,7 @@ describe('SceneLayout', () => {
     ['Viewing mode', { isViewing: true }],
   ].forEach((value) => {
     it(`should render correctly in ${value[0]}`, () => {
-      const container = create(
+      const { container } = render(
         <SceneLayout
           onPointerMissed={() => {}}
           LoadingView={<div data-test-id='Loading view' />}
@@ -76,7 +75,7 @@ describe('SceneLayout', () => {
   });
 
   it('should render camera preview if editing and camera component is on selectedNode', () => {
-    (useSelectedNode as jest.Mock).mockReturnValueOnce({
+    (useSelectedNode as vi.Mock).mockReturnValueOnce({
       selectedSceneNode: {
         ref: 'test-ref',
         name: 'Test Camera',
@@ -88,7 +87,7 @@ describe('SceneLayout', () => {
       },
     });
 
-    const container = create(
+    const { container } = render(
       <SceneLayout onPointerMissed={() => {}} LoadingView={<div data-test-id='Loading view' />} isViewing={false} />,
     );
 
@@ -96,7 +95,7 @@ describe('SceneLayout', () => {
   });
 
   it('should not render camera preview if editing and non-camera component is on selectedNode', () => {
-    const container = create(
+    const { container } = render(
       <SceneLayout onPointerMissed={() => {}} LoadingView={<div data-test-id='Loading view' />} isViewing={false} />,
     );
 

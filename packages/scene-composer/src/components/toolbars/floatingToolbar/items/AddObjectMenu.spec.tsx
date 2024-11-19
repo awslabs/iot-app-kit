@@ -1,13 +1,6 @@
 /* eslint-disable */
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@/tests/testing-library';
 import * as THREE from 'three';
-
-jest.doMock('../../../../../src/utils/nodeUtils', () => ({
-  createNodeWithTransform: jest.fn(),
-}));
-
-import { AddObjectMenu } from './AddObjectMenu';
-import { IColorOverlayComponentInternal, accessStore } from '../../../../store';
 import {
   AssetType,
   COMPOSER_FEATURES,
@@ -21,33 +14,39 @@ import {
   IMotionIndicatorComponent,
   KnownComponentType,
 } from '../../../..';
-import { CameraType, Component, LightType } from '../../../../models/SceneModels';
-import { createNodeWithTransform } from '../../../../utils/nodeUtils';
-import { ToolbarOrientation } from '../../common/types';
-import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
-import { TILESET_JSON } from '../../../../utils/sceneAssetUtils';
 import { setFeatureConfig, setMetricRecorder } from '../../../../common/GlobalSettings';
+import { CameraType, Component, LightType } from '../../../../models/SceneModels';
+import { IColorOverlayComponentInternal, accessStore } from '../../../../store';
+import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
+import { createNodeWithTransform } from '../../../../utils/nodeUtils';
+import { TILESET_JSON } from '../../../../utils/sceneAssetUtils';
+import { ToolbarOrientation } from '../../common/types';
+import { AddObjectMenu } from './AddObjectMenu';
 /* eslint-enable */
 
-jest.mock('../../../../utils/entityModelUtils/sceneUtils', () => ({
-  isDynamicScene: jest.fn(),
+vi.mock('../../../../../src/utils/nodeUtils', () => ({
+  createNodeWithTransform: vi.fn(),
+}));
+
+vi.mock('../../../../utils/entityModelUtils/sceneUtils', () => ({
+  isDynamicScene: vi.fn(),
 }));
 
 describe('AddObjectMenu', () => {
-  const addComponentInternal = jest.fn();
-  const appendSceneNode = jest.fn();
-  const showAssetBrowserCallback = jest.fn();
-  const setAddingWidget = jest.fn();
-  const addMessages = jest.fn();
+  const addComponentInternal = vi.fn();
+  const appendSceneNode = vi.fn();
+  const showAssetBrowserCallback = vi.fn();
+  const setAddingWidget = vi.fn();
+  const addMessages = vi.fn();
   const selectedSceneNodeRef = 'test-ref';
   const mockMetricRecorder = {
-    recordClick: jest.fn(),
+    recordClick: vi.fn(),
   };
   const mainCameraObject = new THREE.PerspectiveCamera();
   setMetricRecorder(mockMetricRecorder);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     accessStore('default').setState({
       selectedSceneNodeRef,
@@ -60,7 +59,7 @@ describe('AddObjectMenu', () => {
       mainCameraObject,
       addMessages,
     } as any);
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     setFeatureConfig({
       [COMPOSER_FEATURES.DynamicScene]: true,
@@ -102,7 +101,7 @@ describe('AddObjectMenu', () => {
       parentRef: selectedSceneNodeRef,
     };
 
-    (createNodeWithTransform as jest.Mock).mockImplementation((n) => n);
+    (createNodeWithTransform as vi.Mock).mockImplementation((n) => n);
 
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-view-camera');
@@ -114,7 +113,7 @@ describe('AddObjectMenu', () => {
   });
 
   it('should call appendSceneNode withour parentRef when adding a camera to dynamic scene', () => {
-    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    (isDynamicScene as vi.Mock).mockReturnValue(true);
     const cameraComponent: ICameraComponent = {
       cameraType: CameraType.Perspective,
       type: 'Camera',
@@ -130,7 +129,7 @@ describe('AddObjectMenu', () => {
       parentRef: undefined,
     };
 
-    (createNodeWithTransform as jest.Mock).mockImplementation((n) => n);
+    (createNodeWithTransform as vi.Mock).mockImplementation((n) => n);
 
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-view-camera');

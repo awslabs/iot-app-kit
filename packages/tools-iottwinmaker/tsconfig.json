@@ -1,10 +1,13 @@
 {
-  "extends": "@iot-app-kit/ts-config/base.json",
-  "include": ["src", "functional-tests"],
-  "exclude": ["node_modules", "dist", "coverage"],
-  "files": ["global.d.ts"],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@iot-app-kit/ts-config/tsconfig.base.json",
+  "include": [
+    "src",
+    "functional-tests",
+    "vitest.config.ts",
+    "vitest.functional.ts"
+  ],
   "compilerOptions": {
-    "rootDir": "./src",
-    "sourceMap": true
+    "types": ["vitest/globals", "jest-extended"]
   }
 }

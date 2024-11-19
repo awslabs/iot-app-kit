@@ -1,6 +1,6 @@
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { IntlProvider } from 'react-intl';
 import { MessageType } from '../../../hooks/useAssistant/types';
 import { ResultPanel, type ResultPanelProps } from './resultPanel';
@@ -112,8 +112,8 @@ describe('ResultPanel', () => {
   });
 
   it('fires closes action when close button is clicked', async () => {
-    const user = userEvent.setup();
-    const mockOnClose = jest.fn();
+    const user = ue.setup();
+    const mockOnClose = vi.fn();
     render(
       component({
         onClose: mockOnClose,
@@ -125,8 +125,8 @@ describe('ResultPanel', () => {
   });
 
   it('fires divedeep action when "Chat with AI" action item is clicked', async () => {
-    const mockedDivedeepAction = jest.fn();
-    const user = userEvent.setup();
+    const mockedDivedeepAction = vi.fn();
+    const user = ue.setup();
     render(
       component({
         onDivedeep: mockedDivedeepAction,

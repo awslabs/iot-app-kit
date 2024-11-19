@@ -1,17 +1,42 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when none selected scene node. 1`] = `
+exports[`SceneNodeInspectorPanel returns expected elements. > SceneNode panel contains expected elements when none selected scene node. 1`] = `
 <div>
   <div
-    class="sc-gsFSXq dFvgUY"
-    data-mocked="ExpandableSection"
+    class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
   >
-    <div>
+    <div
+      aria-controls=":r0:"
+      aria-expanded="true"
+      class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+      id=":r0:-trigger"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="awsui_icon-container_gwq0h_xoje_212"
+      >
+        <span
+          class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="filled stroke-linejoin-round"
+              d="M4 5h8l-4 6-4-6z"
+            />
+          </svg>
+        </span>
+      </div>
       <div
         class="sc-dcJsrY ilhrxw"
       >
         <div
-          data-mocked="TextContent"
+          class="awsui_text-content_6absk_1rcdq_100"
         >
           <strong>
             Properties
@@ -20,18 +45,28 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
       </div>
     </div>
     <div
-      data-mocked="Box"
-      padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+      aria-labelledby=":r0:-trigger"
+      class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+      id=":r0:"
+      role="group"
     >
       <div
-        data-mocked="SpaceBetween"
+        class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       >
         <div
-          data-mocked="TextContent"
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
         >
-          <p>
-            No node selected.
-          </p>
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_text-content_6absk_1rcdq_100"
+            >
+              <p>
+                No node selected.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,7 +74,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
 </div>
 `;
 
-exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected scene node. 1`] = `
+exports[`SceneNodeInspectorPanel returns expected elements. > SceneNode panel contains expected elements when selected scene node. 1`] = `
 <div>
   <div
     style="overflow: auto;"
@@ -50,15 +85,40 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
       [{},{}]
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":r1:"
+        aria-expanded="false"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_focusable_gwq0h_xoje_405 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":r1:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Debug Info
@@ -67,35 +127,109 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":r1:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390"
+        id=":r1:"
+        role="group"
       >
         <div
-          data-mocked="SpaceBetween"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
           <div
-            data-mocked="FormField"
-            label="Ref"
+            class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
           >
             <div
-              data-mocked="Input"
-              disabled=""
-              value="node-ref"
-            />
+              class="awsui_child_18582_z63vw_103"
+            >
+              <div
+                class="awsui_root_14mhv_av9zi_174"
+                data-analytics-field-label="[id="formField:r2:-label"]"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="awsui_label_14mhv_av9zi_210"
+                    for="formField:r2:"
+                    id="formField:r2:-label"
+                  >
+                    Ref
+                  </label>
+                </div>
+                <div
+                  class="awsui_controls_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_grid_14yj0_1lwse_99"
+                  >
+                    <div
+                      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+                    >
+                      <div
+                        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                      >
+                        <div
+                          class="awsui_control_14mhv_av9zi_246"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="formField:r2:-label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              disabled=""
+                              id="formField:r2:"
+                              type="text"
+                              value="node-ref"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":r3:"
+        aria-expanded="true"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":r3:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Properties
@@ -104,35 +238,109 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":r3:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+        id=":r3:"
+        role="group"
       >
         <div
-          data-mocked="SpaceBetween"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
           <div
-            data-mocked="FormField"
-            label="Name"
+            class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
           >
             <div
-              data-mocked="Input"
-              data-testid="ip-3D-obj-ref-1"
-              value="node-name"
-            />
+              class="awsui_child_18582_z63vw_103"
+            >
+              <div
+                class="awsui_root_14mhv_av9zi_174"
+                data-analytics-field-label="[id="formField:r4:-label"]"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="awsui_label_14mhv_av9zi_210"
+                    for="formField:r4:"
+                    id="formField:r4:-label"
+                  >
+                    Name
+                  </label>
+                </div>
+                <div
+                  class="awsui_controls_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_grid_14yj0_1lwse_99"
+                  >
+                    <div
+                      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+                    >
+                      <div
+                        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                      >
+                        <div
+                          class="awsui_control_14mhv_av9zi_246"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                            data-testid="ip-3D-obj-ref-1"
+                          >
+                            <input
+                              aria-labelledby="formField:r4:-label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="formField:r4:"
+                              type="text"
+                              value="node-name"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":r5:"
+        aria-expanded="true"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":r5:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Transform
@@ -141,348 +349,593 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":r5:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+        id=":r5:"
+        role="group"
       >
         <div
-          data-mocked="SpaceBetween"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
           <div
-            data-mocked="Box"
+            class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
           >
             <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Position_label"
-              >
-                Position
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
+              class="awsui_child_18582_z63vw_103"
             >
               <div
-                class="sc-gEvEer dfsMpp"
+                class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
               >
                 <div
-                  class="sc-fqkvVR bxVbvh"
+                  class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
                 >
-                  <div
-                    data-mocked="TextContent"
+                  <label
+                    id="Position_label"
                   >
-                    <label
-                      for="Position_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
+                    Position
+                  </label>
                 </div>
+                 
                 <div
-                  class="sc-iGgWBj kumTxJ"
+                  class="awsui_grid_14yj0_1lwse_99"
                 >
                   <div
-                    arialabelledby="Position_input_X Position_label"
-                    controlid="Position_input_X"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Position_input_Y"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Y
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Position_input_X"
+                            >
+                              X
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Position_input_X Position_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Position_input_X"
+                              type="text"
+                              value="1.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Position_input_Y Position_label"
-                    controlid="Position_input_Y"
-                    data-mocked="Input"
-                    disabled=""
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Position_input_Z"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Z
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Position_input_Y"
+                            >
+                              Y
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Position_input_Y Position_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              disabled=""
+                              id="Position_input_Y"
+                              type="text"
+                              value="1.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Position_input_Z Position_label"
-                    controlid="Position_input_Z"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Rotation_label"
-              >
-                Rotation
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Rotation_input_X"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      X
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Position_input_Z"
+                            >
+                              Z
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Position_input_Z Position_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Position_input_Z"
+                              type="text"
+                              value="1.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_X Rotation_label"
-                    controlid="Rotation_input_X"
-                    data-mocked="Input"
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Y Rotation_label"
-                    controlid="Rotation_input_Y"
-                    data-mocked="Input"
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Z Rotation_label"
-                    controlid="Rotation_input_Z"
-                    data-mocked="Input"
-                    value="0.000"
-                  />
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
             <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
+              class="awsui_child_18582_z63vw_103"
             >
-              <label
-                id="Scale_label"
+              <div
+                class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
               >
-                Scale
-              </label>
+                <div
+                  class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                >
+                  <label
+                    id="Rotation_label"
+                  >
+                    Rotation
+                  </label>
+                </div>
+                 
+                <div
+                  class="awsui_grid_14yj0_1lwse_99"
+                >
+                  <div
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Rotation_input_X"
+                            >
+                              X
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Rotation_input_X Rotation_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Rotation_input_X"
+                              type="text"
+                              value="0.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Rotation_input_Y"
+                            >
+                              Y
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Rotation_input_Y Rotation_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Rotation_input_Y"
+                              type="text"
+                              value="0.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Rotation_input_Z"
+                            >
+                              Z
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Rotation_input_Z Rotation_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Rotation_input_Z"
+                              type="text"
+                              value="0.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-             
             <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
+              class="awsui_child_18582_z63vw_103"
             >
               <div
-                class="sc-gEvEer dfsMpp"
+                class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
               >
                 <div
-                  class="sc-fqkvVR bxVbvh"
+                  class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
                 >
-                  <div
-                    data-mocked="TextContent"
+                  <label
+                    id="Scale_label"
                   >
-                    <label
-                      for="Scale_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
+                    Scale
+                  </label>
                 </div>
+                 
                 <div
-                  class="sc-iGgWBj kumTxJ"
+                  class="awsui_grid_14yj0_1lwse_99"
                 >
                   <div
-                    arialabelledby="Scale_input_X Scale_label"
-                    controlid="Scale_input_X"
-                    data-mocked="Input"
-                    value="2.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Scale_input_Y"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Y
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Scale_input_X"
+                            >
+                              X
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Scale_input_X Scale_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Scale_input_X"
+                              type="text"
+                              value="2.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Scale_input_Y Scale_label"
-                    controlid="Scale_input_Y"
-                    data-mocked="Input"
-                    value="2.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Scale_input_Z"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Z
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Scale_input_Y"
+                            >
+                              Y
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Scale_input_Y Scale_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Scale_input_Y"
+                              type="text"
+                              value="2.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Scale_input_Z Scale_label"
-                    controlid="Scale_input_Z"
-                    data-mocked="Input"
-                    value="2.000"
-                  />
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Scale_input_Z"
+                            >
+                              Z
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Scale_input_Z Scale_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Scale_input_Z"
+                              type="text"
+                              value="2.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            data-mocked="FormField"
-            label="Constraints"
-          >
             <div
-              data-mocked="Checkbox"
+              class="awsui_child_18582_z63vw_103"
             >
-              Snap to floor
+              <div
+                class="awsui_root_14mhv_av9zi_174"
+                data-analytics-field-label="[id="formField:r6:-label"]"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="awsui_label_14mhv_av9zi_210"
+                    for="formField:r6:"
+                    id="formField:r6:-label"
+                  >
+                    Constraints
+                  </label>
+                </div>
+                <div
+                  class="awsui_controls_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_grid_14yj0_1lwse_99"
+                  >
+                    <div
+                      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+                    >
+                      <div
+                        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                      >
+                        <div
+                          class="awsui_control_14mhv_av9zi_246"
+                        >
+                          <span
+                            class="awsui_wrapper_1wepg_11g7b_120 awsui_root_k2y2q_16s24_99"
+                          >
+                            <span
+                              class="awsui_label-wrapper_1wepg_11g7b_126"
+                            >
+                              <span
+                                class="awsui_control_1wepg_11g7b_161 awsui_checkbox-control_k2y2q_16s24_135"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="awsui_root_1fn7j_ayb8r_99"
+                                  focusable="false"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <rect
+                                    class="awsui_styled-box_1fn7j_ayb8r_106 awsui_styled-box-checked_1fn7j_ayb8r_112"
+                                    height="14"
+                                    rx="2"
+                                    ry="2"
+                                    width="14"
+                                    x="1"
+                                    y="1"
+                                  />
+                                  <polyline
+                                    class="awsui_styled-line_1fn7j_ayb8r_130"
+                                    points="3.5,8 7,11 12,4"
+                                  />
+                                </svg>
+                                <input
+                                  aria-labelledby=":r7:-label formField:r6:-label"
+                                  checked=""
+                                  class="awsui_native-input_1wepg_11g7b_116"
+                                  id=":r7:"
+                                  type="checkbox"
+                                />
+                                <span
+                                  class="awsui_outline_1wepg_11g7b_109 awsui_outline_k2y2q_16s24_143"
+                                />
+                              </span>
+                              <span
+                                class="awsui_content_1wepg_11g7b_99"
+                              >
+                                <span
+                                  class="awsui_label_1wepg_11g7b_101"
+                                  id=":r7:-label"
+                                >
+                                  Snap to floor
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":r8:"
+        aria-expanded="true"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":r8:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Model Reference
@@ -496,13 +949,19 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":r8:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+        id=":r8:"
+        role="group"
       >
         <div
-          data-testid="ComponentEditor"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":true},"components":[{"ref":"3D-obj-ref-1","type":"ModelRef"}]},"component":{"ref":"3D-obj-ref-1","type":"ModelRef"}},{}]
+          <div
+            data-testid="ComponentEditor"
+          >
+            [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":true},"components":[{"ref":"3D-obj-ref-1","type":"ModelRef"}]},"component":{"ref":"3D-obj-ref-1","type":"ModelRef"}},{}]
+          </div>
         </div>
       </div>
     </div>
@@ -510,7 +969,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
 </div>
 `;
 
-exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hide scale and render correct overlay section when selected scene node is Tag with Overlay panel. 1`] = `
+exports[`SceneNodeInspectorPanel returns expected elements. > disable y scale when selected scene node is LinearPlane motion indicator. 1`] = `
 <div>
   <div
     style="overflow: auto;"
@@ -521,15 +980,40 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
       [{},{}]
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":r9:"
+        aria-expanded="false"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_focusable_gwq0h_xoje_405 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":r9:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Debug Info
@@ -538,35 +1022,109 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":r9:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390"
+        id=":r9:"
+        role="group"
       >
         <div
-          data-mocked="SpaceBetween"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
           <div
-            data-mocked="FormField"
-            label="Ref"
+            class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
           >
             <div
-              data-mocked="Input"
-              disabled=""
-              value="node-ref"
-            />
+              class="awsui_child_18582_z63vw_103"
+            >
+              <div
+                class="awsui_root_14mhv_av9zi_174"
+                data-analytics-field-label="[id="formField:ra:-label"]"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="awsui_label_14mhv_av9zi_210"
+                    for="formField:ra:"
+                    id="formField:ra:-label"
+                  >
+                    Ref
+                  </label>
+                </div>
+                <div
+                  class="awsui_controls_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_grid_14yj0_1lwse_99"
+                  >
+                    <div
+                      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+                    >
+                      <div
+                        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                      >
+                        <div
+                          class="awsui_control_14mhv_av9zi_246"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="formField:ra:-label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              disabled=""
+                              id="formField:ra:"
+                              type="text"
+                              value="node-ref"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":rb:"
+        aria-expanded="true"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":rb:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Properties
@@ -575,35 +1133,109 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":rb:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+        id=":rb:"
+        role="group"
       >
         <div
-          data-mocked="SpaceBetween"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
           <div
-            data-mocked="FormField"
-            label="Name"
+            class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
           >
             <div
-              data-mocked="Input"
-              data-testid="ip-3D-obj-ref-1"
-              value="node-name"
-            />
+              class="awsui_child_18582_z63vw_103"
+            >
+              <div
+                class="awsui_root_14mhv_av9zi_174"
+                data-analytics-field-label="[id="formField:rc:-label"]"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="awsui_label_14mhv_av9zi_210"
+                    for="formField:rc:"
+                    id="formField:rc:-label"
+                  >
+                    Name
+                  </label>
+                </div>
+                <div
+                  class="awsui_controls_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_grid_14yj0_1lwse_99"
+                  >
+                    <div
+                      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+                    >
+                      <div
+                        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                      >
+                        <div
+                          class="awsui_control_14mhv_av9zi_246"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                            data-testid="ip-3D-obj-ref-1"
+                          >
+                            <input
+                              aria-labelledby="formField:rc:-label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="formField:rc:"
+                              type="text"
+                              value="node-name"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
+      <div
+        aria-controls=":rd:"
+        aria-expanded="true"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":rd:-trigger"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="awsui_icon-container_gwq0h_xoje_212"
+        >
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
+        </div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Transform
@@ -612,219 +1244,459 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":rd:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+        id=":rd:"
+        role="group"
       >
         <div
-          data-mocked="SpaceBetween"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
           <div
-            data-mocked="Box"
+            class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
           >
             <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
+              class="awsui_child_18582_z63vw_103"
             >
-              <label
-                id="Position_label"
+              <div
+                class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
               >
-                Position
-              </label>
+                <div
+                  class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                >
+                  <label
+                    id="Position_label"
+                  >
+                    Position
+                  </label>
+                </div>
+                 
+                <div
+                  class="awsui_grid_14yj0_1lwse_99"
+                >
+                  <div
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Position_input_X"
+                            >
+                              X
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Position_input_X Position_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Position_input_X"
+                              type="text"
+                              value="1.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Position_input_Y"
+                            >
+                              Y
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Position_input_Y Position_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Position_input_Y"
+                              type="text"
+                              value="1.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Position_input_Z"
+                            >
+                              Z
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Position_input_Z Position_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Position_input_Z"
+                              type="text"
+                              value="1.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-             
             <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
+              class="awsui_child_18582_z63vw_103"
             >
               <div
-                class="sc-gEvEer dfsMpp"
+                class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
               >
                 <div
-                  class="sc-fqkvVR bxVbvh"
+                  class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
                 >
-                  <div
-                    data-mocked="TextContent"
+                  <label
+                    id="Rotation_label"
                   >
-                    <label
-                      for="Position_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
+                    Rotation
+                  </label>
                 </div>
+                 
                 <div
-                  class="sc-iGgWBj kumTxJ"
+                  class="awsui_grid_14yj0_1lwse_99"
                 >
                   <div
-                    arialabelledby="Position_input_X Position_label"
-                    controlid="Position_input_X"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Position_input_Y"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Y
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Rotation_input_X"
+                            >
+                              X
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Rotation_input_X Rotation_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Rotation_input_X"
+                              type="text"
+                              value="0.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Position_input_Y Position_label"
-                    controlid="Position_input_Y"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Position_input_Z"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Z
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Rotation_input_Y"
+                            >
+                              Y
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Rotation_input_Y Rotation_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Rotation_input_Y"
+                              type="text"
+                              value="0.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Position_input_Z Position_label"
-                    controlid="Position_input_Z"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Rotation_input_Z"
+                            >
+                              Z
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Rotation_input_Z Rotation_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Rotation_input_Z"
+                              type="text"
+                              value="0.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
             <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Rotation_label"
-              >
-                Rotation
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
+              class="awsui_child_18582_z63vw_103"
             >
               <div
-                class="sc-gEvEer dfsMpp"
+                class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
               >
                 <div
-                  class="sc-fqkvVR bxVbvh"
+                  class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
                 >
-                  <div
-                    data-mocked="TextContent"
+                  <label
+                    id="Scale_label"
                   >
-                    <label
-                      for="Rotation_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
+                    Scale
+                  </label>
                 </div>
+                 
                 <div
-                  class="sc-iGgWBj kumTxJ"
+                  class="awsui_grid_14yj0_1lwse_99"
                 >
                   <div
-                    arialabelledby="Rotation_input_X Rotation_label"
-                    controlid="Rotation_input_X"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Rotation_input_Y"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Y
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Scale_input_X"
+                            >
+                              X
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Scale_input_X Scale_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Scale_input_X"
+                              type="text"
+                              value="2.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Rotation_input_Y Rotation_label"
-                    controlid="Rotation_input_Y"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
                   >
-                    <label
-                      for="Rotation_input_Z"
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
                     >
-                      Z
-                    </label>
-                     
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Scale_input_Y"
+                            >
+                              Y
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Scale_input_Y Scale_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              disabled=""
+                              id="Scale_input_Y"
+                              type="text"
+                              value="2.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
                   <div
-                    arialabelledby="Rotation_input_Z Rotation_label"
-                    controlid="Rotation_input_Z"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
+                    class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-4_14yj0_1lwse_184"
+                  >
+                    <div
+                      class="awsui_restore-pointer-events_14yj0_1lwse_314"
+                    >
+                      <div
+                        class="sc-gEvEer dfsMpp"
+                      >
+                        <div
+                          class="sc-fqkvVR bxVbvh"
+                        >
+                          <div
+                            class="awsui_text-content_6absk_1rcdq_100"
+                          >
+                            <label
+                              for="Scale_input_Z"
+                            >
+                              Z
+                            </label>
+                             
+                          </div>
+                        </div>
+                        <div
+                          class="sc-iGgWBj kumTxJ"
+                        >
+                          <div
+                            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                          >
+                            <input
+                              aria-labelledby="Scale_input_Z Scale_label"
+                              autocomplete="on"
+                              class="awsui_input_2rhyz_15wpl_103"
+                              id="Scale_input_Z"
+                              type="text"
+                              value="2.000"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -833,1334 +1705,40 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
       </div>
     </div>
     <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
+      class="sc-gsFSXq ewmopI awsui_root_gwq0h_xoje_157"
     >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Tag
-            </strong>
-          </div>
-          <div
-            data-testid="ComponentEditMenu"
-          >
-            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
-          </div>
-        </div>
-      </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-controls=":re:"
+        aria-expanded="true"
+        class="awsui_header_gwq0h_xoje_252 awsui_wrapper_gwq0h_xoje_220 awsui_wrapper-default_gwq0h_xoje_228 awsui_wrapper-expanded_gwq0h_xoje_274 awsui_focusable_gwq0h_xoje_405 awsui_expanded_gwq0h_xoje_202 awsui_expand-button_gwq0h_xoje_195 awsui_click-target_gwq0h_xoje_420 awsui_header-deprecated_gwq0h_xoje_252"
+        id=":re:-trigger"
+        role="button"
+        tabindex="0"
       >
         <div
-          data-testid="ComponentEditor"
+          class="awsui_icon-container_gwq0h_xoje_212"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"Tag"},{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
+          <span
+            class="awsui_icon_gwq0h_xoje_139 awsui_expanded_gwq0h_xoje_202 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="filled stroke-linejoin-round"
+                d="M4 5h8l-4 6-4-6z"
+              />
+            </svg>
+          </span>
         </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
         <div
           class="sc-dcJsrY ilhrxw"
         >
           <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Overlay
-            </strong>
-          </div>
-          <div
-            data-testid="ComponentEditMenu"
-          >
-            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}},{}]
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-testid="ComponentEditor"
-        >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"Tag"},{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}},{}]
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hide scale and render correct overlay section when selected scene node is Tag. 1`] = `
-<div>
-  <div
-    style="overflow: auto;"
-  >
-    <div
-      data-testid="AddComponentMenu"
-    >
-      [{},{}]
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Debug Info
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="FormField"
-            label="Ref"
-          >
-            <div
-              data-mocked="Input"
-              disabled=""
-              value="node-ref"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Properties
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="FormField"
-            label="Name"
-          >
-            <div
-              data-mocked="Input"
-              data-testid="ip-3D-obj-ref-1"
-              value="node-name"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Transform
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Position_label"
-              >
-                Position
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_X Position_label"
-                    controlid="Position_input_X"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_Y Position_label"
-                    controlid="Position_input_Y"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_Z Position_label"
-                    controlid="Position_input_Z"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Rotation_label"
-              >
-                Rotation
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_X Rotation_label"
-                    controlid="Rotation_input_X"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Y Rotation_label"
-                    controlid="Rotation_input_Y"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Z Rotation_label"
-                    controlid="Rotation_input_Z"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Tag
-            </strong>
-          </div>
-          <div
-            data-testid="ComponentEditMenu"
-          >
-            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-testid="ComponentEditor"
-        >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"Tag"}]},"component":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`SceneNodeInspectorPanel returns expected elements. disable scale and rotation when selected scene node is Annotation. 1`] = `
-<div>
-  <div
-    style="overflow: auto;"
-  >
-    <div
-      data-testid="AddComponentMenu"
-    >
-      [{},{}]
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Debug Info
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="FormField"
-            label="Ref"
-          >
-            <div
-              data-mocked="Input"
-              disabled=""
-              value="node-ref"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Properties
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="FormField"
-            label="Name"
-          >
-            <div
-              data-mocked="Input"
-              data-testid="ip-3D-obj-ref-1"
-              value="node-name"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Transform
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Position_label"
-              >
-                Position
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_X Position_label"
-                    controlid="Position_input_X"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_Y Position_label"
-                    controlid="Position_input_Y"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_Z Position_label"
-                    controlid="Position_input_Z"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Rotation_label"
-              >
-                Rotation
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_X Rotation_label"
-                    controlid="Rotation_input_X"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Y Rotation_label"
-                    controlid="Rotation_input_Y"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Z Rotation_label"
-                    controlid="Rotation_input_Z"
-                    data-mocked="Input"
-                    disabled=""
-                    value="0.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Scale_label"
-              >
-                Scale
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Scale_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Scale_input_X Scale_label"
-                    controlid="Scale_input_X"
-                    data-mocked="Input"
-                    disabled=""
-                    value="2.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Scale_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Scale_input_Y Scale_label"
-                    controlid="Scale_input_Y"
-                    data-mocked="Input"
-                    disabled=""
-                    value="2.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Scale_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Scale_input_Z Scale_label"
-                    controlid="Scale_input_Z"
-                    data-mocked="Input"
-                    disabled=""
-                    value="2.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Annotation
-            </strong>
-          </div>
-          <div
-            data-testid="ComponentEditMenu"
-          >
-            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"DataOverlay","subType":"TextAnnotation"}},{}]
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-testid="ComponentEditor"
-        >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"DataOverlay","subType":"TextAnnotation"}]},"component":{"ref":"3D-obj-ref-1","type":"DataOverlay","subType":"TextAnnotation"}},{}]
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when selected scene node is LinearPlane motion indicator. 1`] = `
-<div>
-  <div
-    style="overflow: auto;"
-  >
-    <div
-      data-testid="AddComponentMenu"
-    >
-      [{},{}]
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Debug Info
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="FormField"
-            label="Ref"
-          >
-            <div
-              data-mocked="Input"
-              disabled=""
-              value="node-ref"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Properties
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="FormField"
-            label="Name"
-          >
-            <div
-              data-mocked="Input"
-              data-testid="ip-3D-obj-ref-1"
-              value="node-name"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
-          >
-            <strong>
-              Transform
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
-      >
-        <div
-          data-mocked="SpaceBetween"
-        >
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Position_label"
-              >
-                Position
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_X Position_label"
-                    controlid="Position_input_X"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_Y Position_label"
-                    controlid="Position_input_Y"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Position_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Position_input_Z Position_label"
-                    controlid="Position_input_Z"
-                    data-mocked="Input"
-                    value="1.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Rotation_label"
-              >
-                Rotation
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_X Rotation_label"
-                    controlid="Rotation_input_X"
-                    data-mocked="Input"
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Y Rotation_label"
-                    controlid="Rotation_input_Y"
-                    data-mocked="Input"
-                    value="0.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Rotation_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Rotation_input_Z Rotation_label"
-                    controlid="Rotation_input_Z"
-                    data-mocked="Input"
-                    value="0.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            data-mocked="Box"
-          >
-            <div
-              data-mocked="Box"
-              margin="{"bottom":"xxs"}"
-            >
-              <label
-                id="Scale_label"
-              >
-                Scale
-              </label>
-            </div>
-             
-            <div
-              data-mocked="Grid"
-              griddefinition="[{"colspan":4},{"colspan":4},{"colspan":4}]"
-            >
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Scale_input_X"
-                    >
-                      X
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Scale_input_X Scale_label"
-                    controlid="Scale_input_X"
-                    data-mocked="Input"
-                    value="2.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Scale_input_Y"
-                    >
-                      Y
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Scale_input_Y Scale_label"
-                    controlid="Scale_input_Y"
-                    data-mocked="Input"
-                    disabled=""
-                    value="2.000"
-                  />
-                </div>
-              </div>
-              <div
-                class="sc-gEvEer dfsMpp"
-              >
-                <div
-                  class="sc-fqkvVR bxVbvh"
-                >
-                  <div
-                    data-mocked="TextContent"
-                  >
-                    <label
-                      for="Scale_input_Z"
-                    >
-                      Z
-                    </label>
-                     
-                  </div>
-                </div>
-                <div
-                  class="sc-iGgWBj kumTxJ"
-                >
-                  <div
-                    arialabelledby="Scale_input_Z Scale_label"
-                    controlid="Scale_input_Z"
-                    data-mocked="Input"
-                    value="2.000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="sc-gsFSXq dFvgUY"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          class="sc-dcJsrY ilhrxw"
-        >
-          <div
-            data-mocked="TextContent"
+            class="awsui_text-content_6absk_1rcdq_100"
           >
             <strong>
               Motion Indicator
@@ -2174,13 +1752,19 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
         </div>
       </div>
       <div
-        data-mocked="Box"
-        padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
+        aria-labelledby=":re:-trigger"
+        class="awsui_content_gwq0h_xoje_103 awsui_content-default_gwq0h_xoje_390 awsui_content-expanded_gwq0h_xoje_398"
+        id=":re:"
+        role="group"
       >
         <div
-          data-testid="ComponentEditor"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-top-xxs_18wu0_1elzt_591 awsui_p-right-m_18wu0_1elzt_671 awsui_p-bottom-xxs_18wu0_1elzt_601 awsui_p-left-m_18wu0_1elzt_681 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}]},"component":{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}},{}]
+          <div
+            data-testid="ComponentEditor"
+          >
+            [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}]},"component":{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}},{}]
+          </div>
         </div>
       </div>
     </div>

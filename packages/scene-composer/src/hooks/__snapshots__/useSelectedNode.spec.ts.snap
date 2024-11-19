@@ -1,4 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useSelectedObject > should return the object from the store 1`] = `
+{
+  "getSelectedObject": [Function],
+  "getSelectedSubmodel": [Function],
+  "selectedSceneNode": "Object representing scene node at this ref",
+  "selectedSceneNodeRef": "ref",
+  "selectedSceneSubmodelRef": "submodelRef",
+  "setSelectedSceneNodeRef": [MockFunction spy],
+  "setSelectedSceneSubmodelRef": [MockFunction spy],
+}
+`;
 
 exports[`useSelectedObject should return the object from the store 1`] = `
 {

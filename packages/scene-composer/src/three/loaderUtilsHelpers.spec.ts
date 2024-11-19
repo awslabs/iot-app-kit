@@ -6,11 +6,11 @@ import { type BasisuDecoderConfig, type DracoDecoderConfig } from '../interfaces
 
 import { setupBasisuSupport, setupDracoSupport, setupFileLoader } from './loaderUtilsHelpers';
 
-jest.mock('../common/GlobalSettings');
+vi.mock('../common/GlobalSettings');
 
 describe('dracoSupport', () => {
   it('it should do nothing if draco is not enabled', () => {
-    const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+    const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
 
     const dracoDecoder: DracoDecoderConfig = {
       enable: false,
@@ -18,11 +18,11 @@ describe('dracoSupport', () => {
 
     getGlobalSettingsMock.mockReturnValue({
       dracoDecoder,
-      getSceneObjectFunction: jest.fn(),
+      getSceneObjectFunction: vi.fn(),
     });
 
     const loader = {
-      setDRACOLoader: jest.fn(),
+      setDRACOLoader: vi.fn(),
     };
 
     // Act
@@ -33,7 +33,7 @@ describe('dracoSupport', () => {
 
   ['/fake/path/to/draco', undefined].forEach((path) => {
     it(`should use ${path} if not provided`, () => {
-      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
 
       const dracoDecoder: DracoDecoderConfig = {
         enable: true,
@@ -42,16 +42,16 @@ describe('dracoSupport', () => {
 
       getGlobalSettingsMock.mockReturnValue({
         dracoDecoder,
-        getSceneObjectFunction: jest.fn(),
+        getSceneObjectFunction: vi.fn(),
       });
 
       const loader = {
-        setDRACOLoader: jest.fn(),
+        setDRACOLoader: vi.fn(),
       };
 
       const dracoLoader = {
-        setDecoderConfig: jest.fn(() => dracoLoader),
-        setDecoderPath: jest.fn(),
+        setDecoderConfig: vi.fn(() => dracoLoader),
+        setDecoderPath: vi.fn(),
       };
 
       // Act
@@ -69,17 +69,17 @@ describe('dracoSupport', () => {
 describe('setupBasisu', () => {
   it('should do nothing if not enabled', () => {
     const gl = {};
-    const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+    const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
     const basisuDecoder: BasisuDecoderConfig = {
       enable: false,
     };
     getGlobalSettingsMock.mockReturnValue({
       basisuDecoder,
-      getSceneObjectFunction: jest.fn(),
+      getSceneObjectFunction: vi.fn(),
     });
 
     const loader = {
-      setKTX2Loader: jest.fn(),
+      setKTX2Loader: vi.fn(),
     };
 
     // Act
@@ -89,7 +89,7 @@ describe('setupBasisu', () => {
   ['/fake/path/to/basisu', undefined].forEach((path) => {
     it(`should use ${path} if not provided`, () => {
       const gl = {};
-      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
 
       const basisuDecoder: BasisuDecoderConfig = {
         enable: true,
@@ -97,16 +97,16 @@ describe('setupBasisu', () => {
       };
       getGlobalSettingsMock.mockReturnValue({
         basisuDecoder,
-        getSceneObjectFunction: jest.fn(),
+        getSceneObjectFunction: vi.fn(),
       });
       const loader = {
-        setKTX2Loader: jest.fn(),
-        setMeshoptDecoder: jest.fn(),
+        setKTX2Loader: vi.fn(),
+        setMeshoptDecoder: vi.fn(),
       };
 
       const ktx2loader = {
-        setTranscoderPath: jest.fn(() => ktx2loader),
-        detectSupport: jest.fn(),
+        setTranscoderPath: vi.fn(() => ktx2loader),
+        detectSupport: vi.fn(),
       };
 
       // Act
@@ -125,8 +125,8 @@ describe('setupBasisu', () => {
 describe('setupFileLoader', () => {
   it('should do nothing if getSceneObjectFunction is undefined', () => {
     const loader = {
-      setFileLoader: jest.fn(),
-      setTextureLoader: jest.fn(),
+      setFileLoader: vi.fn(),
+      setTextureLoader: vi.fn(),
     };
 
     // Act
@@ -134,13 +134,13 @@ describe('setupFileLoader', () => {
     expect(loader.setTextureLoader).not.toBeCalled();
   });
   it('should set the file & texture loaders', () => {
-    const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+    const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
     getGlobalSettingsMock.mockReturnValue({
-      getSceneObjectFunction: jest.fn(),
+      getSceneObjectFunction: vi.fn(),
     });
     const loader = {
-      setFileLoader: jest.fn(),
-      setTextureLoader: jest.fn(),
+      setFileLoader: vi.fn(),
+      setTextureLoader: vi.fn(),
     };
 
     // Act

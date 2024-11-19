@@ -27,7 +27,7 @@ const clients = {
     config,
   } as unknown as IoTSiteWiseClient,
   iotTwinMakerClient: {
-    send: jest.fn(),
+    send: vi.fn(),
   } as unknown as IoTTwinMakerClient,
   iotSiteWise: new IoTSiteWise(),
 };

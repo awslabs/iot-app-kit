@@ -1,7 +1,7 @@
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { render } from '@testing-library/react';
-import { mockedInvokeAssistantResponse3 } from '../../__mocks__/assistantMockedResponse';
+import { mockedInvokeAssistantResponse3 } from '../../../__mocks__/assistantMockedResponse';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
@@ -10,7 +10,7 @@ import { TableAssistantResults } from './tableAssistantResults';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest
+    invokeAssistant: vi
       .fn()
       .mockResolvedValue([mockedInvokeAssistantResponse3]),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -20,7 +20,7 @@ const client = new IoTSitewiseAssistantClient({
 const assistant = {
   enabled: true,
   componentId: 'componentId',
-  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  onAction: (_event: AssistantActionEventDetail) => vi.fn(),
   conversationId: 'conversationId',
   target: 'widget',
   client,
@@ -28,7 +28,7 @@ const assistant = {
 
 describe('TableAssistantResults', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders', () => {
@@ -58,7 +58,7 @@ describe('TableAssistantResults', () => {
   });
 
   it('fires summarize action when summarize action item is clicked', () => {
-    const mockedSummarizeAction = jest.fn();
+    const mockedSummarizeAction = vi.fn();
     render(
       <TableAssistantResults
         assistant={assistant}

@@ -8,9 +8,9 @@ describe('Confirm Delete Modal', () => {
       submitTitle: 'Submit',
       description: 'Are you sure you want to submit?',
       visible: true,
-      handleDismiss: jest.fn(),
-      handleCancel: jest.fn(),
-      handleSubmit: jest.fn(),
+      handleDismiss: vi.fn(),
+      handleCancel: vi.fn(),
+      handleSubmit: vi.fn(),
     };
     const { getByText, getByTestId } = render(
       <ConfirmDeleteModal {...props} />
@@ -24,15 +24,15 @@ describe('Confirm Delete Modal', () => {
   });
 
   test('calls handleCancel when cancel button is clicked', () => {
-    const handleCancel = jest.fn();
+    const handleCancel = vi.fn();
     const props = {
       headerTitle: 'Confirmation',
       submitTitle: 'Submit',
       description: 'Are you sure you want to submit?',
       visible: true,
-      handleDismiss: jest.fn(),
+      handleDismiss: vi.fn(),
       handleCancel,
-      handleSubmit: jest.fn(),
+      handleSubmit: vi.fn(),
     };
     const { getByText } = render(<ConfirmDeleteModal {...props} />);
     const cancelButton = getByText('Cancel');
@@ -44,14 +44,14 @@ describe('Confirm Delete Modal', () => {
   });
 
   test('calls handleSubmit when submit button is clicked', () => {
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const props = {
       headerTitle: 'Confirmation',
       submitTitle: 'Submit',
       description: 'Are you sure you want to submit?',
       visible: true,
-      handleDismiss: jest.fn(),
-      handleCancel: jest.fn(),
+      handleDismiss: vi.fn(),
+      handleCancel: vi.fn(),
       handleSubmit,
     };
     const { getByTestId } = render(<ConfirmDeleteModal {...props} />);

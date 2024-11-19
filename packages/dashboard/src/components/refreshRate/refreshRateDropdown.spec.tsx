@@ -1,9 +1,11 @@
 import { type PropsWithChildren } from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { RefreshRateDropDown } from './refreshRateDropdown';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
+
+const user = ue.setup();
 
 describe('Refresh rate drop down', () => {
   const ProviderWrapper = ({ children }: PropsWithChildren) => (
@@ -12,7 +14,6 @@ describe('Refresh rate drop down', () => {
 
   it('selecting option changes on screen', async () => {
     const dropDownElement = <RefreshRateDropDown />;
-    const user = userEvent.setup();
     render(dropDownElement, { wrapper: ProviderWrapper });
     const dropDown = screen.getByLabelText('Refresh rate');
     expect(screen.queryByText('1s')).not.toBeInTheDocument();
@@ -26,7 +27,6 @@ describe('Refresh rate drop down', () => {
 
   it('all options are visible on dropdown click', async () => {
     const dropDownElement = <RefreshRateDropDown />;
-    const user = userEvent.setup();
     render(dropDownElement, { wrapper: ProviderWrapper });
     const dropDown = screen.getByLabelText('Refresh rate');
     await user.click(dropDown);
@@ -40,7 +40,6 @@ describe('Refresh rate drop down', () => {
 
   it('triggers modal when 1s option is selected', async () => {
     const dropDownElement = <RefreshRateDropDown />;
-    const user = userEvent.setup();
     render(dropDownElement, { wrapper: ProviderWrapper });
     expect(screen.getByText('5s')).toBeVisible();
     const dropDown = screen.getByLabelText('Refresh rate');

@@ -3,7 +3,7 @@ import useIsRefreshing from './useIsrefreshing';
 
 describe('useIsRefreshing hook testing', () => {
   it('should set delayLoading to true when isRefreshing is true after delay', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const delay = 3000;
     const { result, rerender } = renderHook(() => useIsRefreshing(true, delay));
 
@@ -12,15 +12,15 @@ describe('useIsRefreshing hook testing', () => {
 
     rerender();
     act(() => {
-      jest.advanceTimersByTime(delay);
+      vi.advanceTimersByTime(delay);
     });
     expect(result.current).toBe(true);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should set delayLoading to false when isRefreshing is false', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const delay = 2000;
     const { result, rerender } = renderHook(() =>
       useIsRefreshing(false, delay)
@@ -31,9 +31,9 @@ describe('useIsRefreshing hook testing', () => {
 
     rerender();
     act(() => {
-      jest.advanceTimersByTime(delay);
+      vi.advanceTimersByTime(delay);
     });
     expect(result.current).toBe(false);
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });

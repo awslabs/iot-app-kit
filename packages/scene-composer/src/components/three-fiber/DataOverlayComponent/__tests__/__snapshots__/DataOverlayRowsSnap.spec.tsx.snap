@@ -1,4 +1,40 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DataOverlayRows > should render overlay panel correctly 1`] = `
+<div>
+  <div
+    style="margin-left: 1em; margin-right: 1em;"
+  >
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 1"},"overlayType":"OverlayPanel","valueDataBindings":[]},{}]
+    </div>
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 2"},"overlayType":"OverlayPanel","valueDataBindings":[]},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataOverlayRows > should render text annotation correctly 1`] = `
+<div>
+  <div>
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 1"},"overlayType":"TextAnnotation","valueDataBindings":[]},{}]
+    </div>
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 2"},"overlayType":"TextAnnotation","valueDataBindings":[]},{}]
+    </div>
+  </div>
+</div>
+`;
 
 exports[`DataOverlayRows should render overlay panel correctly 1`] = `
 <div>

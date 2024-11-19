@@ -3,7 +3,7 @@ import type { DataSource } from '../types';
 
 it('initiate a request on a registered data source', () => {
   const customSource: DataSource = {
-    initiateRequest: jest.fn(),
+    initiateRequest: vi.fn(),
     getRequestsFromQuery: () => Promise.resolve([]),
   };
   const dataSourceStore = new DataSourceStore(customSource);

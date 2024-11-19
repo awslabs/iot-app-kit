@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// vi Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<LoadingProgress /> should render loading indicator 1`] = `
 <div>

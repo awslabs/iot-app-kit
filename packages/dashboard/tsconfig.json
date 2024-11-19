@@ -1,14 +1,12 @@
 {
-  "extends": "@iot-app-kit/ts-config/react-library.json",
-  "include": ["src", "stories"],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@iot-app-kit/ts-config/tsconfig.react.json",
+  "include": ["src", "stories", "testing", "vitest.config.ts"],
+  "files": ["custom.d.ts", "vitest.setup.ts"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "baseUrl": "./",
+    "types": ["vitest/globals", "jest-extended"],
     "paths": {
       "~/*": ["./src/*"]
-    },
-    "sourceMap": true
-  },
-  "exclude": ["node_modules", "dist", "coverage"],
-  "files": ["./global.d.ts", "custom.d.ts"]
+    }
+  }
 }

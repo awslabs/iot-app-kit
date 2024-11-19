@@ -5,32 +5,32 @@ import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import { copySceneNodes } from './copySceneNodes';
 import { cloneSceneNodes, createSceneRootEntity, fetchSceneNodes, saveSceneNodes } from './sceneUtils';
 
-jest.mock('./sceneUtils', () => ({
-  cloneSceneNodes: jest.fn(),
-  createSceneRootEntity: jest.fn(),
-  fetchSceneNodes: jest.fn(),
-  saveSceneNodes: jest.fn(),
+vi.mock('./sceneUtils', () => ({
+  cloneSceneNodes: vi.fn(),
+  createSceneRootEntity: vi.fn(),
+  fetchSceneNodes: vi.fn(),
+  saveSceneNodes: vi.fn(),
 }));
 
 const srcNodes = [{ ref: 'node1' }, { ref: 'node2', parentRef: 'node1' }];
 const destNodes = [{ ref: 'node3' }, { ref: 'node4', parentRef: 'node3' }];
 
 describe('copySceneNodes', () => {
-  const createSceneEntity = jest.fn();
+  const createSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     createSceneEntity,
-    getSceneId: jest.fn().mockReturnValue('testSceneId'),
+    getSceneId: vi.fn().mockReturnValue('testSceneId'),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
 
-    (cloneSceneNodes as jest.Mock).mockImplementation(() => {
+    (cloneSceneNodes as vi.Mock).mockImplementation(() => {
       return Promise.resolve(destNodes);
     });
-    (fetchSceneNodes as jest.Mock).mockImplementation(() => {
+    (fetchSceneNodes as vi.Mock).mockImplementation(() => {
       return Promise.resolve(srcNodes);
     });
   });

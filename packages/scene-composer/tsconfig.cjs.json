@@ -1,24 +1,12 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist/cjs",
-    "module": "commonjs",
-    "incremental": true,
-    "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo"
-  },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": ["./tsconfig.json", "@iot-app-kit/ts-config/tsconfig.cjs.json"],
   "include": ["src"],
-  "exclude": [
-    "node_modules",
-    ".husky",
-    ".storybook",
-    "dist",
-    "coverage",
-    "tests",
-    "public",
-    "__mocks__",
-    "e2e",
-    "**/*.spec.*",
-    "**/*.test.*",
-    "./src/__snapshots__"
-  ]
+  "files": ["./src/global.d.ts"],
+  "exclude": ["./src/**/*.spec.*", "./src/**/*.test.*", "./src/__snapshots__"],
+  "compilerOptions": {
+    "types": [],
+    "outDir": "./dist/cjs",
+    "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo"
+  }
 }

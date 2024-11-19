@@ -1,44 +1,44 @@
-import * as THREE from 'three';
-import { render } from '@testing-library/react';
 import { useThree } from '@react-three/fiber';
+import { render } from '@testing-library/react';
+import * as THREE from 'three';
 
-import { type ICameraComponentInternal, type ISceneNodeInternal, useEditorState, accessStore } from '../../../../store';
-import useActiveCamera from '../../../../hooks/useActiveCamera';
 import CameraComponent from '..';
+import useActiveCamera from '../../../../hooks/useActiveCamera';
+import { accessStore, type ICameraComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../../store';
 
-import Mock = jest.Mock;
+import Mock = vi.Mock;
 
-jest.mock('../../../../store', () => {
-  const originalModule = jest.requireActual('../../../../store');
+vi.mock('../../../../store', async () => {
+  const originalModule = await vi.importActual('../../../../store');
   return {
     ...originalModule,
-    accessStore: jest.fn(),
-    useSceneDocument: jest.fn(() => ({ document: { defaultCameraRef: { ref: 'testCamera' } } })),
-    useEditorState: jest.fn(),
+    accessStore: vi.fn(),
+    useSceneDocument: vi.fn(() => ({ document: { defaultCameraRef: { ref: 'testCamera' } } })),
+    useEditorState: vi.fn(),
   };
 });
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
-    useFrame: jest.fn().mockImplementation((callback) => callback()),
+    useThree: vi.fn(),
+    useFrame: vi.fn().mockImplementation((callback) => callback()),
   };
 });
 
-jest.mock('../../../../hooks/useSelectedNode', () => {
-  return jest.fn().mockReturnValue({
+vi.mock('../../../../hooks/useSelectedNode', () => {
+  return vi.fn().mockReturnValue({
     selectedSceneNodeRef: 'testRef',
   });
 });
 
-jest.mock('../../../../hooks/useActiveCamera', () => {
-  return jest.fn().mockReturnValue({ activeCameraName: 'test-camera', setActiveCameraName: jest.fn() });
+vi.mock('../../../../hooks/useActiveCamera', () => {
+  return vi.fn().mockReturnValue({ activeCameraName: 'test-camera', setActiveCameraName: vi.fn() });
 });
 
-jest.mock('../../../../hooks/useEditorHelper', () => {
-  return { useEditorHelper: jest.fn() };
+vi.mock('../../../../hooks/useEditorHelper', () => {
+  return { useEditorHelper: vi.fn() };
 });
 
 describe('CameraComponent', () => {
@@ -49,8 +49,8 @@ describe('CameraComponent', () => {
       position: [5, 5, 5],
     },
   } as ISceneNodeInternal;
-  const isEditing = jest.fn();
-  const isViewing = jest.fn();
+  const isEditing = vi.fn();
+  const isViewing = vi.fn();
   const object3D = new THREE.Object3D();
   object3D.position.set(5, 5, 5);
   object3D.rotation.set(0, 0, 0);
@@ -60,7 +60,7 @@ describe('CameraComponent', () => {
     const mockState = { isEditing: true, isLoadingModel: false };
 
     const accessStoreMock = accessStore as Mock;
-    accessStoreMock.mockReturnValue({ getState: jest.fn(() => mockState) });
+    accessStoreMock.mockReturnValue({ getState: vi.fn(() => mockState) });
 
     const useThreeMock = useThree as Mock;
     useThreeMock.mockReturnValue({ width: 1920, height: 1080 });
@@ -69,15 +69,15 @@ describe('CameraComponent', () => {
     useEditorStateMock.mockReturnValue({
       isEditing,
       isViewing,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(object3D),
+      getObject3DBySceneNodeRef: vi.fn().mockReturnValue(object3D),
     });
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly for perspective camera', () => {
     isEditing.mockReturnValue(true);
-    (useActiveCamera as jest.Mock).mockReturnValue({
+    (useActiveCamera as vi.Mock).mockReturnValue({
       activeCameraSettings: {
         cameraType: 'Perspective',
         fov: 100,
@@ -87,7 +87,7 @@ describe('CameraComponent', () => {
           position: [5, 5, 5],
         },
       },
-      setActiveCameraSettings: jest.fn(),
+      setActiveCameraSettings: vi.fn(),
     });
     const component = {
       ref: 'testCamera',
@@ -135,7 +135,7 @@ describe('CameraComponent', () => {
 
   it('should call setActiveCameraSettings if activeCameraName matches the name of the node', () => {
     isEditing.mockReturnValue(true);
-    (useActiveCamera as jest.Mock).mockReturnValue({
+    (useActiveCamera as vi.Mock).mockReturnValue({
       activeCameraSettings: {
         cameraType: 'Perspective',
         fov: 100,
@@ -145,7 +145,7 @@ describe('CameraComponent', () => {
           position: [5, 5, 5],
         },
       },
-      setActiveCameraSettings: jest.fn(),
+      setActiveCameraSettings: vi.fn(),
       activeCameraName: 'testCamera',
     });
     const component = {
@@ -159,7 +159,7 @@ describe('CameraComponent', () => {
 
     render(<CameraComponent node={node} component={component} />);
 
-    const argValue = (useActiveCamera().setActiveCameraSettings as jest.Mock).mock.calls[0][0];
+    const argValue = (useActiveCamera().setActiveCameraSettings as vi.Mock).mock.calls[0][0];
 
     expect(argValue).toMatchInlineSnapshot(`
       {

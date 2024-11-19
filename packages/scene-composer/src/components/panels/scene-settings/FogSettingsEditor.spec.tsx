@@ -1,25 +1,25 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { act, render } from '@testing-library/react';
+import { act, render } from '@/tests/testing-library';
 
-import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
+import { accessStore } from '../../../store';
 
 import { FogSettingsEditor } from './FogSettingsEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('FogSettingsEditor', () => {
-  const setScenePropertyMock = jest.fn();
-  const getScenePropertyMock = jest.fn();
+  const setScenePropertyMock = vi.fn();
+  const getScenePropertyMock = vi.fn();
   const baseState = {
     setSceneProperty: setScenePropertyMock,
     getSceneProperty: getScenePropertyMock,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should save fogsettings when enabled', async () => {

@@ -1,65 +1,61 @@
 /* eslint-disable */
 import * as THREE from 'three';
 import ReactThreeTestRenderer from '@react-three/test-renderer';
-jest.useFakeTimers();
+import { useThree } from '@react-three/fiber';
+import { IModelRefComponentInternal, accessStore } from '../../../../store';
+import { GLTFModelComponent } from '../GLTFModelComponent';
+import { KnownComponentType } from '../../../..';
+import { getScaleFactor } from '../../../../utils/mathUtils';
+import Mock = vi.Mock;
 
-import Mock = jest.Mock;
+vi.useFakeTimers();
 
 const mockThreeStates = {
   gl: {
     capabilities: {
-      getMaxAnisotropy: jest.fn(),
+      getMaxAnisotropy: vi.fn(),
     },
   },
   scene: new THREE.Scene(),
   camera: new THREE.PerspectiveCamera(),
 };
 
-const mockUseFrame = jest.fn();
-jest.doMock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+const mockUseFrame = vi.fn();
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
+    useThree: vi.fn(),
     useFrame: mockUseFrame,
   };
 });
 
-const mockUseGLTF = jest.fn();
-jest.doMock('../GLTFLoader', () => {
-  const originalModule = jest.requireActual('../GLTFLoader');
+vi.mock('../GLTFLoader', async () => {
+  const originalModule = await vi.importActual('../GLTFLoader');
   return {
     ...originalModule,
-    useGLTF: mockUseGLTF,
+    useGLTF: vi.fn(),
   };
 });
 
-const mockEnableShadow = jest.fn();
-jest.doMock('../../../../utils/objectThreeUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/objectThreeUtils');
+const mockEnableShadow = vi.fn();
+vi.mock('../../../../utils/objectThreeUtils', async () => {
+  const originalModule = await vi.importActual('../../../../utils/objectThreeUtils');
   return {
     ...originalModule,
-    acceleratedRaycasting: jest.fn(),
-    deepClonedeepClone: jest.fn(),
+    acceleratedRaycasting: vi.fn(),
+    deepClonedeepClone: vi.fn(),
     enableShadow: mockEnableShadow,
   };
 });
-
-import { useThree } from '@react-three/fiber';
-import { IModelRefComponentInternal, accessStore } from '../../../../store';
-import { GLTFModelComponent } from '../GLTFModelComponent';
-import { KnownComponentType } from '../../../..';
-import { getScaleFactor } from '../../../../utils/mathUtils';
-import { GLTFLoadingManager } from '../../../../common/loadingManagers';
-
 // @ts-ignore
-jest.mock('scheduler', () => require('scheduler/unstable_mock'));
+vi.mock('scheduler', () => require('scheduler/unstable_mock'));
 
 /* eslint-enable */
 
 describe('GLTFLoader', () => {
-  const mockStoreUriModifier = jest.fn();
-  const mockSetLoadingModelState = jest.fn();
+  const mockStoreUriModifier = vi.fn();
+  const mockSetLoadingModelState = vi.fn();
 
   const baseState: any = {
     getEditorConfig: () => ({ uriModifier: mockStoreUriModifier }),
@@ -79,7 +75,7 @@ describe('GLTFLoader', () => {
   baseScene.add(mockObject);
 
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     const useThreeMock = useThree as Mock;
     useThreeMock.mockReturnValue(mockThreeStates);

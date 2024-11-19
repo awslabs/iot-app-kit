@@ -25,7 +25,7 @@ describe('svgIconToWidgetSprite', () => {
   }
   icons.forEach((value) => {
     it(`it should render the ${value[0]} correctly`, () => {
-      jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
+      vi.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as Icons;
       const container = create(svgIconToWidgetSprite(icon, key, key, false, true));
 
@@ -35,7 +35,7 @@ describe('svgIconToWidgetSprite', () => {
 
   icons.forEach((value) => {
     it(`it should render the always visible ${value[0]} correctly`, () => {
-      jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
+      vi.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as Icons;
       const container = create(svgIconToWidgetSprite(icon, key, key, true, true));
 
@@ -45,7 +45,7 @@ describe('svgIconToWidgetSprite', () => {
 
   icons.forEach((value) => {
     it(`it should render the constant sized ${value[0]} correctly`, () => {
-      jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
+      vi.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as Icons;
       const container = create(svgIconToWidgetSprite(icon, key, key, false, false));
 

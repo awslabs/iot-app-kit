@@ -1,4 +1,88 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TabbedPanelContainerSnap > should render correctly 1`] = `
+<div
+  className="tm-sidePanelTabs awsui_root_14rmt_n8497_389 awsui_tabs_14rmt_n8497_198"
+>
+  <div
+    className="awsui_tabs-header_14rmt_n8497_198 awsui_tabs-header-with-divider_14rmt_n8497_385"
+  >
+    <ul
+      className="awsui_tabs-header-list_14rmt_n8497_206"
+      onScroll={[Function]}
+      role="tablist"
+    >
+      <li
+        className="awsui_tabs-tab_14rmt_n8497_245"
+        role="presentation"
+      >
+        <button
+          aria-controls="awsui-tabs-:r0:-test1-panel"
+          aria-selected={true}
+          className="awsui_tabs-tab-link_14rmt_n8497_273 awsui_refresh_14rmt_n8497_292 awsui_tabs-tab-active_14rmt_n8497_378"
+          data-testid="test1"
+          id="awsui-tabs-:r0:-test1"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          role="tab"
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="awsui_tabs-tab-label_14rmt_n8497_257"
+          >
+            test1
+          </span>
+        </button>
+      </li>
+      <li
+        className="awsui_tabs-tab_14rmt_n8497_245"
+        role="presentation"
+      >
+        <button
+          aria-controls="awsui-tabs-:r0:-test2-panel"
+          aria-selected={false}
+          className="awsui_tabs-tab-link_14rmt_n8497_273 awsui_refresh_14rmt_n8497_292"
+          data-testid="test2"
+          id="awsui-tabs-:r0:-test2"
+          onClick={[Function]}
+          role="tab"
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            className="awsui_tabs-tab-label_14rmt_n8497_257"
+          >
+            test2
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    className="awsui_tabs-content-wrapper_14rmt_n8497_454 awsui_with-paddings_14rmt_n8497_454"
+  >
+    <div
+      aria-labelledby="awsui-tabs-:r0:-test1"
+      className="awsui_tabs-content_14rmt_n8497_430 awsui_tabs-content-active_14rmt_n8497_440"
+      id="awsui-tabs-:r0:-test1-panel"
+      role="tabpanel"
+      tabIndex={0}
+    >
+      <div>
+         Panel 1 
+      </div>
+    </div>
+    <div
+      aria-labelledby="awsui-tabs-:r0:-test2"
+      className="awsui_tabs-content_14rmt_n8497_430"
+      id="awsui-tabs-:r0:-test2-panel"
+      role="tabpanel"
+      tabIndex={0}
+    />
+  </div>
+</div>
+`;
 
 exports[`TabbedPanelContainerSnap should render correctly 1`] = `
 <div

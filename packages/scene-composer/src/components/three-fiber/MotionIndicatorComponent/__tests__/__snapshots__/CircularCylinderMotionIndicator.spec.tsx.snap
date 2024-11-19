@@ -1,4 +1,32 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CircularCylinderMotionIndicator > should render correctly 1`] = `
+<mesh>
+  <cylinderGeometry
+    args={
+      [
+        0.5,
+        0.5,
+        1,
+        32,
+        1,
+        true,
+      ]
+    }
+    attach="geometry"
+  />
+  <meshBasicMaterial
+    attach="material"
+    color="white"
+    depthWrite={true}
+    map={{}}
+    onBeforeCompile={[Function]}
+    opacity={0.6}
+    side={2}
+    transparent={true}
+  />
+</mesh>
+`;
 
 exports[`CircularCylinderMotionIndicator should render correctly 1`] = `
 <div

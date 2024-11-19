@@ -1,21 +1,21 @@
 /* eslint-disable import/first */
-import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { render } from '@/tests/testing-library';
 
-import { SceneRuleTargetIconEditor } from '../SceneRuleTargetIconEditor';
 import { DefaultAnchorStatus } from '../../../../interfaces/components';
+import { SceneRuleTargetIconEditor } from '../SceneRuleTargetIconEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-jest.mock('../../../../common/GlobalSettings');
+vi.mock('../../../../common/GlobalSettings');
 
 describe('SceneRuleTargetIconEditor', () => {
-  const onChange = jest.fn();
+  const onChange = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should change target Icon on click', () => {

@@ -24,7 +24,7 @@ function mockComponent(componentName) {
   };
 }
 
-jest.mock('@cloudscape-design/components', () => {
+vi.mock('@cloudscape-design/components', () => {
   return {
     Box: mockComponent('Box'),
     Container: mockComponent('Container'),
@@ -32,13 +32,13 @@ jest.mock('@cloudscape-design/components', () => {
   };
 });
 
-jest.mock('@react-three/drei/web/Html', () => {
+vi.mock('@react-three/drei/web/Html', () => {
   return {
     Html: mockComponent('Html'),
   };
 });
 
-jest.mock('../../../src/components/three-fiber/hooks/useProgress', () => () => ({
+vi.mock('../../../src/components/three-fiber/hooks/useProgress', () => () => ({
   downloadItem: 'file.jpg',
   dowloaded: true,
   progess: 50,

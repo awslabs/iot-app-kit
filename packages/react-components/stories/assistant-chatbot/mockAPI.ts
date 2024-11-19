@@ -7,7 +7,7 @@ import {
   mockedInvokeAssistantResponse2,
   mockedInvokeAssistantResponse4,
   mockedInvokeAssistantResponse5,
-} from '../../src/__mocks__/assistantMockedResponse';
+} from '../../__mocks__/assistantMockedResponse';
 
 // TODO: without msw for now, but change to msw in the future
 export const MockInvokeAssistant = (

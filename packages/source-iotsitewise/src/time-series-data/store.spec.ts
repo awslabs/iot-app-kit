@@ -13,7 +13,7 @@ describe('TimeSeriesDataStore', () => {
       errors: {},
     };
 
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const store = new CreateTimeSeriesDataStore({ initialState, callback });
 

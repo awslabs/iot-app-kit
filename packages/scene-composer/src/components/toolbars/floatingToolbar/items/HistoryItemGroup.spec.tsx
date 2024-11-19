@@ -1,22 +1,21 @@
-import { create, act } from 'react-test-renderer';
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
 import useDynamicScene from '../../../../hooks/useDynamicScene';
-import { createUndoStore } from '../../../../store/middlewares';
 import { accessStore } from '../../../../store';
+import { createUndoStore } from '../../../../store/middlewares';
 import { ToolbarOrientation } from '../../common/types';
 
 import { HistoryItemGroup } from './HistoryItemGroup';
 
-jest.mock('../../common/ToolbarItem', () => ({
+vi.mock('../../common/ToolbarItem', () => ({
   ToolbarItem: 'ToolbarItem',
 }));
 
-jest.mock('../../../../hooks/useDynamicScene', () => jest.fn());
+vi.mock('../../../../hooks/useDynamicScene', () => ({ default: vi.fn() }));
 
 describe('HistoryItemGroup', () => {
   beforeEach(() => {
-    (useDynamicScene as jest.Mock).mockReturnValue(false);
+    (useDynamicScene as vi.Mock).mockReturnValue(false);
   });
 
   it('should render correctly with undo enabled', () => {
@@ -24,23 +23,17 @@ describe('HistoryItemGroup', () => {
     accessStore('default').setState({ undoStore });
 
     undoStore.setState({ prevStates: [{}] });
-    let container;
-    act(() => {
-      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
-    });
+    const { container } = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly with undo disabled', () => {
     const undoStore = createUndoStore();
     accessStore('default').setState({ undoStore });
-    (useDynamicScene as jest.Mock).mockReturnValue(true);
+    (useDynamicScene as vi.Mock).mockReturnValue(true);
 
     undoStore.setState({ prevStates: [{}] });
-    let container;
-    act(() => {
-      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
-    });
+    const { container } = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     expect(container).toMatchSnapshot();
   });
 
@@ -49,32 +42,22 @@ describe('HistoryItemGroup', () => {
     accessStore('default').setState({ undoStore });
 
     undoStore.setState({ futureStates: [{}] });
-    let container;
-    act(() => {
-      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
-    });
+    const { container } = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly with redo disabled', () => {
     const undoStore = createUndoStore();
     accessStore('default').setState({ undoStore });
-    (useDynamicScene as jest.Mock).mockReturnValue(true);
+    (useDynamicScene as vi.Mock).mockReturnValue(true);
 
     undoStore.setState({ futureStates: [{}] });
-    let container;
-    act(() => {
-      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
-    });
+    const { container } = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should correctly render horizontally', async () => {
-    let container: HTMLElement | undefined;
-    await act(async () => {
-      const rendered = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Horizontal} />);
-      container = rendered.container;
-    });
+    const { container } = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Horizontal} />);
 
     expect(container).toMatchSnapshot();
   });

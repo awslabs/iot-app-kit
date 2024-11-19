@@ -1,4 +1,176 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SubModelTree > callbacks > should append node onCreate 1`] = `
+[
+  {
+    "childRefs": [],
+    "components": [
+      {
+        "parentRef": "112",
+        "ref": "40B59050-EBAE-497F-A366-201E775341DD",
+        "selector": "RootObject",
+        "type": "SubModelRef",
+      },
+    ],
+    "name": "RootObject",
+    "parentRef": "112",
+    "properties": {},
+    "ref": "40B59050-EBAE-497F-A366-201E775341DD",
+    "transform": {
+      "position": [
+        1,
+        1,
+        1,
+      ],
+      "rotation": [
+        1,
+        1,
+        1,
+      ],
+      "scale": [
+        1,
+        1,
+        1,
+      ],
+    },
+    "transformConstraint": {
+      "snapToFloor": false,
+    },
+  },
+]
+`;
+
+exports[`SubModelTree > should not render a SubModel Tree if isOriginal flag is false 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable tm-sub-model"
+    role="treeitem"
+  >
+    <label
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <button
+        aria-expanded="false"
+        aria-label="Expand RootObject"
+        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
+        data-analytics-funnel-value="button:r4:"
+        title="Expand RootObject"
+        type="submit"
+      >
+        <span
+          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="stroke-linejoin-round"
+              d="M5 8h6M8 11V5M2 2h12v12H2z"
+            />
+          </svg>
+        </span>
+      </button>
+      <div
+        data-mocked="SubModelTreeItemLabel"
+      >
+        RootObject
+      </div>
+    </label>
+  </li>
+</div>
+`;
+
+exports[`SubModelTree > should not render a SubModel Tree if name is null 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable tm-sub-model"
+    role="treeitem"
+  >
+    <label
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <button
+        aria-expanded="false"
+        aria-label="Expand RootObject"
+        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
+        data-analytics-funnel-value="button:r2:"
+        title="Expand RootObject"
+        type="submit"
+      >
+        <span
+          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="stroke-linejoin-round"
+              d="M5 8h6M8 11V5M2 2h12v12H2z"
+            />
+          </svg>
+        </span>
+      </button>
+      <div
+        data-mocked="SubModelTreeItemLabel"
+      >
+        RootObject
+      </div>
+    </label>
+  </li>
+</div>
+`;
+
+exports[`SubModelTree > should render appropriately based on the object 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable tm-sub-model"
+    role="treeitem"
+  >
+    <label
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <button
+        aria-expanded="false"
+        aria-label="Expand RootObject"
+        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
+        data-analytics-funnel-value="button:r0:"
+        title="Expand RootObject"
+        type="submit"
+      >
+        <span
+          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="stroke-linejoin-round"
+              d="M5 8h6M8 11V5M2 2h12v12H2z"
+            />
+          </svg>
+        </span>
+      </button>
+      <div
+        data-mocked="SubModelTreeItemLabel"
+      >
+        RootObject
+      </div>
+    </label>
+  </li>
+</div>
+`;
 
 exports[`SubModelTree callbacks should append node onCreate 1`] = `
 [

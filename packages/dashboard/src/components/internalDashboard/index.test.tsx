@@ -19,19 +19,19 @@ const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
   viewport: { duration: '10m' },
 };
 
-jest.mock('../../store/actions', () => {
-  const originalModule = jest.requireActual('../../store/actions');
+vi.mock('../../store/actions', async () => {
+  const originalModule = await vi.importActual('../../store/actions');
 
   return {
     __esModule: true,
     ...originalModule,
-    onDeleteWidgetsAction: jest.fn(),
+    onDeleteWidgetsAction: vi.fn(),
   };
 });
 
 // TODO: fix these tests (likely need to mock TwinMaker client)
 it.skip('saves when the save button is pressed with default grid settings provided', function () {
-  const onSave = jest.fn().mockImplementation(() => Promise.resolve());
+  const onSave = vi.fn().mockImplementation(() => Promise.resolve());
 
   const getState = () => ({
     ...initialState,

@@ -32,22 +32,22 @@ import {
 import { createNodeEntity } from './createNodeEntity';
 import { createSceneEntityComponent, updateSceneEntityComponent } from './sceneComponent';
 
-jest.mock('../mathUtils', () => ({
-  generateUUID: jest.fn(() => 'random-uuid'),
+vi.mock('../mathUtils', () => ({
+  generateUUID: vi.fn(() => 'random-uuid'),
 }));
 
-jest.mock('./createNodeEntity', () => ({
-  createNodeEntity: jest.fn(),
+vi.mock('./createNodeEntity', () => ({
+  createNodeEntity: vi.fn(),
 }));
 
-jest.mock('./sceneComponent', () => ({
-  createSceneEntityComponent: jest.fn(),
-  updateSceneEntityComponent: jest.fn(),
+vi.mock('./sceneComponent', () => ({
+  createSceneEntityComponent: vi.fn(),
+  updateSceneEntityComponent: vi.fn(),
 }));
 
-jest.mock('../nodeUtils', () => ({
-  findComponentByType: jest.fn(),
-  getFinalNodeTransform: jest.fn(),
+vi.mock('../nodeUtils', () => ({
+  findComponentByType: vi.fn(),
+  getFinalNodeTransform: vi.fn(),
 }));
 
 describe('createSceneEntityId', () => {
@@ -58,10 +58,10 @@ describe('createSceneEntityId', () => {
 
 describe('createSceneRootEntity', () => {
   it('should call createSceneEntity with metadataModule sceneId', () => {
-    const createSceneEntity = jest.fn();
+    const createSceneEntity = vi.fn();
     const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
       createSceneEntity,
-      getSceneId: jest.fn().mockReturnValue('test'),
+      getSceneId: vi.fn().mockReturnValue('test'),
     };
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
     setFeatureConfig({});
@@ -78,7 +78,7 @@ describe('createSceneRootEntity', () => {
   });
 
   it('should call createSceneEntity with provided sceneName', () => {
-    const createSceneEntity = jest.fn();
+    const createSceneEntity = vi.fn();
     const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
       createSceneEntity,
     };
@@ -98,7 +98,7 @@ describe('createSceneRootEntity', () => {
 });
 
 describe('updateSceneRootEntity', () => {
-  const updateSceneEntity = jest.fn();
+  const updateSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     updateSceneEntity,
   };
@@ -110,7 +110,7 @@ describe('updateSceneRootEntity', () => {
       componentTypeId: 'type.scene',
       propertyUpdates: {},
     };
-    (updateSceneEntityComponent as jest.Mock).mockReturnValue(mockComponentUpdates);
+    (updateSceneEntityComponent as vi.Mock).mockReturnValue(mockComponentUpdates);
 
     updateSceneRootEntity('scene-root-id', mockSceneDocument);
 
@@ -126,13 +126,13 @@ describe('updateSceneRootEntity', () => {
 });
 
 describe('checkIfEntityExists', () => {
-  const getSceneEntity = jest.fn();
+  const getSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     getSceneEntity,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return true when entity exist', async () => {
@@ -164,15 +164,15 @@ describe('checkIfEntityExists', () => {
 });
 
 describe('prepareWorkspace', () => {
-  const createSceneEntity = jest.fn();
-  const getSceneEntity = jest.fn();
+  const createSceneEntity = vi.fn();
+  const getSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     createSceneEntity,
     getSceneEntity,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call createSceneEntity to create scenes root entity', async () => {
@@ -272,20 +272,20 @@ describe('convertAllNodesToEntities', () => {
       scale: [3, 3, 3],
     },
   };
-  const onSuccess = jest.fn();
-  const onFailure = jest.fn();
+  const onSuccess = vi.fn();
+  const onFailure = vi.fn();
 
-  const getSceneEntity = jest.fn();
+  const getSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     getSceneEntity,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
-    (createNodeEntity as jest.Mock).mockResolvedValue(null);
-    //(getFinalNodeTransform as jest.Mock).mockImplementation((n, _, __) => n.transform);
-    (findComponentByType as jest.Mock).mockReturnValue(false);
+    (createNodeEntity as vi.Mock).mockResolvedValue(null);
+    //(getFinalNodeTransform as vi.Mock).mockImplementation((n, _, __) => n.transform);
+    (findComponentByType as vi.Mock).mockReturnValue(false);
   });
 
   it('should not call createNodeEntity when node is dynamic', async () => {
@@ -298,7 +298,7 @@ describe('convertAllNodesToEntities', () => {
       document: document as ISceneDocumentInternal,
       onSuccess,
       onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
+      getObject3DBySceneNodeRef: vi.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
     });
 
@@ -320,7 +320,7 @@ describe('convertAllNodesToEntities', () => {
       document: document as ISceneDocumentInternal,
       onSuccess,
       onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(undefined),
+      getObject3DBySceneNodeRef: vi.fn().mockReturnValue(undefined),
       sceneRootEntityId: 'scene-root',
     });
 
@@ -342,7 +342,7 @@ describe('convertAllNodesToEntities', () => {
       document: document as ISceneDocumentInternal,
       onSuccess,
       onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
+      getObject3DBySceneNodeRef: vi.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
     });
 
@@ -372,7 +372,7 @@ describe('convertAllNodesToEntities', () => {
       document: document as ISceneDocumentInternal,
       onSuccess,
       onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
+      getObject3DBySceneNodeRef: vi.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
     });
 
@@ -404,14 +404,14 @@ describe('convertAllNodesToEntities', () => {
       },
     };
     const error = new Error('createNodeEntity failed');
-    (createNodeEntity as jest.Mock).mockRejectedValue(error);
-    const onFailure = jest.fn();
+    (createNodeEntity as vi.Mock).mockRejectedValue(error);
+    const onFailure = vi.fn();
 
     convertAllNodesToEntities({
       document: document as ISceneDocumentInternal,
       onSuccess,
       onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
+      getObject3DBySceneNodeRef: vi.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
     });
 

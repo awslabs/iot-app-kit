@@ -7,8 +7,8 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { mockedInvokeAssistantResponse5 } from '../../__mocks__/assistantMockedResponse';
+import ue from '@testing-library/user-event';
+import { mockedInvokeAssistantResponse5 } from '../../../__mocks__/assistantMockedResponse';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
@@ -21,7 +21,7 @@ import {
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest
+    invokeAssistant: vi
       .fn()
       .mockResolvedValue({ body: [mockedInvokeAssistantResponse5] }),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -29,7 +29,7 @@ const client = new IoTSitewiseAssistantClient({
 });
 
 const assistant = {
-  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  onAction: (_event: AssistantActionEventDetail) => vi.fn(),
   componentId: 'componentId',
   conversationId: 'conversationId',
   target: 'widget',
@@ -57,7 +57,7 @@ describe('ActionPanel', () => {
   });
 
   it('show result panel when summarize action is started', async () => {
-    const mockedSummarizeAction = jest.fn();
+    const mockedSummarizeAction = vi.fn();
     render(
       component({
         assistant: {
@@ -87,8 +87,8 @@ describe('ActionPanel', () => {
   });
 
   it('fires divedeep action when "Chat with AI" action item is clicked', async () => {
-    const mockedDivedeepAction = jest.fn();
-    const user = userEvent.setup();
+    const mockedDivedeepAction = vi.fn();
+    const user = ue.setup();
     render(
       component({
         assistant: {

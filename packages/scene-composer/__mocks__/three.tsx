@@ -1,8 +1,8 @@
+export * from 'three';
 /**
  * Mock implementation of R3F (React Three Fiber) components with the string name for a clean snapshot test.
  */
 module.exports = {
-  ...jest.requireActual('three'),
   audioListener: 'audioListener',
   positionalAudio: 'positionalAudio',
 

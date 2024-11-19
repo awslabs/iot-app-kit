@@ -2,7 +2,7 @@ import { DAY_IN_MS } from './time';
 import { viewportEndDate, viewportStartDate } from './viewport';
 
 const mockCurrentTime = (mockedDate: Date) => {
-  jest.spyOn(Date, 'now').mockImplementation(() => mockedDate.getTime());
+  vi.spyOn(Date, 'now').mockImplementation(() => mockedDate.getTime());
 };
 
 describe('viewportStart', () => {

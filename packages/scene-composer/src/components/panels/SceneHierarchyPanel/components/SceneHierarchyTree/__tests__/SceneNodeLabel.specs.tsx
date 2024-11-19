@@ -1,33 +1,33 @@
-import { useCallback } from 'react';
 import { render } from '@testing-library/react';
+import { useCallback } from 'react';
 
-import SceneNodeLabel, { type SceneNodeLabelProps } from '../SceneNodeLabel';
-import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
 import { KnownComponentType } from '../../../../../../interfaces';
+import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
+import SceneNodeLabel, { type SceneNodeLabelProps } from '../SceneNodeLabel';
 
-jest.mock('../../../../../../components/VisibilityToggle', () => 'VisibilityToggle');
-jest.mock('../../../../../../assets/svgs', () => ({
+vi.mock('../../../../../../components/VisibilityToggle', () => 'VisibilityToggle');
+vi.mock('../../../../../../assets/svgs', () => ({
   DeleteSvg: 'DeleteSVG',
 }));
 
-jest.mock('../ComponentTypeIcon', () => 'ComponentTypeIcon');
+vi.mock('../ComponentTypeIcon', () => 'ComponentTypeIcon');
 
-jest.mock('../../../SceneHierarchyDataProvider');
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn(),
+vi.mock('../../../SceneHierarchyDataProvider');
+vi.mock('react', () => ({
+  ...vi.importActual('react'),
+  useCallback: vi.fn(),
 }));
 
 describe('SceneNodeLabel', () => {
-  const toggleObjectVisibility = jest.fn();
-  const remove = jest.fn();
-  const validationErrors = jest.fn();
+  const toggleObjectVisibility = vi.fn();
+  const remove = vi.fn();
+  const validationErrors = vi.fn();
   let callbacks: any[] = [];
 
   beforeEach(() => {
     callbacks = [];
 
-    (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
+    (useSceneHierarchyData as unknown as vi.Mock).mockImplementation(() => {
       return {
         toggleObjectVisibility,
         remove,
@@ -35,11 +35,11 @@ describe('SceneNodeLabel', () => {
       };
     });
 
-    (useCallback as jest.Mock).mockImplementation((cb) => callbacks.push(cb));
+    (useCallback as vi.Mock).mockImplementation((cb) => callbacks.push(cb));
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   const defaultParams: SceneNodeLabelProps = {
@@ -59,7 +59,7 @@ describe('SceneNodeLabel', () => {
       ...defaultParams,
       objectRef: 'Batman',
     };
-    (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
+    (useSceneHierarchyData as unknown as vi.Mock).mockImplementation(() => {
       return {
         validationErrors: { [batmanParams.objectRef]: 'There is an error' },
       };
@@ -93,7 +93,7 @@ describe('SceneNodeLabel', () => {
       objectRef: 'Batman',
       componentTypes: [],
     };
-    (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
+    (useSceneHierarchyData as unknown as vi.Mock).mockImplementation(() => {
       return {
         validationErrors: { [batmanParams.objectRef]: 'There is an error' },
         remove,

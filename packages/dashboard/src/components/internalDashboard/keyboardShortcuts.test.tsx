@@ -14,23 +14,23 @@ import {
   onSendWidgetsToBackAction,
 } from '../../store/actions';
 
-jest.mock('../../store/actions', () => {
-  const originalModule = jest.requireActual('../../store/actions');
+vi.mock('../../store/actions', async () => {
+  const originalModule = await vi.importActual('../../store/actions');
 
   return {
     __esModule: true,
     ...originalModule,
-    onSelectWidgetsAction: jest.fn(),
-    onDeleteWidgetsAction: jest.fn(),
-    onBringWidgetsToFrontAction: jest.fn(),
-    onSendWidgetsToBackAction: jest.fn(),
-    // onCopyWidgetsAction: jest.fn(),
-    // onPasteWidgetsAction: jest.fn(),
+    onSelectWidgetsAction: vi.fn(),
+    onDeleteWidgetsAction: vi.fn(),
+    onBringWidgetsToFrontAction: vi.fn(),
+    onSendWidgetsToBackAction: vi.fn(),
+    // onCopyWidgetsAction: vi.fn(),
+    // onPasteWidgetsAction: vi.fn(),
   };
 });
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 const renderDashboardAndPressKey = ({
@@ -91,7 +91,7 @@ const renderDashboardAndPressKey = ({
 
 // TODO: fix these tests (likely need to mock TwinMaker client)
 it.skip('can clear the selection', () => {
-  (onSelectWidgetsAction as jest.Mock).mockImplementation(() => ({
+  (onSelectWidgetsAction as vi.Mock).mockImplementation(() => ({
     type: '',
     payload: {},
   }));
@@ -105,7 +105,7 @@ it.skip('can clear the selection', () => {
 });
 
 it.skip('can send the selection to the back', () => {
-  (onSendWidgetsToBackAction as jest.Mock).mockImplementation(() => ({
+  (onSendWidgetsToBackAction as vi.Mock).mockImplementation(() => ({
     type: '',
     payload: {},
   }));
@@ -117,7 +117,7 @@ it.skip('can send the selection to the back', () => {
 
 // TODO: fix these tests (likely need to mock TwinMaker client)
 it.skip('can bring the selection to the front', () => {
-  (onBringWidgetsToFrontAction as jest.Mock).mockImplementation(() => ({
+  (onBringWidgetsToFrontAction as vi.Mock).mockImplementation(() => ({
     type: '',
     payload: {},
   }));
@@ -128,7 +128,7 @@ it.skip('can bring the selection to the front', () => {
 });
 
 /**
- * TODO: simulating command + c and command + v does not seem to work within jest.
+ * TODO: simulating command + c and command + v does not seem to work within vi.
  * need to find a different way to do this.
  * Tried using the fireEvent util and the document dispatch directly, but could
  * not figure out a way to set the metaKey to true

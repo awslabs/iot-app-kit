@@ -3,13 +3,13 @@ import { createMockSecretsManagerSDK } from '../__mocks__/secretsManagerSDK';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { KGDataModule } from '../knowledgeGraph-module/KGDataModule';
 
-const getScene = jest.fn();
-const updateScene = jest.fn();
-const getEntity = jest.fn();
-const createEntity = jest.fn();
-const updateEntity = jest.fn();
-const deleteEntity = jest.fn();
-const createScene = jest.fn();
+const getScene = vi.fn();
+const updateScene = vi.fn();
+const getEntity = vi.fn();
+const createEntity = vi.fn();
+const updateEntity = vi.fn();
+const deleteEntity = vi.fn();
+const createScene = vi.fn();
 const twinMakerClientMock = createMockTwinMakerSDK({
   getScene,
   updateScene,
@@ -20,7 +20,7 @@ const twinMakerClientMock = createMockTwinMakerSDK({
   createScene,
 });
 
-const listSecrets = jest.fn();
+const listSecrets = vi.fn();
 const secretsManagerClientMock = createMockSecretsManagerSDK({
   listSecrets,
 });
@@ -39,7 +39,7 @@ const sceneMetadataModule = new SceneMetadataModule({
 
 describe('getSceneInfo', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get expected kgModule', () => {
@@ -78,7 +78,7 @@ describe('getSceneInfo', () => {
 
 describe('updateScene', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update the scene', async () => {
@@ -109,7 +109,7 @@ describe('updateScene', () => {
 
 describe('get3pConnectionList', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get correct list of secrets', async () => {
@@ -138,7 +138,7 @@ describe('get3pConnectionList', () => {
 
 describe('getSceneId', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get correct sceneId', async () => {
@@ -150,7 +150,7 @@ describe('getSceneId', () => {
 
 describe('getSceneEntity', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get correct entity', async () => {
@@ -178,7 +178,7 @@ describe('getSceneEntity', () => {
 
 describe('createSceneEntity', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call API to create entity successfully', async () => {
@@ -212,7 +212,7 @@ describe('createSceneEntity', () => {
 
 describe('updateSceneEntity', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call API to update entity successfully', async () => {
@@ -243,7 +243,7 @@ describe('updateSceneEntity', () => {
 
 describe('deleteSceneEntity', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call API to delete entity successfully', async () => {
@@ -270,7 +270,7 @@ describe('deleteSceneEntity', () => {
 
 describe('createScene', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call API to create scene successfully', async () => {

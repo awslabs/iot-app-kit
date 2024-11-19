@@ -1,14 +1,14 @@
+import { act, cleanup, renderHook } from '@testing-library/react';
 import { useEffect } from 'react';
-import { act, cleanup, renderHook } from '@testing-library/react-hooks';
-import { Object3D, type Event, Mesh, MeshBasicMaterial, Color } from 'three';
+import { Color, Mesh, MeshBasicMaterial, Object3D, type Event } from 'three';
 
 import useMaterialEffect from './useMaterialEffect';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn((cb) => cb),
-  useEffect: jest.fn(),
-  useRef: jest.fn((i) => ({ current: i })),
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useCallback: vi.fn((cb) => cb),
+  useEffect: vi.fn(),
+  useRef: vi.fn((i) => ({ current: i })),
 }));
 
 const times = (count: number, cb: (i: number) => void) => {
@@ -19,7 +19,7 @@ const times = (count: number, cb: (i: number) => void) => {
 
 describe('useMaterialEffect', () => {
   it('should handle no object and not have exception', () => {
-    (useEffect as jest.Mock).mockImplementationOnce((cb) => cb());
+    (useEffect as vi.Mock).mockImplementationOnce((cb) => cb());
     const [transform, restore] = renderHook(() =>
       useMaterialEffect(() => {
         return null;
@@ -34,7 +34,7 @@ describe('useMaterialEffect', () => {
 
   it('should handle non mesh and not have expection ', () => {
     const object = new Object3D<Event>();
-    (useEffect as jest.Mock).mockImplementationOnce((cb) => cb());
+    (useEffect as vi.Mock).mockImplementationOnce((cb) => cb());
     times(5, () => {
       const child = new Object3D();
       child.userData.isOriginal = true;
@@ -61,7 +61,7 @@ describe('useMaterialEffect', () => {
     const transformedColor = 0x000000;
     const originalColor = 0x00ff00;
 
-    (useEffect as jest.Mock).mockImplementationOnce((cb) => cb());
+    (useEffect as vi.Mock).mockImplementationOnce((cb) => cb());
 
     times(5, () => {
       const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: new Color(originalColor) }));
@@ -124,7 +124,7 @@ describe('useMaterialEffect', () => {
     const transformedColor = 0x000000;
     const originalColor = 0x00ff00;
 
-    (useEffect as jest.Mock).mockImplementationOnce((cb) => cb());
+    (useEffect as vi.Mock).mockImplementationOnce((cb) => cb());
 
     times(5, () => {
       const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: new Color(originalColor) }));

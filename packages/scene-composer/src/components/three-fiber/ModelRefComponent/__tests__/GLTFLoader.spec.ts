@@ -4,58 +4,58 @@ import { useLoader as mockUseLoader } from '@react-three/fiber';
 
 import { GLTFLoader } from '../../../../three/GLTFLoader';
 import { useGLTF } from '../GLTFLoader';
-import { getGlobalSettings, getGlobalSettings as mockGetGlobalSettings } from '../../../../common/GlobalSettings';
+import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import { type BasisuDecoderConfig, type DracoDecoderConfig } from '../../../../interfaces';
-import { THREE_PATH } from '../../../../common/constants';
-jest.mock('three', () => {
-  const originalModule = jest.requireActual('three');
+
+vi.mock('three', async () => {
+  const originalModule = await vi.importActual('three');
   return {
     ...originalModule,
     LoadingManager: class {
-      setURLModifier = jest.fn();
+      setURLModifier = vi.fn();
     },
   };
 });
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useLoader: jest.fn(),
+    useLoader: vi.fn(),
   };
 });
 
-jest.mock('../../../../common/GlobalSettings', () => {
-  const originalModule = jest.requireActual('../../../../common/GlobalSettings');
+vi.mock('../../../../common/GlobalSettings', async () => {
+  const originalModule = await vi.importActual('../../../../common/GlobalSettings');
   return {
     ...originalModule,
-    getGlobalSettings: jest.fn(),
+    getGlobalSettings: vi.fn(),
   };
 });
 
 describe('GLTFLoader', () => {
-  const mockPreloadFn = jest.fn();
-  const mockClearFn = jest.fn();
+  const mockPreloadFn = vi.fn();
+  const mockClearFn = vi.fn();
 
-  const uriModifier = jest.fn();
-  const extendLoader = jest.fn();
-  const onProgress = jest.fn();
+  const uriModifier = vi.fn();
+  const extendLoader = vi.fn();
+  const onProgress = vi.fn();
 
   let extensionsCb;
   let mockLoader;
   let gl;
   const createMockLoader = () => {
     return {
-      setDRACOLoader: jest.fn(),
+      setDRACOLoader: vi.fn(),
     };
   };
 
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     mockLoader = createMockLoader();
 
-    (mockUseLoader as unknown as jest.Mock).mockImplementation((l, p, e) => {
+    (mockUseLoader as unknown as vi.Mock).mockImplementation((l, p, e) => {
       extensionsCb = e;
     });
     (mockUseLoader as any).preload = mockPreloadFn;
@@ -68,11 +68,11 @@ describe('GLTFLoader', () => {
     beforeEach(() => {
       setup();
 
-      setDecoderPathSpy = jest.spyOn(DRACOLoader.prototype, 'setDecoderPath');
+      setDecoderPathSpy = vi.spyOn(DRACOLoader.prototype, 'setDecoderPath');
     });
 
     it('should execute without draco decoder enabled', async () => {
-      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
       const dracoDecoder: DracoDecoderConfig = {
         enable: false,
       };
@@ -92,7 +92,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should execute without draco decoder enabled', async () => {
-      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
       const dracoDecoder: DracoDecoderConfig = {
         enable: false,
       };
@@ -118,7 +118,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should call useLoader', async () => {
-      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
       const dracoDecoder: DracoDecoderConfig = {
         enable: true,
         path: 'draco/path',
@@ -130,7 +130,7 @@ describe('GLTFLoader', () => {
         basisuDecoder,
         dracoDecoder,
       });
-      const setURLModifierSpy = jest.spyOn(DefaultLoadingManager, 'setURLModifier');
+      const setURLModifierSpy = vi.spyOn(DefaultLoadingManager, 'setURLModifier');
 
       useGLTF(dracoDecoder.path as string, gl, uriModifier, extendLoader, onProgress);
       extensionsCb(mockLoader);
@@ -149,7 +149,7 @@ describe('GLTFLoader', () => {
 
     it('should call useLoader.preload', async () => {
       let ext;
-      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const getGlobalSettingsMock = getGlobalSettings as vi.Mock;
       const dracoDecoder: DracoDecoderConfig = {
         enable: true,
         path: 'draco/path',

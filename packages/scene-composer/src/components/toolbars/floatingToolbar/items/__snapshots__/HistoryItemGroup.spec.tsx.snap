@@ -1,4 +1,89 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HistoryItemGroup > should correctly render horizontally 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR TuwzD"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`HistoryItemGroup > should render correctly with redo disabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`HistoryItemGroup > should render correctly with redo enabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`HistoryItemGroup > should render correctly with undo disabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`HistoryItemGroup > should render correctly with undo enabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
+</div>
+`;
 
 exports[`HistoryItemGroup should correctly render horizontally 1`] = `
 <div>

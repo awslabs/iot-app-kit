@@ -17,14 +17,14 @@ describe('Anchor', () => {
     visualContainer = new THREE.Group();
     visualContainer.add(visual);
     widgetVisual = new WidgetVisual();
-    jest.spyOn(widgetVisual, 'setVisible');
-    jest.resetAllMocks();
+    vi.spyOn(widgetVisual, 'setVisible');
+    vi.resetAllMocks();
   });
 
   it('should log an error if no name set on widget visual', () => {
     const anchor = new Anchor();
 
-    const errorLog = jest.spyOn((anchor as any).log, 'error');
+    const errorLog = vi.spyOn((anchor as any).log, 'error');
 
     anchor.add(widgetVisual);
 
@@ -35,7 +35,7 @@ describe('Anchor', () => {
     const anchor = new Anchor();
     widgetVisual.name = 'testName';
 
-    const errorLog = jest.spyOn((anchor as any).log, 'error');
+    const errorLog = vi.spyOn((anchor as any).log, 'error');
 
     anchor.add(widgetVisual);
 
@@ -100,7 +100,7 @@ describe('Anchor', () => {
     const selectedVisual = new WidgetVisual();
     selectedVisual.name = SelectedAnchor;
     selectedVisual.visual = visualContainer;
-    jest.spyOn(selectedVisual, 'setVisible');
+    vi.spyOn(selectedVisual, 'setVisible');
 
     anchor.add(widgetVisual);
     anchor.add(selectedVisual);
@@ -108,7 +108,7 @@ describe('Anchor', () => {
     expect(anchor.isSelected).toEqual(false);
     expect(widgetVisual.setVisible).toBeCalledWith(true);
     expect(selectedVisual.setVisible).toBeCalledWith(false);
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     anchor.isSelected = true;
     expect(widgetVisual.setVisible).not.toBeCalled();

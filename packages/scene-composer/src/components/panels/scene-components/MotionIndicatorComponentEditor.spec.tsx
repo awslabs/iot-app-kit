@@ -1,31 +1,31 @@
-import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { render } from '@testing-library/react';
 
-import { type IMotionIndicatorComponentInternal, accessStore } from '../../../store';
+import { mockComponent, mockNode } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
+import { type IMotionIndicatorComponentInternal, accessStore } from '../../../store';
 
 import { MotionIndicatorComponentEditor } from './MotionIndicatorComponentEditor';
 
-jest.mock('./motion-indicator/SpeedEditor', () => {
-  const originalModule = jest.requireActual('./motion-indicator/SpeedEditor');
+vi.mock('./motion-indicator/SpeedEditor', async () => {
+  const originalModule = await vi.importActual('./motion-indicator/SpeedEditor');
   return {
     ...originalModule,
     SpeedEditor: (...props: any[]) => <div id='SpeedEditor'>{JSON.stringify(props)}</div>,
   };
 });
 
-jest.mock('./motion-indicator/AppearanceEditor', () => (...props: any[]) => (
+vi.mock('./motion-indicator/AppearanceEditor', () => (...props: any[]) => (
   <div id='AppearanceEditor'>{JSON.stringify(props)}</div>
 ));
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-const updateComponentInternalFn = jest.fn();
+const updateComponentInternalFn = vi.fn();
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,

@@ -8,7 +8,7 @@ describe('alarm table', () => {
   beforeEach(() => {
     resourceExplorerQueryClient.clear();
     queryClient.clear();
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   describe('rendering', () => {
@@ -164,9 +164,9 @@ describe('alarm table', () => {
   //   });
 
   //   it('regularly requests latest values', async () => {
-  //     jest.useFakeTimers();
+  //     vi.useFakeTimers();
 
-  //     const batchGetAssetPropertyValue = jest.fn().mockResolvedValue({
+  //     const batchGetAssetPropertyValue = vi.fn().mockResolvedValue({
   //       successEntries: [],
   //       skippedEntries: [],
   //       errorEntries: [],
@@ -182,11 +182,11 @@ describe('alarm table', () => {
 
   //     expect(batchGetAssetPropertyValue).toHaveBeenCalledOnce();
 
-  //     jest.advanceTimersByTime(DEFAULT_LATEST_VALUE_REQUEST_INTERVAL);
+  //     vi.advanceTimersByTime(DEFAULT_LATEST_VALUE_REQUEST_INTERVAL);
   //     expect(batchGetAssetPropertyValue).toHaveBeenCalledTimes(2);
 
   //     // Remove mocking
-  //     jest.useRealTimers();
+  //     vi.useRealTimers();
   //   });
   // });
 

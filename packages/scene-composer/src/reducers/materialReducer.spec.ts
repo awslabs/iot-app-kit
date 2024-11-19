@@ -1,12 +1,12 @@
+import { act, renderHook } from '@testing-library/react';
 import { useReducer } from 'react';
-import { act, renderHook } from '@testing-library/react-hooks';
-import { Mesh, MeshBasicMaterial, Color } from 'three';
+import { Color, Mesh, MeshBasicMaterial } from 'three';
 
 import {
-  materialReducer,
-  initialMaterialMaps,
-  backUpOriginalMaterial,
   addMaterial,
+  backUpOriginalMaterial,
+  initialMaterialMaps,
+  materialReducer,
   removeMaterial,
 } from './materialReducer';
 

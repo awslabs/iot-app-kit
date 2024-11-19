@@ -1,28 +1,17 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@iot-app-kit/ts-config/tsconfig.react.json",
+  "include": ["src", "stories", "tests", "e2e", "__mocks__"],
+  "files": ["./src/global.d.ts", "vitest.setup.ts"],
   "compilerOptions": {
-    "module": "ESNext",
-    "lib": ["dom", "ESNext"],
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "./dist",
-    "esModuleInterop": true,
+    "types": ["vitest/globals", "jest-extended"],
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2015",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false,
+    "resolveJsonModule": true,
     "plugins": [
       {
         "transform": "@formatjs/ts-transformer",
@@ -32,10 +21,8 @@
         "ast": true
       }
     ],
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
-  },
-  "include": ["src", "stories", "test"],
-  "exclude": ["node_modules", "dist", "coverage"],
-  "files": ["./src/global.d.ts"]
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
 }

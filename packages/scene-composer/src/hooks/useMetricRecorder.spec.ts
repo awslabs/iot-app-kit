@@ -3,16 +3,16 @@ import useLogger from '../logger/react-logger/hooks/useLogger';
 
 import useMetricRecorder from './useMetricRecorder';
 
-jest.mock('../logger/react-logger/hooks/useLogger');
+vi.mock('../logger/react-logger/hooks/useLogger');
 
-jest.mock('../common/GlobalSettings', () => ({
-  getGlobalSettings: jest.fn(() => ({})),
+vi.mock('../common/GlobalSettings', () => ({
+  getGlobalSettings: vi.fn(() => ({})),
 }));
 
 describe('useMetricRecorder hook', () => {
   it('should fallback to default recorder when not set in global settings', () => {
-    const logger = useLogger as jest.Mock;
-    const verboseLogger = jest.fn();
+    const logger = useLogger as vi.Mock;
+    const verboseLogger = vi.fn();
 
     logger.mockImplementationOnce(() => ({
       verbose: verboseLogger,
@@ -25,9 +25,9 @@ describe('useMetricRecorder hook', () => {
   });
 
   it('should use globalSettings metric Recorder if available', () => {
-    const globalSettings = getGlobalSettings as jest.Mock;
+    const globalSettings = getGlobalSettings as vi.Mock;
     const metricRecorder = {
-      recordClick: jest.fn(),
+      recordClick: vi.fn(),
     };
 
     globalSettings.mockImplementationOnce(() => ({

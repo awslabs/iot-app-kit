@@ -1,4 +1,66 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WebGLCanvasManagerSnap > should render editing correctly without immersive view feature 1`] = `
+<div
+  style={
+    {
+      "height": "100%",
+      "overflow": "hidden",
+      "pointerEvents": "auto",
+      "position": "relative",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    style={
+      {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  >
+    <canvas
+      style={
+        {
+          "display": "block",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`WebGLCanvasManagerSnap > should render viewing correctly without immersive view feature 1`] = `
+<div
+  style={
+    {
+      "height": "100%",
+      "overflow": "hidden",
+      "pointerEvents": "auto",
+      "position": "relative",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    style={
+      {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  >
+    <canvas
+      style={
+        {
+          "display": "block",
+        }
+      }
+    />
+  </div>
+</div>
+`;
 
 exports[`WebGLCanvasManagerSnap should render editing correctly without immersive view feature 1`] = `
 <div

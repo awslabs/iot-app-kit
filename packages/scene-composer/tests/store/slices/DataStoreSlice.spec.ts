@@ -5,8 +5,8 @@ describe('createDataStoreSlice', () => {
     const dataInput = 'Test dataInput';
     const draft = { lastOperation: undefined, dataInput };
 
-    const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const get = vi.fn();
+    const set = vi.fn(((callback) => callback(draft)) as any);
 
     const { setDataInput } = createDataStoreSlice(set, get, undefined as any);
     setDataInput(dataInput as any);

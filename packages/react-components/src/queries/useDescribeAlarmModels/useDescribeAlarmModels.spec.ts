@@ -10,7 +10,7 @@ import {
 
 describe('useDescribeAlarmModels', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 

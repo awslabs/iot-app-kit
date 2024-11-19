@@ -13,31 +13,31 @@ import useTagSettings from '../../../../../hooks/useTagSettings';
 import { type ISceneNodeInternal, accessStore } from '../../../../../store/Store';
 import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
 
-jest.mock('../../common/SvgIconToWidgetSprite', () =>
-  jest.fn((_, __, key, ___, props) => <div data-test-id={key} {...props} />),
-);
+vi.mock('../../common/SvgIconToWidgetSprite', () => ({
+  default: vi.fn((_, __, key, ___, props) => <div data-test-id={key} {...props} />),
+}));
 
-jest.mock('../../../../../hooks/useTagSettings', () => jest.fn());
-jest.mock('../../../../../hooks/useBindingData', () =>
-  jest.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }),
-);
+vi.mock('../../../../../hooks/useTagSettings', () => ({ default: vi.fn() }));
+vi.mock('../../../../../hooks/useBindingData', () => ({
+  default: vi.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }),
+}));
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useLoader: jest.fn(),
-    useFrame: jest.fn().mockImplementation((func) => {
+    useLoader: vi.fn(),
+    useFrame: vi.fn().mockImplementation((func) => {
       func();
     }),
   };
 });
 
 describe('AnchorWidget', () => {
-  const onWidgetClick = jest.fn();
-  const setHighlightedSceneNodeRef = jest.fn();
-  const setSelectedSceneNodeRef = jest.fn();
-  const getObject3DBySceneNodeRef = jest.fn();
+  const onWidgetClick = vi.fn();
+  const setHighlightedSceneNodeRef = vi.fn();
+  const setSelectedSceneNodeRef = vi.fn();
+  const getObject3DBySceneNodeRef = vi.fn();
 
   const node: ISceneNodeInternal = {
     ref: 'test-ref',
@@ -58,7 +58,7 @@ describe('AnchorWidget', () => {
     },
   };
 
-  const getSceneRuleMapByIdMock = jest.fn();
+  const getSceneRuleMapByIdMock = vi.fn();
   const states = accessStore('default').getState().noHistoryStates;
   const setStore = (
     selectedSceneNodeRef: string,
@@ -84,9 +84,9 @@ describe('AnchorWidget', () => {
   };
 
   beforeEach(() => {
-    (useLoader as unknown as jest.Mock).mockReturnValue(['TestSvgData']);
-    (useTagSettings as jest.Mock).mockReturnValue(DEFAULT_TAG_GLOBAL_SETTINGS);
-    jest.clearAllMocks();
+    (useLoader as unknown as vi.Mock).mockReturnValue(['TestSvgData']);
+    (useTagSettings as vi.Mock).mockReturnValue(DEFAULT_TAG_GLOBAL_SETTINGS);
+    vi.clearAllMocks();
   });
 
   it('should not call onWidgetClick when switching between anchors', () => {
@@ -162,7 +162,7 @@ describe('AnchorWidget', () => {
 
   it('should render correctly with non default tag settings', () => {
     setStore('test-ref', 'test-ref');
-    (useTagSettings as jest.Mock).mockReturnValue({ scale: 3, autoRescale: true });
+    (useTagSettings as vi.Mock).mockReturnValue({ scale: 3, autoRescale: true });
     const container = create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
@@ -239,10 +239,10 @@ describe('AnchorWidget', () => {
  * This test also help us to validate the tag details on event click.
  */
 describe('AnchorWidget onWidgetClick', () => {
-  const onWidgetClickMock = jest.fn();
-  const setHighlightedSceneNodeRef = jest.fn();
-  const setSelectedSceneNodeRef = jest.fn();
-  const getObject3DBySceneNodeRef = jest.fn();
+  const onWidgetClickMock = vi.fn();
+  const setHighlightedSceneNodeRef = vi.fn();
+  const setSelectedSceneNodeRef = vi.fn();
+  const getObject3DBySceneNodeRef = vi.fn();
   const setStore = (
     selectedSceneNodeRef: string,
     highlightedSceneNodeRef: string,
@@ -264,7 +264,7 @@ describe('AnchorWidget onWidgetClick', () => {
       },
     });
   };
-  (useTagSettings as jest.Mock).mockReturnValue({
+  (useTagSettings as vi.Mock).mockReturnValue({
     autoRescale: true,
   });
 

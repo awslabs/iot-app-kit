@@ -1,24 +1,18 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist/esm",
-    "module": "ESNext",
-    "incremental": true,
-    "tsBuildInfoFile": "./dist/esm/.tsbuildinfo"
-  },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": ["./tsconfig.json", "@iot-app-kit/ts-config/tsconfig.esm.json"],
   "include": ["src"],
+  "files": ["./src/global.d.ts"],
   "exclude": [
-    "node_modules",
-    ".husky",
-    ".storybook",
-    "dist",
-    "coverage",
-    "tests",
-    "public",
-    "__mocks__",
-    "e2e",
-    "**/*.spec.*",
-    "**/*.test.*",
-    "./src/__snapshots__"
-  ]
+    "./src/**/*.spec.*",
+    "./src/**/*.test.*",
+    "./src/**/__snapshots__",
+    "./src/**/__mocks__",
+    "./src/**/__tests__"
+  ],
+  "compilerOptions": {
+    "types": [],
+    "outDir": "./dist/esm",
+    "tsBuildInfoFile": "./dist/esm/.tsbuildinfo"
+  }
 }

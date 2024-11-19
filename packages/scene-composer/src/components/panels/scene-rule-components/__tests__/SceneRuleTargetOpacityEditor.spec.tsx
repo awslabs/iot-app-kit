@@ -1,15 +1,15 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import SceneRuleTargetOpacityEditor from '../SceneRuleTargetOpacityEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
+vi.mock('@cloudscape-design/components', () => ({
   Grid: 'Grid',
   Input: 'input',
 }));
 
 describe('<SceneRuleTargetOpacityEditor>', () => {
   it('render expected field', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const value = '1';
 
     const { container } = render(<SceneRuleTargetOpacityEditor targetValue={value} onChange={onChange} />);
@@ -17,7 +17,7 @@ describe('<SceneRuleTargetOpacityEditor>', () => {
   });
 
   it('update value on change', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const value = '1';
 
     const { findByTestId } = render(<SceneRuleTargetOpacityEditor targetValue={value} onChange={onChange} />);

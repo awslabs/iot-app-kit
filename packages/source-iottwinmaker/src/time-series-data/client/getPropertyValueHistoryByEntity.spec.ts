@@ -46,15 +46,15 @@ describe('getPropertyValueHistoryByEntity', () => {
     start,
     end,
   };
-  const getPropertyValueHistory = jest.fn();
+  const getPropertyValueHistory = vi.fn();
   const tmClient = createMockTwinMakerSDK({
     getPropertyValueHistory,
   });
-  const onSuccess = jest.fn();
-  const onError = jest.fn();
+  const onSuccess = vi.fn();
+  const onError = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should send correct request when fetchMostRecentBeforeStart is true', async () => {

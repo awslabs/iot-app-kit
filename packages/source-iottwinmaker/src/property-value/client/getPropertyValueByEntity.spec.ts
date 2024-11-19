@@ -43,13 +43,13 @@ describe('getPropertyValueByEntity', () => {
     ],
   };
 
-  const getPropertyValue = jest.fn();
+  const getPropertyValue = vi.fn();
   const tmClient = createMockTwinMakerSDK({
     getPropertyValue,
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should send correct request and return correct data with multiple properties', async () => {

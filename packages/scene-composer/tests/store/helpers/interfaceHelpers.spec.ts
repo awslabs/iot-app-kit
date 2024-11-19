@@ -3,11 +3,11 @@ import * as MathUtils from '../../../src/utils/mathUtils';
 
 describe('interfaceHelpers', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('creates an internal scene composer node with generated id', () => {
-    jest.spyOn(MathUtils, 'generateUUID').mockReturnValue('test-uuid');
+    vi.spyOn(MathUtils, 'generateUUID').mockReturnValue('test-uuid');
     const sceneComponentInternal = InterfaceHelpers.createSceneComponentInternal({ type: 'testComponent' });
 
     expect(MathUtils.generateUUID).toBeCalled();
@@ -16,7 +16,7 @@ describe('interfaceHelpers', () => {
   });
 
   it('creates an internal scene composer node with maintained id', () => {
-    jest.spyOn(MathUtils, 'generateUUID');
+    vi.spyOn(MathUtils, 'generateUUID');
     const sceneComponentInternal = InterfaceHelpers.createSceneComponentInternal({
       ref: 'a2a91acc-3a47-4875-a146-b95741aedc2a',
       type: 'testComponent',
@@ -28,7 +28,7 @@ describe('interfaceHelpers', () => {
   });
 
   it('creates a scene node internal with defaults from minimal scene node', () => {
-    jest.spyOn(MathUtils, 'generateUUID').mockReturnValue('test-uuid');
+    vi.spyOn(MathUtils, 'generateUUID').mockReturnValue('test-uuid');
 
     const sceneNodeInternal = InterfaceHelpers.createSceneNodeInternal({});
     expect(MathUtils.generateUUID).toBeCalled();
@@ -46,7 +46,7 @@ describe('interfaceHelpers', () => {
   });
 
   it('creates a scene node internal from complete scene node', () => {
-    jest.spyOn(MathUtils, 'generateUUID');
+    vi.spyOn(MathUtils, 'generateUUID');
     const sceneNode = {
       ref: 'a2a91acc-3a47-4875-a146-b95741aedc2a',
       name: 'testNode',

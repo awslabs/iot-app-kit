@@ -1,4 +1,48 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnchorComponent > should render correctly with default icon 1`] = `
+<group
+  name="TAG_COMPONENT_testRef"
+>
+  <AnchorWidget
+    defaultIcon="Info"
+    navLink="https://test.url"
+    node={
+      {
+        "ref": "testRef",
+      }
+    }
+    ruleBasedMapId="testId"
+    valueDataBinding={
+      {
+        "test": "test",
+      }
+    }
+  />
+</group>
+`;
+
+exports[`AnchorComponent > should render correctly with set icon 1`] = `
+<group
+  name="TAG_COMPONENT_testRef"
+>
+  <AnchorWidget
+    defaultIcon="Error"
+    navLink="https://test.url"
+    node={
+      {
+        "ref": "testRef",
+      }
+    }
+    ruleBasedMapId="testId"
+    valueDataBinding={
+      {
+        "test": "test",
+      }
+    }
+  />
+</group>
+`;
 
 exports[`AnchorComponent should render correctly with default icon 1`] = `
 <group

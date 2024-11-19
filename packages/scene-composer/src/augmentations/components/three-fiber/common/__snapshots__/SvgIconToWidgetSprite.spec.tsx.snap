@@ -1,4 +1,319 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`svgIconToWidgetSprite > it should render the Error correctly 1`] = `
+<widgetSprite
+  name="Error"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the Info correctly 1`] = `
+<widgetSprite
+  name="Info"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the Selected correctly 1`] = `
+<widgetSprite
+  name="Selected"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the Video correctly 1`] = `
+<widgetSprite
+  name="Video"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the Warning correctly 1`] = `
+<widgetSprite
+  name="Warning"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the always visible Error correctly 1`] = `
+<widgetSprite
+  name="Error"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        depthFunc={6}
+        opacity={0.5}
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the always visible Info correctly 1`] = `
+<widgetSprite
+  name="Info"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        depthFunc={6}
+        opacity={0.5}
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the always visible Selected correctly 1`] = `
+<widgetSprite
+  name="Selected"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        depthFunc={6}
+        opacity={0.5}
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the always visible Video correctly 1`] = `
+<widgetSprite
+  name="Video"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        depthFunc={6}
+        opacity={0.5}
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the always visible Warning correctly 1`] = `
+<widgetSprite
+  name="Warning"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={true}
+      />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        depthFunc={6}
+        opacity={0.5}
+        sizeAttenuation={true}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the constant sized Error correctly 1`] = `
+<widgetSprite
+  name="Error"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={false}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the constant sized Info correctly 1`] = `
+<widgetSprite
+  name="Info"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={false}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the constant sized Selected correctly 1`] = `
+<widgetSprite
+  name="Selected"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={false}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the constant sized Video correctly 1`] = `
+<widgetSprite
+  name="Video"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={false}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite > it should render the constant sized Warning correctly 1`] = `
+<widgetSprite
+  name="Warning"
+>
+  <group
+    attach="visual"
+  >
+    <sprite
+      renderOrder={10}
+    >
+      <spriteMaterial
+        sizeAttenuation={false}
+      />
+    </sprite>
+  </group>
+</widgetSprite>
+`;
 
 exports[`svgIconToWidgetSprite it should render the Error correctly 1`] = `
 <widgetSprite

@@ -1,10 +1,10 @@
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from './client';
 
-jest.mock('@amzn/iot-black-pearl-internal-v3');
+vi.mock('@amzn/iot-black-pearl-internal-v3');
 
-function flushPromises() {
-  return new Promise(jest.requireActual('timers').setImmediate);
+async function flushPromises() {
+  return new Promise(setImmediate);
 }
 
 const response1 = {
@@ -63,10 +63,10 @@ const responseThrottlingException = {
 describe('AssistantClient', () => {
   const conversationId = 'myAssistantConversation';
   const componentId = 'componentId';
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('createAssistantClient return a new instance', () => {
-    const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
+    const mockInvokeAssistant = vi.fn().mockResolvedValue({ body: [] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -80,7 +80,7 @@ describe('AssistantClient', () => {
   });
 
   it('can set iotSiteWiseClient', () => {
-    const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
+    const mockInvokeAssistant = vi.fn().mockResolvedValue({ body: [] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -104,10 +104,10 @@ describe('AssistantClient', () => {
   });
 
   it('can set RequestHandlers', async () => {
-    const mockOnResponse = jest.fn();
-    const mockOnComplete = jest.fn();
-    const mockOnError = jest.fn();
-    const mockInvokeAssistant = jest
+    const mockOnResponse = vi.fn();
+    const mockOnComplete = vi.fn();
+    const mockOnError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response2, response3] });
     const client = new IoTSitewiseAssistantClient({
@@ -133,8 +133,8 @@ describe('AssistantClient', () => {
   });
 
   it('call invoke and return all responses', async () => {
-    const onResponse = jest.fn();
-    const mockInvokeAssistant = jest
+    const onResponse = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response1, response2] });
     const client = new IoTSitewiseAssistantClient({
@@ -161,8 +161,8 @@ describe('AssistantClient', () => {
   });
 
   it('call invoke and listen all responses have completed', async () => {
-    const onComplete = jest.fn();
-    const mockInvokeAssistant = jest
+    const onComplete = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response3] });
     const client = new IoTSitewiseAssistantClient({
@@ -189,7 +189,7 @@ describe('AssistantClient', () => {
   });
 
   it('call generateSummary and invoke assistant with summary utterance and context', () => {
-    const mockInvokeAssistant = jest
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response3] });
     const client = new IoTSitewiseAssistantClient({
@@ -219,8 +219,8 @@ describe('AssistantClient', () => {
   });
 
   it('handle error when invoke assistant call fails', async () => {
-    const onError = jest.fn();
-    const mockInvokeAssistant = jest
+    const onError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockRejectedValue(new Error('assistant 5xx error'));
     const client = new IoTSitewiseAssistantClient({
@@ -249,8 +249,8 @@ describe('AssistantClient', () => {
   });
 
   it('handle invoke assistant with accessDeniedException as response', async () => {
-    const onError = jest.fn();
-    const mockInvokeAssistant = jest
+    const onError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseAccessDeniedException] });
     const client = new IoTSitewiseAssistantClient({
@@ -280,8 +280,8 @@ describe('AssistantClient', () => {
   });
 
   it('handle invoke assistant with internalFailureException as response', async () => {
-    const onError = jest.fn();
-    const mockInvokeAssistant = jest
+    const onError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseInternalFailureException] });
     const client = new IoTSitewiseAssistantClient({
@@ -312,8 +312,8 @@ describe('AssistantClient', () => {
   });
 
   it('handle invoke assistant with limitExceededException as response', async () => {
-    const onError = jest.fn();
-    const mockInvokeAssistant = jest
+    const onError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseLimitExceededException] });
     const client = new IoTSitewiseAssistantClient({
@@ -343,8 +343,8 @@ describe('AssistantClient', () => {
   });
 
   it('handle invoke assistant with resourceNotFoundException as response', async () => {
-    const onError = jest.fn();
-    const mockInvokeAssistant = jest
+    const onError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseResourceNotFoundException] });
     const client = new IoTSitewiseAssistantClient({
@@ -375,8 +375,8 @@ describe('AssistantClient', () => {
   });
 
   it('handle invoke assistant with throttlingException as response', async () => {
-    const onError = jest.fn();
-    const mockInvokeAssistant = jest
+    const onError = vi.fn();
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseThrottlingException] });
     const client = new IoTSitewiseAssistantClient({

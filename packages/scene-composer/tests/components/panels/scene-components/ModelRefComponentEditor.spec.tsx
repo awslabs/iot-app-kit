@@ -8,11 +8,11 @@ import { accessStore } from '../../../../src/store';
 import { mockNode, mockComponent } from './MockComponents';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', () => ({
+  ...vi.importActual('@cloudscape-design/components'),
 }));
 
-const updateComponentInternalFn = jest.fn();
+const updateComponentInternalFn = vi.fn();
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,
@@ -20,7 +20,7 @@ const baseState = {
 
 describe('ModelRefComponentEditor', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should toggle cast shadow check box', () => {

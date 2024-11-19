@@ -18,7 +18,7 @@ describe('WidgetVisual', () => {
     anchorGroup.add(visualContainer);
 
     visualContainer.add(visual);
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should get and set visual', () => {
@@ -31,7 +31,7 @@ describe('WidgetVisual', () => {
   });
 
   it('should set root visual onBeforeRender to call its lookAt', () => {
-    jest.spyOn(anchorGroup, 'lookAt');
+    vi.spyOn(anchorGroup, 'lookAt');
     const widgetVisual = new WidgetVisual();
     const camera = new THREE.PerspectiveCamera();
     camera.position.set(1, 2, 3);
@@ -79,7 +79,7 @@ describe('WidgetVisual', () => {
 
   it('should log an warning when trying to call add', () => {
     const widgetVisual = new WidgetVisual();
-    jest.spyOn((widgetVisual as any).log, 'warn');
+    vi.spyOn((widgetVisual as any).log, 'warn');
 
     widgetVisual.add(visualContainer);
 

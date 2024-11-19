@@ -1,13 +1,13 @@
 /* eslint-disable */
 const mockSceneComposerApi = {
-  findSceneNodeRefBy: jest.fn(),
-  setCameraTarget: jest.fn(),
-  setSelectedSceneNodeRef: jest.fn(),
+  findSceneNodeRefBy: vi.fn(),
+  setCameraTarget: vi
+  setSelectedSceneNodeRef: vi
 };
 
 let onSceneLoadedCb;
-jest.doMock('./components/SceneComposerInternal', () => {
-  const original = jest.requireActual('./components/SceneComposerInternal');
+vi'./components/SceneComposerInternal', () => {
+  const original = viActual('./components/SceneComposerInternal');
   return {
     ...original,
     SceneComposerInternal: (props) => {
@@ -25,7 +25,7 @@ import mockComponent from '../__mocks__/mockComponent';
 /* eslint-enable */
 
 describe('SceneViewer', () => {
-  const mockGetSceneObjectFunction = jest.fn();
+  const mockGetSceneObjectFunction = vi
   const mockSceneLoader = {
     getSceneUri: () => Promise.resolve('https://test.url'),
     getSceneUrl: () => Promise.resolve('https://test.url'),
@@ -33,7 +33,7 @@ describe('SceneViewer', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vilMocks();
   });
 
   it('should render correctly', async () => {

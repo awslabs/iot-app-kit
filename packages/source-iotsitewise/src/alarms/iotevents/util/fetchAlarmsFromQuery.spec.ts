@@ -29,15 +29,13 @@ const getMockedAlarmModule = (
   /**
    * Default Mocks
    */
-  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
-  const describeAsset = jest.fn().mockResolvedValue({
+  const getAlarmModel = vi.fn().mockResolvedValue(ALARM_MODEL);
+  const describeAsset = vi.fn().mockResolvedValue({
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest
-    .fn()
-    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
-  const getAssetPropertyValue = jest
+  const describeAssetModel = vi.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const getAssetPropertyValue = vi
     .fn()
     .mockResolvedValueOnce({
       propertyValue: ALARM_SOURCE_PROPERTY_VALUE,
@@ -49,7 +47,7 @@ const getMockedAlarmModule = (
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
 
-  const batchGetAssetPropertyValueHistory = jest
+  const batchGetAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
 

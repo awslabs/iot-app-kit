@@ -1,7 +1,9 @@
-import { cleanup, renderHook } from '@testing-library/react-hooks';
+import { cleanup, renderHook } from '@testing-library/react';
+import useMatterportObserver from './useMatterportObserver';
+import * as globalSettings from '../common/GlobalSettings';
 
-const matterTagSubscribe = jest.fn();
-const tagSubscribe = jest.fn();
+const matterTagSubscribe = vi.fn();
+const tagSubscribe = vi.fn();
 
 const matterportSdk = {
   Mattertag: {
@@ -16,29 +18,19 @@ const matterportSdk = {
   },
 };
 
-const getMatterportSdkMock = jest.fn();
-jest.mock('../common/GlobalSettings', () => {
-  return {
-    getMatterportSdk: getMatterportSdkMock,
-  };
-});
-getMatterportSdkMock.mockImplementation(() => {
-  return matterportSdk;
+beforeEach(() => {
+  vi.clearAllMocks();
 });
 
-import useMatterportObserver from './useMatterportObserver';
-
-describe('useMatterportTags', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+it('should subscribe to mattertag and tag', () => {
+  vi.spyOn(globalSettings, 'getMatterportSdk').mockImplementation(() => {
+    return matterportSdk;
   });
 
-  it('should subscribe to mattertag and tag', () => {
-    renderHook(() => useMatterportObserver()).result.current;
+  renderHook(() => useMatterportObserver()).result.current;
 
-    expect(matterTagSubscribe).toBeCalled();
-    expect(tagSubscribe).toBeCalled();
+  expect(matterTagSubscribe).toBeCalled();
+  expect(tagSubscribe).toBeCalled();
 
-    cleanup();
-  });
+  cleanup();
 });

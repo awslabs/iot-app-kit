@@ -1,113 +1,251 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataBindingMapNameEditor should render binding name correctly 1`] = `
+exports[`DataBindingMapNameEditor > should render binding name correctly 1`] = `
 <div>
   <div
-    data-mocked="FormField"
-    errortext="null"
-    label="Binding Name"
+    class="awsui_root_14mhv_av9zi_174"
+    data-analytics-field-label="[id="formField:r0:-label"]"
   >
     <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value="binding-1"
-    />
+      class=""
+    >
+      <label
+        class="awsui_label_14mhv_av9zi_210"
+        for="formField:r0:"
+        id="formField:r0:-label"
+      >
+        Binding Name
+      </label>
+    </div>
+    <div
+      class="awsui_controls_14mhv_av9zi_246"
+    >
+      <div
+        class="awsui_grid_14yj0_1lwse_99"
+      >
+        <div
+          class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_1lwse_314"
+          >
+            <div
+              class="awsui_control_14mhv_av9zi_246"
+            >
+              <div
+                class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                data-testid="binding-name-input"
+              >
+                <input
+                  aria-labelledby="formField:r0:-label"
+                  autocomplete="on"
+                  class="awsui_input_2rhyz_15wpl_103"
+                  id="formField:r0:"
+                  type="text"
+                  value="binding-1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
 
-exports[`DataBindingMapNameEditor should render with duplicate binding name error 1`] = `
+exports[`DataBindingMapNameEditor > should render with duplicate binding name error 1`] = `
 <div>
   <div
-    data-mocked="FormField"
-    errortext="Duplicate name"
-    label="Binding Name"
+    class="awsui_root_14mhv_av9zi_174"
+    data-analytics-field-error="[id="formField:r2:-error"]"
+    data-analytics-field-label="[id="formField:r2:-label"]"
   >
     <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value="binding-2"
-    />
+      class=""
+    >
+      <label
+        class="awsui_label_14mhv_av9zi_210"
+        for="formField:r2:"
+        id="formField:r2:-label"
+      >
+        Binding Name
+      </label>
+    </div>
+    <div
+      class="awsui_controls_14mhv_av9zi_246"
+    >
+      <div
+        class="awsui_grid_14yj0_1lwse_99"
+      >
+        <div
+          class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_1lwse_314"
+          >
+            <div
+              class="awsui_control_14mhv_av9zi_246"
+            >
+              <div
+                class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                data-testid="binding-name-input"
+              >
+                <input
+                  aria-describedby="formField:r2:-error"
+                  aria-invalid="true"
+                  aria-labelledby="formField:r2:-label"
+                  autocomplete="on"
+                  class="awsui_input_2rhyz_15wpl_103 awsui_input-invalid_2rhyz_15wpl_220"
+                  id="formField:r2:"
+                  type="text"
+                  value="binding-2"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="awsui_hints_14mhv_av9zi_237"
+    >
+      <div
+        class="awsui_error_14mhv_av9zi_103"
+        id="formField:r2:-error"
+      >
+        <div
+          class="awsui_error-icon-shake-wrapper_14mhv_av9zi_103"
+        >
+          <div
+            class="awsui_error-icon-scale-wrapper_14mhv_av9zi_130"
+            role="img"
+          >
+            <span
+              class="awsui_icon_h11ix_1l964_104 awsui_size-small-mapped-height_h11ix_1l964_139 awsui_size-small_h11ix_1l964_135 awsui_variant-normal_h11ix_1l964_230"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  class="stroke-linejoin-round"
+                  d="m8 1 7 14H1L8 1z"
+                />
+                <path
+                  d="M7.99 12H8v.01h-.01zM8 6v4"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <span
+          class="awsui_error__message_14mhv_av9zi_264"
+        >
+          Duplicate name
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 `;
 
-exports[`DataBindingMapNameEditor should render with invalid binding name error 1`] = `
+exports[`DataBindingMapNameEditor > should render with invalid binding name error 1`] = `
 <div>
   <div
-    data-mocked="FormField"
-    errortext="Invalid name"
-    label="Binding Name"
+    class="awsui_root_14mhv_av9zi_174"
+    data-analytics-field-error="[id="formField:r1:-error"]"
+    data-analytics-field-label="[id="formField:r1:-label"]"
   >
     <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value=""
-    />
-  </div>
-</div>
-`;
-
-exports[`DataBindingMapNameEditor should render with invalid character in name error for $ 1`] = `
-<div>
-  <div
-    data-mocked="FormField"
-    errortext="Invalid character in the name"
-    label="Binding Name"
-  >
+      class=""
+    >
+      <label
+        class="awsui_label_14mhv_av9zi_210"
+        for="formField:r1:"
+        id="formField:r1:-label"
+      >
+        Binding Name
+      </label>
+    </div>
     <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value="aa $ bb"
-    />
-  </div>
-</div>
-`;
-
-exports[`DataBindingMapNameEditor should render with invalid character in name error for . 1`] = `
-<div>
-  <div
-    data-mocked="FormField"
-    errortext="Invalid character in the name"
-    label="Binding Name"
-  >
+      class="awsui_controls_14mhv_av9zi_246"
+    >
+      <div
+        class="awsui_grid_14yj0_1lwse_99"
+      >
+        <div
+          class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_1lwse_314"
+          >
+            <div
+              class="awsui_control_14mhv_av9zi_246"
+            >
+              <div
+                class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+                data-testid="binding-name-input"
+              >
+                <input
+                  aria-describedby="formField:r1:-error"
+                  aria-invalid="true"
+                  aria-labelledby="formField:r1:-label"
+                  autocomplete="on"
+                  class="awsui_input_2rhyz_15wpl_103 awsui_input-invalid_2rhyz_15wpl_220"
+                  id="formField:r1:"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value="aa . bb"
-    />
-  </div>
-</div>
-`;
-
-exports[`DataBindingMapNameEditor should render with invalid character in name error for { 1`] = `
-<div>
-  <div
-    data-mocked="FormField"
-    errortext="Invalid character in the name"
-    label="Binding Name"
-  >
-    <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value="aa { bb"
-    />
-  </div>
-</div>
-`;
-
-exports[`DataBindingMapNameEditor should render with invalid character in name error for } 1`] = `
-<div>
-  <div
-    data-mocked="FormField"
-    errortext="Invalid character in the name"
-    label="Binding Name"
-  >
-    <div
-      data-mocked="Input"
-      data-testid="binding-name-input"
-      value="aa } bb"
-    />
+      class="awsui_hints_14mhv_av9zi_237"
+    >
+      <div
+        class="awsui_error_14mhv_av9zi_103"
+        id="formField:r1:-error"
+      >
+        <div
+          class="awsui_error-icon-shake-wrapper_14mhv_av9zi_103"
+        >
+          <div
+            class="awsui_error-icon-scale-wrapper_14mhv_av9zi_130"
+            role="img"
+          >
+            <span
+              class="awsui_icon_h11ix_1l964_104 awsui_size-small-mapped-height_h11ix_1l964_139 awsui_size-small_h11ix_1l964_135 awsui_variant-normal_h11ix_1l964_230"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  class="stroke-linejoin-round"
+                  d="m8 1 7 14H1L8 1z"
+                />
+                <path
+                  d="M7.99 12H8v.01h-.01zM8 6v4"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <span
+          class="awsui_error__message_14mhv_av9zi_264"
+        >
+          Invalid name
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 `;

@@ -1,6 +1,6 @@
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
 
@@ -152,8 +152,8 @@ describe(Chatbot, () => {
   });
 
   it('should render prompts and be able to click on it', async () => {
-    const user = userEvent.setup();
-    const mockOnCLick = jest.fn();
+    const user = ue.setup();
+    const mockOnCLick = vi.fn();
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const promptText = 'What are the recommendations?';
@@ -179,8 +179,8 @@ describe(Chatbot, () => {
   });
 
   it('should call assistant API and send user message', async () => {
-    const user = userEvent.setup();
-    const mockOnCLick = jest.fn();
+    const user = ue.setup();
+    const mockOnCLick = vi.fn();
     const message = 'What is the root cause of the alarm?';
 
     const { getByPlaceholderText, getByTestId } = render(
@@ -213,8 +213,8 @@ describe(Chatbot, () => {
   });
 
   it('should call onClose callback when chatbot is closed', async () => {
-    const user = userEvent.setup();
-    const mockOnClose = jest.fn();
+    const user = ue.setup();
+    const mockOnClose = vi.fn();
     const { getByRole } = render(
       <Chatbot
         height={400}
@@ -235,8 +235,8 @@ describe(Chatbot, () => {
   });
 
   it('should call onReset callback when reset button is clicked', async () => {
-    const user = userEvent.setup();
-    const mockOnReset = jest.fn();
+    const user = ue.setup();
+    const mockOnReset = vi.fn();
     const { getByRole } = render(
       <Chatbot
         height={400}
@@ -257,7 +257,7 @@ describe(Chatbot, () => {
   });
 
   it('should resize message container when customer types breakline', async () => {
-    const user = userEvent.setup();
+    const user = ue.setup();
     const { getByPlaceholderText, getByTestId } = render(
       <Chatbot
         height={500}
@@ -270,7 +270,7 @@ describe(Chatbot, () => {
             loading: false,
           },
         ]}
-        onSubmit={jest.fn()}
+        onSubmit={vi.fn()}
       />
     );
 

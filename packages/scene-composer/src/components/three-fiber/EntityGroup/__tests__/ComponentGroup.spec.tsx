@@ -2,27 +2,27 @@ import { render } from '@testing-library/react';
 
 import { KnownComponentType } from '../../../../interfaces';
 import {
-  type ISceneComponentInternal,
-  type IModelRefComponentInternal,
-  type ISubModelRefComponentInternal,
   type IAnchorComponentInternal,
   type ICameraComponentInternal,
-  type ILightComponentInternal,
-  type IMotionIndicatorComponentInternal,
   type IColorOverlayComponentInternal,
   type IDataOverlayComponentInternal,
+  type ILightComponentInternal,
+  type IModelRefComponentInternal,
+  type IMotionIndicatorComponentInternal,
+  type ISceneComponentInternal,
+  type ISubModelRefComponentInternal,
 } from '../../../../store';
 import ComponentGroup from '../ComponentGroup';
 import { fakeSceneNode } from '../fakers';
 
-jest.mock('../../ModelRefComponent', () => 'ModelRefComponent');
-jest.mock('../../AnchorComponent', () => 'AnchorComponent');
-jest.mock('../../CameraComponent', () => 'CameraComponent');
-jest.mock('../../LightComponent', () => 'LightComponent');
-jest.mock('../../MotionIndicatorComponent', () => 'MotionIndicatorComponent');
-jest.mock('../../ColorOverlayComponent', () => 'ColorOverlayComponent');
-jest.mock('../../SubModelComponent', () => 'SubModelComponent');
-jest.mock('../../DataOverlayComponent', () => 'DataOverlayComponent');
+vi.mock('../../ModelRefComponent', () => ({ default: 'ModelRefComponent' }));
+vi.mock('../../AnchorComponent', () => ({ default: 'AnchorComponent' }));
+vi.mock('../../CameraComponent', () => ({ default: 'CameraComponent' }));
+vi.mock('../../LightComponent', () => ({ default: 'LightComponent' }));
+vi.mock('../../MotionIndicatorComponent', () => ({ default: 'MotionIndicatorComponent' }));
+vi.mock('../../ColorOverlayComponent', () => ({ default: 'ColorOverlayComponent' }));
+vi.mock('../../SubModelComponent', () => ({ default: 'SubModelComponent' }));
+vi.mock('../../DataOverlayComponent', () => ({ default: 'DataOverlayComponent' }));
 
 describe('<ComponentGroup />', () => {
   it('should render the appropriate view', () => {

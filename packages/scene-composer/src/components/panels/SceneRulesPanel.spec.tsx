@@ -1,29 +1,28 @@
-import { render } from '@testing-library/react';
-import * as React from 'react';
+import { render } from '@/tests/testing-library';
 
 import { SceneRulesPanel } from './SceneRulesPanel';
 
-jest.mock('../../logger/react-logger/log-provider', () => (props) => <div {...props} />);
-jest.mock('./CommonPanelComponents', () => ({
+vi.mock('../../logger/react-logger/log-provider', () => ({ default: (props) => <div {...props} /> }));
+vi.mock('./CommonPanelComponents', () => ({
   ExpandableInfoSection: (props) => <div data-mocked='ExpandableInfoSection' {...props} />,
 }));
 
-const removeSceneRuleMapById = jest.fn();
-const updateSceneRuleMapById = jest.fn();
-const getSceneRuleMapById = jest.fn().mockReturnValue({ statements: [{ expression: 'exp1', target: 'target1' }] });
-const listSceneRuleMapIds = jest.fn().mockReturnValue(['rule1']);
-// const setNewRuleBasedMapId = jest.fn();
+const removeSceneRuleMapById = vi.fn();
+const updateSceneRuleMapById = vi.fn();
+const getSceneRuleMapById = vi.fn().mockReturnValue({ statements: [{ expression: 'exp1', target: 'target1' }] });
+const listSceneRuleMapIds = vi.fn().mockReturnValue(['rule1']);
+// const setNewRuleBasedMapId = vi.fn();
 
-// jest.spyOn(React, 'useState').mockReturnValue(['mapId', setNewRuleBasedMapId] as any);
+// vi.spyOn(React, 'useState').mockReturnValue(['mapId', setNewRuleBasedMapId] as any);
 
-// jest.spyOn(React, 'useContext').mockReturnValue('sceneComponserId' as any);
+// vi.spyOn(React, 'useContext').mockReturnValue('sceneComponserId' as any);
 
-jest.mock('../../store/Store', () => {
-  const originalModule = jest.requireActual('../../store/Store');
+vi.mock('../../store/Store', async () => {
+  const originalModule = await vi.importActual('../../store/Store');
   return {
     __esModule: true,
     ...originalModule,
-    useSceneDocument: jest.fn(() => ({
+    useSceneDocument: vi.fn(() => ({
       removeSceneRuleMapById: removeSceneRuleMapById,
       updateSceneRuleMapById: updateSceneRuleMapById,
       getSceneRuleMapById: getSceneRuleMapById,

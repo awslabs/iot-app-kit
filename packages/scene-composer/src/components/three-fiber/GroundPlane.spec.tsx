@@ -2,44 +2,39 @@ import { useRef } from 'react';
 import ReactThreeTestRenderer from '@react-three/test-renderer';
 import { type Mesh, Texture, type MeshStandardMaterial } from 'three';
 import { useFrame } from '@react-three/fiber';
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 import { useEditorState, accessStore } from '../../store';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
-import useAddWidget from '../../hooks/useAddWidget';
 
 //we need actual drei code to test with r3f renderer
-jest.mock('@react-three/drei', () => {
-  const originalModule = jest.requireActual('@react-three/drei');
+vi.mock('@react-three/drei', async () => {
+  const originalModule = await vi.importActual('@react-three/drei');
   return {
     ...originalModule,
   };
 });
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: jest.fn(),
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useRef: vi.fn(),
 }));
 
 // Mock Hooks
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useFrame: jest.fn(),
+    useFrame: vi.fn(),
   };
 });
 
 import GroundPlane from './GroundPlane';
 
-jest.mock('../../utils/objectThreeUtils', () => {
+vi.mock('../../utils/objectThreeUtils', () => {
   return {
-    acceleratedRaycasting: jest.fn(),
+    acceleratedRaycasting: vi.fn(),
   };
-});
-
-jest.mock('../../hooks/useAddWidget', () => {
-  return jest.fn();
 });
 
 const mockTexture = new Texture();
@@ -52,36 +47,30 @@ const mockClearTexture = (mesh: Mesh) => {
   (mesh.material as MeshStandardMaterial).map = null;
 };
 
-jest.mock('../../hooks/useTwinMakerTextureLoader', () => {
-  return jest.fn();
-});
+vi.mock('../../hooks/useTwinMakerTextureLoader', () => ({ default: vi.fn() }));
 
-jest.mock('../../hooks/useAddWidget', () => {
-  return jest.fn();
-});
-
-jest.mock('../../store/', () => ({
-  ...jest.requireActual('../../store/'),
-  useEditorState: jest.fn(),
+const mockHandleAddWidget = vi.fn();
+vi.mock('../../hooks/useAddWidget', async () => ({
+  default: () => ({ handleAddWidget: mockHandleAddWidget }),
 }));
 
-const mockHandleAddWidget = jest.fn();
+vi.mock('../../store/', async () => ({
+  ...(await vi.importActual('../../store/')),
+  useEditorState: vi.fn(),
+}));
 
-const getScenePropertyMock = jest.fn();
+const getScenePropertyMock = vi.fn();
 const baseState = {
   getSceneProperty: getScenePropertyMock,
 };
 
 describe('GroundPlane', () => {
   const setup = () => {
-    jest.resetAllMocks();
-    (useFrame as jest.Mock).mockImplementation((cb) => cb());
-    (useTwinMakerTextureLoader as jest.Mock).mockImplementation(() => ({
+    vi.resetAllMocks();
+    (useFrame as vi.Mock).mockImplementation((cb) => cb());
+    (useTwinMakerTextureLoader as vi.Mock).mockImplementation(() => ({
       loadTextureOnMesh: mockLoadTexture,
       clearTextureOnMesh: mockClearTexture,
-    }));
-    (useAddWidget as jest.Mock).mockImplementation(() => ({
-      handleAddWidget: mockHandleAddWidget,
     }));
 
     accessStore('default').setState(baseState);
@@ -93,24 +82,24 @@ describe('GroundPlane', () => {
 
   it(`should not render with when not set and not in editing`, async () => {
     getScenePropertyMock.mockReturnValue(undefined);
-    (useEditorState as jest.Mock).mockImplementation(() => ({
-      isEditing: jest.fn().mockReturnValue(false),
+    (useEditorState as vi.Mock).mockImplementation(() => ({
+      isEditing: vi.fn().mockReturnValue(false),
       addingWidget: true,
     }));
 
-    (useRef as jest.Mock).mockReturnValue({ current: null });
+    (useRef as vi.Mock).mockReturnValue({ current: null });
     const rendered = await ReactThreeTestRenderer.create(<GroundPlane />);
     expect(rendered.scene.children.length === 0);
   });
 
   it(`should render invisible when not enabled in editing`, async () => {
     getScenePropertyMock.mockReturnValue(undefined);
-    (useEditorState as jest.Mock).mockImplementation(() => ({
-      isEditing: jest.fn().mockReturnValue(true),
+    (useEditorState as vi.Mock).mockImplementation(() => ({
+      isEditing: vi.fn().mockReturnValue(true),
       addingWidget: true,
     }));
 
-    (useRef as jest.Mock).mockReturnValue({ current: null });
+    (useRef as vi.Mock).mockReturnValue({ current: null });
     const rendered = await ReactThreeTestRenderer.create(<GroundPlane />);
 
     const material = (rendered.scene.children[0].instance as Mesh).material as MeshStandardMaterial;
@@ -120,12 +109,12 @@ describe('GroundPlane', () => {
 
   it(`should render with predefined color`, async () => {
     getScenePropertyMock.mockReturnValue({ color: '#abcdef' });
-    (useEditorState as jest.Mock).mockImplementation(() => ({
-      isEditing: jest.fn().mockReturnValue(true),
+    (useEditorState as vi.Mock).mockImplementation(() => ({
+      isEditing: vi.fn().mockReturnValue(true),
       addingWidget: true,
     }));
 
-    (useRef as jest.Mock).mockReturnValue({ current: null });
+    (useRef as vi.Mock).mockReturnValue({ current: null });
     const rendered = await ReactThreeTestRenderer.create(<GroundPlane />);
     const material = (rendered.scene.children[0].instance as Mesh).material as MeshStandardMaterial;
     expect(material.color.getHexString()).toBe('abcdef');
@@ -134,12 +123,12 @@ describe('GroundPlane', () => {
 
   it('should trigger on click', async () => {
     getScenePropertyMock.mockReturnValue({ color: '#abcdef' });
-    (useEditorState as jest.Mock).mockImplementation(() => ({
-      isEditing: jest.fn().mockReturnValue(true),
+    (useEditorState as vi.Mock).mockImplementation(() => ({
+      isEditing: vi.fn().mockReturnValue(true),
       addingWidget: true,
     }));
 
-    (useRef as jest.Mock).mockReturnValue({ current: null });
+    (useRef as vi.Mock).mockReturnValue({ current: null });
     const rendered = await ReactThreeTestRenderer.create(<GroundPlane />);
     const mesh = rendered.scene.children[0];
     await rendered.fireEvent(mesh, 'click', { delta: 0.1 });

@@ -87,8 +87,8 @@ const createMockBatchAssetPropertyValueHistoryResponse = (
     response
   );
 
-const getAssetPropertyValueHistory = jest.fn();
-const batchGetAssetPropertyValueHistory = jest.fn();
+const getAssetPropertyValueHistory = vi.fn();
+const batchGetAssetPropertyValueHistory = vi.fn();
 
 const iotSiteWiseClientMock = {
   getAssetPropertyValueHistory,
@@ -101,7 +101,7 @@ const iotSiteWiseClientEdgeMock = {
 
 describe('useHistoricalAssetPropertyValues', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 

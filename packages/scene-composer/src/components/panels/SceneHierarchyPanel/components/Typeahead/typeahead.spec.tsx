@@ -1,8 +1,10 @@
-import { render } from '@testing-library/react';
-
 import Typeahead from '.';
 
-jest.mock('@cloudscape-design/components/autosuggest', () => (props) => <div data-mocked='Autosuggest' {...props} />);
+import { render } from '@/tests/testing-library';
+
+vi.mock('@cloudscape-design/components/autosuggest', () => ({
+  default: (props) => <div data-mocked='Autosuggest' {...props} />,
+}));
 
 describe('<Typeahead />', () => {
   it('should match snapshot', () => {

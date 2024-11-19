@@ -10,7 +10,7 @@ import {
 
 describe('useDescribeAssets', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 

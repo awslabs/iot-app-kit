@@ -10,7 +10,7 @@ describe('Slider', () => {
 
   it('should select binding', () => {
     let value;
-    const onChange = jest.fn().mockImplementation((e) => (value = e.target.value));
+    const onChange = vi.fn().mockImplementation((e) => (value = e.target.value));
     render(<Slider max={100} min={10} step={0.5} value={4} onChange={onChange} />);
 
     fireEvent.change(screen.getByTestId('slider'), { target: { value: 25 } });

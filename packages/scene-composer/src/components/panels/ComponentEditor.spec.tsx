@@ -5,47 +5,47 @@ import { type ISceneNodeInternal } from '../../store/internalInterfaces';
 
 import { ComponentEditor, DefaultComponentEditor } from './ComponentEditor';
 
-jest.mock('./scene-components/AnchorComponentEditor', () => ({
+vi.mock('./scene-components/AnchorComponentEditor', () => ({
   AnchorComponentEditor: (props) => <div data-mocked='AnchorComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/LightComponentEditor', () => ({
+vi.mock('./scene-components/LightComponentEditor', () => ({
   LightComponentEditor: (props) => <div data-mocked='LightComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/AnimationComponentEditor', () => ({
+vi.mock('./scene-components/AnimationComponentEditor', () => ({
   AnimationComponentEditor: (props) => <div data-mocked='AnimationComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/ColorOverlayComponentEditor', () => ({
+vi.mock('./scene-components/ColorOverlayComponentEditor', () => ({
   ColorOverlayComponentEditor: (props) => <div data-mocked='ColorOverlayComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/ModelRefComponentEditor', () => ({
+vi.mock('./scene-components/ModelRefComponentEditor', () => ({
   ModelRefComponentEditor: (props) => <div data-mocked='ModelRefComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/MotionIndicatorComponentEditor', () => ({
+vi.mock('./scene-components/MotionIndicatorComponentEditor', () => ({
   MotionIndicatorComponentEditor: (props) => (
     <div data-mocked='MotionIndicatorComponentEditor'>{JSON.stringify(props)}</div>
   ),
 }));
 
-jest.mock('./scene-components/CameraComponentEditor', () => (props) => (
+vi.mock('./scene-components/CameraComponentEditor', () => (props) => (
   <div data-mocked='CameraComponentEditor'>{JSON.stringify(props)}</div>
 ));
 
-jest.mock('./scene-components/DataOverlayComponentEditor', () => ({
+vi.mock('./scene-components/DataOverlayComponentEditor', () => ({
   DataOverlayComponentEditor: (props) => <div data-mocked='DataOverlayComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/EntityBindingComponentEditor', () => ({
+vi.mock('./scene-components/EntityBindingComponentEditor', () => ({
   EntityBindingComponentEditor: (props) => (
     <div data-mocked='EntityBindingComponentEditor'>{JSON.stringify(props)}</div>
   ),
 }));
 
-jest.mock('./scene-components/PlaneGeometryComponentEditor', () => ({
+vi.mock('./scene-components/PlaneGeometryComponentEditor', () => ({
   PlaneGeometryComponentEditor: (props) => (
     <div data-mocked='PlaneGeometryComponentEditor'>{JSON.stringify(props)}</div>
   ),

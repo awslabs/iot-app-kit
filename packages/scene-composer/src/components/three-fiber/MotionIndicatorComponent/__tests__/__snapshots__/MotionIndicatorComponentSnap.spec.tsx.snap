@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// vi Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MotionIndicatorComponent should render with correct default values from config when dataBinding not set 1`] = `
 {

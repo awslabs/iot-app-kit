@@ -79,10 +79,10 @@ const mockUserViewport: {
   viewport?: Viewport;
   setViewport: (viewport: Viewport) => void;
   group: string;
-} = { viewport: undefined, setViewport: jest.fn(), group: 'group' };
+} = { viewport: undefined, setViewport: vi.fn(), group: 'group' };
 
-jest.mock('../../../hooks/useViewport', () => ({
-  useViewport: jest.fn(() => mockUserViewport),
+vi.mock('../../../hooks/useViewport', () => ({
+  useViewport: vi.fn(() => mockUserViewport),
 }));
 
 // a default KPI widget has all values, text, dates, etc. set to be visible

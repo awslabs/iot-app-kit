@@ -1,4 +1,34 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useSceneModal() hook > should render with convert scene modal 1`] = `
+{
+  "current": <ConvertSceneModal />,
+}
+`;
+
+exports[`useSceneModal() hook > should render with delete component modal 1`] = `
+{
+  "current": <DeleteComponentModal />,
+}
+`;
+
+exports[`useSceneModal() hook > should render with delete node modal 1`] = `
+{
+  "current": <DeleteNodeModal />,
+}
+`;
+
+exports[`useSceneModal() hook > should render with message modal 1`] = `
+{
+  "current": <MessageModal />,
+}
+`;
+
+exports[`useSceneModal() hook > should render with no modal 1`] = `
+{
+  "current": null,
+}
+`;
 
 exports[`useSceneModal() hook should render with convert scene modal 1`] = `
 {

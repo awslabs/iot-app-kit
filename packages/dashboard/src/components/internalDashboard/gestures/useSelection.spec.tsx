@@ -16,7 +16,7 @@ const TestProvider: React.FC<{
 );
 
 it('returns user selection when performing a selection gesture', () => {
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>
@@ -62,7 +62,7 @@ it('returns user selection when performing a selection gesture', () => {
 });
 
 it('sets the gesture to selection when performing a selection gesture', () => {
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>
@@ -88,7 +88,7 @@ it('sets the gesture to selection when performing a selection gesture', () => {
 });
 
 it('sets the userSelection to undefined when ending a selection gesture', () => {
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>

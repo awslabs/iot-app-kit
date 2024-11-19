@@ -5,29 +5,29 @@ import { type IModelRefComponentInternal, type ISceneNodeInternal } from '../../
 import { KnownComponentType } from '../../../../interfaces';
 import { ModelType } from '../../../../models/SceneModels';
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', () => {
+  const originalModule = viuireActual('@react-three/fiber');
   return {
     ...originalModule,
-    useLoader: jest.fn(),
-    useFrame: jest.fn().mockImplementation((func) => {
+    useLoader: vi),
+    useFrame: vi).mockImplementation((func) => {
       func();
     }),
   };
 });
 
-jest.mock('../GLTFModelComponent', () => ({
+vik('../GLTFModelComponent', () => ({
   GLTFModelComponent: (props) => <div id='GLTFModelComponent' {...props} />,
   ErrorModelComponent: (props) => <div id='ErrorModelComponent' {...props} />,
 }));
 
-jest.mock('../TilesModelComponent', () => ({
+vik('../TilesModelComponent', () => ({
   TilesModelComponent: (props) => <div id='TilesModelComponent' {...props} />,
 }));
 
 describe('ModelRefComponent', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    viarAllMocks();
   });
 
   it('should render correctly', () => {

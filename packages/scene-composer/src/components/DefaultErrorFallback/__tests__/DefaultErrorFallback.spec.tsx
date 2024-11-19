@@ -3,7 +3,7 @@ import { create } from 'react-test-renderer';
 import { ErrorCode, ErrorLevel, SceneComposerRuntimeError } from '../../..';
 import DefaultErrorFallback from '..';
 
-jest.mock('../../../layouts/StaticLayout', () => ({
+vi.mock('../../../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',
 }));
 

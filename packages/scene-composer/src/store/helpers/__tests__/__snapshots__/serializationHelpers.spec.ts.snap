@@ -1,4 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`serializationHelpers > deserializeComponent > should create a sub model 1`] = `
+{
+  "parentRef": "parentRef",
+  "ref": "test-uuid",
+  "selector": "Mixer1",
+  "type": "SubModelRef",
+}
+`;
 
 exports[`serializationHelpers deserializeComponent should create a sub model 1`] = `
 {

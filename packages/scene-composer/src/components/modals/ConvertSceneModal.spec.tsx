@@ -1,7 +1,10 @@
-import { act, render, waitFor } from '@testing-library/react';
-import flushPromises from 'flush-promises';
 import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { act, render, waitFor } from '@/tests/testing-library';
+import flushPromises from 'flush-promises';
 
+import { defaultNode } from '../../../__mocks__/sceneNode';
+import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
+import { KnownSceneProperty } from '../../interfaces';
 import { accessStore } from '../../store';
 import {
   checkIfEntityExists,
@@ -10,31 +13,28 @@ import {
   prepareWorkspace,
   updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
-import { KnownSceneProperty } from '../../interfaces';
-import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
-import { defaultNode } from '../../../__mocks__/sceneNode';
 
 import ConvertSceneModal from './ConvertSceneModal';
 
-jest.mock('../../utils/entityModelUtils/sceneUtils', () => ({
-  createSceneRootEntity: jest.fn(),
-  updateSceneRootEntity: jest.fn(),
-  prepareWorkspace: jest.fn(),
-  checkIfEntityExists: jest.fn(),
-  convertAllNodesToEntities: jest.fn(),
+vi.mock('../../utils/entityModelUtils/sceneUtils', () => ({
+  createSceneRootEntity: vi.fn(),
+  updateSceneRootEntity: vi.fn(),
+  prepareWorkspace: vi.fn(),
+  checkIfEntityExists: vi.fn(),
+  convertAllNodesToEntities: vi.fn(),
 }));
 
 describe('ConvertSceneModal', () => {
-  const setConvertSceneModalVisibility = jest.fn();
-  const setSceneProperty = jest.fn();
-  const updateSceneNodeInternalBatch = jest.fn();
-  const getObject3DBySceneNodeRef = jest.fn();
-  const getSceneProperty = jest.fn();
-  const updateSceneInfo = jest.fn();
-  const getSceneInfo = jest.fn();
+  const setConvertSceneModalVisibility = vi.fn();
+  const setSceneProperty = vi.fn();
+  const updateSceneNodeInternalBatch = vi.fn();
+  const getObject3DBySceneNodeRef = vi.fn();
+  const getSceneProperty = vi.fn();
+  const updateSceneInfo = vi.fn();
+  const getSceneInfo = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     accessStore('default').setState({
       document: {
         nodeMap: {
@@ -48,11 +48,11 @@ describe('ConvertSceneModal', () => {
       getObject3DBySceneNodeRef,
       getSceneProperty,
     });
-    (createSceneRootEntity as jest.Mock).mockImplementation(() => {
+    (createSceneRootEntity as vi.Mock).mockImplementation(() => {
       return Promise.resolve({ entityId: 'scene-root-id' });
     });
-    (updateSceneRootEntity as jest.Mock).mockResolvedValue({});
-    (prepareWorkspace as jest.Mock).mockResolvedValue(undefined);
+    (updateSceneRootEntity as vi.Mock).mockResolvedValue({});
+    (prepareWorkspace as vi.Mock).mockResolvedValue(undefined);
 
     getSceneProperty.mockImplementation((p) => {
       if (p == KnownSceneProperty.SceneRootEntityId) {
@@ -62,10 +62,10 @@ describe('ConvertSceneModal', () => {
       }
     });
 
-    (checkIfEntityExists as jest.Mock).mockReturnValue(true);
+    (checkIfEntityExists as vi.Mock).mockReturnValue(true);
 
     setTwinMakerSceneMetadataModule({
-      getSceneId: jest.fn().mockReturnValue('test-scene'),
+      getSceneId: vi.fn().mockReturnValue('test-scene'),
       getSceneInfo,
       updateSceneInfo,
     } as Partial<TwinMakerSceneMetadataModule> as TwinMakerSceneMetadataModule);
@@ -104,7 +104,7 @@ describe('ConvertSceneModal', () => {
     expect(queryByTestId('confirm-button')?.getAttribute('disabled')).not.toBeNull();
 
     expect(prepareWorkspace).toBeCalledTimes(1);
-    expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
+    expect(createSceneRootEntity as vi.Mock).not.toBeCalled();
     expect(setSceneProperty).not.toBeCalled();
   });
 
@@ -119,13 +119,13 @@ describe('ConvertSceneModal', () => {
 
     await flushPromises();
 
-    expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
+    expect(createSceneRootEntity as vi.Mock).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
   });
 
   it('should create a default scene entity when it does not exist', async () => {
-    (checkIfEntityExists as jest.Mock).mockImplementation((entityId) => {
+    (checkIfEntityExists as vi.Mock).mockImplementation((entityId) => {
       if (entityId == 'scene-root-id') {
         return Promise.resolve(false);
       }
@@ -141,13 +141,13 @@ describe('ConvertSceneModal', () => {
 
     await flushPromises();
 
-    expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
+    expect(createSceneRootEntity as vi.Mock).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
   });
 
   it('should call convertAllNodesToEntities and convert scene successfully', async () => {
-    (convertAllNodesToEntities as jest.Mock).mockImplementation(({ onSuccess }) => {
+    (convertAllNodesToEntities as vi.Mock).mockImplementation(({ onSuccess }) => {
       act(() => {
         onSuccess({ ...defaultNode, ref: 'success-1' });
         onSuccess({ ...defaultNode, ref: 'success-2' });
@@ -188,7 +188,7 @@ describe('ConvertSceneModal', () => {
   });
 
   it('should render with converting scene failure', async () => {
-    (convertAllNodesToEntities as jest.Mock).mockImplementation(({ onSuccess, onFailure }) => {
+    (convertAllNodesToEntities as vi.Mock).mockImplementation(({ onSuccess, onFailure }) => {
       act(() => {
         onSuccess({ ...defaultNode, ref: 'success-node-ref' });
         onFailure({ ...defaultNode, ref: 'failure-node-ref', name: 'failure-node' }, new Error('convert failed'));
@@ -223,7 +223,7 @@ describe('ConvertSceneModal', () => {
   });
 
   it('should render with preparing workspace failure', async () => {
-    (prepareWorkspace as jest.Mock).mockRejectedValue(new Error('prepare workspace error'));
+    (prepareWorkspace as vi.Mock).mockRejectedValue(new Error('prepare workspace error'));
     const { rerender, container, queryByTestId, queryByText } = render(<ConvertSceneModal />);
 
     const confirmButton = queryByTestId('confirm-button');
@@ -263,7 +263,7 @@ describe('ConvertSceneModal', () => {
 
     await flushPromises();
 
-    expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
+    expect(createSceneRootEntity as vi.Mock).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
     expect(convertAllNodesToEntities).not.toBeCalled();

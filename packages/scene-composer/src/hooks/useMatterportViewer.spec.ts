@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 import { accessStore } from '../store';
 
@@ -6,7 +6,7 @@ import useMatterportViewer from './useMatterportViewer';
 
 describe('useMatterportViewer', () => {
   const baseState = {
-    getSceneProperty: jest.fn(),
+    getSceneProperty: vi.fn(),
   };
   const states = accessStore('default').getState().noHistoryStates;
   const createState = (connectionName?: string) => ({
@@ -14,12 +14,12 @@ describe('useMatterportViewer', () => {
     noHistoryStates: {
       ...states,
       connectionNameForMatterportViewer: connectionName,
-      setConnectionNameForMatterportViewer: jest.fn(),
+      setConnectionNameForMatterportViewer: vi.fn(),
     },
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get enableMatterportViewer as true when connectionName and model id are configured', () => {

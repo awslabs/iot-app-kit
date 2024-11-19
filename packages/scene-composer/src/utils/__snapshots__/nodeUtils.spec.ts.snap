@@ -1,4 +1,62 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`nodeUtils > createNodeWithTransform > should create a node with the local parent coordinates 1`] = `
+{
+  "components": [
+    {
+      "type": "Camera",
+    },
+  ],
+  "parentRef": "parent-ref",
+  "ref": "test-ref",
+  "transform": {
+    "position": [
+      1,
+      1,
+      1,
+    ],
+    "rotation": [
+      -1.5707963267948963,
+      1.5707963267948966,
+      0,
+    ],
+    "scale": [
+      1,
+      1,
+      1,
+    ],
+  },
+}
+`;
+
+exports[`nodeUtils > createNodeWithTransform > should create a node with the world coordinates 1`] = `
+{
+  "components": [
+    {
+      "type": "Camera",
+    },
+  ],
+  "parentRef": undefined,
+  "ref": "test-ref",
+  "transform": {
+    "position": [
+      5,
+      5,
+      5,
+    ],
+    "rotation": [
+      0,
+      0,
+      0,
+    ],
+    "scale": [
+      1,
+      1,
+      1,
+    ],
+  },
+}
+`;
 
 exports[`nodeUtils createNodeWithTransform should create a node with the local parent coordinates 1`] = `
 {

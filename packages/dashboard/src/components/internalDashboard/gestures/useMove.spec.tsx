@@ -9,13 +9,13 @@ import { onMoveWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import type { RecursivePartial } from '~/types';
 
-jest.mock('../../../store/actions', () => {
-  const originalModule = jest.requireActual('../../../store/actions');
+vi.mock('../../../store/actions', async () => {
+  const originalModule = await vi.importActual('../../../store/actions');
 
   return {
     __esModule: true,
     ...originalModule,
-    onMoveWidgetsAction: jest.fn(),
+    onMoveWidgetsAction: vi.fn(),
   };
 });
 
@@ -27,7 +27,7 @@ const TestProvider: React.FC<{
 );
 
 it('sets the gesture to move when performing a move gesture', () => {
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>
@@ -48,12 +48,12 @@ it('sets the gesture to move when performing a move gesture', () => {
 });
 
 it('dispatches the move action on gesture move update and end', () => {
-  (onMoveWidgetsAction as jest.Mock).mockImplementation(() => ({
+  (onMoveWidgetsAction as vi.Mock).mockImplementation(() => ({
     type: '',
     payload: {},
   }));
 
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>

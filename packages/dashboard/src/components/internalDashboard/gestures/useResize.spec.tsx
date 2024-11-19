@@ -9,18 +9,18 @@ import { onResizeWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import type { RecursivePartial } from '~/types';
 
-jest.mock('../../../store/actions', () => {
-  const originalModule = jest.requireActual('../../../store/actions');
+vi.mock('../../../store/actions', async () => {
+  const originalModule = await vi.importActual('../../../store/actions');
 
   return {
     __esModule: true,
     ...originalModule,
-    onResizeWidgetsAction: jest.fn(),
+    onResizeWidgetsAction: vi.fn(),
   };
 });
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 const TestProvider: React.FC<{
@@ -31,7 +31,7 @@ const TestProvider: React.FC<{
 );
 
 it('sets the gesture to resize when performing a resize gesture', () => {
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>
@@ -52,12 +52,12 @@ it('sets the gesture to resize when performing a resize gesture', () => {
 });
 
 it('dispatches the resize action on gesture resize update and end', () => {
-  (onResizeWidgetsAction as jest.Mock).mockImplementation(() => ({
+  (onResizeWidgetsAction as vi.Mock).mockImplementation(() => ({
     type: '',
     payload: {},
   }));
 
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>
@@ -109,12 +109,12 @@ it('dispatches the resize action on gesture resize update and end', () => {
 });
 
 it('doesnt dispatch the resize action on gesture resize update and end if there is no anchor', () => {
-  (onResizeWidgetsAction as jest.Mock).mockImplementation(() => ({
+  (onResizeWidgetsAction as vi.Mock).mockImplementation(() => ({
     type: '',
     payload: {},
   }));
 
-  const setActiveGesture = jest.fn();
+  const setActiveGesture = vi.fn();
 
   const { result } = renderHook(
     () =>

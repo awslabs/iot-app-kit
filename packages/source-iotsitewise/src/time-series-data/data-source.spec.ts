@@ -18,7 +18,7 @@ import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS } from '../common/timeConstants';
 import type { TimeSeriesDataRequest } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
 
-import Mock = jest.Mock;
+import Mock = vi.Mock;
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 it('initializes', () => {
@@ -60,10 +60,10 @@ const HISTORICAL_REQUEST: TimeSeriesDataRequest = {
 
 describe('initiateRequest', () => {
   it('does not call SDK when query contains no assets', () => {
-    const batchGetAssetPropertyValue = jest.fn();
-    const batchGetAssetPropertyAggregates = jest.fn();
-    const batchGetAssetPropertyValueHistory = jest.fn();
-    const getInterpolatedAssetPropertyValues = jest.fn();
+    const batchGetAssetPropertyValue = vi.fn();
+    const batchGetAssetPropertyAggregates = vi.fn();
+    const batchGetAssetPropertyValueHistory = vi.fn();
+    const getInterpolatedAssetPropertyValues = vi.fn();
 
     const mockSDK = createMockSiteWiseSDK({
       batchGetAssetPropertyValue,
@@ -97,10 +97,10 @@ describe('initiateRequest', () => {
     const end = new Date(2001, 0, 0);
 
     it('gets latest value for multiple properties', async () => {
-      const batchGetAssetPropertyValueHistory = jest
+      const batchGetAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-      const batchGetAssetPropertyValue = jest
+      const batchGetAssetPropertyValue = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
@@ -173,10 +173,10 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value for multiple assets', async () => {
-      const batchGetAssetPropertyValueHistory = jest
+      const batchGetAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-      const batchGetAssetPropertyValue = jest
+      const batchGetAssetPropertyValue = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
@@ -253,7 +253,7 @@ describe('initiateRequest', () => {
 
   describe('fetch latest before start', () => {
     it('gets latest value before start for multiple properties', async () => {
-      const batchGetAssetPropertyValueHistory = jest
+      const batchGetAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
@@ -335,7 +335,7 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value before start for multiple assets', async () => {
-      const batchGetAssetPropertyValueHistory = jest
+      const batchGetAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
@@ -413,7 +413,7 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value before start for aggregates', async () => {
-      const batchGetAssetPropertyAggregates = jest
+      const batchGetAssetPropertyAggregates = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
 
@@ -497,12 +497,12 @@ describe('initiateRequest', () => {
 });
 
 it('requests raw data if specified per asset property', async () => {
-  const batchGetAssetPropertyValue = jest.fn();
-  const batchGetAssetPropertyAggregates = jest.fn();
-  const batchGetAssetPropertyValueHistory = jest
+  const batchGetAssetPropertyValue = vi.fn();
+  const batchGetAssetPropertyAggregates = vi.fn();
+  const batchGetAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-  const getInterpolatedAssetPropertyValues = jest.fn();
+  const getInterpolatedAssetPropertyValues = vi.fn();
 
   const mockSDK = createMockSiteWiseSDK({
     batchGetAssetPropertyValue,
@@ -522,8 +522,8 @@ it('requests raw data if specified per asset property', async () => {
     ],
   };
 
-  const onError = jest.fn();
-  const onSuccess = jest.fn();
+  const onError = vi.fn();
+  const onSuccess = vi.fn();
 
   const start = new Date(2000, 0, 0);
   const end = new Date();
@@ -603,7 +603,7 @@ it('requests raw data if specified per asset property', async () => {
 describe('e2e through data-module', () => {
   describe('fetching range of historical data', () => {
     it('reports error occurred on request initiation', async () => {
-      const batchGetAssetPropertyAggregates = jest
+      const batchGetAssetPropertyAggregates = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
       const mockSDK = createMockSiteWiseSDK({
@@ -612,7 +612,7 @@ describe('e2e through data-module', () => {
       const dataSource = createDataSource(mockSDK);
       const dataModule = new TimeSeriesDataModule(dataSource);
 
-      const timeSeriesCallback = jest.fn();
+      const timeSeriesCallback = vi.fn();
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
@@ -657,7 +657,7 @@ describe('e2e through data-module', () => {
 
   describe('fetching latest value', () => {
     it('reports error occurred on request initiation', async () => {
-      const batchGetAssetPropertyValue = jest
+      const batchGetAssetPropertyValue = vi
         .fn()
         .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
 
@@ -665,7 +665,7 @@ describe('e2e through data-module', () => {
       const dataSource = createDataSource(mockSDK);
       const dataModule = new TimeSeriesDataModule(dataSource);
 
-      const timeSeriesCallback = jest.fn();
+      const timeSeriesCallback = vi.fn();
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
@@ -707,12 +707,12 @@ describe('e2e through data-module', () => {
 
 describe.skip('aggregated data', () => {
   it('requests aggregated data with correct resolution based on resolutionMap and uses default aggregate type', async () => {
-    const getAssetPropertyValue = jest.fn();
-    const getAssetPropertyAggregates = jest
+    const getAssetPropertyValue = vi.fn();
+    const getAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue(AGGREGATE_VALUES);
-    const getAssetPropertyValueHistory = jest.fn();
-    const getInterpolatedAssetPropertyValues = jest.fn();
+    const getAssetPropertyValueHistory = vi.fn();
+    const getInterpolatedAssetPropertyValues = vi.fn();
 
     const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValue,
@@ -732,8 +732,8 @@ describe.skip('aggregated data', () => {
       ],
     };
 
-    const onError = jest.fn();
-    const onSuccess = jest.fn();
+    const onError = vi.fn();
+    const onSuccess = vi.fn();
 
     const start = new Date(2000, 0, 0);
     const end = new Date();
@@ -820,12 +820,12 @@ describe.skip('aggregated data', () => {
   });
 
   it('requests specific resolution', async () => {
-    const getAssetPropertyValue = jest.fn();
-    const getAssetPropertyAggregates = jest
+    const getAssetPropertyValue = vi.fn();
+    const getAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue(AGGREGATE_VALUES);
-    const getAssetPropertyValueHistory = jest.fn();
-    const getInterpolatedAssetPropertyValues = jest.fn();
+    const getAssetPropertyValueHistory = vi.fn();
+    const getInterpolatedAssetPropertyValues = vi.fn();
 
     const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValue,
@@ -845,8 +845,8 @@ describe.skip('aggregated data', () => {
       ],
     };
 
-    const onError = jest.fn();
-    const onSuccess = jest.fn();
+    const onError = vi.fn();
+    const onSuccess = vi.fn();
 
     const resolution = '1m';
 
@@ -921,10 +921,10 @@ describe.skip('aggregated data', () => {
   });
 
   it('requests specific resolution per asset property', async () => {
-    const getAssetPropertyAggregates = jest
+    const getAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue(AGGREGATE_VALUES);
-    const getAssetPropertyValueHistory = jest
+    const getAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
@@ -956,7 +956,7 @@ describe.skip('aggregated data', () => {
       ],
     };
 
-    const onSuccess = jest.fn();
+    const onSuccess = vi.fn();
 
     dataSource.initiateRequest(
       {
@@ -1082,8 +1082,8 @@ describe.skip('aggregated data', () => {
       assets: [],
     };
 
-    const onError = jest.fn();
-    const onSuccess = jest.fn();
+    const onError = vi.fn();
+    const onSuccess = vi.fn();
 
     expect(() => {
       dataSource.initiateRequest(
@@ -1150,7 +1150,7 @@ describe('gets requests from query', () => {
 });
 
 it.skip('only fetches uncached data for multiple properties', async () => {
-  const getAssetPropertyValueHistory = jest
+  const getAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
@@ -1173,7 +1173,7 @@ it.skip('only fetches uncached data for multiple properties', async () => {
   const START_2 = new Date(START_1.getTime() - MONTH_IN_MS);
   const END_2 = new Date(END_1.getTime() + MONTH_IN_MS);
 
-  const dataStreamCallback = jest.fn();
+  const dataStreamCallback = vi.fn();
   const { update, unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [query],
@@ -1255,7 +1255,7 @@ it.skip('only fetches uncached data for multiple properties', async () => {
 });
 
 it.skip('requests buffered data', async () => {
-  const getAssetPropertyValueHistory = jest
+  const getAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
@@ -1278,7 +1278,7 @@ it.skip('requests buffered data', async () => {
   const END = new Date(2000, 2, 1);
   const BUFFERED_END = new Date(2000, 3, 6, 5, 46, 40);
 
-  const dataStreamCallback = jest.fn();
+  const dataStreamCallback = vi.fn();
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [query],

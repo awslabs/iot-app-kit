@@ -23,12 +23,12 @@ import {
 
 describe('useAlarmAssets', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 
   it('should have the correct status', async () => {
-    const onSummarizeAlarmsMock = jest.fn();
+    const onSummarizeAlarmsMock = vi.fn();
 
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
@@ -87,7 +87,7 @@ describe('useAlarmAssets', () => {
   });
 
   it('should return AlarmData with content for one alarm in an alarm composite model request', async () => {
-    const onSummarizeAlarmsMock = jest.fn();
+    const onSummarizeAlarmsMock = vi.fn();
 
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
@@ -124,7 +124,7 @@ describe('useAlarmAssets', () => {
   });
 
   it('should return AlarmData with content for one alarm in an alarm input property request', async () => {
-    const onSummarizeAlarmsMock = jest.fn();
+    const onSummarizeAlarmsMock = vi.fn();
 
     const mockProperties = [mockInputProperty];
     describeAssetMock.mockResolvedValue(

@@ -1,14 +1,14 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@/tests/testing-library';
 
 import { mockComponent, mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
-import { type IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
+import { type IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 
 import ColorEditor from './ColorEditor';
 
-jest.mock('./DataBindingEditor', () => {
-  const originalModule = jest.requireActual('./DataBindingEditor');
+vi.mock('./DataBindingEditor', async () => {
+  const originalModule = await vi.importActual('./DataBindingEditor');
   return {
     ...originalModule,
     DataBindingEditor: (...props: any[]) => <div data-testid='DataBindingEditor'>{JSON.stringify(props)}</div>,
@@ -16,8 +16,8 @@ jest.mock('./DataBindingEditor', () => {
 });
 
 let _sliderOnChangeCb;
-jest.mock('../../Slider', () => {
-  const originalModule = jest.requireActual('../../Slider');
+vi.mock('../../Slider', async () => {
+  const originalModule = await vi.importActual('../../Slider');
   return {
     ...originalModule,
     Slider: (...props: any[]) => {
@@ -27,7 +27,7 @@ jest.mock('../../Slider', () => {
   };
 });
 
-jest.mock('../../ColorPicker/ColorPicker', () => ({
+vi.mock('../../ColorPicker/ColorPicker', () => ({
   ColorPicker: (props) => <div data-mocked='ColorPicker'>{JSON.stringify(props)}</div>,
 }));
 
@@ -51,7 +51,7 @@ describe('ColorEditor', () => {
       defaultForegroundColor: 'blue',
     },
   };
-  const onUpdateCallback = jest.fn();
+  const onUpdateCallback = vi.fn();
 
   it('should render correctly for background color with data binding', () => {
     accessStore('default').setState(baseState);

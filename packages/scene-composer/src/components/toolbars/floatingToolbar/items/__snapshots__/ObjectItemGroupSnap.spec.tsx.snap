@@ -1,4 +1,61 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ObjectItemGroupSnap > should correctly render horizontally 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR TuwzD"
+  >
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button","isVertical":false},{}]
+    </div>
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},"isVertical":false,"menuPosition":"bottom-right"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ObjectItemGroupSnap > should render with disabled rotate and scale when Overlay is selected 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button","isVertical":true},{}]
+    </div>
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},"isVertical":true,"menuPosition":"right"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ObjectItemGroupSnap > should render with disabled rotate and scale when Tag is selected 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button","isVertical":true},{}]
+    </div>
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},"isVertical":true,"menuPosition":"right"},{}]
+    </div>
+  </div>
+</div>
+`;
 
 exports[`ObjectItemGroupSnap should correctly render horizontally 1`] = `
 <div>

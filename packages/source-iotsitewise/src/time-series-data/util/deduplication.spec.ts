@@ -3,8 +3,8 @@ import { deduplicateBatch } from './deduplication';
 describe('deduplicateBatch', () => {
   it('removes duplicate entries from a given batch', () => {
     const entry = {
-      onError: jest.fn(),
-      onSuccess: jest.fn(),
+      onError: vi.fn(),
+      onSuccess: vi.fn(),
       requestEnd: new Date(2001, 0, 0),
       requestStart: new Date(2000, 0, 0),
       requestInformation: {

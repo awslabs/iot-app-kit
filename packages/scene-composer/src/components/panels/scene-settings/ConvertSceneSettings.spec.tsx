@@ -1,25 +1,25 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@/tests/testing-library';
 
 import { accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ConvertSceneSettings } from './ConvertSceneSettings';
 
-jest.mock('../../../utils/entityModelUtils/sceneUtils');
+vi.mock('../../../utils/entityModelUtils/sceneUtils');
 
 describe('ConvertSceneSettings', () => {
-  const setConvertSceneModalVisibility = jest.fn();
+  const setConvertSceneModalVisibility = vi.fn();
   const baseState = {
     setConvertSceneModalVisibility,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly with convert button disabled', () => {
     accessStore('default').setState(baseState);
-    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    (isDynamicScene as vi.Mock).mockReturnValue(true);
 
     const { container, queryByTestId } = render(<ConvertSceneSettings />);
 
@@ -29,7 +29,7 @@ describe('ConvertSceneSettings', () => {
 
   it('should render correctly with convert button enabled', () => {
     accessStore('default').setState(baseState);
-    (isDynamicScene as jest.Mock).mockReturnValue(false);
+    (isDynamicScene as vi.Mock).mockReturnValue(false);
 
     const { container, queryByTestId } = render(<ConvertSceneSettings />);
 
@@ -39,7 +39,7 @@ describe('ConvertSceneSettings', () => {
 
   it('should set convert scene modal to visible on convert button click', () => {
     accessStore('default').setState(baseState);
-    (isDynamicScene as jest.Mock).mockReturnValue(false);
+    (isDynamicScene as vi.Mock).mockReturnValue(false);
 
     const { queryByTestId } = render(<ConvertSceneSettings />);
     const button = queryByTestId('convert-button');

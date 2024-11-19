@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@/tests/testing-library';
 
 import { useSvgParser } from './useSvgParser';
 

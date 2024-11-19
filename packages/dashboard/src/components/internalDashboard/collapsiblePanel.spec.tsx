@@ -12,13 +12,13 @@ const headerText = 'Configuration';
 
 describe('CollapsiblePanel', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should open collapsed panel when icon is clicked', async () => {
     const side = 'right';
     let isPanelCollapsed = true;
-    const onCollapsedPanelClick = jest
+    const onCollapsedPanelClick = vi
       .fn()
       .mockImplementation(() => (isPanelCollapsed = !isPanelCollapsed));
     const collapsedElement = (
@@ -49,7 +49,7 @@ describe('CollapsiblePanel', () => {
   it('should close expanded panel when button is clicked', async () => {
     const side = 'left';
     let isPanelCollapsed = false;
-    const onCollapsedPanelClick = jest
+    const onCollapsedPanelClick = vi
       .fn()
       .mockImplementation(() => (isPanelCollapsed = !isPanelCollapsed));
     const collapsedElement = (
@@ -84,7 +84,7 @@ describe('CollapsiblePanel', () => {
       <CollapsiblePanel
         isPanelCollapsed={false}
         panelWidth={panelWidth}
-        onCollapsedPanelClick={jest.fn()}
+        onCollapsedPanelClick={vi.fn()}
         panelContent={panelContent}
         icon={mockIcon}
         side='left'
@@ -102,7 +102,7 @@ describe('CollapsiblePanel', () => {
       <CollapsiblePanel
         isPanelCollapsed={false}
         panelWidth={panelWidth}
-        onCollapsedPanelClick={jest.fn()}
+        onCollapsedPanelClick={vi.fn()}
         panelContent={null}
         icon={mockIcon}
         side='left'

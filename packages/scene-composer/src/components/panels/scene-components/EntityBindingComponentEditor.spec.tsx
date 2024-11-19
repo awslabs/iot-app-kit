@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@/tests/testing-library';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { KnownComponentType } from '../../../interfaces';
@@ -6,8 +6,8 @@ import { type IEntityBindingComponentInternal, type ISceneNodeInternal, accessSt
 
 import { EntityBindingComponentEditor } from './EntityBindingComponentEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('EntityindingComponentEditor', () => {
@@ -22,17 +22,17 @@ describe('EntityindingComponentEditor', () => {
   const node = {
     ref: 'node-ref',
   } as ISceneNodeInternal;
-  const updateComponentInternalMock = jest.fn();
-  const removeComponentMock = jest.fn();
+  const updateComponentInternalMock = vi.fn();
+  const removeComponentMock = vi.fn();
 
   const baseState = {
     updateComponentInternal: updateComponentInternalMock,
     removeComponent: removeComponentMock,
-    getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
+    getEditorConfig: vi.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should not have remove button', async () => {

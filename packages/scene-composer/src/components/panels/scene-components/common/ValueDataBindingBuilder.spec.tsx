@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
-import { act, render, screen } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { act, render, screen } from '@/tests/testing-library';
 import flushPromises from 'flush-promises';
 
 import {
@@ -13,16 +13,16 @@ import {
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('ValueDataBindingBuilder', () => {
   const componentRef = 'testRef';
-  const onChange = jest.fn();
+  const onChange = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockUpdateSelection.mockResolvedValue(mockBuilderState);
   });
 

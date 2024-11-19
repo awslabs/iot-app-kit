@@ -7,35 +7,35 @@ import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/data
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import MotionIndicatorComponent from '../MotionIndicatorComponent';
 
-jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }));
+vi.mock('../../../../hooks/useBindingData', () => vi.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }));
 
-jest.mock('../LinearPlaneMotionIndicator', () => ({
+vi.mock('../LinearPlaneMotionIndicator', () => ({
   LinearPlaneMotionIndicator: (...props: any[]) => <div data-testid='linear-plane'>{JSON.stringify(props)}</div>,
 }));
 
-const mockGetSceneResourceInfo = getSceneResourceInfo as jest.Mock;
-jest.mock('../../../../utils/sceneResourceUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/sceneResourceUtils');
+const mockGetSceneResourceInfo = getSceneResourceInfo as vi.Mock;
+vi.mock('../../../../utils/sceneResourceUtils', async () => {
+  const originalModule = await vi.importActual('../../../../utils/sceneResourceUtils');
   return {
     ...originalModule,
-    getSceneResourceInfo: jest.fn(),
+    getSceneResourceInfo: vi.fn(),
   };
 });
 
-const mockDataBindingValuesProvider = dataBindingValuesProvider as jest.Mock;
-const mockRuleEvaluator = ruleEvaluator as jest.Mock;
-jest.mock('../../../../utils/dataBindingUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/dataBindingUtils');
+const mockDataBindingValuesProvider = dataBindingValuesProvider as vi.Mock;
+const mockRuleEvaluator = ruleEvaluator as vi.Mock;
+vi.mock('../../../../utils/dataBindingUtils', async () => {
+  const originalModule = await vi.importActual('../../../../utils/dataBindingUtils');
   return {
     ...originalModule,
-    dataBindingValuesProvider: jest.fn(),
-    ruleEvaluator: jest.fn(),
+    dataBindingValuesProvider: vi.fn(),
+    ruleEvaluator: vi.fn(),
   };
 });
 
 describe('MotionIndicatorComponent', () => {
-  const mockGetSceneRuleMapById = jest.fn();
-  const mockGetObject3DBySceneNodeRef = jest.fn();
+  const mockGetSceneRuleMapById = vi.fn();
+  const mockGetObject3DBySceneNodeRef = vi.fn();
 
   const baseState = {
     getSceneRuleMapById: mockGetSceneRuleMapById,
@@ -70,7 +70,7 @@ describe('MotionIndicatorComponent', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     mockGetSceneResourceInfo.mockReturnValue({ type: SceneResourceType.Color, value: 'black' });
     mockDataBindingValuesProvider.mockReturnValue({});

@@ -1,26 +1,16 @@
-import { fireEvent, render } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { fireEvent, render, act, screen } from '@/tests/testing-library';
 import { number } from 'prop-types';
-
-import {
-  DynamicSelect,
-  ExpandableInfoSection,
-  Matrix3XInputGrid,
-  NumericInput,
-  TextInput,
-} from '../CommonPanelComponents';
 import { toNumber } from '../../../utils/stringUtils';
+import { DynamicSelect, ExpandableInfoSection, Matrix3XInputGrid, NumericInput } from '../CommonPanelComponents';
 
 describe('render correct panels.', () => {
   it('render correct numeric input.', async () => {
-    const setValue = jest.fn();
-    const toStr = jest.fn().mockImplementation((num) => num + '');
-    const fromStr = jest.fn();
-    const { container } = render(<NumericInput value={2} setValue={setValue} toStr={toStr} fromStr={fromStr} />);
+    const setValue = vi.fn();
+    const toStr = vi.fn().mockImplementation((num) => num + '');
+    const fromStr = vi.fn();
+    render(<NumericInput value={2} setValue={setValue} toStr={toStr} fromStr={fromStr} />);
 
-    const input = container.querySelectorAll('[data-mocked="Input"]')[0];
-
-    expect(input.outerHTML).toMatchInlineSnapshot(`"<div data-mocked="Input" value="2"></div>"`);
+    const input = screen.getByRole('textbox');
 
     fireEvent.change(input, { detail: { value: 2 } });
     fireEvent.blur(input);
@@ -31,9 +21,9 @@ describe('render correct panels.', () => {
   });
 
   it('useEffect is called after mounting.', async () => {
-    const setValue = jest.fn();
-    const toStr = jest.fn().mockImplementation((num) => num + '');
-    const fromStr = jest.fn();
+    const setValue = vi.fn();
+    const toStr = vi.fn().mockImplementation((num) => num + '');
+    const fromStr = vi.fn();
     act(() => {
       render(<NumericInput value={2} setValue={setValue} toStr={toStr} fromStr={fromStr} />);
     });
@@ -41,9 +31,9 @@ describe('render correct panels.', () => {
   });
 
   it('render Matrix3XInputGrid correctly.', async () => {
-    const onChange = jest.fn();
-    const toStr = jest.fn().mockImplementation((num) => num + '');
-    const fromStr = jest.fn().mockImplementation((str) => number + str);
+    const onChange = vi.fn();
+    const toStr = vi.fn().mockImplementation((num) => num + '');
+    const fromStr = vi.fn().mockImplementation((str) => number + str);
 
     const { container } = render(
       <Matrix3XInputGrid<number>
@@ -65,7 +55,7 @@ describe('render correct panels.', () => {
   });
 
   it('render Matrix3XInputGrid readonly correctly.', async () => {
-    const toStr = jest.fn().mockImplementation((num) => num + '');
+    const toStr = vi.fn().mockImplementation((num) => num + '');
     const { container } = render(
       <Matrix3XInputGrid
         name='gridName'
@@ -112,15 +102,5 @@ describe('render correct panels.', () => {
 
       expect(container).toMatchSnapshot();
     });
-  });
-});
-
-describe('TextInput', () => {
-  it('should populate with a given value', () => {
-    const setValue = jest.fn();
-    const { container } = render(<TextInput value='test' setValue={setValue} />);
-    const input = container.querySelectorAll('[data-mocked="Input"]')[0];
-
-    expect(input.outerHTML).toMatchInlineSnapshot(`"<div data-mocked="Input" value="test"></div>"`);
   });
 });

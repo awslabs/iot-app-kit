@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
 import { type IDataOverlayComponentInternal } from '../../../../store';
@@ -22,7 +22,7 @@ describe('DataBindingMapEditor', () => {
       },
     ],
   } as unknown as IDataOverlayComponentInternal;
-  const onUpdateCallbackMock = jest.fn();
+  const onUpdateCallbackMock = vi.fn();
 
   it('should render existing maps with bindings', async () => {
     const { container, queryAllByTestId } = render(

@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 
-import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../../store';
 import { DataOverlayContainer } from '../DataOverlayContainer';
 import { type DataOverlayRowsProps } from '../DataOverlayRows';
 
-jest.mock('../DataOverlayRows', () => ({
+vi.mock('../DataOverlayRows', () => ({
   DataOverlayRows: (...props: [DataOverlayRowsProps, object]) => <div data-testid='rows'>{JSON.stringify(props)}</div>,
 }));
 
@@ -29,7 +29,7 @@ describe('DataOverlayContainer', () => {
     components: [mockComponent],
   };
 
-  const mockSetSelectedSceneNodeRef = jest.fn();
+  const mockSetSelectedSceneNodeRef = vi.fn();
   const baseState = {
     selectedSceneNodeRef: undefined,
     setSelectedSceneNodeRef: mockSetSelectedSceneNodeRef,
@@ -37,7 +37,7 @@ describe('DataOverlayContainer', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     accessStore('default').setState(baseState);
   });
 

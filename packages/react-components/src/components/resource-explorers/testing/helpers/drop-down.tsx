@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 
 export function getOption(resourceName: string) {
   return screen.getByRole('option', { name: resourceName });
@@ -10,7 +10,7 @@ export function queryOption(resourceName: string) {
 }
 
 export async function open() {
-  await userEvent.click(screen.getByRole('button', { name: /Select/ }));
+  await ue.click(screen.getByRole('button', { name: /Select/ }));
 }
 
 export async function close() {
@@ -18,7 +18,7 @@ export async function close() {
 }
 
 export async function clearFilter() {
-  await userEvent.click(screen.getByRole('button', { name: 'Clear' }));
+  await ue.click(screen.getByRole('button', { name: 'Clear' }));
 }
 
 export async function waitForLoadingToFinish() {

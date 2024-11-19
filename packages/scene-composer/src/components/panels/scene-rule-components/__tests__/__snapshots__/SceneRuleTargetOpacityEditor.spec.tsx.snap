@@ -1,4 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<SceneRuleTargetOpacityEditor> > render expected field 1`] = `
+<div>
+  <grid
+    griddefinition="[object Object],[object Object]"
+  >
+    <input
+      data-testid="tm-opacity-field"
+      step="0.01"
+      type="number"
+      value="1"
+    />
+  </grid>
+</div>
+`;
 
 exports[`<SceneRuleTargetOpacityEditor> render expected field 1`] = `
 <div>

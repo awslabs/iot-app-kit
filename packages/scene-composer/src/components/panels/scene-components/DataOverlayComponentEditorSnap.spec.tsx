@@ -1,14 +1,14 @@
 import { render } from '@testing-library/react';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
-import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
-import { Component } from '../../../models/SceneModels';
 import { KnownComponentType } from '../../../interfaces';
+import { Component } from '../../../models/SceneModels';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
 
 import { DataOverlayComponentEditor } from './DataOverlayComponentEditor';
 
-jest.mock('./common/DataBindingMapEditor', () => {
-  const originalModule = jest.requireActual('./common/DataBindingMapEditor');
+vi.mock('./common/DataBindingMapEditor', async () => {
+  const originalModule = await vi.importActual('./common/DataBindingMapEditor');
   return {
     ...originalModule,
     DataBindingMapEditor: (...props: unknown[]) => {
@@ -16,8 +16,8 @@ jest.mock('./common/DataBindingMapEditor', () => {
     },
   };
 });
-jest.mock('./data-overlay/DataOverlayPanelConfigEditor', () => {
-  const originalModule = jest.requireActual('./data-overlay/DataOverlayPanelConfigEditor');
+vi.mock('./data-overlay/DataOverlayPanelConfigEditor', async () => {
+  const originalModule = await vi.importActual('./data-overlay/DataOverlayPanelConfigEditor');
   return {
     ...originalModule,
     DataOverlayPanelConfigEditor: (...props: unknown[]) => {
@@ -52,8 +52,8 @@ describe('DataOverlayComponentEditorSnap', () => {
   } as ISceneNodeInternal;
 
   const baseState = {
-    updateComponentInternal: jest.fn(),
-    getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
+    updateComponentInternal: vi.fn(),
+    getEditorConfig: vi.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
   };
 
   it('should render data rows for text annotation', async () => {

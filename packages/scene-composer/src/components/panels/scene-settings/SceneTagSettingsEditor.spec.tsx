@@ -1,29 +1,29 @@
 /* eslint-disable import/first */
-import { act, fireEvent, render, screen } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
-import { accessStore } from '../../../store';
-import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { DEFAULT_TAG_GLOBAL_SETTINGS } from '../../../common/constants';
 import useTagSettings from '../../../hooks/useTagSettings';
+import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
+import { accessStore } from '../../../store';
 
 import { SceneTagSettingsEditor } from './SceneTagSettingsEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-jest.mock('../../../hooks/useTagSettings', () => jest.fn());
+vi.mock('../../../hooks/useTagSettings', () => vi.fn());
 
 const sleep = async (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
 describe('SceneTagSettingsEditor', () => {
-  const setScenePropertyMock = jest.fn();
-  const getScenePropertyMock = jest.fn();
-  const isViewingMock = jest.fn();
-  const setTagSettingsMock = jest.fn();
+  const setScenePropertyMock = vi.fn();
+  const getScenePropertyMock = vi.fn();
+  const isViewingMock = vi.fn();
+  const setTagSettingsMock = vi.fn();
   const baseState = {
     setSceneProperty: setScenePropertyMock,
     getSceneProperty: getScenePropertyMock,
@@ -36,13 +36,13 @@ describe('SceneTagSettingsEditor', () => {
   };
 
   beforeEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     getScenePropertyMock.mockReturnValue({
       [KnownComponentType.Tag]: DEFAULT_TAG_GLOBAL_SETTINGS,
     });
-    (useTagSettings as jest.Mock).mockReturnValue(DEFAULT_TAG_GLOBAL_SETTINGS);
+    (useTagSettings as vi.Mock).mockReturnValue(DEFAULT_TAG_GLOBAL_SETTINGS);
     isViewingMock.mockReturnValue(false);
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update store and view options when input value changed', async () => {

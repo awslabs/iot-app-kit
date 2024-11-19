@@ -6,13 +6,13 @@ import { createTwinMakerFetch } from './TwinMakerBrowserUtils';
 
 describe('createTwinMakerFetch', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should replace fetch to the fetch using getSceneObjectFunction', async () => {
     const mockResponseString = '{"key1":"value1","key2":123}';
     const mockArrayBuffer = str2ab(mockResponseString);
-    const mockGetSceneObjectFunction: GetSceneObjectFunction = jest.fn(() => Promise.resolve(mockArrayBuffer));
+    const mockGetSceneObjectFunction: GetSceneObjectFunction = vi.fn(() => Promise.resolve(mockArrayBuffer));
     const fetchFunc = createTwinMakerFetch(mockGetSceneObjectFunction);
     const result = await fetchFunc('s3://bucket-name/path/file.ext');
     expect(mockGetSceneObjectFunction).toBeCalledTimes(1);
@@ -40,10 +40,10 @@ describe('createTwinMakerFetch', () => {
 
   it('should use the original fetch for non-getSceneObjectFunction url', async () => {
     const _fetch = window.fetch;
-    const mockFetch = jest.fn();
+    const mockFetch = vi.fn();
     window.fetch = mockFetch;
-    const mockResolve = jest.fn();
-    const mockGetSceneObjectFunction: GetSceneObjectFunction = jest.fn(() => new Promise<ArrayBuffer>(mockResolve));
+    const mockResolve = vi.fn();
+    const mockGetSceneObjectFunction: GetSceneObjectFunction = vi.fn(() => new Promise<ArrayBuffer>(mockResolve));
 
     const fetchFunc = createTwinMakerFetch(mockGetSceneObjectFunction);
     fetchFunc('http://bucket-name/path/file.ext');

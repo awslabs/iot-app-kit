@@ -1,4 +1,26 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<SceneHierarchyTree /> > should render as per snapshot 1`] = `
+<div>
+  <div
+    data-mocked="EnhancedTree"
+    data-props="{"acceptDrop":["ModelRef","Camera","Light","Animation","Tag","ModelShader","MotionIndicator","DataOverlay","EntityBinding","PlaneGeometry","Space","default"],"droppable":true}"
+  >
+    <div
+      data-mocked="SceneHierarchyTreeItem"
+      data-props="{"enableDragAndDrop":true,"objectRef":"1","someProp":"yes"}"
+    />
+    <div
+      data-mocked="SceneHierarchyTreeItem"
+      data-props="{"enableDragAndDrop":true,"objectRef":"2","someProp":"yes"}"
+    />
+    <div
+      data-mocked="SceneHierarchyTreeItem"
+      data-props="{"enableDragAndDrop":true,"objectRef":"3","someProp":"yes"}"
+    />
+  </div>
+</div>
+`;
 
 exports[`<SceneHierarchyTree /> should render as per snapshot 1`] = `
 <div>

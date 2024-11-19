@@ -1,29 +1,29 @@
 /* eslint-disable import/first */
-import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { render } from '@/tests/testing-library';
 
-import { type IColorOverlayComponentInternal, accessStore } from '../../../store';
 import {
   mockBinding,
   mockBuilderState,
-  mockNode,
   mockComponent,
+  mockNode,
   mockProvider,
 } from '../../../../tests/components/panels/scene-components/MockComponents';
+import { type IColorOverlayComponentInternal, accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ColorOverlayComponentEditor } from './ColorOverlayComponentEditor';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-jest.mock('../../../utils/entityModelUtils/sceneUtils');
+vi.mock('../../../utils/entityModelUtils/sceneUtils');
 
-const updateComponentInternalFn = jest.fn();
-const removeComponentFn = jest.fn();
-const setDeleteConfirmationModalVisible = jest.fn();
+const updateComponentInternalFn = vi.fn();
+const removeComponentFn = vi.fn();
+const setDeleteConfirmationModalVisible = vi.fn();
 
 const mockEditorConfig = {
   valueDataBindingProvider: mockProvider,
@@ -31,10 +31,10 @@ const mockEditorConfig = {
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,
-  getEditorConfig: jest.fn(() => {
+  getEditorConfig: vi.fn(() => {
     return mockEditorConfig;
   }),
-  listSceneRuleMapIds: jest.fn(() => {
+  listSceneRuleMapIds: vi.fn(() => {
     return ['rule1'];
   }),
   removeComponent: removeComponentFn,
@@ -50,8 +50,8 @@ describe('ColorOverlayComponentEditor', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    (isDynamicScene as jest.Mock).mockReturnValue(false);
+    vi.clearAllMocks();
+    (isDynamicScene as vi.Mock).mockReturnValue(false);
   });
 
   it('should select bindings', () => {
@@ -113,7 +113,7 @@ describe('ColorOverlayComponentEditor', () => {
   });
 
   it('should remove components for dynamic scene', () => {
-    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    (isDynamicScene as vi.Mock).mockReturnValue(true);
     accessStore('default').setState(baseState);
 
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);

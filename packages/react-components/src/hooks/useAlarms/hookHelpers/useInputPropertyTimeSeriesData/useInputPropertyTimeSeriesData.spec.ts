@@ -46,14 +46,14 @@ const TEST_DATASTREAM_2 = {
 
 describe('useInputPropertyTimeSeriesData', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('correctly calls onUpdateAlarmInputPropertyData', async () => {
-    const onUpdateAlarmInputPropertyData = jest.fn();
+    const onUpdateAlarmInputPropertyData = vi.fn();
 
     const testViewport = { duration: '1m' };
-    const timeSeriesDataMock = jest.fn();
+    const timeSeriesDataMock = vi.fn();
     timeSeriesDataMock.mockReturnValue(
       mockTimeSeriesDataQuery([
         {
@@ -99,9 +99,9 @@ describe('useInputPropertyTimeSeriesData', () => {
   });
 
   it('does not fetch time series data if the required properties are not provided', async () => {
-    const onUpdateAlarmInputPropertyData = jest.fn();
+    const onUpdateAlarmInputPropertyData = vi.fn();
     const testViewport = { duration: '1m' };
-    const timeSeriesDataMock = jest.fn();
+    const timeSeriesDataMock = vi.fn();
 
     const { rerender } = renderHook(
       (

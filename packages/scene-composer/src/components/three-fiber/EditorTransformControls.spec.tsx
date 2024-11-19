@@ -1,9 +1,11 @@
 /* eslint-disable */
-import { act, render } from '@testing-library/react';
-
-import { MockTransformControls } from '../../../tests/__mocks__/MockTransformControls';
-
-import Mock = jest.Mock;
+import { act, render } from '@/tests/testing-library';
+import { MockTransformControls } from '../../../__mocks__/MockTransformControls';
+import * as reactThree from '@react-three/fiber';
+import { EditorTransformControls } from './EditorTransformControls';
+import { ISceneNodeInternal, accessStore } from '../../store';
+import { KnownComponentType, TransformControlMode } from '../..';
+import { Component } from '../../models/SceneModels';
 
 const mockThreeStates = {
   gl: {
@@ -12,53 +14,46 @@ const mockThreeStates = {
   camera: {
     type: 'PerspectiveCamera',
   },
-};
-jest.doMock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+} as const;
+
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
+    useThree: vi.fn(),
   };
 });
 
-const mockSnapToFloor = jest.fn();
-jest.doMock('../../../src/three/transformUtils', () => {
-  const originalModule = jest.requireActual('../../../src/three/transformUtils');
+const mockSnapToFloor = vi.fn();
+vi.mock('../../../src/three/transformUtils', async () => {
+  const originalModule = await vi.importActual('../../../src/three/transformUtils');
   return {
     ...originalModule,
     snapObjectToFloor: mockSnapToFloor,
   };
 });
 
-jest.doMock('../../../src/three/TransformControls', () => {
-  const originalModule = jest.requireActual('../../../src/three/TransformControls');
+vi.mock('../../../src/three/TransformControls', async () => {
+  const originalModule = await vi.importActual('../../../src/three/TransformControls');
   return {
     ...originalModule,
     TransformControls: MockTransformControls,
   };
 });
 
-const mockFindComponentByType = jest.fn();
-jest.doMock('../../../src/utils/nodeUtils', () => {
+const mockFindComponentByType = vi.fn();
+vi.mock('../../../src/utils/nodeUtils', () => {
   return {
     findComponentByType: mockFindComponentByType,
   };
 });
 
-import { EditorTransformControls } from './EditorTransformControls';
-import { ISceneNodeInternal, accessStore } from '../../store';
-import { KnownComponentType, TransformControlMode } from '../..';
-
-import { useThree } from '@react-three/fiber';
-import { Component } from '../../models/SceneModels';
-/* eslint-enable */
-
 describe('EditorTransformControls', () => {
-  const mockSetTransformControls = jest.fn();
-  const mockGetSceneNodeByRef = jest.fn();
-  const mockGetObject3DBySceneNodeRef = jest.fn();
-  const mockUpdateSceneNodeInternal = jest.fn();
-  const mockSetTransformControlMode = jest.fn();
+  const mockSetTransformControls = vi.fn();
+  const mockGetSceneNodeByRef = vi.fn();
+  const mockGetObject3DBySceneNodeRef = vi.fn();
+  const mockUpdateSceneNodeInternal = vi.fn();
+  const mockSetTransformControlMode = vi.fn();
 
   const baseState = {
     transformControlMode: 'translate' as TransformControlMode,
@@ -87,11 +82,12 @@ describe('EditorTransformControls', () => {
   };
 
   const setup = () => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
-    const useThreeMock = useThree as Mock;
-    useThreeMock.mockImplementation((s) => {
-      return s(mockThreeStates);
+    vi.spyOn(reactThree, 'useThree').mockImplementation((s) => {
+      if (s) {
+        return s(mockThreeStates as reactThree.RootState);
+      }
     });
   };
 

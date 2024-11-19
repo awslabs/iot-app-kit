@@ -6,8 +6,8 @@ import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { SpeedEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor';
 
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', () => {
-  const originalModule = jest.requireActual(
+vi.mock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', async () => {
+  const originalModule = await vi.importActual(
     '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor',
   );
   return {
@@ -16,8 +16,8 @@ jest.mock('../../../../../src/components/panels/scene-components/motion-indicato
   };
 });
 
-jest.mock('../../../../../src/components/panels/Slider', () => {
-  const originalModule = jest.requireActual('../../../../../src/components/panels/Slider');
+vi.mock('../../../../../src/components/panels/Slider', async () => {
+  const originalModule = await vi.importActual('../../../../../src/components/panels/Slider');
   return {
     ...originalModule,
     Slider: (...props: any[]) => <div id='Slider'>{JSON.stringify(props)}</div>,
@@ -41,7 +41,7 @@ describe('SpeedEditor', () => {
       backgroundColorOpacity: 0.5,
     },
   };
-  const onUpdateCallback = jest.fn();
+  const onUpdateCallback = vi.fn();
 
   it('should render correctly with data binding', () => {
     accessStore('default').setState(baseState);

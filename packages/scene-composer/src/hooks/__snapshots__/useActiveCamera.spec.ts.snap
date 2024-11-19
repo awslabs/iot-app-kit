@@ -1,4 +1,27 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useSelectedObject > should return the object from the store 1`] = `
+{
+  "activeCameraName": undefined,
+  "activeCameraSettings": {
+    "cameraType": "Perspective",
+    "far": 1000,
+    "fov": 53.13,
+    "near": 0.1,
+    "transform": {
+      "position": [
+        5,
+        5,
+        5,
+      ],
+    },
+    "zoom": 1,
+  },
+  "mainCameraObject": undefined,
+  "setActiveCameraName": undefined,
+  "setActiveCameraSettings": [Function],
+}
+`;
 
 exports[`useSelectedObject should return the object from the store 1`] = `
 {

@@ -3,7 +3,7 @@ import type {
   ListTimeSeries,
 } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { useState } from 'react';
 import { formatDate } from '../../../../utils/time';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
@@ -105,7 +105,7 @@ describe('time series table', () => {
         ...listTimeSeriesResponse.TimeSeriesSummaries[2],
         dataType: 'INTEGER',
       };
-      const listTimeSeries = jest.fn().mockResolvedValue({
+      const listTimeSeries = vi.fn().mockResolvedValue({
         TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
       });
       render(
@@ -142,7 +142,7 @@ describe('time series table', () => {
     it('renders expected columns when displaying latest values', () => {
       render(
         <TimeSeriesExplorer
-          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: vi.fn() }}
         />
       );
 
@@ -159,7 +159,7 @@ describe('time series table', () => {
 
   describe('requests', () => {
     it('requests a single page of time series correctly', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValue(createListTimeSeriesPage(3));
       render(
@@ -180,7 +180,7 @@ describe('time series table', () => {
     });
 
     it('requests multiple pages of time series correctly', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValueOnce(createListTimeSeriesPage(10, 0, 'next-token'))
         .mockResolvedValueOnce(createListTimeSeriesPage(10, 10));
@@ -222,7 +222,7 @@ describe('time series table', () => {
     });
 
     it('requests multiple lists of pages of time series correctly', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValueOnce(createListTimeSeriesPage(10, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListTimeSeriesPage(5, 10))
@@ -286,9 +286,7 @@ describe('time series table', () => {
       const {
         TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
       } = listTimeSeriesResponse;
-      const listTimeSeries = jest
-        .fn()
-        .mockResolvedValue(listTimeSeriesResponse);
+      const listTimeSeries = vi.fn().mockResolvedValue(listTimeSeriesResponse);
       const timeSeries1SuccessEntry = {
         // Entry ID constructure is an implementation detail
         entryId: timeSeries1.timeSeriesId,
@@ -323,7 +321,7 @@ describe('time series table', () => {
           },
         },
       };
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue({
+      const batchGetAssetPropertyValue = vi.fn().mockResolvedValue({
         successEntries: [
           timeSeries1SuccessEntry,
           timeSeries2SuccessEntry,
@@ -390,11 +388,11 @@ describe('time series table', () => {
     });
 
     it('regularly requests latest values', async () => {
-      jest.useFakeTimers();
-      const listTimeSeries = jest
+      vi.useFakeTimers();
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValue(createListTimeSeriesPage(3));
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue({
+      const batchGetAssetPropertyValue = vi.fn().mockResolvedValue({
         successEntries: [],
         skippedEntries: [],
         errorEntries: [],
@@ -413,17 +411,17 @@ describe('time series table', () => {
 
       expect(batchGetAssetPropertyValue).toHaveBeenCalledOnce();
 
-      jest.advanceTimersByTime(DEFAULT_LATEST_VALUE_REQUEST_INTERVAL);
+      vi.advanceTimersByTime(DEFAULT_LATEST_VALUE_REQUEST_INTERVAL);
       expect(batchGetAssetPropertyValue).toHaveBeenCalledTimes(2);
 
       // Remove mocking
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
   });
 
   describe('selection', () => {
     it('does not allow selecting time series if selectionMode is undefined', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValue(createListTimeSeriesPage(3));
 
@@ -437,10 +435,10 @@ describe('time series table', () => {
 
     describe('single-select', () => {
       it('allows selecting a single time series', async () => {
-        const listTimeSeries = jest
+        const listTimeSeries = vi
           .fn()
           .mockResolvedValue(createListTimeSeriesPage(3));
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableTimeSeriesTable
             selectionMode='single'
@@ -481,10 +479,10 @@ describe('time series table', () => {
 
     describe('multi-select', () => {
       it('allows selecting multiple time series', async () => {
-        const listTimeSeries = jest
+        const listTimeSeries = vi
           .fn()
           .mockResolvedValue(createListTimeSeriesPage(3));
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableTimeSeriesTable
             selectionMode='multi'
@@ -563,7 +561,7 @@ describe('time series table', () => {
 
   describe('filtering', () => {
     it('supports filtering by property', async () => {
-      const listTimeSeries = jest
+      const listTimeSeries = vi
         .fn()
         .mockResolvedValue(createListTimeSeriesPage(3));
       render(
@@ -601,10 +599,10 @@ describe('time series table', () => {
         ...listTimeSeriesResponse.TimeSeriesSummaries[2],
         timeSeriesId: 'Different Name 3',
       };
-      const listTimeSeries = jest.fn().mockResolvedValue({
+      const listTimeSeries = vi.fn().mockResolvedValue({
         TimeSeriesSummaries: [timeSeries1, timeSeries2, timeSeries3],
       });
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <TimeSeriesExplorer
           tableSettings={{ isFilterEnabled: true }}
@@ -639,7 +637,7 @@ describe('time series table', () => {
 
   describe('user settings', () => {
     it('renders user settings as expected', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <TimeSeriesExplorer tableSettings={{ isUserSettingsEnabled: true }} />
       );
@@ -697,7 +695,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
-          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: vi.fn() }}
         />
       );
 
@@ -712,7 +710,7 @@ describe('time series table', () => {
     });
 
     it('supports users changing settings', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <TimeSeriesExplorer tableSettings={{ isUserSettingsEnabled: true }} />
       );
@@ -729,7 +727,7 @@ describe('time series table', () => {
     });
 
     it('supports users cancelling changing settings', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <TimeSeriesExplorer tableSettings={{ isUserSettingsEnabled: true }} />
       );
@@ -768,9 +766,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           iotSiteWiseClient={{
-            listTimeSeries: jest
-              .fn()
-              .mockRejectedValue(new Error(errorMessage)),
+            listTimeSeries: vi.fn().mockRejectedValue(new Error(errorMessage)),
           }}
         />
       );

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@/tests/testing-library';
 
 import { accessStore } from '../../store';
 
@@ -6,7 +6,7 @@ import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 describe('DeleteConfirmationModal', () => {
   const baseState = {
-    setDeleteConfirmationModalVisible: jest.fn(),
+    setDeleteConfirmationModalVisible: vi.fn(),
   };
 
   it('should render correctly', () => {
@@ -17,7 +17,7 @@ describe('DeleteConfirmationModal', () => {
         title='title-string'
         contentBody='body-string'
         warningMessage='warning-string'
-        onDelete={jest.fn()}
+        onDelete={vi.fn()}
       />,
     );
     expect(container).toMatchSnapshot();
@@ -32,7 +32,7 @@ describe('DeleteConfirmationModal', () => {
         title='title-string'
         contentBody='body-string'
         warningMessage='warning-string'
-        onDelete={jest.fn()}
+        onDelete={vi.fn()}
       />,
     );
     const deleteButton = screen.getByTestId('delete-button');

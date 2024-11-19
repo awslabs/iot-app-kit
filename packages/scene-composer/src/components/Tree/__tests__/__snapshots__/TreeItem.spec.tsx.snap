@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// vi Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"","selected":false,"expandable":false}" 1`] = `
 <div>

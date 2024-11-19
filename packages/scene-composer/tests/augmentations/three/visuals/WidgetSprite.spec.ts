@@ -16,7 +16,7 @@ describe('WidgetSprite', () => {
     anchorGroup.add(visualContainer);
 
     visualContainer.add(visual);
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should get and set visual', () => {
@@ -30,7 +30,7 @@ describe('WidgetSprite', () => {
 
   it('should log an warning when trying to call add', () => {
     const widgetSprite = new WidgetSprite();
-    jest.spyOn((widgetSprite as THREE.Event).log, 'warn');
+    vi.spyOn((widgetSprite as THREE.Event).log, 'warn');
 
     widgetSprite.add(visualContainer);
 

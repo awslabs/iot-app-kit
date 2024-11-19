@@ -1,5 +1,5 @@
 import { render, renderHook, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { DefaultDashboardMessages } from '~/messages';
@@ -7,6 +7,8 @@ import { configureDashboardStore } from '~/store';
 import { onToggleChatbotAction } from '~/store/actions';
 import { initialState } from '~/store/state';
 import { Chatbot } from './chatbot';
+
+const user = ue.setup();
 
 const store = configureDashboardStore({
   ...initialState,
@@ -33,7 +35,6 @@ describe('Chatbot', () => {
   });
 
   it('should close the chatbot', async () => {
-    const user = userEvent.setup();
     const { getByRole } = render(
       <TestProvider>
         <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />
@@ -47,7 +48,6 @@ describe('Chatbot', () => {
   });
 
   it('should clean assistant state and create a new conversationId when reset button is clicked', async () => {
-    const user = userEvent.setup();
     const { getByRole } = render(
       <TestProvider>
         <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />

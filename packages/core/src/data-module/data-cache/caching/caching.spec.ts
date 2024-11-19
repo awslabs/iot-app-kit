@@ -910,7 +910,7 @@ describe('getRequestInformations', () => {
 describe('retrieve unexpired cached time intervals', () => {
   const DATE_NOW = new Date(2000, 0, 0).getTime();
   beforeEach(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW);
+    vi.spyOn(Date, 'now').mockImplementation(() => DATE_NOW);
   });
 
   describe('with one or less caching rules present', () => {

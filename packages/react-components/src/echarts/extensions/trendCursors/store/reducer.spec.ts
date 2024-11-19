@@ -41,7 +41,7 @@ describe('trend cursor store reducer', () => {
   });
 
   it('can add and remove a trend cursor', () => {
-    const updater = jest.fn();
+    const updater = vi.fn();
     let updated = reducer(stateWithDefault(), onConnect('group-1', updater));
 
     const trendcursor = {
@@ -90,7 +90,7 @@ describe('trend cursor store reducer', () => {
   });
 
   it('can update a trend cursor', () => {
-    const updater = jest.fn();
+    const updater = vi.fn();
     let updated = reducer(stateWithDefault(), onConnect('group-1', updater));
 
     const trendcursor = {

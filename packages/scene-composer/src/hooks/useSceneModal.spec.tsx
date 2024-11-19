@@ -1,18 +1,18 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@/tests/testing-library';
 
 import { accessStore } from '../store';
 
 import useSceneModal from './useSceneModal';
 
-jest.mock('../components/modals/MessageModal', () => 'MessageModal');
-jest.mock('../components/modals/ConvertSceneModal', () => 'ConvertSceneModal');
-jest.mock('../components/modals/DeleteNodeModal', () => 'DeleteNodeModal');
-jest.mock('../components/modals/DeleteComponentModal', () => 'DeleteComponentModal');
+vi.mock('../components/modals/MessageModal', () => ({ default: 'MessageModal' }));
+vi.mock('../components/modals/ConvertSceneModal', () => ({ default: 'ConvertSceneModal' }));
+vi.mock('../components/modals/DeleteNodeModal', () => ({ default: 'DeleteNodeModal' }));
+vi.mock('../components/modals/DeleteComponentModal', () => ({ default: 'DeleteComponentModal' }));
 
 describe('useSceneModal() hook', () => {
   const baseState = {
-    getMessages: jest.fn(),
-    isViewing: jest.fn(),
+    getMessages: vi.fn(),
+    isViewing: vi.fn(),
     convertSceneModalVisible: false,
     deleteConfirmationModalVisible: false,
     deleteConfirmationModalParams: undefined,

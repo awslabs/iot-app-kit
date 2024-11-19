@@ -13,7 +13,7 @@ describe('DashboardHeader', () => {
       name: 'My Dashboard',
       editable: false,
       readOnly: true,
-      onSave: jest.fn(),
+      onSave: vi.fn(),
       dashboardConfiguration: {
         widgets: [],
       },
@@ -37,7 +37,7 @@ describe('DashboardHeader', () => {
       name: 'My Dashboard',
       editable: false,
       readOnly: true,
-      onSave: jest.fn(),
+      onSave: vi.fn(),
       dashboardConfiguration: {
         widgets: [],
       },

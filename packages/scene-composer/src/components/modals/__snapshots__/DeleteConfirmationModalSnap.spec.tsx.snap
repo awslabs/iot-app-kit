@@ -1,4 +1,313 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DeleteConfirmationModal > should render correctly 1`] = `
+<div>
+  <div
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
+  >
+    <div
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r1:"
+    >
+      <div
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+        >
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r2:"
+                >
+                  title-string
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
+        >
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            body-string
+          </div>
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              aria-hidden="false"
+              class="awsui_root_mx3cw_ipfn3_125"
+              data-analytics-alert="warning"
+            >
+              <div
+                class="awsui-context-alert"
+              >
+                <div
+                  class="awsui_alert_mx3cw_ipfn3_99 awsui_type-warning_mx3cw_ipfn3_318 awsui_icon-size-normal_mx3cw_ipfn3_293 awsui_breakpoint-default_mx3cw_ipfn3_219"
+                >
+                  <div
+                    class="awsui_alert-focus-wrapper_mx3cw_ipfn3_240"
+                    tabindex="-1"
+                  >
+                    <div
+                      aria-label="Warning"
+                      class="awsui_icon_mx3cw_ipfn3_276 awsui_text_mx3cw_ipfn3_269"
+                      role="img"
+                    >
+                      <span
+                        class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 16 16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            class="stroke-linejoin-round"
+                            d="m8 1 7 14H1L8 1z"
+                          />
+                          <path
+                            d="M7.99 12H8v.01h-.01zM8 6v4"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <div
+                      class="awsui_message_mx3cw_ipfn3_279 awsui_text_mx3cw_ipfn3_269"
+                    >
+                      <div
+                        class="awsui_content_mx3cw_ipfn3_297"
+                      >
+                        warning-string
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <div
+            class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+          >
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+                data-analytics-funnel-value="button:r3:"
+                data-testid="cancel-button"
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Cancel
+                </span>
+              </button>
+            </div>
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-primary_vjswe_12tek_251"
+                data-analytics-funnel-value="button:r5:"
+                data-testid="delete-button"
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Delete
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DeleteConfirmationModal > should render correctly with delete button disabled 1`] = `
+<div>
+  <div
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
+  >
+    <div
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r8:"
+    >
+      <div
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+        >
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r9:"
+                >
+                  title-string
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
+        >
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            body-string
+          </div>
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              aria-hidden="false"
+              class="awsui_root_mx3cw_ipfn3_125"
+              data-analytics-alert="warning"
+            >
+              <div
+                class="awsui-context-alert"
+              >
+                <div
+                  class="awsui_alert_mx3cw_ipfn3_99 awsui_type-warning_mx3cw_ipfn3_318 awsui_icon-size-normal_mx3cw_ipfn3_293 awsui_breakpoint-default_mx3cw_ipfn3_219"
+                >
+                  <div
+                    class="awsui_alert-focus-wrapper_mx3cw_ipfn3_240"
+                    tabindex="-1"
+                  >
+                    <div
+                      aria-label="Warning"
+                      class="awsui_icon_mx3cw_ipfn3_276 awsui_text_mx3cw_ipfn3_269"
+                      role="img"
+                    >
+                      <span
+                        class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 16 16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            class="stroke-linejoin-round"
+                            d="m8 1 7 14H1L8 1z"
+                          />
+                          <path
+                            d="M7.99 12H8v.01h-.01zM8 6v4"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <div
+                      class="awsui_message_mx3cw_ipfn3_279 awsui_text_mx3cw_ipfn3_269"
+                    >
+                      <div
+                        class="awsui_content_mx3cw_ipfn3_297"
+                      >
+                        warning-string
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <div
+            class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+          >
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+                data-analytics-funnel-value="button:ra:"
+                data-testid="cancel-button"
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Cancel
+                </span>
+              </button>
+            </div>
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-primary_vjswe_12tek_251 awsui_disabled_vjswe_12tek_243"
+                data-analytics-funnel-value="button:rc:"
+                data-testid="delete-button"
+                disabled=""
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Delete
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
 
 exports[`DeleteConfirmationModal should render correctly 1`] = `
 <div>

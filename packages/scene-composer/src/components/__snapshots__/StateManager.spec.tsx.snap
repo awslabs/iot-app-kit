@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StateManager should load dynamic scene correctly 1`] = `
+exports[`StateManager > should load dynamic scene correctly 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -13,7 +13,7 @@ exports[`StateManager should load dynamic scene correctly 1`] = `
 />
 `;
 
-exports[`StateManager should load dynamic scene with error for empty document 1`] = `
+exports[`StateManager > should load dynamic scene with error for empty document 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -26,7 +26,7 @@ exports[`StateManager should load dynamic scene with error for empty document 1`
 />
 `;
 
-exports[`StateManager should load dynamic scene with error for getting scene entity failure 1`] = `
+exports[`StateManager > should load dynamic scene with error for getting scene entity failure 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -39,7 +39,7 @@ exports[`StateManager should load dynamic scene with error for getting scene ent
 />
 `;
 
-exports[`StateManager should render correctly 1`] = `
+exports[`StateManager > should render correctly 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -52,7 +52,7 @@ exports[`StateManager should render correctly 1`] = `
 />
 `;
 
-exports[`StateManager should render correctly with Matterport configuration 1`] = `
+exports[`StateManager > should render correctly with Matterport configuration 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -73,184 +73,276 @@ exports[`StateManager should render correctly with Matterport configuration 1`] 
 />
 `;
 
-exports[`StateManager should render with Failed to fetch scene content 1`] = `
+exports[`StateManager > should render with Failed to fetch scene content 1`] = `
 <div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
+  className="sc-eqUAAy ecXfYb awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
     className="sc-imWYAI garats"
   >
     <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
+      className="sc-dAlyuH exYAMD awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
     >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
       <div
-        data-mocked="TextContent"
+        className="awsui_content-wrapper_14iqq_v4tpg_222"
+        id=":r7:"
       >
-        <p>
-          Failed to fetch scene content
-        </p>
+        <div
+          className="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+          >
+            <div
+              className="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <div
+                className="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+              >
+                <h2
+                  className="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+                >
+                  <span
+                    className="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                    data-analytics-funnel-key="substep-name"
+                    id="heading:r8:"
+                  >
+                    Error
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_text-content_6absk_1rcdq_100"
+          >
+            <p>
+              Failed to fetch scene content
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
+    className="sc-dcJsrY iRIcXR awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
+      className="sc-iGgWBj dbIDHC awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
+        className="sc-kAyceB dBfuLL awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       />
     </div>
   </div>
 </div>
 `;
 
-exports[`StateManager should render with empty scene url error 1`] = `
+exports[`StateManager > should render with empty scene url error 1`] = `
 <div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
+  className="sc-eqUAAy ecXfYb awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
     className="sc-imWYAI garats"
   >
     <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
+      className="sc-dAlyuH exYAMD awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
     >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
       <div
-        data-mocked="TextContent"
+        className="awsui_content-wrapper_14iqq_v4tpg_222"
+        id=":r1:"
       >
-        <p>
-          Got empty scene url
-        </p>
+        <div
+          className="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+          >
+            <div
+              className="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <div
+                className="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+              >
+                <h2
+                  className="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+                >
+                  <span
+                    className="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                    data-analytics-funnel-key="substep-name"
+                    id="heading:r2:"
+                  >
+                    Error
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_text-content_6absk_1rcdq_100"
+          >
+            <p>
+              Got empty scene url
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
+    className="sc-dcJsrY iRIcXR awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
+      className="sc-iGgWBj dbIDHC awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
+        className="sc-kAyceB dBfuLL awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       />
     </div>
   </div>
 </div>
 `;
 
-exports[`StateManager should render with fetch scene content API error 1`] = `
+exports[`StateManager > should render with fetch scene content API error 1`] = `
 <div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
+  className="sc-eqUAAy ecXfYb awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
     className="sc-imWYAI garats"
   >
     <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
+      className="sc-dAlyuH exYAMD awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
     >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
       <div
-        data-mocked="TextContent"
+        className="awsui_content-wrapper_14iqq_v4tpg_222"
+        id=":ra:"
       >
-        <p>
-          Random error
-        </p>
+        <div
+          className="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+          >
+            <div
+              className="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <div
+                className="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+              >
+                <h2
+                  className="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+                >
+                  <span
+                    className="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                    data-analytics-funnel-key="substep-name"
+                    id="heading:rb:"
+                  >
+                    Error
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_text-content_6absk_1rcdq_100"
+          >
+            <p>
+              Random error
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
+    className="sc-dcJsrY iRIcXR awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
+      className="sc-iGgWBj dbIDHC awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
+        className="sc-kAyceB dBfuLL awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       />
     </div>
   </div>
 </div>
 `;
 
-exports[`StateManager should render with get scene uri error 1`] = `
+exports[`StateManager > should render with get scene uri error 1`] = `
 <div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
+  className="sc-eqUAAy ecXfYb awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
     className="sc-imWYAI garats"
   >
     <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
+      className="sc-dAlyuH exYAMD awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
     >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
       <div
-        data-mocked="TextContent"
+        className="awsui_content-wrapper_14iqq_v4tpg_222"
+        id=":r4:"
       >
-        <p>
-          get scene uri error
-        </p>
+        <div
+          className="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+          >
+            <div
+              className="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <div
+                className="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+              >
+                <h2
+                  className="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+                >
+                  <span
+                    className="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                    data-analytics-funnel-key="substep-name"
+                    id="heading:r5:"
+                  >
+                    Error
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+        >
+          <div
+            className="awsui_text-content_6absk_1rcdq_100"
+          >
+            <p>
+              get scene uri error
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
+    className="sc-dcJsrY iRIcXR awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
+      className="sc-iGgWBj dbIDHC awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
+        className="sc-kAyceB dBfuLL awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       />
     </div>
   </div>

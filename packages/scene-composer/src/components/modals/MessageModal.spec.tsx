@@ -1,22 +1,20 @@
-import { render } from '@testing-library/react';
-
+import { render } from '@/tests/testing-library';
 import { accessStore } from '../../store';
 import { DisplayMessageCategory } from '../../store/internalInterfaces';
-
 import MessageModal from './MessageModal';
 
-import Mock = jest.Mock;
+import Mock = vi.Mock;
 
-jest.mock('../../store', () => {
-  const originalModule = jest.requireActual('../../store');
+vi.mock('../../store', async () => {
+  const originalModule = await vi.importActual('../../store');
   return {
     ...originalModule,
-    accessStore: jest.fn(),
+    accessStore: vi.fn(),
   };
 });
 
 describe('MessageModalSnap', () => {
-  const clearMessages = jest.fn();
+  const clearMessages = vi.fn();
   const mockUseStore = accessStore as Mock;
 
   [
