@@ -87,6 +87,9 @@ export const ViewOnly: ComponentStory<typeof Dashboard> = () => (
   <DashboardView
     {...emptyDashboardConfiguration}
     dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
+    assistantConfiguration={{
+      state: 'PASSIVE',
+    }}
   />
 );
 
