@@ -129,6 +129,7 @@ export const AssistantFloatingMenu = ({
           ) : null}
           <div
             className='iot-app-kit-assistant-menu-buttons-container'
+            data-testid='assistant-menu-buttons-container'
             style={{ gap: `${spaceStaticS}`, marginLeft: spaceStaticXs }}
           >
             {assistantState.mode === 'on' ? (
