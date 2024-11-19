@@ -1,4 +1,4 @@
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { render } from '@testing-library/react';
 import { mockedInvokeAssistantResponse3 } from '../../__mocks__/assistantMockedResponse';

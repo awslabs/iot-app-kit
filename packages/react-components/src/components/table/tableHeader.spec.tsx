@@ -1,4 +1,4 @@
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

@@ -43,15 +43,12 @@
     "test:git": "git diff --exit-code",
     "release": "npm run build",
     "pack": "turbo run pack",
-    "publish-packages": "turbo run clean && rimraf .turbo && npm run install-ws && turbo run build lint test",
+    "publish-packages": "npm run install-ws && turbo run build lint test",
     "versionup:patch": "turbo run version --no-git-tag-version patch",
     "versionup:minor": "turbo run version --no-git-tag-version minor",
     "versionup:major": "turbo run version --no-git-tag-version major",
     "prepare": "husky install",
     "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
-  },
-  "dependencies": {
-    "@amzn/iot-black-pearl-internal-v3": "file:./iot-black-pearl-internal-v3.tgz"
   },
   "devDependencies": {
     "@swc/core": "^1.3.71",

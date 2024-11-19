@@ -1,11 +1,11 @@
-import { type IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
 import {
+  type IoTSiteWise as InternalIoTSiteWise,
   type DescribeDashboardRequest,
   type DescribeDashboardResponse,
   type IoTSiteWise,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import type { Viewport } from '@iot-app-kit/core';

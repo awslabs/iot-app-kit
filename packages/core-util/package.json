@@ -35,7 +35,8 @@
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
     "test": "npm run test:jest",
     "test:jest": "TZ=UTC jest --cacheDirectory .cache/jest",
-    "test:typescript": "tsc --noEmit"
+    "test:typescript": "tsc --noEmit",
+    "pack": "npm pack"
   },
   "dependencies": {
     "@iot-app-kit/core": "12.0.0",
@@ -44,7 +45,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@aws-sdk/types": "^3.310.0",
+    "@aws-sdk/types": "^3.696.0",
     "@iot-app-kit/jest-config": "12.0.0",
     "@iot-app-kit/ts-config": "12.0.0",
     "@types/jest": "^29.4.0",
@@ -59,6 +60,6 @@
   },
   "peerDependencies": {
     "@aws-sdk/client-iot-events": "^3.354.0",
-    "@aws-sdk/client-iotsitewise": "^3.456.0"
+    "@aws-sdk/client-iotsitewise": "^3.696.0"
   }
 }

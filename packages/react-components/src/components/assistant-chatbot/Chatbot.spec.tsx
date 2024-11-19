@@ -1,4 +1,4 @@
-import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
+import type { ResponseStream } from '@aws-sdk/client-iotsitewise';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MessageType } from '../../hooks/useAssistant/types';

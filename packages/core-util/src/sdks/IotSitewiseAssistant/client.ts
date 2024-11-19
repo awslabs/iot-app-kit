@@ -1,7 +1,4 @@
-import type {
-  IoTSiteWise,
-  ResponseStream,
-} from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise, ResponseStream } from '@aws-sdk/client-iotsitewise';
 import type {
   AssistantClientInstanceParams,
   AssistantClientInvocationCompleteHandler,

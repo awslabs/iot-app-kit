@@ -76,7 +76,7 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.456.0"
+    "@aws-sdk/client-iotsitewise": "^3.696.0"
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"

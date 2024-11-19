@@ -2,7 +2,7 @@ import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { MessageType } from './types';
 
 const response1 = {

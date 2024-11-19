@@ -2,10 +2,7 @@ import Box from '@cloudscape-design/components/box';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import Link from '@cloudscape-design/components/link';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import type {
-  Citation,
-  ResponseStream,
-} from '@amzn/iot-black-pearl-internal-v3';
+import type { Citation, ResponseStream } from '@aws-sdk/client-iotsitewise';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { spaceStaticL } from '@cloudscape-design/design-tokens';

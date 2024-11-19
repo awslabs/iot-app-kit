@@ -9,10 +9,10 @@
   "license": "Apache-2.0",
   "main": "./dist/cjs/src/index.js",
   "module": "./dist/esm/src/index.js",
-  "types": "./dist/esm/src/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/src/index.d.ts",
+      "types": "./dist/src/index.d.ts",
       "require": "./dist/cjs/src/index.js",
       "import": "./dist/esm/src/index.js",
       "default": "./dist/esm/src/index.js"
@@ -24,7 +24,7 @@
     "test": "__tests__"
   },
   "files": [
-    "dist/",
+    "dist",
     "CHANGELOG.md",
     "THIRD-PARTY-LICENSES",
     "*NOTICE"
@@ -91,7 +91,7 @@
   },
   "devDependencies": {
     "@aws-sdk/credential-providers": "^3.395.0",
-    "@aws-sdk/types": "^3.310.0",
+    "@aws-sdk/types": "^3.696.0",
     "@awsui/jest-preset": "^2.0.20",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",

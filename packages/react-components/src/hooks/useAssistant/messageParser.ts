@@ -1,4 +1,4 @@
-import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
+import type { ResponseStream } from '@aws-sdk/client-iotsitewise';
 import type { IMessage, IMessageParser, UniqueID } from './types';
 import type { AssistantInvocationRequest } from '@iot-app-kit/core-util';
 import { MessageType } from './types';
