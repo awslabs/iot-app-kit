@@ -345,7 +345,7 @@ const BaseChart = ({
       >
         <div className='base-chart-container-element'>
           <Resizable
-            height={adjustedChartHeight}
+            height={chartHeight}
             width={chartWidth}
             onResize={onResize}
             axis={`${isBottomAligned ? 'y' : 'x'}`}
