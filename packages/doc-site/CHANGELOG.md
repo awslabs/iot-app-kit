@@ -1,5 +1,23 @@
 # Changelog
 
+## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.0.0...doc-site-v12.1.0) (2024-11-20)
+
+
+### Miscellaneous Chores
+
+* **doc-site:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/react-components bumped from 12.0.0 to 12.1.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from 12.0.0 to 12.1.0
+    * eslint-config-iot-app-kit bumped from 12.0.0 to 12.1.0
+
 ## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v11.0.0...doc-site-v12.0.0) (2024-11-18)
 
 

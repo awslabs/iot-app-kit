@@ -1,5 +1,27 @@
 # Changelog
 
+## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.0.0...dashboard-v12.1.0) (2024-11-20)
+
+
+### Features
+
+* assistant dashboard e2e ([583b7d9](https://github.com/awslabs/iot-app-kit/commit/583b7d98b5bc0e796c9cbe3898e4b1ba1502c5f4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/core-util bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/react-components bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 12.0.0 to 12.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/testing-util bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/ts-config bumped from 12.0.0 to 12.1.0
+    * eslint-config-iot-app-kit bumped from 12.0.0 to 12.1.0
+
 ## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v11.0.0...dashboard-v12.0.0) (2024-11-18)
 
 
