@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.0.0",
+  "version": "12.1.0",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -39,15 +39,15 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@iot-app-kit/core": "12.0.0",
+    "@iot-app-kit/core": "12.1.0",
     "lodash.difference": "4.5.0",
     "pako": "^2.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
-    "@iot-app-kit/jest-config": "12.0.0",
-    "@iot-app-kit/ts-config": "12.0.0",
+    "@iot-app-kit/jest-config": "12.1.0",
+    "@iot-app-kit/ts-config": "12.1.0",
     "@types/jest": "^29.4.0",
     "@types/lodash.difference": "4.5.9",
     "@types/node": "^18.16.18",
