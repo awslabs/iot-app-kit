@@ -1,25 +1,27 @@
-import { render } from '@testing-library/react';
-
+import { render } from '@/tests/testing-library';
 import { mockComponent } from '../../../../../tests/components/panels/scene-components/MockComponents';
-import { type IMotionIndicatorComponentInternal } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
-
+import { type IMotionIndicatorComponentInternal } from '../../../../store';
 import AppearanceEditor from './AppearanceEditor';
 import { updateComponentForColorTypeSelection as mockUpdateComponentForColorTypeSelection } from './helpers';
 
-jest.mock('./ColorEditor', () => (props: any) => <div id='ColorEditor' data-mocked='ColorEditor' {...props} />);
+vi.mock('./ColorEditor', () => ({
+  default: (props: any) => <div id='ColorEditor' data-mocked='ColorEditor' {...props} />,
+}));
 
-jest.mock('./PreviewArrow', () => (props: any) => (
-  <div id='PreviewArrow' data-mocked='PreviewArrow'>
-    {JSON.stringify(props)}
-  </div>
-));
+vi.mock('./PreviewArrow', () => ({
+  default: (props: any) => (
+    <div id='PreviewArrow' data-mocked='PreviewArrow'>
+      {JSON.stringify(props)}
+    </div>
+  ),
+}));
 
-jest.mock('./helpers', () => {
+vi.mock('./helpers', async () => {
   return {
-    ...jest.requireActual('./helpers'),
-    updateComponentForColorTypeSelection: jest.fn(),
+    ...(await vi.importActual('./helpers')),
+    updateComponentForColorTypeSelection: vi.fn(),
   };
 });
 
@@ -36,11 +38,11 @@ describe('AppearanceEditor', () => {
       backgroundColorOpacity: 0.5,
     },
   };
-  const onUpdateCallback = jest.fn();
+  const onUpdateCallback = vi.fn();
   const mockUpdatedComponent = { ref: 'mock-1' };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     (mockUpdateComponentForColorTypeSelection as any).mockReturnValue(mockUpdatedComponent);
   });

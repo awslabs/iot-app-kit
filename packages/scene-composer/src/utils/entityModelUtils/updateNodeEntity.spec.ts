@@ -17,45 +17,45 @@ import { updateLightEntityComponent } from './lightComponent';
 import { updateSubModelRefEntityComponent } from './subModelRefComponent';
 import { updatePlaneGeometryEntityComponent } from './planeGeometryComponent';
 
-jest.mock('./nodeComponent', () => ({
-  updateNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
+vi.mock('./nodeComponent', () => ({
+  updateNodeEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.node' }),
 }));
-jest.mock('./tagComponent', () => ({
-  updateTagEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.tag' }),
+vi.mock('./tagComponent', () => ({
+  updateTagEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.tag' }),
 }));
-jest.mock('./overlayComponent', () => ({
-  updateOverlayEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.overlay' }),
+vi.mock('./overlayComponent', () => ({
+  updateOverlayEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.overlay' }),
 }));
-jest.mock('./cameraComponent', () => ({
-  updateCameraEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.camera' }),
+vi.mock('./cameraComponent', () => ({
+  updateCameraEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.camera' }),
 }));
-jest.mock('./motionIndicatorComponent', () => ({
-  updateMotionIndicatorEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.motionIndicator' }),
+vi.mock('./motionIndicatorComponent', () => ({
+  updateMotionIndicatorEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.motionIndicator' }),
 }));
-jest.mock('./modelRefComponent', () => ({
-  updateModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
+vi.mock('./modelRefComponent', () => ({
+  updateModelRefEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
 }));
-jest.mock('./modelShaderComponent', () => ({
-  updateModelShaderEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelShader' }),
+vi.mock('./modelShaderComponent', () => ({
+  updateModelShaderEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.modelShader' }),
 }));
-jest.mock('./lightComponent', () => ({
-  updateLightEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.light' }),
+vi.mock('./lightComponent', () => ({
+  updateLightEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.light' }),
 }));
-jest.mock('./subModelRefComponent', () => ({
-  updateSubModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.subModelRef' }),
+vi.mock('./subModelRefComponent', () => ({
+  updateSubModelRefEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.subModelRef' }),
 }));
-jest.mock('./planeGeometryComponent', () => ({
-  updatePlaneGeometryEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.planeGeometry' }),
+vi.mock('./planeGeometryComponent', () => ({
+  updatePlaneGeometryEntityComponent: vi.fn().mockReturnValue({ componentTypeId: '3d.planeGeometry' }),
 }));
 
 describe('updateEntity', () => {
-  const updateSceneEntity = jest.fn();
+  const updateSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     updateSceneEntity,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
   });
 

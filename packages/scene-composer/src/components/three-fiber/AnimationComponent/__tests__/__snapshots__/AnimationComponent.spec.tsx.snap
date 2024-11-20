@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`<AnimationComponent /> should test a simple animation component 1`] = `<div />`;
-
-exports[`<AnimationComponent /> should test more branches 1`] = `<div />`;

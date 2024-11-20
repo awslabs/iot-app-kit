@@ -1,11 +1,11 @@
 /* istanbul ignore file */
-import { type EventManager, type ReactThreeFiber, type RootState, useThree, useFrame } from '@react-three/fiber';
+import { type EventManager, type ReactThreeFiber, type RootState, useFrame, useThree } from '@react-three/fiber';
 import { type DomEvent } from '@react-three/fiber/dist/declarations/src/core/events';
-import { forwardRef, useMemo, useEffect, useCallback, useRef } from 'react';
+import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-import useKeyPress from '../../../hooks/useKeyPress';
 import { defaultKeyMap } from '../../../hooks/useKeyMap';
+import useKeyPress from '../../../hooks/useKeyPress';
 import { PointerLockControls as PointerLockControlsImpl } from '../../../three/PointerLockControls';
 
 export type PointerLockControlsProps = ReactThreeFiber.Object3DNode<
@@ -46,7 +46,7 @@ export const PointerLockControls = forwardRef<PointerLockControlsImpl, PointerLo
 
     const velocity = useRef(new THREE.Vector3());
 
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
       if (enabled && controls.isLocked) {
         const newVelocity = velocity.current;
         newVelocity.x -= velocity.current.x * 10.0 * delta;
@@ -158,7 +158,7 @@ export const PointerLockControls = forwardRef<PointerLockControlsImpl, PointerLo
         // Force events to be centered while PLC is active
         const oldComputeOffsets = get().events.compute;
         setEvents({
-          compute(event: DomEvent, state: RootState) {
+          compute(_event: DomEvent, state: RootState) {
             const offsetX = state.size.width / 2;
             const offsetY = state.size.height / 2;
             state.pointer.set((offsetX / state.size.width) * 2 - 1, -(offsetY / state.size.height) * 2 + 1);

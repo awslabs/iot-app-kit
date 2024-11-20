@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SceneComposerInternal should render a default error view when loading a bad scene content 1`] = `
+exports[`SceneComposerInternal > should render a default error view when loading a bad scene content 1`] = `
 <div
   style={
     {
@@ -71,40 +71,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
 </div>
 `;
 
-exports[`SceneComposerInternal should render a default error view when unknown error happens 1`] = `
-<div
-  style={
-    {
-      "height": "100%",
-      "minHeight": "100%",
-      "minWidth": "100%",
-      "width": "100%",
-    }
-  }
->
-  <StaticLayout
-    modalContent={
-      <Styled(MockContainer)
-        header={
-          <MockHeader
-            variant="h2"
-          >
-            Error
-          </MockHeader>
-        }
-      >
-        <MockTextContent>
-          <p>
-            failed to render
-          </p>
-        </MockTextContent>
-      </Styled(MockContainer)>
-    }
-  />
-</div>
-`;
-
-exports[`SceneComposerInternal should render both valid and invalid scene correctly 1`] = `
+exports[`SceneComposerInternal > should render both valid and invalid scene correctly 1`] = `
 <div>
   <div
     style={
@@ -245,7 +212,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
 </div>
 `;
 
-exports[`SceneComposerInternal should render correctly with a valid scene in editing mode 1`] = `
+exports[`SceneComposerInternal > should render correctly with a valid scene in editing mode 1`] = `
 <div
   style={
     {
@@ -316,7 +283,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
 </div>
 `;
 
-exports[`SceneComposerInternal should render correctly with an empty scene in editing mode 1`] = `
+exports[`SceneComposerInternal > should render correctly with an empty scene in editing mode 1`] = `
 <div
   style={
     {
@@ -380,7 +347,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
 </div>
 `;
 
-exports[`SceneComposerInternal should render correctly with an empty scene in viewing mode 1`] = `
+exports[`SceneComposerInternal > should render correctly with an empty scene in viewing mode 1`] = `
 <div
   style={
     {
@@ -435,7 +402,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
 </div>
 `;
 
-exports[`SceneComposerInternal should render error when major version is newer 1`] = `
+exports[`SceneComposerInternal > should render error when major version is newer 1`] = `
 <div
   style={
     {
@@ -506,7 +473,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
 </div>
 `;
 
-exports[`SceneComposerInternal should render error when specVersion is invalid 1`] = `
+exports[`SceneComposerInternal > should render error when specVersion is invalid 1`] = `
 <div
   style={
     {
@@ -577,7 +544,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
 </div>
 `;
 
-exports[`SceneComposerInternal should render warning when minor version is newer 1`] = `
+exports[`SceneComposerInternal > should render warning when minor version is newer 1`] = `
 <div
   style={
     {
@@ -648,7 +615,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
 </div>
 `;
 
-exports[`SceneComposerInternal should support rendering multiple valid scenes 1`] = `
+exports[`SceneComposerInternal > should support rendering multiple valid scenes 1`] = `
 <div>
   <div
     style={

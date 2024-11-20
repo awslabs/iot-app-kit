@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<EntityGroup /> should render expected DOM when rendered 1`] = `
+exports[`<EntityGroup /> > should render expected DOM when rendered 1`] = `
 <div>
   <group
     name="ENTITY_GROUP_parent"

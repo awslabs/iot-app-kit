@@ -8,8 +8,8 @@ import { Component } from '../../../../../src/models/SceneModels';
 import { DataBindingEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor';
 
 let builderOnChangeCb;
-jest.mock('../../../../../src/components/panels/scene-components/common/ValueDataBindingBuilder', () => {
-  const originalModule = jest.requireActual(
+vi.mock('../../../../../src/components/panels/scene-components/common/ValueDataBindingBuilder', async () => {
+  const originalModule = await vi.importActual(
     '../../../../../src/components/panels/scene-components/common/ValueDataBindingBuilder',
   );
   return {
@@ -22,12 +22,12 @@ jest.mock('../../../../../src/components/panels/scene-components/common/ValueDat
 });
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 const baseState = {
-  listSceneRuleMapIds: jest.fn(),
+  listSceneRuleMapIds: vi.fn(),
 } as any;
 
 describe('DataBindingEditor', () => {
@@ -43,11 +43,11 @@ describe('DataBindingEditor', () => {
       backgroundColorOpacity: 0.5,
     },
   };
-  const onUpdateCallback = jest.fn();
+  const onUpdateCallback = vi.fn();
   const mockRules = ['rule-1', 'rule-2'];
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     baseState.listSceneRuleMapIds.mockReturnValue(mockRules);
   });
 

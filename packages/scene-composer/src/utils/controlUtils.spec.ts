@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
 import { MapControls, OrbitControls } from '../three/OrbitControls';
 import { PointerLockControls } from '../three/PointerLockControls';

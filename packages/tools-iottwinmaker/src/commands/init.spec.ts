@@ -1,5 +1,3 @@
-import { handler, type Options } from './init';
-import { type Arguments } from 'yargs';
 import {
   GetComponentTypeCommand,
   GetEntityCommand,
@@ -10,15 +8,18 @@ import {
   ListScenesCommand,
   ResourceNotFoundException,
 } from '@aws-sdk/client-iottwinmaker';
-import { mockClient } from 'aws-sdk-client-mock';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { type SdkStream } from '@aws-sdk/types';
-import { workspaceId, fakeModelData } from './test-utils';
+import { mockClient } from 'aws-sdk-client-mock';
+import * as fs from 'fs';
+import { type Arguments } from 'yargs';
+import { streamToBuffer } from '../lib/stream-to-buffer';
+import { handler, type Options } from './init';
 import {
+  componentType1Definition,
   emptyListComponentTypesResp,
   emptyListEntitiesResp,
   emptyListScenesResp,
-  componentType1Definition,
   entity1Definition,
   getComponentType1Resp,
   getEntity1Resp,
@@ -27,20 +28,19 @@ import {
   oneSceneListScenesResp,
   scene1,
 } from './test-constants';
-import { streamToBuffer } from '../lib/stream-to-buffer';
-import * as fs from 'fs';
+import { fakeModelData, workspaceId } from './test-utils';
 
-jest.mock('fs', () => ({
+vi.mock('fs', async () => ({
   __esModule: true, // Use it when dealing with esModules
-  ...jest.requireActual('fs'),
+  ...(await vi.importActual('fs')),
 }));
 
-jest.mock('../lib/stream-to-buffer', () => {
-  const originalModule = jest.requireActual('../lib/stream-to-buffer');
+vi.mock('../lib/stream-to-buffer', async () => {
+  const originalModule = await vi.importActual('../lib/stream-to-buffer');
   return {
     __esModule: true,
     ...originalModule,
-    streamToBuffer: jest.fn(() => 'mock'),
+    streamToBuffer: vi.fn(() => 'mock'),
   };
 });
 
@@ -51,8 +51,8 @@ const s3Mock = mockClient(S3Client);
 beforeEach(() => {
   s3Mock.reset();
   twinmakerMock.reset();
-  jest.spyOn(fs, 'writeFileSync');
-  jest.spyOn(fs, 'createWriteStream');
+  vi.spyOn(fs, 'writeFileSync');
+  vi.spyOn(fs, 'createWriteStream');
 });
 
 it('throws error when given tmdt project that does not exist', async () => {
@@ -149,7 +149,7 @@ it('creates a tmdt project with one model and one scene when given one scene and
     .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
-  const filePipeMock = jest.fn();
+  const filePipeMock = vi.fn();
   const s3ResponseBodyMock = (content: string) => {
     return {
       transformToString: () => {
@@ -246,7 +246,7 @@ it('creates a fully populated tmdt project when given a full workspace', async (
   twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
   twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
   twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
-  const filePipeMock = jest.fn();
+  const filePipeMock = vi.fn();
   const s3ResponseBodyMock = (content: string) => {
     return {
       transformToString: () => {

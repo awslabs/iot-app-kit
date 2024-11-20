@@ -1,22 +1,22 @@
-import { renderHook } from '@testing-library/react-hooks';
 import { type MpSdk } from '@matterport/r3f/dist';
+import { renderHook } from '@testing-library/react';
 
-import { generateUUID } from '../utils/mathUtils';
 import { type IAnchorComponent, type ISceneNode, KnownComponentType } from '../interfaces';
-import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../store';
-import { type MattertagItem, type TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../store';
+import { generateUUID } from '../utils/mathUtils';
+import { type MattertagItem, type TagItem } from '../utils/matterportTagUtils';
 
 import useMatterportTags from './useMatterportTags';
 
-jest.mock('../utils/mathUtils', () => ({
-  generateUUID: jest.fn(() => 'random-uuid'),
+vi.mock('../utils/mathUtils', () => ({
+  generateUUID: vi.fn(() => 'random-uuid'),
 }));
 
 describe('useMatterportTags', () => {
-  const appendSceneNode = jest.fn();
-  const updateSceneNodeInternal = jest.fn();
-  const removeSceneNode = jest.fn();
+  const appendSceneNode = vi.fn();
+  const updateSceneNodeInternal = vi.fn();
+  const removeSceneNode = vi.fn();
 
   const id = 'testMatterportId';
 
@@ -103,14 +103,14 @@ ${mattertagItem.description}`,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     accessStore('default').setState({
       appendSceneNode,
       updateSceneNodeInternal,
       removeSceneNode,
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should add matterport mattertag', () => {

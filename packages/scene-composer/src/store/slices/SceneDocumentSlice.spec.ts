@@ -1,7 +1,6 @@
-/* eslint-disable dot-notation, jest/no-conditional-expect */
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import flushPromises from 'flush-promises';
-import { Object3D, Vector3 } from 'three';
+import { Object3D } from 'three';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import { type IAnchorComponentInternal, type IDataOverlayComponentInternal, type ISceneNodeInternal } from '..';
@@ -22,31 +21,36 @@ import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 
-jest.mock('../../../src/utils/objectUtils', () => {
-  return { mergeDeep: jest.fn() };
+vi.mock('../../../src/utils/objectUtils', () => {
+  return { mergeDeep: vi.fn() };
 });
 
-jest.mock('../../../src/utils/dataBindingUtils', () => {
-  return { containsMatchingEntityComponent: jest.fn() };
+vi.mock('../../../src/utils/dataBindingUtils', () => {
+  return { containsMatchingEntityComponent: vi.fn() };
 });
 
-jest.mock('../../../src/utils/entityModelUtils/updateNodeEntity');
+vi.mock('../../../src/utils/entityModelUtils/updateNodeEntity');
 
-jest.mock('../../../src/utils/entityModelUtils/deleteNodeEntity');
+vi.mock('../../../src/utils/entityModelUtils/deleteNodeEntity');
 
-jest.mock('../../../src/utils/entityModelUtils/createNodeEntity');
+vi.mock('../../../src/utils/entityModelUtils/createNodeEntity');
 
-jest.mock('../../../src/utils/entityModelUtils/sceneUtils', () => {
-  return { ...jest.requireActual('../../../src/utils/entityModelUtils/sceneUtils'), updateSceneRootEntity: jest.fn() };
+vi.mock('../../../src/utils/entityModelUtils/sceneUtils', async () => {
+  return {
+    ...(await vi.importActual('../../../src/utils/entityModelUtils/sceneUtils')),
+    updateSceneRootEntity: vi.fn(),
+  };
 });
 
-jest.mock('../helpers/sceneDocumentHelpers', () => {
-  return { ...jest.requireActual('../helpers/sceneDocumentHelpers'), appendSceneNode: jest.fn() };
+vi.mock('../helpers/sceneDocumentHelpers', async () => {
+  return { ...(await vi.importActual('../helpers/sceneDocumentHelpers')), appendSceneNode: vi.fn() };
 });
 
-jest.mock('../helpers/serializationHelpers', () => ({
-  document: {
-    deserialize: jest.fn(),
+vi.mock('../helpers/serializationHelpers', () => ({
+  default: {
+    document: {
+      deserialize: vi.fn(),
+    },
   },
 }));
 
@@ -63,7 +67,7 @@ describe('createSceneDocumentSlice', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     setFeatureConfig({});
   });
@@ -75,11 +79,11 @@ describe('createSceneDocumentSlice', () => {
         document: hasErrors ? undefined : defaultDocumentSliceState,
         errors: hasErrors ? [{ category: 'Error', message: 'test Error' } as unknown as IErrorDetails] : [],
       };
-      (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
+      (serializationHelpers.document.deserialize as vi.Mock).mockReturnValue(deserializeResult);
       const draft = { lastOperation: undefined, document: deserializeResult.document, sceneLoaded: false };
-      const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
-      const get = jest.fn().mockReturnValue(getReturn); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const getReturn = { resetEditorState: vi.fn(), addMessages: vi.fn() };
+      const get = vi.fn().mockReturnValue(getReturn); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
       const options = { disableMotionIndicator: true };
 
       // Act
@@ -107,9 +111,9 @@ describe('createSceneDocumentSlice', () => {
 
   it('should load a scene with parsed document', () => {
     const draft = { lastOperation: undefined, document: undefined, sceneLoaded: false };
-    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
-    const get = jest.fn().mockReturnValue(getReturn); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const getReturn = { resetEditorState: vi.fn(), addMessages: vi.fn() };
+    const get = vi.fn().mockReturnValue(getReturn); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     const { loadScene } = createSceneDocumentSlice(set, get);
     loadScene(defaultDocumentSliceState);
@@ -137,15 +141,15 @@ describe('createSceneDocumentSlice', () => {
       },
       errors: [],
     };
-    (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
+    (serializationHelpers.document.deserialize as vi.Mock).mockReturnValue(deserializeResult);
     const draft = {
       lastOperation: undefined,
       document: deserializeResult.document,
       noHistoryStates: { componentVisibilities: {} },
     };
-    const set = jest.fn((callback) => callback(draft));
-    const get = jest.fn(); // fake out get call
-    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
+    const set = vi.fn((callback) => callback(draft));
+    const get = vi.fn(); // fake out get call
+    const getReturn = { resetEditorState: vi.fn(), addMessages: vi.fn() };
     get.mockReturnValue(getReturn);
 
     // Act
@@ -170,14 +174,14 @@ describe('createSceneDocumentSlice', () => {
       },
       errors: [],
     };
-    (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
+    (serializationHelpers.document.deserialize as vi.Mock).mockReturnValue(deserializeResult);
     const draft = {
       lastOperation: undefined,
       sceneLoaded: false,
     };
-    const set = jest.fn((callback) => callback(draft));
-    const get = jest.fn(); // fake out get call
-    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
+    const set = vi.fn((callback) => callback(draft));
+    const get = vi.fn(); // fake out get call
+    const getReturn = { resetEditorState: vi.fn(), addMessages: vi.fn() };
     get.mockReturnValue(getReturn);
     setFeatureConfig({ [COMPOSER_FEATURES.DynamicScene]: true });
 
@@ -201,14 +205,14 @@ describe('createSceneDocumentSlice', () => {
       },
       errors: [],
     };
-    (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
+    (serializationHelpers.document.deserialize as vi.Mock).mockReturnValue(deserializeResult);
     const draft = {
       lastOperation: undefined,
       sceneLoaded: false,
     };
-    const set = jest.fn((callback) => callback(draft));
-    const get = jest.fn(); // fake out get call
-    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
+    const set = vi.fn((callback) => callback(draft));
+    const get = vi.fn(); // fake out get call
+    const getReturn = { resetEditorState: vi.fn(), addMessages: vi.fn() };
     get.mockReturnValue(getReturn);
     setFeatureConfig({ [COMPOSER_FEATURES.DynamicScene]: false });
 
@@ -225,8 +229,8 @@ describe('createSceneDocumentSlice', () => {
     // Arrange
     const document = { nodeMap: { testRef: 'node' } };
     const draft = { document };
-    const get = jest.fn().mockReturnValue(draft); // fake out get call
-    const set = jest.fn();
+    const get = vi.fn().mockReturnValue(draft); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { getSceneNodeByRef } = createSceneDocumentSlice(set, get);
@@ -240,9 +244,9 @@ describe('createSceneDocumentSlice', () => {
 
   it(`should getSceneNodesByRefs`, () => {
     // Arrange
-    const getSceneNodeByRef = jest.fn();
-    const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-    const set = jest.fn();
+    const getSceneNodeByRef = vi.fn();
+    const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { getSceneNodesByRefs } = createSceneDocumentSlice(set, get);
@@ -266,7 +270,7 @@ describe('createSceneDocumentSlice', () => {
     };
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
 
       setFeatureConfig({ [COMPOSER_FEATURES.DynamicScene]: false });
     });
@@ -274,46 +278,46 @@ describe('createSceneDocumentSlice', () => {
     it('should not be able to appendSceneNodeInternal to an undefined document', () => {
       const testNode: Partial<ISceneNodeInternal> = { ref: 'testNode' };
       const draft = { lastOperation: undefined, document: undefined, selectedSceneNodeRef: undefined };
-      const get = jest.fn().mockReturnValue({ document: undefined }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue({ document: undefined }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
       appendSceneNodeInternal(testNode as ISceneNodeInternal);
 
       expect(get).toBeCalled();
-      expect(appendSceneNode as jest.Mock).not.toBeCalled();
+      expect(appendSceneNode as vi.Mock).not.toBeCalled();
     });
 
     it('should be able to appendSceneNodeInternal to static scene', () => {
       const testNode: Partial<ISceneNodeInternal> = { ref: 'testNode' };
       const document = cloneDeep(valid);
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
-      const get = jest.fn().mockReturnValue({ document }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue({ document }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
       appendSceneNodeInternal(testNode as ISceneNodeInternal);
 
       expect(get).toBeCalled();
-      expect(appendSceneNode as jest.Mock).toBeCalledTimes(1);
-      expect(appendSceneNode as jest.Mock).toBeCalledWith(draft, testNode, undefined);
+      expect(appendSceneNode as vi.Mock).toBeCalledTimes(1);
+      expect(appendSceneNode as vi.Mock).toBeCalledWith(draft, testNode, undefined);
     });
 
     it(`should not be able to appendSceneNodeInternal to a document with an existing node.`, () => {
       const testNode: Partial<ISceneNodeInternal> = { ref: 'testNode' };
       const document = cloneDeep(validWithPreExistingNode);
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
-      const get = jest.fn().mockReturnValue({ document }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue({ document }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
       appendSceneNodeInternal(testNode as ISceneNodeInternal);
 
       expect(get).toBeCalled();
-      expect(appendSceneNode as jest.Mock).not.toBeCalled();
+      expect(appendSceneNode as vi.Mock).not.toBeCalled();
     });
 
     it('should be able to appendSceneNodeInternal to a dynamic scene', async () => {
@@ -327,14 +331,14 @@ describe('createSceneDocumentSlice', () => {
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
-      const appendSceneNodeInternalMock = jest.fn();
-      const get = jest.fn().mockReturnValue({
+      const appendSceneNodeInternalMock = vi.fn();
+      const get = vi.fn().mockReturnValue({
         document,
         appendSceneNodeInternal: appendSceneNodeInternalMock,
-        getObject3DBySceneNodeRef: jest.fn(),
+        getObject3DBySceneNodeRef: vi.fn(),
       }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
-      (createNodeEntity as jest.Mock).mockResolvedValue(null);
+      const set = vi.fn((callback) => callback(draft));
+      (createNodeEntity as vi.Mock).mockResolvedValue(null);
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -343,14 +347,14 @@ describe('createSceneDocumentSlice', () => {
       await flushPromises();
 
       expect(get).toBeCalledTimes(2);
-      expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
-      expect(createNodeEntity as jest.Mock).toBeCalledWith(testNode, 'scene-root');
+      expect(createNodeEntity as vi.Mock).toBeCalledTimes(1);
+      expect(createNodeEntity as vi.Mock).toBeCalledWith(testNode, 'scene-root');
       expect(appendSceneNodeInternalMock).toBeCalledTimes(1);
       expect(appendSceneNodeInternalMock).toBeCalledWith(
         { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } },
         undefined,
       );
-      expect(appendSceneNode as jest.Mock).not.toBeCalled();
+      expect(appendSceneNode as vi.Mock).not.toBeCalled();
     });
 
     it('should be able to appendSceneNodeInternal to a dynamic scene not reparented to root', async () => {
@@ -374,20 +378,20 @@ describe('createSceneDocumentSlice', () => {
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
-      const appendSceneNodeInternalMock = jest.fn();
-      const getObject3DBySceneNodeRefMock = jest.fn();
+      const appendSceneNodeInternalMock = vi.fn();
+      const getObject3DBySceneNodeRefMock = vi.fn();
       const parent = new Object3D();
       parent.position.set(2, 3, 4);
       parent.scale.set(8, 8, 9);
       parent.updateWorldMatrix(true, true);
       getObject3DBySceneNodeRefMock.mockReturnValue(parent);
-      const get = jest.fn().mockReturnValue({
+      const get = vi.fn().mockReturnValue({
         document,
         appendSceneNodeInternal: appendSceneNodeInternalMock,
         getObject3DBySceneNodeRef: getObject3DBySceneNodeRefMock,
       }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
-      (createNodeEntity as jest.Mock).mockResolvedValue(null);
+      const set = vi.fn((callback) => callback(draft));
+      (createNodeEntity as vi.Mock).mockResolvedValue(null);
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -396,8 +400,8 @@ describe('createSceneDocumentSlice', () => {
       await flushPromises();
 
       expect(get).toBeCalledTimes(2);
-      expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
-      expect(createNodeEntity as jest.Mock).toBeCalledWith(
+      expect(createNodeEntity as vi.Mock).toBeCalledTimes(1);
+      expect(createNodeEntity as vi.Mock).toBeCalledWith(
         {
           ...testNode,
         },
@@ -408,7 +412,7 @@ describe('createSceneDocumentSlice', () => {
         { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } },
         undefined,
       );
-      expect(appendSceneNode as jest.Mock).not.toBeCalled();
+      expect(appendSceneNode as vi.Mock).not.toBeCalled();
     });
 
     it('should be able to appendSceneNodeInternal to a dynamic scene and keep parentRef for sub model ref node', async () => {
@@ -432,20 +436,20 @@ describe('createSceneDocumentSlice', () => {
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
-      const appendSceneNodeInternalMock = jest.fn();
-      const getObject3DBySceneNodeRefMock = jest.fn();
+      const appendSceneNodeInternalMock = vi.fn();
+      const getObject3DBySceneNodeRefMock = vi.fn();
       const parent = new Object3D();
       parent.position.set(2, 3, 4);
       parent.scale.set(8, 8, 9);
       parent.updateWorldMatrix(true, true);
       getObject3DBySceneNodeRefMock.mockReturnValue(parent);
-      const get = jest.fn().mockReturnValue({
+      const get = vi.fn().mockReturnValue({
         document,
         appendSceneNodeInternal: appendSceneNodeInternalMock,
         getObject3DBySceneNodeRef: getObject3DBySceneNodeRefMock,
       }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
-      (createNodeEntity as jest.Mock).mockResolvedValue(null);
+      const set = vi.fn((callback) => callback(draft));
+      (createNodeEntity as vi.Mock).mockResolvedValue(null);
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -454,8 +458,8 @@ describe('createSceneDocumentSlice', () => {
       await flushPromises();
 
       expect(get).toBeCalledTimes(2);
-      expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
-      expect(createNodeEntity as jest.Mock).toBeCalledWith(
+      expect(createNodeEntity as vi.Mock).toBeCalledTimes(1);
+      expect(createNodeEntity as vi.Mock).toBeCalledWith(
         {
           ...testNode,
           parentRef: 'parentNode',
@@ -472,7 +476,7 @@ describe('createSceneDocumentSlice', () => {
         { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } },
         undefined,
       );
-      expect(appendSceneNode as jest.Mock).not.toBeCalled();
+      expect(appendSceneNode as vi.Mock).not.toBeCalled();
     });
 
     it('should add error message when appendSceneNodeInternal to a dynamic scene failed', async () => {
@@ -486,12 +490,12 @@ describe('createSceneDocumentSlice', () => {
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
-      const addMessagesMock = jest.fn();
-      const get = jest
+      const addMessagesMock = vi.fn();
+      const get = vi
         .fn()
-        .mockReturnValue({ document, addMessages: addMessagesMock, getObject3DBySceneNodeRef: jest.fn() }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
-      (createNodeEntity as jest.Mock).mockRejectedValue(new Error('create failed'));
+        .mockReturnValue({ document, addMessages: addMessagesMock, getObject3DBySceneNodeRef: vi.fn() }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
+      (createNodeEntity as vi.Mock).mockRejectedValue(new Error('create failed'));
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -500,8 +504,8 @@ describe('createSceneDocumentSlice', () => {
       await flushPromises();
 
       expect(get).toBeCalledTimes(2);
-      expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
-      expect(createNodeEntity as jest.Mock).toBeCalledWith(testNode, 'scene-root');
+      expect(createNodeEntity as vi.Mock).toBeCalledTimes(1);
+      expect(createNodeEntity as vi.Mock).toBeCalledWith(testNode, 'scene-root');
       expect(addMessagesMock).toBeCalledTimes(1);
       expect(addMessagesMock).toBeCalledWith([
         {
@@ -509,15 +513,15 @@ describe('createSceneDocumentSlice', () => {
           messageText: 'Create entity for node test failed with error: create failed',
         },
       ]);
-      expect(appendSceneNode as jest.Mock).not.toBeCalled();
+      expect(appendSceneNode as vi.Mock).not.toBeCalled();
     });
   });
 
   describe('renderSceneNodes', () => {
     it('should not be able to renderSceneNodes when document is undefined', () => {
       const draft = { document: undefined, lastOperation: undefined };
-      const get = jest.fn();
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn();
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { renderSceneNodes } = createSceneDocumentSlice(set, get);
@@ -534,8 +538,8 @@ describe('createSceneDocumentSlice', () => {
         componentNodeMap: {},
       };
       const draft = { lastOperation: undefined, document, sceneLoaded: false };
-      const get = jest.fn();
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn();
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { renderSceneNodes } = createSceneDocumentSlice(set, get);
@@ -555,8 +559,8 @@ describe('createSceneDocumentSlice', () => {
           lastOperation: undefined,
           document: { nodeMap: { testNode: { ref: 'testNode', properties: {} } } },
         };
-        const get = jest.fn().mockReturnValue(draft); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const get = vi.fn().mockReturnValue(draft); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -574,7 +578,7 @@ describe('createSceneDocumentSlice', () => {
 
   describe('updateSceneNodeInternalBatch', () => {
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     [true, false].forEach((isTransient) => {
@@ -584,8 +588,8 @@ describe('createSceneDocumentSlice', () => {
           lastOperation: undefined,
           document: { nodeMap: { testNode1: { ref: 'testNode', properties: {} } } },
         };
-        const get = jest.fn().mockReturnValue(draft); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const get = vi.fn().mockReturnValue(draft); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const { updateSceneNodeInternalBatch } = createSceneDocumentSlice(set, get);
@@ -605,8 +609,8 @@ describe('createSceneDocumentSlice', () => {
   it(`should be able to updateDocumentInternal`, () => {
     // Arrange
     const draft = { lastOperation: undefined, document: { nodeMap: { testNode: 'testNode' } } };
-    const get = jest.fn(); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const get = vi.fn(); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     // Act
     const { updateDocumentInternal } = createSceneDocumentSlice(set, get);
@@ -619,10 +623,10 @@ describe('createSceneDocumentSlice', () => {
   });
 
   it('should be able to appendSceneNode with selete node enabled', () => {
-    jest.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue({ ref: 'newNode' } as ISceneNodeInternal);
-    const appendSceneNodeInternal = jest.fn();
-    const get = jest.fn().mockReturnValue({ appendSceneNodeInternal }); // fake out get call
-    const set = jest.fn();
+    vi.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue({ ref: 'newNode' } as ISceneNodeInternal);
+    const appendSceneNodeInternal = vi.fn();
+    const get = vi.fn().mockReturnValue({ appendSceneNodeInternal }); // fake out get call
+    const set = vi.fn();
 
     const node = { childRefs: [] };
     const nodeWithChildren = { childRefs: ['ref]'] };
@@ -639,10 +643,10 @@ describe('createSceneDocumentSlice', () => {
   });
 
   it('should be able to appendSceneNode with selete node disabled', () => {
-    jest.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue({ ref: 'newNode' } as ISceneNodeInternal);
-    const appendSceneNodeInternal = jest.fn();
-    const get = jest.fn().mockReturnValue({ appendSceneNodeInternal }); // fake out get call
-    const set = jest.fn();
+    vi.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue({ ref: 'newNode' } as ISceneNodeInternal);
+    const appendSceneNodeInternal = vi.fn();
+    const get = vi.fn().mockReturnValue({ appendSceneNodeInternal }); // fake out get call
+    const set = vi.fn();
 
     const node = { childRefs: [] };
     const nodeWithChildren = { childRefs: ['ref]'] };
@@ -659,9 +663,9 @@ describe('createSceneDocumentSlice', () => {
   });
 
   it('should be able to updateSceneNode', () => {
-    const updateSceneNodeInternal = jest.fn();
-    const get = jest.fn().mockReturnValue({ updateSceneNodeInternal }); // fake out get call
-    const set = jest.fn();
+    const updateSceneNodeInternal = vi.fn();
+    const get = vi.fn().mockReturnValue({ updateSceneNodeInternal }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { updateSceneNode } = createSceneDocumentSlice(set, get);
@@ -674,8 +678,8 @@ describe('createSceneDocumentSlice', () => {
   describe('removeSceneNode', () => {
     it('should not be able to removeSceneNode when node not found', () => {
       const document = { nodeMap: { testNode: 'testNode' } };
-      const get = jest.fn().mockReturnValue({ document }); // fake out get call
-      const set = jest.fn();
+      const get = vi.fn().mockReturnValue({ document }); // fake out get call
+      const set = vi.fn();
 
       // Act
       const { removeSceneNode } = createSceneDocumentSlice(set, get);
@@ -705,8 +709,8 @@ describe('createSceneDocumentSlice', () => {
         },
       };
       const draft = { lastOperation: undefined, document };
-      const get = jest.fn().mockReturnValue({ document }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue({ document }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { removeSceneNode } = createSceneDocumentSlice(set, get);
@@ -723,8 +727,8 @@ describe('createSceneDocumentSlice', () => {
   it('should be able to listSceneRuleMapIds', () => {
     const statements = { testRule: { expression: 0, target: 'target' } };
     const document = { ruleMap: { rule1: { statements }, rule2: { statements } } };
-    const get = jest.fn().mockReturnValue({ document }); // fake out get call
-    const set = jest.fn();
+    const get = vi.fn().mockReturnValue({ document }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { listSceneRuleMapIds } = createSceneDocumentSlice(set, get);
@@ -737,8 +741,8 @@ describe('createSceneDocumentSlice', () => {
   it('should be able to getSceneRuleByMapId', () => {
     const statements = { testRule: { expression: 0, target: 'target' } };
     const document = { ruleMap: { rule1: { statements }, rule2: { statements } } };
-    const get = jest.fn().mockReturnValue({ document }); // fake out get call
-    const set = jest.fn();
+    const get = vi.fn().mockReturnValue({ document }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { getSceneRuleMapById } = createSceneDocumentSlice(set, get);
@@ -751,8 +755,8 @@ describe('createSceneDocumentSlice', () => {
   it('should not be able to getSceneRuleByMapId of undefined', () => {
     const statements = { testRule: { expression: 0, target: 'target' } };
     const document = { ruleMap: { rule1: { statements }, rule2: { statements } } };
-    const get = jest.fn().mockReturnValue({ document }); // fake out get call
-    const set = jest.fn();
+    const get = vi.fn().mockReturnValue({ document }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { getSceneRuleMapById } = createSceneDocumentSlice(set, get);
@@ -765,8 +769,8 @@ describe('createSceneDocumentSlice', () => {
     const statements = { testRule: { expression: 0, target: 'target' } };
     const document = { ruleMap: { rule1: { statements }, rule2: { statements } } };
     const draft = { lastOperation: undefined, document };
-    const get = jest.fn(); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const get = vi.fn(); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     // Act
     const { updateSceneRuleMapById } = createSceneDocumentSlice(set, get);
@@ -781,8 +785,8 @@ describe('createSceneDocumentSlice', () => {
     const statements = { testRule: { expression: 0, target: 'target' } };
     const document = { ruleMap: { rule1: { statements }, rule2: { statements } } };
     const draft = { lastOperation: undefined, document };
-    const get = jest.fn(); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const get = vi.fn(); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     // Act
     const { removeSceneRuleMapById } = createSceneDocumentSlice(set, get);
@@ -796,9 +800,9 @@ describe('createSceneDocumentSlice', () => {
   it('should be able to addComponentInternal', () => {
     const document = { nodeMap: { testNode: { components: [], properties: {} } }, componentNodeMap: {} };
     const draft = { lastOperation: undefined, document };
-    const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-    const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const getSceneNodeByRef = vi.fn().mockReturnValue(document.nodeMap.testNode);
+    const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
     const comp = { ref: 'comp-1', type: 'abc' };
 
     // Act
@@ -816,9 +820,9 @@ describe('createSceneDocumentSlice', () => {
   it('should not be able to addComponentInternal if not found', () => {
     const document = { nodeMap: { testNode: { components: [] } } };
     const draft = { lastOperation: undefined, document };
-    const getSceneNodeByRef = jest.fn();
-    const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const getSceneNodeByRef = vi.fn();
+    const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     // Act
     const { addComponentInternal } = createSceneDocumentSlice(set, get);
@@ -836,10 +840,10 @@ describe('createSceneDocumentSlice', () => {
           nodeMap: { testNode: { components: [{ ref: 'component1', data: 'original' }], properties: {} } },
         };
         const draft = { lastOperation: undefined, document };
-        const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-        const getSceneProperty = jest.fn();
-        const get = jest.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty }); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const getSceneNodeByRef = vi.fn().mockReturnValue(document.nodeMap.testNode);
+        const getSceneProperty = vi.fn();
+        const get = vi.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty }); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const { updateComponentInternal } = createSceneDocumentSlice(set, get);
@@ -863,14 +867,14 @@ describe('createSceneDocumentSlice', () => {
         nodeMap: { testNode: { components: [{ ref: 'component1', data: 'original' }] } },
       };
       const draft = { lastOperation: undefined, document };
-      const getSceneNodeByRef = jest.fn().mockImplementation((ref) => {
+      const getSceneNodeByRef = vi.fn().mockImplementation((ref) => {
         if (ref === 'testNode') {
           return document.nodeMap.testNode;
         }
         return undefined;
       });
-      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { updateComponentInternal } = createSceneDocumentSlice(set, get);
@@ -886,9 +890,9 @@ describe('createSceneDocumentSlice', () => {
       componentNodeMap: { abc: { testNode: ['component1'] } },
     };
     const draft = { lastOperation: undefined, document };
-    const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-    const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const getSceneNodeByRef = vi.fn().mockReturnValue(document.nodeMap.testNode);
+    const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     // Act
     const { removeComponent } = createSceneDocumentSlice(set, get);
@@ -908,14 +912,14 @@ describe('createSceneDocumentSlice', () => {
       nodeMap: { testNode: { components: [{ ref: 'component1', data: 'original' }] } },
     };
     const draft = { lastOperation: undefined, document };
-    const getSceneNodeByRef = jest.fn().mockImplementation((ref) => {
+    const getSceneNodeByRef = vi.fn().mockImplementation((ref) => {
       if (ref === 'testNode') {
         return document.nodeMap.testNode;
       }
       return undefined;
     });
-    const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-    const set = jest.fn((callback) => callback(draft));
+    const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+    const set = vi.fn((callback) => callback(draft));
 
     // Act
     const { removeComponent } = createSceneDocumentSlice(set, get);
@@ -931,8 +935,8 @@ describe('createSceneDocumentSlice', () => {
     const document = {
       properties: { matterportModelId: 'abc' },
     };
-    const get = jest.fn().mockReturnValue({ document }); // fake out get call
-    const set = jest.fn();
+    const get = vi.fn().mockReturnValue({ document }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { getSceneProperty } = createSceneDocumentSlice(set, get);
@@ -946,8 +950,8 @@ describe('createSceneDocumentSlice', () => {
 
   it('should return default with getSceneProperty if no properties set', () => {
     const document = {};
-    const get = jest.fn().mockReturnValue({ document }); // fake out get call
-    const set = jest.fn();
+    const get = vi.fn().mockReturnValue({ document }); // fake out get call
+    const set = vi.fn();
 
     // Act
     const { getSceneProperty } = createSceneDocumentSlice(set, get);
@@ -960,8 +964,8 @@ describe('createSceneDocumentSlice', () => {
   [{}, { properties: { environmentPreset: 'neutral' } }].forEach((document) => {
     it(`should be able to setSceneProperty ${document.properties ? 'with' : 'without'} set properties`, () => {
       const draft = { lastOperation: undefined, document };
-      const get = jest.fn(); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn(); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { setSceneProperty } = createSceneDocumentSlice(set, get);
@@ -984,8 +988,8 @@ describe('createSceneDocumentSlice', () => {
         } as IAnchorComponentInternal;
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
         const draft = { lastOperation: undefined, document };
-        const get = jest.fn().mockReturnValue({ document }); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const get = vi.fn().mockReturnValue({ document }); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get);
@@ -1012,8 +1016,8 @@ describe('createSceneDocumentSlice', () => {
         };
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
         const draft = { lastOperation: undefined, document };
-        const get = jest.fn().mockReturnValue({ document }); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const get = vi.fn().mockReturnValue({ document }); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get);
@@ -1033,8 +1037,8 @@ describe('createSceneDocumentSlice', () => {
         } as IAnchorComponentInternal;
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
         const draft = { lastOperation: undefined, document };
-        const get = jest.fn().mockReturnValue({ document }); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const get = vi.fn().mockReturnValue({ document }); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get);
@@ -1052,8 +1056,8 @@ describe('createSceneDocumentSlice', () => {
         } as IAnchorComponentInternal;
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
         const draft = { lastOperation: undefined, document };
-        const get = jest.fn().mockReturnValue({ document }); // fake out get call
-        const set = jest.fn((callback) => callback(draft));
+        const get = vi.fn().mockReturnValue({ document }); // fake out get call
+        const set = vi.fn((callback) => callback(draft));
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get);
@@ -1070,8 +1074,8 @@ describe('createSceneDocumentSlice', () => {
     const document = {
       componentNodeMap: { abc: { node: ['comp'] } },
     };
-    const get = jest.fn();
-    const set = jest.fn();
+    const get = vi.fn();
+    const set = vi.fn();
     get.mockReturnValueOnce({ document: { componentNodeMap: {} } });
     get.mockReturnValueOnce({ document });
     get.mockReturnValueOnce({ document });
@@ -1097,10 +1101,10 @@ describe('createSceneDocumentSlice', () => {
       it(`should be able to findSceneNodeByRef of ${
         ['tagComponent', 'modelShaderComponent', 'otherComponent', 'none'][index]
       }`, () => {
-        (containsMatchingEntityComponent as jest.Mock).mockReturnValue(true);
+        (containsMatchingEntityComponent as vi.Mock).mockReturnValue(true);
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
-        const get = jest.fn().mockReturnValue({ document }); // fake out get call
-        const set = jest.fn();
+        const get = vi.fn().mockReturnValue({ document }); // fake out get call
+        const set = vi.fn();
 
         // Act
         const { findSceneNodeRefBy } = createSceneDocumentSlice(set, get);
@@ -1116,15 +1120,15 @@ describe('createSceneDocumentSlice', () => {
     });
 
     it('should not return ref when no matching for the component type filter', () => {
-      (containsMatchingEntityComponent as jest.Mock).mockReturnValue(true);
+      (containsMatchingEntityComponent as vi.Mock).mockReturnValue(true);
       const document = {
         nodeMap: {
           testTagNode: { ref: 'tagRef', components: [tagComponent] },
           testShaderNode: { ref: 'shaderRef', components: [modelShaderComponent] },
         },
       };
-      const get = jest.fn().mockReturnValue({ document }); // fake out get call
-      const set = jest.fn();
+      const get = vi.fn().mockReturnValue({ document }); // fake out get call
+      const set = vi.fn();
 
       const { findSceneNodeRefBy } = createSceneDocumentSlice(set, get);
 
@@ -1168,8 +1172,8 @@ describe('createSceneDocumentSlice', () => {
     it('should not call update entity for updateSceneNodeInternal action when skip flag is on', () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const get = jest.fn().mockReturnValue(draft); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue(draft); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -1184,8 +1188,8 @@ describe('createSceneDocumentSlice', () => {
     it('should call update entity for updateSceneNodeInternal action', () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const get = jest.fn().mockReturnValue(draft); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue(draft); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -1207,8 +1211,8 @@ describe('createSceneDocumentSlice', () => {
     it('should call update entity for updateSceneNodeInternal action with components update', () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const get = jest.fn().mockReturnValue(draft); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const get = vi.fn().mockReturnValue(draft); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get);
@@ -1233,9 +1237,9 @@ describe('createSceneDocumentSlice', () => {
     it('should call update entity for addComponentInternal action', () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const getSceneNodeByRef = vi.fn().mockReturnValue(document.nodeMap.testNode);
+      const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
       const comp = { ref: 'comp-1', type: 'abc' };
 
       // Act
@@ -1251,9 +1255,9 @@ describe('createSceneDocumentSlice', () => {
     it('should call update entity for updateComponentInternal action', () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
+      const getSceneNodeByRef = vi.fn().mockReturnValue(document.nodeMap.testNode);
+      const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
 
       // Act
       const { updateComponentInternal } = createSceneDocumentSlice(set, get);
@@ -1272,11 +1276,11 @@ describe('createSceneDocumentSlice', () => {
     it('should call delete entity for removeSceneNode action', async () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const get = jest.fn().mockReturnValue({ document }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
-      const onFlashMessage = jest.fn();
+      const get = vi.fn().mockReturnValue({ document }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
+      const onFlashMessage = vi.fn();
       setOnFlashMessage(onFlashMessage);
-      (deleteNodeEntity as jest.Mock).mockResolvedValue({});
+      (deleteNodeEntity as vi.Mock).mockResolvedValue({});
 
       // Act
       const { removeSceneNode } = createSceneDocumentSlice(set, get);
@@ -1295,12 +1299,12 @@ describe('createSceneDocumentSlice', () => {
     it('should call update entity for removeComponent action', async () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
-      const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
-      const set = jest.fn((callback) => callback(draft));
-      const onFlashMessage = jest.fn();
+      const getSceneNodeByRef = vi.fn().mockReturnValue(document.nodeMap.testNode);
+      const get = vi.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = vi.fn((callback) => callback(draft));
+      const onFlashMessage = vi.fn();
       setOnFlashMessage(onFlashMessage);
-      (updateEntity as jest.Mock).mockResolvedValue({});
+      (updateEntity as vi.Mock).mockResolvedValue({});
 
       // Act
       const { removeComponent } = createSceneDocumentSlice(set, get);

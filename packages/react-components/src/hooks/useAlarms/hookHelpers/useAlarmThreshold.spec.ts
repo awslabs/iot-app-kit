@@ -32,12 +32,12 @@ const MOCK_THRESHOLD_2 = 15;
 
 describe('useAlarmThreshold', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 
   it('fetches the latest threshold asset property when no viewport is provided.', async () => {
-    const onUpdateAlarmThresholdData = jest.fn();
+    const onUpdateAlarmThresholdData = vi.fn();
     batchGetAssetPropertyValueMock.mockImplementation(
       (request: BatchGetAssetPropertyValueRequest) => {
         return {
@@ -133,8 +133,8 @@ describe('useAlarmThreshold', () => {
   });
 
   it('fetches the latest threshold asset property within a viewport.', async () => {
-    const onUpdateAlarmThresholdData = jest.fn();
-    jest.useFakeTimers();
+    const onUpdateAlarmThresholdData = vi.fn();
+    vi.useFakeTimers();
 
     const mockAssetProperty1 = mockDoubleAssetPropertyValue(
       MOCK_THRESHOLD,
@@ -243,16 +243,16 @@ describe('useAlarmThreshold', () => {
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
 
     act(() => {
-      jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
+      vi.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
     });
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('no queries run when hook disabled', async () => {
-    const onUpdateAlarmThresholdData = jest.fn();
+    const onUpdateAlarmThresholdData = vi.fn();
     renderHook(() =>
       useAlarmThreshold({
         onUpdateAlarmThresholdData,

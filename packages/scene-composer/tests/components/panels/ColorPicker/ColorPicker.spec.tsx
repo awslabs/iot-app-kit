@@ -2,19 +2,19 @@ import { act, render } from '@testing-library/react';
 
 import { ColorPicker } from '../../../../src/components/panels/ColorPicker/ColorPicker';
 
-jest.mock('@cloudscape-design/components', () => ({
+vi.mock('@cloudscape-design/components', () => ({
   SpaceBetween: 'space-between',
   Input: 'input',
   FormField: 'form-field',
 }));
 
-const onChangeMock = jest.fn();
+const onChangeMock = vi.fn();
 const undefinedColor = <ColorPicker color={undefined} onChange={onChangeMock} />;
 const definedColor = <ColorPicker color='#010101' onChange={onChangeMock} />;
 
 describe('ColorPicker', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should load', async () => {

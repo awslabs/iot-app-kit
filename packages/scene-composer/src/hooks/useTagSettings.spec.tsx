@@ -5,15 +5,15 @@ import { componentSettingsSelector } from '../utils/componentSettingsUtils';
 
 import useTagSettings from './useTagSettings';
 
-jest.mock('../utils/componentSettingsUtils');
+vi.mock('../utils/componentSettingsUtils');
 
 describe('useTagSettings', () => {
-  const isViewingMock = jest.fn();
+  const isViewingMock = vi.fn();
   const settingsDocument = { scale: 2, autoScale: true };
   const settingsViewOption = { scale: 4, autoRescale: false };
 
   beforeEach(() => {
-    (componentSettingsSelector as jest.Mock).mockReturnValue(settingsDocument);
+    (componentSettingsSelector as vi.Mock).mockReturnValue(settingsDocument);
     accessStore('default').setState({
       noHistoryStates: {
         ...accessStore('default').getState().noHistoryStates,

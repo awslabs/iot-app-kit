@@ -1,20 +1,20 @@
 /* eslint-disable import/first */
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
+import { ToolbarOrientation } from '../../../../../src/components/toolbars/common/types';
 import { SceneItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
 import { accessStore } from '../../../../../src/store';
-import { ToolbarOrientation } from '../../../../../src/components/toolbars/common/types';
 
 describe('SceneItemGroup', () => {
   const cameraControlsType = 'orbit';
-  const setCameraControlsType = jest.fn();
+  const setCameraControlsType = vi.fn();
 
   beforeEach(() => {
     accessStore('default').setState({
       cameraControlsType,
       setCameraControlsType,
     } as any);
-    jest.clearAllMocks();
+    viarAllMocks();
   });
 
   it('should call setCameraControlsType when clicking pan', () => {

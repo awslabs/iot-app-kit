@@ -15,7 +15,7 @@ const TestProvider: React.FC<{
 const widgetId = 'widgetId';
 
 describe('useAssistantConfiguration', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('should return assistant property when dashboard mode is readonly', () => {
     const { result } = renderHook(

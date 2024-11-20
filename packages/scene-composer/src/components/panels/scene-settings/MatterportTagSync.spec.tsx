@@ -1,38 +1,36 @@
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@/tests/testing-library';
 import { type MpSdk } from '@matterport/r3f/dist';
-
 import { type ISceneNodeInternal, accessStore } from '../../../store';
 import { type MattertagItem, type TagItem } from '../../../utils/matterportTagUtils';
-
 import { MatterportTagSync } from './MatterportTagSync';
 
-const getMatterTagsMock = jest.fn();
-const getTagsMock = jest.fn();
-jest.mock('../../../hooks/useMatterportObserver', () => {
-  return jest.fn(() => ({
+const getMatterTagsMock = vi.fn();
+const getTagsMock = vi.fn();
+vi.mock('../../../hooks/useMatterportObserver', () => ({
+  default: vi.fn(() => ({
     mattertagObserver: {
       getMattertags: getMatterTagsMock,
     },
     tagObserver: {
       getTags: getTagsMock,
     },
-  }));
-});
+  })),
+}));
 
-const handleAddMatterportTagMock = jest.fn();
-const handleUpdateMatterportTagMock = jest.fn();
-const handleRemoveMatterportTagMock = jest.fn();
-jest.mock('../../../hooks/useMatterportTags', () => {
-  return jest.fn(() => ({
+const handleAddMatterportTagMock = vi.fn();
+const handleUpdateMatterportTagMock = vi.fn();
+const handleRemoveMatterportTagMock = vi.fn();
+vi.mock('../../../hooks/useMatterportTags', () => ({
+  default: vi.fn(() => ({
     handleAddMatterportTag: handleAddMatterportTagMock,
     handleUpdateMatterportTag: handleUpdateMatterportTagMock,
     handleRemoveMatterportTag: handleRemoveMatterportTagMock,
-  }));
-});
+  })),
+}));
 
 describe('MatterportTagSync', () => {
-  const getComponentRefByTypeMock = jest.fn();
-  const getSceneNodeByRefMock = jest.fn();
+  const getComponentRefByTypeMock = vi.fn();
+  const getSceneNodeByRefMock = vi.fn();
 
   const baseState = {
     getComponentRefByType: getComponentRefByTypeMock,
@@ -90,7 +88,7 @@ describe('MatterportTagSync', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly', async () => {

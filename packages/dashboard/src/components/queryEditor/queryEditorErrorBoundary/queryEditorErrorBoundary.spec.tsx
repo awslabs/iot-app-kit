@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 
 import { QueryEditorErrorBoundary } from './queryEditorErrorBoundary';
 import { ErrorBoundaryTester } from '../helpers/test/errorBoundaryTester';
 
 describe(QueryEditorErrorBoundary, () => {
   it('should render an error boundary', async () => {
-    const user = userEvent.setup();
+    const user = ue.setup();
     render(
       <QueryEditorErrorBoundary>
         <ErrorBoundaryTester />

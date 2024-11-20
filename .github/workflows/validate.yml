@@ -50,6 +50,7 @@ jobs:
     needs: repo
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         package:
           [
@@ -113,6 +114,7 @@ jobs:
     needs: repo
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         package: [dashboard, react-components, scene-composer]
     steps:

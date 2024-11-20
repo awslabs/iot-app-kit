@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { IconPicker } from './IconPicker';
 
 describe('IconPicker', () => {
-  const mockOnSelectIconChange = jest.fn();
+  const mockOnSelectIconChange = vi.fn();
   const mockIconPickerLabel = 'Icon';
   const mockSelectedIcon = {
     prefix: 'abc',

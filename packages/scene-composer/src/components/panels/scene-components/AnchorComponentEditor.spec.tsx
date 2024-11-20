@@ -1,24 +1,24 @@
+import { render, waitFor } from '@/tests/testing-library';
 import { useCallback } from 'react';
-import { render, waitFor } from '@testing-library/react';
 
-import { type IAnchorComponentInternal, accessStore } from '../../../store';
 import {
   mockBinding,
-  mockNode,
   mockComponent,
+  mockNode,
   mockProvider,
 } from '../../../../tests/components/panels/scene-components/MockComponents';
+import { type IAnchorComponentInternal, accessStore } from '../../../store';
 
 import { AnchorComponentEditor, convertParamsToKeyValuePairs } from './AnchorComponentEditor';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn().mockImplementation((cb) => cb),
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useCallback: vi.fn().mockImplementation((cb) => cb),
 }));
 
-jest.mock('../../../common/GlobalSettings');
+vi.mock('../../../common/GlobalSettings');
 
-const updateComponentInternalFn = jest.fn();
+const updateComponentInternalFn = vi.fn();
 
 const mockEditorConfig = {
   valueDataBindingProvider: mockProvider,
@@ -26,21 +26,21 @@ const mockEditorConfig = {
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,
-  getEditorConfig: jest.fn(() => {
+  getEditorConfig: vi.fn(() => {
     return mockEditorConfig;
   }),
 };
 
-jest.mock('../../../../src/store/Store', () => {
-  const originalModule = jest.requireActual('../../../../src/store/Store');
+vi.mock('../../../../src/store/Store', async () => {
+  const originalModule = await vi.importActual('../../../../src/store/Store');
   return {
     __esModule: true,
     ...originalModule,
-    useSceneDocument: jest.fn(() => ({
+    useSceneDocument: vi.fn(() => ({
       document: {},
-      getSceneProperty: jest.fn(),
-      getSceneRuleMapById: jest.fn(),
-      listSceneRuleMapIds: jest.fn(() => {
+      getSceneProperty: vi.fn(),
+      getSceneRuleMapById: vi.fn(),
+      listSceneRuleMapIds: vi.fn(() => {
         return ['rule1'];
       }),
     })),
@@ -60,7 +60,7 @@ describe('AnchorComponentEditor', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render with tag style', () => {
@@ -74,7 +74,7 @@ describe('AnchorComponentEditor', () => {
       accessStore('default').setState(baseState);
 
       render(<AnchorComponentEditor node={mockNode} component={anchorComponent} />);
-      const callbackFn = (useCallback as jest.Mock).mock.calls[1][0];
+      const callbackFn = (useCallback as vi.Mock).mock.calls[1][0];
 
       callbackFn({ ref: 'ref', prop: 'value' });
 

@@ -1,11 +1,11 @@
-import { type Arguments } from 'yargs';
 import {
-  workspaceId,
-  s3BucketArn,
-  s3ContentLocationBase,
-  workspaceBucket,
-} from './test-utils';
-import { mockClient } from 'aws-sdk-client-mock';
+  AttachRolePolicyCommand,
+  CreatePolicyCommand,
+  CreateRoleCommand,
+  GetRoleCommand,
+  IAMClient,
+  NoSuchEntityException,
+} from '@aws-sdk/client-iam';
 import {
   CreateComponentTypeCommand,
   CreateEntityCommand,
@@ -18,18 +18,6 @@ import {
   ResourceNotFoundException,
 } from '@aws-sdk/client-iottwinmaker';
 import {
-  componentTypeWithInheritedProperty,
-  modifiedComponentTypeWithInheritedProperty,
-  componentTypeWithDefaultValue,
-  modifiedComponentTypeWithDefaultValue,
-  emptyTmdt,
-  componentType1Definition,
-  scene1,
-  entity1Definition,
-  fakeRole,
-  fakePolicy,
-} from './test-constants';
-import {
   CreateBucketCommand,
   PutBucketAclCommand,
   PutBucketCorsCommand,
@@ -40,26 +28,38 @@ import {
   PutPublicAccessBlockCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
-import * as fsPromises from 'fs/promises';
-import { handler, type Options } from './deploy';
-import * as fs from 'fs';
-import * as prompts from 'prompts';
-import {
-  AttachRolePolicyCommand,
-  CreatePolicyCommand,
-  CreateRoleCommand,
-  GetRoleCommand,
-  IAMClient,
-  NoSuchEntityException,
-} from '@aws-sdk/client-iam';
 import { GetCallerIdentityCommand, STSClient } from '@aws-sdk/client-sts';
+import { mockClient } from 'aws-sdk-client-mock';
+import * as fs from 'fs';
+import * as fsPromises from 'fs/promises';
+import * as prompts from 'prompts';
+import { type Arguments } from 'yargs';
+import { handler, type Options } from './deploy';
+import {
+  componentType1Definition,
+  componentTypeWithDefaultValue,
+  componentTypeWithInheritedProperty,
+  emptyTmdt,
+  entity1Definition,
+  fakePolicy,
+  fakeRole,
+  modifiedComponentTypeWithDefaultValue,
+  modifiedComponentTypeWithInheritedProperty,
+  scene1,
+} from './test-constants';
+import {
+  s3BucketArn,
+  s3ContentLocationBase,
+  workspaceBucket,
+  workspaceId,
+} from './test-utils';
 
-jest.mock('fs', () => ({
+vi.mock('fs', async () => ({
   __esModule: true, // Use it when dealing with esModules
-  ...jest.requireActual('fs'),
+  ...(await vi.importActual('fs')),
 }));
-jest.mock('fs/promises', () => {
-  return { readFile: jest.fn() };
+vi.mock('fs/promises', () => {
+  return { readFile: vi.fn() };
 });
 const twinmakerMock = mockClient(IoTTwinMakerClient);
 const s3Mock = mockClient(S3Client);
@@ -68,8 +68,8 @@ const stsMock = mockClient(STSClient);
 const fakeTmdtDir = '/tmp/deploy-unit-tests';
 
 const emptyProjectSpy = () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+  vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+  vi.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
     if (path.includes('tmdt')) {
       return JSON.stringify(emptyTmdt, null, 4);
@@ -106,7 +106,7 @@ beforeEach(() => {
   twinmakerMock.reset();
   s3Mock.reset();
   iamMock.reset();
-  jest.resetAllMocks();
+  vi.resetAllMocks();
 });
 
 it('throws error when given tmdt project that does not exist', async () => {
@@ -227,8 +227,8 @@ it('creates new workspace when given workspace that does not exist and a user pr
 });
 
 it('deploys successfully when given a tmdt project with one component type', async () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+  vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+  vi.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
     if (path.includes('tmdt')) {
       const tmdt1Ct = JSON.parse(JSON.stringify(emptyTmdt));
@@ -267,8 +267,8 @@ it('deploys successfully when given a tmdt project with one component type', asy
 });
 
 it('deploys successfully when given a tmdt project with one scene with one model', async () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+  vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+  vi.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
     if (path.includes('tmdt')) {
       const tmdt1SceneAndModel = JSON.parse(JSON.stringify(emptyTmdt));
@@ -280,7 +280,7 @@ it('deploys successfully when given a tmdt project with one scene with one model
       return JSON.stringify([], null, 4);
     }
   });
-  jest.spyOn(fsPromises, 'readFile').mockImplementation(async (path) => {
+  vi.spyOn(fsPromises, 'readFile').mockImplementation(async (path) => {
     if (path.toString().includes('scene1')) {
       return Promise.resolve(JSON.stringify(scene1, null, 4));
     } else {
@@ -324,8 +324,8 @@ it('deploys successfully when given a tmdt project with one scene with one model
 });
 
 it('deploys successfully when given a tmdt project with one entity', async () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+  vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+  vi.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
     if (path.includes('tmdt')) {
       const tmdt1Ct = JSON.parse(JSON.stringify(emptyTmdt));
@@ -365,8 +365,8 @@ it('deploys successfully when given a tmdt project with one entity', async () =>
 });
 
 it('deploys successfully when a component type has an inherited property by removing inherited values', async () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+  vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+  vi.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
     if (path.includes('tmdt')) {
       const tmdt1Ct = JSON.parse(JSON.stringify(emptyTmdt));
@@ -406,8 +406,8 @@ it('deploys successfully when a component type has an inherited property by remo
 });
 
 it('deploys successfully when a component type has an inherited property with defaultValue by removing inherited values', async () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+  vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+  vi.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
     if (path.includes('tmdt')) {
       const tmdt1Ct = JSON.parse(JSON.stringify(emptyTmdt));

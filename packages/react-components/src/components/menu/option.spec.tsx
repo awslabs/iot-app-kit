@@ -16,7 +16,7 @@ it('renders', () => {
 });
 
 it('is actionable', () => {
-  const mockAction = jest.fn();
+  const mockAction = vi.fn();
   render(<MenuOption label='test option' action={mockAction} />);
 
   act(() => {
@@ -27,7 +27,7 @@ it('is actionable', () => {
 });
 
 it('is not actionable when disabled', () => {
-  const mockAction = jest.fn();
+  const mockAction = vi.fn();
   render(<MenuOption label='test option' disabled action={mockAction} />);
 
   act(() => {

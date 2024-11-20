@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`useSelectedObject should return the object from the store 1`] = `
+exports[`useSelectedObject > should return the object from the store 1`] = `
 {
   "activeCameraName": undefined,
   "activeCameraSettings": {

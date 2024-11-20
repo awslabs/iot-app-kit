@@ -5,7 +5,7 @@ import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import { deleteNodeEntity } from './deleteNodeEntity';
 
 describe('deleteNodeEntity', () => {
-  const deleteSceneEntity = jest.fn();
+  const deleteSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     deleteSceneEntity,
   };

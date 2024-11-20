@@ -6,7 +6,7 @@ import flushPromises from 'flush-promises';
 import { QueryClient } from '@tanstack/query-core';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 
-const getPropertyValue = jest.fn();
+const getPropertyValue = vi.fn();
 const tmClient = createMockTwinMakerSDK({ getPropertyValue });
 const queryClient = new QueryClient();
 const mockEntityRef1 = {
@@ -48,7 +48,7 @@ it('should subscribes, updates, and unsubscribes to property value data', async 
     }
   );
 
-  const subscribeCallback = jest.fn();
+  const subscribeCallback = vi.fn();
 
   // subscribe
   provider.subscribe({ next: subscribeCallback });

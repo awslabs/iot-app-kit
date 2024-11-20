@@ -174,7 +174,7 @@ export function Matrix3XInputGrid<T>({
         <label id={`${name}_label`}>{name}</label>
       </Box>{' '}
       <Grid gridDefinition={[{ colspan: 4 }, { colspan: 4 }, { colspan: 4 }]}>
-        {values.map((value, index) => (
+        {values.map((_value, index) => (
           <MatrixCell key={index}>
             <MatrixLabel>
               <TextContent>

@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ObjectItemGroupSnap should correctly render horizontally 1`] = `
+exports[`ObjectItemGroupSnap > should correctly render horizontally 1`] = `
 <div>
   <div
-    class="sc-fqkvVR eA-dzJj"
+    class="sc-fqkvVR TuwzD"
   >
     <div
       data-testid="ToolbarItem"
@@ -19,10 +19,10 @@ exports[`ObjectItemGroupSnap should correctly render horizontally 1`] = `
 </div>
 `;
 
-exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Overlay is selected 1`] = `
+exports[`ObjectItemGroupSnap > should render with disabled rotate and scale when Overlay is selected 1`] = `
 <div>
   <div
-    class="sc-fqkvVR qzUpD"
+    class="sc-fqkvVR ktHDAv"
   >
     <div
       data-testid="ToolbarItem"
@@ -38,10 +38,10 @@ exports[`ObjectItemGroupSnap should render with disabled rotate and scale when O
 </div>
 `;
 
-exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Tag is selected 1`] = `
+exports[`ObjectItemGroupSnap > should render with disabled rotate and scale when Tag is selected 1`] = `
 <div>
   <div
-    class="sc-fqkvVR qzUpD"
+    class="sc-fqkvVR ktHDAv"
   >
     <div
       data-testid="ToolbarItem"

@@ -4,15 +4,15 @@ import AnchorComponent from '..';
 import { DefaultAnchorStatus } from '../../../..';
 import { type IAnchorComponentInternal, type ISceneNodeInternal } from '../../../../store';
 
-jest.mock('../../../../augmentations/components/three-fiber/anchor/AnchorWidget', () => ({
+vi.mock('../../../../augmentations/components/three-fiber/anchor/AnchorWidget', () => ({
   AnchorWidget: 'AnchorWidget',
 }));
 
-jest.mock('../../../../store', () => {
-  const originalModule = jest.requireActual('../../../../store');
+vi.mock('../../../../store', async () => {
+  const originalModule = await vi.importActual('../../../../store');
   return {
     ...originalModule,
-    accessStore: jest.fn(() => () => ({ rule: { expression: 'test' } })),
+    accessStore: vi.fn(() => () => ({ rule: { expression: 'test' } })),
   };
 });
 

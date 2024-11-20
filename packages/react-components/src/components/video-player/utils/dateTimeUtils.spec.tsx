@@ -27,7 +27,7 @@ it('should return correct seek time', () => {
         left: 0,
         right: 0,
         top: 0,
-        toJSON: jest.fn(),
+        toJSON: vi.fn(),
       },
       1665583620000,
       1665583720000

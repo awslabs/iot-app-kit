@@ -13,14 +13,14 @@ describe('LinearPlaneMotionIndicator', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should render correctly', async () => {
     const mockTextureRef: any = {
       current: {},
     };
-    jest.spyOn(helpers, 'useArrowTexture').mockReturnValue(mockTextureRef);
+    vi.spyOn(helpers, 'useArrowTexture').mockReturnValue(mockTextureRef);
 
     const container = create(<LinearPlaneMotionIndicator {...baseProps} />);
 

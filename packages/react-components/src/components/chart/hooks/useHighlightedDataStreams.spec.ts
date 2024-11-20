@@ -1,94 +1,100 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useHighlightedDataStreams } from './useHighlightedDataStreams';
 
-describe('useHighlightedDataStreams', () => {
-  it('can highlight data streams', () => {
-    const { result, rerender } = renderHook(() => useHighlightedDataStreams());
+vi.mock('zustand');
 
-    expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+it('can highlight data streams', () => {
+  const { result, rerender } = renderHook(() => useHighlightedDataStreams());
 
-    result.current.highlightDataStream({ id: '1' });
+  expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
 
-    rerender();
+  result.current.highlightDataStream({ id: '1' });
 
-    expect(result.current.highlightedDataStreams).toEqual(
-      expect.arrayContaining([{ id: '1' }])
-    );
-  });
+  rerender();
 
-  it('can unhighlight data streams', () => {
-    const { result, rerender } = renderHook(() => useHighlightedDataStreams());
+  expect(result.current.highlightedDataStreams).toEqual(
+    expect.arrayContaining([{ id: '1' }])
+  );
+});
 
-    result.current.highlightDataStream({ id: '1' });
+it('can unhighlight data streams', () => {
+  const { result, rerender } = renderHook(() => useHighlightedDataStreams());
 
-    rerender();
+  result.current.highlightDataStream({ id: '1' });
 
-    result.current.unHighlightDataStream({ id: '1' });
+  rerender();
 
-    rerender();
+  result.current.unHighlightDataStream({ id: '1' });
 
-    expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
-  });
+  rerender();
 
-  it('has a list of highlighted data streams', () => {
-    const { result, rerender } = renderHook(() => useHighlightedDataStreams());
+  expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+});
 
-    expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+it('has a list of highlighted data streams', () => {
+  const { result, rerender } = renderHook(() => useHighlightedDataStreams());
 
-    result.current.highlightDataStream({ id: '1' });
-    result.current.highlightDataStream({ id: '2' });
+  expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
 
-    rerender();
+  result.current.highlightDataStream({ id: '1' });
+  result.current.highlightDataStream({ id: '2' });
 
-    expect(result.current.highlightedDataStreams).toEqual(
-      expect.arrayContaining([{ id: '1' }, { id: '2' }])
-    );
+  rerender();
 
-    result.current.unHighlightDataStream({ id: '1' });
+  expect(result.current.highlightedDataStreams).toEqual(
+    expect.arrayContaining([{ id: '1' }, { id: '2' }])
+  );
 
-    rerender();
+  result.current.unHighlightDataStream({ id: '1' });
 
-    expect(result.current.highlightedDataStreams).toEqual(
-      expect.arrayContaining([{ id: '2' }])
-    );
-  });
+  rerender();
 
-  it('can toggle a datastreams highlighting', () => {
-    const { result, rerender } = renderHook(() => useHighlightedDataStreams());
+  expect(result.current.highlightedDataStreams).toEqual(
+    expect.arrayContaining([{ id: '2' }])
+  );
+});
 
-    expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+it('can toggle a datastreams highlighting', () => {
+  const { result, rerender } = renderHook(() => useHighlightedDataStreams());
 
+  act(() => {});
+
+  expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+
+  act(() => {
     result.current.toggleHighlighted({ id: '1' });
+  });
 
-    rerender();
+  rerender();
 
-    expect(result.current.highlightedDataStreams).toEqual(
-      expect.arrayContaining([{ id: '1' }])
-    );
+  expect(result.current.highlightedDataStreams).toEqual(
+    expect.arrayContaining([{ id: '1' }])
+  );
 
+  act(() => {
     result.current.toggleHighlighted({ id: '1' });
-
-    rerender();
-
-    expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
   });
 
-  it('can check if a datastream is highlighted', () => {
-    const { result, rerender } = renderHook(() => useHighlightedDataStreams());
+  rerender();
 
-    expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+  expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
+});
 
-    result.current.highlightDataStream({ id: '1' });
-    result.current.highlightDataStream({ id: '2' });
+it('can check if a datastream is highlighted', () => {
+  const { result, rerender } = renderHook(() => useHighlightedDataStreams());
 
-    rerender();
+  expect(result.current.highlightedDataStreams).toBeArrayOfSize(0);
 
-    expect(result.current.isDataStreamHighlighted({ id: '1' })).toBeTrue();
+  result.current.highlightDataStream({ id: '1' });
+  result.current.highlightDataStream({ id: '2' });
 
-    result.current.unHighlightDataStream({ id: '1' });
+  rerender();
 
-    rerender();
+  expect(result.current.isDataStreamHighlighted({ id: '1' })).toBeTrue();
 
-    expect(result.current.isDataStreamHighlighted({ id: '1' })).toBeFalse();
-  });
+  result.current.unHighlightDataStream({ id: '1' });
+
+  rerender();
+
+  expect(result.current.isDataStreamHighlighted({ id: '1' })).toBeFalse();
 });

@@ -3,12 +3,6 @@ module.exports = {
   extends: ['iot-app-kit', 'plugin:react-hooks/recommended'],
   plugins: ['formatjs', 'react-hooks'],
   rules: {
-    'import/order': [
-      'error',
-      {
-        'newlines-between': 'always',
-      },
-    ],
     // note you must disable the base rule as it can report incorrect errors
     'no-template-curly-in-string': 'off',
     'no-use-before-define': 'off',
@@ -62,4 +56,14 @@ module.exports = {
     'tools/watch-build.js',
     'src/assets/auto-gen/icons/*',
   ],
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: ['packages/scene-composer/tsconfig.json'],
+      },
+      node: {
+        project: ['packages/scene-composer/tsconfig.json'],
+      },
+    },
+  },
 };

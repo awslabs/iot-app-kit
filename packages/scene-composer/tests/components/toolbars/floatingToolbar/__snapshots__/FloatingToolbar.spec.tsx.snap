@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// vi Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FloatingToolbar should display the toolbar horiontally if the canvas is small 1`] = `
 <div>

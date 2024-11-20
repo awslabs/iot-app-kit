@@ -43,7 +43,7 @@ const mockAssetProperty2 = mockStringAssetPropertyValue(
 
 const VIEWPORT = { duration: '5m' };
 
-const onUpdateAlarmStateData = jest.fn();
+const onUpdateAlarmStateData = vi.fn();
 
 const waitForLoading = async (viewport?: Viewport) => {
   await waitFor(() => {
@@ -75,12 +75,12 @@ const waitForLoading = async (viewport?: Viewport) => {
 
 describe('useAlarmState', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 
   it('fetches the latest asset property when no viewport is provided.', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     batchGetAssetPropertyValueMock.mockImplementation(
       (request: BatchGetAssetPropertyValueRequest) => {
@@ -155,16 +155,16 @@ describe('useAlarmState', () => {
     expect(batchGetAssetPropertyValueMock).toHaveBeenCalledOnce();
 
     act(() => {
-      jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
+      vi.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
     });
 
     expect(batchGetAssetPropertyValueMock).toHaveBeenCalledTimes(2);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('fetches the latest asset property within a viewport.', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     batchGetAssetPropertyValueHistoryMock.mockImplementation(
       (request: BatchGetAssetPropertyValueHistoryRequest) => {
@@ -238,16 +238,16 @@ describe('useAlarmState', () => {
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
 
     act(() => {
-      jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
+      vi.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
     });
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('fetches values within a viewport and one value before the start', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     const mockAssetPropertyBeforeStart = mockStringAssetPropertyValue(
       mockDefaultAlarmState3,
@@ -406,11 +406,11 @@ describe('useAlarmState', () => {
     );
 
     act(() => {
-      jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
+      vi.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
     });
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(4);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });

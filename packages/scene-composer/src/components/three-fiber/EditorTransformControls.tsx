@@ -1,16 +1,15 @@
-import type * as THREE from 'three';
-import { useContext, useEffect, useState } from 'react';
 import { useThree } from '@react-three/fiber';
-
-import useLogger from '../../logger/react-logger/hooks/useLogger';
+import { useContext, useEffect, useState } from 'react';
+import type * as THREE from 'three';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { accessStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
-import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { findComponentByType } from '../../utils/nodeUtils';
-import { getGlobalSettings } from '../../common/GlobalSettings';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 
 export function EditorTransformControls() {
   const { domElement } = useThree(({ gl }) => gl);

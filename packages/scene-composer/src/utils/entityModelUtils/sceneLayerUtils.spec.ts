@@ -13,8 +13,8 @@ import {
 
 import { attachToLayer, attachToLayerRequest, createLayer, createLayerId } from './sceneLayerUtils';
 
-jest.mock('../mathUtils', () => ({
-  generateUUID: jest.fn(() => 'random-uuid'),
+vi.mock('../mathUtils', () => ({
+  generateUUID: vi.fn(() => 'random-uuid'),
 }));
 
 describe('createLayerId', () => {
@@ -24,7 +24,7 @@ describe('createLayerId', () => {
 });
 
 describe('createLayer', () => {
-  const createSceneEntity = jest.fn();
+  const createSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     createSceneEntity,
   };
@@ -76,7 +76,7 @@ describe('attachToLayerRequest', () => {
 });
 
 describe('attachToLayer', () => {
-  const updateSceneEntity = jest.fn();
+  const updateSceneEntity = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     updateSceneEntity,
   };

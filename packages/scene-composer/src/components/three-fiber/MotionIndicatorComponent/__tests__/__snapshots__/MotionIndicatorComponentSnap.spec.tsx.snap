@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MotionIndicatorComponent should render with correct default values from config when dataBinding not set 1`] = `
+exports[`MotionIndicatorComponent > should render with correct default values from config when dataBinding not set 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
@@ -81,7 +81,7 @@ exports[`MotionIndicatorComponent should render with correct default values from
 }
 `;
 
-exports[`MotionIndicatorComponent should render with correct speed and values from rule evaluating 1`] = `
+exports[`MotionIndicatorComponent > should render with correct speed and values from rule evaluating 1`] = `
 <div>
   <group
     name="MOTION_INDICATOR_COMPONENT_node-ref"

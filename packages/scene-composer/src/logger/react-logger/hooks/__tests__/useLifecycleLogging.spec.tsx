@@ -1,14 +1,14 @@
 import { act, render } from '@testing-library/react';
 
-import useLogger from '../useLogger';
 import useLifecycleLogging from '../useLifecycleLogging';
+import useLogger from '../useLogger';
 
-jest.mock('../useLogger');
+vi.mock('../useLogger');
 
 describe('useLifecycleLogging', () => {
   it('should log rendering, mounted, and unmounted lifecycle events', () => {
     const mockLogger = {
-      verbose: jest.fn(),
+      verbose: vi.fn(),
     };
 
     (useLogger as any).mockImplementation(() => mockLogger);

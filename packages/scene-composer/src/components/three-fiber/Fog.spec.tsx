@@ -1,24 +1,22 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
+import { MockedFunction } from 'vitest';
 import * as THREE from 'three';
-jest.doMock('@react-three/fiber', () => ({
-  useThree: jest.fn(),
-}));
-const getScenePropertyMock = jest.fn();
-const baseState = {
-  getSceneProperty: getScenePropertyMock,
-};
-import { useThree } from '@react-three/fiber';
+// import { useThree } from '@react-three/fiber';
+import * as reactThree from '@react-three/fiber';
 
 import { accessStore } from '../../../src/store';
 import { type IFogSettings } from '../../interfaces';
 
 import Fog from './Fog';
 
-import Mock = jest.Mock;
+const getScenePropertyMock = vi.fn();
+const baseState = {
+  getSceneProperty: getScenePropertyMock,
+};
 
 describe('Fog', () => {
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     accessStore('default').setState(baseState);
   };
@@ -29,12 +27,10 @@ describe('Fog', () => {
 
   it(`should add fog to the scene`, () => {
     const testScene = new THREE.Scene();
-    const mockThreeStates = {
-      scene: testScene,
-    };
-    const useThreeMock = useThree as Mock;
-    useThreeMock.mockImplementation((s) => {
-      return s(mockThreeStates);
+    vi.spyOn(reactThree, 'useThree').mockImplementation((s) => {
+      if (s) {
+        return s({ scene: testScene } as reactThree.RootState);
+      }
     });
 
     const fogSetting: IFogSettings = {
@@ -55,12 +51,10 @@ describe('Fog', () => {
 
   it(`should not add fog to the scene`, () => {
     const testScene = new THREE.Scene();
-    const mockThreeStates = {
-      scene: testScene,
-    };
-    const useThreeMock = useThree as Mock;
-    useThreeMock.mockImplementation((s) => {
-      return s(mockThreeStates);
+    vi.spyOn(reactThree, 'useThree').mockImplementation((s) => {
+      if (s) {
+        return s({ scene: testScene } as reactThree.RootState);
+      }
     });
 
     getScenePropertyMock.mockReturnValue(undefined);

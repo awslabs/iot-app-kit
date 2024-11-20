@@ -1,5 +1,5 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@/tests/testing-library';
 
 import { setMetricRecorder } from '../../common/GlobalSettings';
 import { KnownComponentType } from '../../interfaces';
@@ -9,20 +9,20 @@ import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 
 import { ComponentEditMenu } from './ComponentEditMenu';
 
-jest.mock('../../utils/entityModelUtils/sceneUtils');
+vi.mock('../../utils/entityModelUtils/sceneUtils');
 
 describe('ComponentEditMenu', () => {
   const nodeRef = 'test-node-ref';
-  const removeComponent = jest.fn();
-  const updateComponentInternal = jest.fn();
-  const setDeleteConfirmationModalVisible = jest.fn();
+  const removeComponent = vi.fn();
+  const updateComponentInternal = vi.fn();
+  const setDeleteConfirmationModalVisible = vi.fn();
   const mockMetricRecorder = {
-    recordClick: jest.fn(),
+    recordClick: vi.fn(),
   };
   setMetricRecorder(mockMetricRecorder);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     accessStore('default').setState({
       removeComponent,
@@ -30,7 +30,7 @@ describe('ComponentEditMenu', () => {
       setDeleteConfirmationModalVisible,
     });
 
-    (isDynamicScene as jest.Mock).mockReturnValue(false);
+    (isDynamicScene as vi.Mock).mockReturnValue(false);
   });
 
   it('should render empty when current component has no menu item', () => {
@@ -63,7 +63,7 @@ describe('ComponentEditMenu', () => {
   });
 
   it('should correctly remove entity binding component in dynamic scene', () => {
-    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    (isDynamicScene as vi.Mock).mockReturnValue(true);
     const component = { type: KnownComponentType.EntityBinding, ref: 'comp-ref', valueDataBindings: [{}] };
     const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
     const removeEntityBinding = getByTestId('remove-entity-binding');
@@ -123,7 +123,7 @@ describe('ComponentEditMenu', () => {
   });
 
   it('should correctly remove overlay panel component for dynamic scene', () => {
-    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    (isDynamicScene as vi.Mock).mockReturnValue(true);
     const component = {
       type: KnownComponentType.DataOverlay,
       ref: 'comp-ref',

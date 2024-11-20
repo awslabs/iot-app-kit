@@ -1,33 +1,32 @@
-import { render } from '@testing-library/react';
-
-import ModelRefComponent from '../index';
-import { type IModelRefComponentInternal, type ISceneNodeInternal } from '../../../../store';
+import { render } from '@/tests/testing-library';
 import { KnownComponentType } from '../../../../interfaces';
 import { ModelType } from '../../../../models/SceneModels';
+import { type IModelRefComponentInternal, type ISceneNodeInternal } from '../../../../store';
+import ModelRefComponent from '../index';
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useLoader: jest.fn(),
-    useFrame: jest.fn().mockImplementation((func) => {
+    useLoader: vi.fn(),
+    useFrame: vi.fn().mockImplementation((func) => {
       func();
     }),
   };
 });
 
-jest.mock('../GLTFModelComponent', () => ({
+vi.mock('../GLTFModelComponent', () => ({
   GLTFModelComponent: (props) => <div id='GLTFModelComponent' {...props} />,
   ErrorModelComponent: (props) => <div id='ErrorModelComponent' {...props} />,
 }));
 
-jest.mock('../TilesModelComponent', () => ({
+vi.mock('../TilesModelComponent', () => ({
   TilesModelComponent: (props) => <div id='TilesModelComponent' {...props} />,
 }));
 
 describe('ModelRefComponent', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<PreviewArrow /> should render arrow with color: "black", background: "gray" and opacity "0.5" 1`] = `
+exports[`<PreviewArrow /> > should render arrow with color: "black", background: "gray" and opacity "0.5" 1`] = `
 <div>
   <div
     class="tm-preview-arrow"
@@ -24,7 +24,7 @@ exports[`<PreviewArrow /> should render arrow with color: "black", background: "
 </div>
 `;
 
-exports[`<PreviewArrow /> should render arrow with color: "blue", background: "red" and opacity "1" 1`] = `
+exports[`<PreviewArrow /> > should render arrow with color: "blue", background: "red" and opacity "1" 1`] = `
 <div>
   <div
     class="tm-preview-arrow"
@@ -48,7 +48,7 @@ exports[`<PreviewArrow /> should render arrow with color: "blue", background: "r
 </div>
 `;
 
-exports[`<PreviewArrow /> should render arrow with color: "green", background: "purple" and opacity "0.7" 1`] = `
+exports[`<PreviewArrow /> > should render arrow with color: "green", background: "purple" and opacity "0.7" 1`] = `
 <div>
   <div
     class="tm-preview-arrow"

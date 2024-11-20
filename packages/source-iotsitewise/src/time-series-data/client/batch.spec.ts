@@ -240,8 +240,8 @@ describe('createRawHistoricalEntryBatches', () => {
   it.each(['fetchMostRecentBeforeEnd', 'fetchMostRecentBeforeStart'])(
     'separate all %s entries',
     (mostRecentOption) => {
-      const onError = jest.fn();
-      const onSuccess = jest.fn();
+      const onError = vi.fn();
+      const onSuccess = vi.fn();
       const startDate = new Date(2000, 0, 0);
       const endDate = new Date(2001, 0, 0);
       const resolution = '0';
@@ -430,8 +430,8 @@ describe('createAggregateEntryBatches', () => {
   it.each(['fetchMostRecentBeforeEnd', 'fetchMostRecentBeforeStart'])(
     'separate all %s entries',
     (mostRecentOption) => {
-      const onError = jest.fn();
-      const onSuccess = jest.fn();
+      const onError = vi.fn();
+      const onSuccess = vi.fn();
       const startDate = new Date(2000, 0, 0);
       const endDate = new Date(2001, 0, 0);
       const resolution = '1h';

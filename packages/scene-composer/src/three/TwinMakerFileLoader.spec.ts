@@ -10,28 +10,28 @@ describe('TwinMakerFileLoader', () => {
   let mockCreateObjectURL;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     loadingManager = {
-      itemStart: jest.fn(),
-      itemEnd: jest.fn(),
+      itemStart: vi.fn(),
+      itemEnd: vi.fn(),
       resolveURL: (url) => url,
     } as any as THREE.LoadingManager;
 
-    jest.spyOn(THREE.FileLoader.prototype, 'load').mockImplementation((_url, onLoad, _onProgress, _onError) => {
+    vi.spyOn(THREE.FileLoader.prototype, 'load').mockImplementation((_url, onLoad, _onProgress, _onError) => {
       onLoad?.('mock-value' as any);
     });
 
-    mockCreateObjectURL = jest.fn();
+    mockCreateObjectURL = vi.fn();
     window.URL.createObjectURL = mockCreateObjectURL;
   });
 
   it('should load file successfully with getSceneObjectFunction', async () => {
     const mockResponseString = '{"key1":"value1","key2":123}';
     const mockArrayBuffer = str2ab(mockResponseString);
-    const mockGetSceneObjectFunction: GetSceneObjectFunction = jest.fn(() => Promise.resolve(mockArrayBuffer));
+    const mockGetSceneObjectFunction: GetSceneObjectFunction = vi.fn(() => Promise.resolve(mockArrayBuffer));
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
 
     const twinMakerFileLoader = new TwinMakerFileLoader(loadingManager);
     twinMakerFileLoader.setGetSceneObjectFunction(mockGetSceneObjectFunction);
@@ -44,7 +44,7 @@ describe('TwinMakerFileLoader', () => {
 
   it('should fallback to default loader if S3 client is missing', async () => {
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
 
     const twinMakerFileLoader = new TwinMakerFileLoader(loadingManager);
     twinMakerFileLoader.load(url, onLoad, undefined, undefined);
@@ -56,7 +56,7 @@ describe('TwinMakerFileLoader', () => {
 
   it('should fallback to default loader if the URL is not S3 URL', async () => {
     const url = 'http://test-domain/index.html';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
 
     const twinMakerFileLoader = new TwinMakerFileLoader(loadingManager);
     twinMakerFileLoader.load(url, onLoad, undefined, undefined);
@@ -68,7 +68,7 @@ describe('TwinMakerFileLoader', () => {
 
   it('should get default url if loadingManager is missing', async () => {
     const url = 'http://test-domain/index.html';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
 
     const twinMakerFileLoader = new TwinMakerFileLoader(loadingManager);
     twinMakerFileLoader.load(url, onLoad, undefined, undefined);
@@ -80,10 +80,10 @@ describe('TwinMakerFileLoader', () => {
 
   it('should call onError if S3 download failed', async () => {
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
-    const onError = jest.fn();
+    const onLoad = vi.fn();
+    const onError = vi.fn();
     const mockError = new Error('Mock-Error');
-    const mockGetSceneObjectFunction: GetSceneObjectFunction = jest.fn(() => Promise.reject(mockError));
+    const mockGetSceneObjectFunction: GetSceneObjectFunction = vi.fn(() => Promise.reject(mockError));
 
     const twinMakerFileLoader = new TwinMakerFileLoader(loadingManager);
     twinMakerFileLoader.setGetSceneObjectFunction(mockGetSceneObjectFunction);

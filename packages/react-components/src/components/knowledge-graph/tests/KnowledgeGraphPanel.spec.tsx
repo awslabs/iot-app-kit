@@ -4,38 +4,36 @@ import { fireEvent } from '@testing-library/react';
 import { renderWithProviders } from './utils/test-utils';
 import { kgDataSource } from './__mocks__/dataSource';
 import { KnowledgeGraph, ZOOM_INTERVAL } from '../KnowledgeGraphPanel';
+import type { Mock } from 'vitest';
 
-jest.mock(
-  '@cloudscape-design/components/container',
-  () => (props: HTMLAttributes<HTMLDivElement>) =>
+vi.mock('@cloudscape-design/components/container', () => ({
+  default: (props: HTMLAttributes<HTMLDivElement>) => (
     <div data-mocked='Container' {...props}></div>
-);
+  ),
+}));
 
-jest.mock(
-  '@cloudscape-design/components/button',
-  () => (props: HTMLAttributes<HTMLDivElement>) =>
+vi.mock('@cloudscape-design/components/button', () => ({
+  default: (props: HTMLAttributes<HTMLDivElement>) => (
     <div data-mocked='Button' {...props}></div>
-);
-jest.mock(
-  'react-cytoscapejs',
-  () =>
-    ({
-      elements,
-      cy: _cy, // We don't want to propagate this ref arg
-      ...props
-    }: HTMLAttributes<HTMLDivElement> & {
-      elements: ElementDefinition[];
-      cy: (() => void) | undefined;
-    }) =>
-      (
-        <div data-mocked='CytoscapeComponent' {...props}>
-          {JSON.stringify(elements)}
-        </div>
-      )
-);
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: jest.fn(() => ({ current: null })),
+  ),
+}));
+vi.mock('react-cytoscapejs', () => ({
+  default: ({
+    elements,
+    cy: _cy, // We don't want to propagate this ref arg
+    ...props
+  }: HTMLAttributes<HTMLDivElement> & {
+    elements: ElementDefinition[];
+    cy: (() => void) | undefined;
+  }) => (
+    <div data-mocked='CytoscapeComponent' {...props}>
+      {JSON.stringify(elements)}
+    </div>
+  ),
+}));
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useRef: vi.fn(() => ({ current: null })),
 }));
 
 describe('KnowledgeGraph', () => {
@@ -46,16 +44,16 @@ describe('KnowledgeGraph', () => {
     expect(getByTestId('clear-button')).toBeInTheDocument();
   });
   it('should fit to screen on fit button clicked', async () => {
-    const useRefMock = useRef as jest.Mock;
+    const useRefMock = useRef as Mock;
 
     const fakeCy = {
       current: {
-        off: jest.fn(),
-        on: jest.fn(),
-        resize: jest.fn(),
-        center: jest.fn(),
-        fit: jest.fn(),
-        zoom: jest.fn(),
+        off: vi.fn(),
+        on: vi.fn(),
+        resize: vi.fn(),
+        center: vi.fn(),
+        fit: vi.fn(),
+        zoom: vi.fn(),
       },
     };
 
@@ -72,16 +70,16 @@ describe('KnowledgeGraph', () => {
   });
 
   it('should center on screen when center button clicked', async () => {
-    const useRefMock = useRef as jest.Mock;
+    const useRefMock = useRef as Mock;
 
     const fakeCy = {
       current: {
-        off: jest.fn(),
-        on: jest.fn(),
-        resize: jest.fn(),
-        center: jest.fn(),
-        fit: jest.fn(),
-        zoom: jest.fn(),
+        off: vi.fn(),
+        on: vi.fn(),
+        resize: vi.fn(),
+        center: vi.fn(),
+        fit: vi.fn(),
+        zoom: vi.fn(),
       },
     };
 
@@ -98,18 +96,18 @@ describe('KnowledgeGraph', () => {
   });
 
   it('should zoom in when zoom in button clicked', async () => {
-    const useRefMock = useRef as jest.Mock;
+    const useRefMock = useRef as Mock;
 
     const fakeCy = {
       current: {
-        height: jest.fn(() => 500),
-        width: jest.fn(() => 500),
-        off: jest.fn(),
-        on: jest.fn(),
-        resize: jest.fn(),
-        center: jest.fn(),
-        fit: jest.fn(),
-        zoom: jest.fn(() => 0.1),
+        height: vi.fn(() => 500),
+        width: vi.fn(() => 500),
+        off: vi.fn(),
+        on: vi.fn(),
+        resize: vi.fn(),
+        center: vi.fn(),
+        fit: vi.fn(),
+        zoom: vi.fn(() => 0.1),
       },
     };
 
@@ -129,18 +127,18 @@ describe('KnowledgeGraph', () => {
   });
 
   it('should zoom out when zoom out button clicked', async () => {
-    const useRefMock = useRef as jest.Mock;
+    const useRefMock = useRef as Mock;
 
     const fakeCy = {
       current: {
-        height: jest.fn(() => 500),
-        width: jest.fn(() => 500),
-        off: jest.fn(),
-        on: jest.fn(),
-        resize: jest.fn(),
-        center: jest.fn(),
-        fit: jest.fn(),
-        zoom: jest.fn(() => 0.1),
+        height: vi.fn(() => 500),
+        width: vi.fn(() => 500),
+        off: vi.fn(),
+        on: vi.fn(),
+        resize: vi.fn(),
+        center: vi.fn(),
+        fit: vi.fn(),
+        zoom: vi.fn(() => 0.1),
       },
     };
 

@@ -19,16 +19,16 @@ import * as alarmCompositeProp from './hookHelpers/useLatestAlarmPropertyValues'
 import * as alarmModelHook from './hookHelpers/useAlarmModels';
 import { type AssetProperty } from '@aws-sdk/client-iotsitewise';
 
-jest.mock('./hookHelpers/useAlarmAssets');
-jest.mock('./hookHelpers/useLatestAlarmPropertyValues');
-jest.mock('./hookHelpers/useAlarmModels');
+vi.mock('./hookHelpers/useAlarmAssets');
+vi.mock('./hookHelpers/useLatestAlarmPropertyValues');
+vi.mock('./hookHelpers/useAlarmModels');
 
-const useAlarmAssetsMock = jest.spyOn(alarmAssetHook, 'useAlarmAssets');
-const useLatestAlarmPropertyValuesMock = jest.spyOn(
+const useAlarmAssetsMock = vi.spyOn(alarmAssetHook, 'useAlarmAssets');
+const useLatestAlarmPropertyValuesMock = vi.spyOn(
   alarmCompositeProp,
   'useLatestAlarmPropertyValues'
 );
-const useAlarmModelsMock = jest.spyOn(alarmModelHook, 'useAlarmModels');
+const useAlarmModelsMock = vi.spyOn(alarmModelHook, 'useAlarmModels');
 
 const mockRequest = {
   assetId: MOCK_ASSET_ID,
@@ -47,7 +47,7 @@ const mockAlarmDataInternal = {
  */
 describe.skip('useAlarms', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should not transform AlarmData when no transform function supplied', async () => {

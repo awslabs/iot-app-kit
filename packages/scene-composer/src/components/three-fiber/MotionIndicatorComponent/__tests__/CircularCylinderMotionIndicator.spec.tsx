@@ -1,8 +1,8 @@
 import { create } from 'react-test-renderer';
 import * as THREE from 'three';
 
-import * as helpers from '../helpers';
 import { CircularCylinderMotionIndicator } from '../CircularCylinderMotionIndicator';
+import * as helpers from '../helpers';
 
 describe('CircularCylinderMotionIndicator', () => {
   const baseProps: any = {
@@ -13,14 +13,14 @@ describe('CircularCylinderMotionIndicator', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should render correctly', async () => {
     const mockTextureRef: any = {
       current: {},
     };
-    jest.spyOn(helpers, 'useArrowTexture').mockReturnValue(mockTextureRef);
+    vi.spyOn(helpers, 'useArrowTexture').mockReturnValue(mockTextureRef);
 
     const container = create(<CircularCylinderMotionIndicator {...baseProps} />);
     container.update(<CircularCylinderMotionIndicator {...baseProps} />);

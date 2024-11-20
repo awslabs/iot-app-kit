@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import { setFeatureConfig } from '../../../common/GlobalSettings';
@@ -8,8 +8,8 @@ import { ItemContainer } from './ItemContainer';
 import { type ToolbarItemOptions } from './types';
 
 describe('ItemContainer', () => {
-  const onClick = jest.fn();
-  const onKeyDown = jest.fn();
+  const onClick = vi.fn();
+  const onKeyDown = vi.fn();
   const baseItem: ToolbarItemOptions = {
     label: 'item1',
     uuid: 'item1-uuid',
@@ -55,7 +55,7 @@ describe('ItemContainer', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     setFeatureConfig({});
   });

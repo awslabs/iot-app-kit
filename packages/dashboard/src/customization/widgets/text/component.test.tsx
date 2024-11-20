@@ -3,18 +3,18 @@ import TextWidgetComponent from './component';
 import * as ReactRedux from 'react-redux';
 import type { TextProperties } from '../types';
 
-jest.mock('~/store/actions', () => ({
-  ...jest.requireActual('~/store/actions'),
-  onChangeDashboardGridEnabledAction: jest.fn(),
+vi.mock('~/store/actions', async () => ({
+  ...(await vi.importActual('~/store/actions')),
+  onChangeDashboardGridEnabledAction: vi.fn(),
 }));
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: () => jest.fn(),
+vi.mock('react-redux', async () => ({
+  ...(await vi.importActual('react-redux')),
+  useDispatch: () => vi.fn(),
 }));
 
-jest.mock('~/customization/hooks/useIsSelected', () => ({
-  useIsSelected: jest.fn(),
+vi.mock('~/customization/hooks/useIsSelected', () => ({
+  useIsSelected: vi.fn(),
 }));
 
 function TextTextWidget(props: TextProperties) {
@@ -33,13 +33,13 @@ function TextTextWidget(props: TextProperties) {
 }
 
 function TestReadonlyTextWidget(props: TextProperties) {
-  jest.spyOn(ReactRedux, 'useSelector').mockReturnValueOnce(true);
+  vi.spyOn(ReactRedux, 'useSelector').mockReturnValueOnce(true);
 
   return <TextTextWidget {...props} />;
 }
 
 function TestEditableTextWidget(props: TextProperties) {
-  jest.spyOn(ReactRedux, 'useSelector').mockReturnValueOnce(false);
+  vi.spyOn(ReactRedux, 'useSelector').mockReturnValueOnce(false);
 
   return <TextTextWidget {...props} />;
 }

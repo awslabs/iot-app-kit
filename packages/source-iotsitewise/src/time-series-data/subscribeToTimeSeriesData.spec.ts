@@ -67,7 +67,7 @@ it('does not emit any data streams when empty query is subscribed to', async () 
   const subscribe = initializeSubscribeToTimeSeriesData({
     ioTSiteWiseClient: createMockSiteWiseSDK(),
   });
-  const cb = jest.fn();
+  const cb = vi.fn();
   const { unsubscribe } = subscribe(
     { queries: [], request: { viewport: { duration: '5m' } } },
     cb
@@ -92,8 +92,8 @@ it('unsubscribes', () => {
     siteWiseAssetModule
   );
 
-  const unsubscribeSpy = jest.fn();
-  jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
+  const unsubscribeSpy = vi.fn();
+  vi.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
     unsubscribe: unsubscribeSpy,
     update: async () => {},
   }));
@@ -118,10 +118,10 @@ it('provides time series data from iotsitewise', async () => {
   const ASSET_MODEL_ID = 'some-asset-model-id';
   const PROPERTY_NAME = 'some-property-name';
 
-  const batchGetAssetPropertyValueHistory = jest
+  const batchGetAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-  const describeAsset = jest.fn().mockImplementation(({ assetId }) =>
+  const describeAsset = vi.fn().mockImplementation(({ assetId }) =>
     Promise.resolve(
       createAssetResponse({
         assetId: assetId as string,
@@ -129,7 +129,7 @@ it('provides time series data from iotsitewise', async () => {
       })
     )
   );
-  const describeAssetModel = jest.fn().mockImplementation(({ assetModelId }) =>
+  const describeAssetModel = vi.fn().mockImplementation(({ assetModelId }) =>
     Promise.resolve(
       createAssetModelResponse({
         assetModelId: assetModelId as string,
@@ -138,7 +138,7 @@ it('provides time series data from iotsitewise', async () => {
       })
     )
   );
-  const listAssetProperties = jest.fn().mockImplementation(({ assetId }) =>
+  const listAssetProperties = vi.fn().mockImplementation(({ assetId }) =>
     Promise.resolve(
       createListAssetPropertiesResponse({
         assetId: assetId,
@@ -147,7 +147,7 @@ it('provides time series data from iotsitewise', async () => {
       })
     )
   );
-  const listAssetModelProperties = jest.fn().mockImplementation(() =>
+  const listAssetModelProperties = vi.fn().mockImplementation(() =>
     Promise.resolve(
       createListAssetModelPropertiesResponse({
         propertyId: PROPERTY_ID,
@@ -165,7 +165,7 @@ it('provides time series data from iotsitewise', async () => {
     }),
   });
 
-  const cb = jest.fn();
+  const cb = vi.fn();
   const { unsubscribe } = subscribe(
     {
       queries: [
@@ -235,10 +235,10 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   const ASSET_MODEL_ID = 'some-asset-model-id';
   const PROPERTY_NAME = 'some-property-name';
 
-  const batchGetAssetPropertyValueHistory = jest
+  const batchGetAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-  const describeAsset = jest.fn().mockImplementation(({ assetId }) =>
+  const describeAsset = vi.fn().mockImplementation(({ assetId }) =>
     Promise.resolve(
       createAssetResponse({
         assetId: assetId as string,
@@ -246,7 +246,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
       })
     )
   );
-  const describeAssetModel = jest.fn().mockImplementation(({ assetModelId }) =>
+  const describeAssetModel = vi.fn().mockImplementation(({ assetModelId }) =>
     Promise.resolve(
       createAssetModelResponse({
         assetModelId: assetModelId as string,
@@ -255,7 +255,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
       })
     )
   );
-  const listAssetProperties = jest.fn().mockImplementation(({ assetId }) =>
+  const listAssetProperties = vi.fn().mockImplementation(({ assetId }) =>
     Promise.resolve(
       createListAssetPropertiesResponse({
         assetId: assetId,
@@ -264,7 +264,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
       })
     )
   );
-  const listAssetModelProperties = jest.fn().mockImplementation(() =>
+  const listAssetModelProperties = vi.fn().mockImplementation(() =>
     Promise.resolve(
       createListAssetModelPropertiesResponse({
         propertyId: PROPERTY_ID,
@@ -283,7 +283,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
     }),
   });
 
-  const cb = jest.fn();
+  const cb = vi.fn();
   const { update, unsubscribe } = subscribe(
     {
       queries: [],
@@ -355,15 +355,13 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
 });
 
 it('provides alarm data from iot-events', async () => {
-  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
-  const describeAsset = jest.fn().mockResolvedValue({
+  const getAlarmModel = vi.fn().mockResolvedValue(ALARM_MODEL);
+  const describeAsset = vi.fn().mockResolvedValue({
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest
-    .fn()
-    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
-  const getAssetPropertyValue = jest
+  const describeAssetModel = vi.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const getAssetPropertyValue = vi
     .fn()
     .mockResolvedValueOnce({
       propertyValue: ALARM_SOURCE_PROPERTY_VALUE,
@@ -374,14 +372,14 @@ it('provides alarm data from iot-events', async () => {
     .mockResolvedValueOnce({
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
-  const batchGetAssetPropertyValueHistory = jest
+  const batchGetAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
 
-  const listAssetProperties = jest
+  const listAssetProperties = vi
     .fn()
     .mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_PROP_RESPONSE));
-  const listAssetModelProperties = jest
+  const listAssetModelProperties = vi
     .fn()
     .mockImplementation(() =>
       Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE)
@@ -401,7 +399,7 @@ it('provides alarm data from iot-events', async () => {
     }),
   });
 
-  const cb = jest.fn();
+  const cb = vi.fn();
   const { unsubscribe } = subscribe(
     {
       queries: [
@@ -477,15 +475,13 @@ it('provides alarm data from iot-events', async () => {
 });
 
 it('provides alarm data from iot-events when subscription is updated', async () => {
-  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
-  const describeAsset = jest.fn().mockResolvedValue({
+  const getAlarmModel = vi.fn().mockResolvedValue(ALARM_MODEL);
+  const describeAsset = vi.fn().mockResolvedValue({
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest
-    .fn()
-    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
-  const getAssetPropertyValue = jest
+  const describeAssetModel = vi.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const getAssetPropertyValue = vi
     .fn()
     .mockResolvedValueOnce({
       propertyValue: ALARM_SOURCE_PROPERTY_VALUE,
@@ -496,13 +492,13 @@ it('provides alarm data from iot-events when subscription is updated', async () 
     .mockResolvedValueOnce({
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
-  const batchGetAssetPropertyValueHistory = jest
+  const batchGetAssetPropertyValueHistory = vi
     .fn()
     .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
-  const listAssetProperties = jest
+  const listAssetProperties = vi
     .fn()
     .mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_PROP_RESPONSE));
-  const listAssetModelProperties = jest
+  const listAssetModelProperties = vi
     .fn()
     .mockImplementation(() =>
       Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE)
@@ -522,7 +518,7 @@ it('provides alarm data from iot-events when subscription is updated', async () 
     }),
   });
 
-  const cb = jest.fn();
+  const cb = vi.fn();
   const { update, unsubscribe } = subscribe(
     {
       queries: [],

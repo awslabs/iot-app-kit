@@ -6,14 +6,14 @@ import useBindingData from './useBindingData';
 
 describe('useBindingData', () => {
   const mockProvider = {
-    createQuery: jest.fn(),
+    createQuery: vi.fn(),
   };
 
   beforeEach(() => {
     accessStore('default').getState().noHistoryStates.setAutoQueryEnabled(true);
     accessStore('default').getState().noHistoryStates.setViewport({ duration: '5m' });
     accessStore('default').setState({
-      getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
+      getEditorConfig: vi.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
     });
   });
 
@@ -50,11 +50,11 @@ describe('useBindingData', () => {
       const id = binding.dataBindingContext.entityId;
       if (id === 'AA' || id === 'BB') {
         return {
-          build: jest.fn().mockReturnValue({
-            subscribe: jest
+          build: vi.fn().mockReturnValue({
+            subscribe: vi
               .fn()
               .mockImplementation((cb) => cb.next([{ dataStreams: [{ data: [{ y: 'random' }, { y: id }] }] }])),
-            unsubscribe: jest.fn(),
+            unsubscribe: vi.fn(),
           }),
         };
       }

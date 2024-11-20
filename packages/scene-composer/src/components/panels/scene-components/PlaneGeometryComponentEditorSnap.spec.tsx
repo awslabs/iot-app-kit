@@ -1,15 +1,15 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
+import { mockComponent, mockNode } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
 import { type IPlaneGeometryComponentInternal, accessStore } from '../../../store';
-import { KnownComponentType, COMPOSER_FEATURES } from '../../../interfaces';
-import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import { PlaneGeometryComponentEditor } from './PlaneGeometryComponentEditor';
 
-jest.mock('../../../common/GlobalSettings');
+vi.mock('../../../common/GlobalSettings');
 
-jest.mock('../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo', () => {
+vi.mock('../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo', () => {
   return {
     ColorSelectorCombo: (...props: []) => <div id='ColorSelectorCombo'>{JSON.stringify(props)}</div>,
   };
@@ -41,18 +41,18 @@ describe('PlaneGeometryComponentEditor', () => {
     textureUri: 'filepath',
   };
 
-  const updateComponentInternalFn = jest.fn();
+  const updateComponentInternalFn = vi.fn();
 
   const baseState = {
     updateComponentInternal: updateComponentInternalFn,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
     accessStore('default').setState(baseState);
 
@@ -63,7 +63,7 @@ describe('PlaneGeometryComponentEditor', () => {
   });
 
   it('should render correctly with color', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
     accessStore('default').setState(baseState);
 
@@ -77,7 +77,7 @@ describe('PlaneGeometryComponentEditor', () => {
   });
 
   it('should render correctly with textured plane', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
 
     accessStore('default').setState(baseState);

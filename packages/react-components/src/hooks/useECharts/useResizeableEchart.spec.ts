@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import {
   useResizeableEChart,
   getChartHeight,
@@ -23,7 +23,7 @@ describe('useResizeableEChart', () => {
       height: '30%',
       visible: false,
     };
-    const onChartOptionsChange = jest.fn();
+    const onChartOptionsChange = vi.fn();
     const isBottomAligned = false;
 
     it('should set initial chart width and height correctly', () => {
@@ -50,7 +50,7 @@ describe('useResizeableEChart', () => {
       height: '30%',
       visible: true,
     };
-    const onChartOptionsChange = jest.fn();
+    const onChartOptionsChange = vi.fn();
     const isBottomAligned = false;
 
     it('should set initial chart width and height correctly', () => {
@@ -81,7 +81,7 @@ describe('useResizeableEChart', () => {
 
       act(() => {
         const event = {
-          stopPropagation: jest.fn(),
+          stopPropagation: vi.fn(),
         } as unknown as React.SyntheticEvent;
         result.current.onResizeEnd(event, {
           size: { width: 800, height: 400 },
@@ -103,7 +103,7 @@ describe('useResizeableEChart', () => {
       height: '30%',
       visible: true,
     };
-    const onChartOptionsChange = jest.fn();
+    const onChartOptionsChange = vi.fn();
     const isBottomAligned = true;
 
     it('should set initial chart width and height correctly when bottom aligned', () => {
@@ -134,7 +134,7 @@ describe('useResizeableEChart', () => {
 
       act(() => {
         const event = {
-          stopPropagation: jest.fn(),
+          stopPropagation: vi.fn(),
         } as unknown as React.SyntheticEvent;
         result.current.onResizeEnd(event, {
           size: { width: 800, height: 400 },

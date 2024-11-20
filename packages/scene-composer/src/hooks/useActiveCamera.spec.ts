@@ -1,25 +1,25 @@
 import { MathUtils } from 'three';
 
-import { useEditorState } from '../store';
+import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_TARGET } from '../common/constants';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { type CameraSettings } from '../interfaces';
-import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_TARGET } from '../common/constants';
+import { useEditorState } from '../store';
 
 import useActiveCamera from './useActiveCamera';
 
-jest.mock('../store', () => ({
-  ...jest.requireActual('../store'),
-  useEditorState: jest.fn(),
+vi.mock('../store', async () => ({
+  ...(await vi.importActual('../store')),
+  useEditorState: vi.fn(),
 }));
 
-jest.mock('../common/sceneComposerIdContext', () => ({
-  ...jest.requireActual('../common/sceneComposerIdContext'),
-  useSceneComposerId: jest.fn(),
+vi.mock('../common/sceneComposerIdContext', async () => ({
+  ...(await vi.importActual('../common/sceneComposerIdContext')),
+  useSceneComposerId: vi.fn(),
 }));
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn((cb) => cb), // unbox callbacks.
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useCallback: vi.fn((cb) => cb), // unbox callbacks.
 }));
 
 describe('useSelectedObject', () => {
@@ -34,19 +34,19 @@ describe('useSelectedObject', () => {
     },
   };
   const sceneComposerId = 'default';
-  const setActiveCameraSettings = jest.fn();
-  const isViewing = jest.fn();
-  const setCameraTarget = jest.fn();
+  const setActiveCameraSettings = vi.fn();
+  const isViewing = vi.fn();
+  const setCameraTarget = vi.fn();
 
   beforeEach(() => {
-    (useSceneComposerId as jest.Mock).mockImplementation(() => sceneComposerId);
-    (useEditorState as jest.Mock).mockImplementation(() => ({
+    (useSceneComposerId as vi.Mock).mockImplementation(() => sceneComposerId);
+    (useEditorState as vi.Mock).mockImplementation(() => ({
       setActiveCameraSettings,
       activeCameraSettings: defaultCameraSettings,
       isViewing,
       setCameraTarget,
     }));
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return the object from the store', () => {

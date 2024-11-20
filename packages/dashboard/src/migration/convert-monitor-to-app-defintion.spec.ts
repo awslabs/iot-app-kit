@@ -23,7 +23,7 @@ describe('Dashboard definition conversion', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -113,7 +113,7 @@ describe('Dashboard definition conversion', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -162,7 +162,7 @@ describe('Dashboard definition conversion', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(barChartDefinition),
     });
 
@@ -221,7 +221,7 @@ describe('Dashboard definition conversion', () => {
         createApplicationChartDefinition('xy-plot', expectedProperties),
       ],
     };
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -266,7 +266,7 @@ describe('Dashboard definition conversion', () => {
         createApplicationChartDefinition('status-timeline', expectedProperties),
       ],
     };
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(timelineChartDefinition),
     });
 
@@ -307,7 +307,7 @@ describe('Dashboard definition conversion', () => {
     const expectedDefinition = {
       widgets: [createApplicationChartDefinition('table', expectedProperties)],
     };
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -346,7 +346,7 @@ describe('Dashboard definition conversion', () => {
     const expectedDefinition = {
       widgets: [createApplicationChartDefinition('kpi', expectedProperties)],
     };
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(kpiDefinition),
     });
 
@@ -469,7 +469,7 @@ describe('Dashboard definition conversion', () => {
         ),
       ],
     };
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(kpiDefinition),
     });
 
@@ -510,7 +510,7 @@ describe('Dashboard definition conversion', () => {
     const expectedDefinition = {
       widgets: [createApplicationChartDefinition('status', expectedProperties)],
     };
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -597,7 +597,7 @@ describe('Dashboard definition conversion', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -655,7 +655,7 @@ describe('Widgets dont overlap after migration', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -728,7 +728,7 @@ describe('Widgets dont overlap after migration', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -801,7 +801,7 @@ describe('Widgets dont overlap after migration', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
@@ -874,7 +874,7 @@ describe('Widgets dont overlap after migration', () => {
       ],
     };
 
-    const describeDashboard = jest.fn().mockResolvedValue({
+    const describeDashboard = vi.fn().mockResolvedValue({
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 

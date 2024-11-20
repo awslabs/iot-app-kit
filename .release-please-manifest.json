@@ -8,7 +8,6 @@
   "packages/source-iotsitewise": "12.1.0",
   "packages/source-iottwinmaker": "12.1.0",
   ".": "12.1.0",
-  "configuration/jest-config": "12.1.0",
   "packages/testing-util": "12.1.0",
   "configuration/ts-config": "12.1.0",
   "configuration/eslint-config": "12.1.0",

@@ -6,13 +6,13 @@ import { type ISceneNodeInternal } from '../../src/store';
 import { snapObjectToFloor, useSnapObjectToFloor } from '../../src/three/transformUtils';
 import { type Vector3 } from '../../src';
 
-const getObject3DBySceneNodeRef = jest.fn();
+const getObject3DBySceneNodeRef = vi.fn();
 
-jest.mock('../../src/store', () => {
+vi.mock('../../src/store', () => {
   return {
-    useEditorState: jest.fn(() => {
+    useEditorState: () => {
       return { getObject3DBySceneNodeRef };
-    }),
+    },
   };
 });
 
@@ -62,7 +62,7 @@ describe('snapObjectToFloor', () => {
 
   describe('useSnapObjectToFloor hook', () => {
     it('should continue to snap to floor after applying this constraint', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       childComponent.name = 'name_COMPONENT_test';
       childComponent.add(componentMesh);
       obj.add(childComponent);
@@ -75,10 +75,10 @@ describe('snapObjectToFloor', () => {
       });
 
       const testNode = { ref: 'ref', parentRef: 'parentRef', transformConstraint: { snapToFloor: true } };
-      const validate = jest.fn((floorPosition: Vector3, node: ISceneNodeInternal) => {
+      const validate = (floorPosition: Vector3, node: ISceneNodeInternal) => {
         expect(floorPosition).toEqual([0, 0.5, 0]);
         expect(node).toEqual(testNode);
-      });
+      };
 
       const DummyComponent = () => {
         const activate = useSnapObjectToFloor(validate, testNode as ISceneNodeInternal);
@@ -99,7 +99,7 @@ describe('snapObjectToFloor', () => {
 
       await findByTestId('rendered');
 
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
 
       componentMesh.onAfterRender();
     });

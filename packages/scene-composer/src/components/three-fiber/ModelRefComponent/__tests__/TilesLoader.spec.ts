@@ -1,21 +1,20 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@/tests/testing-library';
+import { useTiles } from '../TilesLoader';
 
-/* eslint-disable */
-const mockUseThree = jest.fn();
-jest.doMock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: mockUseThree,
+    useThree: () => vi.fn(),
   };
 });
 
-const mockAddHandler = jest.fn();
-const mockSetCamera = jest.fn();
-const mockSetResolutionFromRenderer = jest.fn();
-jest.doMock('../../../../three/tiles3d/TilesRenderer', () => {
+const mockAddHandler = vi.fn();
+const mockSetCamera = vi.fn();
+const mockSetResolutionFromRenderer = vi.fn();
+vi.mock('../../../../three/tiles3d/TilesRenderer', () => {
   return {
-    TilesRenderer: jest.fn().mockImplementation(() => {
+    TilesRenderer: vi.fn(() => {
       return {
         manager: {
           addHandler: mockAddHandler,
@@ -27,36 +26,34 @@ jest.doMock('../../../../three/tiles3d/TilesRenderer', () => {
   };
 });
 
-const mockFixNasaUriBug = jest.fn((uri) => uri);
-const mockSetupTilesRenderer = jest.fn();
-jest.doMock('../TilesLoaderUtils', () => ({
-  fixNasaUriBug: mockFixNasaUriBug,
-  setupTilesRenderer: mockSetupTilesRenderer,
+const mockFixNasaUriBug = vi.fn((uri) => uri);
+const mockSetupTilesRenderer = vi.fn();
+vi.mock('../TilesLoaderUtils', () => ({
+  fixNasaUriBug: (uri) => mockFixNasaUriBug(uri),
+  setupTilesRenderer: (...args: unknown[]) => mockSetupTilesRenderer(...args),
 }));
 
-const mockSetupTwinMakerGLTFLoader = jest.fn();
-jest.doMock('../../../../three/loaderUtils', () => ({
-  setupTwinMakerGLTFLoader: mockSetupTwinMakerGLTFLoader,
+const mockSetupTwinMakerGLTFLoader = vi.fn();
+vi.mock('../../../../three/loaderUtils', () => ({
+  setupTwinMakerGLTFLoader: () => mockSetupTwinMakerGLTFLoader(),
 }));
 
-const mockCreateTwinMakerFetch = jest.fn();
-jest.doMock('../../../../utils/TwinMakerBrowserUtils', () => ({
-  createTwinMakerFetch: mockCreateTwinMakerFetch,
+const mockCreateTwinMakerFetch = vi.fn();
+vi.mock('../../../../utils/TwinMakerBrowserUtils', () => ({
+  createTwinMakerFetch: () => mockCreateTwinMakerFetch(),
 }));
 
-const mockGetGlobalSettings = jest.fn();
-jest.doMock('../../../../common/GlobalSettings', () => ({
-  getGlobalSettings: mockGetGlobalSettings, // () => ({}),
+const mockGetGlobalSettings = vi.fn();
+vi.mock('../../../../common/GlobalSettings', () => ({
+  getGlobalSettings: () => mockGetGlobalSettings(), // () => ({}),
 }));
-
-import { useTiles } from '../TilesLoader';
 
 /* eslint-enable */
 
 describe('useTiles', () => {
   beforeEach(() => {
     // setup();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockGetGlobalSettings.mockReturnValue({});
   });
 
@@ -70,7 +67,7 @@ describe('useTiles', () => {
   });
 
   it('should call createTwinMakerFetch if getSceneObjectFunction is not null', async () => {
-    mockGetGlobalSettings.mockReturnValue({ getSceneObjectFunction: jest.fn() });
+    mockGetGlobalSettings.mockReturnValue({ getSceneObjectFunction: vi.fn() });
     renderHook(() => useTiles('mock/path'));
     expect(mockCreateTwinMakerFetch).toBeCalledTimes(1);
     expect(mockAddHandler).toBeCalledTimes(1);
@@ -80,7 +77,7 @@ describe('useTiles', () => {
   });
 
   it('should call preprocessURL successfully', async () => {
-    const mockUriModifier = jest.fn((uri) => uri + '-processed');
+    const mockUriModifier = vi.fn((uri) => uri + '-processed');
     const tilesRenderer = renderHook(() => useTiles('mock/path', mockUriModifier)).result.current;
     const uri = (tilesRenderer as any).preprocessURL?.('s3://bucket-name/path/key');
     expect(mockFixNasaUriBug).toBeCalledTimes(1);

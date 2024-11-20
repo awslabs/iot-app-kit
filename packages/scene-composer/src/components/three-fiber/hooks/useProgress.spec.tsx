@@ -2,7 +2,7 @@ import { DefaultLoadingManager } from 'three';
 
 import { useProgressImpl } from './useProgress';
 
-jest.mock('three', () => ({
+vi.mock('three', () => ({
   DefaultLoadingManager: {},
   LoadingManager: class {},
 }));
@@ -14,7 +14,7 @@ describe('useProgress', () => {
     const total = 100;
 
     // Act
-    const setMock = jest.fn();
+    const setMock = vi.fn();
     useProgressImpl(setMock);
 
     if (DefaultLoadingManager.onStart) {
@@ -32,7 +32,7 @@ describe('useProgress', () => {
 
   it('should update state when DefaultLoadingManager Loads', () => {
     // Act
-    const setMock = jest.fn();
+    const setMock = vi.fn();
     useProgressImpl(setMock);
     DefaultLoadingManager.onLoad();
 
@@ -48,7 +48,7 @@ describe('useProgress', () => {
     const previousState = { errors: ['Previous Errors'] };
     let result = null;
 
-    const setMock = jest.fn((cb) => {
+    const setMock = vi.fn((cb) => {
       result = cb(previousState);
     });
 
@@ -65,7 +65,7 @@ describe('useProgress', () => {
     const item = 'test-url';
     const loaded = 25;
     const total = 100;
-    const setMock = jest.fn();
+    const setMock = vi.fn();
     useProgressImpl(setMock);
 
     // Act
@@ -86,7 +86,7 @@ describe('useProgress', () => {
     const item = 'test-url';
     const loaded = 100;
     const total = 100;
-    const setMock = jest.fn();
+    const setMock = vi.fn();
     useProgressImpl(setMock);
 
     // Act
@@ -107,7 +107,7 @@ describe('useProgress', () => {
     const item = 'test-url';
     const loaded = 100;
     const total = 100;
-    const setMock = jest.fn();
+    const setMock = vi.fn();
     useProgressImpl(setMock);
 
     // Act

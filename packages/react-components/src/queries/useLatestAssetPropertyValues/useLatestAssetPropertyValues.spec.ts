@@ -59,8 +59,8 @@ const createMockBatchAssetPropertyValueResponse = (
     response
   );
 
-const getAssetPropertyValue = jest.fn();
-const batchGetAssetPropertyValue = jest.fn();
+const getAssetPropertyValue = vi.fn();
+const batchGetAssetPropertyValue = vi.fn();
 
 const iotSiteWiseClientMock = {
   getAssetPropertyValue,
@@ -73,7 +73,7 @@ const iotSiteWiseClientEdgeMock = {
 
 describe('useLatestAssetPropertyValues', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 

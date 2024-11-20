@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`nodeUtils createNodeWithTransform should create a node with the local parent coordinates 1`] = `
+exports[`nodeUtils > createNodeWithTransform > should create a node with the local parent coordinates 1`] = `
 {
   "components": [
     {
@@ -29,7 +29,7 @@ exports[`nodeUtils createNodeWithTransform should create a node with the local p
 }
 `;
 
-exports[`nodeUtils createNodeWithTransform should create a node with the world coordinates 1`] = `
+exports[`nodeUtils > createNodeWithTransform > should create a node with the world coordinates 1`] = `
 {
   "components": [
     {

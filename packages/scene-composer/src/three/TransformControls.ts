@@ -638,7 +638,6 @@ type TransformControlsGizmoPrivateGizmos = {
 };
 
 class TransformControlsGizmo extends Object3D {
-  private isTransformControlsGizmo = true;
   public type = 'TransformControlsGizmo';
 
   private tempVector = new Vector3(0, 0, 0);
@@ -1347,7 +1346,6 @@ class TransformControlsGizmo extends Object3D {
 }
 
 class TransformControlsPlane extends Mesh<PlaneGeometry, MeshBasicMaterial> {
-  private isTransformControlsPlane = true;
   public type = 'TransformControlsPlane';
 
   constructor() {

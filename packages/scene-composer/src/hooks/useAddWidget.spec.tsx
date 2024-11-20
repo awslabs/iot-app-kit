@@ -1,15 +1,15 @@
-import * as THREE from 'three';
-import { renderHook } from '@testing-library/react-hooks';
 import { type ThreeEvent } from '@react-three/fiber';
+import { renderHook } from '@testing-library/react';
+import * as THREE from 'three';
 
-import { type AddingWidgetInfo, KnownComponentType } from '../interfaces';
 import { type ISceneNodeInternal, type ISubModelRefComponentInternal, accessStore } from '../../src/store';
+import { type AddingWidgetInfo, KnownComponentType } from '../interfaces';
 
 import useAddWidget from './useAddWidget';
 
-const appendSceneNodeMock = jest.fn();
-const getSceneNodeByRefMock = jest.fn();
-const setAddingWidgetMock = jest.fn();
+const appendSceneNodeMock = vi.fn();
+const getSceneNodeByRefMock = vi.fn();
+const setAddingWidgetMock = vi.fn();
 
 const baseState = {
   appendSceneNode: appendSceneNodeMock,
@@ -19,7 +19,7 @@ const baseState = {
 
 describe('useOverwriteRaycaster', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should handle a click on object with no parent', () => {

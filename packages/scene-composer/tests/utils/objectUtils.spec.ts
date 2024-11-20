@@ -4,7 +4,7 @@ import { appendFunction, isObject, mergeDeep, shallowEqualsArray } from '../../s
 
 describe('objectUtils', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return expected result for isObject', () => {
@@ -30,7 +30,7 @@ describe('objectUtils', () => {
   });
 
   it('should call zustand shallow expected number of times when calling shallowEqualsArray', () => {
-    jest.spyOn(shallow, 'default');
+    vi.spyOn(shallow, 'default');
     const a = { test: 'test' };
     const b = { test: 'test' };
     const c = { test: 'bad' };
@@ -47,8 +47,8 @@ describe('objectUtils', () => {
   });
 
   it('should append 2 functions with appendFunction', () => {
-    const second = jest.fn();
-    const first = jest.fn(() => {
+    const second = vi.fn();
+    const first = vi.fn(() => {
       expect(second).not.toBeCalled();
     });
 

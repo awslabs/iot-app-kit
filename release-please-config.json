@@ -36,9 +36,6 @@
     "configuration/ts-config": {
       "component": "ts-config"
     },
-    "configuration/jest-config": {
-      "component": "jest-config"
-    },
     "configuration/eslint-config": {
       "component": "eslint-config"
     }
@@ -65,7 +62,6 @@
         "tools-iottwinmaker",
         "testing-util",
         "core-util",
-        "jest-config",
         "ts-config",
         "eslint-config"
       ]

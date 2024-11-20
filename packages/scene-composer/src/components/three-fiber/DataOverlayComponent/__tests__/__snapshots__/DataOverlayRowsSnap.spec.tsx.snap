@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataOverlayRows should render overlay panel correctly 1`] = `
+exports[`DataOverlayRows > should render overlay panel correctly 1`] = `
 <div>
   <div
     style="margin-left: 1em; margin-right: 1em;"
@@ -19,7 +19,7 @@ exports[`DataOverlayRows should render overlay panel correctly 1`] = `
 </div>
 `;
 
-exports[`DataOverlayRows should render text annotation correctly 1`] = `
+exports[`DataOverlayRows > should render text annotation correctly 1`] = `
 <div>
   <div>
     <div

@@ -1,20 +1,20 @@
-import { act, render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { act, render } from '@/tests/testing-library';
 
 import { DataOverlayPanelConfigEditor } from './DataOverlayPanelConfigEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('DataOverlayPanelConfigEditor', () => {
   const config = {
     isPinned: true,
   };
-  const onUpdateCallbackMock = jest.fn();
+  const onUpdateCallbackMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update when clicking checkbox', async () => {

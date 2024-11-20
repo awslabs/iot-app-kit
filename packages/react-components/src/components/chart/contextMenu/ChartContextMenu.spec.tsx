@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { describe } from '@jest/globals';
 import {
   type RenderResult,
   act,
@@ -7,10 +6,10 @@ import {
   render,
   screen,
 } from '@testing-library/react';
-
+import type { Mock } from 'vitest';
 import ChartContextMenu from './ChartContextMenu';
 
-type ActionStub = jest.Mock;
+type ActionStub = Mock;
 
 const TestChartContextMenu = ({
   action1,
@@ -41,8 +40,8 @@ const TestChartContextMenu = ({
 };
 
 describe('ChartContextMenu', () => {
-  const action1Stub = jest.fn();
-  const action2Stub = jest.fn();
+  const action1Stub = vi.fn();
+  const action2Stub = vi.fn();
 
   let component: RenderResult;
   let trigger: Element;

@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import { cloneDeep } from 'lodash';
+import { render, screen } from '@/tests/testing-library';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
 
@@ -18,7 +18,7 @@ describe('DataBindingMapNameEditor', () => {
       },
     },
   ];
-  const onUpdateCallbackMock = jest.fn();
+  const onUpdateCallbackMock = vi.fn();
 
   it('should render binding name correctly', async () => {
     const { container } = render(
@@ -62,7 +62,7 @@ describe('DataBindingMapNameEditor', () => {
   });
 
   it('should render with invalid character in name error for $', async () => {
-    const { container } = render(
+    render(
       <DataBindingMapNameEditor
         bindingName='aa $ bb'
         index={0}
@@ -71,12 +71,11 @@ describe('DataBindingMapNameEditor', () => {
       />,
     );
 
-    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
-    expect(container).toMatchSnapshot();
+    expect(screen.getByText('Invalid character in the name')).toBeVisible();
   });
 
   it('should render with invalid character in name error for {', async () => {
-    const { container } = render(
+    render(
       <DataBindingMapNameEditor
         bindingName='aa { bb'
         index={0}
@@ -85,12 +84,11 @@ describe('DataBindingMapNameEditor', () => {
       />,
     );
 
-    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
-    expect(container).toMatchSnapshot();
+    expect(screen.getByText('Invalid character in the name')).toBeVisible();
   });
 
   it('should render with invalid character in name error for }', async () => {
-    const { container } = render(
+    render(
       <DataBindingMapNameEditor
         bindingName='aa } bb'
         index={0}
@@ -99,12 +97,11 @@ describe('DataBindingMapNameEditor', () => {
       />,
     );
 
-    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
-    expect(container).toMatchSnapshot();
+    expect(screen.getByText('Invalid character in the name')).toBeVisible();
   });
 
   it('should render with invalid character in name error for .', async () => {
-    const { container } = render(
+    render(
       <DataBindingMapNameEditor
         bindingName='aa . bb'
         index={0}
@@ -113,7 +110,6 @@ describe('DataBindingMapNameEditor', () => {
       />,
     );
 
-    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
-    expect(container).toMatchSnapshot();
+    expect(screen.getByText('Invalid character in the name')).toBeVisible();
   });
 });

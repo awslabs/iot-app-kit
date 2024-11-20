@@ -1,4 +1,4 @@
-import { Easing, Interpolation, Group, Tween } from '@tweenjs/tween.js';
+import { Easing, Interpolation, Group, Tween } from '@tweenjs/tween.js/dist/tween.esm.js';
 import { useEffect, useRef } from 'react';
 
 interface TweenConfig<T extends object> {

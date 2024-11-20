@@ -7,13 +7,13 @@ import {
   parseColorWithAlpha,
 } from '../../src/utils/sceneResourceUtils';
 
-jest.mock('../../src/utils/styleUtils', () => ({ colors: { errorRed: '#EE0000' } }));
+vi.mock('../../src/utils/styleUtils', () => ({ colors: { errorRed: '#EE0000' } }));
 
-jest.mock('../../src/common/GlobalSettings', () => {
-  const originalModule = jest.requireActual('../../src/common/GlobalSettings');
+vi.mock('../../src/common/GlobalSettings', async () => {
+  const originalModule = await vi.importActual('../../src/common/GlobalSettings');
   return {
     ...originalModule,
-    getGlobalSettings: jest.fn(),
+    getGlobalSettings: vi.fn(),
   };
 });
 

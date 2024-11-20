@@ -56,12 +56,12 @@ const batchParamForMostRecentBeforeEnd = expect.objectContaining({
 
 describe('batchGetHistoricalPropertyDataPoints', () => {
   it('requests with fetchFromStartToEnd', async () => {
-    const batchGetAssetPropertyValueHistory = jest
+    const batchGetAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
@@ -91,12 +91,12 @@ describe('batchGetHistoricalPropertyDataPoints', () => {
   });
 
   it('requests with fetchMostRecentBeforeStart', async () => {
-    const batchGetAssetPropertyValueHistory = jest
+    const batchGetAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
@@ -126,12 +126,12 @@ describe('batchGetHistoricalPropertyDataPoints', () => {
   });
 
   it('requests with fetchMostRecentBeforeEnd', async () => {
-    const batchGetAssetPropertyValueHistory = jest
+    const batchGetAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
@@ -161,12 +161,12 @@ describe('batchGetHistoricalPropertyDataPoints', () => {
   });
 
   it('requests with fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, and fetchFromStartToEnd', async () => {
-    const batchGetAssetPropertyValueHistory = jest
+    const batchGetAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 

@@ -17,7 +17,7 @@ const DATE_BEFORE = new Date(2000, 11, 0);
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 beforeEach(() => {
-  jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW.getTime());
+  vi.spyOn(Date, 'now').mockImplementation(() => DATE_NOW.getTime());
 });
 
 describe('loading status', () => {

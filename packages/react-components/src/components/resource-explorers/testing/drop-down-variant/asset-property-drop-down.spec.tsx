@@ -3,7 +3,7 @@ import type {
   ListAssetProperties,
 } from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { useState } from 'react';
 import { AssetPropertyExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
@@ -79,10 +79,10 @@ describe('asset property drop-down', () => {
           assetModelProperty3,
         ],
       } = listAssetModelPropertiesResponse;
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(listAssetPropertiesResponse);
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(listAssetModelPropertiesResponse);
       render(
@@ -124,10 +124,10 @@ describe('asset property drop-down', () => {
 
   describe('request handling', () => {
     it('requests a single page of asset properties correctly', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(createListAssetPropertiesPage(3));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
       render(
@@ -146,7 +146,7 @@ describe('asset property drop-down', () => {
     });
 
     it('requests multiple pages of asset properties correctly', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValueOnce(
           createListAssetPropertiesPage(1, 0, 'next-token-1')
@@ -155,7 +155,7 @@ describe('asset property drop-down', () => {
           createListAssetPropertiesPage(1, 1, 'next-token-2')
         )
         .mockResolvedValueOnce(createListAssetPropertiesPage(1, 2));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
       render(
@@ -174,7 +174,7 @@ describe('asset property drop-down', () => {
     });
 
     it('requests multiple lists of pages of asset properties correctly', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValueOnce(
           createListAssetPropertiesPage(1, 0, 'next-token-1')
@@ -184,7 +184,7 @@ describe('asset property drop-down', () => {
           createListAssetPropertiesPage(1, 2, 'next-token-2')
         )
         .mockResolvedValueOnce(createListAssetPropertiesPage(1, 3));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(4, 0));
 
@@ -221,13 +221,13 @@ describe('asset property drop-down', () => {
           assetModelProperty3,
         ],
       } = listAssetModelPropertiesResponse;
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(listAssetPropertiesResponse);
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(listAssetModelPropertiesResponse);
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <SelectableAssetPropertyDropDown
           listAssetProperties={listAssetProperties}
@@ -265,13 +265,13 @@ describe('asset property drop-down', () => {
             assetModelProperty3,
           ],
         } = listAssetModelPropertiesResponse;
-        const listAssetProperties = jest
+        const listAssetProperties = vi
           .fn()
           .mockResolvedValue(listAssetPropertiesResponse);
-        const listAssetModelProperties = jest
+        const listAssetModelProperties = vi
           .fn()
           .mockResolvedValue(listAssetModelPropertiesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetPropertyDropDown
             selectionMode='single'
@@ -306,13 +306,13 @@ describe('asset property drop-down', () => {
             assetModelProperty2,
           ],
         } = listAssetModelPropertiesResponse;
-        const listAssetProperties = jest
+        const listAssetProperties = vi
           .fn()
           .mockResolvedValue(listAssetPropertiesResponse);
-        const listAssetModelProperties = jest
+        const listAssetModelProperties = vi
           .fn()
           .mockResolvedValue(listAssetModelPropertiesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetPropertyDropDown
             selectionMode='single'
@@ -349,13 +349,13 @@ describe('asset property drop-down', () => {
             assetModelProperty3,
           ],
         } = listAssetModelPropertiesResponse;
-        const listAssetProperties = jest
+        const listAssetProperties = vi
           .fn()
           .mockResolvedValue(listAssetPropertiesResponse);
-        const listAssetModelProperties = jest
+        const listAssetModelProperties = vi
           .fn()
           .mockResolvedValue(listAssetModelPropertiesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetPropertyDropDown
             selectionMode='multi'
@@ -393,13 +393,13 @@ describe('asset property drop-down', () => {
             assetModelProperty2,
           ],
         } = listAssetModelPropertiesResponse;
-        const listAssetProperties = jest
+        const listAssetProperties = vi
           .fn()
           .mockResolvedValue(listAssetPropertiesResponse);
-        const listAssetModelProperties = jest
+        const listAssetModelProperties = vi
           .fn()
           .mockResolvedValue(listAssetModelPropertiesResponse);
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetPropertyDropDown
             selectionMode='multi'
@@ -464,21 +464,21 @@ describe('asset property drop-down', () => {
         ...assetProperty3,
         name: 'Different Name 3',
       };
-      const listAssetProperties = jest.fn().mockResolvedValue({
+      const listAssetProperties = vi.fn().mockResolvedValue({
         assetPropertySummaries: [
           assetProperty1,
           assetProperty2,
           assetProperty3,
         ],
       });
-      const listAssetModelProperties = jest.fn().mockResolvedValue({
+      const listAssetModelProperties = vi.fn().mockResolvedValue({
         assetModelPropertySummaries: [
           assetModelProperty1,
           assetModelProperty2,
           assetModelProperty3,
         ],
       });
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetPropertyExplorer
           variant='drop-down'

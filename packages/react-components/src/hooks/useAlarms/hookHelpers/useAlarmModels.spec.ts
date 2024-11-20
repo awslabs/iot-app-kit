@@ -18,12 +18,12 @@ import {
 
 describe('useAlarmModels', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 
   it('correctly calls onSummarizeAlarmModels', async () => {
-    const onSummarizeAlarmModels = jest.fn();
+    const onSummarizeAlarmModels = vi.fn();
 
     describeAlarmModelMock.mockResolvedValueOnce(mockAlarmModel);
     describeAlarmModelMock.mockResolvedValueOnce(mockAlarmModel2);

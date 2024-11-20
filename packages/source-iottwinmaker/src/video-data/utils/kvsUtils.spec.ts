@@ -20,12 +20,12 @@ import {
 } from '../types';
 
 describe('KVSUtils for Video Player', () => {
-  const getDataEndpoint = jest.fn();
+  const getDataEndpoint = vi.fn();
   const kinesisVideoClientMock = createMockKinesisVideoSDK({
     getDataEndpoint,
   });
 
-  const getHLSStreamingSessionURL = jest.fn();
+  const getHLSStreamingSessionURL = vi.fn();
   const kinesisVideoArchivedMediaClientMock =
     createMockKinesisVideoArchivedMediaSDK({
       getHLSStreamingSessionURL,

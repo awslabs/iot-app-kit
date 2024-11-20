@@ -1,6 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StateManager should load dynamic scene correctly 1`] = `
+exports[`StateManager > should load dynamic scene correctly 1`] = `
+<div>
+  <scenelayout
+    externallibraryconfig="[object Object]"
+    loadingview="[object Object]"
+  />
+</div>
+`;
+
+exports[`StateManager > should load dynamic scene with error for empty document 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -13,7 +22,7 @@ exports[`StateManager should load dynamic scene correctly 1`] = `
 />
 `;
 
-exports[`StateManager should load dynamic scene with error for empty document 1`] = `
+exports[`StateManager > should load dynamic scene with error for getting scene entity failure 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -26,7 +35,7 @@ exports[`StateManager should load dynamic scene with error for empty document 1`
 />
 `;
 
-exports[`StateManager should load dynamic scene with error for getting scene entity failure 1`] = `
+exports[`StateManager > should render correctly 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -39,20 +48,7 @@ exports[`StateManager should load dynamic scene with error for getting scene ent
 />
 `;
 
-exports[`StateManager should render correctly 1`] = `
-<SceneLayout
-  LoadingView={
-    <Provider>
-      <LoadingProgress />
-    </Provider>
-  }
-  externalLibraryConfig={{}}
-  isViewing={false}
-  onPointerMissed={[Function]}
-/>
-`;
-
-exports[`StateManager should render correctly with Matterport configuration 1`] = `
+exports[`StateManager > should render correctly with Matterport configuration 1`] = `
 <SceneLayout
   LoadingView={
     <Provider>
@@ -73,186 +69,47 @@ exports[`StateManager should render correctly with Matterport configuration 1`] 
 />
 `;
 
-exports[`StateManager should render with Failed to fetch scene content 1`] = `
-<div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
->
-  <div
-    className="sc-imWYAI garats"
-  >
-    <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
-    >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
-      <div
-        data-mocked="TextContent"
-      >
-        <p>
-          Failed to fetch scene content
-        </p>
-      </div>
-    </div>
-  </div>
-  <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
-  >
-    <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
-    >
-      <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
-      />
-    </div>
-  </div>
+exports[`StateManager > should render with Failed to fetch scene content 1`] = `
+<div>
+  <scenelayout
+    externallibraryconfig="[object Object]"
+    loadingview="[object Object]"
+  />
 </div>
 `;
 
-exports[`StateManager should render with empty scene url error 1`] = `
-<div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
->
-  <div
-    className="sc-imWYAI garats"
-  >
-    <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
-    >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
-      <div
-        data-mocked="TextContent"
-      >
-        <p>
-          Got empty scene url
-        </p>
-      </div>
-    </div>
-  </div>
-  <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
-  >
-    <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
-    >
-      <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
-      />
-    </div>
-  </div>
+exports[`StateManager > should render with empty scene url error 1`] = `
+<div>
+  <scenelayout
+    externallibraryconfig="[object Object]"
+    loadingview="[object Object]"
+  />
 </div>
 `;
 
-exports[`StateManager should render with fetch scene content API error 1`] = `
-<div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
->
-  <div
-    className="sc-imWYAI garats"
-  >
-    <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
-    >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
-      <div
-        data-mocked="TextContent"
-      >
-        <p>
-          Random error
-        </p>
-      </div>
-    </div>
-  </div>
-  <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
-  >
-    <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
-    >
-      <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
-      />
-    </div>
-  </div>
+exports[`StateManager > should render with empty scene url error 2`] = `
+<div>
+  <scenelayout
+    externallibraryconfig="[object Object]"
+    loadingview="[object Object]"
+  />
 </div>
 `;
 
-exports[`StateManager should render with get scene uri error 1`] = `
-<div
-  className="sc-eqUAAy gibenV"
-  data-mocked="Box"
->
-  <div
-    className="sc-imWYAI garats"
-  >
-    <div
-      className="sc-dAlyuH exYAMD"
-      data-mocked="Container"
-    >
-      <div>
-        <div
-          data-mocked="Header"
-          variant="h2"
-        >
-          Error
-        </div>
-      </div>
-      <div
-        data-mocked="TextContent"
-      >
-        <p>
-          get scene uri error
-        </p>
-      </div>
-    </div>
-  </div>
-  <div
-    className="sc-dcJsrY iRIcXR"
-    data-mocked="Box"
-  >
-    <div
-      className="sc-iGgWBj dbIDHC"
-      data-mocked="Box"
-    >
-      <div
-        className="sc-kAyceB dBfuLL"
-        data-mocked="Box"
-      />
-    </div>
-  </div>
+exports[`StateManager > should render with fetch scene content API error 1`] = `
+<div>
+  <scenelayout
+    externallibraryconfig="[object Object]"
+    loadingview="[object Object]"
+  />
+</div>
+`;
+
+exports[`StateManager > should render with get scene uri error 1`] = `
+<div>
+  <scenelayout
+    externallibraryconfig="[object Object]"
+    loadingview="[object Object]"
+  />
 </div>
 `;

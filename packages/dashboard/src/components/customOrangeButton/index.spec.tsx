@@ -3,7 +3,7 @@ import CustomOrangeButton from './index';
 
 describe('CustomOrangeButton', () => {
   const title = 'Test Button';
-  const handleClick = jest.fn();
+  const handleClick = vi.fn();
 
   test('renders button with correct title', () => {
     const { getByText } = render(

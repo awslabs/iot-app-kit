@@ -6,13 +6,13 @@ import { ViewCursorEditSvgString } from '../assets/svgs';
 
 import { convertSvgToMesh, createMesh, getDataUri } from './svgUtils';
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('three-stdlib');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('three-stdlib');
   return {
     ...originalModule,
-    useLoader: jest.fn(),
-    createShapes: jest.fn(),
-    SVGLoader: jest.fn(),
+    useLoader: vi.fn(),
+    createShapes: vi.fn(),
+    SVGLoader: vi.fn(),
   };
 });
 describe('svgUtils', () => {

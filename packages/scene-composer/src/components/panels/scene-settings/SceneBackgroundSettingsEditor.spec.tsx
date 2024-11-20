@@ -1,22 +1,22 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { act, render } from '@testing-library/react';
+import { act, render } from '@/tests/testing-library';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { COMPOSER_FEATURES, KnownSceneProperty } from '../../../interfaces';
 import { accessStore } from '../../../store';
-import { KnownSceneProperty, COMPOSER_FEATURES } from '../../../interfaces';
 
 import { SceneBackgroundSettingsEditor } from './SceneBackgroundSettingsEditor';
 
-jest.mock('../../../common/GlobalSettings');
+vi.mock('../../../common/GlobalSettings');
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('SceneBackgroundSettingsEditor', () => {
-  const setScenePropertyMock = jest.fn();
-  const getScenePropertyMock = jest.fn();
-  const showAssetBrowserCallbackMock = jest.fn();
+  const setScenePropertyMock = vi.fn();
+  const getScenePropertyMock = vi.fn();
+  const showAssetBrowserCallbackMock = vi.fn();
 
   const mockFeatureConfigOn = { [COMPOSER_FEATURES.Textures]: true };
 
@@ -29,7 +29,7 @@ describe('SceneBackgroundSettingsEditor', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should save background on clean scene', () => {
@@ -41,7 +41,7 @@ describe('SceneBackgroundSettingsEditor', () => {
         return customColors;
       }
     });
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     accessStore('default').setState(baseState);
 
@@ -49,7 +49,7 @@ describe('SceneBackgroundSettingsEditor', () => {
 
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
-      color: 'colorBackgroundContainerContent',
+      color: 'var(--color-background-container-content-4un1ap, #ffffff)',
     });
   });
 
@@ -64,7 +64,7 @@ describe('SceneBackgroundSettingsEditor', () => {
         return customColors;
       }
     });
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     accessStore('default').setState(baseState);
     const { container } = render(<SceneBackgroundSettingsEditor />);
@@ -94,7 +94,7 @@ describe('SceneBackgroundSettingsEditor', () => {
         return customColors;
       }
     });
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     showAssetBrowserCallbackMock.mockImplementation((cb) => {
       cb(null, 'c:\file.jpg');
@@ -127,7 +127,7 @@ describe('SceneBackgroundSettingsEditor', () => {
         return customColors;
       }
     });
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     accessStore('default').setState(baseState);
     const { container } = render(<SceneBackgroundSettingsEditor />);
@@ -141,7 +141,7 @@ describe('SceneBackgroundSettingsEditor', () => {
       removeTextureButton!.click();
     });
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
-      color: 'colorBackgroundContainerContent',
+      color: 'var(--color-background-container-content-4un1ap, #ffffff)',
     });
   });
 });

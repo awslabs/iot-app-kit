@@ -1,15 +1,15 @@
 import useLogger from '../useLogger';
 
-const extend = jest.fn();
+const extend = vi.fn();
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useContext: jest.fn().mockImplementation(() => ({
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useContext: vi.fn().mockImplementation(() => ({
     log: {
       extend: extend,
     },
   })),
-  useMemo: jest.fn().mockImplementation((f: any) => {
+  useMemo: vi.fn().mockImplementation((f: any) => {
     f();
   }),
 }));

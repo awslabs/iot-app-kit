@@ -1,13 +1,15 @@
 import { Provider } from 'react-redux';
 
 import { act, render, screen, waitFor } from '@testing-library/react';
-import UserEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 
 import { DefaultDashboardMessages } from '~/messages';
 import { configureDashboardStore } from '~/store';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import type { ContextMenuProps } from './index';
 import ContextMenu from './index';
+
+const user = ue.setup();
 
 const renderContextMenu = async (args: ContextMenuProps, open?: boolean) => {
   const ret: { container: HTMLElement | null } = {
@@ -48,7 +50,6 @@ const renderContextMenu = async (args: ContextMenuProps, open?: boolean) => {
 };
 
 const clickOption = async (option: string) => {
-  const user = UserEvent.setup();
   await user.click(screen.getByText(option));
 };
 
@@ -86,7 +87,7 @@ describe('ContextMenu', () => {
   });
 
   it('can copy', async () => {
-    const copyWidgets = jest.fn();
+    const copyWidgets = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -110,7 +111,7 @@ describe('ContextMenu', () => {
   });
 
   it('does not copy if there is no selection', async () => {
-    const copyWidgets = jest.fn();
+    const copyWidgets = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -134,7 +135,7 @@ describe('ContextMenu', () => {
   });
 
   it('can paste', async () => {
-    const pasteWidgets = jest.fn();
+    const pasteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -158,7 +159,7 @@ describe('ContextMenu', () => {
   });
 
   it('does not paste if there are no copied widgets', async () => {
-    const pasteWidgets = jest.fn();
+    const pasteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -182,7 +183,7 @@ describe('ContextMenu', () => {
   });
 
   it('can delete', async () => {
-    const deleteWidgets = jest.fn();
+    const deleteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -206,7 +207,7 @@ describe('ContextMenu', () => {
   });
 
   it('does not delete if there are no selected widgets', async () => {
-    const deleteWidgets = jest.fn();
+    const deleteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -230,7 +231,7 @@ describe('ContextMenu', () => {
   });
 
   it('can bring to front', async () => {
-    const bringWidgetsToFront = jest.fn();
+    const bringWidgetsToFront = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -254,7 +255,7 @@ describe('ContextMenu', () => {
   });
 
   it('does not bring to front if there are no selected widgets', async () => {
-    const bringWidgetsToFront = jest.fn();
+    const bringWidgetsToFront = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -278,7 +279,7 @@ describe('ContextMenu', () => {
   });
 
   it('can send to back', async () => {
-    const sendWidgetsToBack = jest.fn();
+    const sendWidgetsToBack = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
@@ -302,7 +303,7 @@ describe('ContextMenu', () => {
   });
 
   it('does not send to back if there are no selected widgets', async () => {
-    const sendWidgetsToBack = jest.fn();
+    const sendWidgetsToBack = vi.fn();
 
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,

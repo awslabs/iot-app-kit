@@ -1,13 +1,15 @@
 import { render } from '@testing-library/react';
 
-import { Component } from '../../../../models/SceneModels';
-import { DataOverlayDataRow } from '../DataOverlayDataRow';
-import { accessStore } from '../../../../store';
 import { type IDataInput } from '../../../../interfaces';
+import { Component } from '../../../../models/SceneModels';
+import { accessStore } from '../../../../store';
+import { DataOverlayDataRow } from '../DataOverlayDataRow';
 
-jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ 'prop-1': 'ACTIVE' }] }));
+vi.mock('../../../../hooks/useBindingData', () => ({
+  default: vi.fn().mockReturnValue({ data: [{ 'prop-1': 'ACTIVE' }] }),
+}));
 
-jest.mock('../../../wrappers/ReactMarkdownWrapper', () => ({
+vi.mock('../../../wrappers/ReactMarkdownWrapper', () => ({
   ReactMarkdownWrapper: (...props: unknown[]) => <div data-testid='ReactMarkdownWrapper'>{JSON.stringify(props)}</div>,
 }));
 
@@ -51,7 +53,7 @@ describe('DataOverlayDataRow', () => {
     ],
     timeRange: { from: 111, to: 222 },
   };
-  const isEditingMock = jest.fn();
+  const isEditingMock = vi.fn();
   const baseState = {
     dataInput: mockDataInput,
     dataBindingTemplate: undefined,

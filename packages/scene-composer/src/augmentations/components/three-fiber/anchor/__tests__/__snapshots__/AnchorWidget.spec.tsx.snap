@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AnchorWidget should render correctly 1`] = `
+exports[`AnchorWidget > should render correctly 1`] = `
 <group
   visible={true}
 >
@@ -65,7 +65,7 @@ exports[`AnchorWidget should render correctly 1`] = `
 </group>
 `;
 
-exports[`AnchorWidget should render correctly when not visible 1`] = `
+exports[`AnchorWidget > should render correctly when not visible 1`] = `
 <group
   visible={false}
 >
@@ -130,7 +130,7 @@ exports[`AnchorWidget should render correctly when not visible 1`] = `
 </group>
 `;
 
-exports[`AnchorWidget should render correctly with an offset 1`] = `
+exports[`AnchorWidget > should render correctly with an offset 1`] = `
 <group
   visible={true}
 >
@@ -195,7 +195,7 @@ exports[`AnchorWidget should render correctly with an offset 1`] = `
 </group>
 `;
 
-exports[`AnchorWidget should render correctly with data binding custom rule 1`] = `
+exports[`AnchorWidget > should render correctly with data binding custom rule 1`] = `
 <group
   visible={true}
 >
@@ -260,7 +260,7 @@ exports[`AnchorWidget should render correctly with data binding custom rule 1`] 
 </group>
 `;
 
-exports[`AnchorWidget should render correctly with data binding rule 1`] = `
+exports[`AnchorWidget > should render correctly with data binding rule 1`] = `
 <group
   visible={true}
 >
@@ -325,7 +325,7 @@ exports[`AnchorWidget should render correctly with data binding rule 1`] = `
 </group>
 `;
 
-exports[`AnchorWidget should render correctly with non default tag settings 1`] = `
+exports[`AnchorWidget > should render correctly with non default tag settings 1`] = `
 <group
   visible={true}
 >
@@ -390,7 +390,7 @@ exports[`AnchorWidget should render correctly with non default tag settings 1`] 
 </group>
 `;
 
-exports[`AnchorWidget should render with a countered size when parent is scaled 1`] = `
+exports[`AnchorWidget > should render with a countered size when parent is scaled 1`] = `
 <group
   visible={true}
 >

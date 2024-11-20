@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 
-import type ILogger from '../../../../ILogger';
 import ErrorBoundary from '..';
+import type ILogger from '../../../../ILogger';
 
 describe('<ErrorBoundary />', () => {
   it('should log unhandled errors in child rendering', () => {
     const loggerMock = {
-      fatal: jest.fn(),
+      fatal: vi.fn(),
     } as unknown as ILogger;
 
     const error = new Error('unhandled');
@@ -14,13 +14,13 @@ describe('<ErrorBoundary />', () => {
       componentStack: 'This would be a stacktrace',
     };
 
-    const onError = jest.fn();
+    const onError = vi.fn();
 
     const sut = new ErrorBoundary({ onError, children: <div></div> });
 
     sut.context = {
       log: loggerMock,
-      setLog: jest.fn(),
+      setLog: vi.fn(),
     };
 
     // Act

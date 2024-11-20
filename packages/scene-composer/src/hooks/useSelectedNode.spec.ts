@@ -1,42 +1,42 @@
-import { useEditorState, accessStore } from '../store';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
+import { accessStore, useEditorState } from '../store';
 
 import useSelectedNode from './useSelectedNode';
 
-jest.mock('../store', () => ({
-  ...jest.requireActual('../store'),
-  useEditorState: jest.fn(),
-  accessStore: jest.fn(),
+vi.mock('../store', async () => ({
+  ...(await vi.importActual('../store')),
+  useEditorState: vi.fn(),
+  accessStore: vi.fn(),
 }));
 
-jest.mock('../common/sceneComposerIdContext', () => ({
-  ...jest.requireActual('../common/sceneComposerIdContext'),
-  useSceneComposerId: jest.fn(),
+vi.mock('../common/sceneComposerIdContext', async () => ({
+  ...(await vi.importActual('../common/sceneComposerIdContext')),
+  useSceneComposerId: vi.fn(),
 }));
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useMemo: jest.fn((cb) => cb()), // useMemo just caches the results, for mocking purposes, we can always just execute.
-  useCallback: jest.fn((cb) => cb), // unbox callbacks.
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useMemo: vi.fn((cb) => cb()), // useMemo just caches the results, for mocking purposes, we can always just execute.
+  useCallback: vi.fn((cb) => cb), // unbox callbacks.
 }));
 
 describe('useSelectedObject', () => {
   it('should return the object from the store', () => {
     const expected = { material: { color: 'blue ' } };
-    const getObject3DBySceneNodeRefMock = jest.fn(() => expected);
-    const getSceneNodeByRef = jest.fn(() => 'Object representing scene node at this ref');
+    const getObject3DBySceneNodeRefMock = vi.fn(() => expected);
+    const getSceneNodeByRef = vi.fn(() => 'Object representing scene node at this ref');
     const sceneComposerId = 'fred';
 
-    (useSceneComposerId as jest.Mock).mockImplementation(() => sceneComposerId);
-    (useEditorState as jest.Mock).mockImplementation(() => ({
+    (useSceneComposerId as vi.Mock).mockImplementation(() => sceneComposerId);
+    (useEditorState as vi.Mock).mockImplementation(() => ({
       selectedSceneNodeRef: 'ref',
       selectedSceneSubmodelRef: 'submodelRef',
       getObject3DBySceneNodeRef: getObject3DBySceneNodeRefMock,
-      setSelectedSceneNodeRef: jest.fn(),
-      setSelectedSceneSubmodelRef: jest.fn(),
+      setSelectedSceneNodeRef: vi.fn(),
+      setSelectedSceneSubmodelRef: vi.fn(),
     }));
 
-    (accessStore as jest.Mock).mockImplementation(
+    (accessStore as vi.Mock).mockImplementation(
       () => (cb) =>
         cb({
           getSceneNodeByRef,

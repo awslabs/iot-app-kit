@@ -28,28 +28,28 @@ import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 
 describe('Test VideoData class', () => {
-  const getDataEndpoint = jest.fn();
+  const getDataEndpoint = vi.fn();
   const kinesisVideoClientMock = createMockKinesisVideoSDK({
     getDataEndpoint,
   });
 
-  const getHLSStreamingSessionURL = jest.fn();
+  const getHLSStreamingSessionURL = vi.fn();
   const kinesisVideoArchivedMediaClientMock =
     createMockKinesisVideoArchivedMediaSDK({
       getHLSStreamingSessionURL,
     });
 
-  const batchPutAssetPropertyValue = jest.fn();
-  const getAssetPropertyValue = jest.fn();
-  const getInterpolatedAssetPropertyValues = jest.fn();
+  const batchPutAssetPropertyValue = vi.fn();
+  const getAssetPropertyValue = vi.fn();
+  const getInterpolatedAssetPropertyValues = vi.fn();
   const siteWiseClientMock = createMockSiteWiseSDK({
     batchPutAssetPropertyValue,
     getAssetPropertyValue,
     getInterpolatedAssetPropertyValues,
   });
 
-  const getEntity = jest.fn();
-  const getPropertyValueHistory = jest.fn();
+  const getEntity = vi.fn();
+  const getPropertyValueHistory = vi.fn();
   const twinMakerClientMock = createMockTwinMakerSDK({
     getEntity,
     getPropertyValueHistory,
@@ -80,7 +80,7 @@ describe('Test VideoData class', () => {
   const videoDataSimpleMode = new VideoDataImpl(videoDataInputSimpleMode);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     getDataEndpoint.mockResolvedValue(mockGetDataEndpointResponse);
     batchPutAssetPropertyValue.mockResolvedValue(batchPutAssetPropertyResponse);

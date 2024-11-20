@@ -6,13 +6,13 @@ import { accessStore } from '../../../store';
 import { ComponentVisibilityToggle } from './ComponentVisibilityToggle';
 
 describe('ComponentVisibilityToggle', () => {
-  const getComponentRefByType = jest.fn();
+  const getComponentRefByType = vi.fn();
 
   const createState = (visible: boolean) => ({
     noHistoryStates: {
       ...accessStore('default').getState().noHistoryStates,
       componentVisibilities: { [KnownComponentType.MotionIndicator]: visible },
-      toggleComponentVisibility: jest.fn(),
+      toggleComponentVisibility: vi.fn(),
     },
     getComponentRefByType,
   });

@@ -8,57 +8,57 @@ import { accessStore } from '../store';
 
 import { WebGLCanvasManager } from './WebGLCanvasManager';
 
-import Mock = jest.Mock;
+import Mock = vi.Mock;
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useEffect: jest.fn(),
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useEffect: vi.fn(),
 }));
 
 // Mock other internal components
-jest.mock('./three-fiber/EntityGroup', () => 'EntityGroup');
-jest.mock('./three-fiber/Environment', () => {
-  const originalModule = jest.requireActual('./three-fiber/Environment');
+vi.mock('./three-fiber/EntityGroup', () => ({ default: 'EntityGroup' }));
+vi.mock('./three-fiber/Environment', async () => {
+  const originalModule = await vi.importActual('./three-fiber/Environment');
   return {
     ...originalModule,
     Environment: 'Environment',
   };
 });
-jest.mock('./three-fiber/StatsWindow', () => {
+vi.mock('./three-fiber/StatsWindow', () => {
   return {
     StatsWindow: 'StatsWindow',
   };
 });
-jest.mock('./three-fiber/EditorCamera', () => {
+vi.mock('./three-fiber/EditorCamera', () => {
   return {
     EditorMainCamera: 'EditorMainCamera',
   };
 });
-jest.mock('./three-fiber/EditorTransformControls', () => {
+vi.mock('./three-fiber/EditorTransformControls', () => {
   return {
     EditorTransformControls: 'EditorTransformControls',
   };
 });
-jest.mock('./three-fiber/SceneInfoView', () => {
+vi.mock('./three-fiber/SceneInfoView', () => {
   return {
     SceneInfoView: 'SceneInfoView',
   };
 });
 
 // Mock Hooks
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
-    useLoader: jest.fn(),
+    useThree: vi.fn(),
+    useLoader: vi.fn(),
   };
 });
 
 class ResizeObserver {
-  observe = jest.fn();
-  unobserve = jest.fn();
-  disconnect = jest.fn();
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
 }
 
 const Layout: React.FC = () => {
@@ -108,15 +108,15 @@ describe('WebGLCanvasManagerSnap', () => {
   group.add(mesh);
 
   const baseState: any = {
-    getSceneNodeByRef: jest.fn(),
-    getSceneProperty: jest.fn(),
-    isEditing: jest.fn(),
+    getSceneNodeByRef: vi.fn(),
+    getSceneProperty: vi.fn(),
+    isEditing: vi.fn(),
     document: sceneDocument,
-    getObject3DBySceneNodeRef: jest.fn().mockReturnValue(group),
+    getObject3DBySceneNodeRef: vi.fn().mockReturnValue(group),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     const mockUseThree = useThree as Mock;
     mockUseThree.mockReturnValue(mockThreeStates);
