@@ -3,13 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.0.0...root-v12.1.0) (2024-11-20)
-
-
-### Features
-
-* assistant dashboard e2e ([583b7d9](https://github.com/awslabs/iot-app-kit/commit/583b7d98b5bc0e796c9cbe3898e4b1ba1502c5f4))
-
 ## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v11.0.0...root-v12.0.0) (2024-11-18)
 
 

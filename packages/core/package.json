@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.1.0",
+  "version": "12.0.0",
   "description": "IoT Application Kit core",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -61,13 +61,13 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@iot-app-kit/jest-config": "12.1.0",
-    "@iot-app-kit/ts-config": "12.1.0",
+    "@iot-app-kit/jest-config": "12.0.0",
+    "@iot-app-kit/ts-config": "12.0.0",
     "@types/d3-array": "^3.0.5",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.16.18",
     "@types/uuid": "^9.0.2",
-    "eslint-config-iot-app-kit": "12.1.0",
+    "eslint-config-iot-app-kit": "12.0.0",
     "flush-promises": "^1.0.2",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
