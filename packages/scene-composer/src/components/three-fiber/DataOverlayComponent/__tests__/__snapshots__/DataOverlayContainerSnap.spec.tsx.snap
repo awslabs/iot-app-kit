@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataOverlayContainer should render with annotation invisible correctly 1`] = `<div />`;
+exports[`DataOverlayContainer > should render with annotation invisible correctly 1`] = `<div />`;
 
-exports[`DataOverlayContainer should render with annotation visible correctly 1`] = `
+exports[`DataOverlayContainer > should render with annotation visible correctly 1`] = `
 <div>
   <div
-    style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-left: 12px; padding-right: 12px;"
+    style="overflow: auto; border: 1px solid; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-left: 12px; padding-right: 12px; border-width: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-style: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-color: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6);"
   >
     <div
       data-testid="rows"
@@ -16,12 +16,12 @@ exports[`DataOverlayContainer should render with annotation visible correctly 1`
 </div>
 `;
 
-exports[`DataOverlayContainer should render with panel invisible correctly 1`] = `<div />`;
+exports[`DataOverlayContainer > should render with panel invisible correctly 1`] = `<div />`;
 
-exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
+exports[`DataOverlayContainer > should render with panel visible correctly 1`] = `
 <div>
   <div
-    style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-top: 12px; padding-bottom: 12px; width: 210px; min-height: 2em;"
+    style="overflow: auto; border: 1px solid; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-top: 12px; padding-bottom: 12px; width: 210px; min-height: 2em; border-width: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-style: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-color: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6);"
   >
     <div
       data-testid="rows"
@@ -32,7 +32,7 @@ exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
       style="display: flex; flex-direction: column; align-items: center;"
     >
       <div
-        style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: -9px; transform: rotate(45deg);"
+        style="overflow: auto; border: 1px solid; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: -9px; transform: rotate(45deg); border-width: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-style: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-color: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6);"
       />
       <div
         style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: none; width: 20px; height: 20px; position: absolute; z-index: 1; bottom: -7.5px; transform: rotate(45deg);"
@@ -42,13 +42,13 @@ exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
 </div>
 `;
 
-exports[`DataOverlayContainer should render with panel visible correctly when the overlay node is selected 1`] = `
+exports[`DataOverlayContainer > should render with panel visible correctly when the overlay node is selected 1`] = `
 <div>
   <div
-    style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-top: 12px; padding-bottom: 12px; width: 210px; min-height: 2em;"
+    style="overflow: auto; border: 1px solid; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-top: 12px; padding-bottom: 12px; width: 210px; min-height: 2em; border-width: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-style: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-color: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6);"
   >
     <div
-      style="float: right; margin-top: 8px; margin-right: 8px;"
+      style="css-float: right; margin-top: 8px; margin-right: 8px;"
     >
       <button
         style="background-color: transparent; border-color: transparent; color: white;"
@@ -65,7 +65,7 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
       style="display: flex; flex-direction: column; align-items: center;"
     >
       <div
-        style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: -9px; transform: rotate(45deg);"
+        style="overflow: auto; border: 1px solid; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: -9px; transform: rotate(45deg); border-width: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-style: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6); border-color: var(--color-border-button-normal-disabled-40wkb4,#9ba7b6);"
       />
       <div
         style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: none; width: 20px; height: 20px; position: absolute; z-index: 1; bottom: -7.5px; transform: rotate(45deg);"

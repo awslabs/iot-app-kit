@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
-
 import Environment, { presets } from './Environment';
+
+import { render } from '@/tests/testing-library';
 
 describe('<Environment />', () => {
   Object.keys(presets).forEach((preset) => {

@@ -13,8 +13,8 @@ export const mockGetAvailableTimeRangeResponse = [
 ];
 
 export const mockVideoData = {
-  getKvsStreamSrc: jest.fn().mockResolvedValue('kvsStreamSrc'),
-  getAvailableTimeRanges: jest.fn(),
-  triggerLiveVideoUpload: jest.fn(),
-  triggerOnDemandVideoUploadRequest: jest.fn(),
-};
+  getKvsStreamSrc: vi.fn().mockResolvedValue('kvsStreamSrc'),
+  getAvailableTimeRanges: vi.fn(),
+  triggerLiveVideoUpload: vi.fn(),
+  triggerOnDemandVideoUploadRequest: vi.fn(),
+} as const;

@@ -1,17 +1,18 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 import { act } from 'react-test-renderer';
 
-import { accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
+import { accessStore } from '../../../../store';
 import { ToolbarOrientation } from '../../common/types';
 
 import { ObjectItemGroup } from '.';
 
-jest.mock('../../common/ToolbarItem', () => ({
+vi.mock('../../common/ToolbarItem', () => ({
   ToolbarItem: (...props: unknown[]) => <div data-testid='ToolbarItem'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('../../../../assets/svgs', () => ({
+vi.mock('../../../../assets/svgs', async () => ({
+  ...(await vi.importActual('../../../../assets/svgs')),
   DeleteSvg: 'DeleteSvg',
   RotateIconSvg: 'RotateIconSvg',
   ScaleIconSvg: 'ScaleIconSvg',
@@ -19,10 +20,10 @@ jest.mock('../../../../assets/svgs', () => ({
 }));
 
 describe('ObjectItemGroupSnap', () => {
-  const removeSceneNode = jest.fn();
+  const removeSceneNode = vi.fn();
   const selectedSceneNodeRef = 'test-ref';
-  const setTransformControlMode = jest.fn();
-  const getSceneNodeByRef = jest.fn();
+  const setTransformControlMode = vi.fn();
+  const getSceneNodeByRef = vi.fn();
 
   beforeEach(() => {
     accessStore('default').setState({
@@ -32,7 +33,7 @@ describe('ObjectItemGroupSnap', () => {
       setTransformControlMode,
       getSceneNodeByRef,
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render with disabled rotate and scale when Tag is selected', () => {

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { DecodeSvgString } from './DecodeSvgString';
 import { useSvgParser } from './useSvgParser';
 
-jest.mock('./useSvgParser'); // Mocking the useSvgParser module
+vi.mock('./useSvgParser'); // Mocking the useSvgParser module
 
 describe('DecodeSvgString', () => {
   const mockSvgCode = '<svg>...</svg>'; // Mocked svgCode value
@@ -15,7 +15,7 @@ describe('DecodeSvgString', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders component with all required props and correct img attributes', () => {

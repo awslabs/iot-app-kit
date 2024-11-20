@@ -1,5 +1,5 @@
-import { renderHook } from '@testing-library/react-hooks';
-import THREE from 'three';
+import { renderHook } from '@testing-library/react';
+import * as THREE from 'three';
 
 import useOverwriteRaycaster from './useOverwriteRaycaster';
 
@@ -12,7 +12,7 @@ describe('useOverwriteRaycaster', () => {
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('it overwrite the raycaster for all objects with custom no op function', () => {
@@ -32,7 +32,7 @@ describe('useOverwriteRaycaster', () => {
     //hit each cube on enter and leave
     expect(intersectObjects.length).toBe(4);
 
-    const mockRaycaster = jest.fn();
+    const mockRaycaster = vi.fn();
     const [overwriteRayCaster, restoreRaycaster] = renderHook(() => useOverwriteRaycaster(parentCube, mockRaycaster))
       .result.current;
     overwriteRayCaster();
@@ -88,7 +88,7 @@ describe('useOverwriteRaycaster', () => {
     parentCube.add(cube2);
     cube2.updateMatrixWorld();
 
-    const mockRaycaster = jest.fn();
+    const mockRaycaster = vi.fn();
     const restoreRaycaster = renderHook(() => useOverwriteRaycaster(parentCube, mockRaycaster)).result.current[1];
 
     const intersectObjects = raycaster.intersectObjects([parentCube]);

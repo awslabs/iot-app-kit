@@ -7,8 +7,8 @@ import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { SpeedEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor';
 
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', () => {
-  const originalModule = jest.requireActual(
+vi.mock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', async () => {
+  const originalModule = await vi.importActual(
     '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor',
   );
   return {
@@ -18,8 +18,8 @@ jest.mock('../../../../../src/components/panels/scene-components/motion-indicato
 });
 
 let sliderOnChangeCb;
-jest.mock('../../../../../src/components/panels/Slider', () => {
-  const originalModule = jest.requireActual('../../../../../src/components/panels/Slider');
+vi.mock('../../../../../src/components/panels/Slider', async () => {
+  const originalModule = await vi.importActual('../../../../../src/components/panels/Slider');
   return {
     ...originalModule,
     Slider: (...props: any[]) => {
@@ -30,8 +30,8 @@ jest.mock('../../../../../src/components/panels/Slider', () => {
 });
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', () => ({
+  ...vi.importActual('@cloudscape-design/components'),
 }));
 
 const baseState = {
@@ -51,10 +51,10 @@ describe('SpeedEditor', () => {
       backgroundColorOpacity: 0.5,
     },
   };
-  const onUpdateCallback = jest.fn();
+  const onUpdateCallback = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update correctly when speed selection change with data binding', () => {

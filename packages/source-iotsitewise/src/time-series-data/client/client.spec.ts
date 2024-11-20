@@ -26,14 +26,14 @@ it('initializes', () => {
 
 describe('getHistoricalPropertyDataPoints', () => {
   it('calls onError on failure', async () => {
-    const batchGetAssetPropertyValueHistory = jest
+    const batchGetAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory })
@@ -69,7 +69,7 @@ describe('getHistoricalPropertyDataPoints', () => {
   });
 
   it('batches and paginates', async () => {
-    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue({
+    const batchGetAssetPropertyValueHistory = vi.fn().mockResolvedValue({
       ...BATCH_ASSET_PROPERTY_VALUE_HISTORY,
       nextToken: 'nextToken',
     });
@@ -79,8 +79,8 @@ describe('getHistoricalPropertyDataPoints', () => {
     const assetId2 = 'some-asset-id-2';
     const propertyId2 = 'some-property-id-2';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory })
@@ -211,13 +211,13 @@ describe('getHistoricalPropertyDataPoints', () => {
   });
 
   it('requests data by property alias', async () => {
-    const batchGetAssetPropertyValueHistory = jest
+    const batchGetAssetPropertyValueHistory = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
     const propertyAlias = 'some/property/alias';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory })
@@ -300,7 +300,7 @@ describe('getHistoricalPropertyDataPoints', () => {
 
 describe('getLatestPropertyDataPoint', () => {
   it('calls onError when error occurs', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
@@ -310,8 +310,8 @@ describe('getLatestPropertyDataPoint', () => {
       createMockSiteWiseSDK({ batchGetAssetPropertyValue })
     );
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const requestInformations = [
       {
@@ -340,7 +340,7 @@ describe('getLatestPropertyDataPoint', () => {
   });
 
   it('batches', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId1 = 'some-asset-id-1';
@@ -349,8 +349,8 @@ describe('getLatestPropertyDataPoint', () => {
     const assetId2 = 'some-asset-id-2';
     const propertyId2 = 'some-property-id-2';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValue })
@@ -466,13 +466,13 @@ describe('getLatestPropertyDataPoint', () => {
   });
 
   it('requests data by property alias', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const propertyAlias = 'some/property/alias';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValue })
@@ -548,14 +548,14 @@ describe('getLatestPropertyDataPoint', () => {
 
 describe('getAggregatedPropertyDataPoints', () => {
   it('calls onError on failure', async () => {
-    const batchGetAssetPropertyAggregates = jest
+    const batchGetAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyAggregates })
@@ -593,7 +593,7 @@ describe('getAggregatedPropertyDataPoints', () => {
   });
 
   it('batches and paginates', async () => {
-    const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue({
+    const batchGetAssetPropertyAggregates = vi.fn().mockResolvedValue({
       ...BATCH_ASSET_PROPERTY_AGGREGATES,
       nextToken: 'nextToken',
     });
@@ -603,8 +603,8 @@ describe('getAggregatedPropertyDataPoints', () => {
     const assetId2 = 'some-asset-id-2';
     const propertyId2 = 'some-property-id-2';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyAggregates })
@@ -754,14 +754,14 @@ describe('getAggregatedPropertyDataPoints', () => {
   });
 
   it('requests data by property alias', async () => {
-    const batchGetAssetPropertyAggregates = jest
+    const batchGetAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
 
     const propertyAlias = 'some/property/alias';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyAggregates })
@@ -848,22 +848,22 @@ describe('getAggregatedPropertyDataPoints', () => {
 
 describe('batch duration', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('batches requests over a single frame', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValue })
@@ -894,7 +894,7 @@ describe('batch duration', () => {
     });
 
     await flushPromises(); // clear promise queue
-    jest.advanceTimersByTime(0); // ensure latest requests are enqueued
+    vi.advanceTimersByTime(0); // ensure latest requests are enqueued
 
     // process the batch
     expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
@@ -909,7 +909,7 @@ describe('batch duration', () => {
     });
 
     await flushPromises(); // clear promise queue
-    jest.advanceTimersByTime(0); // ensure latest requests are enqueued
+    vi.advanceTimersByTime(0); // ensure latest requests are enqueued
 
     client.getLatestPropertyDataPoint({
       requestInformations: [requestInformation],
@@ -918,20 +918,20 @@ describe('batch duration', () => {
     });
 
     await flushPromises(); // clear promise queue
-    jest.advanceTimersByTime(0); // ensure latest requests are enqueued
+    vi.advanceTimersByTime(0); // ensure latest requests are enqueued
 
     expect(batchGetAssetPropertyValue).toBeCalledTimes(2);
   });
 
   it('batches requests over a specified duration', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValue }),
@@ -957,7 +957,7 @@ describe('batch duration', () => {
     });
 
     await flushPromises(); // clear promise queue
-    jest.advanceTimersByTime(50); // ensure latest requests are enqueued but not outside of batch window
+    vi.advanceTimersByTime(50); // ensure latest requests are enqueued but not outside of batch window
 
     client.getLatestPropertyDataPoint({
       requestInformations: [requestInformation],
@@ -966,7 +966,7 @@ describe('batch duration', () => {
     });
 
     await flushPromises(); // clear promise queue
-    jest.advanceTimersByTime(100); // ensure latest requests are enqueued and outside of batch window
+    vi.advanceTimersByTime(100); // ensure latest requests are enqueued and outside of batch window
 
     await flushPromises();
 
@@ -983,7 +983,7 @@ describe('batch duration', () => {
     });
 
     await flushPromises();
-    jest.advanceTimersByTime(150); // ensure latest requests are enqueued and outside of batch window
+    vi.advanceTimersByTime(150); // ensure latest requests are enqueued and outside of batch window
 
     client.getLatestPropertyDataPoint({
       requestInformations: [requestInformation],
@@ -992,7 +992,7 @@ describe('batch duration', () => {
     });
 
     await flushPromises();
-    jest.advanceTimersByTime(150); // ensure latest requests are enqueued and outside of batch window
+    vi.advanceTimersByTime(150); // ensure latest requests are enqueued and outside of batch window
 
     expect(batchGetAssetPropertyValue).toBeCalledTimes(2);
   });
@@ -1000,22 +1000,22 @@ describe('batch duration', () => {
 
 describe('batch deduplication', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('deduplicates duplicate requests', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValue })
@@ -1049,7 +1049,7 @@ describe('batch deduplication', () => {
     await flushPromises();
 
     // ensure latest requests are enqueued
-    jest.advanceTimersByTime(0);
+    vi.advanceTimersByTime(0);
 
     // process the batch
     expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
@@ -1068,12 +1068,12 @@ describe('batch deduplication', () => {
   });
 
   it('does not deduplicate non-duplicate requests', async () => {
-    const batchGetAssetPropertyValue = jest
+    const batchGetAssetPropertyValue = vi
       .fn()
       .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = new SiteWiseClient(
       createMockSiteWiseSDK({ batchGetAssetPropertyValue })
@@ -1116,7 +1116,7 @@ describe('batch deduplication', () => {
     await flushPromises();
 
     // ensure latest requests are enqueued
-    jest.advanceTimersByTime(0);
+    vi.advanceTimersByTime(0);
 
     // process the batch
     expect(batchGetAssetPropertyValue).toBeCalledTimes(1);

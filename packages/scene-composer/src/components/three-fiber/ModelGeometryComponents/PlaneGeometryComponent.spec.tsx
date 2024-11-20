@@ -1,49 +1,49 @@
-import { useRef } from 'react';
-import { render } from '@testing-library/react';
-import ReactThreeTestRenderer from '@react-three/test-renderer';
-import { Mesh, Texture, MeshStandardMaterial } from 'three';
 import { useFrame } from '@react-three/fiber';
-jest.useFakeTimers();
+import ReactThreeTestRenderer from '@react-three/test-renderer';
+import { render } from '@testing-library/react';
+import { useRef } from 'react';
+import { Mesh, MeshStandardMaterial, Texture } from 'three';
+import type { Mock } from 'vitest';
 
+vi.useFakeTimers();
+
+import useAddWidget from '../../../hooks/useAddWidget';
+import useTwinMakerTextureLoader from '../../../hooks/useTwinMakerTextureLoader';
 import { KnownComponentType } from '../../../interfaces';
 import { type IPlaneGeometryComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../store';
-import useTwinMakerTextureLoader from '../../../hooks/useTwinMakerTextureLoader';
-import useAddWidget from '../../../hooks/useAddWidget';
 
 //we need actual drei code to test with r3f renderer
-jest.mock('@react-three/drei', () => {
-  const originalModule = jest.requireActual('@react-three/drei');
+vi.mock('@react-three/drei', async () => {
+  const originalModule = await vi.importActual('@react-three/drei');
   return {
     ...originalModule,
   };
 });
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: jest.fn(),
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useRef: vi.fn(),
 }));
 
 // Mock Hooks
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useFrame: jest.fn(),
+    useFrame: vi.fn(),
   };
 });
 
 import PlaneGeometryComponent from './PlaneGeometryComponent';
 
-jest.mock('../../../utils/objectThreeUtils', () => {
+vi.mock('../../../utils/objectThreeUtils', () => {
   return {
-    acceleratedRaycasting: jest.fn(),
-    getComponentGroupName: jest.fn().mockReturnValue('mockComponentGroupName'),
+    acceleratedRaycasting: vi.fn(),
+    getComponentGroupName: vi.fn().mockReturnValue('mockComponentGroupName'),
   };
 });
 
-jest.mock('../../../hooks/useAddWidget', () => {
-  return jest.fn();
-});
+vi.mock('../../../hooks/useAddWidget', () => ({ default: vi.fn() }));
 
 const mockTexture = new Texture();
 mockTexture.name = 'testTextureName';
@@ -55,20 +55,14 @@ const mockClearTexture = (mesh: Mesh) => {
   (mesh.material as MeshStandardMaterial).map = null;
 };
 
-jest.mock('../../../hooks/useTwinMakerTextureLoader', () => {
-  return jest.fn();
-});
+vi.mock('../../../hooks/useTwinMakerTextureLoader', () => ({ default: vi.fn() }));
 
-jest.mock('../../../hooks/useAddWidget', () => {
-  return jest.fn();
-});
-
-jest.mock('../../../store/', () => ({
-  ...jest.requireActual('../../../store/'),
-  useEditorState: jest.fn(),
+vi.mock('../../../store/', async () => ({
+  ...(await vi.importActual('../../../store/')),
+  useEditorState: vi.fn(),
 }));
 
-const mockHandleAddWidget = jest.fn();
+const mockHandleAddWidget = vi.fn();
 
 describe('PlaneGeometryComponent', () => {
   const baseNode: ISceneNodeInternal = {
@@ -105,17 +99,17 @@ describe('PlaneGeometryComponent', () => {
   };
 
   const setup = () => {
-    jest.resetAllMocks();
-    (useFrame as jest.Mock).mockImplementation((cb) => cb());
-    (useTwinMakerTextureLoader as jest.Mock).mockImplementation(() => ({
+    vi.resetAllMocks();
+    (useFrame as Mock).mockImplementation((cb) => cb());
+    (useTwinMakerTextureLoader as Mock).mockImplementation(() => ({
       loadTextureOnMesh: mockLoadTexture,
       clearTextureOnMesh: mockClearTexture,
     }));
-    (useAddWidget as jest.Mock).mockImplementation(() => ({
+    (useAddWidget as Mock).mockImplementation(() => ({
       handleAddWidget: mockHandleAddWidget,
     }));
-    (useEditorState as jest.Mock).mockImplementation(() => ({
-      isEditing: jest.fn().mockReturnValue(true),
+    (useEditorState as Mock).mockImplementation(() => ({
+      isEditing: vi.fn().mockReturnValue(true),
       addingWidget: true,
     }));
   };
@@ -125,14 +119,14 @@ describe('PlaneGeometryComponent', () => {
   });
 
   it(`should render`, () => {
-    (useRef as jest.Mock).mockImplementation(() => ({ current: undefined }));
+    (useRef as Mock).mockImplementation(() => ({ current: undefined }));
     const { container } = render(<PlaneGeometryComponent component={component} node={baseNode} />);
 
     expect(container).toMatchSnapshot();
   });
 
   it(`should render with predefined color`, async () => {
-    (useRef as jest.Mock).mockReturnValue({ current: null });
+    (useRef as Mock).mockReturnValue({ current: null });
     const rendered = await ReactThreeTestRenderer.create(
       <PlaneGeometryComponent component={componentWithColor} node={baseNode} />,
     );
@@ -144,7 +138,7 @@ describe('PlaneGeometryComponent', () => {
   it(`should render with predefined texture uri`, async () => {
     const material = new MeshStandardMaterial();
     const mesh = new Mesh(undefined, material);
-    (useRef as jest.Mock).mockReturnValue({ current: mesh });
+    (useRef as Mock).mockReturnValue({ current: mesh });
     const rendered = await ReactThreeTestRenderer.create(
       <PlaneGeometryComponent component={componentWithTexture} node={baseNode} />,
     );
@@ -153,7 +147,7 @@ describe('PlaneGeometryComponent', () => {
   });
 
   it('should trigger on click', async () => {
-    (useRef as jest.Mock).mockReturnValue({ current: null });
+    (useRef as Mock).mockReturnValue({ current: null });
     const rendered = await ReactThreeTestRenderer.create(
       <PlaneGeometryComponent component={componentWithColor} node={baseNode} />,
     );

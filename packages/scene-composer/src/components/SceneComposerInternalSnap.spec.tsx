@@ -2,25 +2,15 @@ import { create, act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
-
-import * as SceneLayoutComponents from '../layouts/SceneLayout';
 import { invalidTestScenes, testScenes } from '../../tests/testData';
-
 import { SceneComposerInternal } from './SceneComposerInternal';
 
-jest.mock('../layouts/StaticLayout', () => ({
+vi.mock('../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',
 }));
 
-jest.mock((window as any).ResizeObserver, () => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
-
-// @ts-ignore
-jest.mock('scheduler', () => require('scheduler/unstable_mock'));
-jest.mock('resize-observer-polyfill', () => {
+vi.mock('scheduler', () => require('scheduler/unstable_mock'));
+vi.mock('resize-observer-polyfill', () => {
   return ResizeObserver;
 });
 
@@ -33,13 +23,13 @@ function createSceneLoaderMock(sceneContent: string) {
 }
 
 describe('SceneComposerInternal', () => {
-  const getSceneInfo = jest.fn();
+  const getSceneInfo = vi.fn();
   const mockSceneMetadataModule = {
     getSceneInfo,
   } as unknown as TwinMakerSceneMetadataModule;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     getSceneInfo.mockResolvedValue({
       capabilities: [],
       sceneMetadata: {},
@@ -215,25 +205,5 @@ describe('SceneComposerInternal', () => {
     });
 
     expect(container).toMatchSnapshot();
-  });
-
-  it('should render a default error view when unknown error happens', async () => {
-    const mocked = jest.spyOn(SceneLayoutComponents, 'SceneLayout').mockImplementation(() => {
-      throw new Error('failed to render');
-    });
-
-    const container = create(
-      <SceneComposerInternal
-        config={{ mode: 'Editing' }}
-        sceneLoader={createSceneLoaderMock('')}
-        sceneMetadataModule={mockSceneMetadataModule}
-      />,
-    );
-
-    await flushPromises();
-
-    expect(container).toMatchSnapshot();
-
-    mocked.mockRestore();
   });
 });

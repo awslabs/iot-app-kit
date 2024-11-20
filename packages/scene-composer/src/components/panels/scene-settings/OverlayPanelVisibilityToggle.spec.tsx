@@ -1,5 +1,5 @@
-import { act, render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { act, render } from '@/tests/testing-library';
 
 import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
@@ -7,16 +7,16 @@ import { accessStore } from '../../../store';
 
 import { OverlayPanelVisibilityToggle } from './OverlayPanelVisibilityToggle';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('OverlayPanelVisibilityToggle', () => {
-  const setSceneProperty = jest.fn();
-  const getSceneProperty = jest.fn();
-  const getComponentRefByType = jest.fn();
-  const getSceneNodeByRef = jest.fn();
-  const isViewing = jest.fn();
+  const setSceneProperty = vi.fn();
+  const getSceneProperty = vi.fn();
+  const getComponentRefByType = vi.fn();
+  const getSceneNodeByRef = vi.fn();
+  const isViewing = vi.fn();
 
   const createState = (visible: boolean) => ({
     noHistoryStates: {
@@ -31,7 +31,7 @@ describe('OverlayPanelVisibilityToggle', () => {
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     getSceneNodeByRef.mockReturnValue({
       components: [{ type: KnownComponentType.DataOverlay, subType: Component.DataOverlaySubType.OverlayPanel }],
     });

@@ -7,11 +7,11 @@ import { KnownComponentType } from '../../../../interfaces';
 import { accessStore } from '../../../../store';
 import { CameraPreview } from '../index';
 
-jest.mock('@react-three/fiber', () => ({
-  useFrame: jest.fn(),
+vi.mock('@react-three/fiber', () => ({
+  useFrame: vi.fn(),
 }));
 
-jest.mock('@react-three/drei/core/PerspectiveCamera', () => ({
+vi.mock('@react-three/drei/core/PerspectiveCamera', () => ({
   PerspectiveCamera: 'PerspectiveCamera',
 }));
 
@@ -34,7 +34,7 @@ describe('CameraPreview', () => {
   it('should render correctly', () => {
     accessStore('default').setState({
       selectedSceneNodeRef: 'test-ref',
-      getSceneNodeByRef: jest.fn().mockReturnValue(node),
+      getSceneNodeByRef: vi.fn().mockReturnValue(node),
     });
 
     const TestComponent: React.FC = () => {

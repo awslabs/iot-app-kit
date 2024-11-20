@@ -1,5 +1,5 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { act, render } from '@testing-library/react';
+import { act, render } from '@/tests/testing-library';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
 import { Component } from '../../../../models/SceneModels';
@@ -8,17 +8,17 @@ import { type IDataOverlayComponentInternal } from '../../../../store';
 import { DataBindingMapEditor } from './DataBindingMapEditor';
 import { type IValueDataBindingBuilderProps } from './ValueDataBindingBuilder';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-jest.mock('../../../../utils/mathUtils', () => ({
-  generateUUID: jest.fn(() => 'random-uuid'),
+vi.mock('../../../../utils/mathUtils', () => ({
+  generateUUID: vi.fn(() => 'random-uuid'),
 }));
 
 let builderOnChangeCb;
-jest.mock('./ValueDataBindingBuilder', () => {
-  const originalModule = jest.requireActual('./ValueDataBindingBuilder');
+vi.mock('./ValueDataBindingBuilder', async () => {
+  const originalModule = await vi.importActual('./ValueDataBindingBuilder');
   return {
     ...originalModule,
     ValueDataBindingBuilder: (props: IValueDataBindingBuilderProps) => {
@@ -40,9 +40,9 @@ describe('DataBindingMapEditor', () => {
       },
     ],
   } as unknown as IDataOverlayComponentInternal;
-  const onUpdateCallbackMock = jest.fn();
+  const onUpdateCallbackMock = vi.fn();
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should remove binding by clicking remove button', async () => {

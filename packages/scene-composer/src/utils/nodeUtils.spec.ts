@@ -81,7 +81,7 @@ describe('nodeUtils', () => {
     it('should create a node with the local parent coordinates', () => {
       const parent = new Object3D();
       parent.userData = { nodeRef: 'parent-ref', componentTypes: [KnownComponentType.ModelRef] };
-      parent.worldToLocal = jest.fn().mockReturnValue(new Vector3(1, 1, 1));
+      parent.worldToLocal = vi.fn().mockReturnValue(new Vector3(1, 1, 1));
       const widgetInfo = {
         type: KnownComponentType.Tag,
         node: {
@@ -128,7 +128,7 @@ describe('nodeUtils', () => {
       const parent = new Object3D();
       parent.userData = { nodeRef: 'parent-ref', componentTypes: [KnownComponentType.ModelRef] };
       parent.quaternion.setFromEuler(new Euler(MathUtils.degToRad(90), 0, 0));
-      parent.worldToLocal = jest.fn().mockReturnValue(new Vector3(1, 1, 1));
+      parent.worldToLocal = vi.fn().mockReturnValue(new Vector3(1, 1, 1));
       const widgetInfo = {
         type: KnownComponentType.Camera,
         node: {

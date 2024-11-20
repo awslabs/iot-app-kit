@@ -1,28 +1,45 @@
 import { toDataStreamId } from '../common/dataStreamId';
-import type { DataSource, DataSourceRequest, DataStream, DataStreamQuery, RequestInformationAndRange } from "../data-module/types";
+import type {
+  DataSource,
+  DataSourceRequest,
+  DataStream,
+  DataStreamQuery,
+  RequestInformationAndRange,
+} from '../data-module/types';
 
-export type MockSiteWiseQuery = { assets: { assetId: string, properties: { refId?: string; propertyId: string }[] } [] } & DataStreamQuery;
+export type MockSiteWiseQuery = {
+  assets: {
+    assetId: string;
+    properties: { refId?: string; propertyId: string }[];
+  }[];
+} & DataStreamQuery;
 
 // A simple mock data source, which will always immediately return a successful response of your choosing.
 export const createMockSiteWiseDataSource = (
   {
     dataStreams = [],
-    onRequestData = () => { },
+    onRequestData = () => {},
     meta,
   }: {
     dataStreams?: DataStream[];
     onRequestData?: (props: any) => void;
-    meta?: DataStream["meta"];
-  } = { dataStreams: [], onRequestData: () => { } }
+    meta?: DataStream['meta'];
+  } = { dataStreams: [], onRequestData: () => {} }
 ): DataSource<MockSiteWiseQuery> => ({
-  initiateRequest: jest.fn(
+  initiateRequest: vi.fn(
     (
-      { query, request, onSuccess = () => { } }: DataSourceRequest<MockSiteWiseQuery>,
+      {
+        query,
+        request,
+        onSuccess = () => {},
+      }: DataSourceRequest<MockSiteWiseQuery>,
       requestInformations: RequestInformationAndRange[]
     ) => {
       query.assets.forEach(({ assetId, properties }) =>
         properties.forEach(({ propertyId }) => {
-          const correspondingRequestInfo = requestInformations.find(({ id }) => `${assetId}---${propertyId}` === id);
+          const correspondingRequestInfo = requestInformations.find(
+            ({ id }) => `${assetId}---${propertyId}` === id
+          );
           if (correspondingRequestInfo) {
             onRequestData({ assetId, propertyId, request });
             onSuccess(
@@ -37,14 +54,16 @@ export const createMockSiteWiseDataSource = (
     }
   ),
   getRequestsFromQuery: ({ query }) =>
-    Promise.resolve(query.assets
-      .map(({ assetId, properties }) =>
-        properties.map(({ propertyId, refId }) => ({
-          id: toDataStreamId({ assetId, propertyId }),
-          refId,
-          resolution: '0',
-          meta,
-        }))
-      )
-      .flat()),
+    Promise.resolve(
+      query.assets
+        .map(({ assetId, properties }) =>
+          properties.map(({ propertyId, refId }) => ({
+            id: toDataStreamId({ assetId, propertyId }),
+            refId,
+            resolution: '0',
+            meta,
+          }))
+        )
+        .flat()
+    ),
 });

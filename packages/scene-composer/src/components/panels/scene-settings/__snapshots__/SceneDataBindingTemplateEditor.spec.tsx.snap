@@ -1,32 +1,288 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SceneDataBindingTemplateEditor should change the selection from icon to color 1`] = `
+exports[`SceneDataBindingTemplateEditor > should change the selection from icon to color 1`] = `
 <div>
   <div
-    data-mocked="FormField"
-    label="sel_entity"
+    class="awsui_root_14mhv_av9zi_174"
+    data-analytics-field-label="[id="formField:r0:-label"]"
   >
     <div
-      data-mocked="Select"
-      data-testid="data-binding-value-selector-0"
-      disabled=""
-      options="[]"
-      placeholder="Select an option"
-      selectedoption="null"
-    />
+      class=""
+    >
+      <label
+        class="awsui_label_14mhv_av9zi_210"
+        for="formField:r0:"
+        id="formField:r0:-label"
+      >
+        sel_entity
+      </label>
+    </div>
+    <div
+      class="awsui_controls_14mhv_av9zi_246"
+    >
+      <div
+        class="awsui_grid_14yj0_1lwse_99"
+      >
+        <div
+          class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_1lwse_314"
+          >
+            <div
+              class="awsui_control_14mhv_av9zi_246"
+            >
+              <div
+                class="awsui_root_r2vco_wvvus_99"
+                data-testid="data-binding-value-selector-0"
+              >
+                <div
+                  class="awsui_root_qwoo0_1ea5w_149"
+                >
+                  <div
+                    class=""
+                    id=":r6:"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby="formField:r0:-label select-arialabel-:r4: trigger-content-:r8:"
+                      class="awsui_button-trigger_18eso_syr88_103 awsui_disabled_18eso_syr88_189 awsui_has-caret_18eso_syr88_170"
+                      disabled=""
+                      id="formField:r0:"
+                      type="button"
+                    >
+                      <span
+                        aria-disabled="true"
+                        class="awsui_placeholder_dwuol_18z0d_99 awsui_trigger_dwuol_18z0d_122"
+                        id="trigger-content-:r8:"
+                      >
+                        Select an option
+                      </span>
+                      <span
+                        class="awsui_arrow_18eso_syr88_103"
+                      >
+                        <span
+                          class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-disabled_h11ix_1l964_233"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            viewBox="0 0 16 16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              class="filled stroke-linejoin-round"
+                              d="M4 5h8l-4 6-4-6z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    tabindex="-1"
+                  />
+                  <div>
+                    <div
+                      tabindex="-1"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="awsui_dropdown_qwoo0_1ea5w_99 awsui-visual-refresh awsui_hide-block-border_qwoo0_1ea5w_281 awsui_refresh_qwoo0_1ea5w_120 awsui_stretch-beyond-trigger-width_qwoo0_1ea5w_277"
+                      data-animating="false"
+                      data-open="false"
+                      id="dialog:r3:"
+                      style="--awsui-dropdown-default-max-width-iof9y8: 465px;"
+                    >
+                      <div
+                        class="awsui_dropdown-content-wrapper_qwoo0_1ea5w_99 awsui_refresh_qwoo0_1ea5w_120"
+                      >
+                        <div
+                          class="awsui_dropdown-content_qwoo0_1ea5w_99"
+                        >
+                          <ul
+                            aria-labelledby="select-arialabel-:r4: formField:r0:"
+                            class="awsui_options-list_19gcf_halkh_99"
+                            id="option-list:r2:"
+                            role="listbox"
+                            style="position: relative;"
+                            tabindex="-1"
+                          />
+                          <div
+                            class="awsui_root_1afi9_5kqbd_99 awsui_hidden_1afi9_5kqbd_133"
+                          >
+                            <div
+                              id="footer:r5:"
+                            />
+                            <span
+                              class="awsui_root_xttbq_pgwjg_99 awsui_root_3bgfn_im8v7_5"
+                            >
+                              <span
+                                aria-atomic="true"
+                                aria-live="polite"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+                <span
+                  class="awsui_root_xttbq_pgwjg_99"
+                  id="select-arialabel-:r4:"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div
-    data-mocked="FormField"
-    label="sel_comp"
+    class="awsui_root_14mhv_av9zi_174"
+    data-analytics-field-label="[id="formField:r9:-label"]"
   >
     <div
-      data-mocked="Select"
-      data-testid="data-binding-value-selector-1"
-      disabled=""
-      options="[]"
-      placeholder="Select an option"
-      selectedoption="null"
-    />
+      class=""
+    >
+      <label
+        class="awsui_label_14mhv_av9zi_210"
+        for="formField:r9:"
+        id="formField:r9:-label"
+      >
+        sel_comp
+      </label>
+    </div>
+    <div
+      class="awsui_controls_14mhv_av9zi_246"
+    >
+      <div
+        class="awsui_grid_14yj0_1lwse_99"
+      >
+        <div
+          class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_1lwse_314"
+          >
+            <div
+              class="awsui_control_14mhv_av9zi_246"
+            >
+              <div
+                class="awsui_root_r2vco_wvvus_99"
+                data-testid="data-binding-value-selector-1"
+              >
+                <div
+                  class="awsui_root_qwoo0_1ea5w_149"
+                >
+                  <div
+                    class=""
+                    id=":rf:"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby="formField:r9:-label select-arialabel-:rd: trigger-content-:rh:"
+                      class="awsui_button-trigger_18eso_syr88_103 awsui_disabled_18eso_syr88_189 awsui_has-caret_18eso_syr88_170"
+                      disabled=""
+                      id="formField:r9:"
+                      type="button"
+                    >
+                      <span
+                        aria-disabled="true"
+                        class="awsui_placeholder_dwuol_18z0d_99 awsui_trigger_dwuol_18z0d_122"
+                        id="trigger-content-:rh:"
+                      >
+                        Select an option
+                      </span>
+                      <span
+                        class="awsui_arrow_18eso_syr88_103"
+                      >
+                        <span
+                          class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-disabled_h11ix_1l964_233"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            viewBox="0 0 16 16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              class="filled stroke-linejoin-round"
+                              d="M4 5h8l-4 6-4-6z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    tabindex="-1"
+                  />
+                  <div>
+                    <div
+                      tabindex="-1"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="awsui_dropdown_qwoo0_1ea5w_99 awsui-visual-refresh awsui_hide-block-border_qwoo0_1ea5w_281 awsui_refresh_qwoo0_1ea5w_120 awsui_stretch-beyond-trigger-width_qwoo0_1ea5w_277"
+                      data-animating="false"
+                      data-open="false"
+                      id="dialog:rc:"
+                      style="--awsui-dropdown-default-max-width-iof9y8: 465px;"
+                    >
+                      <div
+                        class="awsui_dropdown-content-wrapper_qwoo0_1ea5w_99 awsui_refresh_qwoo0_1ea5w_120"
+                      >
+                        <div
+                          class="awsui_dropdown-content_qwoo0_1ea5w_99"
+                        >
+                          <ul
+                            aria-labelledby="select-arialabel-:rd: formField:r9:"
+                            class="awsui_options-list_19gcf_halkh_99"
+                            id="option-list:rb:"
+                            role="listbox"
+                            style="position: relative;"
+                            tabindex="-1"
+                          />
+                          <div
+                            class="awsui_root_1afi9_5kqbd_99 awsui_hidden_1afi9_5kqbd_133"
+                          >
+                            <div
+                              id="footer:re:"
+                            />
+                            <span
+                              class="awsui_root_xttbq_pgwjg_99 awsui_root_3bgfn_im8v7_5"
+                            >
+                              <span
+                                aria-atomic="true"
+                                aria-live="polite"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+                <span
+                  class="awsui_root_xttbq_pgwjg_99"
+                  id="select-arialabel-:rd:"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

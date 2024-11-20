@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LinearPlaneMotionIndicator should render correctly 1`] = `
+exports[`LinearPlaneMotionIndicator > should render correctly 1`] = `
 <mesh
   rotation={
     Euler {

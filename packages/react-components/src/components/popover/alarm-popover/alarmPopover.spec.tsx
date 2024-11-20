@@ -2,7 +2,7 @@ import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { PascalCaseStateName } from '@iot-app-kit/source-iotsitewise';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import {
   type AssistantActionEventDetail,
   type AssistantProperty,
@@ -11,31 +11,31 @@ import * as useAssistant from '../../../hooks/useAssistant/useAssistant';
 import { type AlarmContent } from '../../alarm-components/alarm-content/types';
 import { AlarmPopover, type AlarmPopoverProps } from './alarmPopover';
 
-jest.mock('../../../hooks/useAssistant/useAssistant');
+vi.mock('../../../hooks/useAssistant/useAssistant');
 
-const mockGenerateSummary = jest.fn();
-jest.spyOn(useAssistant, 'useAssistant').mockReturnValue({
+const mockGenerateSummary = vi.fn();
+vi.spyOn(useAssistant, 'useAssistant').mockReturnValue({
   actions: {},
-  setMessages: jest.fn(),
-  invokeAssistant: jest.fn(),
+  setMessages: vi.fn(),
+  invokeAssistant: vi.fn(),
   actionsByComponent: {},
-  startAction: jest.fn(),
-  clearActions: jest.fn(),
-  clearAll: jest.fn(),
+  startAction: vi.fn(),
+  clearActions: vi.fn(),
+  clearAll: vi.fn(),
   messages: [],
   generateSummary: mockGenerateSummary,
 });
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn().mockResolvedValue([]),
+    invokeAssistant: vi.fn().mockResolvedValue([]),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
 
-const mockOnAction = jest
+const mockOnAction = vi
   .fn()
-  .mockImplementation((_event: AssistantActionEventDetail) => jest.fn());
+  .mockImplementation((_event: AssistantActionEventDetail) => vi.fn());
 const assistant = {
   onAction: mockOnAction,
   conversationId: 'conversationId',
@@ -77,7 +77,7 @@ describe('AlarmPopover', () => {
 
   it('renders title', async () => {
     const text = 'Test Title';
-    const user = userEvent.setup();
+    const user = ue.setup();
     const { getByText, getByRole } = render(component({ title: text }));
     await user.click(getByRole('button', { name: /Popover button/i }));
     expect(getByText(text)).toBeInTheDocument();
@@ -85,21 +85,21 @@ describe('AlarmPopover', () => {
 
   it('renders Footer Text', async () => {
     const text = 'Footer Text';
-    const user = userEvent.setup();
+    const user = ue.setup();
     const { getByText, getByRole } = render(component({ footerText: text }));
     await user.click(getByRole('button', { name: /Popover button/i }));
     expect(getByText(text)).toBeInTheDocument();
   });
 
   it('renders alarm content', async () => {
-    const user = userEvent.setup();
+    const user = ue.setup();
     const { getByText, getByRole } = render(component({}));
     await user.click(getByRole('button', { name: /Popover button/i }));
     expect(getByText(mockAlarmName)).toBeInTheDocument();
   });
 
   it('renders summary button when assistant property is passed', async () => {
-    const user = userEvent.setup();
+    const user = ue.setup();
     const { getByRole } = render(component({}));
     await user.click(getByRole('button', { name: /Popover button/i }));
     expect(

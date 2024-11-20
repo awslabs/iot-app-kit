@@ -2,17 +2,17 @@ import { SECOND_IN_MS } from '../../common/time';
 import RequestScheduler from './requestScheduler';
 
 beforeAll(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterAll(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('creates a task request and continue to request at the given refresh rate', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
   scheduler.create({
     id,
     cb,
@@ -20,7 +20,7 @@ it('creates a task request and continue to request at the given refresh rate', (
   });
 
   const secondsElapsed = 2.4;
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
   expect(cb).toHaveBeenCalledTimes(Math.floor(secondsElapsed));
 });
@@ -28,7 +28,7 @@ it('creates a task request and continue to request at the given refresh rate', (
 it('stops the task request loop after remove function is called with the same id', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
   scheduler.create({
     id,
     cb,
@@ -36,19 +36,19 @@ it('stops the task request loop after remove function is called with the same id
   });
 
   const secondsElapsed = 2.4;
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
   cb.mockClear();
   scheduler.remove(id);
 
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
   expect(cb).not.toHaveBeenCalled();
 });
 
 it('does not affect the existing schedulers when remove is called on an id that does not exist', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
   scheduler.create({
     id,
     cb,
@@ -56,19 +56,19 @@ it('does not affect the existing schedulers when remove is called on an id that 
   });
 
   const secondsElapsed = 2.4;
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
   cb.mockClear();
   scheduler.remove('random-id');
 
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
   expect(cb).toHaveBeenCalledTimes(Math.floor(secondsElapsed));
 });
 
 it('stops the task request loop if current time is beyond refreshExpiration', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
   scheduler.create({
     id,
     cb,
@@ -77,20 +77,20 @@ it('stops the task request loop if current time is beyond refreshExpiration', ()
   });
 
   const secondsElapsed = 2.4;
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
   expect(cb).toHaveBeenCalledTimes(2);
 
   cb.mockClear();
 
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
   expect(cb).not.toHaveBeenCalled();
 });
 
 it('returns true when the given id exists within the scheduler store', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
   scheduler.create({
     id,
     cb,
@@ -98,7 +98,7 @@ it('returns true when the given id exists within the scheduler store', () => {
   });
 
   const secondsElapsed = 2.4;
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
   expect(scheduler.isScheduled(id)).toBeTrue();
 });
@@ -108,7 +108,7 @@ it('resets task request intervals when document visibility changes', () => {
 
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
 
   scheduler.create({
     id,
@@ -126,7 +126,7 @@ it('resets task request intervals when document visibility changes', () => {
 
   // The interval should reset, simulating the same behavior as if the tab was made active again
   const secondsElapsed = 2.4;
-  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  vi.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
   expect(cb).toHaveBeenCalledTimes(Math.floor(secondsElapsed));
 });
@@ -136,7 +136,7 @@ it('does not reset intervals when document visibility changes but the document i
 
   const scheduler = new RequestScheduler();
   const id = 'id';
-  const cb = jest.fn();
+  const cb = vi.fn();
 
   scheduler.create({
     id,
@@ -154,8 +154,8 @@ it('synchronizes intervals when a new interval is created', () => {
   const scheduler = new RequestScheduler();
   const id1 = 'id1';
   const id2 = 'id2';
-  const cb1 = jest.fn();
-  const cb2 = jest.fn();
+  const cb1 = vi.fn();
+  const cb2 = vi.fn();
 
   scheduler.create({
     id: id1,
@@ -163,7 +163,7 @@ it('synchronizes intervals when a new interval is created', () => {
     refreshRate: SECOND_IN_MS,
   });
 
-  jest.advanceTimersByTime(SECOND_IN_MS);
+  vi.advanceTimersByTime(SECOND_IN_MS);
   expect(cb1).toHaveBeenCalledTimes(1);
 
   cb1.mockClear();
@@ -174,11 +174,11 @@ it('synchronizes intervals when a new interval is created', () => {
     refreshRate: SECOND_IN_MS,
   });
 
-  jest.advanceTimersByTime(SECOND_IN_MS);
+  vi.advanceTimersByTime(SECOND_IN_MS);
   expect(cb1).toHaveBeenCalledTimes(1);
   expect(cb2).toHaveBeenCalledTimes(1);
 
-  jest.advanceTimersByTime(SECOND_IN_MS);
+  vi.advanceTimersByTime(SECOND_IN_MS);
   expect(cb1).toHaveBeenCalledTimes(2);
   expect(cb2).toHaveBeenCalledTimes(2);
 });

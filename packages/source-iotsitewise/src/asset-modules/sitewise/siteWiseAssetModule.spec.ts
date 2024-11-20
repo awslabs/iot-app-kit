@@ -36,7 +36,7 @@ describe('fetchAsset', () => {
   });
 
   it('returns the cached asset summary when re-requested', async () => {
-    const describeAsset = jest.fn().mockResolvedValue(DESCRIBE_ASSET_RESPONSE);
+    const describeAsset = vi.fn().mockResolvedValue(DESCRIBE_ASSET_RESPONSE);
 
     const module = new SiteWiseAssetModule(
       createSiteWiseAssetDataSource(
@@ -62,7 +62,7 @@ describe('fetchAsset', () => {
       name: 'ResourceNotFoundException',
       $metadata: { httpStatusCode: 404 },
     };
-    const describeAsset = jest.fn().mockRejectedValue(ERROR);
+    const describeAsset = vi.fn().mockRejectedValue(ERROR);
 
     const module = new SiteWiseAssetModule(
       createSiteWiseAssetDataSource(

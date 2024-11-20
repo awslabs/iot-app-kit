@@ -32,12 +32,12 @@ const mockBatchGetAssetPropertyValue = ({
 
 describe('useAlarmTypes', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 
   it('correctly calls onUpdateAlarmTypeData', async () => {
-    const onUpdateAlarmTypeData = jest.fn();
+    const onUpdateAlarmTypeData = vi.fn();
 
     batchGetAssetPropertyValueMock.mockImplementation(
       (request: BatchGetAssetPropertyValueRequest) => {

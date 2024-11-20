@@ -50,7 +50,7 @@ describe('root loading functionality', () => {
   );
   replayData.addAssetSummaries([rootAsset]);
 
-  it('When you subscribe the root is returned', (done) => {
+  it('When you subscribe the root is returned', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {}
@@ -75,7 +75,6 @@ describe('root loading functionality', () => {
         });
 
         expect(treeRoot[0]?.properties).toBeEmpty();
-        done();
       },
     });
   });
@@ -87,7 +86,7 @@ describe('branch loading functionality', () => {
   replayData.addAssetSummaries([rootAsset]);
   // This time the asset has no hierarchis and the loading will stop at just the asset
 
-  it('When you subscribe the asset is returned', (done) => {
+  it('When you subscribe the asset is returned', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -103,7 +102,6 @@ describe('branch loading functionality', () => {
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.hierarchies.size).toEqual(0);
         expect(treeRoot[0]?.properties).toBeEmpty();
-        done();
       },
     });
   });
@@ -125,7 +123,7 @@ describe('model loading', () => {
   replayData.addAssetSummaries([rootAsset]);
   replayData.addAssetModels([sampleAssetModel]);
 
-  it('When you request the model you get the model', (done) => {
+  it('When you request the model you get the model', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -142,7 +140,6 @@ describe('model loading', () => {
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.model).toEqual(sampleAssetModel);
         expect(treeRoot[0]?.properties).toBeEmpty();
-        done();
       },
     });
   });
@@ -206,7 +203,7 @@ describe('asset property loading', () => {
     value: badPropertyValue,
   });
 
-  it('When you request a property and it exists it is attached to the asset node', (done) => {
+  it('When you request a property and it exists it is attached to the asset node', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -229,7 +226,6 @@ describe('asset property loading', () => {
         expect(treeRoot[0]?.properties.get('modelNumber.id.1234')).toEqual(
           expectedPropertyValue
         );
-        done();
       },
     });
   });
@@ -266,7 +262,7 @@ describe('expand functionality', () => {
 
   replayData.addAssetSummaries([rootAsset, bananaOne, bananaTwo]);
 
-  it('Expands a hierarchy when requested', (done) => {
+  it('Expands a hierarchy when requested', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {}
@@ -295,12 +291,11 @@ describe('expand functionality', () => {
         expect(
           treeRoot[0]?.hierarchies.get('bananas1234')?.children[1].asset
         ).toEqual(bananaTwo);
-        done();
       },
     });
   });
 
-  it('Collapses and expanded hierarchy', (done) => {
+  it('Collapses and expanded hierarchy', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {}
@@ -319,7 +314,6 @@ describe('expand functionality', () => {
         expect(
           treeRoot[0]?.hierarchies.get('bananas1234')?.children.length
         ).toEqual(0);
-        done();
       },
     });
   });
@@ -336,7 +330,7 @@ describe('error handling', () => {
 
   replayData.addErrors([error]);
 
-  it('it returns the error when requesting root asset fails', (done) => {
+  it('it returns the error when requesting root asset fails', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -353,12 +347,11 @@ describe('error handling', () => {
         expect(err[0].msg).toEqual(error.msg);
         expect(err[0].type).toEqual(error.type);
         expect(err[0].status).toEqual(error.status);
-        done();
       },
     });
   });
 
-  it('it returns the error when requesting asset hierarchy fails', (done) => {
+  it('it returns the error when requesting asset hierarchy fails', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -375,12 +368,11 @@ describe('error handling', () => {
         expect(err[0].msg).toEqual(error.msg);
         expect(err[0].type).toEqual(error.type);
         expect(err[0].status).toEqual(error.status);
-        done();
       },
     });
   });
 
-  it('it returns the error when requesting asset summary fails', (done) => {
+  it('it returns the error when requesting asset summary fails', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -396,12 +388,11 @@ describe('error handling', () => {
         expect(err[0].msg).toEqual(error.msg);
         expect(err[0].type).toEqual(error.type);
         expect(err[0].status).toEqual(error.status);
-        done();
       },
     });
   });
 
-  it('it returns the error when requesting asset model fails', (done) => {
+  it('it returns the error when requesting asset model fails', async () => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
       new MockSiteWiseAssetSession(replayData),
       {
@@ -417,7 +408,6 @@ describe('error handling', () => {
         expect(err[0].msg).toEqual(error.msg);
         expect(err[0].type).toEqual(error.type);
         expect(err[0].status).toEqual(error.status);
-        done();
       },
     });
   });

@@ -1,82 +1,162 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ConvertSceneSettings should render correctly with convert button disabled 1`] = `
+exports[`ConvertSceneSettings > should render correctly with convert button disabled 1`] = `
 <div>
-  <div
-    data-mocked="Box"
-    font-weight="bold"
-    margin="{"bottom":"xxs"}"
-    variant="p"
+  <p
+    class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-variant_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-bold_18wu0_1elzt_414"
   >
     Convert to entities
-  </div>
-  <div
-    data-mocked="Box"
-    margin="{"bottom":"xxs"}"
-    variant="p"
+  </p>
+  <p
+    class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-variant_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     Converting your scene to entities enables auto updating, filtering and querying your scene.
-  </div>
-  <div
-    data-mocked="Button"
+  </p>
+  <button
+    class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158 awsui_disabled_vjswe_12tek_243"
+    data-analytics-funnel-value="button:r0:"
     data-testid="convert-button"
     disabled=""
+    type="submit"
   >
-    Convert scene
-  </div>
-  <div
-    data-mocked="Box"
-    font-weight="bold"
-    margin="{"bottom":"xxs","top":"s"}"
-    variant="p"
+    <span
+      class="awsui_content_vjswe_12tek_103"
+    >
+      Convert scene
+    </span>
+  </button>
+  <p
+    class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-variant_18wu0_1elzt_219 awsui_m-top-s_18wu0_1elzt_891 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-bold_18wu0_1elzt_414"
   >
     Refresh cycle
-  </div>
-  <div
-    data-mocked="Checkbox"
+  </p>
+  <span
+    class="awsui_wrapper_1wepg_11g7b_120 awsui_root_k2y2q_16s24_99"
     data-testid="auto-update-checkbox"
   >
-    Auto update (every 30s)
-  </div>
+    <span
+      class="awsui_label-wrapper_1wepg_11g7b_126"
+    >
+      <span
+        class="awsui_control_1wepg_11g7b_161 awsui_checkbox-control_k2y2q_16s24_135"
+      >
+        <svg
+          aria-hidden="true"
+          class="awsui_root_1fn7j_ayb8r_99"
+          focusable="false"
+          viewBox="0 0 16 16"
+        >
+          <rect
+            class="awsui_styled-box_1fn7j_ayb8r_106"
+            height="14"
+            rx="2"
+            ry="2"
+            width="14"
+            x="1"
+            y="1"
+          />
+        </svg>
+        <input
+          aria-labelledby=":r2:-label"
+          class="awsui_native-input_1wepg_11g7b_116"
+          id=":r2:"
+          type="checkbox"
+        />
+        <span
+          class="awsui_outline_1wepg_11g7b_109 awsui_outline_k2y2q_16s24_143"
+        />
+      </span>
+      <span
+        class="awsui_content_1wepg_11g7b_99"
+      >
+        <span
+          class="awsui_label_1wepg_11g7b_101"
+          id=":r2:-label"
+        >
+          Auto update (every 30s)
+        </span>
+      </span>
+    </span>
+  </span>
 </div>
 `;
 
-exports[`ConvertSceneSettings should render correctly with convert button enabled 1`] = `
+exports[`ConvertSceneSettings > should render correctly with convert button enabled 1`] = `
 <div>
-  <div
-    data-mocked="Box"
-    font-weight="bold"
-    margin="{"bottom":"xxs"}"
-    variant="p"
+  <p
+    class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-variant_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-bold_18wu0_1elzt_414"
   >
     Convert to entities
-  </div>
-  <div
-    data-mocked="Box"
-    margin="{"bottom":"xxs"}"
-    variant="p"
+  </p>
+  <p
+    class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-variant_18wu0_1elzt_219 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     Converting your scene to entities enables auto updating, filtering and querying your scene.
-  </div>
-  <div
-    data-mocked="Button"
+  </p>
+  <button
+    class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+    data-analytics-funnel-value="button:r3:"
     data-testid="convert-button"
+    type="submit"
   >
-    Convert scene
-  </div>
-  <div
-    data-mocked="Box"
-    font-weight="bold"
-    margin="{"bottom":"xxs","top":"s"}"
-    variant="p"
+    <span
+      class="awsui_content_vjswe_12tek_103"
+    >
+      Convert scene
+    </span>
+  </button>
+  <p
+    class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-variant_18wu0_1elzt_219 awsui_m-top-s_18wu0_1elzt_891 awsui_m-bottom-xxs_18wu0_1elzt_851 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-bold_18wu0_1elzt_414"
   >
     Refresh cycle
-  </div>
-  <div
-    data-mocked="Checkbox"
+  </p>
+  <span
+    class="awsui_wrapper_1wepg_11g7b_120 awsui_root_k2y2q_16s24_99"
     data-testid="auto-update-checkbox"
   >
-    Auto update (every 30s)
-  </div>
+    <span
+      class="awsui_label-wrapper_1wepg_11g7b_126"
+    >
+      <span
+        class="awsui_control_1wepg_11g7b_161 awsui_checkbox-control_k2y2q_16s24_135"
+      >
+        <svg
+          aria-hidden="true"
+          class="awsui_root_1fn7j_ayb8r_99"
+          focusable="false"
+          viewBox="0 0 16 16"
+        >
+          <rect
+            class="awsui_styled-box_1fn7j_ayb8r_106"
+            height="14"
+            rx="2"
+            ry="2"
+            width="14"
+            x="1"
+            y="1"
+          />
+        </svg>
+        <input
+          aria-labelledby=":r5:-label"
+          class="awsui_native-input_1wepg_11g7b_116"
+          id=":r5:"
+          type="checkbox"
+        />
+        <span
+          class="awsui_outline_1wepg_11g7b_109 awsui_outline_k2y2q_16s24_143"
+        />
+      </span>
+      <span
+        class="awsui_content_1wepg_11g7b_99"
+      >
+        <span
+          class="awsui_label_1wepg_11g7b_101"
+          id=":r5:-label"
+        >
+          Auto update (every 30s)
+        </span>
+      </span>
+    </span>
+  </span>
 </div>
 `;

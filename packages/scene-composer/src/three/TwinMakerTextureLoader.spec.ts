@@ -4,7 +4,7 @@ import { TwinMakerFileLoader } from './TwinMakerFileLoader';
 import { TwinMakerTextureLoader } from './TwinMakerTextureLoader';
 import { shouldCreateImageBitmap } from './TwinMakerTextureLoaderUtils';
 
-jest.mock('./TwinMakerTextureLoaderUtils');
+vi.mock('./TwinMakerTextureLoaderUtils');
 
 describe('TwinMakerTextureLoader', () => {
   // let mockedS3Client;
@@ -15,7 +15,7 @@ describe('TwinMakerTextureLoader', () => {
   let spyTextureLoader;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     (shouldCreateImageBitmap as any).mockImplementation(() => true);
 
@@ -23,21 +23,21 @@ describe('TwinMakerTextureLoader', () => {
       onLoad?.('mock-value' as any);
       return {} as any;
     };
-    spyTwinMakerFileLoader = jest.spyOn(TwinMakerFileLoader.prototype, 'load');
+    spyTwinMakerFileLoader = vi.spyOn(TwinMakerFileLoader.prototype, 'load');
     spyTwinMakerFileLoader.mockImplementation(callOnLoad);
-    spyImageBitmapLoader = jest.spyOn(THREE.ImageBitmapLoader.prototype, 'load');
+    spyImageBitmapLoader = vi.spyOn(THREE.ImageBitmapLoader.prototype, 'load');
     spyImageBitmapLoader.mockImplementation(callOnLoad);
-    spyTextureLoader = jest.spyOn(THREE.TextureLoader.prototype, 'load');
+    spyTextureLoader = vi.spyOn(THREE.TextureLoader.prototype, 'load');
     spyTextureLoader.mockImplementation(callOnLoad);
 
-    mockCreateObjectURL = jest.fn();
+    mockCreateObjectURL = vi.fn();
     window.URL.createObjectURL = mockCreateObjectURL;
     THREE.Cache.enabled = false;
   });
 
   it('should load file successfully with S3 client', async () => {
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
 
     const twinMakerTextureLoader = new TwinMakerTextureLoader(loadingManager);
     twinMakerTextureLoader.load(url, onLoad, undefined, undefined);
@@ -50,7 +50,7 @@ describe('TwinMakerTextureLoader', () => {
 
   it('should load file successfully with texture loader', async () => {
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
     (shouldCreateImageBitmap as any).mockImplementation(() => false);
 
     const twinMakerTextureLoader = new TwinMakerTextureLoader(loadingManager);
@@ -65,7 +65,7 @@ describe('TwinMakerTextureLoader', () => {
   it('should load file successfully with cache', async () => {
     THREE.Cache.enabled = true;
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
 
     const twinMakerTextureLoader = new TwinMakerTextureLoader(loadingManager);
     twinMakerTextureLoader.load(url, onLoad, undefined, undefined);
@@ -81,7 +81,7 @@ describe('TwinMakerTextureLoader', () => {
 
   it('should call onError if textureLoader.load fail', async () => {
     const url = 's3://test-bucket/file.ext';
-    const onLoad = jest.fn();
+    const onLoad = vi.fn();
     spyImageBitmapLoader.mockImplementation((url, onLoad, onProgress, onError) => onError?.('mock-error' as any));
 
     const twinMakerTextureLoader = new TwinMakerTextureLoader(loadingManager);

@@ -5,7 +5,7 @@ describe('shouldCreateImageBitmap', () => {
 
   beforeEach(() => {
     userAgent = 'TestAgent';
-    global.createImageBitmap = jest.fn();
+    global.createImageBitmap = vi.fn();
   });
 
   it('should true for valid browser', async () => {

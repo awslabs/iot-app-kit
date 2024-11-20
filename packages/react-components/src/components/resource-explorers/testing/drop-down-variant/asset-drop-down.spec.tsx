@@ -1,6 +1,6 @@
 import type { ListAssets } from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { useState } from 'react';
 import { AssetExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
@@ -60,7 +60,7 @@ describe('asset drop-down', () => {
       const {
         assetSummaries: [asset1, asset2, asset3],
       } = listAssetsResponse;
-      const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
+      const listAssets = vi.fn().mockResolvedValue(listAssetsResponse);
       render(
         <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
       );
@@ -90,7 +90,7 @@ describe('asset drop-down', () => {
 
   describe('request handling', () => {
     it('requests a single page of assets correctly', async () => {
-      const listAssets = jest.fn().mockResolvedValue(createListAssetsPage(3));
+      const listAssets = vi.fn().mockResolvedValue(createListAssetsPage(3));
       render(
         <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
       );
@@ -102,7 +102,7 @@ describe('asset drop-down', () => {
     });
 
     it('requests multiple pages of assets correctly', async () => {
-      const listAssets = jest
+      const listAssets = vi
         .fn()
         .mockResolvedValueOnce(createListAssetsPage(1, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListAssetsPage(1, 10, 'next-token-2'))
@@ -119,7 +119,7 @@ describe('asset drop-down', () => {
     });
 
     it('requests multiple lists of pages of assets correctly', async () => {
-      const listAssets = jest
+      const listAssets = vi
         .fn()
         .mockResolvedValueOnce(createListAssetsPage(1, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListAssetsPage(1, 10))
@@ -157,8 +157,8 @@ describe('asset drop-down', () => {
       const {
         assetSummaries: [asset1, asset2, asset3],
       } = listAssetsResponse;
-      const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
-      const user = userEvent.setup();
+      const listAssets = vi.fn().mockResolvedValue(listAssetsResponse);
+      const user = ue.setup();
       render(<SelectableAssetDropDown listAssets={listAssets} />);
 
       await dropDown.open();
@@ -177,8 +177,8 @@ describe('asset drop-down', () => {
         const {
           assetSummaries: [asset1, asset2, asset3],
         } = listAssetsResponse;
-        const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
-        const user = userEvent.setup();
+        const listAssets = vi.fn().mockResolvedValue(listAssetsResponse);
+        const user = ue.setup();
         render(
           <SelectableAssetDropDown
             selectionMode='single'
@@ -201,8 +201,8 @@ describe('asset drop-down', () => {
         const {
           assetSummaries: [asset1, asset2],
         } = listAssetsResponse;
-        const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
-        const user = userEvent.setup();
+        const listAssets = vi.fn().mockResolvedValue(listAssetsResponse);
+        const user = ue.setup();
         render(
           <SelectableAssetDropDown
             selectionMode='single'
@@ -230,8 +230,8 @@ describe('asset drop-down', () => {
         const {
           assetSummaries: [asset1, asset2, asset3],
         } = listAssetsResponse;
-        const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
-        const user = userEvent.setup();
+        const listAssets = vi.fn().mockResolvedValue(listAssetsResponse);
+        const user = ue.setup();
         render(
           <SelectableAssetDropDown
             selectionMode='multi'
@@ -259,8 +259,8 @@ describe('asset drop-down', () => {
         const {
           assetSummaries: [asset1, asset2],
         } = listAssetsResponse;
-        const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
-        const user = userEvent.setup();
+        const listAssets = vi.fn().mockResolvedValue(listAssetsResponse);
+        const user = ue.setup();
         render(
           <SelectableAssetDropDown
             selectionMode='multi'
@@ -312,10 +312,10 @@ describe('asset drop-down', () => {
         name: 'Different Name 3',
         description: 'Similar Description 3',
       };
-      const listAssets = jest.fn().mockResolvedValue({
+      const listAssets = vi.fn().mockResolvedValue({
         assetSummaries: [asset1, asset2, asset3],
       });
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetExplorer
           variant='drop-down'

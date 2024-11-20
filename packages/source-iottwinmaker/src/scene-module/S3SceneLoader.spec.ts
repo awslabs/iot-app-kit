@@ -1,5 +1,5 @@
-jest.mock('../utils/s3Utils', () => {
-  const originalModule = jest.requireActual('../utils/s3Utils');
+vi.mock('../utils/s3Utils', async () => {
+  const originalModule = await vi.importActual('../utils/s3Utils');
 
   return {
     __esModule: true,
@@ -23,7 +23,7 @@ class MockResponse {
     this.data = data;
   }
 
-  arrayBuffer = jest.fn().mockImplementation(() => this.data);
+  arrayBuffer = vi.fn().mockImplementation(() => this.data);
 }
 
 global.Response = MockResponse as any;
@@ -37,18 +37,18 @@ const loader = new S3SceneLoader({
 
 describe('getSceneUri', () => {
   beforeEach(() => {
-    jest
-      .spyOn(S3Utils, 'parseS3BucketFromArn')
-      .mockImplementation((input) => input);
-    jest
-      .spyOn(S3Utils, 'parseS3RelativeScenePathFromURI')
-      .mockImplementation((input) => input);
+    vi.spyOn(S3Utils, 'parseS3BucketFromArn').mockImplementation(
+      (input) => input
+    );
+    vi.spyOn(S3Utils, 'parseS3RelativeScenePathFromURI').mockImplementation(
+      (input) => input
+    );
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get correct scene url', async () => {
-    const sendSpy = jest
+    const sendSpy = vi
       .spyOn(IoTTwinMakerClient.prototype, 'send')
       .mockImplementation(() => {
         return Promise.resolve({
@@ -65,7 +65,7 @@ describe('getSceneUri', () => {
   });
 
   it('should get null when missing data', async () => {
-    const sendSpy = jest
+    const sendSpy = vi
       .spyOn(IoTTwinMakerClient.prototype, 'send')
       .mockImplementation(() => {
         return Promise.resolve({ contentLocation: 'mock-contentLocation' });
@@ -78,7 +78,7 @@ describe('getSceneUri', () => {
   });
 
   it('should get error when API failed', async () => {
-    const sendSpy = jest
+    const sendSpy = vi
       .spyOn(IoTTwinMakerClient.prototype, 'send')
       .mockImplementation(() => {
         throw 'API failed';
@@ -102,12 +102,12 @@ describe('getSceneObject', () => {
 
   beforeEach(() => {
     cmd = undefined;
-    sendSpy = jest.spyOn(S3Client.prototype, 'send').mockImplementation((c) => {
+    sendSpy = vi.spyOn(S3Client.prototype, 'send').mockImplementation((c) => {
       cmd = c;
       return Promise.resolve({ Body: 'mock-data' });
     });
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should send GetObjectCommand with valid s3 uri', async () => {

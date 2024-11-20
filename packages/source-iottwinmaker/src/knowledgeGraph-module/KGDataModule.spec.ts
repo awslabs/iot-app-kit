@@ -1,7 +1,7 @@
 import { KGDataModule } from './KGDataModule';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 
-const executeQuery = jest.fn();
+const executeQuery = vi.fn();
 const twinMakerClientMock = createMockTwinMakerSDK({
   executeQuery,
 });
@@ -48,7 +48,7 @@ const expected = {
 
 describe('executeQuery', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should get a valid response', async () => {

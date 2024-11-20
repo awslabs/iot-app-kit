@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import * as React from 'react';
 
 import { ToolbarItem } from './ToolbarItem';
@@ -42,16 +41,16 @@ describe('ToolbarItem', () => {
       uuid: 'item3',
     },
   ];
-  const setSelectedItem = jest.fn();
-  const setShowMenu = jest.fn();
+  const setSelectedItem = vi.fn();
+  const setShowMenu = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it.skip('should show menu on pointerDown', () => {
-    jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
-    jest.spyOn(React, 'useState').mockReturnValueOnce([false, setShowMenu]);
+    vi.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
+    vi.spyOn(React, 'useState').mockReturnValueOnce([false, setShowMenu]);
     render(<ToolbarItem items={[testMenuItem]} type='action-select' menuPosition='bottom-right' />);
 
     fireEvent.pointerDown(screen.getByTestId('item1'));
@@ -60,8 +59,8 @@ describe('ToolbarItem', () => {
   });
 
   it.skip('should hide menu on pointerDown outside', () => {
-    jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
-    jest.spyOn(React, 'useState').mockReturnValueOnce([true, setShowMenu]);
+    vi.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
+    vi.spyOn(React, 'useState').mockReturnValueOnce([true, setShowMenu]);
     render(<ToolbarItem items={[testMenuItem]} type='action-select' />);
 
     fireEvent.pointerDown(document.body);
@@ -70,7 +69,7 @@ describe('ToolbarItem', () => {
   });
 
   it('should trigger onClick when clicking on sub menu item', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     render(<ToolbarItem items={[testMenuItem, testMenuItemWithSubItem]} type='action-select' onSelect={onClick} />);
 
     fireEvent.pointerUp(screen.getByTestId('sub-item1'));
@@ -80,8 +79,8 @@ describe('ToolbarItem', () => {
   });
 
   it('should focus first element after menu opens', async () => {
-    const user = userEvent.setup();
-    const onKeyDown = jest.fn();
+    const user = ue.setup();
+    const onKeyDown = vi.fn();
     render(<ToolbarItem items={testMenuItemsFlat} type='action-select' onSelect={onKeyDown} />);
 
     // focus menu item container
@@ -93,8 +92,8 @@ describe('ToolbarItem', () => {
   });
 
   it('should navigate focus between menu items with keyboard', async () => {
-    const user = userEvent.setup();
-    const onKeyDown = jest.fn();
+    const user = ue.setup();
+    const onKeyDown = vi.fn();
     render(<ToolbarItem items={testMenuItemsFlat} type='action-select' onSelect={onKeyDown} />);
 
     screen.getByTestId('item1').focus();
@@ -119,8 +118,8 @@ describe('ToolbarItem', () => {
     });
   });
   it('should trap focus in menu', async () => {
-    const user = userEvent.setup();
-    const onKeyDown = jest.fn();
+    const user = ue.setup();
+    const onKeyDown = vi.fn();
     render(<ToolbarItem items={testMenuItemsFlat} type='action-select' onSelect={onKeyDown} />);
 
     screen.getByTestId('item1').focus();

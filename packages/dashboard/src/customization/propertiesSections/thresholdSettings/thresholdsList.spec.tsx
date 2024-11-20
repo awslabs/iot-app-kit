@@ -23,7 +23,7 @@ const mockThreshold2: ThresholdWithId & StyledThreshold = {
   visible: true,
 };
 
-const mockUpdateThresholds = jest.fn();
+const mockUpdateThresholds = vi.fn();
 
 const component = (
   <ThresholdsList

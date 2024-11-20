@@ -1,4 +1,4 @@
-import { unmountComponentAtNode, render } from 'react-dom';
+import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
 import { useTween as UseTween } from '../../src/hooks/useTween';
@@ -8,26 +8,26 @@ let setTween = null;
 let updateTween = null;
 
 const mockedTween = {
-  to: jest.fn(),
-  easing: jest.fn(),
-  interpolation: jest.fn(),
-  onComplete: jest.fn(),
-  onUpdate: jest.fn(),
-  start: jest.fn(),
+  to: vi.fn(),
+  easing: vi.fn(),
+  interpolation: vi.fn(),
+  onComplete: vi.fn(),
+  onUpdate: vi.fn(),
+  start: vi.fn(),
 };
 
 const mockedUpdate = {
-  update: jest.fn(),
-  removeAll: jest.fn(),
+  update: vi.fn(),
+  removeAll: vi.fn(),
 };
 
-jest.mock('@tweenjs/tween.js', () => {
-  const originalModule = jest.requireActual('@tweenjs/tween.js');
+vi.mock('@tweenjs/tween.js', async () => {
+  const originalModule = await vi.importActual('@tweenjs/tween.js');
   return {
     __esModule: true,
     ...originalModule,
-    Tween: jest.fn(() => mockedTween),
-    Group: jest.fn(() => mockedUpdate),
+    Tween: vi.fn(() => mockedTween),
+    Group: vi.fn(() => mockedUpdate),
   };
 });
 
@@ -56,11 +56,11 @@ describe('useTween returns correct functions', () => {
     const configs = {
       from: {},
       to: {},
-      onUpdate: jest.fn(),
+      onUpdate: vi.fn(),
       duration: 100,
-      easing: jest.fn(),
-      interpolation: jest.fn(),
-      onComplete: jest.fn(),
+      easing: vi.fn(),
+      interpolation: vi.fn(),
+      onComplete: vi.fn(),
     };
 
     (setTween as any)(configs);

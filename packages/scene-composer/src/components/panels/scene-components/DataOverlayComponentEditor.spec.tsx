@@ -1,18 +1,18 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@/tests/testing-library';
 
-import { KnownComponentType } from '../../../interfaces';
-import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
-import { Component } from '../../../models/SceneModels';
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
+import { KnownComponentType } from '../../../interfaces';
+import { Component } from '../../../models/SceneModels';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
 
 import { DataOverlayComponentEditor } from './DataOverlayComponentEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-jest.mock('./common/DataBindingMapEditor', () => {
-  const originalModule = jest.requireActual('./common/DataBindingMapEditor');
+vi.mock('./common/DataBindingMapEditor', async () => {
+  const originalModule = await vi.importActual('./common/DataBindingMapEditor');
   return {
     ...originalModule,
     DataBindingMapEditor: (...props: unknown[]) => {
@@ -38,16 +38,16 @@ describe('DataOverlayComponentEditor', () => {
     ref: 'node-ref',
     properties: {},
   } as ISceneNodeInternal;
-  const updateComponentInternalMock = jest.fn();
+  const updateComponentInternalMock = vi.fn();
 
   const baseState = {
     document: {},
     updateComponentInternal: updateComponentInternalMock,
-    getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
+    getEditorConfig: vi.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
   } as any;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should add new binding by clicking add button', async () => {

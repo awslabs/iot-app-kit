@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<ComponentGroup /> should render the appropriate view 1`] = `
+exports[`<ComponentGroup /> > should render the appropriate view 1`] = `
 <div>
   <group
     name="ENTITY_GROUP_ref_COMPONENTS"

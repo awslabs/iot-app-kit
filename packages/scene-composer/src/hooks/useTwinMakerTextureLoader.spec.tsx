@@ -1,9 +1,9 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { Mesh, Texture, MeshStandardMaterial } from 'three';
+import { renderHook } from '@testing-library/react';
+import { Mesh, MeshStandardMaterial, Texture } from 'three';
 
-jest.mock('../common/GlobalSettings', () => ({
-  getGlobalSettings: jest.fn(() => ({
-    getSceneObjectFunction: jest.fn(),
+vi.mock('../common/GlobalSettings', () => ({
+  getGlobalSettings: vi.fn(() => ({
+    getSceneObjectFunction: vi.fn(),
   })),
 }));
 
@@ -13,19 +13,19 @@ texture.name = 'testTexture';
 const oldTexture = new Texture();
 texture.name = 'oldTexture';
 
-jest.mock('../three/TwinMakerTextureLoader', () => {
+vi.mock('../three/TwinMakerTextureLoader', () => {
   return {
-    TwinMakerTextureLoader: jest.fn().mockImplementation(() => {
+    TwinMakerTextureLoader: vi.fn().mockImplementation(() => {
       return {
-        setOptions: jest.fn(),
-        load: jest.fn((url, onLoad) => {
+        setOptions: vi.fn(),
+        load: vi.fn((url, onLoad) => {
           onLoad(texture);
         }),
-        setGetSceneObjectFunction: jest.fn(),
+        setGetSceneObjectFunction: vi.fn(),
         manager: {
-          onStart: jest.fn(),
-          onLoad: jest.fn(),
-          onError: jest.fn(),
+          onStart: vi.fn(),
+          onLoad: vi.fn(),
+          onError: vi.fn(),
         },
       };
     }),
@@ -36,12 +36,12 @@ import useTwinMakerTextureLoader from './useTwinMakerTextureLoader';
 
 describe('useTwinMakerTextureLoader', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call texture load callback', () => {
     const { loadTexture } = renderHook(() => useTwinMakerTextureLoader({ imageOrientation: 'flipY' })).result.current;
-    const mockOnLoadCallback = jest.fn();
+    const mockOnLoadCallback = vi.fn();
     loadTexture('myUri', mockOnLoadCallback);
 
     expect(mockOnLoadCallback).toBeCalledWith(texture);

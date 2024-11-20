@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { SVGProps } from 'react';
 const SvgPan = (props: SVGProps<SVGSVGElement>) => (
   <svg width={14} height={14} {...props}>

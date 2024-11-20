@@ -9,8 +9,8 @@ import {
 import flushPromises from 'flush-promises';
 
 describe('EntityPropertyBindingProviderStore', () => {
-  const getEntity = jest.fn();
-  const listEntities = jest.fn();
+  const getEntity = vi.fn();
+  const listEntities = vi.fn();
   const tmClient = createMockTwinMakerSDK({
     getEntity,
     listEntities,
@@ -79,7 +79,7 @@ describe('EntityPropertyBindingProviderStore', () => {
     providerStore = new EntityPropertyBindingProviderStore({ metadataModule });
     await flushPromises();
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return a correct state based on the binding input', async () => {
@@ -103,7 +103,7 @@ describe('EntityPropertyBindingProviderStore', () => {
   });
 
   it('should skip the init if the binding key and binding input is the same', async () => {
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     providerStore.setOnStateChangedListener(mockOnChange);
     providerStore.setBinding('a', mockDataBindingInput);
 
@@ -121,7 +121,7 @@ describe('EntityPropertyBindingProviderStore', () => {
       name: 'error name',
     });
 
-    const mockOnError = jest.fn();
+    const mockOnError = vi.fn();
     metadataModule = new TwinMakerMetadataModule(mockWorkspaceId, tmClient);
     providerStore = new EntityPropertyBindingProviderStore({
       metadataModule,
@@ -157,7 +157,7 @@ describe('EntityPropertyBindingProviderStore', () => {
       message: 'mock error message.',
       name: 'error name',
     });
-    const mockOnError = jest.fn();
+    const mockOnError = vi.fn();
     metadataModule = new TwinMakerMetadataModule(mockWorkspaceId, tmClient);
     providerStore = new EntityPropertyBindingProviderStore({
       metadataModule,
@@ -180,7 +180,7 @@ describe('EntityPropertyBindingProviderStore', () => {
   });
 
   it('should return correct entity selection options', async () => {
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     const mockDataBindingConfig: IDataBindingConfig = {
       fieldMapping: {
         entityId: ['sel_entity'],
@@ -202,7 +202,7 @@ describe('EntityPropertyBindingProviderStore', () => {
   });
 
   it('should set property option state to disabled if component is not selected', async () => {
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
 
     providerStore.setOnStateChangedListener(mockOnChange);
     providerStore.setBinding('a', undefined);
@@ -226,7 +226,7 @@ describe('EntityPropertyBindingProviderStore', () => {
   });
 
   it('should update selectedOptions when entity selection is in options', async () => {
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     providerStore.setOnStateChangedListener(mockOnChange);
 
     await providerStore.updateSelection('entityId', {
@@ -250,7 +250,7 @@ describe('EntityPropertyBindingProviderStore', () => {
       },
     };
 
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
 
     providerStore.setOnStateChangedListener(mockOnChange);
     providerStore.setBinding('a', undefined, mockDataBindingConfig);

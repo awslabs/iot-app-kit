@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`cameraUtils getCameraSettings should return default position and camera basics 1`] = `
+exports[`cameraUtils > getCameraSettings > should return default position and camera basics 1`] = `
 {
   "cameraType": "Perspective",
   "far": 500,
@@ -17,7 +17,7 @@ exports[`cameraUtils getCameraSettings should return default position and camera
 }
 `;
 
-exports[`cameraUtils getCameraSettings should return defaults 1`] = `
+exports[`cameraUtils > getCameraSettings > should return defaults 1`] = `
 {
   "cameraType": "Perspective",
   "far": 1000,
@@ -34,7 +34,7 @@ exports[`cameraUtils getCameraSettings should return defaults 1`] = `
 }
 `;
 
-exports[`cameraUtils getCameraSettings should return object3D world coordinates and camera basics if provided 1`] = `
+exports[`cameraUtils > getCameraSettings > should return object3D world coordinates and camera basics if provided 1`] = `
 {
   "cameraType": "Perspective",
   "far": 500,
@@ -61,7 +61,7 @@ exports[`cameraUtils getCameraSettings should return object3D world coordinates 
 }
 `;
 
-exports[`cameraUtils getCameraSettings should return object3D world coordinates and camera component if provided 1`] = `
+exports[`cameraUtils > getCameraSettings > should return object3D world coordinates and camera component if provided 1`] = `
 {
   "cameraType": "Perspective",
   "far": 500,
@@ -88,7 +88,7 @@ exports[`cameraUtils getCameraSettings should return object3D world coordinates 
 }
 `;
 
-exports[`cameraUtils getCameraSettings should return object3D world coordinates and default camera settings 1`] = `
+exports[`cameraUtils > getCameraSettings > should return object3D world coordinates and default camera settings 1`] = `
 {
   "cameraType": "Perspective",
   "far": 1000,

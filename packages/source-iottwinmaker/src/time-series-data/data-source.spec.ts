@@ -1,4 +1,4 @@
-jest.mock('../metadata-module/TwinMakerMetadataModule', () => {
+vi.mock('../metadata-module/TwinMakerMetadataModule', () => {
   const mockEntities = [
     {
       entityId: 'entity-1',

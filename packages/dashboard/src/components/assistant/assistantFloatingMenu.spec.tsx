@@ -1,5 +1,5 @@
 import { act, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { DefaultDashboardMessages } from '~/messages';
@@ -17,6 +17,8 @@ import {
   MOCK_STATUS_TIMELINE_WIDGET,
 } from '../../../testing/mocks';
 import { AssistantFloatingMenu } from './assistantFloatingMenu';
+
+const user = ue.setup();
 
 const store = configureDashboardStore(initialState);
 const TestProvider: React.FC<{
@@ -43,7 +45,6 @@ describe('Chatbot', () => {
   });
 
   it('should display buttons when assistant mode is on', async () => {
-    const user = userEvent.setup();
     const { getByRole } = render(<Component />);
 
     await user.click(
@@ -90,7 +91,6 @@ describe('Chatbot', () => {
   });
 
   it('should display error message when number of widgets selected bigger than max allowed', async () => {
-    const user = userEvent.setup();
     const { getByText, getByRole } = render(<Component />);
 
     act(() => {
@@ -157,7 +157,6 @@ describe('Chatbot', () => {
 });
 
 it('should clear all selection if clear all button is clicked', async () => {
-  const user = userEvent.setup();
   const { getByRole } = render(<Component />);
 
   act(() => {
@@ -192,7 +191,6 @@ it('should clear all selection if clear all button is clicked', async () => {
 });
 
 it('should open the chatbot when generate summary is clicked', async () => {
-  const user = userEvent.setup();
   const { getByRole } = render(<Component />);
 
   act(() => {

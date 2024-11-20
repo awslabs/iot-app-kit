@@ -5,7 +5,7 @@ import type {
   ListAssetProperties,
 } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { useState } from 'react';
 import { formatDate } from '../../../../utils/time';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
@@ -140,14 +140,14 @@ describe('asset property table', () => {
         ...listAssetModelPropertiesResponse.assetModelPropertySummaries[2],
         dataType: 'INTEGER',
       };
-      const listAssetProperties = jest.fn().mockResolvedValue({
+      const listAssetProperties = vi.fn().mockResolvedValue({
         assetPropertySummaries: [
           assetProperty1,
           assetProperty2,
           assetProperty3,
         ],
       });
-      const listAssetModelProperties = jest.fn().mockResolvedValue({
+      const listAssetModelProperties = vi.fn().mockResolvedValue({
         assetModelPropertySummaries: [
           assetModelProperty1,
           assetModelProperty2,
@@ -191,7 +191,7 @@ describe('asset property table', () => {
     it('renders expected columns when displaying latest values', () => {
       render(
         <AssetPropertyExplorer
-          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: vi.fn() }}
         />
       );
 
@@ -208,10 +208,10 @@ describe('asset property table', () => {
 
   describe('requests', () => {
     it('requests a single page of asset properties correctly', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(createListAssetPropertiesPage(3));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
       render(
@@ -233,13 +233,13 @@ describe('asset property table', () => {
     });
 
     it('requests multiple pages of asset properties correctly', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValueOnce(
           createListAssetPropertiesPage(10, 0, 'next-token')
         )
         .mockResolvedValueOnce(createListAssetPropertiesPage(10, 10));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(20));
       render(
@@ -284,7 +284,7 @@ describe('asset property table', () => {
     });
 
     it('requests multiple lists of pages of asset properties correctly', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValueOnce(
           createListAssetPropertiesPage(10, 0, 'next-token-1')
@@ -294,7 +294,7 @@ describe('asset property table', () => {
           createListAssetPropertiesPage(5, 15, 'next-token-2')
         )
         .mockResolvedValueOnce(createListAssetPropertiesPage(10, 20));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(30, 0));
       render(
@@ -360,7 +360,7 @@ describe('asset property table', () => {
 
   describe('search', () => {
     it('searches for asset properties as expected', async () => {
-      const executeQuery = jest
+      const executeQuery = vi
         .fn()
         .mockResolvedValue({ rows: [] } satisfies Awaited<
           ReturnType<ExecuteQuery>
@@ -415,7 +415,7 @@ describe('asset property table', () => {
         ],
       };
 
-      const executeQuery = jest.fn().mockResolvedValue({
+      const executeQuery = vi.fn().mockResolvedValue({
         rows: [assetPropertyRow1, assetPropertyRow2, assetPropertyRow3],
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
       render(
@@ -509,7 +509,7 @@ describe('asset property table', () => {
         ],
       };
 
-      const executeQuery = jest.fn().mockResolvedValue({
+      const executeQuery = vi.fn().mockResolvedValue({
         rows: [assetPropertyRow1, assetPropertyRow2, assetPropertyRow3],
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
       render(
@@ -575,7 +575,7 @@ describe('asset property table', () => {
     });
 
     it('initiates search when user presses enter/return key', async () => {
-      const executeQuery = jest
+      const executeQuery = vi
         .fn()
         .mockResolvedValue({ rows: [] } satisfies Awaited<
           ReturnType<ExecuteQuery>
@@ -605,10 +605,10 @@ describe('asset property table', () => {
           assetModelProperty3,
         ],
       } = listAssetModelPropertiesResponse;
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(listAssetPropertiesResponse);
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(listAssetModelPropertiesResponse);
       const assetProperty1SuccessEntry = {
@@ -645,7 +645,7 @@ describe('asset property table', () => {
           },
         },
       };
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue({
+      const batchGetAssetPropertyValue = vi.fn().mockResolvedValue({
         successEntries: [
           assetProperty1SuccessEntry,
           assetProperty2SuccessEntry,
@@ -713,14 +713,14 @@ describe('asset property table', () => {
     });
 
     it('regularly requests latest values', async () => {
-      jest.useFakeTimers();
-      const listAssetProperties = jest
+      vi.useFakeTimers();
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(createListAssetPropertiesPage(3));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue({
+      const batchGetAssetPropertyValue = vi.fn().mockResolvedValue({
         successEntries: [],
         skippedEntries: [],
         errorEntries: [],
@@ -740,20 +740,20 @@ describe('asset property table', () => {
 
       expect(batchGetAssetPropertyValue).toHaveBeenCalledOnce();
 
-      jest.advanceTimersByTime(DEFAULT_LATEST_VALUE_REQUEST_INTERVAL);
+      vi.advanceTimersByTime(DEFAULT_LATEST_VALUE_REQUEST_INTERVAL);
       expect(batchGetAssetPropertyValue).toHaveBeenCalledTimes(2);
 
       // Remove mocking
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
   });
 
   describe('selection', () => {
     it('does not allow selecting asset properties if selectionMode is undefined', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(createListAssetPropertiesPage(3));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
 
@@ -772,13 +772,13 @@ describe('asset property table', () => {
 
     describe('single-select', () => {
       it('allows selecting a single asset property', async () => {
-        const listAssetProperties = jest
+        const listAssetProperties = vi
           .fn()
           .mockResolvedValue(createListAssetPropertiesPage(3));
-        const listAssetModelProperties = jest
+        const listAssetModelProperties = vi
           .fn()
           .mockResolvedValue(createListAssetModelPropertiesPage(3));
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetPropertyTable
             selectionMode='single'
@@ -821,13 +821,13 @@ describe('asset property table', () => {
 
     describe('multi-select', () => {
       it('allows selecting multiple asset properties', async () => {
-        const listAssetProperties = jest
+        const listAssetProperties = vi
           .fn()
           .mockResolvedValue(createListAssetPropertiesPage(3));
-        const listAssetModelProperties = jest
+        const listAssetModelProperties = vi
           .fn()
           .mockResolvedValue(createListAssetPropertiesPage(3));
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetPropertyTable
             selectionMode='multi'
@@ -907,10 +907,10 @@ describe('asset property table', () => {
 
   describe('filtering', () => {
     it('supports filtering by property', async () => {
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(createListAssetPropertiesPage(3));
-      const listAssetModelProperties = jest
+      const listAssetModelProperties = vi
         .fn()
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
       render(
@@ -949,17 +949,17 @@ describe('asset property table', () => {
         ...listAssetModelPropertiesResponse.assetModelPropertySummaries[2],
         name: 'Different Name 3',
       };
-      const listAssetProperties = jest
+      const listAssetProperties = vi
         .fn()
         .mockResolvedValue(createListAssetPropertiesPage(3));
-      const listAssetModelProperties = jest.fn().mockResolvedValue({
+      const listAssetModelProperties = vi.fn().mockResolvedValue({
         assetModelPropertySummaries: [
           assetModelProperty1,
           assetModelProperty2,
           assetModelProperty3,
         ],
       });
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetPropertyExplorer
           tableSettings={{ isFilterEnabled: true }}
@@ -994,7 +994,7 @@ describe('asset property table', () => {
 
   describe('user settings', () => {
     it('renders user settings as expected', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetPropertyExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
@@ -1056,7 +1056,7 @@ describe('asset property table', () => {
       render(
         <AssetPropertyExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
-          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: vi.fn() }}
         />
       );
 
@@ -1071,7 +1071,7 @@ describe('asset property table', () => {
     });
 
     it('supports users changing settings', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetPropertyExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
@@ -1092,7 +1092,7 @@ describe('asset property table', () => {
     });
 
     it('supports users cancelling changing settings', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetPropertyExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
@@ -1137,10 +1137,10 @@ describe('asset property table', () => {
         <AssetPropertyExplorer
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
           iotSiteWiseClient={{
-            listAssetProperties: jest
+            listAssetProperties: vi
               .fn()
               .mockRejectedValue(new Error(errorMessage)),
-            listAssetModelProperties: jest
+            listAssetModelProperties: vi
               .fn()
               .mockRejectedValue(new Error(errorMessage)),
           }}
@@ -1159,7 +1159,7 @@ describe('asset property table', () => {
         <AssetPropertyExplorer
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
           iotSiteWiseClient={{
-            listAssetModelProperties: jest
+            listAssetModelProperties: vi
               .fn()
               .mockRejectedValue(new Error(errorMessage)),
           }}
@@ -1173,7 +1173,7 @@ describe('asset property table', () => {
 
     test('user experiences an error when searching asset properties', async () => {
       const errorMessage = 'Failed to request resources';
-      const executeQuery = jest.fn().mockRejectedValue(new Error(errorMessage));
+      const executeQuery = vi.fn().mockRejectedValue(new Error(errorMessage));
       render(
         <AssetPropertyExplorer
           iotSiteWiseClient={{ executeQuery }}

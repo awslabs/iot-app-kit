@@ -21,7 +21,7 @@ describe('dataBindingTemplatesSelector', () => {
   });
 
   it('should return data binding templates from state', () => {
-    const getSceneProperty = jest.fn();
+    const getSceneProperty = vi.fn();
     getSceneProperty.mockReturnValue(mockDataBindingConfig);
     const dataBindingConfig = dataBindingConfigSelector({ getSceneProperty } as any);
 
@@ -31,7 +31,7 @@ describe('dataBindingTemplatesSelector', () => {
   });
 
   it('should fill missing data binding template keys if they are missing', () => {
-    const getSceneProperty = jest.fn();
+    const getSceneProperty = vi.fn();
     const newMockDataBindingConfig = {
       fieldMapping: mockDataBindingConfig.fieldMapping,
       template: pick(mockDataBindingConfig.template, 'sel_comp'),
@@ -44,7 +44,7 @@ describe('dataBindingTemplatesSelector', () => {
   });
 
   it('should use default data binding config if RootState has no data binding config', () => {
-    const getSceneProperty = jest.fn();
+    const getSceneProperty = vi.fn();
     getSceneProperty.mockReturnValue(undefined);
 
     const dataBindingConfig = dataBindingConfigSelector({ getSceneProperty } as any);

@@ -1,17 +1,18 @@
-import { render, waitFor } from '@testing-library/react';
-import { ThresholdStyleSettings } from './thresholdStyle';
-import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { type ThresholdStyleType } from '@iot-app-kit/core';
+import { render, screen } from '@testing-library/react';
+import ue from '@testing-library/user-event';
 import {
   convertOptionToThresholdStyle,
   convertThresholdStyleToOption,
   styledOptions,
 } from './defaultThresholds';
+import { ThresholdStyleSettings } from './thresholdStyle';
 
 const thresholdStyle: ThresholdStyleType = {
   visible: true,
 };
-const mockUpdateAllThresholdStyles = jest.fn();
+const mockUpdateAllThresholdStyles = vi.fn();
+const user = ue.setup();
 
 const component = (
   <ThresholdStyleSettings
@@ -23,30 +24,71 @@ const component = (
   />
 );
 
-describe('thresholdStyleSettings', () => {
-  it('renders', () => {
-    const result = render(component);
-    const elem = result.baseElement;
-    expect(elem);
-  });
+test('user changes threshold style', async () => {
+  render(component);
 
-  it('calls update functions when option changes', async () => {
-    const { container, getByText, queryAllByText } = render(component);
-    const cloudscapeWrapper = await waitFor(() => wrapper(container));
+  expect(screen.getByLabelText('Show thresholds')).toHaveTextContent(
+    'As lines'
+  );
+  expect(
+    screen.queryByRole('option', { name: 'As lines' })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole('option', { name: 'As filled region' })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole('option', {
+      name: 'As lines and filled region',
+    })
+  ).not.toBeInTheDocument();
 
-    const select = await waitFor(() => cloudscapeWrapper.findSelect());
+  await user.click(screen.getByLabelText('Show thresholds'));
 
-    await waitFor(() =>
-      expect(getByText('Show thresholds')).toBeInTheDocument()
-    );
-    select?.openDropdown();
-    await waitFor(() =>
-      expect(queryAllByText('As lines').length).toBeGreaterThan(0)
-    );
-    select?.selectOptionByValue('2');
-    await waitFor(() =>
-      expect(queryAllByText('As filled region').length).toBeGreaterThan(0)
-    );
-    expect(mockUpdateAllThresholdStyles).toBeCalled();
-  });
+  expect(
+    screen.getByRole('option', { name: 'As lines', selected: true })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('option', { name: 'As filled region', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('option', {
+      name: 'As lines and filled region',
+      selected: false,
+    })
+  ).toBeVisible();
+
+  await user.click(
+    screen.getByRole('option', { name: 'As filled region', selected: false })
+  );
+
+  expect(screen.getByLabelText('Show thresholds')).toHaveTextContent(
+    'As filled region'
+  );
+  expect(mockUpdateAllThresholdStyles).toBeCalled();
+  expect(
+    screen.queryByRole('option', { name: 'As lines' })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole('option', { name: 'As filled region' })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole('option', {
+      name: 'As lines and filled region',
+    })
+  ).not.toBeInTheDocument();
+
+  await user.click(screen.getByLabelText('Show thresholds'));
+
+  expect(
+    screen.getByRole('option', { name: 'As lines', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('option', { name: 'As filled region', selected: true })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('option', {
+      name: 'As lines and filled region',
+      selected: false,
+    })
+  ).toBeVisible();
 });

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<ScenePanel /> should render the left panel as closed by default 1`] = `
+exports[`<ScenePanel /> > should render the left panel as closed by default 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
@@ -91,7 +91,7 @@ exports[`<ScenePanel /> should render the left panel as closed by default 1`] = 
 }
 `;
 
-exports[`<ScenePanel /> should render the left panel as open when .open class is applied 1`] = `
+exports[`<ScenePanel /> > should render the left panel as open when .open class is applied 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
@@ -182,7 +182,7 @@ exports[`<ScenePanel /> should render the left panel as open when .open class is
 }
 `;
 
-exports[`<ScenePanel /> should render the right panel as closed by default 1`] = `
+exports[`<ScenePanel /> > should render the right panel as closed by default 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
@@ -273,7 +273,7 @@ exports[`<ScenePanel /> should render the right panel as closed by default 1`] =
 }
 `;
 
-exports[`<ScenePanel /> should render the right panel as open when .open class is applied 1`] = `
+exports[`<ScenePanel /> > should render the right panel as open when .open class is applied 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>

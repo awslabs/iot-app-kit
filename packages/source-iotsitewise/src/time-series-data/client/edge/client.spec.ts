@@ -25,12 +25,12 @@ describe('SiteWiseClientEdge', () => {
 
   describe('getHistoricalPropertyDataPoints', () => {
     it('calls onError on failure', async () => {
-      const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(error);
+      const getAssetPropertyValueHistory = vi.fn().mockRejectedValue(error);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const client = new SiteWiseClientEdge(
         createMockSiteWiseSDK({ getAssetPropertyValueHistory })
@@ -67,14 +67,14 @@ describe('SiteWiseClientEdge', () => {
     });
 
     it('makes request with fetchFromStartToEnd', async () => {
-      const getAssetPropertyValueHistory = jest
+      const getAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const client = new SiteWiseClientEdge(
         createMockSiteWiseSDK({ getAssetPropertyValueHistory })
@@ -134,14 +134,14 @@ describe('SiteWiseClientEdge', () => {
     });
 
     it('makes request with fetchMostRecentBeforeEnd', async () => {
-      const getAssetPropertyValueHistory = jest
+      const getAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const client = new SiteWiseClientEdge(
         createMockSiteWiseSDK({ getAssetPropertyValueHistory })
@@ -206,14 +206,14 @@ describe('SiteWiseClientEdge', () => {
     });
 
     it('makes request with fetchMostRecentBeforeStart', async () => {
-      const getAssetPropertyValueHistory = jest
+      const getAssetPropertyValueHistory = vi
         .fn()
         .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const client = new SiteWiseClientEdge(
         createMockSiteWiseSDK({ getAssetPropertyValueHistory })
@@ -280,7 +280,7 @@ describe('SiteWiseClientEdge', () => {
 
   describe('getLatestPropertyDataPoint', () => {
     it('calls onError when error occurs', async () => {
-      const getAssetPropertyValue = jest.fn().mockRejectedValue(error);
+      const getAssetPropertyValue = vi.fn().mockRejectedValue(error);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
@@ -288,8 +288,8 @@ describe('SiteWiseClientEdge', () => {
         createMockSiteWiseSDK({ getAssetPropertyValue })
       );
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const requestInformations = [
         {
@@ -321,14 +321,14 @@ describe('SiteWiseClientEdge', () => {
     });
 
     it('makes request with fetchFromStartToEnd', async () => {
-      const getAssetPropertyValue = jest
+      const getAssetPropertyValue = vi
         .fn()
         .mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const start = new Date(1000099);
       const end = new Date();
@@ -385,12 +385,12 @@ describe('SiteWiseClientEdge', () => {
 
   describe('getAggregatedPropertyDataPoints', () => {
     it('calls onError on failure', async () => {
-      const getAssetPropertyAggregates = jest.fn().mockRejectedValue(error);
+      const getAssetPropertyAggregates = vi.fn().mockRejectedValue(error);
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
 
       const client = new SiteWiseClientEdge(
         createMockSiteWiseSDK({ getAssetPropertyAggregates })
@@ -434,9 +434,9 @@ describe('SiteWiseClientEdge', () => {
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
-      const getAssetPropertyAggregates = jest
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
+      const getAssetPropertyAggregates = vi
         .fn()
         .mockResolvedValue(AGGREGATE_VALUES);
 
@@ -515,9 +515,9 @@ describe('SiteWiseClientEdge', () => {
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
-      const getAssetPropertyAggregates = jest
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
+      const getAssetPropertyAggregates = vi
         .fn()
         .mockResolvedValue(AGGREGATE_VALUES);
 
@@ -596,9 +596,9 @@ describe('SiteWiseClientEdge', () => {
       const assetId = 'some-asset-id';
       const propertyId = 'some-property-id';
 
-      const onSuccess = jest.fn();
-      const onError = jest.fn();
-      const getAssetPropertyAggregates = jest
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
+      const getAssetPropertyAggregates = vi
         .fn()
         .mockResolvedValue(AGGREGATE_VALUES);
 

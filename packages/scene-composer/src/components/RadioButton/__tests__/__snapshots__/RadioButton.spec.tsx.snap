@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RadioButton it should render the Fifth Option as a radio button 1`] = `
+exports[`RadioButton > it should render the Fifth Option as a radio button 1`] = `
 <input
   data-testid="five"
   type="radio"
@@ -8,7 +8,7 @@ exports[`RadioButton it should render the Fifth Option as a radio button 1`] = `
 />
 `;
 
-exports[`RadioButton it should render the First Option as a radio button 1`] = `
+exports[`RadioButton > it should render the First Option as a radio button 1`] = `
 <input
   data-testid="one"
   type="radio"
@@ -16,7 +16,7 @@ exports[`RadioButton it should render the First Option as a radio button 1`] = `
 />
 `;
 
-exports[`RadioButton it should render the Fourth Option as a radio button 1`] = `
+exports[`RadioButton > it should render the Fourth Option as a radio button 1`] = `
 <input
   data-testid="four"
   type="radio"
@@ -24,16 +24,15 @@ exports[`RadioButton it should render the Fourth Option as a radio button 1`] = 
 />
 `;
 
-exports[`RadioButton it should render the Second Option as a radio button 1`] = `
+exports[`RadioButton > it should render the Second Option as a radio button 1`] = `
 <input
-  checked=""
   data-testid="two"
   type="radio"
   value="radio two"
 />
 `;
 
-exports[`RadioButton it should render the Third Option as a radio button 1`] = `
+exports[`RadioButton > it should render the Third Option as a radio button 1`] = `
 <input
   data-testid="three"
   type="radio"

@@ -19,11 +19,11 @@ import { useIoTSiteWiseClient } from './useIoTSiteWiseClient';
 
 describe('useIoTSiteWiseClient tests', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('useIoTSiteWiseClient accepts a custom SiteWise client', async () => {
-    const getAssetPropertyValueMock = jest.fn();
+    const getAssetPropertyValueMock = vi.fn();
     const customSiteWiseClient = {
       getAssetPropertyValue: (_, __) => {
         getAssetPropertyValueMock();
@@ -43,7 +43,7 @@ describe('useIoTSiteWiseClient tests', () => {
   });
 
   it('useIoTSiteWiseClient accepts an IoTSiteWise client', async () => {
-    const getAssetPropertyValueMock = jest.fn();
+    const getAssetPropertyValueMock = vi.fn();
     const siteWiseClient = {
       ...new IoTSiteWise({
         credentials: {

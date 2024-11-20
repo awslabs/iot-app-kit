@@ -1,14 +1,14 @@
 import { cloneDeep } from 'lodash';
 
 import { type ISceneDocumentInternal, type ISceneNodeInternal, type RootState } from '../..';
+import { RESERVED_LAYER_ID } from '../../../common/entityModelConstants';
 import DebugLogger from '../../../logger/DebugLogger';
+import { mergeDeep } from '../../../utils/objectUtils';
 import { type ITransformInternal } from '../../internalInterfaces';
 import { appendSceneNode, removeNode, renderSceneNodes, updateSceneNode } from '../sceneDocumentHelpers';
-import { mergeDeep } from '../../../utils/objectUtils';
-import { RESERVED_LAYER_ID } from '../../../common/entityModelConstants';
 
-jest.mock('../../../utils/objectUtils', () => {
-  return { mergeDeep: jest.fn() };
+vi.mock('../../../utils/objectUtils', () => {
+  return { mergeDeep: vi.fn() };
 });
 
 const logger = new DebugLogger('stateStore');
@@ -274,7 +274,7 @@ describe('sceneDocumentHelpers', () => {
     };
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it(`should be able to updateSceneNode with different parent`, () => {

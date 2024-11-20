@@ -1,13 +1,13 @@
 /* eslint-disable */
 const mockSceneComposerApi = {
-  findSceneNodeRefBy: jest.fn(),
-  setCameraTarget: jest.fn(),
-  setSelectedSceneNodeRef: jest.fn(),
+  findSceneNodeRefBy: vi.fn(),
+  setCameraTarget: vi.fn(),
+  setSelectedSceneNodeRef: vi.fn(),
 };
 
 let onSceneLoadedCb;
-jest.doMock('./components/SceneComposerInternal', () => {
-  const original = jest.requireActual('./components/SceneComposerInternal');
+vi.mock('./components/SceneComposerInternal', async () => {
+  const original = await vi.importActual('./components/SceneComposerInternal');
   return {
     ...original,
     SceneComposerInternal: (props) => {
@@ -15,17 +15,17 @@ jest.doMock('./components/SceneComposerInternal', () => {
       return mockComponent('SceneComposerInternal')(props);
     },
     useSceneComposerApi: () => mockSceneComposerApi,
-  }
+  };
 });
 
 import { act, create } from 'react-test-renderer';
+import mockComponent from '../__mocks__/mockComponent';
 import { SceneViewer } from './SceneViewer';
 import { KnownComponentType } from './interfaces';
-import mockComponent from '../__mocks__/mockComponent';
 /* eslint-enable */
 
 describe('SceneViewer', () => {
-  const mockGetSceneObjectFunction = jest.fn();
+  const mockGetSceneObjectFunction = vi;
   const mockSceneLoader = {
     getSceneUri: () => Promise.resolve('https://test.url'),
     getSceneUrl: () => Promise.resolve('https://test.url'),
@@ -33,7 +33,7 @@ describe('SceneViewer', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly', async () => {

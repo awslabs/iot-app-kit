@@ -81,8 +81,8 @@ describe('getPropertyValueHistoryByComponentType', () => {
       meta: { componentTypeId: 'comp-type-1' },
     },
   ];
-  const getEntity = jest.fn();
-  const getPropertyValueHistory = jest.fn();
+  const getEntity = vi.fn();
+  const getPropertyValueHistory = vi.fn();
   const tmClient = createMockTwinMakerSDK({
     getEntity,
     getPropertyValueHistory,
@@ -165,12 +165,13 @@ describe('getPropertyValueHistoryByComponentType', () => {
       },
     },
   ] as any as GetEntityResponse[];
-  jest
-    .spyOn(twinMakerMetadataModule, 'fetchEntitiesByComponentTypeId')
-    .mockResolvedValue(mockEntities);
+  vi.spyOn(
+    twinMakerMetadataModule,
+    'fetchEntitiesByComponentTypeId'
+  ).mockResolvedValue(mockEntities);
 
-  const onSuccess = jest.fn();
-  const onError = jest.fn();
+  const onSuccess = vi.fn();
+  const onError = vi.fn();
 
   const mockResponse1 = {
     nextToken: '11223344',
@@ -239,7 +240,7 @@ describe('getPropertyValueHistoryByComponentType', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should send correct request when fetchMostRecentBeforeStart is true', async () => {

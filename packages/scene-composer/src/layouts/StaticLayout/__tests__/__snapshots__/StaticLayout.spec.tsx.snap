@@ -1,9 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StaticLayoutSnap should render correctly with modal 1`] = `
+exports[`StaticLayoutSnap > should render correctly with modal 1`] = `
 <div
-  className="sc-aXZVg bXfOXf"
-  data-mocked="Box"
+  className="sc-aXZVg iQWtQB awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
     className="sc-gsFSXq irdOli"
@@ -11,148 +10,120 @@ exports[`StaticLayoutSnap should render correctly with modal 1`] = `
     modalContent
   </div>
   <div
-    className="sc-gEvEer iHsuBI"
-    data-mocked="Box"
+    className="sc-gEvEer deMTkg awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     header
   </div>
   <div
-    className="sc-eqUAAy lplIYk"
-    data-mocked="Box"
+    className="sc-eqUAAy lplIYk awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-kAyceB cqfbWr"
-      data-mocked="Box"
-      isFloating={false}
+      className="sc-kAyceB cHqwUn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       leftPanel
     </div>
     <div
-      className="sc-fqkvVR hhwHuy"
-      data-mocked="Box"
+      className="sc-fqkvVR hhwHuy awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-iGgWBj hzaGuy"
-        data-mocked="Box"
+        className="sc-iGgWBj hzaGuy awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       >
         mainContent
       </div>
     </div>
     <div
-      className="sc-imWYAI fdOAXN"
-      data-mocked="Box"
+      className="sc-imWYAI eUyaSV awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       rightPanel
     </div>
   </div>
   <div
-    className="sc-jXbUNg kirTmv"
-    data-mocked="Box"
+    className="sc-jXbUNg errLgn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     footer
   </div>
 </div>
 `;
 
-exports[`StaticLayoutSnap should render correctly with topBar 1`] = `
+exports[`StaticLayoutSnap > should render correctly with topBar 1`] = `
 <div
-  className="sc-aXZVg bXfOXf"
-  data-mocked="Box"
+  className="sc-aXZVg iQWtQB awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
-    className="sc-gEvEer iHsuBI"
-    data-mocked="Box"
+    className="sc-gEvEer deMTkg awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     header
   </div>
   <div
-    className="sc-eqUAAy lplIYk"
-    data-mocked="Box"
+    className="sc-eqUAAy lplIYk awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-kAyceB cqfbWr"
-      data-mocked="Box"
-      isFloating={false}
+      className="sc-kAyceB cHqwUn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       leftPanel
     </div>
     <div
-      className="sc-fqkvVR hhwHuy"
-      data-mocked="Box"
+      className="sc-fqkvVR hhwHuy awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-dcJsrY cda-DkI"
-        data-mocked="Box"
-        padding="xxs"
+        className="sc-dcJsrY cvpwOE awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-xxs_18wu0_1elzt_586 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       >
         topBar
       </div>
       <div
-        className="sc-iGgWBj hzaGuy"
-        data-mocked="Box"
+        className="sc-iGgWBj hzaGuy awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       >
         mainContent
       </div>
     </div>
     <div
-      className="sc-imWYAI fdOAXN"
-      data-mocked="Box"
+      className="sc-imWYAI eUyaSV awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       rightPanel
     </div>
   </div>
   <div
-    className="sc-jXbUNg kirTmv"
-    data-mocked="Box"
+    className="sc-jXbUNg errLgn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     footer
   </div>
 </div>
 `;
 
-exports[`StaticLayoutSnap should render correctly without modal 1`] = `
+exports[`StaticLayoutSnap > should render correctly without modal 1`] = `
 <div
-  className="sc-aXZVg bXfOXf"
-  data-mocked="Box"
+  className="sc-aXZVg iQWtQB awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
 >
   <div
-    className="sc-gEvEer iHsuBI"
-    data-mocked="Box"
+    className="sc-gEvEer deMTkg awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     header
   </div>
   <div
-    className="sc-eqUAAy lplIYk"
-    data-mocked="Box"
+    className="sc-eqUAAy lplIYk awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     <div
-      className="sc-kAyceB cqfbWr"
-      data-mocked="Box"
-      isFloating={false}
+      className="sc-kAyceB cHqwUn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       leftPanel
     </div>
     <div
-      className="sc-fqkvVR hhwHuy"
-      data-mocked="Box"
+      className="sc-fqkvVR hhwHuy awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       <div
-        className="sc-iGgWBj hzaGuy"
-        data-mocked="Box"
+        className="sc-iGgWBj hzaGuy awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
       >
         mainContent
       </div>
     </div>
     <div
-      className="sc-imWYAI fdOAXN"
-      data-mocked="Box"
+      className="sc-imWYAI eUyaSV awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
     >
       rightPanel
     </div>
   </div>
   <div
-    className="sc-jXbUNg kirTmv"
-    data-mocked="Box"
+    className="sc-jXbUNg errLgn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
   >
     footer
   </div>

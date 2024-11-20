@@ -9,8 +9,8 @@ import { SceneLifecycleModule } from './SceneLifecycleModule';
 import { updateSceneEntityComponent } from './sceneComponent';
 
 describe('createDynamicScene', () => {
-  const createScene = jest.fn();
-  const getSceneInfo = jest.fn().mockResolvedValue({
+  const createScene = vi.fn();
+  const getSceneInfo = vi.fn().mockResolvedValue({
     workspaceId: 'workspace-id',
     sceneId: 'dynamic-scene',
     contentLocation: undefined,
@@ -20,17 +20,17 @@ describe('createDynamicScene', () => {
     capabilities: ['DYNAMIC_SCENE'],
     sceneMetadata: { sceneRootEntityId: 'example-dynamic-scene-entity-id' },
   });
-  const updateSceneEntity = jest.fn().mockResolvedValue({
+  const updateSceneEntity = vi.fn().mockResolvedValue({
     updateDateTime: new Date(2022, 2, 1),
     state: 'ACTIVE',
   });
-  const createSceneEntity = jest.fn().mockResolvedValue({
+  const createSceneEntity = vi.fn().mockResolvedValue({
     entityId: 'dynamic-scene-entity-id',
     arn: 'dynamic-scene-entity-arn',
     creationDateTime: new Date(2022, 2, 1),
     state: 'ACTIVE',
   });
-  const getSceneId = jest.fn().mockReturnValue('dynamic-scene-entity-id');
+  const getSceneId = vi.fn().mockReturnValue('dynamic-scene-entity-id');
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     createScene,
     getSceneInfo,
@@ -40,7 +40,7 @@ describe('createDynamicScene', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const sceneLifecycleModule = new SceneLifecycleModule();

@@ -309,7 +309,7 @@ it('returns data streams from multiple queries', () => {
 
 it('providers updated viewport to query', () => {
   let viewport = { duration: '5m' };
-  const updateViewport = jest.fn();
+  const updateViewport = vi.fn();
   const DATA_STREAM: DataStream = {
     refId: 'red',
     id: 'abc',

@@ -1,42 +1,42 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 import { useIntl } from 'react-intl';
 
-import { SceneRuleTargetEditor } from '../SceneRuleTargetEditor';
 import { DefaultAnchorStatus, SceneResourceType } from '../../../../';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
+import { SceneRuleTargetEditor } from '../SceneRuleTargetEditor';
 
-jest.mock('../SceneRuleTargetColorEditor', () => ({
+vi.mock('../SceneRuleTargetColorEditor', () => ({
   SceneRuleTargetColorEditor: () => 'SceneRuleTargetColorEditor',
 }));
-jest.mock('../SceneRuleTargetIconEditor', () => ({
+vi.mock('../SceneRuleTargetIconEditor', () => ({
   SceneRuleTargetIconEditor: () => 'SceneRuleTargetIconEditor',
 }));
-jest.mock('../SceneRuleTargetOpacityEditor', () => () => 'SceneRuleTargetOpacityEditor');
+vi.mock('../SceneRuleTargetOpacityEditor', () => ({ default: () => 'SceneRuleTargetOpacityEditor' }));
 
-jest.mock('../../../../utils/sceneResourceUtils', () => ({
-  ...jest.requireActual('../../../../utils/sceneResourceUtils'),
-  getSceneResourceInfo: jest.fn(),
+vi.mock('../../../../utils/sceneResourceUtils', async () => ({
+  ...(await vi.importActual('../../../../utils/sceneResourceUtils')),
+  getSceneResourceInfo: vi.fn(),
 }));
 
-jest.mock('react-intl', () => ({
-  ...jest.requireActual('react-intl'),
-  useIntl: jest.fn(),
+vi.mock('react-intl', async () => ({
+  ...(await vi.importActual('react-intl')),
+  useIntl: vi.fn(),
 }));
 
-jest.mock('../../../../hooks/useFeature', () => jest.fn());
+vi.mock('../../../../hooks/useFeature', () => ({ default: vi.fn() }));
 
 describe('SceneRuleTargetEditor', () => {
   [{ type: SceneResourceType.Icon }, { type: SceneResourceType.Color }, { type: SceneResourceType.Opacity }].forEach(
     ({ type }) => {
       it(`should render a drop down with appropriate resource type: ${type}`, () => {
-        (useIntl as jest.Mock).mockReturnValue({
-          formatMessage: jest.fn(() => 'test message'),
+        (useIntl as vi.Mock).mockReturnValue({
+          formatMessage: vi.fn(() => 'test message'),
         });
-        (getSceneResourceInfo as jest.Mock).mockReturnValue({
+        (getSceneResourceInfo as vi.Mock).mockReturnValue({
           type,
         });
 
-        const { container } = render(<SceneRuleTargetEditor target={DefaultAnchorStatus.Info} onChange={jest.fn()} />);
+        const { container } = render(<SceneRuleTargetEditor target={DefaultAnchorStatus.Info} onChange={vi.fn()} />);
 
         expect(container).toMatchSnapshot();
       });

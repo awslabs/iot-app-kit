@@ -61,7 +61,7 @@ const AnimationComponent: React.FC<AnimationComponentProps> = ({ component, node
       toggleIsAnimationPaused(AnimationMixer, isGlobalAnimationPaused, currentAnimations);
     }
   }, [scene, isGlobalAnimationPaused, currentAnimations, component, AnimationMixer]);
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     AnimationMixer?.update(delta);
   });
   return <Fragment />;

@@ -1,14 +1,12 @@
-import { render } from '@testing-library/react';
-
-import { accessStore } from '../../store';
-import { setFeatureConfig } from '../../common/GlobalSettings';
-import { mockProvider } from '../../../tests/components/panels/scene-components/MockComponents';
-import useDynamicScene from '../../hooks/useDynamicScene';
-
+import { render } from '@/tests/testing-library';
 import { SettingsPanel } from '.';
+import { mockProvider } from '../../../tests/components/panels/scene-components/MockComponents';
+import { setFeatureConfig } from '../../common/GlobalSettings';
+import useDynamicScene from '../../hooks/useDynamicScene';
+import { accessStore } from '../../store';
 
-jest.mock('./scene-settings', () => {
-  const originalModule = jest.requireActual('./scene-settings');
+vi.mock('./scene-settings', async () => {
+  const originalModule = await vi.importActual('./scene-settings');
   return {
     ...originalModule,
     SceneDataBindingTemplateEditor: 'SceneDataBindingTemplateEditor',
@@ -16,37 +14,37 @@ jest.mock('./scene-settings', () => {
   };
 });
 
-jest.mock('./scene-settings/ConvertSceneSettings', () => {
-  const originalModule = jest.requireActual('./scene-settings/ConvertSceneSettings');
+vi.mock('./scene-settings/ConvertSceneSettings', async () => {
+  const originalModule = await vi.importActual('./scene-settings/ConvertSceneSettings');
   return {
     ...originalModule,
     ConvertSceneSettings: (props) => <div data-mocked='ConvertSceneSettings' {...props} />,
   };
 });
 
-jest.mock('./CommonPanelComponents', () => ({
-  ...jest.requireActual('./CommonPanelComponents'),
+vi.mock('./CommonPanelComponents', async () => ({
+  ...(await vi.importActual('./CommonPanelComponents')),
   ExpandableInfoSection: (props) => <div data-mocked='ExpandableInfoSection' {...props} />,
 }));
 
-jest.mock('../../hooks/useDynamicScene', () => jest.fn());
+vi.mock('../../hooks/useDynamicScene', () => ({ default: vi.fn() }));
 
 describe('SettingsPanel contains expected elements.', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     setFeatureConfig({});
     accessStore('default').setState({
-      setSceneProperty: jest.fn(),
-      getSceneProperty: jest.fn().mockReturnValue('neutral'),
-      isEditing: jest.fn(),
+      setSceneProperty: vi.fn(),
+      getSceneProperty: vi.fn().mockReturnValue('neutral'),
+      isEditing: vi.fn(),
     });
-    (useDynamicScene as jest.Mock).mockReturnValue(false);
+    (useDynamicScene as vi.Mock).mockReturnValue(false);
   });
 
   it('should contains default elements in editing mode.', async () => {
     accessStore('default').setState({
-      isEditing: jest.fn().mockReturnValue(true),
+      isEditing: vi.fn().mockReturnValue(true),
     });
 
     const { container, queryByTitle } = render(<SettingsPanel valueDataBindingProvider={mockProvider} />);
@@ -60,7 +58,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains default elements in viewing mode.', async () => {
     accessStore('default').setState({
-      isEditing: jest.fn().mockReturnValue(false),
+      isEditing: vi.fn().mockReturnValue(false),
     });
 
     const { container, queryByTitle } = render(<SettingsPanel valueDataBindingProvider={mockProvider} />);
@@ -74,7 +72,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains settings element for overlay in editing.', async () => {
     accessStore('default').setState({
-      isEditing: jest.fn().mockReturnValue(true),
+      isEditing: vi.fn().mockReturnValue(true),
     });
 
     const { container, queryByTitle, queryAllByText } = render(<SettingsPanel />);
@@ -88,7 +86,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains settings element for overlay in viewing.', async () => {
     accessStore('default').setState({
-      isEditing: jest.fn().mockReturnValue(false),
+      isEditing: vi.fn().mockReturnValue(false),
     });
 
     const { container, queryByTitle, queryAllByText } = render(<SettingsPanel />);
@@ -101,9 +99,9 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains settings element for converting scene in editing.', async () => {
-    (useDynamicScene as jest.Mock).mockReturnValue(true);
+    (useDynamicScene as vi.Mock).mockReturnValue(true);
     accessStore('default').setState({
-      isEditing: jest.fn().mockReturnValue(true),
+      isEditing: vi.fn().mockReturnValue(true),
     });
 
     const { container, queryByTitle } = render(<SettingsPanel />);
@@ -113,9 +111,9 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should not contain settings element for converting scene in viewing.', async () => {
-    (useDynamicScene as jest.Mock).mockReturnValue(true);
+    (useDynamicScene as vi.Mock).mockReturnValue(true);
     accessStore('default').setState({
-      isEditing: jest.fn().mockReturnValue(false),
+      isEditing: vi.fn().mockReturnValue(false),
     });
 
     const { queryByTitle } = render(<SettingsPanel />);

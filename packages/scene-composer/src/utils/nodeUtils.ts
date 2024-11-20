@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-import { type ISceneComponentInternal, type ISceneNodeInternal } from '../store';
 import { type AddingWidgetInfo, KnownComponentType } from '../interfaces';
 import { type Vector3 } from '../models/SceneModels';
+import { type ISceneComponentInternal, type ISceneNodeInternal } from '../store';
 import { type ITransformInternal } from '../store/internalInterfaces';
 
 /**
@@ -134,7 +134,7 @@ export const findNearestViableParentAncestorNodeRef = (object?: THREE.Object3D):
 export const createNodeWithPositionAndNormal = (
   newWidget: AddingWidgetInfo,
   position: THREE.Vector3,
-  normal: THREE.Vector3,
+  _normal: THREE.Vector3,
   parent?: THREE.Object3D,
   targetRef?: string,
 ): ISceneNodeInternal => {

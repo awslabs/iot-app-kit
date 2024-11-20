@@ -1,7 +1,7 @@
+import { TextContent } from '@cloudscape-design/components';
 import { Html } from '@react-three/drei/web/Html';
 import { useContext, useEffect, useState } from 'react';
-import { TextContent } from '@cloudscape-design/components';
-import { useIntl, defineMessages } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 import * as THREE from 'three';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
@@ -124,8 +124,8 @@ const interpolateBetween = (point1: number, point2: number, factor: number) => {
 //For small screens (< 300px wide), position the scene info right against the edge of the scene
 //For screens in between, use a linear interpolation to smooth out the transition
 function calculatePosition(
-  el: THREE.Object3D,
-  camera: THREE.Camera,
+  _el: THREE.Object3D,
+  _camera: THREE.Camera,
   size: { width: number; height: number },
 ): number[] {
   const wideScreenWidthPixels = 600;

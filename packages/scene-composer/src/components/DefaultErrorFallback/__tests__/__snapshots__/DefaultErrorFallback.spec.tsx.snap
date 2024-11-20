@@ -1,89 +1,89 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DefaultErrorFallback should render correctly with a Error type 1`] = `
+exports[`DefaultErrorFallback > should render correctly with a Error type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(MockContainer)
+    <Styled(Container)
       header={
-        <MockHeader
+        <Header
           variant="h2"
         >
           Error
-        </MockHeader>
+        </Header>
       }
     >
-      <MockTextContent>
+      <TextContent>
         <p>
           Testing an error
         </p>
-      </MockTextContent>
-    </Styled(MockContainer)>
+      </TextContent>
+    </Styled(Container)>
   }
 />
 `;
 
-exports[`DefaultErrorFallback should render correctly with a SceneComposerRuntimeError type 1`] = `
+exports[`DefaultErrorFallback > should render correctly with a SceneComposerRuntimeError type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(MockContainer)
+    <Styled(Container)
       header={
-        <MockHeader
+        <Header
           variant="h2"
         >
           Error
-        </MockHeader>
+        </Header>
       }
     >
-      <MockTextContent>
+      <TextContent>
         <p>
           Testing a SceneComposerRuntimeError
         </p>
-      </MockTextContent>
-    </Styled(MockContainer)>
+      </TextContent>
+    </Styled(Container)>
   }
 />
 `;
 
-exports[`DefaultErrorFallback should render correctly with a String type 1`] = `
+exports[`DefaultErrorFallback > should render correctly with a String type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(MockContainer)
+    <Styled(Container)
       header={
-        <MockHeader
+        <Header
           variant="h2"
         >
           Error
-        </MockHeader>
+        </Header>
       }
     >
-      <MockTextContent>
+      <TextContent>
         <p>
           Testing a string
         </p>
-      </MockTextContent>
-    </Styled(MockContainer)>
+      </TextContent>
+    </Styled(Container)>
   }
 />
 `;
 
-exports[`DefaultErrorFallback should render correctly with a Unknown type 1`] = `
+exports[`DefaultErrorFallback > should render correctly with a Unknown type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(MockContainer)
+    <Styled(Container)
       header={
-        <MockHeader
+        <Header
           variant="h2"
         >
           Error
-        </MockHeader>
+        </Header>
       }
     >
-      <MockTextContent>
+      <TextContent>
         <p>
           An unexpected error occurred.
         </p>
-      </MockTextContent>
-    </Styled(MockContainer)>
+      </TextContent>
+    </Styled(Container)>
   }
 />
 `;

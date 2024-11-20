@@ -1,25 +1,25 @@
-import { act, render } from '@testing-library/react';
 import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { act, render } from '@/tests/testing-library';
 
-import { accessStore } from '../../store';
 import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
+import { accessStore } from '../../store';
 
 import DeleteNodeModal from './DeleteNodeModal';
 
-jest.mock('./DeleteConfirmationModal', () => (props) => <div>{Object.values(props)}</div>);
+vi.mock('./DeleteConfirmationModal', () => ({ default: (props) => <div>{Object.values(props)}</div> }));
 
 describe('DeleteNodeModal', () => {
   const baseState = {
-    setDeleteConfirmationModalVisible: jest.fn(),
-    getSceneNodeByRef: jest.fn().mockReturnValue({ name: 'delete-node-name' }),
-    removeSceneNode: jest.fn(),
+    setDeleteConfirmationModalVisible: vi.fn(),
+    getSceneNodeByRef: vi.fn().mockReturnValue({ name: 'delete-node-name' }),
+    removeSceneNode: vi.fn(),
   };
   const mockKGModule = {
-    executeQuery: jest.fn().mockResolvedValue({}),
+    executeQuery: vi.fn().mockResolvedValue({}),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     setTwinMakerSceneMetadataModule({ kgModule: mockKGModule } as unknown as TwinMakerSceneMetadataModule);
   });
 

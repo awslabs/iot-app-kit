@@ -33,7 +33,7 @@ const mockBatchGetAssetPropertyValue = ({
 
 describe('useLatestAlarmPropertyValues', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     queryClient.clear();
   });
 

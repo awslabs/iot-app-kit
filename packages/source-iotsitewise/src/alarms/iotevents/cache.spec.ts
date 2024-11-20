@@ -14,7 +14,7 @@ const initCache = ({ eventsApiOverride } = { eventsApiOverride: {} }) => {
 };
 
 it('should request alarm model from cache', async () => {
-  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
+  const getAlarmModel = vi.fn().mockResolvedValue(ALARM_MODEL);
 
   const cache = initCache({ eventsApiOverride: { getAlarmModel } });
 
@@ -29,7 +29,7 @@ it('should request alarm model from cache', async () => {
 });
 
 it('should throw if simple rule is empty', async () => {
-  const getAlarmModel = jest.fn().mockResolvedValue({
+  const getAlarmModel = vi.fn().mockResolvedValue({
     ...ALARM_MODEL,
     alarmRule: {},
   });
@@ -40,7 +40,7 @@ it('should throw if simple rule is empty', async () => {
 });
 
 it('should throw if alarm model is missing severity', async () => {
-  const getAlarmModel = jest.fn().mockResolvedValue({
+  const getAlarmModel = vi.fn().mockResolvedValue({
     ...ALARM_MODEL,
     severity: undefined,
   });
@@ -53,7 +53,7 @@ it('should throw if alarm model is missing severity', async () => {
 it.each(['inputProperty', 'comparisonOperator', 'threshold'])(
   'should throw if simple rule is missing %s',
   async (ruleConfig) => {
-    const getAlarmModel = jest.fn().mockResolvedValue({
+    const getAlarmModel = vi.fn().mockResolvedValue({
       ...ALARM_MODEL,
       alarmRule: {
         ...ALARM_MODEL.alarmRule,

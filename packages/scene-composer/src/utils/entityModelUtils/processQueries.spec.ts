@@ -12,8 +12,8 @@ import { type ISubModelRefComponent, KnownComponentType } from '../../interfaces
 
 import { isValidSceneNodeEntity, processQueries } from './processQueries';
 
-jest.mock('../mathUtils', () => ({
-  generateUUID: jest.fn(() => 'random-uuid'),
+vi.mock('../mathUtils', () => ({
+  generateUUID: vi.fn(() => 'random-uuid'),
 }));
 
 describe('isValidSceneNodeEntity', () => {
@@ -30,7 +30,7 @@ describe('isValidSceneNodeEntity', () => {
 });
 
 describe('processQueries', () => {
-  const executeQuery = jest.fn();
+  const executeQuery = vi.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     kgModule: { executeQuery },
   };
@@ -114,10 +114,10 @@ describe('processQueries', () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
     executeQuery.mockResolvedValue({ rows: mockRows });
-    (console.error as jest.Mock) = jest.fn();
+    (console.error as vi.Mock) = vi.fn();
   });
 
   it('should return empty when scene metadata module is not set', async () => {

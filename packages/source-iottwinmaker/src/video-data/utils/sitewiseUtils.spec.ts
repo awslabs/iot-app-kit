@@ -21,9 +21,9 @@ import {
 } from '../types';
 
 describe('SitewiseUtils for Video Player', () => {
-  const batchPutAssetPropertyValue = jest.fn();
-  const getAssetPropertyValue = jest.fn();
-  const getInterpolatedAssetPropertyValues = jest.fn();
+  const batchPutAssetPropertyValue = vi.fn();
+  const getAssetPropertyValue = vi.fn();
+  const getInterpolatedAssetPropertyValues = vi.fn();
   const siteWiseClientMock = createMockSiteWiseSDK({
     batchPutAssetPropertyValue,
     getAssetPropertyValue,

@@ -3,16 +3,16 @@
 import { create } from 'react-test-renderer';
 
 import LightComponent from '..';
+import { KnownComponentType } from '../../../../interfaces';
 import { type Component, LightType } from '../../../../models/SceneModels';
 import { type ISceneNodeInternal } from '../../../../store';
-import { KnownComponentType } from '../../../../interfaces';
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
-    useFrame: jest.fn().mockImplementation((callback) => callback()),
+    useThree: vi.fn(),
+    useFrame: vi.fn().mockImplementation((callback) => callback()),
   };
 });
 

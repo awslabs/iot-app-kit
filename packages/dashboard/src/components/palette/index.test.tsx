@@ -12,7 +12,7 @@ import Palette from './index';
 const ComponentPaletteTestComponent = ({
   onAddWidget,
 }: {
-  onAddWidget: typeof jest.fn;
+  onAddWidget: typeof vi.fn;
 }) => {
   useDashboardPlugins();
   return (
@@ -36,11 +36,11 @@ describe('Component Palette', () => {
   /**
    * drag and drop functionality covered by dashboard e2e tests
    * removing them here because they are redundant and difficult
-   * to maintain in the jest context
+   * to maintain in the vi context
    */
 
   it('adds a widget when clicked', () => {
-    const onAddWidgetStub = jest.fn();
+    const onAddWidgetStub = vi.fn();
     render(<ComponentPaletteTestComponent onAddWidget={onAddWidgetStub} />);
 
     const lineWidget = screen.getByLabelText(/add line widget/i);
@@ -53,7 +53,7 @@ describe('Component Palette', () => {
   });
 
   it('adds a widget on enter or space', () => {
-    const onAddWidgetStub = jest.fn();
+    const onAddWidgetStub = vi.fn();
     render(<ComponentPaletteTestComponent onAddWidget={onAddWidgetStub} />);
 
     const lineWidget = screen.getByLabelText(/add line widget/i);

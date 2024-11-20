@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"","selected":false,"expandable":false}" 1`] = `
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"","selected":false,"expandable":false}" 1`] = `
 <div>
   <li
     class="tm-tree-item"
@@ -25,7 +25,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label 1","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label 1","selected":false,"expandable":false}" 1`] = `
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label 1","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label 1","selected":false,"expandable":false}" 1`] = `
 <div>
   <li
     class="tm-tree-item"
@@ -50,7 +50,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":false,"expandable":false}" 1`] = `
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":false,"expandable":false}" 1`] = `
 <div>
   <li
     class="tm-tree-item"
@@ -75,7 +75,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":false,"expandable":true}" 1`] = `
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":false,"expandable":true}" 1`] = `
 <div>
   <li
     class="tm-tree-item expandable"
@@ -89,13 +89,29 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
         type="radio"
         value="Label"
       />
-      <div
-        arialabel="Expand Label"
-        class="tm-tree-item-expand-btn"
-        data-mocked="Button"
-        iconname="treeview-expand"
-        variant="inline-icon"
-      />
+      <button
+        aria-label="Expand Label"
+        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
+        data-analytics-funnel-value="button:r0:"
+        title="Expand Label"
+        type="submit"
+      >
+        <span
+          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="stroke-linejoin-round"
+              d="M5 8h6M8 11V5M2 2h12v12H2z"
+            />
+          </svg>
+        </span>
+      </button>
       <div
         data-mocked="SceneNodeLabel"
       >
@@ -106,7 +122,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":false}" 1`] = `
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":false}" 1`] = `
 <div>
   <li
     class="tm-tree-item"
@@ -117,7 +133,6 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
       class="tm-tree-item-inner selected"
     >
       <input
-        checked=""
         type="radio"
         value="Label"
       />
@@ -132,7 +147,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":true}" 1`] = `
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":true}" 1`] = `
 <div>
   <li
     class="tm-tree-item expandable"
@@ -143,17 +158,32 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"ke
       class="tm-tree-item-inner selected"
     >
       <input
-        checked=""
         type="radio"
         value="Label"
       />
-      <div
-        arialabel="Expand Label"
-        class="tm-tree-item-expand-btn"
-        data-mocked="Button"
-        iconname="treeview-expand"
-        variant="inline-icon"
-      />
+      <button
+        aria-label="Expand Label"
+        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
+        data-analytics-funnel-value="button:r2:"
+        title="Expand Label"
+        type="submit"
+      >
+        <span
+          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="stroke-linejoin-round"
+              d="M5 8h6M8 11V5M2 2h12v12H2z"
+            />
+          </svg>
+        </span>
+      </button>
       <div
         data-mocked="SceneNodeLabel"
       >

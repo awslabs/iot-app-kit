@@ -22,12 +22,12 @@ describe('TwinMakerMetadataModule', () => {
   let module: TwinMakerMetadataModule;
 
   describe('fetchEntity', () => {
-    const getEntity = jest.fn();
+    const getEntity = vi.fn();
     const mockTMClient = createMockTwinMakerSDK({
       getEntity,
     });
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
 
       cache = createCache();
       module = new TwinMakerMetadataModule('ws-id', mockTMClient, cache);
@@ -65,7 +65,7 @@ describe('TwinMakerMetadataModule', () => {
     it('should return cached entity when one is in the cache', async () => {
       getEntity.mockResolvedValue(mockEntity1);
       await module.fetchEntity({ entityId: mockEntity1.entityId! });
-      jest.clearAllMocks();
+      vi.clearAllMocks();
 
       const entity = await module.fetchEntity({
         entityId: mockEntity1.entityId!,
@@ -99,15 +99,15 @@ describe('TwinMakerMetadataModule', () => {
 
   describe('fetchEntitiesByComponentTypeId', () => {
     const mockComponentTypeId = 'test-comp-1';
-    const getEntity = jest.fn();
-    const listEntities = jest.fn();
+    const getEntity = vi.fn();
+    const listEntities = vi.fn();
     const mockTMClient = createMockTwinMakerSDK({
       getEntity,
       listEntities,
     });
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       listEntities
         .mockResolvedValueOnce({
           entitySummaries: [mockEntity1],
@@ -129,7 +129,7 @@ describe('TwinMakerMetadataModule', () => {
     });
 
     it('should not send request when the request for the same component type is in process', async () => {
-      jest.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
+      vi.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
 
       await Promise.all([
         module.fetchEntitiesByComponentTypeId({
@@ -143,8 +143,7 @@ describe('TwinMakerMetadataModule', () => {
     });
 
     it('should send request when multiple calls for the different component types are triggered', async () => {
-      jest
-        .spyOn(mockTMClient, 'send')
+      vi.spyOn(mockTMClient, 'send')
         .mockResolvedValueOnce({} as never)
         .mockResolvedValueOnce({} as never);
 
@@ -162,7 +161,7 @@ describe('TwinMakerMetadataModule', () => {
         componentTypeId: mockComponentTypeId,
       });
 
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       const entities = await module.fetchEntitiesByComponentTypeId({
         componentTypeId: mockComponentTypeId,
       });
@@ -195,13 +194,13 @@ describe('TwinMakerMetadataModule', () => {
   });
 
   describe('fetchEntitiesSummaries', () => {
-    const listEntities = jest.fn();
+    const listEntities = vi.fn();
     const mockTMClient = createMockTwinMakerSDK({
       listEntities,
     });
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       listEntities
         .mockResolvedValueOnce({
           entitySummaries: [mockEntity1],
@@ -219,7 +218,7 @@ describe('TwinMakerMetadataModule', () => {
     });
 
     it('should not send request when the same request is in process', async () => {
-      jest.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
+      vi.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
 
       await Promise.all([
         module.fetchEntitiesSummaries(),
@@ -231,7 +230,7 @@ describe('TwinMakerMetadataModule', () => {
     it('should return cached entities when available in the cache', async () => {
       await module.fetchEntitiesSummaries();
 
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       const entities = await module.fetchEntitiesSummaries();
       expect(entities).toEqual([mockEntity1, mockEntity2]);
       expect(listEntities).not.toBeCalled();

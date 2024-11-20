@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ModelRefComponent should render correctly 1`] = `
+exports[`ModelRefComponent > should render correctly 1`] = `
 <div>
   <div
     component="[object Object]"
@@ -10,7 +10,7 @@ exports[`ModelRefComponent should render correctly 1`] = `
 </div>
 `;
 
-exports[`ModelRefComponent should render correctly with Tiles Model Type 1`] = `
+exports[`ModelRefComponent > should render correctly with Tiles Model Type 1`] = `
 <div>
   <div
     component="[object Object]"

@@ -17,11 +17,11 @@ describe('isDefined', () => {
 
 describe('toValue', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'warn').mockImplementation(() => null);
+    vi.spyOn(console, 'warn').mockImplementation(() => null);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should return undefined when no value is defined', () => {

@@ -4,8 +4,8 @@ import { type EntityPropertyBindingProviderStore } from './EntityPropertyBinding
 import { createEntityPropertyBindingProvider } from './createEntityPropertyBindingProvider';
 
 describe('createEntityPropertyBindingProvider', () => {
-  const getEntity = jest.fn();
-  const listEntities = jest.fn();
+  const getEntity = vi.fn();
+  const listEntities = vi.fn();
   const tmClient = createMockTwinMakerSDK({
     getEntity,
     listEntities,
@@ -22,14 +22,14 @@ describe('createEntityPropertyBindingProvider', () => {
   };
 
   beforeEach(async () => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return a correct data binding provider store', async () => {
     const provider = createEntityPropertyBindingProvider({
       metadataModule,
-      timeSeriesDataQuery: jest.fn(),
-      propertyValueQuery: jest.fn(),
+      timeSeriesDataQuery: vi.fn(),
+      propertyValueQuery: vi.fn(),
     });
     const store = provider.createStore(false);
     expect(store).toBeDefined();
@@ -42,8 +42,8 @@ describe('createEntityPropertyBindingProvider', () => {
     const query = { key: 'value' };
     const provider = createEntityPropertyBindingProvider({
       metadataModule,
-      timeSeriesDataQuery: jest.fn().mockReturnValue(query),
-      propertyValueQuery: jest.fn(),
+      timeSeriesDataQuery: vi.fn().mockReturnValue(query),
+      propertyValueQuery: vi.fn(),
     });
     const result = provider.createQuery(mockDataBindingInput);
     expect(result).toBe(query);
@@ -53,8 +53,8 @@ describe('createEntityPropertyBindingProvider', () => {
     const query = { key: 'value' };
     const provider = createEntityPropertyBindingProvider({
       metadataModule,
-      timeSeriesDataQuery: jest.fn().mockReturnValue({ random: 'abc' }),
-      propertyValueQuery: jest.fn().mockReturnValue(query),
+      timeSeriesDataQuery: vi.fn().mockReturnValue({ random: 'abc' }),
+      propertyValueQuery: vi.fn().mockReturnValue(query),
     });
     const result = provider.createQuery({
       ...mockDataBindingInput,
@@ -67,8 +67,8 @@ describe('createEntityPropertyBindingProvider', () => {
     const query = { key: 'value' };
     const provider = createEntityPropertyBindingProvider({
       metadataModule,
-      timeSeriesDataQuery: jest.fn().mockReturnValue(query),
-      propertyValueQuery: jest.fn(),
+      timeSeriesDataQuery: vi.fn().mockReturnValue(query),
+      propertyValueQuery: vi.fn(),
     });
     const result = provider.createQuery({
       dataBindingContext: {

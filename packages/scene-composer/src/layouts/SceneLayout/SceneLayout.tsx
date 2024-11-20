@@ -1,4 +1,4 @@
-import { type FC, Fragment, type ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { type FC, Fragment, type ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
 import { Canvas, type ThreeEvent, useThree } from '@react-three/fiber';

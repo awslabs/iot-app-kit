@@ -111,7 +111,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
   const [matterportReady, setMatterportReady] = useState<boolean>(false);
-  const [sceneInfo, setSceneInfo] = useState<GetSceneCommandOutput | undefined>(undefined);
+  const [_sceneInfo, setSceneInfo] = useState<GetSceneCommandOutput | undefined>(undefined);
 
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
@@ -119,7 +119,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     () => createStandardUriModifier(sceneContentUri || '', undefined),
     [sceneContentUri],
   );
-  const [sceneRootEntityId, setSceneRootEntityId] = useState(null);
 
   const isViewing = config.mode === 'Viewing';
 

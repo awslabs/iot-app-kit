@@ -1,43 +1,93 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SceneRuleTargetColorEditor should render as expected 1`] = `
+exports[`SceneRuleTargetColorEditor > should render as expected 1`] = `
 <div>
   <div
-    data-mocked="Grid"
-    griddefinition="[{"colspan":9},{"colspan":3}]"
+    class="awsui_grid_14yj0_1lwse_99"
   >
     <div
-      data-mocked="Input"
-      disabled=""
-      value="#000000"
-    />
+      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-9_14yj0_1lwse_234"
+    >
+      <div
+        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+      >
+        <div
+          class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+        >
+          <input
+            autocomplete="on"
+            class="awsui_input_2rhyz_15wpl_103"
+            disabled=""
+            type="text"
+            value="#0972d3"
+          />
+        </div>
+      </div>
+    </div>
     <div
-      data-testid="color-swatch"
-      style="background-color: rgb(0, 0, 0); border-color: #000000; width: 100%; height: 30px; border-style: solid; border-width: 1px; cursor: pointer;"
-    />
+      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-3_14yj0_1lwse_174"
+    >
+      <div
+        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+      >
+        <div
+          data-testid="color-swatch"
+          style="background-color: #0972d3; border-color: #0972d3; width: 100%; height: 30px; border-style: solid; border-width: 1px; cursor: pointer;"
+        />
+      </div>
+    </div>
   </div>
 </div>
 `;
 
-exports[`SceneRuleTargetColorEditor should toggle color picker on click 1`] = `
+exports[`SceneRuleTargetColorEditor > should toggle color picker on click 1`] = `
 <div>
   <div
-    data-mocked="Grid"
-    griddefinition="[{"colspan":9},{"colspan":3}]"
+    class="awsui_grid_14yj0_1lwse_99"
   >
     <div
-      data-mocked="Input"
-      disabled=""
-      value="#000000"
-    />
-    <div
-      data-testid="color-swatch"
-      style="background-color: rgb(0, 0, 0); border-color: #000000; width: 100%; height: 30px; border-style: solid; border-width: 1px; cursor: pointer;"
-    />
-    <div
-      data-mocked="ColorPicker"
+      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-9_14yj0_1lwse_234"
     >
-      {"color":"#000000"}
+      <div
+        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+      >
+        <div
+          class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
+        >
+          <input
+            autocomplete="on"
+            class="awsui_input_2rhyz_15wpl_103"
+            disabled=""
+            type="text"
+            value="#0972d3"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-3_14yj0_1lwse_174"
+    >
+      <div
+        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+      >
+        <div
+          data-testid="color-swatch"
+          style="background-color: #0972d3; border-color: #0972d3; width: 100%; height: 30px; border-style: solid; border-width: 1px; cursor: pointer;"
+        />
+      </div>
+    </div>
+    <div
+      class="awsui_grid-column_14yj0_1lwse_143"
+    >
+      <div
+        class="awsui_restore-pointer-events_14yj0_1lwse_314"
+      >
+        <div
+          data-mocked="ColorPicker"
+        >
+          {"color":"#0972d3"}
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -7,20 +7,20 @@ import {
 
 const VIEWPORT = { duration: '5m' };
 
-jest.mock('echarts', () => ({
-  use: jest.fn(),
-  init: jest.fn(),
-  getInstanceByDom: jest.fn(),
-  registerTheme: jest.fn(),
-  connect: jest.fn(),
-  disconnect: jest.fn(),
-  graphic: jest.fn(),
-  ComponentView: jest.fn(),
-  ComponentModel: jest.fn(),
+vi.mock('echarts', () => ({
+  use: vi.fn(),
+  init: vi.fn(),
+  getInstanceByDom: vi.fn(),
+  registerTheme: vi.fn(),
+  connect: vi.fn(),
+  disconnect: vi.fn(),
+  graphic: vi.fn(),
+  ComponentView: vi.fn(),
+  ComponentModel: vi.fn(),
 }));
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 describe('Anomaly Chart Component Tests', () => {

@@ -1,5 +1,5 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<ErrorBoundary /> should render children view if there is not an issue 1`] = `"<div><div>I get ice cream</div></div>"`;
+exports[`<ErrorBoundary /> > should render children view if there is not an issue 1`] = `"<div><div>I get ice cream</div></div>"`;
 
-exports[`<ErrorBoundary /> should render error view if there is an issue 1`] = `"<div><div>Error View</div></div>"`;
+exports[`<ErrorBoundary /> > should render error view if there is an issue 1`] = `"<div><div>Error View</div></div>"`;

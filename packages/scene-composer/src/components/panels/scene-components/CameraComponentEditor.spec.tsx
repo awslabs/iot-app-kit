@@ -1,21 +1,21 @@
 /* eslint-disable import/first */
-import * as THREE from 'three';
-import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { render } from '@/tests/testing-library';
+import * as THREE from 'three';
 
-import { CameraType } from '../../../models/SceneModels';
+import { mockComponent, mockNode } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { DEFAULT_CAMERA_SETTINGS } from '../../../common/constants';
+import { CameraType } from '../../../models/SceneModels';
 import { type ICameraComponentInternal, accessStore } from '../../../store';
-import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import CameraComponentEditor from './CameraComponentEditor';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
-const updateComponentInternalFn = jest.fn();
+const updateComponentInternalFn = vi.fn();
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,
@@ -29,7 +29,7 @@ describe('CameraComponentEditor', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update camera settings when selecting focal length', () => {

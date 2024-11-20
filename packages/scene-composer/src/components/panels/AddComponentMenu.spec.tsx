@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@/tests/testing-library';
 
 import { setMetricRecorder } from '../../common/GlobalSettings';
 import { KnownComponentType } from '../../interfaces';
@@ -8,17 +8,17 @@ import { accessStore } from '../../store';
 import { AddComponentMenu } from './AddComponentMenu';
 
 describe('AddComponentMenu', () => {
-  const addComponentInternal = jest.fn();
-  const updateComponentInternal = jest.fn();
-  const getSceneNodeByRef = jest.fn();
+  const addComponentInternal = vi.fn();
+  const updateComponentInternal = vi.fn();
+  const getSceneNodeByRef = vi.fn();
   const selectedSceneNodeRef = 'test-ref';
   const mockMetricRecorder = {
-    recordClick: jest.fn(),
+    recordClick: vi.fn(),
   };
   setMetricRecorder(mockMetricRecorder);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     accessStore('default').setState({
       selectedSceneNodeRef,

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LightComponent should render correctly for Ambient light 1`] = `
+exports[`LightComponent > should render correctly for Ambient light 1`] = `
 <group
   name="LIGHT_COMPONENT_undefined"
 >
@@ -11,7 +11,7 @@ exports[`LightComponent should render correctly for Ambient light 1`] = `
 </group>
 `;
 
-exports[`LightComponent should render correctly for Directional light 1`] = `
+exports[`LightComponent > should render correctly for Directional light 1`] = `
 <group
   name="LIGHT_COMPONENT_undefined"
 >
@@ -32,7 +32,7 @@ exports[`LightComponent should render correctly for Directional light 1`] = `
 </group>
 `;
 
-exports[`LightComponent should render correctly for Hemisphere light 1`] = `
+exports[`LightComponent > should render correctly for Hemisphere light 1`] = `
 <group
   name="LIGHT_COMPONENT_undefined"
 >
@@ -44,7 +44,7 @@ exports[`LightComponent should render correctly for Hemisphere light 1`] = `
 </group>
 `;
 
-exports[`LightComponent should render correctly for Point light 1`] = `
+exports[`LightComponent > should render correctly for Point light 1`] = `
 <group
   name="LIGHT_COMPONENT_undefined"
 >
@@ -67,7 +67,7 @@ exports[`LightComponent should render correctly for Point light 1`] = `
 </group>
 `;
 
-exports[`LightComponent should render correctly for Unknown light 1`] = `
+exports[`LightComponent > should render correctly for Unknown light 1`] = `
 <group
   name="LIGHT_COMPONENT_undefined"
 />

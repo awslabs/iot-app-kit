@@ -1,17 +1,17 @@
 /* eslint-disable import/first,import/order */
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { accessStore } from '../../../../../src/store';
 import { CancelMenuItem } from '../../../../../src/components/toolbars/floatingToolbar/items';
+import { accessStore } from '../../../../../src/store';
 
 describe('CancelMenuItem', () => {
-  const setAddingWidget = jest.fn();
+  const setAddingWidget = vi.fn();
 
   beforeEach(() => {
     accessStore('default').setState({
       setAddingWidget,
     } as any);
-    jest.clearAllMocks();
+    viarAllMocks();
   });
 
   it('should call setAddingWidget with undefined when clicked', () => {

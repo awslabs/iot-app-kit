@@ -1,69 +1,69 @@
 /* eslint-disable */
-import { MockTransformControls } from '../../__mocks__/MockTransformControls';
+import { MockTransformControls } from '../../../__mocks__/MockTransformControls';
 
-import Mock = jest.Mock;
+import Mock = vi.Mock;
 
 const mockThreeStates = {
   scene: {
-    getObjectByName: jest.fn(),
+    getObjectByName: vi.fn(),
   },
-  set: jest.fn(),
+  set: vi.fn(),
 };
-const mockUseFrame = jest.fn();
-jest.doMock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+const mockUseFrame = vi.fn();
+vi.doMock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
+    useThree: vi.fn(),
     useFrame: mockUseFrame,
   };
 });
 
-const mockMapControls = jest.fn();
-jest.doMock('../../../src/components/three-fiber/controls/MapControls', () => {
-  const originalModule = jest.requireActual('../../../src/components/three-fiber/controls/MapControls');
+const mockMapControls = vi.fn();
+vi.doMock('../../../src/components/three-fiber/controls/MapControls', async () => {
+  const originalModule = await vi.importActual('../../../src/components/three-fiber/controls/MapControls');
   return {
     ...originalModule,
     MapControls: mockMapControls,
   };
 });
 
-const mockOrbitControls = jest.fn();
-jest.doMock('../../../src/components/three-fiber/controls/OrbitControls', () => {
-  const originalModule = jest.requireActual('../../../src/components/three-fiber/controls/OrbitControls');
+const mockOrbitControls = vi.fn();
+vi.doMock('../../../src/components/three-fiber/controls/OrbitControls', async () => {
+  const originalModule = await vi.importActual('../../../src/components/three-fiber/controls/OrbitControls');
   return {
     ...originalModule,
     OrbitControls: mockOrbitControls,
   };
 });
 
-const mockPointerLockControls = jest.fn();
-jest.doMock('../../../src/components/three-fiber/controls/PointerLockControls', () => {
-  const originalModule = jest.requireActual('../../../src/components/three-fiber/controls/PointerLockControls');
+const mockPointerLockControls = vi.fn();
+vi.doMock('../../../src/components/three-fiber/controls/PointerLockControls', async () => {
+  const originalModule = await vi.importActual('../../../src/components/three-fiber/controls/PointerLockControls');
   return {
     ...originalModule,
     PointerLockControls: mockPointerLockControls,
   };
 });
 
-const mockPerspectiveCamera = jest.fn();
-jest.doMock('@react-three/drei/core/PerspectiveCamera', () => {
-  const originalModule = jest.requireActual('@react-three/drei/core/PerspectiveCamera');
+const mockPerspectiveCamera = vi.fn();
+vi.doMock('@react-three/drei/core/PerspectiveCamera', async () => {
+  const originalModule = await vi.importActual('@react-three/drei/core/PerspectiveCamera');
   return {
     ...originalModule,
     PerspectiveCamera: mockPerspectiveCamera,
   };
 });
 
-const mockMergeRefs = jest.fn();
-jest.doMock('react-merge-refs', () => {
+const mockMergeRefs = vi.fn();
+vi.doMock('react-merge-refs', () => {
   return mockMergeRefs;
 });
 
-const mockSetTween = jest.fn();
-const mockUpdateTween = jest.fn();
-jest.doMock('../../../src/hooks', () => {
-  const originalModule = jest.requireActual('../../../src/hooks');
+const mockSetTween = vi.fn();
+const mockUpdateTween = vi.fn();
+vi.doMock('../../../src/hooks', async () => {
+  const originalModule = await vi.importActual('../../../src/hooks');
   return {
     ...originalModule,
     useTween: () => [mockSetTween, mockUpdateTween],
@@ -84,7 +84,7 @@ import { OrbitControls } from '../../../src/three/OrbitControls';
 /* eslint-enable */
 
 describe('EditorMainCamera', () => {
-  const mockGetObject3DBySceneNodeRef = jest.fn();
+  const mockGetObject3DBySceneNodeRef = vi.fn();
 
   const baseState: any = {
     cameraCommand: undefined,
@@ -94,7 +94,7 @@ describe('EditorMainCamera', () => {
   };
 
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     mockMapControls.mockReturnValue(<div data-testid='map-control' />);
     mockOrbitControls.mockReturnValue(<div data-testid='orbit-control' />);
@@ -236,7 +236,7 @@ describe('EditorMainCamera', () => {
 
     it('should setTween to correct camera target when camera command changes to fixed camera target with no intersections ahead', async () => {
       accessStore('default').setState(baseState);
-      const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
+      const setPositionSpy = vi.spyOn(mockCamera.position, 'set');
       mockMergeRefs.mockImplementation((refs) => {
         if (refs[1]) refs[1].current = mockCamera;
       });
@@ -249,7 +249,7 @@ describe('EditorMainCamera', () => {
 
       const mockThreeStatesWithGeometry = {
         scene: new THREE.Scene(),
-        set: jest.fn(),
+        set: vi.fn(),
       };
       // override generic mock for one to support geometry testing
       const useThreeMock = useThree as Mock;
@@ -288,7 +288,7 @@ describe('EditorMainCamera', () => {
 
     it('should setTween to correct camera target when camera command changes to fixed camera target with intersections ahead', async () => {
       accessStore('default').setState(baseState);
-      const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
+      const setPositionSpy = vi.spyOn(mockCamera.position, 'set');
       mockMergeRefs.mockImplementation((refs) => {
         if (refs[1]) refs[1].current = mockCamera;
       });
@@ -301,7 +301,7 @@ describe('EditorMainCamera', () => {
 
       const mockThreeStatesWithGeometry = {
         scene: new THREE.Scene(),
-        set: jest.fn(),
+        set: vi.fn(),
       };
       const boxSize = 1;
       const position = new THREE.Vector3(11, 22, 33);
@@ -452,7 +452,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should initialize the position to the max point of the bounding box for initial case', () => {
-      const spy = jest
+      const spy = vi
         .spyOn(THREE.Box3.prototype, 'expandByScalar')
         .mockReturnValue(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(7, 7, 7)));
       const result = findBestViewingPosition(mockObject, true, mockControls);
@@ -465,7 +465,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should return the current camera position as position', () => {
-      const spy = jest
+      const spy = vi
         .spyOn(THREE.Box3.prototype, 'expandByScalar')
         .mockReturnValue(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(7, 7, 7)));
       const result = findBestViewingPosition(mockObject, false, mockControls);
@@ -476,7 +476,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should back the camera to the minimum distanct', () => {
-      const spy = jest
+      const spy = vi
         .spyOn(THREE.Box3.prototype, 'expandByScalar')
         .mockReturnValue(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(7, 7, 7)));
       const mockObject = new THREE.Mesh(

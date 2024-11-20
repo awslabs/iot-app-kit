@@ -9,7 +9,7 @@ import { DescribeModeledDataStreamRequest } from './describeModeledDataStreamReq
 
 describe(DescribeModeledDataStreamRequest, () => {
   it('builds', () => {
-    const client = { send: jest.fn() } as unknown as IoTSiteWiseClient;
+    const client = { send: vi.fn() } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
     expect(request).not.toBeNull();
@@ -17,7 +17,7 @@ describe(DescribeModeledDataStreamRequest, () => {
 
   it('returns undefined if DescribeAsset fails', async () => {
     const client = {
-      send: jest.fn().mockRejectedValue(new Error()),
+      send: vi.fn().mockRejectedValue(new Error()),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -54,7 +54,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     } satisfies DescribeAssetCommandOutput;
 
     const client = {
-      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
+      send: vi.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -98,7 +98,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     };
 
     const client = {
-      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
+      send: vi.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -141,7 +141,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     };
 
     const client = {
-      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
+      send: vi.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -190,7 +190,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     };
 
     const client = {
-      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
+      send: vi.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -245,7 +245,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     };
 
     const client = {
-      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
+      send: vi.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -329,7 +329,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutput)
@@ -364,7 +364,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockRejectedValue(new Error()),
@@ -404,7 +404,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutput)
@@ -494,7 +494,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutput)
@@ -600,7 +600,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutputPage1)
@@ -683,7 +683,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutputPage1)
@@ -785,7 +785,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutputPage1)
@@ -878,7 +878,7 @@ describe(DescribeModeledDataStreamRequest, () => {
       };
 
     const client = {
-      send: jest
+      send: vi
         .fn()
         .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
         .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutputPage1)

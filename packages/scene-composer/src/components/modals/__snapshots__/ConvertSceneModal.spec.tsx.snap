@@ -1,250 +1,694 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ConvertSceneModal should call convertAllNodesToEntities and convert scene successfully 1`] = `
+exports[`ConvertSceneModal > should call convertAllNodesToEntities and convert scene successfully 1`] = `
 <div>
   <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
   >
-    <div>
-      <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Convert scene
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
-      >
-        <div
-          data-mocked="Button"
-          data-testid="ok-button"
-        >
-          Ok
-        </div>
-      </div>
-    </div>
     <div
-      data-mocked="Alert"
-      header="Convert to entities successful"
-      type="success"
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r16:"
     >
-      All nodes have been converted successfully
-    </div>
-  </div>
-</div>
-`;
-
-exports[`ConvertSceneModal should call prepareWorkspace when converting scene 1`] = `
-<div>
-  <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
-  >
-    <div>
       <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Convert scene
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="SpaceBetween"
-          direction="horizontal"
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
         >
           <div
-            data-mocked="Button"
-            data-testid="cancel-button"
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
           >
-            Cancel
-          </div>
-          <div
-            data-mocked="Button"
-            data-testid="confirm-button"
-            disabled=""
-            variant="primary"
-          >
-            Confirm
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r17:"
+                >
+                  Convert scene
+                </span>
+              </h2>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="sc-gEvEer eTOZLh"
-      data-mocked="Container"
-      data-testid="progress-container"
-    >
       <div
-        data-mocked="ProgressBar"
-        label="Converting nodes"
-        status="in-progress"
-        value="0"
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
       >
-        <div>
+        <div
+          aria-hidden="false"
+          class="awsui_root_mx3cw_ipfn3_125"
+          data-analytics-alert="success"
+        >
           <div
-            class="sc-eqUAAy cqkkzp"
-            data-mocked="Box"
+            class="awsui-context-alert"
           >
-            0 out of 2 converted
+            <div
+              class="awsui_alert_mx3cw_ipfn3_99 awsui_type-success_mx3cw_ipfn3_326 awsui_icon-size-normal_mx3cw_ipfn3_293 awsui_breakpoint-default_mx3cw_ipfn3_219"
+            >
+              <div
+                class="awsui_alert-focus-wrapper_mx3cw_ipfn3_240"
+                tabindex="-1"
+              >
+                <div
+                  class="awsui_icon_mx3cw_ipfn3_276 awsui_text_mx3cw_ipfn3_269"
+                  role="img"
+                >
+                  <span
+                    class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 16 16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        class="stroke-linejoin-round"
+                        cx="8"
+                        cy="8"
+                        r="7"
+                      />
+                      <path
+                        class="stroke-linecap-square"
+                        d="m5 8 2 2 3.521-3.521"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div
+                  class="awsui_message_mx3cw_ipfn3_279 awsui_text_mx3cw_ipfn3_269"
+                >
+                  <div
+                    class="awsui_header_mx3cw_ipfn3_226"
+                  >
+                    Convert to entities successful
+                  </div>
+                  <div
+                    class="awsui_content_mx3cw_ipfn3_297"
+                  >
+                    All nodes have been converted successfully
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`ConvertSceneModal should render with converting scene failure 1`] = `
-<div>
-  <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
-  >
-    <div>
       <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Convert scene
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="Button"
-          data-testid="ok-button"
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
         >
-          Ok
+          <button
+            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+            data-analytics-funnel-value="button:r1f:"
+            data-testid="ok-button"
+            type="submit"
+          >
+            <span
+              class="awsui_content_vjswe_12tek_103"
+            >
+              Ok
+            </span>
+          </button>
         </div>
-      </div>
-    </div>
-    <div
-      data-mocked="Alert"
-      header="Convert to entities failed"
-      type="error"
-    >
-      <div
-        data-mocked="Box"
-      >
-        Some node conversion failed:
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{"left":"s"}"
-      >
-        failure-node
-         (
-        convert failed
-        )
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`ConvertSceneModal should render with correct confirmation view 1`] = `
+exports[`ConvertSceneModal > should call prepareWorkspace when converting scene 1`] = `
 <div>
   <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
   >
-    <div>
+    <div
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r8:"
+    >
       <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Convert scene
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="SpaceBetween"
-          direction="horizontal"
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
         >
           <div
-            data-mocked="Button"
-            data-testid="cancel-button"
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
           >
-            Cancel
-          </div>
-          <div
-            data-mocked="Button"
-            data-testid="confirm-button"
-            variant="primary"
-          >
-            Confirm
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r9:"
+                >
+                  Convert scene
+                </span>
+              </h2>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      data-mocked="Alert"
-      header="Converting scene"
-      type="warning"
-    >
-      Proceeding with this action will permanently change your scene. You cannot undo this action
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="sc-gEvEer eTOZLh awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
+          data-testid="progress-container"
+        >
+          <div
+            class="awsui_content-wrapper_14iqq_v4tpg_222"
+            id=":rf:"
+          >
+            <div
+              class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+            >
+              <div
+                class="awsui_root_11huc_1ah81_233"
+              >
+                <div>
+                  <div
+                    class="awsui_word-wrap_11huc_1ah81_286"
+                    id="awsui-progress-bar-:rg:-label"
+                  >
+                    Converting nodes
+                  </div>
+                  <div>
+                    <div
+                      class="awsui_progress-container_11huc_1ah81_307"
+                    >
+                      <progress
+                        aria-labelledby="awsui-progress-bar-:rg:-label"
+                        class="awsui_progress_11huc_1ah81_197"
+                        max="100"
+                        value="0"
+                      />
+                      <span
+                        aria-hidden="true"
+                        class="awsui_percentage-container_11huc_1ah81_314"
+                      >
+                        <small
+                          class="awsui_percentage_11huc_1ah81_314 awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_small-variant_18wu0_1elzt_227 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                        >
+                          0%
+                        </small>
+                      </span>
+                    </div>
+                    <span
+                      class="awsui_root_xttbq_pgwjg_99 awsui_root_3bgfn_im8v7_5"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        Converting nodes
+                        : 
+                        0%
+                      </span>
+                      <span
+                        aria-atomic="true"
+                        aria-live="polite"
+                      >
+                        Converting nodes: 0%
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <small
+                  class="awsui_word-wrap_11huc_1ah81_286 awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_small-variant_18wu0_1elzt_227 awsui_d-block_18wu0_1elzt_1036 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                >
+                  <div
+                    class="sc-eqUAAy eNExrC awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                  >
+                    0 out of 2 converted
+                  </div>
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <div
+            class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+          >
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+                data-analytics-funnel-value="button:ra:"
+                data-testid="cancel-button"
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Cancel
+                </span>
+              </button>
+            </div>
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-primary_vjswe_12tek_251 awsui_disabled_vjswe_12tek_243"
+                data-analytics-funnel-value="button:rc:"
+                data-testid="confirm-button"
+                disabled=""
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Confirm
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`ConvertSceneModal should render with preparing workspace failure 1`] = `
+exports[`ConvertSceneModal > should render with converting scene failure 1`] = `
 <div>
   <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
   >
-    <div>
+    <div
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r1m:"
+    >
       <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Convert scene
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="Button"
-          data-testid="ok-button"
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
         >
-          Ok
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r1n:"
+                >
+                  Convert scene
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          aria-hidden="false"
+          class="awsui_root_mx3cw_ipfn3_125"
+          data-analytics-alert="error"
+        >
+          <div
+            class="awsui-context-alert"
+          >
+            <div
+              class="awsui_alert_mx3cw_ipfn3_99 awsui_type-error_mx3cw_ipfn3_310 awsui_icon-size-normal_mx3cw_ipfn3_293 awsui_breakpoint-default_mx3cw_ipfn3_219"
+            >
+              <div
+                class="awsui_alert-focus-wrapper_mx3cw_ipfn3_240"
+                tabindex="-1"
+              >
+                <div
+                  class="awsui_icon_mx3cw_ipfn3_276 awsui_text_mx3cw_ipfn3_269"
+                  role="img"
+                >
+                  <span
+                    class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 16 16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        class="stroke-linejoin-round"
+                        cx="8"
+                        cy="8"
+                        r="7"
+                      />
+                      <path
+                        d="m10.828 5.172-5.656 5.656M10.828 10.828 5.172 5.172"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div
+                  class="awsui_message_mx3cw_ipfn3_279 awsui_text_mx3cw_ipfn3_269"
+                >
+                  <div
+                    class="awsui_header_mx3cw_ipfn3_226"
+                  >
+                    Convert to entities failed
+                  </div>
+                  <div
+                    class="awsui_content_mx3cw_ipfn3_297"
+                  >
+                    <div
+                      class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                    >
+                      Some node conversion failed:
+                    </div>
+                    <div
+                      class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-left-s_18wu0_1elzt_656 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                    >
+                      failure-node
+                       (
+                      convert failed
+                      )
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <button
+            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+            data-analytics-funnel-value="button:r1v:"
+            data-testid="ok-button"
+            type="submit"
+          >
+            <span
+              class="awsui_content_vjswe_12tek_103"
+            >
+              Ok
+            </span>
+          </button>
         </div>
       </div>
     </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneModal > should render with correct confirmation view 1`] = `
+<div>
+  <div
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
+  >
     <div
-      data-mocked="Alert"
-      header="Convert to entities failed"
-      type="error"
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r1:"
     >
       <div
-        data-mocked="Box"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
-        prepare workspace error
+        <div
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+        >
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r2:"
+                >
+                  Convert scene
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          aria-hidden="false"
+          class="awsui_root_mx3cw_ipfn3_125"
+          data-analytics-alert="warning"
+        >
+          <div
+            class="awsui-context-alert"
+          >
+            <div
+              class="awsui_alert_mx3cw_ipfn3_99 awsui_type-warning_mx3cw_ipfn3_318 awsui_icon-size-normal_mx3cw_ipfn3_293 awsui_breakpoint-default_mx3cw_ipfn3_219"
+            >
+              <div
+                class="awsui_alert-focus-wrapper_mx3cw_ipfn3_240"
+                tabindex="-1"
+              >
+                <div
+                  class="awsui_icon_mx3cw_ipfn3_276 awsui_text_mx3cw_ipfn3_269"
+                  role="img"
+                >
+                  <span
+                    class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 16 16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        class="stroke-linejoin-round"
+                        d="m8 1 7 14H1L8 1z"
+                      />
+                      <path
+                        d="M7.99 12H8v.01h-.01zM8 6v4"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div
+                  class="awsui_message_mx3cw_ipfn3_279 awsui_text_mx3cw_ipfn3_269"
+                >
+                  <div
+                    class="awsui_header_mx3cw_ipfn3_226"
+                  >
+                    Converting scene
+                  </div>
+                  <div
+                    class="awsui_content_mx3cw_ipfn3_297"
+                  >
+                    Proceeding with this action will permanently change your scene. You cannot undo this action
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <div
+            class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+          >
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+                data-analytics-funnel-value="button:r3:"
+                data-testid="cancel-button"
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Cancel
+                </span>
+              </button>
+            </div>
+            <div
+              class="awsui_child_18582_z63vw_103"
+            >
+              <button
+                class="awsui_button_vjswe_12tek_107 awsui_variant-primary_vjswe_12tek_251"
+                data-analytics-funnel-value="button:r5:"
+                data-testid="confirm-button"
+                type="submit"
+              >
+                <span
+                  class="awsui_content_vjswe_12tek_103"
+                >
+                  Confirm
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneModal > should render with preparing workspace failure 1`] = `
+<div>
+  <div
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
+  >
+    <div
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r22:"
+    >
+      <div
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
+        >
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r23:"
+                >
+                  Convert scene
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          aria-hidden="false"
+          class="awsui_root_mx3cw_ipfn3_125"
+          data-analytics-alert="error"
+        >
+          <div
+            class="awsui-context-alert"
+          >
+            <div
+              class="awsui_alert_mx3cw_ipfn3_99 awsui_type-error_mx3cw_ipfn3_310 awsui_icon-size-normal_mx3cw_ipfn3_293 awsui_breakpoint-default_mx3cw_ipfn3_219"
+            >
+              <div
+                class="awsui_alert-focus-wrapper_mx3cw_ipfn3_240"
+                tabindex="-1"
+              >
+                <div
+                  class="awsui_icon_mx3cw_ipfn3_276 awsui_text_mx3cw_ipfn3_269"
+                  role="img"
+                >
+                  <span
+                    class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 16 16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        class="stroke-linejoin-round"
+                        cx="8"
+                        cy="8"
+                        r="7"
+                      />
+                      <path
+                        d="m10.828 5.172-5.656 5.656M10.828 10.828 5.172 5.172"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div
+                  class="awsui_message_mx3cw_ipfn3_279 awsui_text_mx3cw_ipfn3_269"
+                >
+                  <div
+                    class="awsui_header_mx3cw_ipfn3_226"
+                  >
+                    Convert to entities failed
+                  </div>
+                  <div
+                    class="awsui_content_mx3cw_ipfn3_297"
+                  >
+                    <div
+                      class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+                    >
+                      prepare workspace error
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <button
+            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+            data-analytics-funnel-value="button:r2b:"
+            data-testid="ok-button"
+            type="submit"
+          >
+            <span
+              class="awsui_content_vjswe_12tek_103"
+            >
+              Ok
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

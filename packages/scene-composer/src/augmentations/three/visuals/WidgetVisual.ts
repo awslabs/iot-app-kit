@@ -37,7 +37,7 @@ export class WidgetVisual extends THREE.Object3D implements IVisual {
       const mesh = this.findTopLevelMesh(this._visual);
 
       if (mesh) {
-        mesh.onBeforeRender = (renderer, scene, camera) => {
+        mesh.onBeforeRender = (_renderer, _scene, camera) => {
           // This assumes the structure of the visual's parent node.
           // Not ideal, but we need to change the look at of the group
           // instead of individual meshes to correctly render SVGs.
