@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v12.0.0...react-components-v12.1.0) (2024-11-20)
+
+
+### Miscellaneous Chores
+
+* **react-components:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/core-util bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 12.0.0 to 12.1.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/jest-config bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/testing-util bumped from 12.0.0 to 12.1.0
+    * @iot-app-kit/ts-config bumped from 12.0.0 to 12.1.0
+    * eslint-config-iot-app-kit bumped from 12.0.0 to 12.1.0
+
 ## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v11.0.0...react-components-v12.0.0) (2024-11-18)
 
 
