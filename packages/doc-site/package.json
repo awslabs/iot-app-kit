@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/doc-site",
-  "version": "12.1.0",
+  "version": "12.0.0",
   "private": true,
   "scripts": {
     "storybook": "storybook dev -p 6006",
@@ -13,7 +13,7 @@
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/"
   },
   "devDependencies": {
-    "@iot-app-kit/testing-util": "12.1.0",
+    "@iot-app-kit/testing-util": "12.0.0",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
@@ -26,7 +26,7 @@
     "@storybook/test": "^7.6.6",
     "@storybook/theming": "^7.6.6",
     "@types/node": "^18.16.18",
-    "eslint-config-iot-app-kit": "12.1.0",
+    "eslint-config-iot-app-kit": "12.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -35,7 +35,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@iot-app-kit/core": "12.1.0",
-    "@iot-app-kit/react-components": "12.1.0"
+    "@iot-app-kit/core": "12.0.0",
+    "@iot-app-kit/react-components": "12.0.0"
   }
 }
