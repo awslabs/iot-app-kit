@@ -56,7 +56,7 @@
     "@types/node": "^18.16.18",
     "@types/uuid": "^9.0.2",
     "@vitest/coverage-v8": "^2.1.5",
-    "eslint-config-iot-app-kit": "12.1.0",
+    "eslint-config-iot-app-kit": "*",
     "flush-promises": "^1.0.2",
     "jest-extended": "^3.2.4",
     "rimraf": "^5.0.1",
