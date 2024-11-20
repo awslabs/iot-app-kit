@@ -17,7 +17,7 @@ describe('Logger registry', () => {
 
   test('provides given logger', () => {
     const mockLogClient = new MockLogClient();
-    const mockProvider = jest.fn().mockReturnValue(mockLogClient);
+    const mockProvider = vi.fn().mockReturnValue(mockLogClient);
 
     registerPlugin('logger', {
       provider: mockProvider,
@@ -42,7 +42,7 @@ describe('MetricsRecorder registry', () => {
 
   test('provides given MetricsRecorder', () => {
     const mockMetricsRecorder = new MockMetricsRecorder();
-    const mockProvider = jest.fn().mockReturnValue(mockMetricsRecorder);
+    const mockProvider = vi.fn().mockReturnValue(mockMetricsRecorder);
 
     registerPlugin('metricsRecorder', {
       provider: mockProvider,

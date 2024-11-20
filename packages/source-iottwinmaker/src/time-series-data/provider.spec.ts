@@ -38,7 +38,7 @@ it('should subscribes, updates, and unsubscribes to time series data', async () 
     }
   );
 
-  const timeSeriesCallback = jest.fn();
+  const timeSeriesCallback = vi.fn();
 
   // subscribe
   provider.subscribe({ next: timeSeriesCallback });

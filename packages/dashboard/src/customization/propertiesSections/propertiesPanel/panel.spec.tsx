@@ -96,7 +96,7 @@ const renderTestComponentAsync = async (
   const widgets = optionsWithDefault.widgets;
   const selectedWidgets = optionsWithDefault.selectedWidgets;
 
-  const describeAsset = jest
+  const describeAsset = vi
     .fn()
     .mockImplementation(() => Promise.resolve(mockAssetDescription));
 
@@ -105,7 +105,7 @@ const renderTestComponentAsync = async (
       describeAsset,
     }) as unknown as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
-    iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+    iotTwinMakerClient: { send: vi.fn() } as unknown as IoTTwinMakerClient,
     iotSiteWise: new IoTSiteWise(),
   };
 
@@ -128,7 +128,7 @@ const renderTestComponentAsync = async (
 
 describe(`${PropertiesPanel.name}`, () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   afterEach(cleanup);

@@ -1,20 +1,20 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
-import { accessStore } from '../../store';
 import { KnownComponentType } from '../../interfaces';
+import { accessStore } from '../../store';
 
 import DeleteComponentModal from './DeleteComponentModal';
 
-jest.mock('./DeleteConfirmationModal', () => (props) => <div>{Object.values(props)}</div>);
+vi.mock('./DeleteConfirmationModal', () => ({ default: (props) => <div>{Object.values(props)}</div> }));
 
 describe('DeleteComponentModal', () => {
   const baseState = {
-    setDeleteConfirmationModalVisible: jest.fn(),
-    getSceneNodeByRef: jest.fn().mockReturnValue({
+    setDeleteConfirmationModalVisible: vi.fn(),
+    getSceneNodeByRef: vi.fn().mockReturnValue({
       name: 'delete-node-name',
       components: [{ ref: 'delete-comp-1', type: KnownComponentType.Tag }],
     }),
-    removeComponent: jest.fn(),
+    removeComponent: vi.fn(),
   };
 
   it('should render correctly', () => {

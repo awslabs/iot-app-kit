@@ -1,17 +1,19 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@/tests/testing-library';
 
 import { accessStore } from '../store';
 
 import useRuleResult from './useRuleResult';
 
-jest.mock('./useBindingData', () =>
-  jest.fn().mockImplementation((param) => (param ? { data: [{ alarm_status: 'ACTIVE' }] } : { data: undefined })),
-);
+vi.mock('./useBindingData', () => ({
+  default: vi
+    .fn()
+    .mockImplementation((param) => (param ? { data: [{ alarm_status: 'ACTIVE' }] } : { data: undefined })),
+}));
 
 describe('useRuleResult', () => {
   beforeEach(() => {
     accessStore('default').setState({
-      getSceneRuleMapById: jest.fn().mockImplementation((id) =>
+      getSceneRuleMapById: vi.fn().mockImplementation((id) =>
         id == 'rule-id'
           ? {
               statements: [

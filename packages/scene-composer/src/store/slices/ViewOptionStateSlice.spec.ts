@@ -10,7 +10,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { componentVisibilities: { [KnownComponentType.MotionIndicator]: false } },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { toggleComponentVisibility } = createViewOptionStateSlice(set);
     toggleComponentVisibility(KnownComponentType.MotionIndicator);
@@ -30,7 +30,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { componentVisibilities: { [Component.DataOverlaySubType.OverlayPanel]: false } },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { toggleComponentVisibility } = createViewOptionStateSlice(set);
     toggleComponentVisibility(Component.DataOverlaySubType.OverlayPanel);
@@ -50,7 +50,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { componentVisibilities: { [Component.DataOverlaySubType.TextAnnotation]: false } },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { toggleComponentVisibility } = createViewOptionStateSlice(set);
     toggleComponentVisibility(Component.DataOverlaySubType.TextAnnotation);
@@ -70,7 +70,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { componentVisibilities: { [KnownComponentType.Tag]: false } },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { toggleComponentVisibility } = createViewOptionStateSlice(set);
     toggleComponentVisibility(KnownComponentType.Tag);
@@ -87,7 +87,7 @@ describe('createViewOptionStateSlice', () => {
   it('should be able to change tag settings', () => {
     const draft = { lastOperation: undefined, noHistoryStates: { tagSettings: {} } };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { setTagSettings } = createViewOptionStateSlice(set);
     setTagSettings({
@@ -108,7 +108,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { viewport: undefined },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { setViewport } = createViewOptionStateSlice(set);
     setViewport({ duration: '5m' });
@@ -128,7 +128,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { dataBindingQueryRefreshRate: undefined },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { setDataBindingQueryRefreshRate } = createViewOptionStateSlice(set);
     setDataBindingQueryRefreshRate(6666);
@@ -148,7 +148,7 @@ describe('createViewOptionStateSlice', () => {
       noHistoryStates: { autoQueryEnabled: false },
     };
 
-    const set = jest.fn((callback) => callback(draft));
+    const set = vi.fn((callback) => callback(draft));
 
     const { setAutoQueryEnabled } = createViewOptionStateSlice(set);
     setAutoQueryEnabled(true);

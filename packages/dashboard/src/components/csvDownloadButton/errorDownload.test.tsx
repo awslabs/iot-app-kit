@@ -35,14 +35,14 @@ const MOCK_QUERY: StyledAssetQuery = {
   properties: [{ propertyAlias: alias1 }],
 };
 
-const mockFetchTimeSeriesData = jest.fn(() =>
+const mockFetchTimeSeriesData = vi.fn(() =>
   Promise.resolve([MOCK_DATA_STREAM_1])
 );
-jest.mock('../dashboard/queryContext', () => ({
-  useFetchTimeSeriesData: jest.fn(() => mockFetchTimeSeriesData),
+vi.mock('../dashboard/queryContext', () => ({
+  useFetchTimeSeriesData: vi.fn(() => mockFetchTimeSeriesData),
 }));
-jest.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
-  fetchListAssetPropertiesMap: jest.fn(),
+vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
+  fetchListAssetPropertiesMap: vi.fn(),
 }));
 
 it('console an errors if data has errors', async function () {
@@ -62,7 +62,7 @@ it('console an errors if data has errors', async function () {
     </QueryClientProvider>
   );
 
-  const consoleErrorSpy = jest.spyOn(console, 'error');
+  const consoleErrorSpy = vi.spyOn(console, 'error');
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
   downloadButton && fireEvent.click(downloadButton);
@@ -89,7 +89,7 @@ it('does not create a file for download if data has errors', async function () {
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
 
-  const createElementSpyOn = jest.spyOn(document, 'createElement');
+  const createElementSpyOn = vi.spyOn(document, 'createElement');
   downloadButton && fireEvent(downloadButton, new MouseEvent('click'));
   await waitFor(() => expect(useFetchTimeSeriesData).toHaveBeenCalled());
   await waitFor(() => expect(createElementSpyOn).not.toBeCalledWith('a'));

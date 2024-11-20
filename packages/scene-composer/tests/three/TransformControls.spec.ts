@@ -107,7 +107,7 @@ describe('TransformControls', () => {
     object = new THREE.Object3D();
     scene.add(object);
     transformControls = new TransformControls(camera, domElement);
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('becomes visible after calling attach invisible after calling detach', () => {
@@ -122,9 +122,9 @@ describe('TransformControls', () => {
   });
 
   it('updateMatrixWorld should not call object updateMatrixWorld if not attached', () => {
-    const objectUpdateMatrixWorldMock = jest.spyOn(object, 'updateMatrixWorld');
-    const cameraUpdateMatrixWorldMock = jest.spyOn(camera, 'updateMatrixWorld');
-    const cameraMatrixWorldDecompose = jest.spyOn(camera.matrixWorld, 'decompose');
+    const objectUpdateMatrixWorldMock = vi.spyOn(object, 'updateMatrixWorld');
+    const cameraUpdateMatrixWorldMock = vi.spyOn(camera, 'updateMatrixWorld');
+    const cameraMatrixWorldDecompose = vi.spyOn(camera.matrixWorld, 'decompose');
     transformControls.updateMatrixWorld();
 
     const privateAccessTransformControls = transformControls as any;
@@ -143,10 +143,10 @@ describe('TransformControls', () => {
   it('expected dependencies and log error should be called on object without a parent', () => {
     const object = new THREE.Object3D();
 
-    const objectUpdateMatrixWorldMock = jest.spyOn(object, 'updateMatrixWorld');
-    const objectMatrixWorldDecompose = jest.spyOn(object.matrixWorld, 'decompose');
-    const cameraUpdateMatrixWorldMock = jest.spyOn(camera, 'updateMatrixWorld');
-    const cameraMatrixWorldDecompose = jest.spyOn(camera.matrixWorld, 'decompose');
+    const objectUpdateMatrixWorldMock = viOn(object, 'updateMatrixWorld');
+    const objectMatrixWorldDecompose = viOn(object.matrixWorld, 'decompose');
+    const cameraUpdateMatrixWorldMock = viOn(camera, 'updateMatrixWorld');
+    const cameraMatrixWorldDecompose = viOn(camera.matrixWorld, 'decompose');
     transformControls.attach(object);
     transformControls.updateMatrixWorld();
 
@@ -169,11 +169,11 @@ describe('TransformControls', () => {
   });
 
   it('expected dependencies should be called on object and camera', () => {
-    const objectUpdateMatrixWorldMock = jest.spyOn(object, 'updateMatrixWorld');
-    const objectMatrixWorldDecompose = jest.spyOn(object.matrixWorld, 'decompose');
-    const objectParentMatrixWorldDecompose = jest.spyOn(object.parent!.matrixWorld, 'decompose');
-    const cameraUpdateMatrixWorldMock = jest.spyOn(camera, 'updateMatrixWorld');
-    const cameraMatrixWorldDecompose = jest.spyOn(camera.matrixWorld, 'decompose');
+    const objectUpdateMatrixWorldMock = viOn(object, 'updateMatrixWorld');
+    const objectMatrixWorldDecompose = viOn(object.matrixWorld, 'decompose');
+    const objectParentMatrixWorldDecompose = viOn(object.parent!.matrixWorld, 'decompose');
+    const cameraUpdateMatrixWorldMock = viOn(camera, 'updateMatrixWorld');
+    const cameraMatrixWorldDecompose = viOn(camera.matrixWorld, 'decompose');
     transformControls.attach(object);
     transformControls.updateMatrixWorld();
 
@@ -201,7 +201,7 @@ describe('TransformControls', () => {
   });
 
   it('should add/remove pointerMove event on pointer down and up', async () => {
-    jest.spyOn(domElement, 'getBoundingClientRect').mockImplementation(() => boundingRect);
+    viOn(domElement, 'getBoundingClientRect').mockImplementation(() => boundingRect);
     const testScene = fakeScene(camera, domElement);
     camera.lookAt(testScene.cube.position);
     testScene.transformControls.attach(testScene.cube);
@@ -217,7 +217,7 @@ describe('TransformControls', () => {
     // TODO: Do not force axis
     (testScene.transformControls as any).axis = 'Y';
 
-    jest.spyOn(domElement.ownerDocument, 'addEventListener');
+    viOn(domElement.ownerDocument, 'addEventListener');
     (testScene.transformControls as any).onPointerDown(testEvent);
 
     expect(domElement.ownerDocument.addEventListener).toHaveBeenCalledWith(
@@ -225,7 +225,7 @@ describe('TransformControls', () => {
       (testScene.transformControls as any).onPointerMove,
     );
 
-    jest.spyOn(domElement.ownerDocument, 'removeEventListener');
+    viOn(domElement.ownerDocument, 'removeEventListener');
     (testScene.transformControls as any).onPointerUp(testEvent);
 
     expect(domElement.ownerDocument.removeEventListener).toHaveBeenCalledWith(
@@ -289,8 +289,8 @@ describe('TransformControls', () => {
   });
 
   it('should remove events on dispose', () => {
-    jest.spyOn(domElement, 'removeEventListener');
-    jest.spyOn(domElement.ownerDocument, 'removeEventListener');
+    viOn(domElement, 'removeEventListener');
+    viOn(domElement.ownerDocument, 'removeEventListener');
 
     transformControls.dispose();
 

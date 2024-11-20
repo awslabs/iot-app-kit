@@ -1,15 +1,15 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
-import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
+import { accessStore } from '../../../store';
 
 import { MatterportIntegration } from './MatterportIntegration';
 
 describe('MatterportIntegration', () => {
-  const setScenePropertyMock = jest.fn();
-  const getScenePropertyMock = jest.fn();
-  const isViewingMock = jest.fn();
-  const setTagSettingsMock = jest.fn();
+  const setScenePropertyMock = vi.fn();
+  const getScenePropertyMock = vi.fn();
+  const isViewingMock = vi.fn();
+  const setTagSettingsMock = vi.fn();
   const baseState = {
     setSceneProperty: setScenePropertyMock,
     getSceneProperty: getScenePropertyMock,
@@ -21,11 +21,11 @@ describe('MatterportIntegration', () => {
   };
 
   beforeEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     getScenePropertyMock.mockReturnValue({
       [KnownSceneProperty.MatterportModelId]: 'matterport-model-id',
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render correctly', async () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Tree /> should render appropriate structure 1`] = `
+exports[`<Tree /> > should render appropriate structure 1`] = `
 <div>
   <ol
     class="tm-tree"

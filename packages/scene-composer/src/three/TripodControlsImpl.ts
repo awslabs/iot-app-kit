@@ -166,8 +166,6 @@ export class TripodControlsImpl extends EventDispatcher {
         scope.object.lookAt(targetPosition);
         //----------------------------------
 
-        scale = 1;
-
         // update condition is:
         // min(camera displacement, camera rotation in radians)^2 > EPS
         // using small-angle approximation cos(x/2) = 1 - x^2 / 8
@@ -239,8 +237,6 @@ export class TripodControlsImpl extends EventDispatcher {
     // current position in spherical coordinates
     const spherical = new Spherical();
     const sphericalDelta = new Spherical();
-
-    let scale = 1;
 
     const rotateStart = new Vector2();
     const rotateEnd = new Vector2();

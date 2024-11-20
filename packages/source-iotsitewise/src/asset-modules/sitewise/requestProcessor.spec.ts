@@ -60,7 +60,7 @@ const createMockSiteWiseAssetDataSource = (): SiteWiseAssetDataSource => {
 
 describe('Request an AssetSummary', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  const mockDescribeAsset = jest.fn();
+  const mockDescribeAsset = vi.fn();
   mockDescribeAsset.mockReturnValue(Promise.resolve(sampleAssetSummary));
   mockDataSource.describeAsset = mockDescribeAsset;
 
@@ -77,18 +77,17 @@ describe('Request an AssetSummary', () => {
     }
   );
 
-  it('waits for the AssetSummary', (done) => {
+  it('waits for the AssetSummary', async () => {
     observable.subscribe((result) => {
       expect(result).not.toBeUndefined();
       expect(result).toEqual(sampleAssetSummary);
-      done();
     });
   });
 });
 
 describe('Request an Asset Model', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  const mockDescribeAssetModel = jest.fn();
+  const mockDescribeAssetModel = vi.fn();
   mockDescribeAssetModel.mockReturnValue(Promise.resolve(sampleAssetModel));
   mockDataSource.describeAssetModel = mockDescribeAssetModel;
 
@@ -104,17 +103,16 @@ describe('Request an Asset Model', () => {
       );
     });
 
-  it('waits for the Asset Model', (done) => {
+  it('waits for the Asset Model', async () => {
     observable.subscribe((result) => {
       expect(sampleAssetModel).toEqual(result);
-      done();
     });
   });
 });
 
 describe('Request an Asset Property Value', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  const mockGetPropertyValue = jest.fn();
+  const mockGetPropertyValue = vi.fn();
   mockGetPropertyValue.mockResolvedValue(ASSET_PROPERTY_STRING_VALUE);
   mockDataSource.getPropertyValue = mockGetPropertyValue;
 
@@ -133,11 +131,10 @@ describe('Request an Asset Property Value', () => {
       );
     });
 
-  it('waits for the Asset Property Value', (done) => {
+  it('waits for the Asset Property Value', async () => {
     observable.subscribe({
       next: (result) => {
         expect(ASSET_PROPERTY_STRING_VALUE.propertyValue).toEqual(result);
-        done();
       },
     });
   });
@@ -145,7 +142,7 @@ describe('Request an Asset Property Value', () => {
 
 describe('Request an Asset Hierarchy of a parent Asset', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  const mockListAssociatedAssets = jest.fn();
+  const mockListAssociatedAssets = vi.fn();
   const result: ListAssetsCommandOutput = {
     $metadata: {},
     assetSummaries: [sampleAssetSummary],
@@ -166,7 +163,7 @@ describe('Request an Asset Hierarchy of a parent Asset', () => {
       );
     });
 
-  it('waits for the Asset Hierarchy to become loaded', (done) => {
+  it('waits for the Asset Hierarchy to become loaded', async () => {
     observable.subscribe((result) => {
       // the worker returns the completed list of assets:
       expect({
@@ -174,14 +171,13 @@ describe('Request an Asset Hierarchy of a parent Asset', () => {
         assets: [sampleAssetSummary],
         loadingState: LoadingStateEnum.LOADED,
       }).toEqual(result);
-      done();
     });
   });
 });
 
 describe('Request the root assets', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  const mockListAssets = jest.fn();
+  const mockListAssets = vi.fn();
   const result: ListAssetsCommandOutput = {
     $metadata: {},
     assetSummaries: [sampleAssetSummary],
@@ -204,10 +200,10 @@ describe('Request the root assets', () => {
     });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('waits for the root assets to become loaded', (done) => {
+  it('waits for the root assets to become loaded', async () => {
     observable.subscribe((result) => {
       // the worker returns the completed list of assets:
       expect({
@@ -217,13 +213,12 @@ describe('Request the root assets', () => {
       }).toEqual(result);
 
       expect(mockListAssets).toHaveBeenCalled();
-      done();
     });
   });
 
   // this test relies on previous test, since they use the same observer
   // we want to verify that we emit the cached data if we have already requested it
-  it('emits cached data', (done) => {
+  it('emits cached data', async () => {
     observable.subscribe((result) => {
       expect({
         assetHierarchyId: HIERARCHY_ROOT_ID,
@@ -232,7 +227,6 @@ describe('Request the root assets', () => {
       }).toEqual(result);
 
       expect(mockListAssets).not.toHaveBeenCalled();
-      done();
     });
   });
 });

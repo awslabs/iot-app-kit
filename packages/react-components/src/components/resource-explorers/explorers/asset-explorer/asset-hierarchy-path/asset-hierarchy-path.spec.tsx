@@ -4,7 +4,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 
 import { resourceExplorerQueryClient } from '../../../requests/resource-explorer-query-client';
 
@@ -50,16 +50,16 @@ const finalListAssociatedAssetsResponse = {
 } satisfies Awaited<ReturnType<ListAssociatedAssets>>;
 
 describe(AssetHierarchyPath, () => {
-  const onClickPathAsset = jest.fn();
+  const onClickPathAsset = vi.fn();
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     resourceExplorerQueryClient.clear();
   });
 
   describe('requests', () => {
     it('calls ListAssociatedAssets correctly with two levels of assets', () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValue(finalListAssociatedAssetsResponse);
       render(
@@ -78,7 +78,7 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('calls ListAssociatedAssets correctly with three levels of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValueOnce(grandParentListAssociatedAssetsResponse)
         .mockResolvedValue(finalListAssociatedAssetsResponse);
@@ -107,7 +107,7 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('calls ListAssociatedAssets correctly with four levels of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValueOnce(grandParentListAssociatedAssetsResponse)
         .mockResolvedValueOnce(greatGrandParentListAssociatedAssetsResponse)
@@ -145,7 +145,7 @@ describe(AssetHierarchyPath, () => {
 
   describe('rendering', () => {
     it('renders an asset hierarchy path with one level of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValue(finalListAssociatedAssetsResponse);
       render(
@@ -159,7 +159,7 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('renders a hierarchy path with two levels', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValue(finalListAssociatedAssetsResponse);
       render(
@@ -177,7 +177,7 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('renders a hierarchy path with three levels', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValueOnce(grandParentListAssociatedAssetsResponse)
         .mockResolvedValue(finalListAssociatedAssetsResponse);
@@ -197,7 +197,7 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('renders a hierarchy path with four levels', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValueOnce(grandParentListAssociatedAssetsResponse)
         .mockResolvedValueOnce(greatGrandParentListAssociatedAssetsResponse)
@@ -221,10 +221,10 @@ describe(AssetHierarchyPath, () => {
 
   describe('navigation', () => {
     it('does not provide navigation with one level of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValue(finalListAssociatedAssetsResponse);
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetHierarchyPath
           onClickPathAsset={onClickPathAsset}
@@ -237,10 +237,10 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('provides navigation to the root with two or more levels of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValue(finalListAssociatedAssetsResponse);
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetHierarchyPath
           parentAsset={parentAsset}
@@ -256,10 +256,10 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('does not provide navigation to the parent asset with any level of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValue(finalListAssociatedAssetsResponse);
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetHierarchyPath
           parentAsset={parentAsset}
@@ -275,11 +275,11 @@ describe(AssetHierarchyPath, () => {
     });
 
     it('provides navigation to ancestor assets with three or more levels of assets', async () => {
-      const listAssociatedAssets = jest
+      const listAssociatedAssets = vi
         .fn()
         .mockResolvedValueOnce(grandParentListAssociatedAssetsResponse)
         .mockResolvedValue(finalListAssociatedAssetsResponse);
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetHierarchyPath
           parentAsset={parentAsset}

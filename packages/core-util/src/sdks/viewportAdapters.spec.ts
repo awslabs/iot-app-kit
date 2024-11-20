@@ -175,11 +175,11 @@ describe('viewportToDateRange', () => {
 
 describe('getViewportStartOnBackwardRelative', () => {
   beforeEach(() => {
-    jest.useFakeTimers().setSystemTime(new Date(2023, 11, 24).getTime());
+    vi.useFakeTimers().setSystemTime(new Date(2023, 11, 24).getTime());
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('can get the new start date when going back from a relative duration', () => {
@@ -234,17 +234,17 @@ describe('getViewportStartOnBackwardRelative', () => {
     });
     expect(currentDate.getTime() - newDate.getTime()).toEqual(2592000000); //previous month is 30 days
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });
 
 describe('getViewportStartOnBackwardRelative on first backward click', () => {
   beforeEach(() => {
-    jest.useFakeTimers().setSystemTime(new Date(2023, 11, 24).getTime());
+    vi.useFakeTimers().setSystemTime(new Date(2023, 11, 24).getTime());
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('can get the new start date from current range when going back from a relative duration', () => {

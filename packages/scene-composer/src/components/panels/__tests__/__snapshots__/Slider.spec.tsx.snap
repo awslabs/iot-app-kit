@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Slider should render correctly 1`] = `
+exports[`Slider > should render correctly 1`] = `
 <div>
   <div
-    style="display: inline-block;"
+    style="display: inline-block; accent-color: #0972d3;"
   >
     <input
       data-testid="slider"

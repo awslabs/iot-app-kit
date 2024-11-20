@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useVisibleDataStreams } from './useVisibleDataStreams';
 
 describe('useVisibleDataStreams', () => {
@@ -54,40 +54,42 @@ describe('useVisibleDataStreams', () => {
   });
 
   it('can toggle a datastreams visibility', () => {
-    const { result, rerender } = renderHook(() => useVisibleDataStreams());
+    const { result } = renderHook(() => useVisibleDataStreams());
 
     expect(result.current.hiddenDataStreams).toBeArrayOfSize(0);
 
-    result.current.toggleVisibility({ id: '1' });
-
-    rerender();
+    act(() => {
+      result.current.toggleVisibility({ id: '1' });
+    });
 
     expect(result.current.hiddenDataStreams).toEqual(
       expect.arrayContaining([{ id: '1' }])
     );
 
-    result.current.toggleVisibility({ id: '1' });
-
-    rerender();
+    act(() => {
+      result.current.toggleVisibility({ id: '1' });
+    });
 
     expect(result.current.hiddenDataStreams).toBeArrayOfSize(0);
   });
 
   it('can check if a datastream is visible', () => {
-    const { result, rerender } = renderHook(() => useVisibleDataStreams());
+    const { result } = renderHook(() => useVisibleDataStreams());
 
     expect(result.current.hiddenDataStreams).toBeArrayOfSize(0);
 
-    result.current.hideDataStream({ id: '1' });
-    result.current.hideDataStream({ id: '2' });
-
-    rerender();
+    act(() => {
+      result.current.hideDataStream({ id: '1' });
+    });
+    act(() => {
+      result.current.hideDataStream({ id: '2' });
+    });
 
     expect(result.current.isDataStreamHidden({ id: '1' })).toBeTrue();
 
-    result.current.unHideDataStream({ id: '1' });
-
-    rerender();
+    act(() => {
+      result.current.unHideDataStream({ id: '1' });
+    });
 
     expect(result.current.isDataStreamHidden({ id: '1' })).toBeFalse();
   });

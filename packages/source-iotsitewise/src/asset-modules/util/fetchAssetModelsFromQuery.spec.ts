@@ -24,17 +24,15 @@ export const getAssetModule = (
 };
 
 it('correctly parses query and yields asset models', async () => {
-  const describeAsset = jest.fn().mockResolvedValue({
+  const describeAsset = vi.fn().mockResolvedValue({
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest
-    .fn()
-    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
-  const listAssetProperties = jest
+  const describeAssetModel = vi.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const listAssetProperties = vi
     .fn()
     .mockResolvedValue(ALARM_LIST_ASSET_PROP_RESPONSE);
-  const listAssetModelProperties = jest
+  const listAssetModelProperties = vi
     .fn()
     .mockResolvedValue(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE);
 
@@ -90,7 +88,7 @@ it('does not return alarms for property alias query', async () => {
 });
 
 it('yields error', async () => {
-  const describeAsset = jest.fn().mockResolvedValue(new Error('Oops'));
+  const describeAsset = vi.fn().mockResolvedValue(new Error('Oops'));
 
   const { assetModule } = getAssetModule({
     siteWiseApiOverride: { describeAsset },

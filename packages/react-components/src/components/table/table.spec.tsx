@@ -4,7 +4,7 @@ import type { DataStream } from '@iot-app-kit/core';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { act, render, renderHook } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
@@ -31,7 +31,7 @@ const query = mockTimeSeriesDataQuery([
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn(),
+    invokeAssistant: vi.fn(),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
@@ -39,7 +39,7 @@ const client = new IoTSitewiseAssistantClient({
 const assistant = {
   enabled: true,
   componentId: 'componentId',
-  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  onAction: (_event: AssistantActionEventDetail) => vi.fn(),
   conversationId: 'conversationId',
   target: 'widget',
   client,
@@ -73,7 +73,7 @@ it('renders with assistant action panel', async () => {
 });
 
 it('pass context to the assistant', async () => {
-  const user = userEvent.setup();
+  const user = ue.setup();
   const { result } = renderHook(() => useAssistantContext());
   const { getByRole } = render(
     <Table

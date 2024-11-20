@@ -4,16 +4,18 @@ import EntityGroup from '..';
 import { useSceneDocument } from '../../../../store';
 import { fakeSceneNode } from '../fakers';
 
-jest.mock('../../../../store', () => ({
-  ...jest.requireActual('../../../../store'),
-  useSceneDocument: jest.fn(() => ({
-    getSceneNodeByRef: jest.fn(),
+vi.mock('../../../../store', async () => ({
+  ...(await vi.importActual('../../../../store')),
+
+  useSceneDocument: vi.fn(() => ({
+    getSceneNodeByRef: vi.fn(),
   })),
-  useEditorState: jest.fn(() => ({
-    getObject3DBySceneNodeRef: jest.fn(),
+
+  useEditorState: vi.fn(() => ({
+    getObject3DBySceneNodeRef: vi.fn(),
     selectedSceneNodeRef: null,
-    setSceneNodeObject3DMapping: jest.fn(),
-    setSelectedSceneNodeRef: jest.fn(),
+    setSceneNodeObject3DMapping: vi.fn(),
+    setSelectedSceneNodeRef: vi.fn(),
   })),
 }));
 
@@ -24,9 +26,9 @@ describe('<EntityGroup />', () => {
       'parent',
       childRefs.map((c) => c.ref),
     );
-    const getSceneNodeByRef = jest.fn((ref: string) => childRefs[Number(ref)]);
+    const getSceneNodeByRef = vi.fn((ref: string) => childRefs[Number(ref)]);
 
-    (useSceneDocument as jest.Mock).mockImplementation(() => ({
+    (useSceneDocument as vi.Mock).mockImplementation(() => ({
       getSceneNodeByRef,
     }));
 

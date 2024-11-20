@@ -63,12 +63,12 @@
 // });
 
 // const renderPropertiesAndAlarmsSectionAsync = async () => {
-//   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
+//   const describeAsset = vi.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
 
 //   const clientContext: DashboardIotSiteWiseClients = {
 //     iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as unknown as IoTSiteWiseClient,
 //     iotEventsClient: createMockIoTEventsSDK(),
-//     iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+//     iotTwinMakerClient: { send: vi.fn() } as unknown as IoTTwinMakerClient,
 //   };
 
 //   await act(async () => {
@@ -88,7 +88,7 @@
 
 describe('Properties and Alarms Section', () => {
   // beforeEach(() => {
-  //   jest.resetAllMocks();
+  //   vi.resetAllMocks();
   // });
 
   // afterEach(cleanup);

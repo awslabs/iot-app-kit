@@ -15,14 +15,14 @@ const createMockWidget = (widgetType: string): DashboardWidget => {
   };
 };
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: () => jest.fn(),
-  useSelector: () => jest.fn(),
+vi.mock('react-redux', async () => ({
+  ...(await vi.importActual('react-redux')),
+  useDispatch: () => vi.fn(),
+  useSelector: () => vi.fn(),
 }));
 
-jest.mock('../useQuery', () => ({
-  useQuery: jest.fn(() => [{}, jest.fn()]),
+vi.mock('../useQuery', () => ({
+  useQuery: vi.fn(() => [{}, vi.fn()]),
 }));
 
 describe('Add button disbale state on widget and resource selection', () => {
@@ -40,9 +40,7 @@ describe('Add button disbale state on widget and resource selection', () => {
 
   it('Disabled with KPI with query', () => {
     const query = { assets: [{ assetId: '1234', properties: [] }] };
-    jest
-      .spyOn(hooks, 'useQuery')
-      .mockImplementationOnce(() => [query, jest.fn()]);
+    vi.spyOn(hooks, 'useQuery').mockImplementationOnce(() => [query, vi.fn()]);
     expect(useIsAddButtonDisabled([createMockWidget('kpi')])).toBe(true);
   });
 });

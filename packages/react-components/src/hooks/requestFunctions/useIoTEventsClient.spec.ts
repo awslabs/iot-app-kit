@@ -5,11 +5,11 @@ import { useIoTEventsClient } from './useIoTEventsClient';
 
 describe('useIoTEventsClient tests', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('useIoTEventsClient accepts a custom Events client', async () => {
-    const describeAlarmModelMock = jest.fn();
+    const describeAlarmModelMock = vi.fn();
     const customEventsClient = {
       describeAlarmModel: (_, __) => {
         describeAlarmModelMock();
@@ -26,7 +26,7 @@ describe('useIoTEventsClient tests', () => {
   });
 
   it('useIoTEventsClient accepts an IoTEvents client', async () => {
-    const describeAlarmModelMock = jest.fn();
+    const describeAlarmModelMock = vi.fn();
     const eventsClient = {
       ...new IoTEvents({
         credentials: {

@@ -1,17 +1,17 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { act, render } from '@testing-library/react';
+import { act, render } from '@/tests/testing-library';
 
+import { mockComponent, mockNode } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
 import { type IPlaneGeometryComponentInternal, accessStore } from '../../../store';
-import { KnownComponentType, COMPOSER_FEATURES } from '../../../interfaces';
-import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import { PlaneGeometryComponentEditor } from './PlaneGeometryComponentEditor';
 
-jest.mock('../../../common/GlobalSettings');
+vi.mock('../../../common/GlobalSettings');
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('PlaneGeometryComponentEditor', () => {
@@ -40,8 +40,8 @@ describe('PlaneGeometryComponentEditor', () => {
 
   const mockFeatureConfigOn = { [COMPOSER_FEATURES.Textures]: true };
 
-  const updateComponentInternalFn = jest.fn();
-  const showAssetBrowserCallbackMock = jest.fn();
+  const updateComponentInternalFn = vi.fn();
+  const showAssetBrowserCallbackMock = vi.fn();
   const baseState = {
     updateComponentInternal: updateComponentInternalFn,
     getEditorConfig: () => ({
@@ -50,11 +50,11 @@ describe('PlaneGeometryComponentEditor', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update width when width changes', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     accessStore('default').setState(baseState);
     const { container } = render(
@@ -74,7 +74,7 @@ describe('PlaneGeometryComponentEditor', () => {
   });
 
   it('should update height when height changes', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
     accessStore('default').setState(baseState);
@@ -95,7 +95,7 @@ describe('PlaneGeometryComponentEditor', () => {
   });
 
   it('should update when colors changes', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
     accessStore('default').setState(baseState);
@@ -119,7 +119,7 @@ describe('PlaneGeometryComponentEditor', () => {
   });
 
   it('should add open resource manager when select texture clicked and set texture', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
     showAssetBrowserCallbackMock.mockImplementation((cb) => {
@@ -151,7 +151,7 @@ describe('PlaneGeometryComponentEditor', () => {
   });
 
   it('should remove texture', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const globalSettingsMock = getGlobalSettings as vi.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
     accessStore('default').setState(baseState);

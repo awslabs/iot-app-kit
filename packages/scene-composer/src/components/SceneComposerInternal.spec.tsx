@@ -1,29 +1,19 @@
 import { act, create } from 'react-test-renderer';
-import { cleanup, renderHook } from '@testing-library/react-hooks';
+import { cleanup, renderHook } from '@/tests/testing-library';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 import { Object3D, type Event, Mesh, MeshBasicMaterial, Color } from 'three';
-import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
-
 import { useSceneComposerApi, type SceneComposerApi } from '..';
 import { testScenes } from '../../tests/testData';
 import { accessStore } from '../store';
-
 import { SceneComposerInternal } from './SceneComposerInternal';
 
-jest.mock('../layouts/StaticLayout', () => ({
+vi.mock('../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',
 }));
 
-jest.mock((window as any).ResizeObserver, () => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
-
-// @ts-ignore
-jest.mock('scheduler', () => require('scheduler/unstable_mock'));
-jest.mock('resize-observer-polyfill', () => {
+vi.mock('scheduler', () => require('scheduler/unstable_mock'));
+vi.mock('resize-observer-polyfill', () => {
   return ResizeObserver;
 });
 
@@ -44,13 +34,13 @@ function createSceneLoaderMock(sceneContent: string) {
 }
 
 describe('SceneComposerInternal', () => {
-  const getSceneInfo = jest.fn();
+  const getSceneInfo = vi.fn();
   const mockSceneMetadataModule = {
     getSceneInfo,
   } as unknown as TwinMakerSceneMetadataModule;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     getSceneInfo.mockResolvedValue({
       capabilities: [],
       sceneMetadata: {},

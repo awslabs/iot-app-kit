@@ -14,11 +14,11 @@ import {
   getEntityGroupName,
 } from '../../src/utils/objectThreeUtils';
 
-jest.mock('three-mesh-bvh', () => {
-  const originalModule = jest.requireActual('three-mesh-bvh');
+vi.mock('three-mesh-bvh', async () => {
+  const originalModule = await vi.importActual('three-mesh-bvh');
   return {
     ...originalModule,
-    acceleratedRaycast: jest.fn(),
+    acceleratedRaycast: vi.fn(),
   };
 });
 
@@ -69,7 +69,7 @@ describe('objectThreeUtils', () => {
 
   it('should clone mesh object', () => {
     const object = new THREE.Mesh(new THREE.BoxGeometry(1, 2, 3), new THREE.MeshBasicMaterial({ color: 0xffff00 }));
-    const cloneSpy = jest.spyOn(object.material, 'clone');
+    const cloneSpy = vi.spyOn(object.material, 'clone');
 
     cloneMaterials(object);
 

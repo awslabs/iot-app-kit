@@ -27,7 +27,7 @@ const responseAccessDeniedException = {
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
   const componentId = 'componentId';
-  const mockInvokeAssistant = jest
+  const mockInvokeAssistant = vi
     .fn()
     .mockResolvedValue({ body: [response1, response2] });
   const client = new IoTSitewiseAssistantClient({
@@ -37,7 +37,7 @@ describe('useAssistant', () => {
     defaultContext: '',
   });
 
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('should provide a default implementation for messageParser', async () => {
     const { result } = renderHook(() =>
@@ -87,8 +87,8 @@ describe('useAssistant', () => {
   });
 
   it('should allow a custom messageParser ', async () => {
-    const getText = jest.fn();
-    const getPartialResponse = jest.fn();
+    const getText = vi.fn();
+    const getPartialResponse = vi.fn();
     const mockedParser = {
       getText,
       getPartialResponse,
@@ -98,8 +98,8 @@ describe('useAssistant', () => {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       defaultContext: '',
-      onResponse: jest.fn(),
-      onComplete: jest.fn(),
+      onResponse: vi.fn(),
+      onComplete: vi.fn(),
     });
     const { result } = renderHook(() =>
       useAssistant({
@@ -216,7 +216,7 @@ describe('useAssistant', () => {
   });
 
   it('handle invoke assistant with internalFailureException as response', async () => {
-    const mockInvokeAssistant = jest
+    const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseAccessDeniedException] });
 

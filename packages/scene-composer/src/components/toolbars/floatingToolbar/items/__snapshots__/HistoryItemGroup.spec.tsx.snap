@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`HistoryItemGroup should correctly render horizontally 1`] = `
+exports[`HistoryItemGroup > should correctly render horizontally 1`] = `
 <div>
   <div
-    class="sc-fqkvVR eA-dzJj"
+    class="sc-fqkvVR TuwzD"
   >
     <toolbaritem
       items="[object Object]"
@@ -17,162 +17,70 @@ exports[`HistoryItemGroup should correctly render horizontally 1`] = `
 </div>
 `;
 
-exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
-<div
-  className="sc-fqkvVR qzUpD"
->
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "name": "undo",
-          },
-          "isDisabled": true,
-          "label": "Undo",
-          "uuid": "undo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "isMirrored": true,
-            "name": "undo",
-          },
-          "isDisabled": true,
-          "label": "Redo",
-          "uuid": "redo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
+exports[`HistoryItemGroup > should render correctly with redo disabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
 </div>
 `;
 
-exports[`HistoryItemGroup should render correctly with redo enabled 1`] = `
-<div
-  className="sc-fqkvVR qzUpD"
->
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "name": "undo",
-          },
-          "isDisabled": true,
-          "label": "Undo",
-          "uuid": "undo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "isMirrored": true,
-            "name": "undo",
-          },
-          "isDisabled": false,
-          "label": "Redo",
-          "uuid": "redo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
+exports[`HistoryItemGroup > should render correctly with redo enabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
 </div>
 `;
 
-exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
-<div
-  className="sc-fqkvVR qzUpD"
->
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "name": "undo",
-          },
-          "isDisabled": true,
-          "label": "Undo",
-          "uuid": "undo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "isMirrored": true,
-            "name": "undo",
-          },
-          "isDisabled": true,
-          "label": "Redo",
-          "uuid": "redo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
+exports[`HistoryItemGroup > should render correctly with undo disabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
 </div>
 `;
 
-exports[`HistoryItemGroup should render correctly with undo enabled 1`] = `
-<div
-  className="sc-fqkvVR qzUpD"
->
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "name": "undo",
-          },
-          "isDisabled": false,
-          "label": "Undo",
-          "uuid": "undo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
-  <ToolbarItem
-    items={
-      [
-        {
-          "icon": {
-            "isMirrored": true,
-            "name": "undo",
-          },
-          "isDisabled": true,
-          "label": "Redo",
-          "uuid": "redo",
-        },
-      ]
-    }
-    onSelect={[Function]}
-    type="button"
-  />
+exports[`HistoryItemGroup > should render correctly with undo enabled 1`] = `
+<div>
+  <div
+    class="sc-fqkvVR ktHDAv"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
 </div>
 `;

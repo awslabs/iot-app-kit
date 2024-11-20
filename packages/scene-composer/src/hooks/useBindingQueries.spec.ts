@@ -6,12 +6,12 @@ import useBindingQueries from './useBindingQueries';
 
 describe('useBindingQueries', () => {
   const mockProvider = {
-    createQuery: jest.fn(),
+    createQuery: vi.fn(),
   };
 
   beforeEach(() => {
     accessStore('default').setState({
-      getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
+      getEditorConfig: vi.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
       dataBindingTemplate: {
         sel_entity: 'BB',
       },

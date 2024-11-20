@@ -1,33 +1,299 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AnimationComponentEditor should render as expected 1`] = `
+exports[`AnimationComponentEditor > should render as expected 1`] = `
 <div>
   <div
-    data-mocked="SpaceBetween"
+    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-xs_18582_z63vw_155"
   >
     <div
-      data-mocked="FormField"
-      label="Choose Animations"
+      class="awsui_child_18582_z63vw_103"
     >
       <div
-        arialabel="Autosuggest example with suggestions"
-        data-mocked="Autosuggest"
-        empty="No matches found"
-        placeholder="Enter Value"
-        value=""
-      />
+        class="awsui_root_14mhv_av9zi_174"
+        data-analytics-field-label="[id="formField:r0:-label"]"
+      >
+        <div
+          class=""
+        >
+          <label
+            class="awsui_label_14mhv_av9zi_210"
+            for="formField:r0:"
+            id="formField:r0:-label"
+          >
+            Choose Animations
+          </label>
+        </div>
+        <div
+          class="awsui_controls_14mhv_av9zi_246"
+        >
+          <div
+            class="awsui_grid_14yj0_1lwse_99"
+          >
+            <div
+              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+            >
+              <div
+                class="awsui_restore-pointer-events_14yj0_1lwse_314"
+              >
+                <div
+                  class="awsui_control_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_root_12hwc_oboi4_5"
+                  >
+                    <div
+                      class="awsui_root_qwoo0_1ea5w_149"
+                    >
+                      <div
+                        class=""
+                        id=":r5:"
+                      >
+                        <div
+                          class="awsui_input-container_2rhyz_15wpl_262"
+                        >
+                          <span
+                            class="awsui_input-icon-left_2rhyz_15wpl_267"
+                          >
+                            <span
+                              class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-subtle_h11ix_1l964_239"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                focusable="false"
+                                viewBox="0 0 16 16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="7"
+                                  cy="7"
+                                  r="5"
+                                />
+                                <path
+                                  d="m15 15-4.5-4.5"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          <input
+                            aria-autocomplete="list"
+                            aria-expanded="false"
+                            aria-label="Autosuggest example with suggestions"
+                            aria-labelledby="formField:r0:-label"
+                            autocomplete="off"
+                            class="awsui_input_2rhyz_15wpl_103 awsui_input-has-icon-left_2rhyz_15wpl_231"
+                            id="formField:r0:"
+                            placeholder="Enter Value"
+                            role="combobox"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        tabindex="-1"
+                      />
+                      <div>
+                        <div
+                          tabindex="-1"
+                        />
+                        <div
+                          aria-hidden="true"
+                          class="awsui_dropdown_qwoo0_1ea5w_99 awsui-visual-refresh awsui_hide-block-border_qwoo0_1ea5w_281 awsui_refresh_qwoo0_1ea5w_120 awsui_stretch-beyond-trigger-width_qwoo0_1ea5w_277"
+                          data-animating="false"
+                          data-open="false"
+                          style="--awsui-dropdown-default-max-width-iof9y8: 465px;"
+                        >
+                          <div
+                            class="awsui_dropdown-content-wrapper_qwoo0_1ea5w_99 awsui_is-empty_qwoo0_1ea5w_248 awsui_refresh_qwoo0_1ea5w_120"
+                          >
+                            <div
+                              class="awsui_dropdown-content_qwoo0_1ea5w_99"
+                            >
+                              <div
+                                class="awsui_dropdown-footer_vm8qf_jxdvh_5"
+                              >
+                                <div
+                                  class="awsui_root_1afi9_5kqbd_99 awsui_no-items_1afi9_5kqbd_136"
+                                >
+                                  <div
+                                    id="footer:r2:"
+                                  >
+                                    <div
+                                      class="awsui_root_vrgzu_ljki3_99"
+                                    >
+                                      No matches found
+                                    </div>
+                                  </div>
+                                  <span
+                                    class="awsui_root_xttbq_pgwjg_99 awsui_root_3bgfn_im8v7_5"
+                                  >
+                                    <span
+                                      aria-atomic="true"
+                                      aria-live="polite"
+                                    />
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          tabindex="-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
-      data-mocked="FormField"
-      label="Choose Animations"
+      class="awsui_child_18582_z63vw_103"
     >
       <div
-        arialabel="Autosuggest example with suggestions"
-        data-mocked="Autosuggest"
-        empty="No matches found"
-        placeholder="Enter Value"
-        value=""
-      />
+        class="awsui_root_14mhv_av9zi_174"
+        data-analytics-field-label="[id="formField:r6:-label"]"
+      >
+        <div
+          class=""
+        >
+          <label
+            class="awsui_label_14mhv_av9zi_210"
+            for="formField:r6:"
+            id="formField:r6:-label"
+          >
+            Choose Animations
+          </label>
+        </div>
+        <div
+          class="awsui_controls_14mhv_av9zi_246"
+        >
+          <div
+            class="awsui_grid_14yj0_1lwse_99"
+          >
+            <div
+              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+            >
+              <div
+                class="awsui_restore-pointer-events_14yj0_1lwse_314"
+              >
+                <div
+                  class="awsui_control_14mhv_av9zi_246"
+                >
+                  <div
+                    class="awsui_root_12hwc_oboi4_5"
+                  >
+                    <div
+                      class="awsui_root_qwoo0_1ea5w_149"
+                    >
+                      <div
+                        class=""
+                        id=":rb:"
+                      >
+                        <div
+                          class="awsui_input-container_2rhyz_15wpl_262"
+                        >
+                          <span
+                            class="awsui_input-icon-left_2rhyz_15wpl_267"
+                          >
+                            <span
+                              class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-subtle_h11ix_1l964_239"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                focusable="false"
+                                viewBox="0 0 16 16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="7"
+                                  cy="7"
+                                  r="5"
+                                />
+                                <path
+                                  d="m15 15-4.5-4.5"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          <input
+                            aria-autocomplete="list"
+                            aria-expanded="false"
+                            aria-label="Autosuggest example with suggestions"
+                            aria-labelledby="formField:r6:-label"
+                            autocomplete="off"
+                            class="awsui_input_2rhyz_15wpl_103 awsui_input-has-icon-left_2rhyz_15wpl_231"
+                            id="formField:r6:"
+                            placeholder="Enter Value"
+                            role="combobox"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        tabindex="-1"
+                      />
+                      <div>
+                        <div
+                          tabindex="-1"
+                        />
+                        <div
+                          aria-hidden="true"
+                          class="awsui_dropdown_qwoo0_1ea5w_99 awsui-visual-refresh awsui_hide-block-border_qwoo0_1ea5w_281 awsui_refresh_qwoo0_1ea5w_120 awsui_stretch-beyond-trigger-width_qwoo0_1ea5w_277"
+                          data-animating="false"
+                          data-open="false"
+                          style="--awsui-dropdown-default-max-width-iof9y8: 465px;"
+                        >
+                          <div
+                            class="awsui_dropdown-content-wrapper_qwoo0_1ea5w_99 awsui_is-empty_qwoo0_1ea5w_248 awsui_refresh_qwoo0_1ea5w_120"
+                          >
+                            <div
+                              class="awsui_dropdown-content_qwoo0_1ea5w_99"
+                            >
+                              <div
+                                class="awsui_dropdown-footer_vm8qf_jxdvh_5"
+                              >
+                                <div
+                                  class="awsui_root_1afi9_5kqbd_99 awsui_no-items_1afi9_5kqbd_136"
+                                >
+                                  <div
+                                    id="footer:r8:"
+                                  >
+                                    <div
+                                      class="awsui_root_vrgzu_ljki3_99"
+                                    >
+                                      No matches found
+                                    </div>
+                                  </div>
+                                  <span
+                                    class="awsui_root_xttbq_pgwjg_99 awsui_root_3bgfn_im8v7_5"
+                                  >
+                                    <span
+                                      aria-atomic="true"
+                                      aria-live="polite"
+                                    />
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          tabindex="-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

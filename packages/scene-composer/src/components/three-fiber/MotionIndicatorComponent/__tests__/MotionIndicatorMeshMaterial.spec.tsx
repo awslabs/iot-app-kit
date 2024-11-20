@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { MotionIndicatorMeshMaterial, onBeforeCompile } from '../MotionIndicatorMeshMaterial';
 
 // @ts-ignore
-jest.mock('scheduler', () => require('scheduler/unstable_mock'));
+vi.mock('scheduler', () => require('scheduler/unstable_mock'));
 
 describe('MotionIndicatorMeshMaterial', () => {
   const createComponent = (overrides?) => {

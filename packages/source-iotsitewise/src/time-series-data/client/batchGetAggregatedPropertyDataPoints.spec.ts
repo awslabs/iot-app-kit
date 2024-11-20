@@ -62,12 +62,12 @@ const batchParamForMostRecentBeforeEnd = expect.objectContaining({
 
 describe('batchGetAggregatedPropertyDataPoints', () => {
   it('requests with fetchFromStartToEnd', async () => {
-    const batchGetAssetPropertyAggregates = jest
+    const batchGetAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES });
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
 
@@ -97,12 +97,12 @@ describe('batchGetAggregatedPropertyDataPoints', () => {
   });
 
   it('requests with fetchMostRecentBeforeStart', async () => {
-    const batchGetAssetPropertyAggregates = jest
+    const batchGetAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES });
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
 
@@ -132,12 +132,12 @@ describe('batchGetAggregatedPropertyDataPoints', () => {
   });
 
   it('requests with fetchMostRecentBeforeEnd', async () => {
-    const batchGetAssetPropertyAggregates = jest
+    const batchGetAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES });
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
 
@@ -167,12 +167,12 @@ describe('batchGetAggregatedPropertyDataPoints', () => {
   });
 
   it('requests with fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, and fetchFromStartToEnd', async () => {
-    const batchGetAssetPropertyAggregates = jest
+    const batchGetAssetPropertyAggregates = vi
       .fn()
       .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES });
 
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
 
     const client = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
 

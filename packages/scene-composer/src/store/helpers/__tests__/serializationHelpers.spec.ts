@@ -1,4 +1,4 @@
-import SerializationHelpers, { exportsForTesting } from '../serializationHelpers';
+import { type ISceneComponentInternal, type ISceneDocumentInternal, type ISceneNodeInternal } from '../..';
 import {
   DEFAULT_FOG_COLOR,
   DEFAULT_FOG_FAR,
@@ -11,23 +11,23 @@ import {
   type IModelRefComponent,
   KnownComponentType,
 } from '../../..';
-import { generateUUID } from '../../../utils/mathUtils';
 import { Component, LightType, type ModelType, type Node } from '../../../models/SceneModels';
-import { type ISceneComponentInternal, type ISceneDocumentInternal, type ISceneNodeInternal } from '../..';
+import { generateUUID } from '../../../utils/mathUtils';
+import SerializationHelpers, { exportsForTesting } from '../serializationHelpers';
 
-jest.mock('../../../utils/mathUtils', () => ({
-  ...jest.requireActual('../../../utils/mathUtils'),
-  generateUUID: jest.fn(),
+vi.mock('../../../utils/mathUtils', async () => ({
+  ...(await vi.importActual('../../../utils/mathUtils')),
+  generateUUID: vi.fn(),
 }));
 
 describe('serializationHelpers', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
+    vi.clearAllMocks();
+    (generateUUID as vi.Mock).mockReturnValue('test-uuid');
   });
 
   it('should appropriately create model ref componentAs or log errors when calling createModelRefComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid').mockReturnValueOnce('other-test-uuid');
+    (generateUUID as vi.Mock).mockReturnValueOnce('test-uuid').mockReturnValueOnce('other-test-uuid');
 
     const errorCollector = [];
     const glb = exportsForTesting.createModelRefComponent(
@@ -64,7 +64,7 @@ describe('serializationHelpers', () => {
       valueDataBinding: { dataBindingContext: 'dataBindingContext', random: 'abc' },
       navLink: 'https://test-nav.link',
     };
-    const resolver = jest.fn();
+    const resolver = vi.fn();
     resolver.mockReturnValueOnce('here is a map');
     resolver.mockReturnValueOnce(undefined);
     const errorCollector = [];
@@ -93,7 +93,7 @@ describe('serializationHelpers', () => {
   });
 
   it('should appropriately create camera components or log errors when calling createCameraComponent', () => {
-    const resolver = jest.fn();
+    const resolver = vi.fn();
     exportsForTesting.createCameraComponent({ cameraIndex: 1 } as any, resolver, []);
     expect(resolver).toHaveBeenCalledWith(Component.Type.Camera, 1);
   });
@@ -133,7 +133,7 @@ describe('serializationHelpers', () => {
         defaultSpeed: '0.5' as unknown as number,
       },
     };
-    const resolver = jest.fn();
+    const resolver = vi.fn();
     resolver.mockReturnValueOnce('here is a map');
     resolver.mockReturnValueOnce(undefined);
     const errorCollector = [];
@@ -177,7 +177,7 @@ describe('serializationHelpers', () => {
         },
       ],
     };
-    const resolver = jest.fn();
+    const resolver = vi.fn();
     resolver.mockReturnValueOnce('here is a map');
     resolver.mockReturnValueOnce(undefined);
     const errorCollector = [];
@@ -369,10 +369,10 @@ describe('serializationHelpers', () => {
   });
 
   describe('deserializeComponent', () => {
-    const resolver = jest.fn();
+    const resolver = vi.fn();
     beforeEach(() => {
-      (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-      jest.clearAllMocks();
+      (generateUUID as vi.Mock).mockReturnValueOnce('test-uuid');
+      vi.clearAllMocks();
     });
 
     it('should create a modelRef', () => {
@@ -510,9 +510,9 @@ describe('serializationHelpers', () => {
   });
 
   it('should create a document state from a given scene', () => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     let idCount = 0;
-    (generateUUID as jest.Mock).mockImplementation(() => {
+    (generateUUID as vi.Mock).mockImplementation(() => {
       idCount++;
       return 'test-uuid' + idCount;
     });
@@ -608,7 +608,7 @@ describe('serializationHelpers', () => {
 
   it('should convert the nodes for serialization', () => {
     let uuidIndex = 0;
-    (generateUUID as jest.Mock).mockImplementation(() => {
+    (generateUUID as vi.Mock).mockImplementation(() => {
       return `test-uuid-${uuidIndex++}`;
     });
     const node = {
@@ -742,7 +742,7 @@ describe('serializationHelpers', () => {
   });
 
   it('should serialize and deserialize a sceneDocument appropriately when calling serialize, deserialize', () => {
-    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
+    (generateUUID as vi.Mock).mockReturnValue('test-uuid');
 
     const scene = {
       specVersion: '1.0',
@@ -811,9 +811,9 @@ describe('serializationHelpers', () => {
   });
 
   it('should revert invalid scene properties to defaults', () => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     let idCount = 0;
-    (generateUUID as jest.Mock).mockImplementation(() => {
+    (generateUUID as vi.Mock).mockImplementation(() => {
       idCount++;
       return 'test-uuid' + idCount;
     });

@@ -1,43 +1,87 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MatterportIntegration should render correctly 1`] = `
+exports[`MatterportIntegration > should render correctly 1`] = `
 <div>
   <div
-    data-mocked="SpaceBetween"
+    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
   >
     <div
-      data-mocked="Box"
-      font-weight="bold"
-    >
-      Matterport Integration
-    </div>
-    <div
-      data-mocked="Box"
-    >
-      Connecting your Matterport account enables viewing spaces in your TwinMaker scene.
-    </div>
-    <div
-      style="text-align: center;"
+      class="awsui_child_18582_z63vw_103"
     >
       <div
-        data-mocked="SpaceBetween"
+        class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-bold_18wu0_1elzt_414"
+      >
+        Matterport Integration
+      </div>
+    </div>
+    <div
+      class="awsui_child_18582_z63vw_103"
+    >
+      <div
+        class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+      >
+        Connecting your Matterport account enables viewing spaces in your TwinMaker scene.
+      </div>
+    </div>
+    <div
+      class="awsui_child_18582_z63vw_103"
+    >
+      <div
+        style="text-align: center;"
       >
         <div
-          data-mocked="Box"
-          font-weight="bold"
-          textalign="center"
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-xl_18582_z63vw_167"
         >
-          No Connections
-        </div>
-        <div
-          arialabel="Learn more (opens new tab)"
-          data-mocked="Button"
-          href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/tm-matterport-integration.html"
-          iconalign="right"
-          iconname="external"
-          target="_blank"
-        >
-          Learn more
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-bold_18wu0_1elzt_414 awsui_t-center_18wu0_1elzt_429"
+            >
+              No Connections
+            </div>
+          </div>
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <a
+              aria-label="Learn more (opens new tab)"
+              class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
+              data-analytics-funnel-value="button:r0:"
+              href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/tm-matterport-integration.html"
+              rel="noopener noreferrer"
+              target="_blank"
+              title="Learn more (opens new tab)"
+            >
+              <span
+                class="awsui_content_vjswe_12tek_103"
+              >
+                Learn more
+              </span>
+              <span
+                class="awsui_icon_vjswe_12tek_1123 awsui_icon-right_vjswe_12tek_1128 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230 awsui_name-external_h11ix_1l964_264"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="stroke-linecap-square"
+                    d="M10 2h4v4"
+                  />
+                  <path
+                    d="m6 10 8-8"
+                  />
+                  <path
+                    class="stroke-linejoin-round"
+                    d="M14 9.048V14H2V2h5"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

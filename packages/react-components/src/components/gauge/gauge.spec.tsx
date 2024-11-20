@@ -29,13 +29,13 @@ const query = mockTimeSeriesDataQuery([
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn(),
+    invokeAssistant: vi.fn(),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
 
 const assistant = {
-  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  onAction: (_event: AssistantActionEventDetail) => vi.fn(),
   componentId: 'componentId',
   conversationId: 'conversationId',
   target: 'widget',

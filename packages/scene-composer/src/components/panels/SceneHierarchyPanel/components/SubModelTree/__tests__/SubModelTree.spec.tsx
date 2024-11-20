@@ -1,32 +1,34 @@
+import { fireEvent, render } from '@/tests/testing-library';
 import { useCallback } from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { type Object3D, type Event } from 'three';
+import { type Event, type Object3D } from 'three';
 
-import { useEditorState, useSceneDocument } from '../../../../../../store';
-import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';
 import SubModelTree from '..';
+import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';
 import { KnownComponentType } from '../../../../../../interfaces';
+import { useEditorState, useSceneDocument } from '../../../../../../store';
 
-jest.mock('../../../../../../utils/mathUtils', () => ({
-  generateUUID: jest.fn(() => '40B59050-EBAE-497F-A366-201E775341DD'), // Hard code UUID for predictable snapshots.
+vi.mock('../../../../../../utils/mathUtils', () => ({
+  generateUUID: vi.fn(() => '40B59050-EBAE-497F-A366-201E775341DD'), // Hard code UUID for predictable snapshots.
 }));
 
-jest.mock('../../../../../../hooks/useMaterialEffect');
+vi.mock('../../../../../../hooks/useMaterialEffect');
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn((cb) => cb), // just act as a pass through, since we don't care about testing useCallback Behavior
+vi.mock('react', async () => ({
+  ...(await vi.importActual('react')),
+  useCallback: vi.fn((cb) => cb), // just act as a pass through, since we don't care about testing useCallback Behavior
 }));
 
-jest.mock('../SubModelTreeItemLabel', () => (props) => <div data-mocked='SubModelTreeItemLabel' {...props} />);
+vi.mock('../SubModelTreeItemLabel', () => ({
+  default: (props) => <div data-mocked='SubModelTreeItemLabel' {...props} />,
+}));
 
-jest.mock('../../../../../../store', () => ({
-  ...jest.requireActual('../../../../../../store'),
-  useSceneDocument: jest.fn(() => ({
-    appendSceneNodeInternal: jest.fn(),
-    getSceneNodeByRef: jest.fn(),
+vi.mock('../../../../../../store', async () => ({
+  ...(await vi.importActual('../../../../../../store')),
+  useSceneDocument: vi.fn(() => ({
+    appendSceneNodeInternal: vi.fn(),
+    getSceneNodeByRef: vi.fn(),
   })),
-  useEditorState: jest.fn(() => ({ setSceneNodeObject3DMapping: jest.fn() })),
+  useEditorState: vi.fn(() => ({ setSceneNodeObject3DMapping: vi.fn() })),
 }));
 
 const node = (id: number, name?: string, children: any[] = [], isOriginal = true) => {
@@ -52,14 +54,14 @@ const defaultObject = {
 
 describe('SubModelTree', () => {
   it('should render appropriately based on the object', () => {
-    (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+    (useMaterialEffect as vi.Mock).mockImplementation(() => [vi.fn(), vi.fn()]);
 
     const { container } = render(<SubModelTree {...defaultObject} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should not render a SubModel Tree if name is null', () => {
-    (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+    (useMaterialEffect as vi.Mock).mockImplementation(() => [vi.fn(), vi.fn()]);
 
     const objectNullName = {
       ...defaultObject,
@@ -71,7 +73,7 @@ describe('SubModelTree', () => {
   });
 
   it('should not render a SubModel Tree if isOriginal flag is false', () => {
-    (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+    (useMaterialEffect as vi.Mock).mockImplementation(() => [vi.fn(), vi.fn()]);
 
     const objectIsOriginalFalse = {
       ...defaultObject,
@@ -83,8 +85,8 @@ describe('SubModelTree', () => {
   });
 
   it('should change color of submodel on hover', async () => {
-    const transform = jest.fn();
-    const restore = jest.fn();
+    const transform = vi.fn();
+    const restore = vi.fn();
 
     const object = {
       name: 'RootObject',
@@ -94,7 +96,7 @@ describe('SubModelTree', () => {
 
     const parentRef = '112';
 
-    (useMaterialEffect as jest.Mock).mockImplementation(() => [transform, restore]);
+    (useMaterialEffect as vi.Mock).mockImplementation(() => [transform, restore]);
 
     const { findByText } = render(<SubModelTree parentRef={parentRef} object3D={object} />);
 
@@ -114,7 +116,7 @@ describe('SubModelTree', () => {
 
     beforeEach(() => {
       callbacks = [];
-      (useCallback as jest.Mock).mockImplementation((cb) => {
+      (useCallback as vi.Mock).mockImplementation((cb) => {
         callbacks.push(cb);
         return cb;
       });
@@ -129,7 +131,7 @@ describe('SubModelTree', () => {
 
       const parentRef = '112';
 
-      (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+      (useMaterialEffect as vi.Mock).mockImplementation(() => [vi.fn(), vi.fn()]);
 
       render(<SubModelTree parentRef={parentRef} object3D={object} />);
 
@@ -141,9 +143,9 @@ describe('SubModelTree', () => {
     });
 
     it('should append node onCreate', () => {
-      const appendSceneNodeInternal = jest.fn();
-      const getSceneNodeByRef = jest.fn();
-      const setSceneNodeObject3DMapping = jest.fn();
+      const appendSceneNodeInternal = vi.fn();
+      const getSceneNodeByRef = vi.fn();
+      const setSceneNodeObject3DMapping = vi.fn();
       const object = {
         name: 'RootObject',
         userData: { isOriginal: true },
@@ -155,14 +157,14 @@ describe('SubModelTree', () => {
 
       const parentRef = '112';
 
-      (useSceneDocument as jest.Mock).mockImplementation(() => ({
+      (useSceneDocument as vi.Mock).mockImplementation(() => ({
         appendSceneNodeInternal,
         getSceneNodeByRef,
       }));
 
-      (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
+      (useEditorState as vi.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
 
-      (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+      (useMaterialEffect as vi.Mock).mockImplementation(() => [vi.fn(), vi.fn()]);
 
       render(<SubModelTree parentRef={parentRef} object3D={object} />);
 
@@ -176,7 +178,7 @@ describe('SubModelTree', () => {
     });
 
     it('should not append duplicate node onCreate', () => {
-      const appendSceneNodeInternal = jest.fn();
+      const appendSceneNodeInternal = vi.fn();
 
       const nodes = [
         {
@@ -192,8 +194,8 @@ describe('SubModelTree', () => {
           ],
         },
       ];
-      const getSceneNodeByRef = jest.fn().mockReturnValueOnce(nodes[0]).mockReturnValueOnce(nodes[1]);
-      const setSceneNodeObject3DMapping = jest.fn();
+      const getSceneNodeByRef = vi.fn().mockReturnValueOnce(nodes[0]).mockReturnValueOnce(nodes[1]);
+      const setSceneNodeObject3DMapping = vi.fn();
       const object = {
         name: 'RootObject',
         userData: { isOriginal: true },
@@ -205,14 +207,14 @@ describe('SubModelTree', () => {
 
       const parentRef = '112';
 
-      (useSceneDocument as jest.Mock).mockImplementation(() => ({
+      (useSceneDocument as vi.Mock).mockImplementation(() => ({
         appendSceneNodeInternal,
         getSceneNodeByRef,
       }));
 
-      (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
+      (useEditorState as vi.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
 
-      (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+      (useMaterialEffect as vi.Mock).mockImplementation(() => [vi.fn(), vi.fn()]);
 
       render(<SubModelTree parentRef={parentRef} object3D={object} />);
 

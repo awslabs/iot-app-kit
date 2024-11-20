@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataOverlayDataRow Markdown should render markdown row for overlay panel correctly 1`] = `
+exports[`DataOverlayDataRow > Markdown > should render markdown row for overlay panel correctly 1`] = `
 <div>
   <div
     data-testid="ReactMarkdownWrapper"
@@ -10,7 +10,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row for overlay pane
 </div>
 `;
 
-exports[`DataOverlayDataRow Markdown should render markdown row for text annotation correctly 1`] = `
+exports[`DataOverlayDataRow > Markdown > should render markdown row for text annotation correctly 1`] = `
 <div>
   <div
     data-testid="ReactMarkdownWrapper"
@@ -20,7 +20,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row for text annotat
 </div>
 `;
 
-exports[`DataOverlayDataRow Markdown should render markdown row with data binding variable correctly in editing mode 1`] = `
+exports[`DataOverlayDataRow > Markdown > should render markdown row with data binding variable correctly in editing mode 1`] = `
 <div>
   <div
     data-testid="ReactMarkdownWrapper"
@@ -30,7 +30,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row with data bindin
 </div>
 `;
 
-exports[`DataOverlayDataRow Markdown should render markdown row with data binding variable correctly in viewing mode 1`] = `
+exports[`DataOverlayDataRow > Markdown > should render markdown row with data binding variable correctly in viewing mode 1`] = `
 <div>
   <div
     data-testid="ReactMarkdownWrapper"
@@ -40,7 +40,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row with data bindin
 </div>
 `;
 
-exports[`DataOverlayDataRow should render markdown row with data binding variable correctly in viewing mode from useBindingData 1`] = `
+exports[`DataOverlayDataRow > should render markdown row with data binding variable correctly in viewing mode from useBindingData 1`] = `
 <div>
   <div
     data-testid="ReactMarkdownWrapper"

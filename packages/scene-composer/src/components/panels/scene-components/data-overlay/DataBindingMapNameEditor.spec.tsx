@@ -1,9 +1,9 @@
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@/tests/testing-library';
 
 import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
 
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', async () => ({
+  ...(await vi.importActual('@cloudscape-design/components')),
 }));
 
 describe('DataBindingMapNameEditor', () => {
@@ -15,10 +15,10 @@ describe('DataBindingMapNameEditor', () => {
       },
     },
   ];
-  const onUpdateCallbackMock = jest.fn();
+  const onUpdateCallbackMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update binding name', async () => {

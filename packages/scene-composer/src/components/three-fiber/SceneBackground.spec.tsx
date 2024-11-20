@@ -1,14 +1,15 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 import * as THREE from 'three';
-jest.doMock('@react-three/fiber', () => ({
-  useThree: jest.fn(),
-}));
-import { useThree } from '@react-three/fiber';
-
+import * as reactThree from '@react-three/fiber';
 import { COMPOSER_FEATURES, type ISceneBackgroundSetting } from '../../interfaces';
 import { accessStore } from '../../store';
+import SceneBackground from './SceneBackground';
 
-const getScenePropertyMock = jest.fn();
+vi.doMock('@react-three/fiber', () => ({
+  useThree: vi.fn(),
+}));
+
+const getScenePropertyMock = vi.fn();
 const baseState = {
   getSceneProperty: getScenePropertyMock,
 };
@@ -20,15 +21,13 @@ const mockLoadTexture = (uri, cb) => {
 };
 const mockFeatureConfigOn = { [COMPOSER_FEATURES.Textures]: true };
 
-import SceneBackground from './SceneBackground';
-
-jest.mock('../../hooks/useTwinMakerTextureLoader', () => {
-  return () => ({
+vi.mock('../../hooks/useTwinMakerTextureLoader', () => ({
+  default: () => ({
     loadTexture: mockLoadTexture,
-  });
-});
+  }),
+}));
 
-jest.mock('../../common/GlobalSettings', () => {
+vi.mock('../../common/GlobalSettings', () => {
   return {
     getGlobalSettings: () => ({ featureConfig: mockFeatureConfigOn }),
   };
@@ -36,7 +35,7 @@ jest.mock('../../common/GlobalSettings', () => {
 
 describe('SceneBackground', () => {
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     accessStore('default').setState(baseState);
   };
@@ -47,12 +46,10 @@ describe('SceneBackground', () => {
 
   it(`should add background color to the scene`, () => {
     const testScene = new THREE.Scene();
-    const mockThreeStates = {
-      scene: testScene,
-    };
-    const useThreeMock = useThree as jest.Mock;
-    useThreeMock.mockImplementation((s) => {
-      return s(mockThreeStates);
+    vi.spyOn(reactThree, 'useThree').mockImplementation((s) => {
+      if (s) {
+        return s({ scene: testScene } as reactThree.RootState);
+      }
     });
 
     const backgroundSetting: ISceneBackgroundSetting = {
@@ -69,12 +66,10 @@ describe('SceneBackground', () => {
 
   it(`should add texture background to the scene`, () => {
     const testScene = new THREE.Scene();
-    const mockThreeStates = {
-      scene: testScene,
-    };
-    const useThreeMock = useThree as jest.Mock;
-    useThreeMock.mockImplementation((s) => {
-      return s(mockThreeStates);
+    vi.spyOn(reactThree, 'useThree').mockImplementation((s) => {
+      if (s) {
+        return s({ scene: testScene } as reactThree.RootState);
+      }
     });
     const backgroundSetting: ISceneBackgroundSetting = {
       textureUri: 'filepath',
@@ -89,14 +84,11 @@ describe('SceneBackground', () => {
 
   it(`should not add background to the scene`, () => {
     const testScene = new THREE.Scene();
-    const mockThreeStates = {
-      scene: testScene,
-    };
-    const useThreeMock = useThree as jest.Mock;
-    useThreeMock.mockImplementation((s) => {
-      return s(mockThreeStates);
+    vi.spyOn(reactThree, 'useThree').mockImplementation((s) => {
+      if (s) {
+        return s({ scene: testScene } as reactThree.RootState);
+      }
     });
-
     getScenePropertyMock.mockReturnValue(undefined);
 
     expect(testScene.background).toBeNull();

@@ -33,7 +33,7 @@ const AGGREGATE_TYPE = AggregateType.AVERAGE;
 const createMockSource = (
   dataStreams: DataStream[]
 ): DataSource<SiteWiseDataStreamQuery> => ({
-  initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
+  initiateRequest: vi.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
     onSuccess(
       dataStreams,
       {
@@ -75,11 +75,11 @@ const componentSession = new SiteWiseComponentSession({
 });
 
 beforeAll(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterAll(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it.skip('subscribes, updates, and unsubscribes to time series data by delegating to underlying data modules', () => {
@@ -96,7 +96,7 @@ it.skip('subscribes, updates, and unsubscribes to time series data by delegating
     },
   });
 
-  const timeSeriesCallback = jest.fn();
+  const timeSeriesCallback = vi.fn();
 
   // subscribe
   provider.subscribe({ next: timeSeriesCallback });
@@ -167,7 +167,7 @@ it.skip('subscribes, updates, and unsubscribes to time series data by delegating
   timeSeriesCallback.mockClear();
 
   // check that subscription refreshes
-  jest.advanceTimersByTime(refreshRate);
+  vi.advanceTimersByTime(refreshRate);
 
   expect(timeSeriesCallback).toHaveBeenCalled();
 
@@ -176,7 +176,7 @@ it.skip('subscribes, updates, and unsubscribes to time series data by delegating
   // unsubscribe
   provider.unsubscribe();
 
-  jest.advanceTimersByTime(refreshRate);
+  vi.advanceTimersByTime(refreshRate);
 
   expect(timeSeriesCallback).not.toHaveBeenCalled();
 });

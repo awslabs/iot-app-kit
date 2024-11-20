@@ -1,44 +1,114 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MessageModalSnap should render correctly with: [object Object] 1`] = `
+exports[`MessageModalSnap > should render correctly with: [object Object] 1`] = `
 <div>
   <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
   >
-    <div>
-      <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Notice
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
-      >
-        <div
-          data-mocked="Button"
-          variant="primary"
-        >
-          Ok
-        </div>
-      </div>
-    </div>
     <div
-      data-mocked="SpaceBetween"
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r1:"
     >
       <div
-        data-mocked="Box"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="StatusIndicator"
-          type="info"
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
         >
-          Info Test
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r2:"
+                >
+                  Notice
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
+        >
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+            >
+              <span
+                class="awsui_root_1cbgc_azp03_153 awsui_status-info_1cbgc_azp03_171"
+              >
+                <span
+                  class="awsui_container_1cbgc_azp03_131 awsui_display-inline-block_1cbgc_azp03_210"
+                >
+                  <span
+                    class="awsui_icon_1cbgc_azp03_103"
+                  >
+                    <span
+                      class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          class="stroke-linejoin-round"
+                          cx="8"
+                          cy="8"
+                          r="7"
+                        />
+                        <path
+                          d="M8 11V8H6"
+                        />
+                        <path
+                          class="stroke-linejoin-round"
+                          d="M10 11H6"
+                        />
+                        <path
+                          d="M7.99 5H8v.01h-.01z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  Info Test
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <button
+            class="awsui_button_vjswe_12tek_107 awsui_variant-primary_vjswe_12tek_251"
+            data-analytics-funnel-value="button:r3:"
+            type="submit"
+          >
+            <span
+              class="awsui_content_vjswe_12tek_103"
+            >
+              Ok
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -46,68 +116,150 @@ exports[`MessageModalSnap should render correctly with: [object Object] 1`] = `
 </div>
 `;
 
-exports[`MessageModalSnap should render correctly with: [object Object] 2`] = `
+exports[`MessageModalSnap > should render correctly with: [object Object] 2`] = `
 <div>
   <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
   >
-    <div>
-      <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Warning
-      </div>
-    </div>
-    <div>
-      <div
-        data-mocked="Box"
-        float="right"
-        padding="{"bottom":"s"}"
-      >
-        <div
-          data-mocked="Button"
-          variant="primary"
-        >
-          Ok
-        </div>
-      </div>
-    </div>
     <div
-      data-mocked="SpaceBetween"
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":r6:"
     >
       <div
-        data-mocked="Box"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="StatusIndicator"
-          type="warning"
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
         >
-          Warning Test
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:r7:"
+                >
+                  Warning
+                </span>
+              </h2>
+            </div>
+          </div>
         </div>
       </div>
       <div
-        data-mocked="Box"
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="TextContent"
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
         >
-          <p>
-            <a
-              href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
             >
-               
-              Learn More
-               
+              <span
+                class="awsui_root_1cbgc_azp03_153 awsui_status-warning_1cbgc_azp03_165"
+              >
+                <span
+                  class="awsui_container_1cbgc_azp03_131 awsui_display-inline-block_1cbgc_azp03_210"
+                >
+                  <span
+                    class="awsui_icon_1cbgc_azp03_103"
+                  >
+                    <span
+                      class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          class="stroke-linejoin-round"
+                          d="m8 1 7 14H1L8 1z"
+                        />
+                        <path
+                          d="M7.99 12H8v.01h-.01zM8 6v4"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  Warning Test
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+            >
               <div
-                data-mocked="Icon"
-                name="external"
-                variant="link"
-              />
-               
-            </a>
-          </p>
+                class="awsui_text-content_6absk_1rcdq_100"
+              >
+                <p>
+                  <a
+                    href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+                  >
+                     
+                    Learn More
+                     
+                    <span
+                      class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-link_h11ix_1l964_251 awsui_name-external_h11ix_1l964_264"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          class="stroke-linecap-square"
+                          d="M10 2h4v4"
+                        />
+                        <path
+                          d="m6 10 8-8"
+                        />
+                        <path
+                          class="stroke-linejoin-round"
+                          d="M14 9.048V14H2V2h5"
+                        />
+                      </svg>
+                    </span>
+                     
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="awsui_footer_14iqq_v4tpg_421 awsui_with-divider_14iqq_v4tpg_425 awsui_with-paddings_14iqq_v4tpg_303"
+      >
+        <div
+          class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_p-bottom-s_18wu0_1elzt_651 awsui_f-right_18wu0_1elzt_1053 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+        >
+          <button
+            class="awsui_button_vjswe_12tek_107 awsui_variant-primary_vjswe_12tek_251"
+            data-analytics-funnel-value="button:r8:"
+            type="submit"
+          >
+            <span
+              class="awsui_content_vjswe_12tek_103"
+            >
+              Ok
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -115,54 +267,133 @@ exports[`MessageModalSnap should render correctly with: [object Object] 2`] = `
 </div>
 `;
 
-exports[`MessageModalSnap should render correctly with: [object Object] 3`] = `
+exports[`MessageModalSnap > should render correctly with: [object Object] 3`] = `
 <div>
   <div
-    class="sc-aXZVg eWvTss"
-    data-mocked="Container"
+    class="sc-aXZVg eWvTss awsui_root_14iqq_v4tpg_103 awsui_variant-default_14iqq_v4tpg_147 awsui_refresh_14iqq_v4tpg_155"
   >
-    <div>
-      <div
-        data-mocked="Header"
-        variant="h2"
-      >
-        Error - unable to render the scene
-      </div>
-    </div>
     <div
-      data-mocked="SpaceBetween"
+      class="awsui_content-wrapper_14iqq_v4tpg_222"
+      id=":rb:"
     >
       <div
-        data-mocked="Box"
+        class="awsui_refresh_14iqq_v4tpg_155 awsui_header_14iqq_v4tpg_263 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="StatusIndicator"
-          type="error"
+          class="awsui_root_2qdw9_1bpgx_99 awsui_root-variant-h2_2qdw9_1bpgx_141 awsui_refresh_2qdw9_1bpgx_138 awsui_root-no-actions_2qdw9_1bpgx_138"
         >
-          Error Test
+          <div
+            class="awsui_main_2qdw9_1bpgx_160 awsui_refresh_2qdw9_1bpgx_138"
+          >
+            <div
+              class="awsui_title_2qdw9_1bpgx_216 awsui_title-variant-h2_2qdw9_1bpgx_228 awsui_refresh_2qdw9_1bpgx_138"
+            >
+              <h2
+                class="awsui_heading_2qdw9_1bpgx_296 awsui_heading-variant-h2_2qdw9_1bpgx_312"
+              >
+                <span
+                  class="awsui_heading-text_2qdw9_1bpgx_327 awsui_heading-text-variant-h2_2qdw9_1bpgx_338"
+                  data-analytics-funnel-key="substep-name"
+                  id="heading:rc:"
+                >
+                  Error - unable to render the scene
+                </span>
+              </h2>
+            </div>
+          </div>
         </div>
       </div>
       <div
-        data-mocked="Box"
+        class="awsui_content_14iqq_v4tpg_222 awsui_with-paddings_14iqq_v4tpg_303"
       >
         <div
-          data-mocked="TextContent"
+          class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
         >
-          <p>
-            <a
-              href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
             >
-               
-              Learn More
-               
+              <span
+                class="awsui_root_1cbgc_azp03_153 awsui_status-error_1cbgc_azp03_162"
+              >
+                <span
+                  class="awsui_container_1cbgc_azp03_131 awsui_display-inline-block_1cbgc_azp03_210"
+                >
+                  <span
+                    class="awsui_icon_1cbgc_azp03_103"
+                  >
+                    <span
+                      class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          class="stroke-linejoin-round"
+                          cx="8"
+                          cy="8"
+                          r="7"
+                        />
+                        <path
+                          d="m10.828 5.172-5.656 5.656M10.828 10.828 5.172 5.172"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  Error Test
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="awsui_child_18582_z63vw_103"
+          >
+            <div
+              class="awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+            >
               <div
-                data-mocked="Icon"
-                name="external"
-                variant="link"
-              />
-               
-            </a>
-          </p>
+                class="awsui_text-content_6absk_1rcdq_100"
+              >
+                <p>
+                  <a
+                    href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+                  >
+                     
+                    Learn More
+                     
+                    <span
+                      class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-link_h11ix_1l964_251 awsui_name-external_h11ix_1l964_264"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          class="stroke-linecap-square"
+                          d="M10 2h4v4"
+                        />
+                        <path
+                          d="m6 10 8-8"
+                        />
+                        <path
+                          class="stroke-linejoin-round"
+                          d="M14 9.048V14H2V2h5"
+                        />
+                      </svg>
+                    </span>
+                     
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

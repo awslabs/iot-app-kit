@@ -9,12 +9,14 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import { resourceExplorerQueryClient } from '@iot-app-kit/react-components';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 
-jest.mock('@iot-app-kit/charts-core');
+const user = ue.setup();
+
+vi.mock('@iot-app-kit/charts-core');
 export const SUPPORTED_PAGE_SIZES = [10, 25, 100, 250];
 
 export async function waitForLoadingToFinish() {
@@ -140,18 +142,18 @@ const assetModelProperty3 = {
 
 describe('Query editor tests', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     resourceExplorerQueryClient.clear();
   });
 
   test('Renders query', async () => {
-    const listAssets = jest.fn().mockResolvedValue({
+    const listAssets = vi.fn().mockResolvedValue({
       assetSummaries: [asset1WithHierarchy, asset2, asset3],
     });
-    const listAssetProperties = jest.fn().mockResolvedValue({
+    const listAssetProperties = vi.fn().mockResolvedValue({
       assetPropertySummaries: [assetProperty1, assetProperty2, assetProperty3],
     });
-    const listAssetModelProperties = jest.fn().mockResolvedValue({
+    const listAssetModelProperties = vi.fn().mockResolvedValue({
       assetModelPropertySummaries: [
         assetModelProperty1,
         assetModelProperty2,
@@ -191,21 +193,20 @@ describe('Query editor tests', () => {
   });
 
   test('Single select calls update query one time', async () => {
-    const listAssets = jest.fn().mockResolvedValue({
+    const listAssets = vi.fn().mockResolvedValue({
       assetSummaries: [asset1WithHierarchy, asset2, asset3],
     });
-    const listAssetProperties = jest.fn().mockResolvedValue({
+    const listAssetProperties = vi.fn().mockResolvedValue({
       assetPropertySummaries: [assetProperty1, assetProperty2, assetProperty3],
     });
-    const listAssetModelProperties = jest.fn().mockResolvedValue({
+    const listAssetModelProperties = vi.fn().mockResolvedValue({
       assetModelPropertySummaries: [
         assetModelProperty1,
         assetModelProperty2,
         assetModelProperty3,
       ],
     });
-    const user = userEvent.setup();
-    const onUpdateQuery = jest.fn();
+    const onUpdateQuery = vi.fn();
     render(
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
@@ -250,21 +251,20 @@ describe('Query editor tests', () => {
   });
 
   test('Adding multiselected properties at once calls update query one time', async () => {
-    const listAssets = jest.fn().mockResolvedValue({
+    const listAssets = vi.fn().mockResolvedValue({
       assetSummaries: [asset1WithHierarchy, asset2, asset3],
     });
-    const listAssetProperties = jest.fn().mockResolvedValue({
+    const listAssetProperties = vi.fn().mockResolvedValue({
       assetPropertySummaries: [assetProperty1, assetProperty2, assetProperty3],
     });
-    const listAssetModelProperties = jest.fn().mockResolvedValue({
+    const listAssetModelProperties = vi.fn().mockResolvedValue({
       assetModelPropertySummaries: [
         assetModelProperty1,
         assetModelProperty2,
         assetModelProperty3,
       ],
     });
-    const user = userEvent.setup();
-    const onUpdateQuery = jest.fn();
+    const onUpdateQuery = vi.fn();
     render(
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
@@ -313,21 +313,20 @@ describe('Query editor tests', () => {
   });
 
   test('Adding multiselected properties mulitiple times calls update query multiple times', async () => {
-    const listAssets = jest.fn().mockResolvedValue({
+    const listAssets = vi.fn().mockResolvedValue({
       assetSummaries: [asset1WithHierarchy, asset2, asset3],
     });
-    const listAssetProperties = jest.fn().mockResolvedValue({
+    const listAssetProperties = vi.fn().mockResolvedValue({
       assetPropertySummaries: [assetProperty1, assetProperty2, assetProperty3],
     });
-    const listAssetModelProperties = jest.fn().mockResolvedValue({
+    const listAssetModelProperties = vi.fn().mockResolvedValue({
       assetModelPropertySummaries: [
         assetModelProperty1,
         assetModelProperty2,
         assetModelProperty3,
       ],
     });
-    const user = userEvent.setup();
-    const onUpdateQuery = jest.fn();
+    const onUpdateQuery = vi.fn();
     render(
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
@@ -380,20 +379,20 @@ describe('Query editor tests', () => {
   });
 
   // test('Adding multiselected properties mulitiple times calls update query multiple times', async () => {
-  //   const listAssets = jest.fn().mockResolvedValue({
+  //   const listAssets = vi.fn().mockResolvedValue({
   //     assetSummaries: [asset1WithHierarchy, asset2, asset3],
   //   });
-  //   const listAssetProperties = jest.fn().mockResolvedValue({
+  //   const listAssetProperties = vi.fn().mockResolvedValue({
   //     assetPropertySummaries: [assetProperty1, assetProperty2, assetProperty3],
   //   });
-  //   const listAssetModelProperties = jest.fn().mockResolvedValue({
+  //   const listAssetModelProperties = vi.fn().mockResolvedValue({
   //     assetModelPropertySummaries: [
   //       assetModelProperty1,
   //       assetModelProperty2,
   //       assetModelProperty3,
   //     ],
   //   });
-  //   const onUpdateQuery = jest.fn();
+  //   const onUpdateQuery = vi.fn();
   //   render(
   //     <Provider store={configureDashboardStore()}>
   //       <IoTSiteWiseQueryEditor

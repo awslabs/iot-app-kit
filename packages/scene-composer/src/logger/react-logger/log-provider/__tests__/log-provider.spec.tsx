@@ -1,22 +1,22 @@
-import { useContext } from 'react';
 import { render } from '@testing-library/react';
+import { useContext } from 'react';
 
+import LogProvider from '..';
 import DebugLogger from '../../../DebugLogger';
 import type ILogger from '../../../ILogger';
-import LogProvider from '..';
 import LoggingContext from '../../contexts/logging';
 
-jest.mock('../../../DebugLogger');
+vi.mock('../../../DebugLogger');
 
 const MockLogger = {
   extend() {
     return MockLogger;
   },
-  warn: jest.fn(),
-  error: jest.fn(),
-  fatal: jest.fn(),
-  info: jest.fn(),
-  verbose: jest.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
+  fatal: vi.fn(),
+  info: vi.fn(),
+  verbose: vi.fn(),
 };
 
 describe('<LogProvider />', () => {
@@ -51,13 +51,13 @@ describe('<LogProvider />', () => {
   });
 
   it('should support nesting loggers', () => {
-    const log = jest.fn();
+    const log = vi.fn();
     const top = 'This is a log';
     const inner = 'this is another log';
 
     (DebugLogger as any).mockImplementation(() => ({
       info: log,
-      verbose: jest.fn(),
+      verbose: vi.fn(),
       extend: (namespace: string) => new DebugLogger(namespace),
     }));
 

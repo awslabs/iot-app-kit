@@ -34,10 +34,9 @@
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
-    "test": "npm run test:jest",
-    "test-functional": "TZ=UTC jest --silent -c jest.config.functional.ts --cacheDirectory .cache/jest",
-    "test:watch": "TZ=UTC jest --watchAll --cacheDirectory .cache/jest",
-    "test:jest": "TZ=UTC jest --silent --cacheDirectory .cache/jest",
+    "test": "TZ=UTC vitest run -c vitest.config.ts --silent --coverage",
+    "test:watch": "TZ=UTC vitest -c vitest.config.ts --silent",
+    "test-functional": "TZ=UTC vitest --silent -c vitest.functional.ts",
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
@@ -48,14 +47,18 @@
     "package-mac": "pkg . --targets node16-macos-x64 --output tmdt_local"
   },
   "devDependencies": {
+    "@iot-app-kit/ts-config": "*",
     "@types/node": "^18.16.18",
     "@types/prompts": "^2.4.4",
     "@types/yargs": "^17.0.24",
+    "@vitest/coverage-v8": "^2.1.5",
     "aws-sdk-client-mock": "^3.1.0",
     "jest-extended": "^3.2.4",
     "pkg": "^5.8.0",
     "rimraf": "^5.0.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.5.4",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.5"
   },
   "dependencies": {
     "@aws-sdk/client-cloudformation": "^3.376.0",

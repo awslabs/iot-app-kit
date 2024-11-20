@@ -1,20 +1,20 @@
-import * as THREE from 'three';
-import { render } from '@testing-library/react';
 import { useFrame as mockUseFrame } from '@react-three/fiber';
+import { render } from '@testing-library/react';
+import * as THREE from 'three';
 
-import { TilesModelComponent } from '../TilesModelComponent';
 import { KnownComponentType } from '../../../../interfaces';
 import { type IModelRefComponentInternal } from '../../../../store/internalInterfaces';
 import { useTiles as mockUseTiles } from '../TilesLoader';
+import { TilesModelComponent } from '../TilesModelComponent';
 
-jest.mock('../TilesLoader', () => {
+vi.mock('../TilesLoader', () => {
   return {
-    useTiles: jest.fn(),
+    useTiles: vi.fn(),
   };
 });
 
-jest.mock('@react-three/fiber', () => ({
-  useFrame: jest.fn(),
+vi.mock('@react-three/fiber', () => ({
+  useFrame: vi.fn(),
 }));
 
 describe('TilesModelComponent', () => {
@@ -33,7 +33,7 @@ describe('TilesModelComponent', () => {
   baseScene.add(mockObject);
 
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   };
 
   beforeEach(() => {
@@ -41,8 +41,8 @@ describe('TilesModelComponent', () => {
   });
 
   it('should render TilesModelComponent', () => {
-    const mockUpdate = jest.fn();
-    (mockUseTiles as jest.Mock).mockReturnValue({ update: mockUpdate, group: baseScene });
+    const mockUpdate = vi.fn();
+    (mockUseTiles as vi.Mock).mockReturnValue({ update: mockUpdate, group: baseScene });
 
     const { container } = render(<TilesModelComponent node={baseNode} component={baseComponent} />);
 
@@ -50,10 +50,10 @@ describe('TilesModelComponent', () => {
   });
 
   it('should update renderer every frame', () => {
-    const mockUpdate = jest.fn();
+    const mockUpdate = vi.fn();
 
-    (mockUseTiles as jest.Mock).mockReturnValue({ update: mockUpdate, group: baseScene });
-    (mockUseFrame as jest.Mock).mockImplementation((cb) => cb()); // basically, let's cheat and just run it as soon as useFrame is setup so we can verify it's internals
+    (mockUseTiles as vi.Mock).mockReturnValue({ update: mockUpdate, group: baseScene });
+    (mockUseFrame as vi.Mock).mockImplementation((cb) => cb()); // basically, let's cheat and just run it as soon as useFrame is setup so we can verify it's internals
 
     render(<TilesModelComponent node={baseNode} component={baseComponent} />);
 

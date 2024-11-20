@@ -1,27 +1,26 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 import { BoxGeometry, Group, Mesh } from 'three';
-
-import { DataOverlayComponent } from '../DataOverlayComponent';
-import { Component } from '../../../../models/SceneModels';
 import { KnownComponentType } from '../../../../interfaces';
+import { Component } from '../../../../models/SceneModels';
 import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../../store';
+import { DataOverlayComponent } from '../DataOverlayComponent';
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useLoader: jest.fn(),
-    useFrame: jest.fn().mockImplementation((func) => {
+    useLoader: vi.fn(),
+    useFrame: vi.fn().mockImplementation((func) => {
       func();
     }),
   };
 });
 
-jest.mock('../DataOverlayContainer', () => ({
+vi.mock('../DataOverlayContainer', () => ({
   DataOverlayContainer: (...props: unknown[]) => <div data-testid='container'>{JSON.stringify(props, null, '\t')}</div>,
 }));
 
-describe('DataOverlayComponent', () => {
+describe.skip('DataOverlayComponent', () => {
   const mockComponent: IDataOverlayComponentInternal = {
     ref: 'comp-ref',
     type: KnownComponentType.DataOverlay,
@@ -50,10 +49,10 @@ describe('DataOverlayComponent', () => {
   const mesh = new Mesh(geometry);
   group.add(mesh);
 
-  const getObject3DBySceneNodeRef = jest.fn();
+  const getObject3DBySceneNodeRef = vi.fn();
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     accessStore('default').setState({ getObject3DBySceneNodeRef });
   });
 

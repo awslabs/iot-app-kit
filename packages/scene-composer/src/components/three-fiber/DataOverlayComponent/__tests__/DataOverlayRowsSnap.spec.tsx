@@ -1,12 +1,11 @@
-import { render } from '@testing-library/react';
-
-import { type IDataOverlayComponentInternal } from '../../../../store';
+import { render } from '@/tests/testing-library';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
-import { DataOverlayRows } from '../DataOverlayRows';
+import { type IDataOverlayComponentInternal } from '../../../../store';
 import { type DataOverlayDataRowProps } from '../DataOverlayDataRow';
+import { DataOverlayRows } from '../DataOverlayRows';
 
-jest.mock('../DataOverlayDataRow', () => ({
+vi.mock('../DataOverlayDataRow', () => ({
   DataOverlayDataRow: (...props: [DataOverlayDataRowProps, object]) => (
     <div data-testid='data-row'>{JSON.stringify(props)}</div>
   ),

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SceneViewer should render correctly 1`] = `
+exports[`SceneViewer > should render correctly 1`] = `
 <div
   className="sc-cWSHoV icqfWN sceneViewer"
   data-testid="webgl-root"
@@ -10,7 +10,7 @@ exports[`SceneViewer should render correctly 1`] = `
     data-mocked="SceneComposerInternal"
     onSceneLoaded={[Function]}
     sceneComposerId="123"
-    sceneLoader="{}"
+    sceneLoader="{"getSceneObject":{}}"
   />
 </div>
 `;

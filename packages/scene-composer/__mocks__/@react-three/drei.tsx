@@ -1,6 +1,6 @@
 import mockComponent from '../mockComponent';
 
-const dreiRaw: any = jest.createMockFromModule('@react-three/drei');
+const dreiRaw: any = await vi.importMock('@react-three/drei');
 
 const drei = Object.keys(dreiRaw).reduce((acc, comp) => {
   if (!comp.startsWith('_')) {

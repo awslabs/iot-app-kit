@@ -5,8 +5,8 @@ describe('createNodeErrorStateSlice', () => {
     // Arrange
     const errorMap = {};
     const draft = { lastOperation: undefined, nodeErrorMap: errorMap };
-    const get = jest.fn(() => ({ errorMap })); // fake out get call
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const get = vi.fn(() => ({ errorMap })); // fake out get call
+    const set = vi.fn(((callback) => callback(draft)) as any);
     const newNodeRef = 'new-error';
     const newErrorMessage = 'fake error';
     const expected = { ...errorMap, [newNodeRef]: newErrorMessage };
@@ -24,8 +24,8 @@ describe('createNodeErrorStateSlice', () => {
     // Arrange
     const errorMap = { 'test-ref': 'this is a fake error' };
     const draft = { lastOperation: undefined, nodeErrorMap: errorMap };
-    const get = jest.fn(() => ({ errorMap })); // fake out get call
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const get = vi.fn(() => ({ errorMap })); // fake out get call
+    const set = vi.fn(((callback) => callback(draft)) as any);
     const expected = {};
 
     // Act

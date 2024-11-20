@@ -3,17 +3,17 @@ import StatsImpl from 'stats.js';
 
 import { StatsWindow } from './StatsWindow';
 
-jest.mock('stats.js');
+vi.mock('stats.js');
 
 describe('StatsWindow', () => {
   it('should call StatsImpl Dependencies', () => {
-    const showPanel = jest.fn();
+    const showPanel = vi.fn();
 
-    (StatsImpl as jest.Mock).mockReturnValue(() => ({
+    (StatsImpl as vi.Mock).mockReturnValue(() => ({
       showPanel,
       dom: document.createElement('div'),
-      begin: jest.fn(),
-      end: jest.fn(),
+      begin: vi.fn(),
+      end: vi.fn(),
     }));
 
     render(<StatsWindow />);

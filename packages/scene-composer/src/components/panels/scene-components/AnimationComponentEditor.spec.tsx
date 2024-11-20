@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
-import { type IAnimationComponentInternal, accessStore } from '../../../store';
 import { mockNode, mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
+import { type IAnimationComponentInternal, accessStore } from '../../../store';
 import { generateUUID } from '../../../utils/mathUtils';
 
 import { AnimationComponentEditor } from './AnimationComponentEditor';
 
-const updateComponentInternalFn = jest.fn();
+const updateComponentInternalFn = vi.fn();
 
 const mockEditorConfig = {
   valueDataBindingProvider: mockProvider,
@@ -14,17 +14,17 @@ const mockEditorConfig = {
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,
-  getEditorConfig: jest.fn(() => {
+  getEditorConfig: vi.fn(() => {
     return mockEditorConfig;
   }),
 };
 
-jest.mock('../../../../src/store/Store', () => {
-  const originalModule = jest.requireActual('../../../../src/store/Store');
+vi.mock('../../../../src/store/Store', async () => {
+  const originalModule = await vi.importActual('../../../../src/store/Store');
   return {
     __esModule: true,
     ...originalModule,
-    useSceneDocument: jest.fn(() => ({})),
+    useSceneDocument: vi.fn(() => ({})),
   };
 });
 

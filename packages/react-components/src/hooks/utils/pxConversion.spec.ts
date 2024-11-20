@@ -38,7 +38,7 @@ describe('px converstion', () => {
 
   describe('pxToEm', () => {
     beforeAll(() => {
-      jest.spyOn(window, 'getComputedStyle').mockImplementation(() => {
+      vi.spyOn(window, 'getComputedStyle').mockImplementation(() => {
         return {
           fontSize: '16px',
         } as CSSStyleDeclaration;
@@ -54,13 +54,11 @@ describe('px converstion', () => {
       expect(pxToEm(-16)).toBe(-1); // -16px / 16px per em = -1em
     });
     afterAll(() => {
-      jest.restoreAllMocks();
+      vi.restoreAllMocks();
     });
   });
   test('emToPx should convert em to px correctly', () => {
-    const mockGetComputedStyle = jest
-      .fn()
-      .mockReturnValue({ fontSize: '16px' });
+    const mockGetComputedStyle = vi.fn().mockReturnValue({ fontSize: '16px' });
     window.getComputedStyle = mockGetComputedStyle;
 
     expect(emToPx(2)).toBe(32); // 2em * 16px = 32px

@@ -1,6 +1,8 @@
 import { getByLabelText, render, screen } from '@testing-library/react';
 import DecimalPlaces from './index';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
+
+const user = ue.setup();
 
 const TestComponent = () => (
   <DecimalPlaces
@@ -23,7 +25,6 @@ describe('Decimal Places', () => {
   });
 
   it('shows error if decimal places input is greater than 100', async () => {
-    const user = userEvent.setup();
     render(<TestComponent />);
     const input = screen.getByLabelText('Decimal places');
     await user.type(input, '145');
@@ -33,7 +34,6 @@ describe('Decimal Places', () => {
     expect(errorText).toBeTruthy();
   });
   it('Does not show error if decimal places input is less than 100', async () => {
-    const user = userEvent.setup();
     render(<TestComponent />);
     const input = screen.getByLabelText('Decimal places');
     await user.type(input, '30');

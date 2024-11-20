@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 
 import { useMockedValueDataBindingProvider } from '../../../../stories/useMockedValueDataBindingProvider';
 
@@ -6,7 +6,7 @@ import { SceneDataBindingTemplateEditor } from './SceneDataBindingTemplateEditor
 
 describe('SceneDataBindingTemplateEditor', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should change the selection from icon to color', async () => {

@@ -3,7 +3,7 @@ import { COMPARISON_OPERATOR, STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { createTableItems } from './createTableItems';
 import { TableBase } from './tableBase';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import type { TableColumnDefinition, TableItem } from './types';
 
 const dataStreamId = 'datastream-1';
@@ -140,8 +140,7 @@ it('renders icon and applies style when a datastream breaches threshold', async 
   expect(cell.style.color).toEqual('red');
   const iconContainer = cell.childNodes.item(0);
   expect(iconContainer).toBeTruthy();
-  const text = cell.childNodes.item(1) as Text;
-  expect(text.wholeText).toMatch('200');
+  expect(screen.getByText('200')).toBeVisible();
 });
 
 it('renders icon and displays error message when datastream is in error state', () => {
@@ -177,6 +176,5 @@ it('renders icon and displays error message when datastream is in error state', 
   const iconContainer = cell.childNodes.item(0);
   expect(iconContainer).toBeTruthy();
 
-  const text = cell.childNodes.item(1) as Text;
-  expect(text.wholeText).toMatch('Error');
+  expect(screen.getByText('Error')).toBeVisible();
 });

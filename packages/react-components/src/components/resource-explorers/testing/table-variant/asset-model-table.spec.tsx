@@ -1,6 +1,6 @@
 import type { ListAssetModels } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { useState } from 'react';
 import { AssetModelExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
@@ -90,7 +90,7 @@ describe('asset model table', () => {
       const {
         assetModelSummaries: [assetModel1, assetModel2, assetModel3],
       } = listAssetModelsResponse;
-      const listAssetModels = jest
+      const listAssetModels = vi
         .fn()
         .mockResolvedValue(listAssetModelsResponse);
       render(<AssetModelExplorer iotSiteWiseClient={{ listAssetModels }} />);
@@ -117,7 +117,7 @@ describe('asset model table', () => {
 
   describe('requests', () => {
     it('requests a single page of asset models correctly', async () => {
-      const listAssetModels = jest
+      const listAssetModels = vi
         .fn()
         .mockResolvedValue(createListAssetModelsPage(3));
       render(<AssetModelExplorer iotSiteWiseClient={{ listAssetModels }} />);
@@ -133,7 +133,7 @@ describe('asset model table', () => {
     });
 
     it('requests multiple pages of asset models correctly', async () => {
-      const listAssetModels = jest
+      const listAssetModels = vi
         .fn()
         .mockResolvedValueOnce(createListAssetModelsPage(10, 0, 'next-token'))
         .mockResolvedValueOnce(createListAssetModelsPage(10, 10));
@@ -174,7 +174,7 @@ describe('asset model table', () => {
     });
 
     it('requests multiple lists of pages of asset models correctly', async () => {
-      const listAssetModels = jest
+      const listAssetModels = vi
         .fn()
         .mockResolvedValueOnce(createListAssetModelsPage(10, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListAssetModelsPage(5, 10))
@@ -237,7 +237,7 @@ describe('asset model table', () => {
 
   describe('selection', () => {
     it('does not allow selecting asset models if selectionMode is undefined', async () => {
-      const listAssetModels = jest
+      const listAssetModels = vi
         .fn()
         .mockResolvedValue(createListAssetModelsPage(3));
 
@@ -251,10 +251,10 @@ describe('asset model table', () => {
 
     describe('single-select', () => {
       it('allows selecting a single asset model', async () => {
-        const listAssetModels = jest
+        const listAssetModels = vi
           .fn()
           .mockResolvedValue(createListAssetModelsPage(3));
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetModelTable
             selectionMode='single'
@@ -295,10 +295,10 @@ describe('asset model table', () => {
 
     describe('multi-select', () => {
       it('allows selecting multiple asset models', async () => {
-        const listAssetModels = jest
+        const listAssetModels = vi
           .fn()
           .mockResolvedValue(createListAssetModelsPage(3));
-        const user = userEvent.setup();
+        const user = ue.setup();
         render(
           <SelectableAssetModelTable
             selectionMode='multi'
@@ -377,7 +377,7 @@ describe('asset model table', () => {
 
   describe('filtering', () => {
     it('supports filtering by property', async () => {
-      const listAssetModels = jest
+      const listAssetModels = vi
         .fn()
         .mockResolvedValue(createListAssetModelsPage(3));
       render(
@@ -409,10 +409,10 @@ describe('asset model table', () => {
         ...listAssetModelsResponse.assetModelSummaries[2],
         name: 'Different Name 3',
       };
-      const listAssetModels = jest.fn().mockResolvedValue({
+      const listAssetModels = vi.fn().mockResolvedValue({
         assetModelSummaries: [assetModel1, assetModel2, assetModel3],
       });
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetModelExplorer
           tableSettings={{ isFilterEnabled: true }}
@@ -444,7 +444,7 @@ describe('asset model table', () => {
 
   describe('user settings', () => {
     it('renders user settings as expected', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetModelExplorer tableSettings={{ isUserSettingsEnabled: true }} />
       );
@@ -482,7 +482,7 @@ describe('asset model table', () => {
     });
 
     it('supports users changing settings', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetModelExplorer tableSettings={{ isUserSettingsEnabled: true }} />
       );
@@ -499,7 +499,7 @@ describe('asset model table', () => {
     });
 
     it('supports users cancelling changing settings', async () => {
-      const user = userEvent.setup();
+      const user = ue.setup();
       render(
         <AssetModelExplorer tableSettings={{ isUserSettingsEnabled: true }} />
       );
@@ -538,9 +538,7 @@ describe('asset model table', () => {
       render(
         <AssetModelExplorer
           iotSiteWiseClient={{
-            listAssetModels: jest
-              .fn()
-              .mockRejectedValue(new Error(errorMessage)),
+            listAssetModels: vi.fn().mockRejectedValue(new Error(errorMessage)),
           }}
         />
       );

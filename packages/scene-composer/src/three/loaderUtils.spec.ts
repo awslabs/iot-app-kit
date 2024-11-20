@@ -4,12 +4,12 @@ import { type GLTFLoader } from './GLTFLoader';
 import { setupTwinMakerGLTFLoader } from './loaderUtils';
 import { setupBasisuSupport, setupDracoSupport, setupFileLoader } from './loaderUtilsHelpers';
 
-jest.mock('./loaderUtilsHelpers');
+vi.mock('./loaderUtilsHelpers');
 
 describe('loaderUtils', () => {
   it('should setup DRACO', () => {
-    const loader = jest.fn() as unknown as GLTFLoader;
-    const renderer = jest.fn() as unknown as WebGLRenderer;
+    const loader = vi.fn() as unknown as GLTFLoader;
+    const renderer = vi.fn() as unknown as WebGLRenderer;
 
     // ACT
     const results = setupTwinMakerGLTFLoader(loader, renderer);

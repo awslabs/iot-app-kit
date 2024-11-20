@@ -1,4 +1,3 @@
-import { expect, it } from '@jest/globals';
 import { bindStylesToDataStreams } from './bindStylesToDataStreams';
 import type { DataStream } from '@iot-app-kit/core';
 

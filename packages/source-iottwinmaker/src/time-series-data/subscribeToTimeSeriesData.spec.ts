@@ -12,8 +12,8 @@ describe('subscribeToTimeSeriesData', () => {
   const dataModule = new TimeSeriesDataModule(
     createDataSource(metadataModule, tmClient)
   );
-  const mockUpdate = jest.fn();
-  const mockUnsubscribe = jest.fn();
+  const mockUpdate = vi.fn();
+  const mockUnsubscribe = vi.fn();
 
   const query = {
     workspaceId: 'ws-1',
@@ -23,21 +23,21 @@ describe('subscribeToTimeSeriesData', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    jest
-      .spyOn(dataModule, 'subscribeToDataStreams')
-      .mockImplementation((_input, cb) => {
+    vi.clearAllMocks();
+    vi.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(
+      (_input, cb) => {
         cb({ dataStreams: [], viewport: { duration: '5m' }, thresholds: [] });
         return { update: mockUpdate, unsubscribe: mockUnsubscribe };
-      });
-    jest
-      .spyOn(metadataModule, 'fetchEntity')
-      .mockResolvedValue({ entityId: 'entity-1' } as GetEntityResponse);
+      }
+    );
+    vi.spyOn(metadataModule, 'fetchEntity').mockResolvedValue({
+      entityId: 'entity-1',
+    } as GetEntityResponse);
   });
 
   it('should not fetch entity when queries is empty', () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
-    const cb = jest.fn();
+    const cb = vi.fn();
     subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, cb);
 
     expect(metadataModule.fetchEntity).not.toBeCalled();
@@ -45,7 +45,7 @@ describe('subscribeToTimeSeriesData', () => {
 
   it('should fetch entity when queries is defined properly', async () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
-    const cb = jest.fn();
+    const cb = vi.fn();
     subscribe(
       { queries: [query], request: { viewport: { duration: '5m' } } },
       cb
@@ -64,7 +64,7 @@ describe('subscribeToTimeSeriesData', () => {
 
   it('should call unsubscribe coorrectly', () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
-    const cb = jest.fn();
+    const cb = vi.fn();
     const { unsubscribe } = subscribe(
       { queries: [], request: { viewport: { duration: '5m' } } },
       cb
@@ -77,7 +77,7 @@ describe('subscribeToTimeSeriesData', () => {
 
   it('should update as expected', async () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
-    const cb = jest.fn();
+    const cb = vi.fn();
     const { update } = subscribe(
       { queries: [query], request: { viewport: { duration: '5m' } } },
       cb

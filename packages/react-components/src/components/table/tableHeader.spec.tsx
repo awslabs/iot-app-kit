@@ -1,7 +1,7 @@
 import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
 import { IntlProvider } from 'react-intl';
 import type {
   AssistantActionEventDetail,
@@ -11,14 +11,14 @@ import { TableHeader } from './tableHeader';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn(),
+    invokeAssistant: vi.fn(),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
 
 const assistant = {
   enabled: true,
-  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  onAction: (_event: AssistantActionEventDetail) => vi.fn(),
   conversationId: 'conversationId',
   componentId: 'componentId',
   target: 'widget',
@@ -58,8 +58,8 @@ describe('counter', () => {
 
 describe('Generate Summary', () => {
   it('onSummarize is called when customer clicks on summary button', async () => {
-    const user = userEvent.setup();
-    const mockSummarize = jest.fn();
+    const user = ue.setup();
+    const mockSummarize = vi.fn();
     const { getByRole } = render(
       <IntlProvider locale='en' defaultLocale='en'>
         <TableHeader

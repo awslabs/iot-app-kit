@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { render } from '@testing-library/react';
+import { render } from '@/tests/testing-library';
 import { useQuery } from '@tanstack/react-query';
 
 import { accessStore } from '../store';
@@ -8,18 +8,18 @@ import { KnownSceneProperty } from '../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
 import { SceneLayers } from './SceneLayers';
 
-jest.mock('../utils/entityModelUtils/processQueries', () => ({
-  processQueries: jest.fn(),
+vi.mock('../utils/entityModelUtils/processQueries', () => ({
+  processQueries: vi.fn(),
 }));
 
-jest.mock('@tanstack/react-query', () => ({
-  useQuery: jest.fn(),
+vi.mock('@tanstack/react-query', () => ({
+  useQuery: vi.fn(),
 }));
 
 describe('SceneLayers', () => {
-  const renderSceneNodesMock = jest.fn();
-  const isViewingMock = jest.fn();
-  const getScenePropertyMock = jest.fn();
+  const renderSceneNodesMock = vi.fn();
+  const isViewingMock = vi.fn();
+  const getScenePropertyMock = vi.fn();
   const baseState = {
     getSceneProperty: getScenePropertyMock,
     renderSceneNodes: renderSceneNodesMock,
@@ -27,7 +27,7 @@ describe('SceneLayers', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     isViewingMock.mockReturnValue(true);
     getScenePropertyMock.mockImplementation((name) => {
@@ -44,7 +44,7 @@ describe('SceneLayers', () => {
     getScenePropertyMock.mockReturnValue([]);
 
     let enabledValue = true;
-    (useQuery as jest.Mock).mockImplementation(({ enabled, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ enabled, ..._ }) => {
       enabledValue = enabled;
       return {};
     });
@@ -58,7 +58,7 @@ describe('SceneLayers', () => {
     accessStore('default').setState(baseState);
     isViewingMock.mockReturnValue(false);
     let interval;
-    (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: {} });
       return {};
     });
@@ -71,7 +71,7 @@ describe('SceneLayers', () => {
   it('should not refetch when previous query failed', async () => {
     accessStore('default').setState(baseState);
     let interval;
-    (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: { error: 'error' } });
       return {};
     });
@@ -92,7 +92,7 @@ describe('SceneLayers', () => {
 
     accessStore('default').setState(baseState);
     let interval;
-    (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: {} });
       return {};
     });
@@ -105,7 +105,7 @@ describe('SceneLayers', () => {
   it('should refetch with expected interval', async () => {
     accessStore('default').setState(baseState);
     let interval;
-    (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: {} });
       return {};
     });
@@ -118,7 +118,7 @@ describe('SceneLayers', () => {
   it('should call processQueries with expected data', async () => {
     accessStore('default').setState(baseState);
     let queryFunction;
-    (useQuery as jest.Mock).mockImplementation(({ queryFn, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ queryFn, ..._ }) => {
       queryFunction = queryFn;
       return {};
     });
@@ -126,14 +126,14 @@ describe('SceneLayers', () => {
     render(<SceneLayers />);
     await queryFunction();
 
-    expect(processQueries as jest.Mock).toBeCalledTimes(1);
+    expect(processQueries as vi.Mock).toBeCalledTimes(1);
     expect(renderSceneNodesMock).not.toBeCalled();
   });
 
   it('should call processQueries with expected data', async () => {
     accessStore('default').setState(baseState);
     let queryFunction;
-    (useQuery as jest.Mock).mockImplementation(({ queryFn, ..._ }) => {
+    (useQuery as vi.Mock).mockImplementation(({ queryFn, ..._ }) => {
       queryFunction = queryFn;
       return { data: ['random'] };
     });
@@ -141,7 +141,7 @@ describe('SceneLayers', () => {
     render(<SceneLayers />);
     await queryFunction();
 
-    expect(processQueries as jest.Mock).toBeCalledTimes(1);
+    expect(processQueries as vi.Mock).toBeCalledTimes(1);
     expect(renderSceneNodesMock).toBeCalledTimes(1);
     expect(renderSceneNodesMock).toBeCalledWith(['random']);
   });

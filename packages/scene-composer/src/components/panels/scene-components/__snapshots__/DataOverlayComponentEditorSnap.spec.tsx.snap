@@ -1,48 +1,144 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataOverlayComponentEditorSnap should render data rows for text annotation 1`] = `
+exports[`DataOverlayComponentEditorSnap > should render data rows for text annotation 1`] = `
 <div>
   <div
-    data-mocked="SpaceBetween"
+    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
   >
     <div
-      data-mocked="FormField"
-      label="Markdown Content"
+      class="awsui_child_18582_z63vw_103"
     >
       <div
-        data-mocked="Textarea"
-        placeholder="Example: Current temperature \${temperature-binding-name}"
-        value="markdown-content"
-      />
+        class="awsui_root_14mhv_av9zi_174"
+        data-analytics-field-label="[id="formField:r0:-label"]"
+      >
+        <div
+          class=""
+        >
+          <label
+            class="awsui_label_14mhv_av9zi_210"
+            for="formField:r0:"
+            id="formField:r0:-label"
+          >
+            Markdown Content
+          </label>
+        </div>
+        <div
+          class="awsui_controls_14mhv_av9zi_246"
+        >
+          <div
+            class="awsui_grid_14yj0_1lwse_99"
+          >
+            <div
+              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+            >
+              <div
+                class="awsui_restore-pointer-events_14yj0_1lwse_314"
+              >
+                <div
+                  class="awsui_control_14mhv_av9zi_246"
+                >
+                  <span
+                    class="awsui_root_qk1j1_w6j53_99"
+                  >
+                    <textarea
+                      aria-labelledby="formField:r0:-label"
+                      autocomplete="on"
+                      class="awsui_textarea_qk1j1_w6j53_103"
+                      id="formField:r0:"
+                      placeholder="Example: Current temperature \${temperature-binding-name}"
+                      rows="3"
+                    >
+                      markdown-content
+                    </textarea>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
-      data-testid="DataBindingMapEditor"
+      class="awsui_child_18582_z63vw_103"
     >
-      [{"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":{"entityId":"random-1"}}}]}},{}]
+      <div
+        data-testid="DataBindingMapEditor"
+      >
+        [{"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":{"entityId":"random-1"}}}]}},{}]
+      </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`DataOverlayComponentEditorSnap should render editor for overlay panel 1`] = `
+exports[`DataOverlayComponentEditorSnap > should render editor for overlay panel 1`] = `
 <div>
   <div
-    data-mocked="SpaceBetween"
+    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
   >
     <div
-      data-mocked="FormField"
-      label="Markdown Content"
+      class="awsui_child_18582_z63vw_103"
     >
       <div
-        data-mocked="Textarea"
-        placeholder="Example: Current temperature \${temperature-binding-name}"
-        value="markdown-content"
-      />
+        class="awsui_root_14mhv_av9zi_174"
+        data-analytics-field-label="[id="formField:r1:-label"]"
+      >
+        <div
+          class=""
+        >
+          <label
+            class="awsui_label_14mhv_av9zi_210"
+            for="formField:r1:"
+            id="formField:r1:-label"
+          >
+            Markdown Content
+          </label>
+        </div>
+        <div
+          class="awsui_controls_14mhv_av9zi_246"
+        >
+          <div
+            class="awsui_grid_14yj0_1lwse_99"
+          >
+            <div
+              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
+            >
+              <div
+                class="awsui_restore-pointer-events_14yj0_1lwse_314"
+              >
+                <div
+                  class="awsui_control_14mhv_av9zi_246"
+                >
+                  <span
+                    class="awsui_root_qk1j1_w6j53_99"
+                  >
+                    <textarea
+                      aria-labelledby="formField:r1:-label"
+                      autocomplete="on"
+                      class="awsui_textarea_qk1j1_w6j53_103"
+                      id="formField:r1:"
+                      placeholder="Example: Current temperature \${temperature-binding-name}"
+                      rows="3"
+                    >
+                      markdown-content
+                    </textarea>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
-      data-testid="DataBindingMapEditor"
+      class="awsui_child_18582_z63vw_103"
     >
-      [{"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":{"entityId":"random-1"}}}]}},{}]
+      <div
+        data-testid="DataBindingMapEditor"
+      >
+        [{"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":{"entityId":"random-1"}}}]}},{}]
+      </div>
     </div>
   </div>
 </div>

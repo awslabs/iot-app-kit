@@ -82,21 +82,21 @@ export const mockBuilderState: IValueDataBindingProviderState = {
   errors: {},
 };
 
-export const mockUpdateSelection = jest.fn().mockResolvedValue(mockBuilderState);
+export const mockUpdateSelection = vi.fn().mockResolvedValue(mockBuilderState);
 export const mockBindingStore: IValueDataBindingStore = {
-  setBinding: jest.fn().mockReturnValue(mockBuilderState),
+  setBinding: vi.fn().mockReturnValue(mockBuilderState),
   updateSelection: mockUpdateSelection,
-  createBinding: jest.fn(() => {
+  createBinding: vi.fn(() => {
     return Promise.resolve(mockBinding);
   }),
-  setOnStateChangedListener: jest.fn().mockImplementation((cb) => cb?.(mockBuilderState)),
+  setOnStateChangedListener: vi.fn().mockImplementation((cb) => cb?.(mockBuilderState)),
 };
 
 export const mockProvider: IValueDataBindingProvider = {
-  createStore: jest.fn(() => {
+  createStore: vi.fn(() => {
     return mockBindingStore;
   }),
-  createQuery: jest.fn(),
+  createQuery: vi.fn(),
 };
 
 export const mockDataBindingConfig: IDataBindingConfig = {

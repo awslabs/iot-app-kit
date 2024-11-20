@@ -1,19 +1,19 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@/tests/testing-library';
 
 import { accessStore } from '../../../../store';
-import { ToolbarOrientation } from '../../common/types';
 import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
+import { ToolbarOrientation } from '../../common/types';
 
 import { ObjectItemGroup } from '.';
 
-jest.mock('../../../../utils/entityModelUtils/sceneUtils');
+vi.mock('../../../../utils/entityModelUtils/sceneUtils');
 
 describe('ObjectItemGroup', () => {
-  const removeSceneNode = jest.fn();
+  const removeSceneNode = vi.fn();
   const selectedSceneNodeRef = 'test-ref';
-  const setTransformControlMode = jest.fn();
-  const getSceneNodeByRef = jest.fn();
-  const setDeleteConfirmationModalVisible = jest.fn();
+  const setTransformControlMode = vi.fn();
+  const getSceneNodeByRef = vi.fn();
+  const setDeleteConfirmationModalVisible = vi.fn();
 
   beforeEach(() => {
     accessStore('default').setState({
@@ -24,9 +24,9 @@ describe('ObjectItemGroup', () => {
       getSceneNodeByRef,
       setDeleteConfirmationModalVisible,
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
-    (isDynamicScene as jest.Mock).mockReturnValue(false);
+    (isDynamicScene as vi.Mock).mockReturnValue(false);
   });
 
   it('should call removeSceneNode when clicking delete with a selected node', () => {
@@ -37,7 +37,7 @@ describe('ObjectItemGroup', () => {
   });
 
   it('should call setDeleteConfirmationModalVisible when clicking delete node in dynamic scene', () => {
-    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    (isDynamicScene as vi.Mock).mockReturnValue(true);
 
     render(<ObjectItemGroup canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('delete');

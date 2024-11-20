@@ -5,14 +5,14 @@ import SubModelComponent from '..';
 import { type ISceneNodeInternal, useEditorState } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 
-jest.mock('../../../../common/sceneComposerIdContext', () => ({
-  useSceneComposerId: jest.fn(() => 'composer'),
+vi.mock('../../../../common/sceneComposerIdContext', () => ({
+  useSceneComposerId: vi.fn(() => 'composer'),
 }));
 
-jest.mock('../../../../store', () => {
+vi.mock('../../../../store', () => {
   return {
-    useEditorState: jest.fn(),
-    useSceneDocument: jest.fn().mockReturnValue({ document: {} }),
+    useEditorState: vi.fn(),
+    useSceneDocument: vi.fn().mockReturnValue({ document: {} }),
   };
 });
 
@@ -28,8 +28,8 @@ describe('<SubModelComponent />', () => {
 
     const obj = new Mesh();
 
-    const getObject3DBySceneNodeRef = jest.fn(() => obj);
-    (useEditorState as jest.Mock).mockImplementation(() => ({
+    const getObject3DBySceneNodeRef = vi.fn(() => obj);
+    (useEditorState as vi.Mock).mockImplementation(() => ({
       getObject3DBySceneNodeRef,
     }));
     getObject3DBySceneNodeRef.mockImplementation(() => obj);

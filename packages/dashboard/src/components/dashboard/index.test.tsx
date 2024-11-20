@@ -28,7 +28,7 @@ const clients = {
     config,
   } as unknown as IoTSiteWiseClient,
   iotTwinMakerClient: {
-    send: jest.fn(),
+    send: vi.fn(),
   } as unknown as IoTTwinMakerClient,
   iotSiteWise: new IoTSiteWise(),
 };
@@ -100,7 +100,7 @@ it('renders in edit initially', async () => {
 });
 
 it('passes the correct viewMode to onSave', function () {
-  const onSave = jest.fn();
+  const onSave = vi.fn();
 
   const savedConfig = {
     displaySettings: {

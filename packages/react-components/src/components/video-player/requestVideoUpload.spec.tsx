@@ -3,10 +3,10 @@ import { RequestVideoUpload } from './requestVideoUpload';
 import { mockVideoData } from './__mocks__/MockVideoPlayerProps';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-jest.useFakeTimers();
-jest.spyOn(global, 'setTimeout');
+vi.useFakeTimers();
+vi.spyOn(global, 'setTimeout');
 
-const triggerVideoUploadRequestFn = jest
+const triggerVideoUploadRequestFn = vi
   .spyOn(mockVideoData, 'triggerOnDemandVideoUploadRequest')
   .mockImplementation(() => null as unknown);
 

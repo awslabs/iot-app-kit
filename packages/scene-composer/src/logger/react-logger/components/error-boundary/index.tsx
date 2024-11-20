@@ -16,7 +16,7 @@ interface ErrorBoundaryState {
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static contextType = LoggingContext;
-  context: ContextType<typeof LoggingContext> | undefined;
+  context: ContextType<typeof LoggingContext> | undefined = undefined;
 
   constructor(props: ErrorBoundaryProps) {
     super(props);

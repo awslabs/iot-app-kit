@@ -51,13 +51,10 @@
     "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
   },
   "devDependencies": {
-    "@swc/core": "^1.3.71",
-    "@swc/jest": "^0.2.26",
-    "@commitlint/cli": "^17.6.7",
-    "@commitlint/config-conventional": "^17.6.5",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@playwright/test": "^1.48.2",
     "husky": "^8.0.3",
-    "identity-obj-proxy": "^3.0.0",
     "rimraf": "^5.0.1",
     "stylelint": "14.16.1",
     "stylelint-config-standard": "25.0.0",
@@ -74,5 +71,9 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "fast-xml-parser": "^4.2.5"
+  },
+  "volta": {
+    "node": "18.20.5",
+    "npm": "10.8.2"
   }
 }

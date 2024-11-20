@@ -1,29 +1,29 @@
+import { useFrame as mockUseFrame, useLoader as mockUseLoader } from '@react-three/fiber';
 import { render } from '@testing-library/react';
 import type * as THREE from 'three';
-import { useFrame as mockUseFrame, useLoader as mockUseLoader } from '@react-three/fiber';
 
-import { getWorldMatrixScale, getNumOfRepeatInX, useArrowTexture } from '../helpers';
 import { Component } from '../../../../models/SceneModels';
+import { getNumOfRepeatInX, getWorldMatrixScale, useArrowTexture } from '../helpers';
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     ...originalModule,
-    useFrame: jest.fn(),
-    useLoader: jest.fn(),
+    useFrame: vi.fn(),
+    useLoader: vi.fn(),
   };
 });
 
 describe('MotionIndicator helpers', () => {
-  const mockGetElapsedTime = jest.fn();
+  const mockGetElapsedTime = vi.fn();
   const mockState = {
     clock: { getElapsedTime: mockGetElapsedTime },
   };
 
   const setup = () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
-    (mockUseFrame as jest.Mock).mockImplementation((cb) => cb(mockState));
+    (mockUseFrame as vi.Mock).mockImplementation((cb) => cb(mockState));
   };
 
   beforeEach(() => {
@@ -45,8 +45,8 @@ describe('MotionIndicator helpers', () => {
     });
 
     it('should initialize texture parameters', () => {
-      const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: jest.fn(), setY: jest.fn() } };
-      (mockUseLoader as unknown as jest.Mock).mockReturnValue({ clone: () => mockTexture });
+      const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: vi.fn(), setY: vi.fn() } };
+      (mockUseLoader as unknown as vi.Mock).mockReturnValue({ clone: () => mockTexture });
 
       render(<TestComponent {...baseProps} />);
 
@@ -55,10 +55,10 @@ describe('MotionIndicator helpers', () => {
     });
 
     it('should update texture offset correctly after useFrame', () => {
-      const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: jest.fn(), setY: jest.fn() } };
-      (mockUseLoader as unknown as jest.Mock).mockReturnValue({ clone: () => mockTexture });
+      const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: vi.fn(), setY: vi.fn() } };
+      (mockUseLoader as unknown as vi.Mock).mockReturnValue({ clone: () => mockTexture });
 
-      const mockDecompose = jest.fn().mockImplementation((_, __, scale) => {
+      const mockDecompose = vi.fn().mockImplementation((_, __, scale) => {
         scale.set(...baseProps.scale);
       });
 
@@ -71,8 +71,8 @@ describe('MotionIndicator helpers', () => {
     });
 
     it('should set correct texture repeat values', () => {
-      const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: jest.fn(), setY: jest.fn() } };
-      (mockUseLoader as unknown as jest.Mock).mockReturnValue({ clone: () => mockTexture });
+      const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: vi.fn(), setY: vi.fn() } };
+      (mockUseLoader as unknown as vi.Mock).mockReturnValue({ clone: () => mockTexture });
 
       render(<TestComponent {...baseProps} />);
 
@@ -111,7 +111,7 @@ describe('MotionIndicator helpers', () => {
 
   describe('getWorldMatrixScale', () => {
     const mockScale = [1, 1, 1];
-    const mockDecompose = jest.fn();
+    const mockDecompose = vi.fn();
     const mockObj = { matrixWorld: { decompose: mockDecompose } } as any as THREE.Object3D;
 
     beforeEach(() => {

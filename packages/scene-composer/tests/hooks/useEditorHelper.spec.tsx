@@ -9,20 +9,20 @@ let container = null;
 let helper = null;
 let scene = null;
 
-jest.mock('@react-three/fiber', () => {
-  const originalModule = jest.requireActual('@react-three/fiber');
+vi.mock('@react-three/fiber', async () => {
+  const originalModule = await vi.importActual('@react-three/fiber');
   return {
     __esModule: true,
     ...originalModule,
-    useThree: jest.fn(() => scene),
-    useFrame: jest.fn(),
+    useThree: () => scene,
+    useFrame: () => {},
   };
 });
 
 beforeEach(() => {
   scene = {
-    add: jest.fn(),
-    remove: jest.fn(),
+    add: vi.fn(),
+    remove: vi.fn(),
   } as any;
   container = document.createElement('div') as any;
   document.body.appendChild(container as any);

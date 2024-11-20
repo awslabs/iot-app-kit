@@ -10,6 +10,8 @@ import type {
 import { Chart } from '../index';
 import { type ChartLegend } from '../types';
 
+vi.mock('zustand');
+
 const VIEWPORT = { duration: '5m' };
 
 const DATA_STREAM: DataStream = {
@@ -18,20 +20,20 @@ const DATA_STREAM: DataStream = {
   resolution: 0,
   name: 'my-name',
 };
-jest.mock('echarts', () => ({
-  use: jest.fn(),
-  init: jest.fn(),
-  getInstanceByDom: jest.fn(),
-  registerTheme: jest.fn(),
-  connect: jest.fn(),
-  disconnect: jest.fn(),
-  graphic: jest.fn(),
-  ComponentView: jest.fn(),
-  ComponentModel: jest.fn(),
+vi.mock('echarts', () => ({
+  use: vi.fn(),
+  init: vi.fn(),
+  getInstanceByDom: vi.fn(),
+  registerTheme: vi.fn(),
+  connect: vi.fn(),
+  disconnect: vi.fn(),
+  graphic: vi.fn(),
+  ComponentView: vi.fn(),
+  ComponentModel: vi.fn(),
 }));
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 export const mockQuery = mockTimeSeriesDataQuery([
@@ -44,13 +46,13 @@ export const mockQuery = mockTimeSeriesDataQuery([
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn(),
+    invokeAssistant: vi.fn(),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
 
 const assistant = {
-  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  onAction: (_event: AssistantActionEventDetail) => vi.fn(),
   conversationId: 'conversationId',
   componentId: 'componentId',
   target: 'widget',
@@ -62,7 +64,7 @@ describe('Chart Component Testing', () => {
     const element = render(
       <Chart
         queries={[mockQuery]}
-        onChartOptionsChange={jest.fn()}
+        onChartOptionsChange={vi.fn()}
         viewport={VIEWPORT}
         size={{ width: 500, height: 500 }}
       />
@@ -75,7 +77,7 @@ describe('Chart Component Testing', () => {
       render(
         <Chart
           queries={[mockQuery]}
-          onChartOptionsChange={jest.fn()}
+          onChartOptionsChange={vi.fn()}
           viewport={VIEWPORT}
           size={{ width: 500, height: 500 }}
           assistant={assistant}
@@ -88,7 +90,7 @@ describe('Chart Component Testing', () => {
     render(
       <Chart
         queries={[mockQuery]}
-        onChartOptionsChange={jest.fn()}
+        onChartOptionsChange={vi.fn()}
         viewport={VIEWPORT}
         size={{ width: 500, height: 500 }}
         id='componentId'
@@ -116,7 +118,7 @@ describe('Chart slider testing', () => {
           asset: true,
         },
       },
-      onChartOptionsChange: jest.fn(),
+      onChartOptionsChange: vi.fn(),
       gestures: false,
       significantDigits: 4,
       styleSettings: {},
@@ -145,7 +147,7 @@ describe('Chart slider testing', () => {
           asset: true,
         },
       },
-      onChartOptionsChange: jest.fn(),
+      onChartOptionsChange: vi.fn(),
       gestures: false,
       significantDigits: 4,
       styleSettings: {},

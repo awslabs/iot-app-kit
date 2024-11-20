@@ -1,20 +1,23 @@
 import { render } from '@testing-library/react';
 
+import SceneHierarchyTree from '..';
 import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
 import { EnhancedTree } from '../constants';
-import SceneHierarchyTree from '..';
 
-jest.mock('../../../SceneHierarchyDataProvider');
+vi.mock('../../../SceneHierarchyDataProvider');
 
 // eslint-disable-next-line react/prop-types
-jest.mock('../SceneHierarchyTreeItem', () => ({ children, ...props }) => (
-  <div data-mocked='SceneHierarchyTreeItem' data-props={JSON.stringify(props)}>
-    {children}
-  </div>
-));
+vi.mock('../SceneHierarchyTreeItem', () => ({
+  default: ({ children, ...props }) => (
+    <div data-mocked='SceneHierarchyTreeItem' data-props={JSON.stringify(props)}>
+      {children}
+    </div>
+  ),
+}));
 
-jest.mock('../constants', () => ({
-  EnhancedTree: jest.fn(),
+vi.mock('../constants', async () => ({
+  ...(await vi.importActual('../constants')),
+  EnhancedTree: vi.fn(),
 }));
 
 describe('<SceneHierarchyTree />', () => {
@@ -50,7 +53,7 @@ describe('<SceneHierarchyTree />', () => {
   });
 
   it('should reparent dropped items as rootNodes', () => {
-    const moveFn = jest.fn();
+    const moveFn = vi.fn();
     const droppedRef = '111';
     let dropHandler: Function = null as unknown as Function;
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TilesModelComponent should render TilesModelComponent 1`] = `
+exports[`TilesModelComponent > should render TilesModelComponent 1`] = `
 <div>
   <group
     name="TILES_MODEL_COMPONENT_mock-node"

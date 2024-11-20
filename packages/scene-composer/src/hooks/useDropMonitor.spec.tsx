@@ -2,17 +2,17 @@ import { useDrop } from 'react-dnd';
 
 import useDropMonitor from './useDropMonitor';
 
-jest.mock('react-dnd', () => ({
-  useDrop: jest.fn(),
+vi.mock('react-dnd', () => ({
+  useDrop: vi.fn(),
 }));
 
 describe('useDropMonitor', () => {
   it('should return the useful monitor properties on drop', () => {
-    const onDrop = jest.fn();
+    const onDrop = vi.fn();
 
     const fakeMonitor = {
-      didDrop: jest.fn(() => true),
-      isOver: jest.fn((opts?) => opts?.shallow || false),
+      didDrop: vi.fn(() => true),
+      isOver: vi.fn((opts?) => opts?.shallow || false),
     };
 
     const fakeItem = { item: 'value' };
@@ -23,7 +23,7 @@ describe('useDropMonitor', () => {
 
       return [
         { isOver: fakeMonitor.isOver({ shallow: false }), isOverCurrent: fakeMonitor.isOver({ shallow: true }) },
-        jest.fn(),
+        vi.fn(),
       ];
     });
 

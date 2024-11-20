@@ -16,7 +16,7 @@ import {
 import { createMockTwinMakerSDK } from '../../__mocks__/iottwinmakerSDK';
 
 describe('TwinMakerUtils for Video Player', () => {
-  const getPropertyValueHistory = jest.fn();
+  const getPropertyValueHistory = vi.fn();
   const twinMakerClientMock = createMockTwinMakerSDK({
     getPropertyValueHistory,
   });

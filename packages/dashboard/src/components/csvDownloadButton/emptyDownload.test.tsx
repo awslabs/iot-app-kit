@@ -30,12 +30,12 @@ const MOCK_EMPTY_QUERY: StyledAssetQuery = {
   assets: [],
 };
 
-const mockFetchTimeSeriesData = jest.fn(() => Promise.resolve([]));
-jest.mock('../dashboard/queryContext', () => ({
-  useFetchTimeSeriesData: jest.fn(() => mockFetchTimeSeriesData),
+const mockFetchTimeSeriesData = vi.fn(() => Promise.resolve([]));
+vi.mock('../dashboard/queryContext', () => ({
+  useFetchTimeSeriesData: vi.fn(() => mockFetchTimeSeriesData),
 }));
-jest.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
-  fetchListAssetPropertiesMap: jest.fn(),
+vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
+  fetchListAssetPropertiesMap: vi.fn(),
 }));
 
 it('does not render button if query has no content', function () {
@@ -57,7 +57,7 @@ it('does not render button if query has no content', function () {
 });
 
 it('creates a file for download if data is empty', async function () {
-  global.URL.createObjectURL = jest.fn();
+  global.URL.createObjectURL = vi.fn();
   const mockClient = createMockSiteWiseSDK() as unknown as IoTSiteWiseClient;
   const mockQueryConfig = {
     source: 'iotsitewise',
@@ -78,7 +78,7 @@ it('creates a file for download if data is empty', async function () {
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
   downloadButton && fireEvent.click(downloadButton);
-  const createElementSpyOn = jest.spyOn(document, 'createElement');
+  const createElementSpyOn = vi.spyOn(document, 'createElement');
   await waitFor(() => expect(mockFetchTimeSeriesData).toHaveBeenCalled());
   await waitFor(() => expect(createElementSpyOn).toBeCalledWith('a'));
 });

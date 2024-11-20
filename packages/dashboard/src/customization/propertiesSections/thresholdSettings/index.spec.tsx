@@ -7,7 +7,9 @@ import { ThresholdComponent } from './thresholdComponent';
 import type { DashboardState } from '~/store/state';
 import type { ThresholdWithId } from '~/customization/settings';
 import { ThresholdSettingsConfiguration, type ThresholdsWidget } from './index';
-import userEvent from '@testing-library/user-event';
+import ue from '@testing-library/user-event';
+
+const user = ue.setup();
 
 const MOCK_THRESHOLD_1: ThresholdWithId = {
   id: '1',
@@ -72,7 +74,6 @@ describe('thresholdsComponent', () => {
   });
 
   it('should focus the operator select on click of label', async () => {
-    const user = userEvent.setup();
     render(<TestThresholdComponent />);
 
     const label = screen.getByText('Operator');
@@ -91,7 +92,6 @@ describe('thresholdsComponent', () => {
   });
 
   it('should focus the threshold value input on click of label', async () => {
-    const user = userEvent.setup();
     render(<TestThresholdComponent />);
 
     const label = screen.getByText('Value');

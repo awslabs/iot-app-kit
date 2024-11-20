@@ -40,7 +40,7 @@ describe('default cell function', () => {
         value: 10,
         error: undefined,
         isLoading: undefined,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
       },
     };
     const { container } = render(<div>{firstColumnDef.cell(item)}</div>);
@@ -54,7 +54,7 @@ describe('default cell function', () => {
         value: 10,
         error: undefined,
         isLoading: undefined,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
         quality: 'GOOD',
       },
     };
@@ -68,7 +68,7 @@ describe('default cell function', () => {
         value: 10,
         error: undefined,
         isLoading: undefined,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
         quality: 'UNCERTAIN',
       },
     };
@@ -82,7 +82,7 @@ describe('default cell function', () => {
         value: 10,
         error: undefined,
         isLoading: undefined,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
         quality: 'BAD',
       },
     };
@@ -96,7 +96,7 @@ describe('default cell function', () => {
         value: 10,
         error: undefined,
         isLoading: undefined,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
       },
     };
     const { container } = render(<div>{secondColumnDef.cell(item)}</div>);
@@ -111,7 +111,7 @@ describe('default cell function', () => {
           msg: 'Some Error',
         },
         isLoading: undefined,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
       },
     };
     const { container } = render(<div>{firstColumnDef.cell(item)}</div>);
@@ -124,7 +124,7 @@ describe('default cell function', () => {
         value: 10,
         error: undefined,
         isLoading: true,
-        valueOf: jest.fn(),
+        valueOf: vi.fn(),
       },
     };
 

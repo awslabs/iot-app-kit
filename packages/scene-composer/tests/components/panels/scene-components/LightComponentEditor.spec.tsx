@@ -10,12 +10,12 @@ import { type ILightComponentInternal, accessStore } from '../../../../src/store
 
 import { mockNode, mockComponent } from './MockComponents';
 
-const mockParse = jest.fn((_str: string, _defaultValue: number) => {
+const mockParse = vi.fn((_str: string, _defaultValue: number) => {
   return 2;
 });
 
-jest.mock('../../../../src/utils/mathUtils', () => {
-  const originalModule = jest.requireActual('../../../../src/utils/mathUtils');
+vi.mock('../../../../src/utils/mathUtils', async () => {
+  const originalModule = await vi.importActual('../../../../src/utils/mathUtils');
   return {
     __esModule: true,
     ...originalModule,
@@ -24,15 +24,15 @@ jest.mock('../../../../src/utils/mathUtils', () => {
 });
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@cloudscape-design/components', () => ({
-  ...jest.requireActual('@cloudscape-design/components'),
+vi.mock('@cloudscape-design/components', () => ({
+  ...vi.importActual('@cloudscape-design/components'),
 }));
 
-const updateComponentInternalFn = jest.fn();
+const updateComponentInternalFn = vi.fn();
 
 const baseState = {
   updateComponentInternal: updateComponentInternalFn,
-  getSceneNodeByRef: jest.fn(() => {
+  getSceneNodeByRef: vi.fn(() => {
     return mockNode;
   }),
 };
@@ -45,7 +45,7 @@ describe('LightComponentEditor', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should select light types', () => {
