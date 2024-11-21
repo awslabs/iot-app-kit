@@ -31,6 +31,10 @@
       "cache": false,
       "outputLogs": "full"
     },
+    "test:ui:update": {
+      "cache": false,
+      "outputLogs": "new-only"
+    },
     "dev:dashboard": {
       "dependsOn": [
         "@iot-app-kit/core#build:es",

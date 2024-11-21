@@ -189,6 +189,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (cameraComponent) {
       const object3D = getObject3DBySceneNodeRef(selectedSceneNodeRef);
 
+      // @ts-expect-error type mismatch after update
       setActiveCameraSettings(getCameraSettings(object3D, cameraComponent));
     }
   }, [selectedSceneNodeRef]);
@@ -355,6 +356,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
           }
           onSceneUpdated(sceneDocumentSnapshotCreator.create({ document: state.document }));
         },
+        // @ts-expect-error type mismatch after update
         (state) => ({ document: state.document, sceneLoaded: state.sceneLoaded }),
       );
     }

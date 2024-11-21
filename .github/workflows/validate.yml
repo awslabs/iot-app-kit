@@ -3,13 +3,14 @@ on:
   pull_request:
   push:
     branches:
-      - sophon
       - rc
+      - main
 env:
   PW_TEST_HTML_REPORT_OPEN: 'never'
 jobs:
   repo:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,6 +50,7 @@ jobs:
   unit:
     needs: repo
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -113,6 +115,7 @@ jobs:
   playwright:
     needs: repo
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -174,9 +177,28 @@ jobs:
         run: npx playwright install-deps
 
       - name: Playwright
-        run: npx turbo run test:ui:ci --filter=@iot-app-kit/${{matrix.package}}
+        run: |
+          npx turbo run test:ui:ci --filter=@iot-app-kit/${{matrix.package}} | tee output.log
+          if grep -q -e "Error: A snapshot doesn't exist at" -e "expect(locator).toHaveScreenshot(expected)" output.log; then
+            echo "Playwright tests failed due to a snapshot issue."
+            echo "SNAPSHOT_DIFFERENCES=true" >> $GITHUB_ENV
+            exit 1
+          elif grep -q "failed" output.log; then
+            echo "Playwright tests failed due to a non-snapshot issue."
+            exit 1
+          fi
+
+      - name: Test report
+        id: upload-test-report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.package }}-playwright-report
+          path: packages/**/playwright-report
+          retention-days: 30
 
       - name: Failure report
+        id: upload-failure-report
         uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -184,10 +206,11 @@ jobs:
           path: packages/**/test-results
           retention-days: 30
 
-      - name: Test report
-        uses: actions/upload-artifact@v4
-        if: always()
+      - name: Comment on PR with report link
+        uses: thollander/actions-comment-pull-request@v3
+        if: ${{ failure() && env.SNAPSHOT_DIFFERENCES == 'true' }}
         with:
-          name: ${{ matrix.package }}-playwright-report
-          path: packages/**/playwright-report
-          retention-days: 30
+          message: |
+            ### Playwright visual snapshot differences were detected.
+            View the [Playwright report](${{ steps.upload-test-report.outputs.artifact-url }}) to review the visual differences.
+            **To approve the snapshot changes and update the snapshots, please comment:** /approve-snapshots

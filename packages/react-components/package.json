@@ -1,5 +1,6 @@
 {
   "name": "@iot-app-kit/react-components",
+  "version": "12.1.0",
   "license": "Apache-2.0",
   "source": "./src/index.ts",
   "main": "./dist/cjs/index.js",
@@ -22,9 +23,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.1.0",
   "scripts": {
-    "start": "npx start-storybook -p 6007",
+    "start": "storybook dev -p 6007",
     "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && npm run copy-assets:es && npm run copy-assets:cjs",
     "build:cjs": "tsc -b ./tsconfig.cjs.json && npm run copy-assets:cjs",
     "build:es": "tsc -b ./tsconfig.esm.json && npm run copy-assets:es",
@@ -47,8 +47,8 @@
     "_test:ui:local": "npm run playwright -- npx playwright test",
     "_test:ui:reliability:ci": "npx playwright test --repeat-each 5 --workers=1",
     "_test:ui:reliability:local": "npm run playwright -- npx playwright test --repeat-each 5 --workers=1",
-    "test:ui:update": "npm run playwright -- npx playwright test --update-snapshots",
-    "test:ui:dev": "npx playwright test --ui",
+    "test:ui:update": "npx playwright test --update-snapshots",
+    "test:ui:watch": "npx playwright test --ui",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
     "copy:license": "cp ../../LICENSE LICENSE",
@@ -62,13 +62,11 @@
     "@iot-app-kit/testing-util": "*",
     "@iot-app-kit/ts-config": "*",
     "@playwright/test": "^1.48.2",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/addons": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/preset-scss": "^1.0.3",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.2.0",
+    "@storybook/addon-essentials": "^8.4.5",
+    "@storybook/addon-links": "^8.4.5",
+    "@storybook/react": "^8.4.5",
+    "@storybook/react-vite": "^8.4.5",
+    "@storybook/test": "^8.4.5",
     "@tanstack/eslint-plugin-query": "^5.40.1",
     "@tanstack/react-query-devtools": "^5.40.1",
     "@testing-library/jest-dom": "^6.6.3",
@@ -104,7 +102,7 @@
     "babel-plugin-formatjs": "10.5.3",
     "copyfiles": "^2.4.1",
     "cytoscape": "^3.25.0",
-    "eslint-config-iot-app-kit": "12.1.0",
+    "eslint-config-iot-app-kit": "*",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "flush-promises": "^1.0.2",
     "jest-extended": "^3.2.4",
@@ -112,6 +110,7 @@
     "react-dom": "^18.2.0",
     "react-intl": "^6.8.7",
     "rimraf": "^5.0.1",
+    "storybook": "^8.4.5",
     "storybook-dark-mode": "^3.0.0",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.5.4",
@@ -166,7 +165,7 @@
     "tiny-invariant": "^1.3.1",
     "uuid": "^9.0.0",
     "video.js": "8.3.0",
-    "zustand": "^4.3.9"
+    "zustand": "^4.5.2"
   },
   "peerDependencies": {
     "@aws-sdk/client-iotsitewise": "^3.696.0",

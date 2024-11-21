@@ -21,7 +21,9 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "clean": "rimraf dist .turbo",
+    "clean:nuke": "rimraf dist .turbo node_modules"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +55,7 @@
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^2.0.22",
     "postcss-initial": "^4.0.1",
+    "rimraf": "^5.0.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "sass": "^1.63.4",
     "typescript": "^5.5.4",

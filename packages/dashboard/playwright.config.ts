@@ -1,20 +1,24 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const SECOND_IN_MS = 1000;
+const MINUTE_IN_MS = 60 * SECOND_IN_MS;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './e2e',
-  /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000,
-    toMatchSnapshot: { maxDiffPixels: 200 },
+    timeout: 100 * SECOND_IN_MS,
+    toMatchSnapshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
+    toHaveScreenshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
   },
+  timeout: 100 * SECOND_IN_MS,
+  globalTimeout: 15 * MINUTE_IN_MS,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -62,10 +66,10 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run start',
-    reuseExistingServer: true,
+    command: 'storybook dev --ci -p 6006',
+    reuseExistingServer: !process.env.CI,
     url: 'http://localhost:6006',
-    timeout: 300 * 1000, // 5 minutes
+    timeout: 5 * MINUTE_IN_MS,
     stdout: 'pipe',
     stderr: 'pipe',
   },

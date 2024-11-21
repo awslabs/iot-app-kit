@@ -10,8 +10,6 @@ import type {
 import { Chart } from '../index';
 import { type ChartLegend } from '../types';
 
-vi.mock('zustand');
-
 const VIEWPORT = { duration: '5m' };
 
 const DATA_STREAM: DataStream = {

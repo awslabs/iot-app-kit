@@ -57,7 +57,7 @@ export const mockTimeSeriesDataQueryLiveStream = ({
         query: `live-data-stream-${id}`,
       }),
     build: () => {
-      let pushDataHandler: NodeJS.Timer | undefined = undefined;
+      let pushDataHandler: NodeJS.Timeout | undefined = undefined;
       return {
         subscribe: ({ next }) => {
           next([
@@ -144,7 +144,7 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
         query: `live-data-stream-${id}`,
       }),
     build: () => {
-      let pushDataHandler: NodeJS.Timer | undefined = undefined;
+      let pushDataHandler: NodeJS.Timeout | undefined = undefined;
       return {
         subscribe: ({ next }) => {
           next([

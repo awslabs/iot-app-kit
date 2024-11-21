@@ -2,7 +2,12 @@
   "name": "eslint-config-iot-app-kit",
   "main": "index.js",
   "private": true,
-  "version": "12.1.0",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "clean:nuke": "rimraf node_modules"
+  },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.62.0",
@@ -22,9 +27,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-unused-imports": "2.0.0"
   },
-  "files": [
-    "index.js"
-  ],
   "devDependencies": {
     "@types/node": "^18.16.18",
     "eslint-import-resolver-typescript": "^3.6.0",

@@ -1,58 +1,9 @@
 import { registerPlugin } from '@iot-app-kit/core';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-
-import { Dashboard, type DashboardProperties } from '../../src';
-import { type DashboardClientConfiguration } from '../../src/types';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
-import { type RefreshRate } from '~/components/refreshRate/types';
-import DashboardView from '~/components/dashboard/view';
+import { Dashboard } from '../../src';
 import { MOCK_DASHBOARD_CONFIG } from './mockData';
-
-/**
- * Data is mocked by the service worker started above.
- * No need for real credentials, but the region must match.
- */
-const clientConfiguration: DashboardClientConfiguration = {
-  awsCredentials: {
-    accessKeyId: '',
-    secretAccessKey: '',
-  },
-  awsRegion: DEFAULT_REGION,
-};
-
-const displaySettings = {
-  numColumns: 100,
-  numRows: 100,
-};
-
-const defaultViewport = { duration: '10m' };
-const querySettings = { refreshRate: 5000 as RefreshRate };
-
-const emptyDashboardConfiguration: DashboardProperties = {
-  clientConfiguration,
-  dashboardConfiguration: {
-    displaySettings,
-    defaultViewport,
-    widgets: [],
-    querySettings,
-  },
-  onSave: () => Promise.resolve(),
-  timeZone: 'Asia/Hong_Kong',
-};
-
-const noOptionalPropsDashboardConfiguration: DashboardProperties = {
-  clientConfiguration,
-  dashboardConfiguration: {
-    displaySettings,
-    widgets: [],
-  },
-  onSave: () => Promise.resolve(),
-  onDashboardConfigurationChange: (config) => {
-    console.log('dashboard config changed to: ', config);
-  },
-  timeZone: 'Asia/Hong_Kong',
-};
 
 registerPlugin('metricsRecorder', {
   provider: () => ({
@@ -60,9 +11,32 @@ registerPlugin('metricsRecorder', {
   }),
 });
 
-export default {
+const meta = {
   title: 'Dashboard/Mocked data',
   component: Dashboard,
+  args: {
+    clientConfiguration: {
+      // MSW is being used to mock requests
+      awsCredentials: {
+        accessKeyId: '',
+        secretAccessKey: '',
+      },
+      awsRegion: DEFAULT_REGION,
+    },
+    dashboardConfiguration: {
+      defaultViewport: { duration: '10m' },
+      querySettings: { refreshRate: 5000 },
+      displaySettings: {
+        numColumns: 100,
+        numRows: 100,
+      },
+      widgets: [],
+    },
+    onDashboardConfigurationChange: (config) => {
+      console.log('dashboard config changed to: ', config);
+    },
+    onSave: () => Promise.resolve(),
+  },
   parameters: {
     layout: 'fullscreen',
   },
@@ -73,30 +47,38 @@ export default {
       return <Story />;
     },
   ],
-} as ComponentMeta<typeof Dashboard>;
+} satisfies Meta<typeof Dashboard>;
 
-export const Empty: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard {...emptyDashboardConfiguration} />
-);
+export default meta;
+type Story = StoryObj<typeof Dashboard>;
 
-export const NoOptionalProps: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard {...noOptionalPropsDashboardConfiguration} />
-);
+export const Empty: Story = {};
 
-export const ViewOnly: ComponentStory<typeof Dashboard> = () => (
-  <DashboardView
-    {...emptyDashboardConfiguration}
-    dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
-    assistantConfiguration={{
-      state: 'PASSIVE',
-    }}
-  />
-);
+export const NoOptionalProps: Story = {
+  args: {
+    dashboardConfiguration: {
+      displaySettings: {
+        numColumns: 100,
+        numRows: 100,
+      },
+      widgets: [],
+    },
+    onDashboardConfigurationChange: undefined,
+    onSave: undefined,
+  },
+};
 
-export const ViewOnlyWithTimezone: ComponentStory<typeof Dashboard> = () => (
-  <DashboardView
-    {...emptyDashboardConfiguration}
-    dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
-    timeZone='Asia/Tokyo'
-  />
-);
+export const ViewOnly: Story = {
+  args: {
+    initialViewMode: 'preview',
+    dashboardConfiguration: MOCK_DASHBOARD_CONFIG,
+    assistantConfiguration: { state: 'PASSIVE' },
+  },
+};
+
+export const ViewOnlyWithTimezone: Story = {
+  args: {
+    initialViewMode: 'preview',
+    dashboardConfiguration: MOCK_DASHBOARD_CONFIG,
+  },
+};

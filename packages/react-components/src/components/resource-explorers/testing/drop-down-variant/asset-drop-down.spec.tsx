@@ -65,16 +65,16 @@ describe('asset drop-down', () => {
         <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
       );
 
-      expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
-      expect(dropDown.queryOption(asset2.name)).not.toBeInTheDocument();
-      expect(dropDown.queryOption(asset3.name)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset2)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset3)).not.toBeInTheDocument();
 
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
 
-      const assetOption1 = dropDown.getOption(asset1.name);
-      const assetOption2 = dropDown.getOption(asset2.name);
-      const assetOption3 = dropDown.getOption(asset3.name);
+      const assetOption1 = dropDown.getOption(asset1);
+      const assetOption2 = dropDown.getOption(asset2);
+      const assetOption3 = dropDown.getOption(asset3);
 
       expect(assetOption1).toBeVisible();
       expect(assetOption1).toHaveTextContent(asset1.name);
@@ -163,12 +163,12 @@ describe('asset drop-down', () => {
 
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
-      await user.click(dropDown.getOption(asset1.name));
+      await user.click(dropDown.getOption(asset1));
 
       expect(screen.queryByText(asset1.name)).not.toBeInTheDocument();
-      expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
-      expect(dropDown.queryOption(asset2.name)).not.toBeInTheDocument();
-      expect(dropDown.queryOption(asset3.name)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset2)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset3)).not.toBeInTheDocument();
     });
 
     describe('single-select', () => {
@@ -188,12 +188,12 @@ describe('asset drop-down', () => {
 
         await dropDown.open();
         await dropDown.waitForLoadingToFinish();
-        await user.click(dropDown.getOption(asset1.name));
+        await user.click(dropDown.getOption(asset1));
 
         expect(screen.getByText(asset1.name)).toBeVisible();
-        expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
-        expect(dropDown.queryOption(asset2.name)).not.toBeInTheDocument();
-        expect(dropDown.queryOption(asset3.name)).not.toBeInTheDocument();
+        expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
+        expect(dropDown.queryOption(asset2)).not.toBeInTheDocument();
+        expect(dropDown.queryOption(asset3)).not.toBeInTheDocument();
       });
 
       it('replaces the selection when a new selection is made', async () => {
@@ -212,12 +212,12 @@ describe('asset drop-down', () => {
 
         await dropDown.open();
         await dropDown.waitForLoadingToFinish();
-        await user.click(dropDown.getOption(asset1.name));
+        await user.click(dropDown.getOption(asset1));
 
         expect(screen.getByText(asset1.name)).toBeVisible();
 
         await user.click(screen.getByText(asset1.name));
-        await user.click(dropDown.getOption(asset2.name));
+        await user.click(dropDown.getOption(asset2));
 
         expect(screen.getByText(asset2.name)).toBeVisible();
         expect(screen.queryByText(asset1.name)).not.toBeInTheDocument();
@@ -241,17 +241,17 @@ describe('asset drop-down', () => {
 
         await dropDown.open();
         await dropDown.waitForLoadingToFinish();
-        await user.click(dropDown.getOption(asset1.name));
-        await user.click(dropDown.getOption(asset2.name));
+        await user.click(dropDown.getOption(asset1));
+        await user.click(dropDown.getOption(asset2));
         await dropDown.close();
 
         expect(screen.getByText(asset1.name)).toBeVisible();
         expect(screen.getByText(asset1.description)).toBeVisible();
         expect(screen.getByText(asset2.name)).toBeVisible();
         expect(screen.getByText(asset2.description)).toBeVisible();
-        expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
-        expect(dropDown.queryOption(asset2.name)).not.toBeInTheDocument();
-        expect(dropDown.queryOption(asset3.name)).not.toBeInTheDocument();
+        expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
+        expect(dropDown.queryOption(asset2)).not.toBeInTheDocument();
+        expect(dropDown.queryOption(asset3)).not.toBeInTheDocument();
       });
 
       it('allows for de-selecting assets', async () => {
@@ -270,8 +270,8 @@ describe('asset drop-down', () => {
 
         await dropDown.open();
         await dropDown.waitForLoadingToFinish();
-        await user.click(dropDown.getOption(asset1.name));
-        await user.click(dropDown.getOption(asset2.name));
+        await user.click(dropDown.getOption(asset1));
+        await user.click(dropDown.getOption(asset2));
         await dropDown.close();
 
         expect(screen.getByText(asset1.name)).toBeVisible();
@@ -331,36 +331,36 @@ describe('asset drop-down', () => {
 
       expect(screen.getByPlaceholderText('Filter assets')).toBeVisible();
 
-      expect(dropDown.getOption(asset1.name)).toBeVisible();
-      expect(dropDown.getOption(asset2.name)).toBeVisible();
-      expect(dropDown.getOption(asset3.name)).toBeVisible();
+      expect(dropDown.getOption(asset1)).toBeVisible();
+      expect(dropDown.getOption(asset2)).toBeVisible();
+      expect(dropDown.getOption(asset3)).toBeVisible();
 
       await user.keyboard('Similar Name');
 
-      expect(dropDown.getOption(asset1.name)).toBeVisible();
-      expect(dropDown.getOption(asset2.name)).toBeVisible();
-      expect(dropDown.queryOption(asset3.name)).not.toBeInTheDocument();
+      expect(dropDown.getOption(asset1)).toBeVisible();
+      expect(dropDown.getOption(asset2)).toBeVisible();
+      expect(dropDown.queryOption(asset3)).not.toBeInTheDocument();
       expect(screen.getByText('(2/3) assets matched')).toBeVisible();
 
       await dropDown.clearFilter();
 
-      expect(dropDown.getOption(asset1.name)).toBeVisible();
-      expect(dropDown.getOption(asset2.name)).toBeVisible();
-      expect(dropDown.getOption(asset3.name)).toBeVisible();
+      expect(dropDown.getOption(asset1)).toBeVisible();
+      expect(dropDown.getOption(asset2)).toBeVisible();
+      expect(dropDown.getOption(asset3)).toBeVisible();
 
       await user.keyboard('Different Name');
 
-      expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
-      expect(dropDown.queryOption(asset2.name)).not.toBeInTheDocument();
-      expect(dropDown.getOption(asset3.name)).toBeVisible();
+      expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
+      expect(dropDown.queryOption(asset2)).not.toBeInTheDocument();
+      expect(dropDown.getOption(asset3)).toBeVisible();
       expect(screen.getByText('(1/3) assets matched')).toBeVisible();
 
       await dropDown.clearFilter();
       await user.keyboard('Similar Description');
 
-      expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
-      expect(dropDown.getOption(asset2.name)).toBeVisible();
-      expect(dropDown.getOption(asset3.name)).toBeVisible();
+      expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
+      expect(dropDown.getOption(asset2)).toBeVisible();
+      expect(dropDown.getOption(asset3)).toBeVisible();
       expect(screen.getByText('(2/3) assets matched')).toBeVisible();
     });
   });

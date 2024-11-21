@@ -1,6 +1,5 @@
-import { type GetState, type SetState, type StoreApi } from 'zustand';
-
-import { type IDataInput, type IDataBindingTemplate } from '../../interfaces';
+import { type StoreApi } from 'zustand';
+import { type IDataBindingTemplate, type IDataInput } from '../../interfaces';
 import { type RootState } from '../Store';
 
 export interface IDataStoreSlice {
@@ -12,8 +11,8 @@ export interface IDataStoreSlice {
 }
 
 export const createDataStoreSlice = (
-  set: SetState<RootState>,
-  _get: GetState<RootState>,
+  set: (cb: (draft: RootState) => void) => void,
+  _get: StoreApi<RootState>['getState'],
   _api: StoreApi<RootState>,
 ): IDataStoreSlice => ({
   dataInput: undefined,

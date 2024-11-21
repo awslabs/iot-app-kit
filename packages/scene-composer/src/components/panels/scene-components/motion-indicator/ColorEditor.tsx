@@ -3,14 +3,12 @@ import { isEmpty } from 'lodash';
 import { useContext, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import styled from 'styled-components';
-
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
 import { type IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { colors } from '../../../../utils/styleUtils';
 import { ColorPicker } from '../../ColorPicker/ColorPicker';
 import { Slider } from '../../Slider';
-
 import { DataBindingEditor } from './DataBindingEditor';
 
 const ColorSwatch = styled.div<{ backgroundColor?: string }>`
@@ -142,7 +140,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
             )}
             <Button data-testid='opacity-button' variant='normal' onClick={() => setShowSlider(!showSlider)}>
               {formatMessage(i18ncolorEditorStrings.opacityButton, {
-                opacityPercentage: Math.round(component.config.backgroundColorOpacity * 100 ?? 100) / 100,
+                opacityPercentage: Math.round(component.config.backgroundColorOpacity * 100) / 100,
               })}
               <Box margin={{ left: 'xs' }} display='inline'>
                 <Icon name={showSlider ? 'caret-down-filled' : 'caret-right-filled'} />
@@ -153,7 +151,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
             {!showColorDataBinding && <Box />}
             {showSlider && (
               <Slider
-                value={component.config.backgroundColorOpacity * 100 ?? 100}
+                value={component.config.backgroundColorOpacity * 100}
                 step={1}
                 min='0'
                 max='100'

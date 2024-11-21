@@ -1,12 +1,13 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const TEST_DATA_ID = 'gauge-base-component';
-const TEST_PAGE = '/iframe.html?id=widgets-gauge--default-gauge';
+const TEST_PAGE = '/iframe.html?args=&id=widgets-gauge--default-gauge';
 const TEST_PAGE_HIDDEN_SETTINGS =
-  '/iframe.html?id=widgets-gauge--hidden-settings-gauge';
-const THRESHOLD_TEST_PAGE = '/iframe.html?id=widgets-gauge--threshold-gauge';
+  '/iframe.html?args=&id=widgets-gauge--hidden-settings-gauge';
+const THRESHOLD_TEST_PAGE =
+  '/iframe.html?args=&id=widgets-gauge--threshold-gauge';
 const DELETABLE_THRESHOLD_TEST_PAGE =
-  '/iframe.html?id=widgets-gauge--deleteable-thresholds-gauge';
+  '/iframe.html?args=&id=widgets-gauge--deleteable-thresholds-gauge';
 
 test('default guage', async ({ page }) => {
   await page.goto(TEST_PAGE);

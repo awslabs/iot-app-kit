@@ -1,19 +1,19 @@
+import { round } from '@iot-app-kit/core-util';
 import type {
   DataZoomComponentOption,
+  EChartsOption,
+  LabelFormatterCallback,
   LegendComponentOption,
   ToolboxComponentOption,
   TooltipComponentOption,
   XAXisComponentOption,
   YAXisComponentOption,
-  EChartsOption,
-  LabelFormatterCallback,
 } from 'echarts';
-import { type ChartAxisOptions, type ChartLegend } from './types';
 import {
   formatDate,
   getPatternForXAxisLabelForLineChart,
 } from '../../utils/time';
-import { round } from '@iot-app-kit/core-util';
+import { type ChartAxisOptions, type ChartLegend } from './types';
 
 export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
@@ -164,6 +164,7 @@ const alarmLabelFormatter: (
     if (
       showAlarmIcons &&
       typeof params.value === 'object' &&
+      params.value != null &&
       'alarmState' in params.value
     ) {
       const alarmState = params.value.alarmState;

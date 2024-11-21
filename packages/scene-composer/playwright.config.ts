@@ -51,7 +51,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run start',
+    command: 'npm start',
     reuseExistingServer: true,
     url: 'http://0.0.0.0:7006',
     timeout: 300 * 1000, // 5 minutes

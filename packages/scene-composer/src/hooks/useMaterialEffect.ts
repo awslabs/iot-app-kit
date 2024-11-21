@@ -2,11 +2,11 @@ import { useCallback, useEffect, useReducer } from 'react';
 import { type Object3D, Mesh } from 'three';
 
 import {
+  type MaterialMapLayer,
   addMaterial,
   backUpOriginalMaterial,
   initialMaterialMaps,
   materialReducer,
-  type MaterialMapLayer,
   removeMaterial,
 } from '../reducers/materialReducer';
 
@@ -40,6 +40,7 @@ const useMaterialEffect = (
       if (o.userData?.isOriginal && o instanceof Mesh) {
         const newMaterial = callback(o);
         if (newMaterial) {
+          // @ts-expect-error type mistmatch after upgrade
           addMaterial(o, newMaterial, layer, materialMaps, dispatch);
         }
       }

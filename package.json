@@ -37,6 +37,7 @@
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "turbo run test",
     "test:ui": "turbo run test:ui",
+    "test:ui:update": "turbo run test:ui:update",
     "test:ui:ci": "turbo run test:ui:ci",
     "test:reliability": "turbo run test:ui:reliability",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",

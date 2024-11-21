@@ -1,16 +1,9 @@
-import { useState } from 'react';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-import type { FC } from 'react';
 import { Icon } from '@cloudscape-design/components';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
 import { getColor } from '../../src/components/chart/utils/getColor';
-import {
-  Menu,
-  MenuOption,
-  type MenuProps,
-  PositionableMenu,
-  type PositionableMenuProps,
-} from '../../src/components/menu';
+import { Menu, MenuOption, PositionableMenu } from '../../src/components/menu';
 
 const defaultPosition = { x: 10, y: 10, z: 0 };
 
@@ -23,11 +16,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof PositionableMenu>;
+} as Meta<typeof PositionableMenu>;
 
-type StoryInputs = PositionableMenuProps;
+type Story = StoryObj<typeof PositionableMenu>;
 
-export const Main: ComponentStory<FC<MenuProps>> = () => (
+export const Main = () => (
   <Menu
     onClickOutside={() => {
       console.log('clicked outside');
@@ -41,53 +34,57 @@ export const Main: ComponentStory<FC<MenuProps>> = () => (
   </Menu>
 );
 
-export const Absolute: ComponentStory<FC<StoryInputs>> = ({ position }) => (
-  <PositionableMenu
-    onClickOutside={() => {
-      console.log('clicked outside');
-    }}
-    shadow
-    open={true}
-    position={position ?? defaultPosition}
-    options={[
-      {
-        action: () => {
-          console.log('Copy');
-        },
-        label: 'Copy',
-        iconEnd: () => '⌘C',
-      },
-      {
-        action: () => {
-          console.log('Paste');
-        },
-        label: 'Paste',
-        iconEnd: () => '⌘V',
-      },
-      {
-        action: () => {
-          console.log('Delete');
-        },
-        label: 'Delete',
-        iconEnd: () => 'del',
-      },
-      {
-        action: () => {
-          console.log('Bring to Front');
-        },
-        label: 'Bring to Front',
-        iconEnd: () => ']',
-      },
-      {
-        action: () => {
-          console.log('Send to Back');
-        },
-        label: 'Send to Back',
-        iconEnd: () => '[',
-      },
-    ]}
-  />
-);
+export const Absolute: Story = {
+  render: (_story, { args: { position } }) => {
+    return (
+      <PositionableMenu
+        onClickOutside={() => {
+          console.log('clicked outside');
+        }}
+        shadow
+        open={true}
+        position={position ?? defaultPosition}
+        options={[
+          {
+            action: () => {
+              console.log('Copy');
+            },
+            label: 'Copy',
+            iconEnd: () => '⌘C',
+          },
+          {
+            action: () => {
+              console.log('Paste');
+            },
+            label: 'Paste',
+            iconEnd: () => '⌘V',
+          },
+          {
+            action: () => {
+              console.log('Delete');
+            },
+            label: 'Delete',
+            iconEnd: () => 'del',
+          },
+          {
+            action: () => {
+              console.log('Bring to Front');
+            },
+            label: 'Bring to Front',
+            iconEnd: () => ']',
+          },
+          {
+            action: () => {
+              console.log('Send to Back');
+            },
+            label: 'Send to Back',
+            iconEnd: () => '[',
+          },
+        ]}
+      />
+    );
+  },
+};
 
 const randomOptions = () =>
   Array(5)
@@ -114,7 +111,7 @@ const ColorIcon = ({ color }: { color: string }) => (
 const mins = randomOptions();
 const maxs = randomOptions();
 
-export const Relative: ComponentStory<FC<StoryInputs>> = () => {
+export const Relative = () => {
   const [minOpen, setMinOpen] = useState(false);
   const [maxOpen, setMaxOpen] = useState(false);
 

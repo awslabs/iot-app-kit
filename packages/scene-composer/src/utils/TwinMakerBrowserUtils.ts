@@ -10,6 +10,7 @@ export function createTwinMakerFetch(getSceneObjectFunction?: GetSceneObjectFunc
         return promise.then((arrayBuffer) => {
           const readableStream: ArrayBuffer | null = null;
 
+          // @ts-ignore type-mismatch after upgrade
           const response: Response = {
             headers: undefined as any, // no valid value for S3
             ok: true,

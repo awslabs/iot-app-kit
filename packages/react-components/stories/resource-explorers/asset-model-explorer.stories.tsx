@@ -1,16 +1,14 @@
 import { type Meta } from '@storybook/react';
-
+import { type ReactElement } from 'react';
+import {
+  AssetModelExplorer,
+  type AssetModelExplorerProps,
+} from '../../src/components/resource-explorers';
 import {
   SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
   type CommonResourceExplorerControls,
 } from './controls';
 import { client } from './data-source';
-
-import { type StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
-import {
-  AssetModelExplorer,
-  type AssetModelExplorerProps,
-} from '../../src/components/resource-explorers';
 import {
   StoryWithClearedResourceCache,
   StoryWithSelectableResource,
@@ -39,7 +37,7 @@ export default {
 type AssetModelExplorerStory = (
   controls: AssetModelExplorerStoryControls,
   context: AssetModelExplorerStoryContext
-) => StoryFnReactReturnType;
+) => ReactElement;
 
 type AssetModelExplorerStoryControls = CommonResourceExplorerControls;
 

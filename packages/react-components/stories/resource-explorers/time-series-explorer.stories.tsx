@@ -1,16 +1,14 @@
 import { type Meta } from '@storybook/react';
-
+import { type ReactElement } from 'react';
+import {
+  TimeSeriesExplorer,
+  type TimeSeriesExplorerProps,
+} from '../../src/components/resource-explorers';
 import {
   type CommonResourceExplorerControls,
   SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
 } from './controls';
 import { client } from './data-source';
-
-import { type StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
-import {
-  TimeSeriesExplorer,
-  type TimeSeriesExplorerProps,
-} from '../../src/components/resource-explorers';
 import {
   StoryWithClearedResourceCache,
   StoryWithSelectableResource,
@@ -39,7 +37,7 @@ export default {
 type TimeSeriesExplorerStory = (
   controls: TimeSeriesExplorerStoryControls,
   context: AssetPropertyExplorerStoryContext
-) => StoryFnReactReturnType;
+) => ReactElement;
 
 type TimeSeriesExplorerStoryControls = CommonResourceExplorerControls;
 

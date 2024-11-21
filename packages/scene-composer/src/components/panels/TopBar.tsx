@@ -1,15 +1,15 @@
-import { type FC, useCallback, useContext, useMemo } from 'react';
-import styled from 'styled-components';
 import { ButtonDropdown, SpaceBetween } from '@cloudscape-design/components';
+import { type FC, useCallback, useContext, useMemo } from 'react';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
-import { KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { type ICameraComponentInternal, accessStore } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
-import { findComponentByType } from '../../utils/nodeUtils';
+import { KnownComponentType } from '../../interfaces';
+import { type ICameraComponentInternal, accessStore } from '../../store';
 import { getCameraSettings } from '../../utils/cameraUtils';
+import { findComponentByType } from '../../utils/nodeUtils';
 
 // TODO: SpaceBetween is not intended to have custom styles, we should refactor this to use our own spacing component
 // if these styles are really needed.
@@ -52,6 +52,7 @@ export const TopBar: FC = () => {
       const cameraComponent = findComponentByType(node, KnownComponentType.Camera) as ICameraComponentInternal;
       const object3D = getObject3DBySceneNodeRef(detail.id);
 
+      // @ts-expect-error type mismatch after update
       setActiveCameraSettings(getCameraSettings(object3D, cameraComponent), 'transition', true);
     },
     [setActiveCameraSettings],
