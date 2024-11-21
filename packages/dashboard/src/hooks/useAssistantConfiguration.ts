@@ -17,15 +17,15 @@ export const useAssistantConfiguration = (widgetId: string) => {
   const dispatch = useDispatch();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const assistant = useSelector((state: DashboardState) => state.assistant);
-  const { iotSiteWisePrivateClient } = useClients();
+  const { iotSiteWise } = useClients();
 
   const assistantClient = useMemo(
     () =>
       new IoTSitewiseAssistantClient({
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        iotSiteWiseClient: iotSiteWisePrivateClient!,
+        iotSiteWiseClient: iotSiteWise!,
       }),
-    [iotSiteWisePrivateClient]
+    [iotSiteWise]
   );
 
   let assistantConfiguration: AssistantProperty | undefined;

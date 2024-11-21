@@ -1,5 +1,4 @@
 import {
-  type IoTSiteWise as InternalIoTSiteWise,
   type DescribeDashboardRequest,
   type DescribeDashboardResponse,
   type IoTSiteWise,
@@ -30,7 +29,6 @@ export type DashboardIotSiteWiseClients = {
   iotEventsClient: IoTEventsClient;
   iotTwinMakerClient: IoTTwinMakerClient;
   iotSiteWise: IoTSiteWise;
-  iotSiteWisePrivateClient?: InternalIoTSiteWise;
 };
 
 export type DashboardIotSiteWiseQueries = {

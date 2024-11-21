@@ -25,7 +25,6 @@ import { getQueries } from './getQueries';
 import { QueryContext } from './queryContext';
 
 import '@cloudscape-design/global-styles/index.css';
-import { useAWSRegion } from '~/hooks/useAWSRegion';
 import '../../styles/variables.css';
 
 export type DashboardViewProperties = {
@@ -58,10 +57,9 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
     ? debounce(onViewportChange, 100)
     : undefined;
 
-  const { region } = useAWSRegion(clientConfiguration);
   const clients = useMemo(
-    () => getClients(clientConfiguration, region),
-    [clientConfiguration, region]
+    () => getClients(clientConfiguration),
+    [clientConfiguration]
   );
 
   return (
@@ -74,7 +72,7 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
     >
       <ClientContext.Provider value={clients}>
         <QueryContext.Provider
-          value={getQueries(clientConfiguration, region, edgeMode)}
+          value={getQueries(clientConfiguration, edgeMode)}
         >
           <QueryClientProvider client={queryClient}>
             <Provider

@@ -1,17 +1,12 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import {
-  IoTSiteWiseClient,
-  IoTSiteWise,
-  IoTSiteWise as InternalIoTSiteWise,
-} from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { type DashboardClientConfiguration } from '~/types';
 import { type DashboardClientContext } from './clientContext';
 import { isCredentials } from '~/hooks/useAWSRegion';
 
 export const getClients = (
-  dashboardClientConfiguration: DashboardClientConfiguration,
-  region: string
+  dashboardClientConfiguration: DashboardClientConfiguration
 ): DashboardClientContext => {
   if (!isCredentials(dashboardClientConfiguration)) {
     return {
@@ -41,23 +36,10 @@ export const getClients = (
     region: dashboardClientConfiguration.awsRegion,
   });
 
-  // This is required to set endpoint for Pen Test
-  const assistantEndpointMetadata = document.querySelector(
-    'meta[name="assistantEndpoint"]'
-  ) as HTMLMetaElement;
-  const iotSiteWisePrivateClient = new InternalIoTSiteWise({
-    credentials: dashboardClientConfiguration.awsCredentials,
-    region: dashboardClientConfiguration.awsRegion,
-    endpoint:
-      assistantEndpointMetadata?.content ??
-      `https://data.iotsitewise.${region}.amazonaws.com`,
-  });
-
   return {
     iotEventsClient,
     iotSiteWiseClient,
     iotTwinMakerClient,
     iotSiteWise,
-    iotSiteWisePrivateClient,
   };
 };
