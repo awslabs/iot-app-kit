@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const TEST_IFRAME = '#storybook-preview-iframe';
 const TEST_PAGE_DEFAULT_SETTINGS =

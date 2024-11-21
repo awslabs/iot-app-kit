@@ -1,10 +1,10 @@
-import { Component, type ContextType, type ReactNode } from 'react';
+import { Component, type ContextType, type ErrorInfo, type ReactNode } from 'react';
 
 import LoggingContext from '../../contexts/logging';
 
 export interface ErrorBoundaryProps {
   ErrorView?: any;
-  onError?(error: Error, errorInfo?: { componentStack: string }): void;
+  onError?(error: Error, errorInfo?: ErrorInfo): void;
   children: ReactNode;
 }
 
@@ -30,7 +30,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     return { hasError: !!error, error };
   }
 
-  componentDidCatch(error: Error, errorInfo?: { componentStack: string }): void {
+  componentDidCatch(error: Error, errorInfo?: ErrorInfo): void {
     const { onError } = this.props;
 
     /* istanbul ignore next */

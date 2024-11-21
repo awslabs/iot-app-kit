@@ -35,6 +35,7 @@ export const OrbitControls = forwardRef<OrbitControlsImpl, OrbitControlsProps>(
     const explDomElement = domElement || (typeof events.connected !== 'boolean' ? events.connected : gl.domElement);
     const controls = useMemo(() => new OrbitControlsImpl(explCamera), [explCamera]);
 
+    // @ts-expect-error type mistmatch after upgrade
     events.filter = (items: THREE.Intersection[]): THREE.Intersection[] => {
       return items.filter((item: THREE.Intersection) => {
         return !!item.face || !!item.faceIndex || item.object.type === 'Sprite';

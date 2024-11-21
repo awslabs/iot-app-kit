@@ -1,5 +1,4 @@
-import { type GetState, type SetState, type StoreApi } from 'zustand';
-
+import { type StoreApi } from 'zustand';
 import { type RootState } from '../Store';
 
 export interface INodeErrorStateSlice {
@@ -10,8 +9,8 @@ export interface INodeErrorStateSlice {
 }
 
 export const createNodeErrorStateSlice = (
-  set: SetState<RootState>,
-  get: GetState<RootState>,
+  set: (cb: (draft: RootState) => void) => void,
+  get: StoreApi<RootState>['getState'],
   _api: StoreApi<RootState>,
 ): INodeErrorStateSlice => ({
   nodeErrorMap: {},

@@ -1,4 +1,4 @@
-import type { ComponentMeta, ComponentStory } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   KnowledgeGraphContainer,
   type KnowledgeGraphInterface,
@@ -36,17 +36,16 @@ export default {
       return acc;
     }, {} as { [key: string]: { control: { type: string; label: string } } }),
   },
-} as ComponentMeta<typeof KnowledgeGraphContainer>;
+} as Meta<typeof KnowledgeGraphContainer>;
 
-export const Basic: ComponentStory<typeof KnowledgeGraphContainer> =
-  Template.bind({});
+export const Basic: StoryFn<typeof KnowledgeGraphContainer> = Template.bind({});
 Basic.parameters = {
   KG: {
     queryResult: response3,
   },
 };
 
-export const InContainers: ComponentStory<typeof KnowledgeGraphContainer> =
+export const InContainers: StoryFn<typeof KnowledgeGraphContainer> =
   TemplateInContainer.bind({});
 InContainers.parameters = {
   KG: {
@@ -54,7 +53,7 @@ InContainers.parameters = {
   },
 };
 
-export const OverrideStyles: ComponentStory<typeof KnowledgeGraphContainer> =
+export const OverrideStyles: StoryFn<typeof KnowledgeGraphContainer> =
   Template.bind({});
 OverrideStyles.parameters = {
   KG: {

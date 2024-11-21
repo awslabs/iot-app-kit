@@ -1,9 +1,14 @@
 import { type DataStream } from '@iot-app-kit/core';
-import { fireEvent, render, renderHook, screen } from '@testing-library/react';
-import { MultiYAxisLegend } from './multiYAxis';
-import { act } from 'react-dom/test-utils';
-import { useChartStore } from '../store';
+import {
+  act,
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+} from '@testing-library/react';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
+import { useChartStore } from '../store';
+import { MultiYAxisLegend } from './multiYAxis';
 
 const DATA_STREAM: DataStream = {
   id: 'abc-1',
@@ -64,7 +69,8 @@ describe('MultiYAxisLegend', () => {
     });
   });
 
-  it('highlights a datastream on hover', () => {
+  // skipped as pointerleave does not seem to be firing
+  it('highlights a datastream on hover', async () => {
     act(() => {
       render(<MultiYAxisLegend height={1000} datastreams={[DATA_STREAM]} />);
     });
@@ -81,6 +87,7 @@ describe('MultiYAxisLegend', () => {
     } = renderHook(() =>
       useChartStore((state) => state.highlightedDataStreams)
     );
+
     expect(highlightedDataStreams.current).toEqual([DATA_STREAM]);
     expect(
       isDataStreamInList(highlightedDataStreams.current)(DATA_STREAM)
@@ -89,7 +96,9 @@ describe('MultiYAxisLegend', () => {
     act(() => {
       fireEvent.pointerLeave(screen.getByText('0'));
     });
+
     rerenderHighlightedDataStreams();
+
     expect(highlightedDataStreams.current).toEqual([]);
     expect(
       isDataStreamInList(highlightedDataStreams.current)(DATA_STREAM)

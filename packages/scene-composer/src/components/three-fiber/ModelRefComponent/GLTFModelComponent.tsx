@@ -155,6 +155,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
       const { position } = getIntersectionTransform(e.intersections[0]);
       const newWidgetNode = createNodeWithPositionAndNormal(
         addingWidget,
+        // @ts-expect-error type mismatch after update
         position,
         cursorLookAt,
         physicalParent,

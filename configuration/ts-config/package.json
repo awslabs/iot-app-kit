@@ -1,6 +1,5 @@
 {
   "name": "@iot-app-kit/ts-config",
-  "version": "12.1.0",
   "type": "module",
   "private": true,
   "files": [
@@ -8,8 +7,12 @@
     "tsconfig.cjs.json",
     "tsconfig.esm.json"
   ],
+  "scripts": {
+    "clean:nuke": "rimraf node_modules"
+  },
   "devDependencies": {
     "@types/node": "^18.16.18",
+    "rimraf": "^5.0.1",
     "typescript": "^5.5.4"
   }
 }

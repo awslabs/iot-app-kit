@@ -1,6 +1,6 @@
+import { type Meta } from '@storybook/react';
 import { Chart } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
-import { type ComponentMeta } from '@storybook/react';
 
 export default {
   title: 'Widgets/Base Chart',
@@ -24,7 +24,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Chart>;
+} as Meta<typeof Chart>;
 
 export const DefaultBaseChart = () => {
   return (

@@ -1,12 +1,12 @@
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import { type Meta, type StoryFn } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { queryClient } from '../../src/queries';
-import { AnomalyChart } from '../../src/components/anomaly-chart';
-import { errorMockDatasource } from './mockData';
-import { getEnvCredentials, getRegion } from '../utils/query';
 import { TimeSelection, TimeSync } from '../../src';
-import { ConnectedAnomalyChart } from './connected-anomaly-chart';
+import { AnomalyChart } from '../../src/components/anomaly-chart';
 import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-chart/tests/mockDataSources';
+import { queryClient } from '../../src/queries';
+import { getEnvCredentials, getRegion } from '../utils/query';
+import { ConnectedAnomalyChart } from './connected-anomaly-chart';
+import { errorMockDatasource } from './mockData';
 
 export default {
   title: 'Widgets/Anomaly',
@@ -56,11 +56,11 @@ export default {
       </>
     ),
   ],
-} as ComponentMeta<typeof AnomalyChart>;
+} as Meta<typeof AnomalyChart>;
 
-export const DefaultSettingsAnomalyChart: ComponentStory<
-  typeof AnomalyChart
-> = (options) => {
+export const DefaultSettingsAnomalyChart: StoryFn<typeof AnomalyChart> = (
+  options
+) => {
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
@@ -70,7 +70,7 @@ export const DefaultSettingsAnomalyChart: ComponentStory<
   );
 };
 
-export const AnomalyChartHiddenAxisAndTimestamp: ComponentStory<
+export const AnomalyChartHiddenAxisAndTimestamp: StoryFn<
   typeof AnomalyChart
 > = () => {
   return (
@@ -90,7 +90,7 @@ export const AnomalyChartHiddenAxisAndTimestamp: ComponentStory<
   );
 };
 
-export const SiteWiseConnectedAnomalyChart: ComponentStory<
+export const SiteWiseConnectedAnomalyChart: StoryFn<
   typeof ConnectedAnomalyChart
 > = ({ assetId, predictionDefinitionId, ...options }) => {
   if (!getEnvCredentials() || !getRegion()) {
@@ -120,7 +120,7 @@ export const SiteWiseConnectedAnomalyChart: ComponentStory<
   );
 };
 
-export const AnomalyChartErrorState: ComponentStory<typeof AnomalyChart> = (
+export const AnomalyChartErrorState: StoryFn<typeof AnomalyChart> = (
   options
 ) => {
   return (
@@ -139,7 +139,7 @@ export const AnomalyChartErrorState: ComponentStory<typeof AnomalyChart> = (
   );
 };
 
-export const AnomalyChartEmptyState: ComponentStory<typeof AnomalyChart> = (
+export const AnomalyChartEmptyState: StoryFn<typeof AnomalyChart> = (
   options
 ) => {
   return (

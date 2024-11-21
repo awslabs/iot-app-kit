@@ -1,6 +1,6 @@
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-import { Status } from '../../src/components/status/status';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { Status } from '../../src/components/status/status';
 
 const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
 const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
@@ -20,7 +20,9 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Status>;
+} as Meta<typeof Status>;
+
+type Story = StoryObj<typeof Status>;
 
 const { query } = initialize({
   awsCredentials: {
@@ -30,22 +32,26 @@ const { query } = initialize({
   },
 });
 
-export const Main: ComponentStory<typeof Status> = () => (
-  <div style={{ width: '200px', height: '200px' }}>
-    <Status
-      viewport={{ duration: '5m' }}
-      query={query.timeSeriesData({
-        assets: [
-          {
-            assetId: ASSET_ID,
-            properties: [
+export const Main: Story = {
+  render: () => {
+    return (
+      <div style={{ width: '200px', height: '200px' }}>
+        <Status
+          viewport={{ duration: '5m' }}
+          query={query.timeSeriesData({
+            assets: [
               {
-                propertyId: PROPERTY_ID,
+                assetId: ASSET_ID,
+                properties: [
+                  {
+                    propertyId: PROPERTY_ID,
+                  },
+                ],
               },
             ],
-          },
-        ],
-      })}
-    />
-  </div>
-);
+          })}
+        />
+      </div>
+    );
+  },
+};

@@ -61,6 +61,7 @@ export const WebGLCanvasManager: React.FC = () => {
   const onClick = (e: ThreeEvent<MouseEvent>) => {
     if (e.delta <= MAX_CLICK_DISTANCE && addingWidget && e.intersections.length > 0) {
       const { position } = getIntersectionTransform(e.intersections[0]);
+      // @ts-expect-error type mismatch after update
       const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
 
       setAddingWidget(undefined);

@@ -1,16 +1,16 @@
+import type { Meta, StoryFn } from '@storybook/react';
 import { type FC } from 'react';
-import type { ComponentMeta, ComponentStory } from '@storybook/react';
-import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
-import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
+import { Chart, TimeSelection, TimeSync, useViewport } from '../../src';
+import {
+  type ChartOptions,
+  type Visualization,
+} from '../../src/components/chart/types';
 import {
   getIotSiteWiseQuery,
   getTimeSeriesDataQuery,
   queryConfigured,
 } from '../utils/query';
-import {
-  type ChartOptions,
-  type Visualization,
-} from '../../src/components/chart/types';
+import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
 
 const chartTypes: Visualization[] = [
   'line',
@@ -46,11 +46,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Chart>;
+} as Meta<typeof Chart>;
 
 type StoryInputs = ChartOptions & { showAllVisualizationTypes: boolean };
 
-export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
+export const BaseChartExample: StoryFn<FC<StoryInputs>> = ({
   id,
   significantDigits,
   size,
@@ -84,9 +84,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   );
 };
 
-export const SiteWiseConnectedBaseChartExample: ComponentStory<
-  FC<StoryInputs>
-> = ({
+export const SiteWiseConnectedBaseChartExample: StoryFn<FC<StoryInputs>> = ({
   showAllVisualizationTypes,
   id,
   significantDigits,

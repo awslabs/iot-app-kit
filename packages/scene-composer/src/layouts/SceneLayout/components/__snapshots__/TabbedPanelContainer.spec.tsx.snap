@@ -83,3 +83,105 @@ exports[`TabbedPanelContainerSnap > should render correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`TabbedPanelContainerSnap > should render correctly 2`] = `
+<div
+  className="tm-sidePanelTabs awsui_root_14rmt_1kz54_418 awsui_tabs_14rmt_1kz54_194"
+>
+  <div
+    className="awsui_tabs-header_14rmt_1kz54_194 awsui_tabs-header-with-divider_14rmt_1kz54_410"
+  >
+    <ul
+      className="awsui_tabs-header-list_14rmt_1kz54_202"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onScroll={[Function]}
+      role="tablist"
+    >
+      <li
+        className="awsui_tabs-tab_14rmt_1kz54_241"
+        role="presentation"
+      >
+        <div
+          className="awsui_tabs-tab-header-container_14rmt_1kz54_266 awsui_refresh_14rmt_1kz54_281 awsui_tabs-tab-active_14rmt_1kz54_403 awsui_tabs-tab-focusable_14rmt_1kz54_414"
+        >
+          <button
+            aria-controls="awsui-tabs-:r3:-test1-panel"
+            aria-selected={true}
+            className="awsui_tabs-tab-link_14rmt_1kz54_327 awsui_refresh_14rmt_1kz54_281 awsui_tabs-tab-active_14rmt_1kz54_403 awsui_tabs-tab-focused_14rmt_1kz54_509 awsui_tabs-tab-focusable_14rmt_1kz54_414"
+            data-testid="test1"
+            id="awsui-tabs-:r3:-test1"
+            onClick={[Function]}
+            role="tab"
+            tabIndex={-1}
+            type="button"
+          >
+            <span
+              className="awsui_tabs-tab-label_14rmt_1kz54_250"
+            >
+              test1
+            </span>
+          </button>
+        </div>
+      </li>
+      <li
+        className="awsui_tabs-tab_14rmt_1kz54_241"
+        role="presentation"
+      >
+        <div
+          className="awsui_tabs-tab-header-container_14rmt_1kz54_266 awsui_refresh_14rmt_1kz54_281 awsui_tabs-tab-focusable_14rmt_1kz54_414"
+        >
+          <button
+            aria-controls="awsui-tabs-:r3:-test2-panel"
+            aria-selected={false}
+            className="awsui_tabs-tab-link_14rmt_1kz54_327 awsui_refresh_14rmt_1kz54_281 awsui_tabs-tab-focusable_14rmt_1kz54_414"
+            data-testid="test2"
+            id="awsui-tabs-:r3:-test2"
+            onClick={[Function]}
+            role="tab"
+            tabIndex={-1}
+            type="button"
+          >
+            <span
+              className="awsui_tabs-tab-label_14rmt_1kz54_250"
+            >
+              test2
+            </span>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div
+    className="awsui_tabs-content-wrapper_14rmt_1kz54_483 awsui_with-paddings_14rmt_1kz54_483"
+  >
+    <div
+      aria-labelledby="awsui-tabs-:r3:-test1"
+      className="awsui_tabs-content_14rmt_1kz54_459 awsui_tabs-content-active_14rmt_1kz54_469"
+      id="awsui-tabs-:r3:-test1-panel"
+      role="tabpanel"
+      tabIndex={0}
+    >
+      <div>
+         Panel 1 
+      </div>
+    </div>
+    <div
+      aria-labelledby="awsui-tabs-:r3:-test2"
+      className="awsui_tabs-content_14rmt_1kz54_459"
+      id="awsui-tabs-:r3:-test2-panel"
+      role="tabpanel"
+      tabIndex={0}
+    />
+  </div>
+</div>
+`;
+
+exports[`TabbedPanelContainerSnap > should render correctly 3`] = `
+<div
+  className="tm-sidePanelTabs"
+  data-mocked="Tabs"
+  tabs="[{"label":"test1","id":"test1","content":{"type":"div","key":null,"ref":null,"props":{"children":" Panel 1 "},"_owner":null,"_store":{}}},{"label":"test2","id":"test2","content":{"type":"div","key":null,"ref":null,"props":{"children":" Panel 2 "},"_owner":null,"_store":{}}}]"
+/>
+`;

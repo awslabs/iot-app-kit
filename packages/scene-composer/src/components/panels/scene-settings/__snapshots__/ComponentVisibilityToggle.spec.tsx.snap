@@ -43,3 +43,73 @@ exports[`ComponentVisibilityToggle > should render correctly for motion indicato
   </div>
 </div>
 `;
+
+exports[`ComponentVisibilityToggle > should render correctly for motion indicator 2`] = `
+<div>
+  <div
+    class="awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_m-vertical-s_18wu0_16wz6_682 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    <p
+      class="awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_p-variant_18wu0_16wz6_108 awsui_m-bottom-xxs_18wu0_16wz6_641 awsui_d-inline_18wu0_16wz6_829 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      Motion indicator label
+    </p>
+    <div
+      class="awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_f-right_18wu0_16wz6_843 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      <span
+        class="awsui_wrapper_1wepg_s8qpr_118 awsui_root_4yi2u_1w171_97"
+      >
+        <span
+          class="awsui_label-wrapper_1wepg_s8qpr_124"
+        >
+          <span
+            class="awsui_control_1wepg_s8qpr_158 awsui_toggle-control_4yi2u_1w171_155 awsui_toggle-control-checked_4yi2u_1w171_168"
+          >
+            <span
+              class="awsui_toggle-handle_4yi2u_1w171_181 awsui_toggle-handle-checked_4yi2u_1w171_196"
+            />
+            <input
+              class="awsui_native-input_1wepg_s8qpr_114"
+              id=":r1:"
+              type="checkbox"
+            />
+            <span
+              class="awsui_outline_1wepg_s8qpr_107 awsui_outline_4yi2u_1w171_133"
+            />
+          </span>
+          <span
+            class="awsui_content_1wepg_s8qpr_97 awsui_empty-content_1wepg_s8qpr_135"
+          />
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ComponentVisibilityToggle > should render correctly for motion indicator 3`] = `
+<div>
+  <div
+    data-mocked="Box"
+    margin="{"vertical":"s"}"
+  >
+    <div
+      data-mocked="Box"
+      display="inline"
+      margin="{"bottom":"xxs"}"
+      variant="p"
+    >
+      Motion indicator label
+    </div>
+    <div
+      data-mocked="Box"
+      float="right"
+    >
+      <div
+        data-mocked="Toggle"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -3,164 +3,50 @@
 exports[`PlaneGeometryComponentEditor > should render correctly 1`] = `
 <div>
   <div
-    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
+    data-mocked="SpaceBetween"
   >
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="FormField"
+      label="Width"
     >
       <div
-        class="awsui_root_14mhv_av9zi_174"
-        data-analytics-field-label="[id="formField:r0:-label"]"
-      >
-        <div
-          class=""
-        >
-          <label
-            class="awsui_label_14mhv_av9zi_210"
-            for="formField:r0:"
-            id="formField:r0:-label"
-          >
-            Width
-          </label>
-        </div>
-        <div
-          class="awsui_controls_14mhv_av9zi_246"
-        >
-          <div
-            class="awsui_grid_14yj0_1lwse_99"
-          >
-            <div
-              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
-            >
-              <div
-                class="awsui_restore-pointer-events_14yj0_1lwse_314"
-              >
-                <div
-                  class="awsui_control_14mhv_av9zi_246"
-                >
-                  <div
-                    class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-                    data-testid="plane-width-input"
-                  >
-                    <input
-                      aria-labelledby="formField:r0:-label"
-                      autocomplete="on"
-                      class="awsui_input_2rhyz_15wpl_103"
-                      id="formField:r0:"
-                      type="number"
-                      value="10"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        data-mocked="Input"
+        data-testid="plane-width-input"
+        type="number"
+        value="10"
+      />
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="FormField"
+      label="Height"
     >
       <div
-        class="awsui_root_14mhv_av9zi_174"
-        data-analytics-field-label="[id="formField:r1:-label"]"
-      >
-        <div
-          class=""
-        >
-          <label
-            class="awsui_label_14mhv_av9zi_210"
-            for="formField:r1:"
-            id="formField:r1:-label"
-          >
-            Height
-          </label>
-        </div>
-        <div
-          class="awsui_controls_14mhv_av9zi_246"
-        >
-          <div
-            class="awsui_grid_14yj0_1lwse_99"
-          >
-            <div
-              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
-            >
-              <div
-                class="awsui_restore-pointer-events_14yj0_1lwse_314"
-              >
-                <div
-                  class="awsui_control_14mhv_av9zi_246"
-                >
-                  <div
-                    class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-                    data-testid="plane-height-input"
-                  >
-                    <input
-                      aria-labelledby="formField:r1:-label"
-                      autocomplete="on"
-                      class="awsui_input_2rhyz_15wpl_103"
-                      id="formField:r1:"
-                      type="number"
-                      value="20"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        data-mocked="Input"
+        data-testid="plane-height-input"
+        type="number"
+        value="20"
+      />
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      id="ColorSelectorCombo"
     >
-      <div
-        id="ColorSelectorCombo"
-      >
-        [{"color":"#cccccc","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
-      </div>
+      [{"color":"#cccccc","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="SpaceBetween"
+      direction="horizontal"
     >
       <div
-        class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+        data-mocked="Button"
+        data-testid="select-texture-button"
       >
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <button
-            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
-            data-analytics-funnel-value="button:r2:"
-            data-testid="select-texture-button"
-            type="submit"
-          >
-            <span
-              class="awsui_content_vjswe_12tek_103"
-            >
-              Select Texture
-            </span>
-          </button>
-        </div>
-        <div
-          class="awsui_child_18582_z63vw_103"
-        />
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <div
-            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-          >
-            <input
-              autocomplete="on"
-              class="awsui_input_2rhyz_15wpl_103"
-              disabled=""
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
+        Select Texture
       </div>
+      <div
+        data-mocked="Input"
+        disabled=""
+        value=""
+      />
     </div>
   </div>
 </div>
@@ -169,164 +55,50 @@ exports[`PlaneGeometryComponentEditor > should render correctly 1`] = `
 exports[`PlaneGeometryComponentEditor > should render correctly with color 1`] = `
 <div>
   <div
-    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
+    data-mocked="SpaceBetween"
   >
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="FormField"
+      label="Width"
     >
       <div
-        class="awsui_root_14mhv_av9zi_174"
-        data-analytics-field-label="[id="formField:r4:-label"]"
-      >
-        <div
-          class=""
-        >
-          <label
-            class="awsui_label_14mhv_av9zi_210"
-            for="formField:r4:"
-            id="formField:r4:-label"
-          >
-            Width
-          </label>
-        </div>
-        <div
-          class="awsui_controls_14mhv_av9zi_246"
-        >
-          <div
-            class="awsui_grid_14yj0_1lwse_99"
-          >
-            <div
-              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
-            >
-              <div
-                class="awsui_restore-pointer-events_14yj0_1lwse_314"
-              >
-                <div
-                  class="awsui_control_14mhv_av9zi_246"
-                >
-                  <div
-                    class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-                    data-testid="plane-width-input"
-                  >
-                    <input
-                      aria-labelledby="formField:r4:-label"
-                      autocomplete="on"
-                      class="awsui_input_2rhyz_15wpl_103"
-                      id="formField:r4:"
-                      type="number"
-                      value="10"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        data-mocked="Input"
+        data-testid="plane-width-input"
+        type="number"
+        value="10"
+      />
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="FormField"
+      label="Height"
     >
       <div
-        class="awsui_root_14mhv_av9zi_174"
-        data-analytics-field-label="[id="formField:r5:-label"]"
-      >
-        <div
-          class=""
-        >
-          <label
-            class="awsui_label_14mhv_av9zi_210"
-            for="formField:r5:"
-            id="formField:r5:-label"
-          >
-            Height
-          </label>
-        </div>
-        <div
-          class="awsui_controls_14mhv_av9zi_246"
-        >
-          <div
-            class="awsui_grid_14yj0_1lwse_99"
-          >
-            <div
-              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
-            >
-              <div
-                class="awsui_restore-pointer-events_14yj0_1lwse_314"
-              >
-                <div
-                  class="awsui_control_14mhv_av9zi_246"
-                >
-                  <div
-                    class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-                    data-testid="plane-height-input"
-                  >
-                    <input
-                      aria-labelledby="formField:r5:-label"
-                      autocomplete="on"
-                      class="awsui_input_2rhyz_15wpl_103"
-                      id="formField:r5:"
-                      type="number"
-                      value="20"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        data-mocked="Input"
+        data-testid="plane-height-input"
+        type="number"
+        value="20"
+      />
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      id="ColorSelectorCombo"
     >
-      <div
-        id="ColorSelectorCombo"
-      >
-        [{"color":"#abcdef","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
-      </div>
+      [{"color":"#abcdef","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="SpaceBetween"
+      direction="horizontal"
     >
       <div
-        class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+        data-mocked="Button"
+        data-testid="select-texture-button"
       >
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <button
-            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
-            data-analytics-funnel-value="button:r6:"
-            data-testid="select-texture-button"
-            type="submit"
-          >
-            <span
-              class="awsui_content_vjswe_12tek_103"
-            >
-              Select Texture
-            </span>
-          </button>
-        </div>
-        <div
-          class="awsui_child_18582_z63vw_103"
-        />
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <div
-            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-          >
-            <input
-              autocomplete="on"
-              class="awsui_input_2rhyz_15wpl_103"
-              disabled=""
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
+        Select Texture
       </div>
+      <div
+        data-mocked="Input"
+        disabled=""
+        value=""
+      />
     </div>
   </div>
 </div>
@@ -335,168 +107,51 @@ exports[`PlaneGeometryComponentEditor > should render correctly with color 1`] =
 exports[`PlaneGeometryComponentEditor > should render correctly with textured plane 1`] = `
 <div>
   <div
-    class="awsui_root_18582_z63vw_99 awsui_vertical_18582_z63vw_146 awsui_vertical-s_18582_z63vw_158"
+    data-mocked="SpaceBetween"
   >
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="FormField"
+      label="Width"
     >
       <div
-        class="awsui_root_14mhv_av9zi_174"
-        data-analytics-field-label="[id="formField:r8:-label"]"
-      >
-        <div
-          class=""
-        >
-          <label
-            class="awsui_label_14mhv_av9zi_210"
-            for="formField:r8:"
-            id="formField:r8:-label"
-          >
-            Width
-          </label>
-        </div>
-        <div
-          class="awsui_controls_14mhv_av9zi_246"
-        >
-          <div
-            class="awsui_grid_14yj0_1lwse_99"
-          >
-            <div
-              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
-            >
-              <div
-                class="awsui_restore-pointer-events_14yj0_1lwse_314"
-              >
-                <div
-                  class="awsui_control_14mhv_av9zi_246"
-                >
-                  <div
-                    class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-                    data-testid="plane-width-input"
-                  >
-                    <input
-                      aria-labelledby="formField:r8:-label"
-                      autocomplete="on"
-                      class="awsui_input_2rhyz_15wpl_103"
-                      id="formField:r8:"
-                      type="number"
-                      value="10"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        data-mocked="Input"
+        data-testid="plane-width-input"
+        type="number"
+        value="10"
+      />
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="FormField"
+      label="Height"
     >
       <div
-        class="awsui_root_14mhv_av9zi_174"
-        data-analytics-field-label="[id="formField:r9:-label"]"
-      >
-        <div
-          class=""
-        >
-          <label
-            class="awsui_label_14mhv_av9zi_210"
-            for="formField:r9:"
-            id="formField:r9:-label"
-          >
-            Height
-          </label>
-        </div>
-        <div
-          class="awsui_controls_14mhv_av9zi_246"
-        >
-          <div
-            class="awsui_grid_14yj0_1lwse_99"
-          >
-            <div
-              class="awsui_grid-column_14yj0_1lwse_143 awsui_colspan-12_14yj0_1lwse_264"
-            >
-              <div
-                class="awsui_restore-pointer-events_14yj0_1lwse_314"
-              >
-                <div
-                  class="awsui_control_14mhv_av9zi_246"
-                >
-                  <div
-                    class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-                    data-testid="plane-height-input"
-                  >
-                    <input
-                      aria-labelledby="formField:r9:-label"
-                      autocomplete="on"
-                      class="awsui_input_2rhyz_15wpl_103"
-                      id="formField:r9:"
-                      type="number"
-                      value="20"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        data-mocked="Input"
+        data-testid="plane-height-input"
+        type="number"
+        value="20"
+      />
     </div>
     <div
-      class="awsui_child_18582_z63vw_103"
+      data-mocked="SpaceBetween"
+      direction="horizontal"
     >
       <div
-        class="awsui_root_18582_z63vw_99 awsui_horizontal_18582_z63vw_114 awsui_horizontal-s_18582_z63vw_127"
+        data-mocked="Button"
+        data-testid="select-texture-button"
       >
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <button
-            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
-            data-analytics-funnel-value="button:ra:"
-            data-testid="select-texture-button"
-            type="submit"
-          >
-            <span
-              class="awsui_content_vjswe_12tek_103"
-            >
-              Select Texture
-            </span>
-          </button>
-        </div>
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <button
-            class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
-            data-analytics-funnel-value="button:rc:"
-            data-testid="remove-texture-button"
-            type="submit"
-          >
-            <span
-              class="awsui_content_vjswe_12tek_103"
-            >
-              Remove Texture
-            </span>
-          </button>
-        </div>
-        <div
-          class="awsui_child_18582_z63vw_103"
-        >
-          <div
-            class="awsui_root_2rhyz_15wpl_99 awsui_input-container_2rhyz_15wpl_262"
-          >
-            <input
-              autocomplete="on"
-              class="awsui_input_2rhyz_15wpl_103"
-              disabled=""
-              type="text"
-              value="filepath"
-            />
-          </div>
-        </div>
+        Select Texture
       </div>
+      <div
+        data-mocked="Button"
+        data-testid="remove-texture-button"
+      >
+        Remove Texture
+      </div>
+      <div
+        data-mocked="Input"
+        disabled=""
+        value="filepath"
+      />
     </div>
   </div>
 </div>

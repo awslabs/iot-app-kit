@@ -28,17 +28,13 @@ exports[`SceneHierarchyTreeItem > should bubble up when expanded 1`] = `
         <span
           class="actions"
         >
-          <button
-            aria-label="Toggle visibility"
-            class="tm-visibility-toggle visible tm-icon-button awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-            data-analytics-funnel-value="button:r4:"
-            title="Toggle visibility"
-            type="submit"
+          <div
+            arialabel="Toggle visibility"
+            class="tm-visibility-toggle visible tm-icon-button"
+            data-mocked="Button"
+            variant="inline-icon"
           >
-            <span
-              aria-hidden="true"
-              class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-            >
+            <div>
               <span>
                 <svg
                   fill="none"
@@ -73,8 +69,8 @@ exports[`SceneHierarchyTreeItem > should bubble up when expanded 1`] = `
                   </defs>
                 </svg>
               </span>
-            </span>
-          </button>
+            </div>
+          </div>
         </span>
       </span>
     </label>
@@ -102,40 +98,41 @@ exports[`SceneHierarchyTreeItem > should render SubModelTree when item has a mod
       <span
         class="tm-scene-node-label"
       >
-        <span
-          aria-hidden="true"
-          class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        <div
+          data-mocked="Icon"
         >
-          <svg
-            fill="none"
-            height="14"
-            width="14"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g
-              clip-path="url(#modelref_svg__a)"
-              stroke="currentColor"
-              stroke-miterlimit="10"
+          <div>
+            <svg
+              fill="none"
+              height="14"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
-              />
-              <path
-                d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
-              />
-            </g>
-            <defs>
-              <clippath
-                id="modelref_svg__a"
+              <g
+                clip-path="url(#modelref_svg__a)"
+                stroke="currentColor"
+                stroke-miterlimit="10"
               >
                 <path
-                  d="M0 0h13.889v14H0z"
-                  fill="#fff"
+                  d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
                 />
-              </clippath>
-            </defs>
-          </svg>
-        </span>
+                <path
+                  d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="modelref_svg__a"
+                >
+                  <path
+                    d="M0 0h13.889v14H0z"
+                    fill="#fff"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+          </div>
+        </div>
         <p
           class="tm-scene-node-label-inner"
         >
@@ -144,17 +141,13 @@ exports[`SceneHierarchyTreeItem > should render SubModelTree when item has a mod
         <span
           class="actions"
         >
-          <button
-            aria-label="Toggle visibility"
-            class="tm-visibility-toggle visible tm-icon-button awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-            data-analytics-funnel-value="button:ra:"
-            title="Toggle visibility"
-            type="submit"
+          <div
+            arialabel="Toggle visibility"
+            class="tm-visibility-toggle visible tm-icon-button"
+            data-mocked="Button"
+            variant="inline-icon"
           >
-            <span
-              aria-hidden="true"
-              class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-            >
+            <div>
               <span>
                 <svg
                   fill="none"
@@ -189,8 +182,8 @@ exports[`SceneHierarchyTreeItem > should render SubModelTree when item has a mod
                   </defs>
                 </svg>
               </span>
-            </span>
-          </button>
+            </div>
+          </div>
         </span>
       </span>
     </label>
@@ -218,31 +211,32 @@ exports[`SceneHierarchyTreeItem > should render dynamic node with drag and drop 
       <span
         class="tm-scene-node-label"
       >
-        <span
-          aria-hidden="true"
-          class="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+        <div
+          data-mocked="Icon"
         >
-          <svg
-            fill="none"
-            height="14"
-            width="14"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g
-              stroke="currentColor"
-              stroke-miterlimit="10"
+          <div>
+            <svg
+              fill="none"
+              height="14"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M7 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-                fill="currentColor"
-              />
-              <path
-                d="M7 13.125A6.125 6.125 0 1 0 7 .875a6.125 6.125 0 0 0 0 12.25Z"
-                stroke-width="2"
-              />
-            </g>
-          </svg>
-        </span>
+              <g
+                stroke="currentColor"
+                stroke-miterlimit="10"
+              >
+                <path
+                  d="M7 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M7 13.125A6.125 6.125 0 1 0 7 .875a6.125 6.125 0 0 0 0 12.25Z"
+                  stroke-width="2"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
         <p
           class="tm-scene-node-label-inner"
         >
@@ -251,17 +245,13 @@ exports[`SceneHierarchyTreeItem > should render dynamic node with drag and drop 
         <span
           class="actions"
         >
-          <button
-            aria-label="Toggle visibility"
-            class="tm-visibility-toggle visible tm-icon-button awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-            data-analytics-funnel-value="button:rc:"
-            title="Toggle visibility"
-            type="submit"
+          <div
+            arialabel="Toggle visibility"
+            class="tm-visibility-toggle visible tm-icon-button"
+            data-mocked="Button"
+            variant="inline-icon"
           >
-            <span
-              aria-hidden="true"
-              class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-            >
+            <div>
               <span>
                 <svg
                   fill="none"
@@ -296,8 +286,8 @@ exports[`SceneHierarchyTreeItem > should render dynamic node with drag and drop 
                   </defs>
                 </svg>
               </span>
-            </span>
-          </button>
+            </div>
+          </div>
         </span>
       </span>
     </label>

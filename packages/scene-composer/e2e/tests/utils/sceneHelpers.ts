@@ -1,5 +1,5 @@
+import type { Locator, Page } from '@playwright/test';
 import { type Scene, type WebGLRenderer } from 'three';
-import type { Page, Locator } from '@playwright/test';
 
 import R3FTestHarness from './r3fTestHarness';
 
@@ -73,7 +73,7 @@ export class PlaywrightHelper {
 
   async getScene(): Promise<{ frame: Locator; sceneId: string; scene: Scene }> {
     await this.page.goto(this.localScene);
-    const frame = this.page.locator('#root');
+    const frame = this.page.locator('#storybook-root');
     const sceneId = await this.getSceneId(frame);
     const scene = await this.tmScene(frame, sceneId);
     return {

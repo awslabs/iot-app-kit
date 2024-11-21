@@ -51,6 +51,7 @@
     "@types/node": "^18.16.18",
     "@types/pako": "^2.0.3",
     "@vitest/coverage-v8": "^2.1.5",
+    "eslint-config-iot-app-kit": "*",
     "jest-extended": "^3.2.4",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",

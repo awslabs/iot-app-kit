@@ -1,11 +1,7 @@
-import { useCallback, useState } from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-
-import { Dashboard, DashboardView } from '../../src';
-import { REGION } from '../../testing/siteWiseQueries';
-
-import { getEnvCredentials } from '../../testing/getEnvCredentials';
+import type { Meta, StoryObj } from '@storybook/react';
+import { useCallback, useState } from 'react';
+import { Dashboard } from '../../src';
 import {
   type DashboardClientConfiguration,
   type DashboardConfiguration,
@@ -23,8 +19,12 @@ const DEFAULT_DASHBOARD_CONFIG = {
 };
 
 const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
-  awsCredentials: getEnvCredentials(),
-  awsRegion: REGION,
+  awsCredentials: {
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+    sessionToken: import.meta.env.VITE_AWS_SESSION_TOKEN,
+  },
+  awsRegion: import.meta.env.VITE_AWS_REGION,
 };
 
 registerPlugin('metricsRecorder', {
@@ -47,49 +47,48 @@ const getInitialDashboardConfig = (): DashboardConfiguration => {
   };
 };
 
-export const Main: ComponentStory<typeof Dashboard> = () => {
-  const dashboardConfig = getInitialDashboardConfig();
-  const [initialViewMode, setInitialViewMode] = useState<'preview' | 'edit'>(
-    'edit'
-  );
-
-  // on save not only updates local storage but forces the dashboard to reload given the updated config
-  // this is done to more realistically match the dashboard implementation in iot-application
-  const onSave = useCallback(
-    async (
-      dashboard: DashboardConfiguration,
-      viewModeOnSave?: 'preview' | 'edit'
-    ) => {
-      viewModeOnSave && setInitialViewMode(viewModeOnSave);
-      window.localStorage.setItem(
-        DASHBOARD_STORAGE_NAMESPACE,
-        JSON.stringify(dashboard)
-      );
-    },
-    [setInitialViewMode]
-  );
-
-  return (
-    <Dashboard
-      clientConfiguration={CLIENT_CONFIGURATION}
-      onSave={onSave}
-      initialViewMode={initialViewMode}
-      dashboardConfiguration={dashboardConfig}
-    />
-  );
-};
-
-export const View: ComponentStory<typeof DashboardView> = () => (
-  <DashboardView
-    clientConfiguration={CLIENT_CONFIGURATION}
-    dashboardConfiguration={getInitialDashboardConfig()}
-  />
-);
-
 export default {
   title: 'Dashboard/SiteWise Connected',
   component: Dashboard,
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Dashboard>;
+  args: {
+    clientConfiguration: CLIENT_CONFIGURATION,
+    dashboardConfiguration: getInitialDashboardConfig(),
+  },
+} as Meta<typeof Dashboard>;
+
+type Story = StoryObj<typeof Dashboard>;
+
+export const Main: Story = {
+  render: (_story, { args }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [initialViewMode, setInitialViewMode] = useState<'preview' | 'edit'>(
+      'edit'
+    );
+
+    // on save not only updates local storage but forces the dashboard to reload given the updated config
+    // this is done to more realistically match the dashboard implementation in iot-application
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const onSave = useCallback(
+      async (
+        dashboard: DashboardConfiguration,
+        viewModeOnSave?: 'preview' | 'edit'
+      ) => {
+        viewModeOnSave && setInitialViewMode(viewModeOnSave);
+        window.localStorage.setItem(
+          DASHBOARD_STORAGE_NAMESPACE,
+          JSON.stringify(dashboard)
+        );
+      },
+      [setInitialViewMode]
+    );
+
+    return (
+      <Dashboard {...args} onSave={onSave} initialViewMode={initialViewMode} />
+    );
+  },
+};
+
+export const View: Story = {};

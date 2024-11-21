@@ -13,37 +13,19 @@ exports[`SubModelTreeItemLabel > should render as appropriate 1`] = `
     <span
       class="actions"
     >
-      <button
-        class="tm-icon-button awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-        data-analytics-funnel-value="button:r0:"
-        type="submit"
+      <div
+        class="tm-icon-button"
+        data-mocked="Button"
+        iconname="add-plus"
+        variant="inline-icon"
+      />
+      <div
+        arialabel="Toggle visibility"
+        class="tm-visibility-toggle visible tm-icon-button"
+        data-mocked="Button"
+        variant="inline-icon"
       >
-        <span
-          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-        >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8 1v14M15 8H1"
-            />
-          </svg>
-        </span>
-      </button>
-      <button
-        aria-label="Toggle visibility"
-        class="tm-visibility-toggle visible tm-icon-button awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-        data-analytics-funnel-value="button:r2:"
-        title="Toggle visibility"
-        type="submit"
-      >
-        <span
-          aria-hidden="true"
-          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-        >
+        <div>
           <span>
             <svg
               fill="none"
@@ -78,8 +60,8 @@ exports[`SubModelTreeItemLabel > should render as appropriate 1`] = `
               </defs>
             </svg>
           </span>
-        </span>
-      </button>
+        </div>
+      </div>
     </span>
   </span>
 </div>

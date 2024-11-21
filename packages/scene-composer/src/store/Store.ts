@@ -1,49 +1,48 @@
-import create, { type StateCreator, type UseStore } from 'zustand';
+import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import shallow from 'zustand/shallow';
-
-import { log, immer, undoMiddleware, type UndoState } from './middlewares';
-import { type SceneComposerOperation } from './StoreOperations';
-import { createSceneDocumentSlice, type ISceneDocumentSlice } from './slices/SceneDocumentSlice';
-import { createEditStateSlice, type IEditorStateSlice } from './slices/EditorStateSlice';
-import { type IDataStoreSlice, createDataStoreSlice } from './slices/DataStoreSlice';
-import { createNodeErrorStateSlice, type INodeErrorStateSlice } from './slices/NodeErrorStateSlice';
-import { createViewOptionStateSlice, type IViewOptionStateSlice } from './slices/ViewOptionStateSlice';
 import {
-  type ISceneDocumentInternal,
-  type ISceneNodeInternal,
-  type ISceneComponentInternal,
-  type IModelRefComponentInternal,
-  type ISubModelRefComponentInternal,
-  type ICameraComponentInternal,
-  type IAnchorComponentInternal,
-  type ILightComponentInternal,
-  type IAnimationComponentInternal,
-  type IColorOverlayComponentInternal,
   isISceneComponentInternal,
   isISceneNodeInternal,
-  type IMotionIndicatorComponentInternal,
+  type IAnchorComponentInternal,
+  type IAnimationComponentInternal,
+  type ICameraComponentInternal,
+  type IColorOverlayComponentInternal,
   type IDataOverlayComponentInternal,
   type IEntityBindingComponentInternal,
+  type ILightComponentInternal,
+  type IModelRefComponentInternal,
+  type IMotionIndicatorComponentInternal,
   type IPlaneGeometryComponentInternal,
+  type ISceneComponentInternal,
+  type ISceneDocumentInternal,
+  type ISceneNodeInternal,
+  type ISubModelRefComponentInternal,
 } from './internalInterfaces';
+import { immer, log, undoMiddleware, type UndoState } from './middlewares';
+import { createDataStoreSlice, type IDataStoreSlice } from './slices/DataStoreSlice';
+import { createEditStateSlice, type IEditorStateSlice } from './slices/EditorStateSlice';
+import { createNodeErrorStateSlice, type INodeErrorStateSlice } from './slices/NodeErrorStateSlice';
+import { createSceneDocumentSlice, type ISceneDocumentSlice } from './slices/SceneDocumentSlice';
+import { createViewOptionStateSlice, type IViewOptionStateSlice } from './slices/ViewOptionStateSlice';
+import { type SceneComposerOperation } from './StoreOperations';
 
 export type {
+  IAnchorComponentInternal,
+  IAnimationComponentInternal,
+  ICameraComponentInternal,
+  IColorOverlayComponentInternal,
+  IDataOverlayComponentInternal,
+  IEntityBindingComponentInternal,
+  ILightComponentInternal,
+  // Components
+  IModelRefComponentInternal,
+  IMotionIndicatorComponentInternal,
+  IPlaneGeometryComponentInternal,
+  ISceneComponentInternal,
   // Document
   ISceneDocumentInternal,
   ISceneNodeInternal,
-  ISceneComponentInternal,
-  // Components
-  IModelRefComponentInternal,
   ISubModelRefComponentInternal,
-  ICameraComponentInternal,
-  IAnchorComponentInternal,
-  IAnimationComponentInternal,
-  ILightComponentInternal,
-  IColorOverlayComponentInternal,
-  IMotionIndicatorComponentInternal,
-  IDataOverlayComponentInternal,
-  IEntityBindingComponentInternal,
-  IPlaneGeometryComponentInternal,
 };
 
 export interface ISharedState {
@@ -62,7 +61,11 @@ export type RootState = ISharedState &
  * Core state management functions
  * TODO: make them into slices and better organized
  */
-const stateCreator: StateCreator<RootState> = (set, get, api) => ({
+const stateCreator = (
+  set: (cb: (draft: RootState) => void) => void,
+  get: StoreApi<RootState>['getState'],
+  api: StoreApi<RootState>,
+) => ({
   lastOperation: undefined,
   ...createSceneDocumentSlice(set, get),
   ...createEditStateSlice(set, get, api),
@@ -73,13 +76,14 @@ const stateCreator: StateCreator<RootState> = (set, get, api) => ({
   ...createNodeErrorStateSlice(set, get, api),
 });
 
-const createStateImpl: () => UseStore<RootState> = () => create<RootState>(undoMiddleware(log(immer(stateCreator))));
+const createStateImpl: () => UseBoundStore<StoreApi<RootState>> = () =>
+  create<RootState>(undoMiddleware(log(immer(stateCreator))));
 
 // TODO: currently undoMiddleware will record editor state changes, such as select/deselect object.
 // We may want to fine-tune the undo/redo experience.
-const stores = new Map<string, UseStore<RootState>>();
+const stores = new Map<string, UseBoundStore<StoreApi<RootState>>>();
 
-const accessStore: (id: string) => UseStore<RootState> = (id: string) => {
+const accessStore: (id: string) => UseBoundStore<StoreApi<RootState>> = (id: string) => {
   if (!stores.has(id)) {
     stores.set(id, createStateImpl());
   }
@@ -201,17 +205,17 @@ const isDocumentStateChanged = (current: ISceneDocumentInternal, previous: IScen
 
 export {
   accessStore,
-  sceneDocumentSelector,
-  editorStateSelector,
-  useSceneDocument,
-  useEditorState,
   dataStoreSelector,
-  useDataStore,
-  nodeErrorStateSelector,
-  useNodeErrorState,
+  editorStateSelector,
   isDocumentStateChanged,
   isISceneComponentInternal,
   isISceneNodeInternal,
-  viewOptionStateSelector,
+  nodeErrorStateSelector,
+  sceneDocumentSelector,
+  useDataStore,
+  useEditorState,
+  useNodeErrorState,
+  useSceneDocument,
   useViewOptionState,
+  viewOptionStateSelector,
 };

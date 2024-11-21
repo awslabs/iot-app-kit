@@ -79,6 +79,114 @@ exports[`ConvertingProgress > should render with correct progress with 0% done 1
 </div>
 `;
 
+exports[`ConvertingProgress > should render with correct progress with 0% done 2`] = `
+<div>
+  <div
+    class="sc-aXZVg jRVSTR awsui_root_14iqq_1vekq_101 awsui_variant-default_14iqq_1vekq_145 awsui_refresh_14iqq_1vekq_153"
+    data-testid="progress-container"
+  >
+    <div
+      class="awsui_content-wrapper_14iqq_1vekq_220"
+      id=":r6:"
+    >
+      <div
+        class="awsui_content_14iqq_1vekq_220 awsui_with-paddings_14iqq_1vekq_304"
+      >
+        <div
+          class="awsui_root_11huc_tckdr_229"
+        >
+          <div>
+            <div
+              class="awsui_word-wrap_11huc_tckdr_282"
+              id="awsui-progress-bar-:r7:-label"
+            >
+              Converting nodes
+            </div>
+            <div>
+              <div
+                class="awsui_progress-container_11huc_tckdr_303"
+              >
+                <progress
+                  aria-describedby="progressbar-additional-info-:r9:"
+                  aria-labelledby="awsui-progress-bar-:r7:-label"
+                  class="awsui_progress_11huc_tckdr_193"
+                  max="100"
+                  value="0"
+                />
+                <span
+                  aria-hidden="true"
+                  class="awsui_percentage-container_11huc_tckdr_310"
+                >
+                  <small
+                    class="awsui_percentage_11huc_tckdr_310 awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_small-variant_18wu0_16wz6_116 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+                  >
+                    0%
+                  </small>
+                </span>
+              </div>
+              <span
+                class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+              >
+                <span
+                  aria-hidden="true"
+                  class="awsui_source_3bgfn_64bxr_9"
+                >
+                  Converting nodes
+                  : 
+                  0%
+                </span>
+                <span
+                  aria-atomic="true"
+                  aria-live="polite"
+                >
+                  Converting nodes: 0%
+                </span>
+              </span>
+            </div>
+          </div>
+          <small
+            class="awsui_word-wrap_11huc_tckdr_282 awsui_additional-info_11huc_tckdr_400 awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_small-variant_18wu0_16wz6_116 awsui_d-block_18wu0_16wz6_826 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+            id="progressbar-additional-info-:r9:"
+          >
+            <div
+              class="sc-gEvEer hYBds awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+            >
+              0 out of 10 converted
+            </div>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertingProgress > should render with correct progress with 0% done 3`] = `
+<div>
+  <div
+    class="sc-aXZVg jRVSTR"
+    data-mocked="Container"
+    data-testid="progress-container"
+  >
+    <div
+      data-mocked="ProgressBar"
+      label="Converting nodes"
+      status="in-progress"
+      value="0"
+    >
+      <div>
+        <div
+          class="sc-gEvEer hYBds"
+          data-mocked="Box"
+        >
+          0 out of 10 converted
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`ConvertingProgress > should render with correct progress with all done 1`] = `
 <div>
   <div
@@ -158,6 +266,114 @@ exports[`ConvertingProgress > should render with correct progress with all done 
 </div>
 `;
 
+exports[`ConvertingProgress > should render with correct progress with all done 2`] = `
+<div>
+  <div
+    class="sc-aXZVg jRVSTR awsui_root_14iqq_1vekq_101 awsui_variant-default_14iqq_1vekq_145 awsui_refresh_14iqq_1vekq_153"
+    data-testid="progress-container"
+  >
+    <div
+      class="awsui_content-wrapper_14iqq_1vekq_220"
+      id=":rq:"
+    >
+      <div
+        class="awsui_content_14iqq_1vekq_220 awsui_with-paddings_14iqq_1vekq_304"
+      >
+        <div
+          class="awsui_root_11huc_tckdr_229"
+        >
+          <div>
+            <div
+              class="awsui_word-wrap_11huc_tckdr_282"
+              id="awsui-progress-bar-:rr:-label"
+            >
+              Converting nodes
+            </div>
+            <div>
+              <div
+                class="awsui_progress-container_11huc_tckdr_303"
+              >
+                <progress
+                  aria-describedby="progressbar-additional-info-:rt:"
+                  aria-labelledby="awsui-progress-bar-:rr:-label"
+                  class="awsui_progress_11huc_tckdr_193 awsui_complete_11huc_tckdr_356"
+                  max="100"
+                  value="100"
+                />
+                <span
+                  aria-hidden="true"
+                  class="awsui_percentage-container_11huc_tckdr_310"
+                >
+                  <small
+                    class="awsui_percentage_11huc_tckdr_310 awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_small-variant_18wu0_16wz6_116 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+                  >
+                    100%
+                  </small>
+                </span>
+              </div>
+              <span
+                class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+              >
+                <span
+                  aria-hidden="true"
+                  class="awsui_source_3bgfn_64bxr_9"
+                >
+                  Converting nodes
+                  : 
+                  100%
+                </span>
+                <span
+                  aria-atomic="true"
+                  aria-live="polite"
+                >
+                  Converting nodes: 100%
+                </span>
+              </span>
+            </div>
+          </div>
+          <small
+            class="awsui_word-wrap_11huc_tckdr_282 awsui_additional-info_11huc_tckdr_400 awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_small-variant_18wu0_16wz6_116 awsui_d-block_18wu0_16wz6_826 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+            id="progressbar-additional-info-:rt:"
+          >
+            <div
+              class="sc-gEvEer hYBds awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+            >
+              10 out of 10 converted
+            </div>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertingProgress > should render with correct progress with all done 3`] = `
+<div>
+  <div
+    class="sc-aXZVg jRVSTR"
+    data-mocked="Container"
+    data-testid="progress-container"
+  >
+    <div
+      data-mocked="ProgressBar"
+      label="Converting nodes"
+      status="in-progress"
+      value="100"
+    >
+      <div>
+        <div
+          class="sc-gEvEer hYBds"
+          data-mocked="Box"
+        >
+          10 out of 10 converted
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`ConvertingProgress > should render with correct progress with partially done 1`] = `
 <div>
   <div
@@ -230,6 +446,114 @@ exports[`ConvertingProgress > should render with correct progress with partially
               2 out of 9 converted
             </div>
           </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertingProgress > should render with correct progress with partially done 2`] = `
+<div>
+  <div
+    class="sc-aXZVg jRVSTR awsui_root_14iqq_1vekq_101 awsui_variant-default_14iqq_1vekq_145 awsui_refresh_14iqq_1vekq_153"
+    data-testid="progress-container"
+  >
+    <div
+      class="awsui_content-wrapper_14iqq_1vekq_220"
+      id=":rg:"
+    >
+      <div
+        class="awsui_content_14iqq_1vekq_220 awsui_with-paddings_14iqq_1vekq_304"
+      >
+        <div
+          class="awsui_root_11huc_tckdr_229"
+        >
+          <div>
+            <div
+              class="awsui_word-wrap_11huc_tckdr_282"
+              id="awsui-progress-bar-:rh:-label"
+            >
+              Converting nodes
+            </div>
+            <div>
+              <div
+                class="awsui_progress-container_11huc_tckdr_303"
+              >
+                <progress
+                  aria-describedby="progressbar-additional-info-:rj:"
+                  aria-labelledby="awsui-progress-bar-:rh:-label"
+                  class="awsui_progress_11huc_tckdr_193"
+                  max="100"
+                  value="22"
+                />
+                <span
+                  aria-hidden="true"
+                  class="awsui_percentage-container_11huc_tckdr_310"
+                >
+                  <small
+                    class="awsui_percentage_11huc_tckdr_310 awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_small-variant_18wu0_16wz6_116 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+                  >
+                    22%
+                  </small>
+                </span>
+              </div>
+              <span
+                class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+              >
+                <span
+                  aria-hidden="true"
+                  class="awsui_source_3bgfn_64bxr_9"
+                >
+                  Converting nodes
+                  : 
+                  22.22222222222222%
+                </span>
+                <span
+                  aria-atomic="true"
+                  aria-live="polite"
+                >
+                  Converting nodes: 22.22222222222222%
+                </span>
+              </span>
+            </div>
+          </div>
+          <small
+            class="awsui_word-wrap_11huc_tckdr_282 awsui_additional-info_11huc_tckdr_400 awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_small-variant_18wu0_16wz6_116 awsui_d-block_18wu0_16wz6_826 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+            id="progressbar-additional-info-:rj:"
+          >
+            <div
+              class="sc-gEvEer hYBds awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+            >
+              2 out of 9 converted
+            </div>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertingProgress > should render with correct progress with partially done 3`] = `
+<div>
+  <div
+    class="sc-aXZVg jRVSTR"
+    data-mocked="Container"
+    data-testid="progress-container"
+  >
+    <div
+      data-mocked="ProgressBar"
+      label="Converting nodes"
+      status="in-progress"
+      value="22.22222222222222"
+    >
+      <div>
+        <div
+          class="sc-gEvEer hYBds"
+          data-mocked="Box"
+        >
+          2 out of 9 converted
         </div>
       </div>
     </div>

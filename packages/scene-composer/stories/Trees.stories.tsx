@@ -1,16 +1,16 @@
 import Box from '@cloudscape-design/components/box';
-import { type FC, type ReactNode, useCallback, useState } from 'react';
-import * as awsui from '@cloudscape-design/design-tokens';
-import { applyMode, Mode } from '@cloudscape-design/global-styles';
-import styled, { ThemeProvider } from 'styled-components';
 import Container from '@cloudscape-design/components/container';
+import * as awsui from '@cloudscape-design/design-tokens';
+import { type FC, type ReactNode, useCallback, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import styled, { ThemeProvider } from 'styled-components';
 
-import { darkTheme } from '../src/theme';
+import IntlProvider from '../src/components/IntlProvider';
 import Tree, { TreeItem } from '../src/components/Tree';
 import draggable from '../src/enhancers/draggable';
 import droppable from '../src/enhancers/droppable';
+import { darkTheme } from '../src/theme';
 
 const DraggableTreeItem = droppable(draggable(TreeItem));
 const DroppableTree = droppable(Tree);
@@ -26,11 +26,13 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   // applyMode(Mode.Dark);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Container>
-        <FancyBox>{children}</FancyBox>
-      </Container>
-    </ThemeProvider>
+    <IntlProvider locale='en'>
+      <ThemeProvider theme={darkTheme}>
+        <Container>
+          <FancyBox>{children}</FancyBox>
+        </Container>
+      </ThemeProvider>
+    </IntlProvider>
   );
 };
 

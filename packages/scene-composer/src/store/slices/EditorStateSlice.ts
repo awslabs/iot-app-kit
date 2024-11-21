@@ -1,19 +1,18 @@
 import * as THREE from 'three';
-import { type GetState, type SetState, type StoreApi } from 'zustand';
-
-import { type TransformControls } from '../../three/TransformControls';
+import { type StoreApi } from 'zustand';
+import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
 import {
+  type AddingWidgetInfo,
   type CameraControlMode,
   type CameraControlsType,
-  type TransformControlMode,
-  type CameraTarget,
-  type AddingWidgetInfo,
   type CameraSettings,
+  type CameraTarget,
+  type TransformControlMode,
 } from '../../interfaces';
+import { CameraType } from '../../models/SceneModels';
+import { type TransformControls } from '../../three/TransformControls';
 import { type RootState } from '../Store';
 import { type CursorStyle, type IDisplayMessage, type IEditorConfig } from '../internalInterfaces';
-import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
-import { CameraType } from '../../models/SceneModels';
 
 // The MappingWrapper is used to bypass immer's snapshotting/copy-on-write mechanism
 // Immer will make plain objects immutable which makes it impossible to update without
@@ -155,8 +154,8 @@ function createDefaultEditorState(): Partial<IEditorStateSlice> {
 }
 
 export const createEditStateSlice = (
-  set: SetState<RootState>,
-  get: GetState<RootState>,
+  set: (cb: (draft: RootState) => void) => void,
+  get: StoreApi<RootState>['getState'],
   _api: StoreApi<RootState>,
 ): IEditorStateSlice =>
   ({

@@ -1,5 +1,5 @@
+import { type Meta, type StoryObj } from '@storybook/react';
 import { KPI } from '../../src';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './kpi-mock-data';
 
 export default {
@@ -18,21 +18,23 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KPI>;
+} as Meta<typeof KPI>;
 
-export const KPIWithTimeZoneProp: ComponentStory<typeof KPI> = ({
-  settings,
-}) => {
-  return (
-    <div style={{ background: 'grey' }}>
-      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
-        <KPI
-          viewport={VIEWPORT}
-          query={MOCK_TIME_SERIES_DATA_QUERY}
-          settings={settings}
-          timeZone='Asia/Tokyo'
-        />
+type Story = StoryObj<typeof KPI>;
+
+export const KPIWithTimeZoneProp: Story = {
+  render: (_story, { args: { settings } }) => {
+    return (
+      <div style={{ background: 'grey' }}>
+        <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+          <KPI
+            viewport={VIEWPORT}
+            query={MOCK_TIME_SERIES_DATA_QUERY}
+            settings={settings}
+            timeZone='Asia/Tokyo'
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  },
 };

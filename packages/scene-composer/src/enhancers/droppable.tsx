@@ -1,6 +1,5 @@
 import { type TargetType } from 'dnd-core';
 import { forwardRef, type ForwardRefExoticComponent, useCallback } from 'react';
-
 import useDropMonitor from '../hooks/useDropMonitor';
 
 export interface DroppableProps {
@@ -14,7 +13,7 @@ function droppable<TProps, TBaseElement>(
   Component: ForwardRefExoticComponent<TProps & React.RefAttributes<TBaseElement>>,
 ) {
   const DroppableComponent = forwardRef<TBaseElement, DroppableProps & TProps>(
-    ({ acceptDrop, onDropped: onDrop, className = '', droppable = true, ...props }: DroppableProps & TProps, ref) => {
+    ({ acceptDrop, onDropped: onDrop, className = '', droppable = true, ...props }, ref) => {
       const { isOverCurrent, dropRef } = useDropMonitor(acceptDrop, onDrop);
 
       const mergeRef = useCallback(

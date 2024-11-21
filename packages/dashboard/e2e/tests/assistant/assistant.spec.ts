@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-const TEST_PAGE = '/iframe.html?id=dashboard-mocked-data--view-only';
+const TEST_PAGE = '/iframe.html?args=&id=dashboard-mocked-data--view-only';
 
 test('dashboard has assistant enabled', async ({ page }) => {
   await page.goto(TEST_PAGE);

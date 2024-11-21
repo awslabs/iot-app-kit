@@ -1,14 +1,7 @@
-import { useDarkMode } from 'storybook-dark-mode';
-import { useEffect } from 'react';
-import { applyMode, Mode } from '@cloudscape-design/global-styles';
-
 const awsCredentialsDefaultFormat = '{ "accessKeyId": "", "secretAccessKey": "", "sessionToken": "" }';
-const awsCredentials = process.env.awsCredentials
-  ? JSON.parse(process.env.awsCredentials)
-  : JSON.parse(awsCredentialsDefaultFormat);
+const awsCredentials = { accessKeyId: '', secretAccessKey: '', sessionToken: '' };
 
 export const parameters = {
-  // actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -16,24 +9,6 @@ export const parameters = {
     },
   },
 };
-
-export const decorators = [
-  (Story) => {
-    const isDarkMode = useDarkMode();
-
-    useEffect(() => {
-      console.log('isDarkMode', isDarkMode);
-      if (isDarkMode) {
-        applyMode(Mode.Dark);
-      } else {
-        applyMode(Mode.Light);
-      }
-    }, [isDarkMode]);
-
-    return <Story />
-  }
-]
-
 
 export const globalTypes = {
   locale: {
@@ -69,9 +44,6 @@ export const argTypes = {
   awsCredentials: {
     if: { arg: 'source', eq: 'aws' },
     table: { category: 'AWS' },
-    control: {
-      description: `Using profile "${process.env.AWS_PROFILE}`,
-    },
   },
 };
 
@@ -79,3 +51,4 @@ export const args = {
   source: awsCredentials ? 'aws' : 'local',
   awsCredentials: awsCredentials,
 };
+export const tags = ['autodocs'];

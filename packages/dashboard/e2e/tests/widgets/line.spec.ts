@@ -1,10 +1,9 @@
+import { expect, test, type Locator } from '@playwright/test';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
 import { NEW_PROPERTY_NAME } from '../constants';
-import { test, expect } from '@playwright/test';
-import { getTrendCursorText } from './LineWidget';
-import { type Locator } from '@playwright/test';
 import { createNewDashboardWithWidget } from '../createDashboardWidget';
 import { ResourceExplorer } from '../resourceExplorer/ResourceExplorer';
-import { ConfigPanel } from '../configPanel/ConfigPanel';
+import { getTrendCursorText } from './LineWidget';
 
 const NEW_Y_LABEL = 'This is new Y-axis Label';
 const Y_MIN = '1';

@@ -40,6 +40,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   }, [ruleResult]);
 
   const [transform, restore] = useMaterialEffect(
+    // @ts-expect-error type mismatch after upgrade
     /* istanbul ignore next */ (obj) => {
       if (obj instanceof Mesh && ruleColor) {
         const newMaterial: Material = obj.material.clone();
