@@ -17,6 +17,7 @@
     "tsBuildInfoFile": "./dist/esm/.tsbuildinfo",
     "noImplicitThis": false,
     "noImplicitAny": false,
+    "allowJs": true,
     "resolveJsonModule": true
   }
 }
