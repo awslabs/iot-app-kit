@@ -311,7 +311,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
   assistant: {
     floatingMenu: {
       propertySelection:
-        'Select the checkboxes from the widgets below to include them in the AI generate summary action.',
+        'Select the checkboxes in the widgets below and click on Generate summary to see the AI generated summaries.',
       error: {
         ariaLabel: 'error',
         propertyLimitHeader: 'Property limit reached',

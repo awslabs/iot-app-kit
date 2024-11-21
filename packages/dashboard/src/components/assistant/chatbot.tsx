@@ -28,7 +28,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 ) => {
   const dispatch = useDispatch();
   const assistant = useSelector((state: DashboardState) => state.assistant);
-  const { iotSiteWisePrivateClient } = useClients();
+  const { iotSiteWise } = useClients();
   const { getContextByComponent } = useAssistantContext();
   const initialMessages: Array<IMessage> = [
     {
@@ -42,7 +42,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 
   const client = new IoTSitewiseAssistantClient({
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    iotSiteWiseClient: iotSiteWisePrivateClient!,
+    iotSiteWiseClient: iotSiteWise!,
   });
 
   const { messages, setMessages, invokeAssistant, generateSummary, clearAll } =
