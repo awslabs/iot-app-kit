@@ -31,7 +31,6 @@ import { debounce } from 'lodash';
 import { FpsView } from 'react-fps';
 import { PropertiesPanel } from '~/customization/propertiesSections';
 import { queryClient } from '~/data/query-client';
-import { useAWSRegion } from '~/hooks/useAWSRegion';
 import '../../styles/variables.css';
 
 export type DashboardProperties = {
@@ -92,14 +91,13 @@ const Dashboard: React.FC<DashboardProperties> = ({
     assistantConfiguration?.state,
   ]);
 
-  const { region } = useAWSRegion(clientConfiguration);
   const clients = useMemo(
-    () => getClients(clientConfiguration, region),
-    [clientConfiguration, region]
+    () => getClients(clientConfiguration),
+    [clientConfiguration]
   );
   const queries = useMemo(
-    () => getQueries(clientConfiguration, region, edgeMode),
-    [clientConfiguration, edgeMode, region]
+    () => getQueries(clientConfiguration, edgeMode),
+    [clientConfiguration, edgeMode]
   );
 
   return (
