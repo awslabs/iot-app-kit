@@ -222,8 +222,6 @@ export function AssetExplorerPlusAlarmExplorer() {
     NonNullable<AssetExplorerProps['selectedAssets']>
   >([]);
 
-  console.log(selectedAssets);
-
   return (
     <>
       <AssetExplorer

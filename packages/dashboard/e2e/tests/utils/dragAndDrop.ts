@@ -1,8 +1,8 @@
 import { type Locator, type Page } from '@playwright/test';
-import zip from 'lodash/zip';
+import zip from 'lodash/zip.js';
 import { isDefined } from '../../../src/util/isDefined';
-import { center } from './mousePosition';
 import { type BoundingBox, getBoundingBox } from './locator';
+import { center } from './mousePosition';
 
 export type Point = [number, number];
 

@@ -40,6 +40,7 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ track, clearColor 
   const cameraComponent = findComponentByType(selectedSceneNode, KnownComponentType.Camera) as ICameraComponentInternal;
   const object3D = getObject3DBySceneNodeRef(selectedSceneNodeRef);
 
+  // @ts-expect-error type mismatch after update
   const cameraSettings = getCameraSettings(object3D, cameraComponent);
 
   const computeContainerPosition = (

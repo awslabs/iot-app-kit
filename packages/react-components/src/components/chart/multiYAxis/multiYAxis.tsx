@@ -2,9 +2,9 @@ import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 import { type DataStream } from '@iot-app-kit/core';
 
-import { YAxisLegend } from './yAxisMenu';
 import { DEFAULT_MARGIN, MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
 import { useCustomYAxis } from './useCustomYAxis';
+import { YAxisLegend } from './yAxisMenu';
 
 import './multiYAxis.css';
 

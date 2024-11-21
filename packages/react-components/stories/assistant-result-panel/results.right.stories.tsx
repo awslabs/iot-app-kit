@@ -1,13 +1,13 @@
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { type Meta, type StoryFn } from '@storybook/react';
 import { useEffect } from 'react';
 import {
   KPI,
   SITUATION_SUMMARY_DEFAULT_UTTERANCE,
   useAssistant,
 } from '../../src';
-import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../kpi/kpi-mock-data';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
+import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../kpi/kpi-mock-data';
 
 export default {
   title: 'Widgets/Assistant Result Panel',
@@ -25,10 +25,10 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KPI>;
+} as Meta<typeof KPI>;
 
 const componentId = crypto.randomUUID();
-export const ResultsOnTheRight: ComponentStory<typeof KPI> = ({ settings }) => {
+export const ResultsOnTheRight: StoryFn<typeof KPI> = ({ settings }) => {
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,

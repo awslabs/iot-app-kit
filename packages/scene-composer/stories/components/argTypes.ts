@@ -1,5 +1,3 @@
-import { Density, Mode } from '@cloudscape-design/global-styles';
-
 import { AssetType, COMPOSER_FEATURES } from '../../src';
 import scenes from '../scenes';
 
@@ -50,4 +48,4 @@ export const viewerArgTypes = {
     action: 'widget-clicked',
     table: { category: 'Events' },
   },
-};
+} as const;

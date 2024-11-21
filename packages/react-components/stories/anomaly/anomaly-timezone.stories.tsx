@@ -1,8 +1,8 @@
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import { type Meta, type StoryFn } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { queryClient } from '../../src/queries';
 import { AnomalyChart } from '../../src/components/anomaly-chart';
 import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-chart/tests/mockDataSources';
+import { queryClient } from '../../src/queries';
 
 export default {
   title: 'Widgets/Anomaly',
@@ -52,11 +52,11 @@ export default {
       </>
     ),
   ],
-} as ComponentMeta<typeof AnomalyChart>;
+} as Meta<typeof AnomalyChart>;
 
-export const AnomalyChartDifferentTimeZone: ComponentStory<
-  typeof AnomalyChart
-> = (options) => {
+export const AnomalyChartDifferentTimeZone: StoryFn<typeof AnomalyChart> = (
+  options
+) => {
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>

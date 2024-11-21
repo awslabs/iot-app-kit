@@ -148,10 +148,6 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
         onEntitySelected(data);
       }
       setSelectedGraphNodeEntityId(data.id);
-      console.log(
-        'selectedGraphNodeEntityId Inside = ',
-        selectedGraphNodeEntityId
-      );
     },
     [onEntitySelected, setSelectedGraphNodeEntityId]
   );

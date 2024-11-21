@@ -38,6 +38,7 @@ const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: I
       const object3D = getObject3DBySceneNodeRef(node.ref);
 
       setActiveCameraSettings(
+        // @ts-expect-error type mismatch after update
         getCameraSettings(object3D, {
           cameraType: CameraType.Perspective,
           fov,

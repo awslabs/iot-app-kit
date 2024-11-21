@@ -1,10 +1,3 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { useEffectOnce, useUpdateEffect } from 'react-use';
-import {
-  type DataZoomComponentOption,
-  type ECharts,
-  type ToolboxComponentOption,
-} from 'echarts';
 import {
   type Viewport,
   isHistoricalViewport,
@@ -12,21 +5,28 @@ import {
   viewportManager,
   viewportStartDate,
 } from '@iot-app-kit/core';
+import {
+  type DataZoomComponentOption,
+  type ECharts,
+  type ToolboxComponentOption,
+} from 'echarts';
+import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 
+import merge from 'lodash.merge';
+import { DEFAULT_VIEWPORT } from '../../components/time-sync';
 import { useViewport } from '../../hooks/useViewport';
+import { type UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';
+import useIntlStore from '../../translations';
 import {
   DEFAULT_DATA_ZOOM,
   DEFAULT_DATA_ZOOM_GESTURES_DISABLED,
   DEFAULT_DATA_ZOOM_GESTURES_ENABLED,
-  DEFAULT_TOOLBOX_GESTURES_ENABLED,
   DEFAULT_TOOLBOX_GESTURES_DISABLED,
+  DEFAULT_TOOLBOX_GESTURES_ENABLED,
   ECHARTS_GESTURE,
   LIVE_MODE_REFRESH_RATE_MS,
 } from './constants';
-import { DEFAULT_VIEWPORT } from '../../components/time-sync';
-import merge from 'lodash.merge';
-import useIntlStore from '../../translations';
-import { type UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';
 
 const isDurationViewport = (viewport: Viewport | undefined) =>
   !!(viewport && !isHistoricalViewport(viewport));
@@ -270,7 +270,7 @@ export const useUnboundedDataZoom = ({
 
   useEffect(() => {
     if (!chart) return;
-    let interval: NodeJS.Timer;
+    let interval: NodeJS.Timeout;
 
     /**
      * Sync the viewport of the chart from manual data zoom gestures

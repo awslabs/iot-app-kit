@@ -1,6 +1,6 @@
-import { type SetState } from 'zustand';
 import { type Viewport } from '@iot-app-kit/core';
 
+import { type Draft } from 'immer';
 import { type ITagSettings, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { type RootState } from '../Store';
@@ -23,7 +23,9 @@ export interface IViewOptionStateSlice {
   setConnectionNameForMatterportViewer: (connectionName?: string) => void;
 }
 
-export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
+type SetState = (cb: (draft: Draft<RootState>) => void) => void;
+
+export const createViewOptionStateSlice = (set: SetState) => ({
   componentVisibilities: {
     [KnownComponentType.MotionIndicator]: true,
     [KnownComponentType.Tag]: true,

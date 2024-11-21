@@ -1,8 +1,9 @@
+import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 import { cloneDeep, isEmpty, isString } from 'lodash';
-import { type GetState, type SetState } from 'zustand';
-import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
-
+import { type StoreApi } from 'zustand';
+import { getGlobalSettings } from '../../common/GlobalSettings';
+import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import {
   COMPOSER_FEATURES,
   type IOverlaySettings,
@@ -13,6 +14,10 @@ import {
 import DebugLogger from '../../logger/DebugLogger';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
+import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
+import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
+import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
+import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
 import { type RecursivePartial } from '../../utils/typeUtils';
 import { type RootState } from '../Store';
@@ -31,12 +36,6 @@ import {
   type ISerializationErrorDetails,
   SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
-import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
-import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
-import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
-import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
-import { getGlobalSettings } from '../../common/GlobalSettings';
-import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -99,7 +98,10 @@ function createEmptyDocumentState(): ISceneDocumentInternal {
   };
 }
 
-export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState<RootState>): ISceneDocumentSlice =>
+export const createSceneDocumentSlice = (
+  set: (cb: (draft: RootState) => void) => void,
+  get: StoreApi<RootState>['getState'],
+): ISceneDocumentSlice =>
   ({
     document: createEmptyDocumentState(),
 

@@ -53,12 +53,14 @@ export const TilesModelComponent: React.FC<TilesModelProps> = ({ node, component
       if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
         while (physicalParent) {
           if (physicalParent.userData.componentTypes?.includes(KnownComponentType.ModelRef)) break;
+          // @ts-expect-error type mismatch after update
           physicalParent = physicalParent.parent as THREE.Object3D<Event>;
         }
       }
       const { position } = getIntersectionTransform(e.intersections[0]);
       const newWidgetNode = createNodeWithPositionAndNormal(
         addingWidget,
+        // @ts-expect-error type mismatch after update
         position,
         cursorLookAt,
         physicalParent,

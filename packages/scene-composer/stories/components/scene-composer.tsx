@@ -1,9 +1,9 @@
-import { type FC, useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import { type CredentialProvider, type Credentials } from '@aws-sdk/types';
 import { type Viewport } from '@iot-app-kit/core';
-import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
+import { TimeSelection, TimeSync } from '@iot-app-kit/react-components';
+import { type FC, useCallback, useMemo, useRef } from 'react';
 import { useDarkMode } from 'storybook-dark-mode';
+import styled from 'styled-components';
 
 import {
   AssetType,
@@ -14,20 +14,20 @@ import {
   type SceneViewerPropsShared,
   TextureFileTypeList,
 } from '../../src';
-import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
+import { SceneComposerInternal } from '../../src/components/SceneComposerInternal';
 import {
   type AssetBrowserResultCallback,
   type OnSceneUpdateCallback,
   type OperationMode,
   type ShowAssetBrowserCallback,
 } from '../../src/interfaces/sceneComposerInternal';
-import { SceneComposerInternal } from '../../src/components/SceneComposerInternal';
+import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
+import { viewerArgTypes } from './argTypes';
+import useDataSource from './hooks/useDataSource';
 import useLoader from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
-import { viewerArgTypes } from './argTypes';
-import useDataSource from './hooks/useDataSource';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -42,7 +42,7 @@ const SceneComposerContainer = styled.div`
   }
 `;
 
-interface SceneComposerWrapperProps extends SceneViewerPropsShared {
+export interface SceneComposerWrapperProps extends SceneViewerPropsShared {
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;
@@ -234,4 +234,4 @@ export const argTypes = {
     action: 'show-asset-browser',
     table: { category: 'Events' },
   },
-};
+} as const;

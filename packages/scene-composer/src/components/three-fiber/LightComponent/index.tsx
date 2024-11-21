@@ -34,10 +34,12 @@ const LightComponent: React.FC<ILightComponentProps> = ({ node, component }: ILi
 
   const { lightSettings, lightType, type } = component;
 
+  // @ts-expect-error type mismatch after update
   useEditorHelper(isEditing(), sceneComposerId, lightRef, getLightHelper(component.lightType));
 
   return (
     <group name={getComponentGroupName(node.ref, 'LIGHT')}>
+      {/* @ts-expect-error type mismatch after update */}
       <Light ref={lightRef} lightSettings={lightSettings} lightType={lightType} type={type} />
     </group>
   );

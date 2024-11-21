@@ -9,7 +9,5 @@
   "packages/source-iottwinmaker": "12.1.0",
   ".": "12.1.0",
   "packages/testing-util": "12.1.0",
-  "configuration/ts-config": "12.1.0",
-  "configuration/eslint-config": "12.1.0",
   "packages/tools-iottwinmaker": "12.1.0"
 }

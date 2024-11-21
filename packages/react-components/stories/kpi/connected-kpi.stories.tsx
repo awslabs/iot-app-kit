@@ -1,4 +1,4 @@
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import { type Meta } from '@storybook/react';
 import { KPI } from '../../src/components/kpi/kpi';
 import {
   getSingleValueAlarmDataQuery,
@@ -19,9 +19,9 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KPI>;
+} as Meta<typeof KPI>;
 
-export const ConnectedKPIWidget: ComponentStory<typeof KPI> = () => {
+export const ConnectedKPIWidget = () => {
   const hasAlarmIds = process.env.ALARM_COMPOSITE_MODEL_ID_1 !== null;
 
   if (!queryConfigured()) {

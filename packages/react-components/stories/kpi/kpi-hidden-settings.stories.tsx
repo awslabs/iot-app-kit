@@ -1,5 +1,5 @@
+import { type Meta } from '@storybook/react';
 import { KPI } from '../../src';
-import { type ComponentMeta } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './kpi-mock-data';
 
 export default {
@@ -13,7 +13,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KPI>;
+} as Meta<typeof KPI>;
 
 export const KPIHiddenSettings = () => {
   return (

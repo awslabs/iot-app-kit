@@ -1,4 +1,4 @@
-export const TEST_PAGE = '/iframe.html?id=dashboard-mocked-data--empty';
+export const TEST_PAGE = '/iframe.html?args=&id=dashboard-mocked-data--empty';
 export const TEST_IFRAME = '#root';
 export const COMPONENT_SELECTOR = '.dashboard';
 

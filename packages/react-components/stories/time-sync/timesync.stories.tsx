@@ -1,4 +1,4 @@
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { TimeSelection, TimeSync, useViewport } from '../../src';
 
 export default {
@@ -7,7 +7,9 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof TimeSync>;
+} as Meta<typeof TimeSync>;
+
+type Story = StoryObj<typeof TimeSync>;
 
 const INITIAL_VIEWPORT = { duration: '5m' };
 
@@ -30,67 +32,77 @@ const ViewportConsumer = () => {
   );
 };
 
-export const Main: ComponentStory<typeof TimeSync> = () => (
-  <TimeSync group='single-group' initialViewport={INITIAL_VIEWPORT}>
-    <TimeSelection />
-    <ViewportConsumer />
-    <ViewportConsumer />
-    <ViewportConsumer />
-    <ViewportConsumer />
-    <ViewportConsumer />
-  </TimeSync>
-);
+export const Main: Story = {
+  render: () => {
+    return (
+      <TimeSync group='single-group' initialViewport={INITIAL_VIEWPORT}>
+        <TimeSelection />
+        <ViewportConsumer />
+        <ViewportConsumer />
+        <ViewportConsumer />
+        <ViewportConsumer />
+        <ViewportConsumer />
+      </TimeSync>
+    );
+  },
+};
 
-export const MultipleTimeSyncs: ComponentStory<typeof TimeSync> = () => (
-  <div>
-    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
-      <TimeSelection />
-      <h1>Group 1</h1>
-      <ViewportConsumer />
-      <ViewportConsumer />
-      <ViewportConsumer />
-    </TimeSync>
-    <TimeSync group='group-2' initialViewport={INITIAL_VIEWPORT}>
-      <TimeSelection />
-      <h1>Group 2</h1>
-      <ViewportConsumer />
-      <ViewportConsumer />
-      <ViewportConsumer />
-    </TimeSync>
-    <TimeSync group='group-3' initialViewport={INITIAL_VIEWPORT}>
-      <TimeSelection />
-      <h1>Group 3</h1>
-      <ViewportConsumer />
-      <ViewportConsumer />
-      <ViewportConsumer />
-    </TimeSync>
-  </div>
-);
+export const MultipleTimeSyncs: Story = {
+  render: () => {
+    return (
+      <div>
+        <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+          <TimeSelection />
+          <h1>Group 1</h1>
+          <ViewportConsumer />
+          <ViewportConsumer />
+          <ViewportConsumer />
+        </TimeSync>
+        <TimeSync group='group-2' initialViewport={INITIAL_VIEWPORT}>
+          <TimeSelection />
+          <h1>Group 2</h1>
+          <ViewportConsumer />
+          <ViewportConsumer />
+          <ViewportConsumer />
+        </TimeSync>
+        <TimeSync group='group-3' initialViewport={INITIAL_VIEWPORT}>
+          <TimeSelection />
+          <h1>Group 3</h1>
+          <ViewportConsumer />
+          <ViewportConsumer />
+          <ViewportConsumer />
+        </TimeSync>
+      </div>
+    );
+  },
+};
 
-export const MultipleTimeSyncSameGroup: ComponentStory<
-  typeof TimeSync
-> = () => (
-  <div>
-    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
-      <TimeSelection />
-      <h1>Group 1</h1>
-      <ViewportConsumer />
-      <ViewportConsumer />
-      <ViewportConsumer />
-    </TimeSync>
-    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
-      <TimeSelection />
-      <h1>Group 2</h1>
-      <ViewportConsumer />
-      <ViewportConsumer />
-      <ViewportConsumer />
-    </TimeSync>
-    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
-      <TimeSelection />
-      <h1>Group 3</h1>
-      <ViewportConsumer />
-      <ViewportConsumer />
-      <ViewportConsumer />
-    </TimeSync>
-  </div>
-);
+export const MultipleTimeSyncSameGroup: Story = {
+  render: () => {
+    return (
+      <div>
+        <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+          <TimeSelection />
+          <h1>Group 1</h1>
+          <ViewportConsumer />
+          <ViewportConsumer />
+          <ViewportConsumer />
+        </TimeSync>
+        <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+          <TimeSelection />
+          <h1>Group 2</h1>
+          <ViewportConsumer />
+          <ViewportConsumer />
+          <ViewportConsumer />
+        </TimeSync>
+        <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+          <TimeSelection />
+          <h1>Group 3</h1>
+          <ViewportConsumer />
+          <ViewportConsumer />
+          <ViewportConsumer />
+        </TimeSync>
+      </div>
+    );
+  },
+};

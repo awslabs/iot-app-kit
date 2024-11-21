@@ -1,27 +1,12 @@
-import { applyMode, Mode } from '@cloudscape-design/global-styles';
-import { useEffect } from 'react';
-import { useDarkMode } from 'storybook-dark-mode';
-
+import '@iot-app-kit/charts/dist/styles.css';
 import './global.scss';
 
-// https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {
-  // https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args
-  actions: { argTypesRegex: '^on.*' },
-};
-
-export const decorators = [
-  (Story) => {
-    const isDarkMode = useDarkMode();
-
-    useEffect(() => {
-      if (isDarkMode) {
-        applyMode(Mode.Dark);
-      } else {
-        applyMode(Mode.Light);
-      }
-    }, [isDarkMode]);
-
-    return <Story />;
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
   },
-];
+};
+export const tags = ['autodocs'];

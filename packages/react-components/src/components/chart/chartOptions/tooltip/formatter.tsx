@@ -36,7 +36,7 @@ export const formatter =
       const quality = dataPoint?.quality;
 
       let alarmContent: AlarmContent | undefined;
-      if (typeof param.value === 'object') {
+      if (typeof param.value === 'object' && param.value != null) {
         const alarmName =
           'alarmName' in param.value
             ? (param.value.alarmName as string)

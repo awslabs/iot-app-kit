@@ -1,20 +1,20 @@
+import { type Viewport, viewportManager } from '@iot-app-kit/core';
+import { type DataZoomComponentOption, type EChartsType } from 'echarts';
 import {
   type MutableRefObject,
   useCallback,
   useEffect,
   useReducer,
 } from 'react';
-import { type DataZoomComponentOption, type EChartsType } from 'echarts';
-import { type Viewport, viewportManager } from '@iot-app-kit/core';
-import { useViewport } from '../../../hooks/useViewport';
+import { useEffectOnce } from 'react-use';
 import { ECHARTS_GESTURE } from '../../../common/constants';
+import { useViewport } from '../../../hooks/useViewport';
+import { convertViewportToMs } from '../../../utils/convertViewportToMs';
+import { DEFAULT_VIEWPORT } from '../../time-sync';
 import {
   DEFAULT_DATA_ZOOM,
   LIVE_MODE_REFRESH_RATE_MS,
 } from '../eChartsConstants';
-import { DEFAULT_VIEWPORT } from '../../time-sync';
-import { useEffectOnce } from 'react-use';
-import { convertViewportToMs } from '../../../utils/convertViewportToMs';
 
 type ValidOption = {
   startValue: number;
@@ -125,7 +125,7 @@ export const useDataZoom = (
   useEffect(() => {
     const chart = chartRef.current;
     let frame: number;
-    let interval: NodeJS.Timer;
+    let interval: NodeJS.Timeout;
 
     /**
      * Sync the viewport of the chart from manual data zoom gestures

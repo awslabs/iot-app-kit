@@ -286,3 +286,323 @@ exports[`SceneDataBindingTemplateEditor > should change the selection from icon 
   </div>
 </div>
 `;
+
+exports[`SceneDataBindingTemplateEditor > should change the selection from icon to color 2`] = `
+<div>
+  <div
+    class="awsui_root_14mhv_1rcjl_184"
+    data-analytics-field-label="[id="formField:ri:-label"]"
+  >
+    <div
+      class="awsui_label-wrapper_14mhv_1rcjl_260"
+    >
+      <label
+        class="awsui_label_14mhv_1rcjl_220"
+        for="formField:ri:"
+        id="formField:ri:-label"
+      >
+        sel_entity
+      </label>
+    </div>
+    <div
+      class="awsui_controls_14mhv_1rcjl_257"
+    >
+      <div
+        class="awsui_grid_14yj0_xuaq6_97"
+      >
+        <div
+          class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-12_14yj0_xuaq6_262"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_xuaq6_312"
+          >
+            <div
+              class="awsui_control_14mhv_1rcjl_257"
+            >
+              <div
+                class="awsui_root_r2vco_1byz9_97"
+                data-testid="data-binding-value-selector-0"
+              >
+                <div
+                  class="awsui_root_qwoo0_vokdv_147"
+                >
+                  <div
+                    class=""
+                    id=":ro:"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby="formField:ri:-label select-arialabel-:rm: trigger-content-:rq:"
+                      class="awsui_button-trigger_18eso_m2fj5_101 awsui_disabled_18eso_m2fj5_187 awsui_has-caret_18eso_m2fj5_168"
+                      disabled=""
+                      id="formField:ri:"
+                      type="button"
+                    >
+                      <span
+                        aria-disabled="true"
+                        class="awsui_placeholder_dwuol_1bifm_97 awsui_trigger_dwuol_1bifm_120"
+                        id="trigger-content-:rq:"
+                      >
+                        Select an option
+                      </span>
+                      <span
+                        class="awsui_arrow_18eso_m2fj5_101"
+                      >
+                        <span
+                          class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-disabled_h11ix_ayzd6_232"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            viewBox="0 0 16 16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              class="filled stroke-linejoin-round"
+                              d="M4 5h8l-4 6-4-6z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    tabindex="-1"
+                  />
+                  <div>
+                    <div
+                      tabindex="-1"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="awsui_dropdown_qwoo0_vokdv_97 awsui-visual-refresh awsui_hide-block-border_qwoo0_vokdv_270 awsui_refresh_qwoo0_vokdv_118 awsui_stretch-beyond-trigger-width_qwoo0_vokdv_263"
+                      data-animating="false"
+                      data-open="false"
+                      id="dialog:rl:"
+                      style="--awsui-dropdown-default-max-width-g964ok: 465px;"
+                    >
+                      <div
+                        class="awsui_dropdown-content-wrapper_qwoo0_vokdv_97 awsui_refresh_qwoo0_vokdv_118"
+                      >
+                        <div
+                          class="awsui_dropdown-content_qwoo0_vokdv_97"
+                        >
+                          <ul
+                            aria-labelledby="select-arialabel-:rm: formField:ri:"
+                            class="awsui_options-list_19gcf_kye0l_97"
+                            id="option-list:rk:"
+                            role="listbox"
+                            style="position: relative;"
+                            tabindex="-1"
+                          />
+                          <div
+                            class="awsui_root_1afi9_1aapr_97 awsui_hidden_1afi9_1aapr_131"
+                          >
+                            <div
+                              class="awsui_source_3bgfn_64bxr_9"
+                              id="footer:rn:"
+                            />
+                            <span
+                              class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+                            >
+                              <span
+                                aria-atomic="true"
+                                aria-live="polite"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+                <span
+                  class="awsui_root_xttbq_1fuh1_97"
+                  id="select-arialabel-:rm:"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="awsui_root_14mhv_1rcjl_184"
+    data-analytics-field-label="[id="formField:rr:-label"]"
+  >
+    <div
+      class="awsui_label-wrapper_14mhv_1rcjl_260"
+    >
+      <label
+        class="awsui_label_14mhv_1rcjl_220"
+        for="formField:rr:"
+        id="formField:rr:-label"
+      >
+        sel_comp
+      </label>
+    </div>
+    <div
+      class="awsui_controls_14mhv_1rcjl_257"
+    >
+      <div
+        class="awsui_grid_14yj0_xuaq6_97"
+      >
+        <div
+          class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-12_14yj0_xuaq6_262"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_xuaq6_312"
+          >
+            <div
+              class="awsui_control_14mhv_1rcjl_257"
+            >
+              <div
+                class="awsui_root_r2vco_1byz9_97"
+                data-testid="data-binding-value-selector-1"
+              >
+                <div
+                  class="awsui_root_qwoo0_vokdv_147"
+                >
+                  <div
+                    class=""
+                    id=":r11:"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby="formField:rr:-label select-arialabel-:rv: trigger-content-:r13:"
+                      class="awsui_button-trigger_18eso_m2fj5_101 awsui_disabled_18eso_m2fj5_187 awsui_has-caret_18eso_m2fj5_168"
+                      disabled=""
+                      id="formField:rr:"
+                      type="button"
+                    >
+                      <span
+                        aria-disabled="true"
+                        class="awsui_placeholder_dwuol_1bifm_97 awsui_trigger_dwuol_1bifm_120"
+                        id="trigger-content-:r13:"
+                      >
+                        Select an option
+                      </span>
+                      <span
+                        class="awsui_arrow_18eso_m2fj5_101"
+                      >
+                        <span
+                          class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-disabled_h11ix_ayzd6_232"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            viewBox="0 0 16 16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              class="filled stroke-linejoin-round"
+                              d="M4 5h8l-4 6-4-6z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    tabindex="-1"
+                  />
+                  <div>
+                    <div
+                      tabindex="-1"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="awsui_dropdown_qwoo0_vokdv_97 awsui-visual-refresh awsui_hide-block-border_qwoo0_vokdv_270 awsui_refresh_qwoo0_vokdv_118 awsui_stretch-beyond-trigger-width_qwoo0_vokdv_263"
+                      data-animating="false"
+                      data-open="false"
+                      id="dialog:ru:"
+                      style="--awsui-dropdown-default-max-width-g964ok: 465px;"
+                    >
+                      <div
+                        class="awsui_dropdown-content-wrapper_qwoo0_vokdv_97 awsui_refresh_qwoo0_vokdv_118"
+                      >
+                        <div
+                          class="awsui_dropdown-content_qwoo0_vokdv_97"
+                        >
+                          <ul
+                            aria-labelledby="select-arialabel-:rv: formField:rr:"
+                            class="awsui_options-list_19gcf_kye0l_97"
+                            id="option-list:rt:"
+                            role="listbox"
+                            style="position: relative;"
+                            tabindex="-1"
+                          />
+                          <div
+                            class="awsui_root_1afi9_1aapr_97 awsui_hidden_1afi9_1aapr_131"
+                          >
+                            <div
+                              class="awsui_source_3bgfn_64bxr_9"
+                              id="footer:r10:"
+                            />
+                            <span
+                              class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+                            >
+                              <span
+                                aria-atomic="true"
+                                aria-live="polite"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+                <span
+                  class="awsui_root_xttbq_1fuh1_97"
+                  id="select-arialabel-:rv:"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneDataBindingTemplateEditor > should change the selection from icon to color 3`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    label="sel_entity"
+  >
+    <div
+      data-mocked="Select"
+      data-testid="data-binding-value-selector-0"
+      disabled=""
+      options="[]"
+      placeholder="Select an option"
+      selectedoption="null"
+    />
+  </div>
+  <div
+    data-mocked="FormField"
+    label="sel_comp"
+  >
+    <div
+      data-mocked="Select"
+      data-testid="data-binding-value-selector-1"
+      disabled=""
+      options="[]"
+      placeholder="Select an option"
+      selectedoption="null"
+    />
+  </div>
+</div>
+`;
