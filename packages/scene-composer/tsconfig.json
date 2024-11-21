@@ -8,6 +8,7 @@
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": false,
