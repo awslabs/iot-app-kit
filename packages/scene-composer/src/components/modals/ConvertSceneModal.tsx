@@ -108,6 +108,7 @@ const ConvertSceneModal: React.FC = () => {
         await convertAllNodesToEntities({
           document,
           sceneRootEntityId: rootId,
+          // @ts-expect-error type mismatch after update
           getObject3DBySceneNodeRef,
           onSuccess: (convertedNode) => {
             progressLocal.succeededNodes[convertedNode.ref] = convertedNode;

@@ -1,8 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { useHighlightedDataStreams } from './useHighlightedDataStreams';
 
-vi.mock('zustand');
-
 it('can highlight data streams', () => {
   const { result, rerender } = renderHook(() => useHighlightedDataStreams());
 

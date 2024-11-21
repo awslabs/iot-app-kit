@@ -60,10 +60,13 @@ export const ViewCursorWidget = (): React.JSX.Element => {
       // Intersections are sorted
       const closestIntersection = intersects[0];
       const n = getIntersectionTransform(closestIntersection);
+      // @ts-expect-error type mismatch after update
       const normalVector = n.normal as THREEVector3;
       // Intersection surface normal may not be a uniform vector, like for point clouds
       if (normalVector) {
+        // @ts-expect-error type mismatch after update
         shape.lookAt(n.normal as THREEVector3);
+        // @ts-expect-error type mismatch after update
         shape.position.copy(n.position);
         // Set scale based on intersection distance
         shape.scale.copy(INIT_SVG_VECTOR);

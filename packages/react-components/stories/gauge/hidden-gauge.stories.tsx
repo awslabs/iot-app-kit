@@ -1,36 +1,36 @@
+import { type Meta, type StoryObj } from '@storybook/react';
 import { Gauge } from '../../src';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-import { MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY } from './mock-data';
 import { DEFAULT_GAUGE_STYLES } from '../../src/components/gauge/constants';
+import { MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY } from './mock-data';
 
-export default {
+const meta = {
   title: 'Widgets/Gauge',
   component: Gauge,
-  argTypes: {
-    settings: {
-      control: { type: 'object' },
-      defaultValue: {
-        ...DEFAULT_GAUGE_STYLES,
-        showName: false,
-        showUnit: false,
-      },
-    },
+  args: {
+    settings: DEFAULT_GAUGE_STYLES,
   },
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Gauge>;
+  decorators: [
+    (Story) => (
+      <div style={{ height: '500px', width: '500px', padding: '20px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof Gauge>;
 
-export const HiddenSettingsGauge: ComponentStory<typeof Gauge> = ({
-  settings,
-}) => {
-  return (
-    <div style={{ height: '500px', width: '500px', padding: '20px' }}>
-      <Gauge
-        viewport={{ duration: '5m' }}
-        query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
-        settings={settings}
-      />
-    </div>
-  );
+export default meta;
+type Story = StoryObj<typeof Gauge>;
+
+export const HiddenSettingsGauge: Story = {
+  args: {
+    settings: {
+      showName: false,
+      showUnit: false,
+    },
+    viewport: { duration: '5m' },
+    query: MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
+  },
 };

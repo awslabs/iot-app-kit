@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const TEST_PAGE =
-  '/iframe.html?id=widgets-assistant-chatbot--assistant-chatbot-default';
+  '/iframe.html?args=&id=widgets-assistant-chatbot--assistant-chatbot-default';
 const TEST_PAGE_PROCESSING =
-  '/iframe.html?id=widgets-assistant-chatbot--assistant-processing-state';
+  '/iframe.html?args=&id=widgets-assistant-chatbot--assistant-processing-state';
 const TEST_PAGE_ERROR =
-  '/iframe.html?id=widgets-assistant-chatbot--assistant-error-state';
+  '/iframe.html?args=&id=widgets-assistant-chatbot--assistant-error-state';
 
 test('chatbot', async ({ page }) => {
   await page.goto(TEST_PAGE);

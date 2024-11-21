@@ -298,3 +298,337 @@ exports[`AnimationComponentEditor > should render as expected 1`] = `
   </div>
 </div>
 `;
+
+exports[`AnimationComponentEditor > should render as expected 2`] = `
+<div>
+  <div
+    class="awsui_root_18582_jftqg_97 awsui_vertical_18582_jftqg_144 awsui_vertical-xs_18582_jftqg_153"
+  >
+    <div
+      class="awsui_child_18582_jftqg_101"
+    >
+      <div
+        class="awsui_root_14mhv_1rcjl_184"
+        data-analytics-field-label="[id="formField:rc:-label"]"
+      >
+        <div
+          class="awsui_label-wrapper_14mhv_1rcjl_260"
+        >
+          <label
+            class="awsui_label_14mhv_1rcjl_220"
+            for="formField:rc:"
+            id="formField:rc:-label"
+          >
+            Choose Animations
+          </label>
+        </div>
+        <div
+          class="awsui_controls_14mhv_1rcjl_257"
+        >
+          <div
+            class="awsui_grid_14yj0_xuaq6_97"
+          >
+            <div
+              class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-12_14yj0_xuaq6_262"
+            >
+              <div
+                class="awsui_restore-pointer-events_14yj0_xuaq6_312"
+              >
+                <div
+                  class="awsui_control_14mhv_1rcjl_257"
+                >
+                  <div
+                    class="awsui_root_12hwc_oboi4_5"
+                  >
+                    <div
+                      class="awsui_root_qwoo0_vokdv_147"
+                    >
+                      <div
+                        class=""
+                        id=":rh:"
+                      >
+                        <div
+                          class="awsui_input-container_2rhyz_4n5z9_273"
+                        >
+                          <span
+                            class="awsui_input-icon-left_2rhyz_4n5z9_278"
+                          >
+                            <span
+                              class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-subtle_h11ix_ayzd6_238"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                focusable="false"
+                                viewBox="0 0 16 16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="7"
+                                  cy="7"
+                                  r="5"
+                                />
+                                <path
+                                  d="m15 15-4.5-4.5"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          <input
+                            aria-autocomplete="list"
+                            aria-expanded="false"
+                            aria-label="Autosuggest example with suggestions"
+                            aria-labelledby="formField:rc:-label"
+                            autocomplete="off"
+                            class="awsui_input_2rhyz_4n5z9_101 awsui_input-has-icon-left_2rhyz_4n5z9_229"
+                            id="formField:rc:"
+                            placeholder="Enter Value"
+                            role="combobox"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        tabindex="-1"
+                      />
+                      <div>
+                        <div
+                          tabindex="-1"
+                        />
+                        <div
+                          aria-hidden="true"
+                          class="awsui_dropdown_qwoo0_vokdv_97 awsui-visual-refresh awsui_hide-block-border_qwoo0_vokdv_270 awsui_refresh_qwoo0_vokdv_118 awsui_stretch-beyond-trigger-width_qwoo0_vokdv_263"
+                          data-animating="false"
+                          data-open="false"
+                          style="--awsui-dropdown-default-max-width-g964ok: 465px;"
+                        >
+                          <div
+                            class="awsui_dropdown-content-wrapper_qwoo0_vokdv_97 awsui_is-empty_qwoo0_vokdv_240 awsui_refresh_qwoo0_vokdv_118"
+                          >
+                            <div
+                              class="awsui_dropdown-content_qwoo0_vokdv_97"
+                            >
+                              <div
+                                class="awsui_dropdown-footer_vm8qf_jxdvh_5"
+                              >
+                                <div
+                                  class="awsui_root_1afi9_1aapr_97 awsui_no-items_1afi9_1aapr_134"
+                                >
+                                  <div
+                                    class="awsui_source_3bgfn_64bxr_9"
+                                    id="footer:re:"
+                                  >
+                                    <div
+                                      class="awsui_root_vrgzu_95md8_97"
+                                    >
+                                      No matches found
+                                    </div>
+                                  </div>
+                                  <span
+                                    class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+                                  >
+                                    <span
+                                      aria-atomic="true"
+                                      aria-live="polite"
+                                    />
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          tabindex="-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="awsui_child_18582_jftqg_101"
+    >
+      <div
+        class="awsui_root_14mhv_1rcjl_184"
+        data-analytics-field-label="[id="formField:ri:-label"]"
+      >
+        <div
+          class="awsui_label-wrapper_14mhv_1rcjl_260"
+        >
+          <label
+            class="awsui_label_14mhv_1rcjl_220"
+            for="formField:ri:"
+            id="formField:ri:-label"
+          >
+            Choose Animations
+          </label>
+        </div>
+        <div
+          class="awsui_controls_14mhv_1rcjl_257"
+        >
+          <div
+            class="awsui_grid_14yj0_xuaq6_97"
+          >
+            <div
+              class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-12_14yj0_xuaq6_262"
+            >
+              <div
+                class="awsui_restore-pointer-events_14yj0_xuaq6_312"
+              >
+                <div
+                  class="awsui_control_14mhv_1rcjl_257"
+                >
+                  <div
+                    class="awsui_root_12hwc_oboi4_5"
+                  >
+                    <div
+                      class="awsui_root_qwoo0_vokdv_147"
+                    >
+                      <div
+                        class=""
+                        id=":rn:"
+                      >
+                        <div
+                          class="awsui_input-container_2rhyz_4n5z9_273"
+                        >
+                          <span
+                            class="awsui_input-icon-left_2rhyz_4n5z9_278"
+                          >
+                            <span
+                              class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-subtle_h11ix_ayzd6_238"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                focusable="false"
+                                viewBox="0 0 16 16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="7"
+                                  cy="7"
+                                  r="5"
+                                />
+                                <path
+                                  d="m15 15-4.5-4.5"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          <input
+                            aria-autocomplete="list"
+                            aria-expanded="false"
+                            aria-label="Autosuggest example with suggestions"
+                            aria-labelledby="formField:ri:-label"
+                            autocomplete="off"
+                            class="awsui_input_2rhyz_4n5z9_101 awsui_input-has-icon-left_2rhyz_4n5z9_229"
+                            id="formField:ri:"
+                            placeholder="Enter Value"
+                            role="combobox"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        tabindex="-1"
+                      />
+                      <div>
+                        <div
+                          tabindex="-1"
+                        />
+                        <div
+                          aria-hidden="true"
+                          class="awsui_dropdown_qwoo0_vokdv_97 awsui-visual-refresh awsui_hide-block-border_qwoo0_vokdv_270 awsui_refresh_qwoo0_vokdv_118 awsui_stretch-beyond-trigger-width_qwoo0_vokdv_263"
+                          data-animating="false"
+                          data-open="false"
+                          style="--awsui-dropdown-default-max-width-g964ok: 465px;"
+                        >
+                          <div
+                            class="awsui_dropdown-content-wrapper_qwoo0_vokdv_97 awsui_is-empty_qwoo0_vokdv_240 awsui_refresh_qwoo0_vokdv_118"
+                          >
+                            <div
+                              class="awsui_dropdown-content_qwoo0_vokdv_97"
+                            >
+                              <div
+                                class="awsui_dropdown-footer_vm8qf_jxdvh_5"
+                              >
+                                <div
+                                  class="awsui_root_1afi9_1aapr_97 awsui_no-items_1afi9_1aapr_134"
+                                >
+                                  <div
+                                    class="awsui_source_3bgfn_64bxr_9"
+                                    id="footer:rk:"
+                                  >
+                                    <div
+                                      class="awsui_root_vrgzu_95md8_97"
+                                    >
+                                      No matches found
+                                    </div>
+                                  </div>
+                                  <span
+                                    class="awsui_root_xttbq_1fuh1_97 awsui_root_3bgfn_64bxr_5"
+                                  >
+                                    <span
+                                      aria-atomic="true"
+                                      aria-live="polite"
+                                    />
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          tabindex="-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AnimationComponentEditor > should render as expected 3`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value=""
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

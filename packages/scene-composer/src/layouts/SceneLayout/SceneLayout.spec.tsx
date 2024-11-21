@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 /* eslint-disable import/order */
 import { render } from '@/tests/testing-library';
+import type { Mock } from 'vitest';
 import { SceneLayout } from '.';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { KnownComponentType } from '../../interfaces';
@@ -44,7 +45,7 @@ describe('SceneLayout', () => {
       document: { componentNodeMap: {} } as any,
     });
     getComponentRefByTypeMock.mockReturnValue({});
-    (useSelectedNode as vi.Mock).mockReturnValue({
+    (useSelectedNode as Mock).mockReturnValue({
       selectedSceneNode: {
         ref: 'test-ref',
         name: 'Test Node',
@@ -75,7 +76,7 @@ describe('SceneLayout', () => {
   });
 
   it('should render camera preview if editing and camera component is on selectedNode', () => {
-    (useSelectedNode as vi.Mock).mockReturnValueOnce({
+    (useSelectedNode as Mock).mockReturnValueOnce({
       selectedSceneNode: {
         ref: 'test-ref',
         name: 'Test Camera',

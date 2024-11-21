@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@iot-app-kit/ts-config/tsconfig.base.json",
-  "include": ["src", "stories", "e2e", "vitest.config.ts", "__mocks__"],
+  "include": ["src", "stories", "e2e", "vite.config.ts", "__mocks__"],
   "files": ["vitest.setup.ts"],
   "compilerOptions": {
-    "types": ["vitest/globals", "jest-extended"]
+    "types": ["vite/client", "vitest/globals", "jest-extended"]
   }
 }

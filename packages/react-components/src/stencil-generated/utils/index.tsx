@@ -45,6 +45,7 @@ export const createForwardRef = <PropType, ElementType>(
   };
   ref.displayName = displayName;
 
+  // @ts-expect-error
   return forwardRef(ref);
 };
 

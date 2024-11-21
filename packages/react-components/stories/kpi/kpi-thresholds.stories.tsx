@@ -1,4 +1,4 @@
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import { type Meta } from '@storybook/react';
 import { KPI } from '../../src/components/kpi/kpi';
 import {
   MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
@@ -12,9 +12,9 @@ export default {
     showPanel: false,
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KPI>;
+} as Meta<typeof KPI>;
 
-export const KPIThresholds: ComponentStory<typeof KPI> = () => {
+export const KPIThresholds = () => {
   return (
     <div
       style={{

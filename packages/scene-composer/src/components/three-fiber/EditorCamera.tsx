@@ -1,30 +1,30 @@
-import * as THREE from 'three';
-import { Fragment, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
+import { MatterportFocusCamera } from '@matterport/r3f/dist';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { type Camera, useFrame, useThree } from '@react-three/fiber';
-import { MatterportFocusCamera } from '@matterport/r3f/dist';
+import { Fragment, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import mergeRefs from 'react-merge-refs';
+import * as THREE from 'three';
 
-import useLogger from '../../logger/react-logger/hooks/useLogger';
 import {
-  Layers,
-  ROOT_OBJECT_3D_NAME,
-  DEFAULT_ORBIT_CAMERA_CONTROLS_OPTIONS,
   DEFAULT_CAMERA_POSITION,
   DEFAULT_CAMERA_TARGET,
+  DEFAULT_ORBIT_CAMERA_CONTROLS_OPTIONS,
   DEFAULT_TWEEN_DURATION,
+  Layers,
+  ROOT_OBJECT_3D_NAME,
 } from '../../common/constants';
-import { type FixedCameraTarget, type Vector3 } from '../../interfaces';
-import { useTween } from '../../hooks';
+import { getMatterportSdk } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useEditorState } from '../../store';
-import { type CameraControlImpl, type TweenValueObject } from '../../store/internalInterfaces';
+import { useTween } from '../../hooks';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import useOverwriteRaycaster from '../../hooks/useOverwriteRaycaster';
-import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
-import { getMatterportSdk } from '../../common/GlobalSettings';
+import { type FixedCameraTarget, type Vector3 } from '../../interfaces';
+import useLogger from '../../logger/react-logger/hooks/useLogger';
+import { useEditorState } from '../../store';
+import { type CameraControlImpl, type TweenValueObject } from '../../store/internalInterfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../../three/OrbitControls';
 import { isOrbitOrPanControlImpl } from '../../utils/controlUtils';
+import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 
 import { MapControls, OrbitControls, PointerLockControls } from './controls';
 
@@ -53,6 +53,7 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
 
   const activeCamera = useActiveCamera();
 
+  // @ts-expect-error type mismatch after update
   const [overwriteRaycaster, restoreRaycaster] = useOverwriteRaycaster(transformControls);
 
   const CameraControls = useMemo(() => {

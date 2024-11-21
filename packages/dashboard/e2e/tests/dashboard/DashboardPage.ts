@@ -7,7 +7,6 @@ const DEFAULT_WIDGET_POS_Y = 300;
 export class DashboardPage {
   readonly page: Page;
   readonly browser: Browser;
-  public readonly heading: Locator;
   public readonly widgetPalette: Locator;
   public readonly lineChartWidgetButton: Locator;
   public readonly textWidgetButton: Locator;

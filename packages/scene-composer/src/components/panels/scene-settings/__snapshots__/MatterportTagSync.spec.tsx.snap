@@ -2,32 +2,26 @@
 
 exports[`MatterportTagSync > should render correctly 1`] = `
 <div>
-  <span
-    class="awsui_root_xjuzf_ekpfy_828"
+  <div
+    data-mocked="Popover"
+    position="top"
+    triggertype="custom"
   >
-    <span
-      class="awsui_trigger_xjuzf_ekpfy_864"
-      id=":r0:"
-    >
-      <button
-        class="awsui_button_vjswe_12tek_107 awsui_variant-normal_vjswe_12tek_158"
-        data-analytics-funnel-value="button:r1:"
-        data-testid="matterport-tag-sync-button"
-        type="submit"
+    <div>
+      <div
+        data-mocked="StatusIndicator"
+        data-testid="sync-button-status"
+        type="loading"
       >
-        <span
-          class="awsui_content_vjswe_12tek_103"
-        >
-          Sync Matterport Tags
-        </span>
-      </button>
-    </span>
+        Syncing tags
+      </div>
+    </div>
     <div
-      aria-atomic="true"
-      aria-live="polite"
-      class="awsui-visual-refresh awsui_popover-content_xjuzf_ekpfy_910"
-      data-awsui-referrer-id=":r0:"
-    />
-  </span>
+      data-mocked="Button"
+      data-testid="matterport-tag-sync-button"
+    >
+      Sync Matterport Tags
+    </div>
+  </div>
 </div>
 `;

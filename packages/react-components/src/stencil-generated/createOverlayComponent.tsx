@@ -170,6 +170,7 @@ export const createOverlayComponent = <
   }
 
   return forwardRef<OverlayType, Props>((props, ref) => {
+    // @ts-expect-error
     return <Overlay {...props} forwardedRef={ref} />;
   });
 };

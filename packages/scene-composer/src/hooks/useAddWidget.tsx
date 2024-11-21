@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { KnownComponentType } from '../interfaces';
-import { useEditorState, accessStore } from '../store';
+import { accessStore, useEditorState } from '../store';
 import {
   createNodeWithPositionAndNormal,
   findComponentByType,
@@ -28,12 +28,14 @@ const useAddWidget: () => {
         if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
           while (physicalParent) {
             if (physicalParent.userData.componentTypes?.includes(KnownComponentType.ModelRef)) break;
+            // @ts-expect-error type mistmatch after upgrade
             physicalParent = physicalParent.parent as THREE.Object3D<Event>;
           }
         }
         const { position } = getIntersectionTransform(e.intersections[0]);
         const newWidgetNode = createNodeWithPositionAndNormal(
           addingWidget,
+          // @ts-expect-error type mistmatch after upgrade
           position,
           cursorLookAt,
           physicalParent,

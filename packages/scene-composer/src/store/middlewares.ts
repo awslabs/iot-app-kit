@@ -1,11 +1,9 @@
-import { type State, type StateCreator } from 'zustand';
 import { produce, type Draft } from 'immer';
-import createVanilla, { type GetState, type SetState, type StoreApi } from 'zustand/vanilla';
-
+import { type StateCreator } from 'zustand';
+import { createStore, type StoreApi } from 'zustand/vanilla';
 import DebugLogger from '../logger/DebugLogger';
-
-import { SceneComposerOperationTypeMap } from './StoreOperations';
 import { type RootState } from './Store';
+import { SceneComposerOperationTypeMap } from './StoreOperations';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -13,7 +11,7 @@ const LOG = new DebugLogger('stateStore');
  * Log the update to the state store, the prev state and the updated state.
  */
 export const log =
-  <T extends State>(config: StateCreator<T>): StateCreator<T> =>
+  <T>(config: StateCreator<T>): StateCreator<T> =>
   (set, get, api) => {
     return config(
       (...args) => {
@@ -30,12 +28,12 @@ export const log =
  * Make nested state update simple.
  */
 export const immer =
-  <T extends State>(config: StateCreator<T>): StateCreator<T> =>
+  <T>(config: StateCreator<T>): StateCreator<T> =>
   (set, get, api) =>
     config(
       (partial, replace) => {
         const nextState = typeof partial === 'function' ? produce(partial as (state: Draft<T>) => T) : (partial as T);
-        set(nextState, replace);
+        set(nextState as Parameters<typeof set>[0], replace);
       },
       get,
       api,
@@ -74,7 +72,7 @@ function filterNoHistoryStates(newState: RootState, currentState: RootState) {
 
 // factory to create undoStore. contains memory about past and future states and has methods to traverse states
 export const createUndoStore = () => {
-  return createVanilla<UndoStoreState>((set, get) => {
+  return createStore<UndoStoreState>((set, get) => {
     return {
       prevStates: [],
       futureStates: [],
@@ -110,7 +108,7 @@ export const createUndoStore = () => {
 // custom zustand middleware to get previous state
 export const undoMiddleware =
   <TState extends UndoState>(config: StateCreator<TState>) =>
-  (set: SetState<TState>, get: GetState<TState>, api: StoreApi<TState>) => {
+  (set: StoreApi<TState>['setState'], get: StoreApi<TState>['getState'], api: StoreApi<TState>) => {
     const undoStore = createUndoStore();
     const { getState, setState } = undoStore;
     const { undo, clear, redo } = getState();
@@ -132,7 +130,7 @@ export const undoMiddleware =
             redo,
             getUndoState: getState,
             undoStore,
-          });
+          } as TState);
         }
 
         set(args);

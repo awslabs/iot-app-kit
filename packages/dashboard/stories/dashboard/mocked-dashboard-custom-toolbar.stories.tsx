@@ -1,40 +1,24 @@
-import { useEffect, useState } from 'react';
-import { type Viewport, registerPlugin } from '@iot-app-kit/core';
-import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-
-import { Dashboard } from '../../src/index';
-import {
-  type DashboardClientConfiguration,
-  type DashboardConfiguration,
-} from '../../src/types';
-import { DEFAULT_REGION } from '~/msw/constants';
-import { useWorker } from '~/msw/useWorker';
-import { type RefreshRate } from '~/components/refreshRate/types';
 import {
   DateRangePicker,
   type DateRangePickerProps,
   FormField,
 } from '@cloudscape-design/components';
-import { Controller, useForm } from 'react-hook-form';
+import { type Viewport, registerPlugin } from '@iot-app-kit/core';
 import {
   dateRangeToViewport,
   rangeValidator,
   viewportToDateRange,
 } from '@iot-app-kit/core-util';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import DashboardView from '~/components/dashboard/view';
+import { type RefreshRate } from '~/components/refreshRate/types';
+import { DEFAULT_REGION } from '~/msw/constants';
+import { useWorker } from '~/msw/useWorker';
+import { Dashboard } from '../../src/index';
+import { type DashboardConfiguration } from '../../src/types';
 import { MOCK_DASHBOARD_CONFIG } from './mockData';
-
-/**
- * Data is mocked by the service worker started above.
- * No need for real credentials, but the region must match.
- */
-const clientConfiguration: DashboardClientConfiguration = {
-  awsCredentials: {
-    accessKeyId: '',
-    secretAccessKey: '',
-  },
-  awsRegion: DEFAULT_REGION,
-};
 
 const displaySettings = {
   numColumns: 100,
@@ -43,10 +27,6 @@ const displaySettings = {
 
 const defaultViewport = { duration: '10m' };
 const querySettings = { refreshRate: 5000 as RefreshRate };
-
-const emptyDashboardConfiguration = {
-  clientConfiguration,
-};
 
 registerPlugin('metricsRecorder', {
   provider: () => ({
@@ -60,6 +40,15 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  args: {
+    clientConfiguration: {
+      awsCredentials: {
+        accessKeyId: '',
+        secretAccessKey: '',
+      },
+      awsRegion: DEFAULT_REGION,
+    },
+  },
   // Applies to all stories under Mocked data
   decorators: [
     (Story) => {
@@ -67,7 +56,9 @@ export default {
       return <Story />;
     },
   ],
-} as ComponentMeta<typeof Dashboard>;
+} satisfies Meta<typeof Dashboard>;
+
+type Story = StoryObj<typeof Dashboard>;
 
 const ViewportPicker = (props: {
   onChangeValue: (value: DateRangePickerProps.Value) => void;
@@ -112,122 +103,128 @@ const ViewportPicker = (props: {
   );
 };
 
-export const EditableDashboard: ComponentStory<typeof Dashboard> = () => {
-  const [viewmode, setViewmode] = useState<'edit' | 'preview'>('edit');
-  const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
-  const [dashboardConfiguration, setDashboardConfiguration] =
-    useState<DashboardConfiguration>({
-      displaySettings,
-      defaultViewport,
-      widgets: [],
-      querySettings,
-    });
+export const EditableDashboard: Story = {
+  render: function EditableDashboard(_story, { args }) {
+    const [viewmode, setViewmode] = useState<'edit' | 'preview'>('edit');
+    const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
+    const [dashboardConfiguration, setDashboardConfiguration] =
+      useState<DashboardConfiguration>({
+        displaySettings,
+        defaultViewport,
+        widgets: [],
+        querySettings,
+      });
 
-  const onViewportChange = (v: Viewport) => {
-    console.log('### onViewportChange', v);
-    setViewport(v);
-  };
-  const onConfigChange = (config: DashboardConfiguration) => {
-    console.log('### onConfigChange', config);
-    setDashboardConfiguration(config);
-  };
+    const onViewportChange = (v: Viewport) => {
+      console.log('### onViewportChange', v);
+      setViewport(v);
+    };
+    const onConfigChange = (config: DashboardConfiguration) => {
+      console.log('### onConfigChange', config);
+      setDashboardConfiguration(config);
+    };
 
-  const customToolbar = ({
-    viewmode,
-  }: {
-    viewmode: 'preview' | 'edit';
-    dashboardConfiguration: DashboardConfiguration;
-    viewport?: Viewport;
-  }) => {
-    return (
-      <div
-        style={{
-          color: 'pink',
-          fontWeight: 'bold',
-          height: '20px',
-          padding: '20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        {viewmode === 'edit'
-          ? 'CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨ CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨'
-          : 'CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️'}
-        <button
-          onClick={() => setViewmode(viewmode === 'edit' ? 'preview' : 'edit')}
-        >
-          viewmode
-        </button>
-        <ViewportPicker
-          viewport={viewport}
-          onChangeValue={(value: DateRangePickerProps.Value) => {
-            setViewport(dateRangeToViewport(value));
+    const customToolbar = ({
+      viewmode,
+    }: {
+      viewmode: 'preview' | 'edit';
+      dashboardConfiguration: DashboardConfiguration;
+      viewport?: Viewport;
+    }) => {
+      return (
+        <div
+          style={{
+            color: 'pink',
+            fontWeight: 'bold',
+            height: '20px',
+            padding: '20px',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
-        />
-      </div>
-    );
-  };
+        >
+          {viewmode === 'edit'
+            ? 'CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨ CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨CUSTOM TOOLBAR IN EDIT MODE! ✨✨✨✨'
+            : 'CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️'}
+          <button
+            onClick={() =>
+              setViewmode(viewmode === 'edit' ? 'preview' : 'edit')
+            }
+          >
+            viewmode
+          </button>
+          <ViewportPicker
+            viewport={viewport}
+            onChangeValue={(value: DateRangePickerProps.Value) => {
+              setViewport(dateRangeToViewport(value));
+            }}
+          />
+        </div>
+      );
+    };
 
-  return (
-    <Dashboard
-      {...emptyDashboardConfiguration}
-      dashboardConfiguration={dashboardConfiguration}
-      initialViewMode={viewmode}
-      currentViewport={viewport}
-      onViewportChange={onViewportChange}
-      toolbar={customToolbar}
-      onDashboardConfigurationChange={onConfigChange}
-    />
-  );
+    return (
+      <Dashboard
+        {...args}
+        dashboardConfiguration={dashboardConfiguration}
+        initialViewMode={viewmode}
+        currentViewport={viewport}
+        onViewportChange={onViewportChange}
+        toolbar={customToolbar}
+        onDashboardConfigurationChange={onConfigChange}
+      />
+    );
+  },
 };
 
-export const ViewOnlyDashboard: ComponentStory<typeof DashboardView> = () => {
-  const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
+export const ViewOnlyDashboard: Story = {
+  render: function ViewOnlyDashboard(_story, { args }) {
+    const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
 
-  const onViewportChange = (v: Viewport) => {
-    console.log('### onViewportChange', v);
-    setViewport(v);
-  };
+    const onViewportChange = (v: Viewport) => {
+      console.log('### onViewportChange', v);
+      setViewport(v);
+    };
 
-  const customToolbar = () => {
-    return (
-      <div
-        style={{
-          color: 'pink',
-          fontWeight: 'bold',
-          height: '20px',
-          padding: '20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
-        ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW
-        MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN
-        VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR
-        IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM
-        TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
-        ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW
-        MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN
-        VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR
-        IN VIEW MODE ❤️❤️❤️❤️❤️
-        <ViewportPicker
-          viewport={viewport}
-          onChangeValue={(value: DateRangePickerProps.Value) => {
-            setViewport(dateRangeToViewport(value));
+    const customToolbar = () => {
+      return (
+        <div
+          style={{
+            color: 'pink',
+            fontWeight: 'bold',
+            height: '20px',
+            padding: '20px',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
-        />
-      </div>
-    );
-  };
+        >
+          CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
+          ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW
+          MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN
+          VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM
+          TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
+          ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW
+          MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN
+          VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM
+          TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
+          ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️
+          <ViewportPicker
+            viewport={viewport}
+            onChangeValue={(value: DateRangePickerProps.Value) => {
+              setViewport(dateRangeToViewport(value));
+            }}
+          />
+        </div>
+      );
+    };
 
-  return (
-    <DashboardView
-      {...emptyDashboardConfiguration}
-      dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
-      currentViewport={viewport}
-      onViewportChange={onViewportChange}
-      toolbar={customToolbar}
-    />
-  );
+    return (
+      <DashboardView
+        {...args}
+        dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
+        currentViewport={viewport}
+        onViewportChange={onViewportChange}
+        toolbar={customToolbar}
+      />
+    );
+  },
 };

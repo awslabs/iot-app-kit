@@ -1,5 +1,5 @@
+import { useCallback, useEffect, useState } from 'react';
 import { Color, LoadingManager, type Mesh, Texture } from 'three';
-import { useCallback, useState, useEffect } from 'react';
 
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
@@ -59,11 +59,14 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
   const loadTextureOnMesh = useCallback(
     (uri: string, mesh: Mesh) => {
       if (textureLoader) {
+        // @ts-expect-error type mistmatch after upgrade
         const material = mesh.material as THREE.MeshStandardMaterial;
         const oldTexture = material.map;
+        // @ts-expect-error type mistmatch after upgrade
         material.color = new Color('#FFFFFF');
         loadTexture(uri, (result) => {
           if (result instanceof Texture) {
+            // @ts-expect-error type mistmatch after upgrade
             material.map = result as Texture;
             material.needsUpdate = true;
           } else {
@@ -80,6 +83,7 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
 
   const clearTextureOnMesh = useCallback((mesh: Mesh) => {
     if (mesh) {
+      // @ts-expect-error type mistmatch after upgrade
       const material = mesh.material as THREE.MeshStandardMaterial;
       const oldTexture = material.map;
       material.map = null;

@@ -104,6 +104,138 @@ exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is
 </div>
 `;
 
+exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is "C" 2`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-toolbar"
+    >
+      <div
+        class="awsui_root_12hwc_oboi4_5"
+      >
+        <div
+          class="awsui_root_qwoo0_vokdv_147"
+        >
+          <div
+            class=""
+            id=":rj:"
+          >
+            <div
+              class="awsui_input-container_2rhyz_4n5z9_273"
+            >
+              <span
+                class="awsui_input-icon-left_2rhyz_4n5z9_278"
+              >
+                <span
+                  class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-subtle_h11ix_ayzd6_238"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="7"
+                      cy="7"
+                      r="5"
+                    />
+                    <path
+                      d="m15 15-4.5-4.5"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <input
+                aria-autocomplete="list"
+                aria-expanded="false"
+                autocomplete="off"
+                class="awsui_input_2rhyz_4n5z9_101 awsui_input-has-icon-left_2rhyz_4n5z9_229"
+                id="input:rf:"
+                placeholder="Find resources"
+                role="combobox"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            tabindex="-1"
+          />
+          <div>
+            <div
+              tabindex="-1"
+            />
+            <div
+              aria-hidden="true"
+              class="awsui_dropdown_qwoo0_vokdv_97 awsui-visual-refresh awsui_hide-block-border_qwoo0_vokdv_270 awsui_refresh_qwoo0_vokdv_118 awsui_stretch-beyond-trigger-width_qwoo0_vokdv_263"
+              data-animating="false"
+              data-open="false"
+              style="--awsui-dropdown-default-max-width-g964ok: 465px;"
+            >
+              <div
+                class="awsui_dropdown-content-wrapper_qwoo0_vokdv_97 awsui_is-empty_qwoo0_vokdv_240 awsui_refresh_qwoo0_vokdv_118"
+              >
+                <div
+                  class="awsui_dropdown-content_qwoo0_vokdv_97"
+                >
+                  <div
+                    class="awsui_dropdown-footer_vm8qf_jxdvh_5"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tm-main"
+      id="tm-main"
+      role="radioGroup"
+    >
+      <ol
+        class="tm-tree"
+        role="tree"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is "C" 3`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-toolbar"
+    >
+      <div
+        data-mocked="Autosuggest"
+        placeholder="Find resources"
+        value=""
+      />
+    </div>
+    <div
+      class="tm-main"
+      id="tm-main"
+      role="radioGroup"
+    >
+      <ol
+        class="tm-tree"
+        role="tree"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is "T1" 1`] = `
 <div>
   <div
@@ -193,6 +325,138 @@ exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class="tm-main"
+      id="tm-main"
+      role="radioGroup"
+    >
+      <ol
+        class="tm-tree"
+        role="tree"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is "T1" 2`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-toolbar"
+    >
+      <div
+        class="awsui_root_12hwc_oboi4_5"
+      >
+        <div
+          class="awsui_root_qwoo0_vokdv_147"
+        >
+          <div
+            class=""
+            id=":r9:"
+          >
+            <div
+              class="awsui_input-container_2rhyz_4n5z9_273"
+            >
+              <span
+                class="awsui_input-icon-left_2rhyz_4n5z9_278"
+              >
+                <span
+                  class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-subtle_h11ix_ayzd6_238"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="7"
+                      cy="7"
+                      r="5"
+                    />
+                    <path
+                      d="m15 15-4.5-4.5"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <input
+                aria-autocomplete="list"
+                aria-expanded="false"
+                autocomplete="off"
+                class="awsui_input_2rhyz_4n5z9_101 awsui_input-has-icon-left_2rhyz_4n5z9_229"
+                id="input:r5:"
+                placeholder="Find resources"
+                role="combobox"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            tabindex="-1"
+          />
+          <div>
+            <div
+              tabindex="-1"
+            />
+            <div
+              aria-hidden="true"
+              class="awsui_dropdown_qwoo0_vokdv_97 awsui-visual-refresh awsui_hide-block-border_qwoo0_vokdv_270 awsui_refresh_qwoo0_vokdv_118 awsui_stretch-beyond-trigger-width_qwoo0_vokdv_263"
+              data-animating="false"
+              data-open="false"
+              style="--awsui-dropdown-default-max-width-g964ok: 465px;"
+            >
+              <div
+                class="awsui_dropdown-content-wrapper_qwoo0_vokdv_97 awsui_is-empty_qwoo0_vokdv_240 awsui_refresh_qwoo0_vokdv_118"
+              >
+                <div
+                  class="awsui_dropdown-content_qwoo0_vokdv_97"
+                >
+                  <div
+                    class="awsui_dropdown-footer_vm8qf_jxdvh_5"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tm-main"
+      id="tm-main"
+      role="radioGroup"
+    >
+      <ol
+        class="tm-tree"
+        role="tree"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneHierarchyPanel > should render hierarchy correctly when enabled is "T1" 3`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-toolbar"
+    >
+      <div
+        data-mocked="Autosuggest"
+        placeholder="Find resources"
+        value=""
+      />
     </div>
     <div
       class="tm-main"

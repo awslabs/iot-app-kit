@@ -1,5 +1,5 @@
 import { type Meta } from '@storybook/react';
-import { type StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
+import { type ReactElement } from 'react';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
@@ -36,7 +36,7 @@ export default {
 type AlarmExplorerStory = (
   controls: AlarmExplorerStoryControls,
   context: AlarmExplorerStoryContext
-) => StoryFnReactReturnType;
+) => ReactElement;
 
 type AlarmExplorerStoryControls = CommonResourceExplorerControls;
 

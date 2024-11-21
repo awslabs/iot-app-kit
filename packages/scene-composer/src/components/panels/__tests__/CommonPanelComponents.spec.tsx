@@ -1,4 +1,4 @@
-import { fireEvent, render, act, screen } from '@/tests/testing-library';
+import { act, fireEvent, render } from '@/tests/testing-library';
 import { number } from 'prop-types';
 import { toNumber } from '../../../utils/stringUtils';
 import { DynamicSelect, ExpandableInfoSection, Matrix3XInputGrid, NumericInput } from '../CommonPanelComponents';
@@ -8,9 +8,9 @@ describe('render correct panels.', () => {
     const setValue = vi.fn();
     const toStr = vi.fn().mockImplementation((num) => num + '');
     const fromStr = vi.fn();
-    render(<NumericInput value={2} setValue={setValue} toStr={toStr} fromStr={fromStr} />);
+    const { container } = render(<NumericInput value={2} setValue={setValue} toStr={toStr} fromStr={fromStr} />);
 
-    const input = screen.getByRole('textbox');
+    const input = container.querySelectorAll('[data-mocked="Input"]')[0];
 
     fireEvent.change(input, { detail: { value: 2 } });
     fireEvent.blur(input);

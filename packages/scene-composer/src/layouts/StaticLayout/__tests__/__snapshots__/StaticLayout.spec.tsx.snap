@@ -45,6 +45,105 @@ exports[`StaticLayoutSnap > should render correctly with modal 1`] = `
 </div>
 `;
 
+exports[`StaticLayoutSnap > should render correctly with modal 2`] = `
+<div
+  className="sc-aXZVg iQWtQB awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+>
+  <div
+    className="sc-gsFSXq irdOli"
+  >
+    modalContent
+  </div>
+  <div
+    className="sc-gEvEer deMTkg awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    header
+  </div>
+  <div
+    className="sc-eqUAAy lplIYk awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    <div
+      className="sc-kAyceB cHqwUn awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      leftPanel
+    </div>
+    <div
+      className="sc-fqkvVR hhwHuy awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      <div
+        className="sc-iGgWBj hzaGuy awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+      >
+        mainContent
+      </div>
+    </div>
+    <div
+      className="sc-imWYAI eUyaSV awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      rightPanel
+    </div>
+  </div>
+  <div
+    className="sc-jXbUNg errLgn awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    footer
+  </div>
+</div>
+`;
+
+exports[`StaticLayoutSnap > should render correctly with modal 3`] = `
+<div
+  className="sc-aXZVg iQWtQB"
+  data-mocked="Box"
+>
+  <div
+    className="sc-gsFSXq irdOli"
+  >
+    modalContent
+  </div>
+  <div
+    className="sc-gEvEer deMTkg"
+    data-mocked="Box"
+  >
+    header
+  </div>
+  <div
+    className="sc-eqUAAy lplIYk"
+    data-mocked="Box"
+  >
+    <div
+      className="sc-kAyceB cHqwUn"
+      data-mocked="Box"
+      isFloating={false}
+    >
+      leftPanel
+    </div>
+    <div
+      className="sc-fqkvVR hhwHuy"
+      data-mocked="Box"
+    >
+      <div
+        className="sc-iGgWBj hzaGuy"
+        data-mocked="Box"
+      >
+        mainContent
+      </div>
+    </div>
+    <div
+      className="sc-imWYAI eUyaSV"
+      data-mocked="Box"
+    >
+      rightPanel
+    </div>
+  </div>
+  <div
+    className="sc-jXbUNg errLgn"
+    data-mocked="Box"
+  >
+    footer
+  </div>
+</div>
+`;
+
 exports[`StaticLayoutSnap > should render correctly with topBar 1`] = `
 <div
   className="sc-aXZVg iQWtQB awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
@@ -90,6 +189,107 @@ exports[`StaticLayoutSnap > should render correctly with topBar 1`] = `
 </div>
 `;
 
+exports[`StaticLayoutSnap > should render correctly with topBar 2`] = `
+<div
+  className="sc-aXZVg iQWtQB awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+>
+  <div
+    className="sc-gEvEer deMTkg awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    header
+  </div>
+  <div
+    className="sc-eqUAAy lplIYk awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    <div
+      className="sc-kAyceB cHqwUn awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      leftPanel
+    </div>
+    <div
+      className="sc-fqkvVR hhwHuy awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      <div
+        className="sc-dcJsrY cvpwOE awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_p-xxs_18wu0_16wz6_376 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+      >
+        topBar
+      </div>
+      <div
+        className="sc-iGgWBj hzaGuy awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+      >
+        mainContent
+      </div>
+    </div>
+    <div
+      className="sc-imWYAI eUyaSV awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      rightPanel
+    </div>
+  </div>
+  <div
+    className="sc-jXbUNg errLgn awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    footer
+  </div>
+</div>
+`;
+
+exports[`StaticLayoutSnap > should render correctly with topBar 3`] = `
+<div
+  className="sc-aXZVg iQWtQB"
+  data-mocked="Box"
+>
+  <div
+    className="sc-gEvEer deMTkg"
+    data-mocked="Box"
+  >
+    header
+  </div>
+  <div
+    className="sc-eqUAAy lplIYk"
+    data-mocked="Box"
+  >
+    <div
+      className="sc-kAyceB cHqwUn"
+      data-mocked="Box"
+      isFloating={false}
+    >
+      leftPanel
+    </div>
+    <div
+      className="sc-fqkvVR hhwHuy"
+      data-mocked="Box"
+    >
+      <div
+        className="sc-dcJsrY cvpwOE"
+        data-mocked="Box"
+        padding="xxs"
+      >
+        topBar
+      </div>
+      <div
+        className="sc-iGgWBj hzaGuy"
+        data-mocked="Box"
+      >
+        mainContent
+      </div>
+    </div>
+    <div
+      className="sc-imWYAI eUyaSV"
+      data-mocked="Box"
+    >
+      rightPanel
+    </div>
+  </div>
+  <div
+    className="sc-jXbUNg errLgn"
+    data-mocked="Box"
+  >
+    footer
+  </div>
+</div>
+`;
+
 exports[`StaticLayoutSnap > should render correctly without modal 1`] = `
 <div
   className="sc-aXZVg iQWtQB awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
@@ -124,6 +324,95 @@ exports[`StaticLayoutSnap > should render correctly without modal 1`] = `
   </div>
   <div
     className="sc-jXbUNg errLgn awsui_root_18wu0_1elzt_99 awsui_box_18wu0_1elzt_219 awsui_color-default_18wu0_1elzt_219 awsui_font-size-default_18wu0_1elzt_235 awsui_font-weight-default_18wu0_1elzt_275"
+  >
+    footer
+  </div>
+</div>
+`;
+
+exports[`StaticLayoutSnap > should render correctly without modal 2`] = `
+<div
+  className="sc-aXZVg iQWtQB awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+>
+  <div
+    className="sc-gEvEer deMTkg awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    header
+  </div>
+  <div
+    className="sc-eqUAAy lplIYk awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    <div
+      className="sc-kAyceB cHqwUn awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      leftPanel
+    </div>
+    <div
+      className="sc-fqkvVR hhwHuy awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      <div
+        className="sc-iGgWBj hzaGuy awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+      >
+        mainContent
+      </div>
+    </div>
+    <div
+      className="sc-imWYAI eUyaSV awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+    >
+      rightPanel
+    </div>
+  </div>
+  <div
+    className="sc-jXbUNg errLgn awsui_root_18wu0_16wz6_851 awsui_box_18wu0_16wz6_108 awsui_color-default_18wu0_16wz6_108 awsui_font-size-default_18wu0_16wz6_124 awsui_font-weight-default_18wu0_16wz6_164"
+  >
+    footer
+  </div>
+</div>
+`;
+
+exports[`StaticLayoutSnap > should render correctly without modal 3`] = `
+<div
+  className="sc-aXZVg iQWtQB"
+  data-mocked="Box"
+>
+  <div
+    className="sc-gEvEer deMTkg"
+    data-mocked="Box"
+  >
+    header
+  </div>
+  <div
+    className="sc-eqUAAy lplIYk"
+    data-mocked="Box"
+  >
+    <div
+      className="sc-kAyceB cHqwUn"
+      data-mocked="Box"
+      isFloating={false}
+    >
+      leftPanel
+    </div>
+    <div
+      className="sc-fqkvVR hhwHuy"
+      data-mocked="Box"
+    >
+      <div
+        className="sc-iGgWBj hzaGuy"
+        data-mocked="Box"
+      >
+        mainContent
+      </div>
+    </div>
+    <div
+      className="sc-imWYAI eUyaSV"
+      data-mocked="Box"
+    >
+      rightPanel
+    </div>
+  </div>
+  <div
+    className="sc-jXbUNg errLgn"
+    data-mocked="Box"
   >
     footer
   </div>

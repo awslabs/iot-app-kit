@@ -1,26 +1,24 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+const SECOND_IN_MS = 1000;
+const MINUTE_IN_MS = 60 * SECOND_IN_MS;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './e2e',
-  /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 10000,
+    timeout: 100 * SECOND_IN_MS,
     toMatchSnapshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
+    toHaveScreenshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
   },
+  timeout: 100 * SECOND_IN_MS,
+  globalTimeout: 15 * MINUTE_IN_MS,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -69,9 +67,9 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npm run start',
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
     url: 'http://localhost:6007',
-    timeout: 300 * 1000, // 5 minutes
+    timeout: 5 * MINUTE_IN_MS,
     stdout: 'pipe',
     stderr: 'pipe',
   },

@@ -89,29 +89,13 @@ exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"
         type="radio"
         value="Label"
       />
-      <button
-        aria-label="Expand Label"
-        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-        data-analytics-funnel-value="button:r0:"
-        title="Expand Label"
-        type="submit"
-      >
-        <span
-          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-        >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              class="stroke-linejoin-round"
-              d="M5 8h6M8 11V5M2 2h12v12H2z"
-            />
-          </svg>
-        </span>
-      </button>
+      <div
+        arialabel="Expand Label"
+        class="tm-tree-item-expand-btn"
+        data-mocked="Button"
+        iconname="treeview-expand"
+        variant="inline-icon"
+      />
       <div
         data-mocked="SceneNodeLabel"
       >
@@ -161,29 +145,13 @@ exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"
         type="radio"
         value="Label"
       />
-      <button
-        aria-label="Expand Label"
-        class="tm-tree-item-expand-btn awsui_button_vjswe_12tek_107 awsui_variant-inline-icon_vjswe_12tek_222 awsui_button-no-text_vjswe_12tek_1097"
-        data-analytics-funnel-value="button:r2:"
-        title="Expand Label"
-        type="submit"
-      >
-        <span
-          class="awsui_icon_vjswe_12tek_1123 awsui_icon-left_vjswe_12tek_1123 awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
-        >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              class="stroke-linejoin-round"
-              d="M5 8h6M8 11V5M2 2h12v12H2z"
-            />
-          </svg>
-        </span>
-      </button>
+      <div
+        arialabel="Expand Label"
+        class="tm-tree-item-expand-btn"
+        data-mocked="Button"
+        iconname="treeview-expand"
+        variant="inline-icon"
+      />
       <div
         data-mocked="SceneNodeLabel"
       >

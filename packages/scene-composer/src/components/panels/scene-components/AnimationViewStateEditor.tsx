@@ -1,7 +1,6 @@
 import { Autosuggest, Button, FormField, SpaceBetween } from '@cloudscape-design/components';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { useEditorState, type IAnimationComponentInternal, type ISceneNodeInternal } from '../../../store';
 import { animationObjectKey } from '../../three-fiber/AnimationComponent/AnimationComponent';
@@ -58,7 +57,7 @@ export const AnimationViewStateEditor: React.FC<AnimationViewStateEditorProps> =
   );
 
   useEffect(() => {
-    const currentAnimations: string[] = [...animationComponent.currentAnimations] || [];
+    const currentAnimations: string[] = [...animationComponent.currentAnimations];
     setSelectedAnimations(currentAnimations);
     animationPanelList.current = [...currentAnimations, ''];
   }, [node.ref]);
