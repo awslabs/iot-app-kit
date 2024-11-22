@@ -1,0 +1,83 @@
+import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
+import * as KPIStories from './KPI.stories';
+
+<Meta of={KPIStories} />
+
+# KPI
+
+The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. 
+This overview provides critical insights into the overall performance of your devices, equipment, and processes.
+The KPI component lets you can interact with IoT data from one or more data sources.
+
+## Assistant
+##### (object, optional)
+This specifies settings to enable the IoT Sitewise AI assistant within the component. Please refer to the [AWS documentation for more details about IoT Sitewise AI assistant](https://aws.amazon.com/iot-sitewise/features/). 
+
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`client\` | object, required | - | Specifies an instantiated assistant client \`IoTSitewiseAssistantClient\`, the assistant client is responsible for interfacing with the Assistant API.|
+| \`conversationId\` | string, required | - | Defines a conversation ID to be used as unique identifier for conversations with the assistant, the conversation ID can be the same for multiple components or unique, depending on use cases. |
+| \`componentId\` | string, required | - | Each component **must define an unique ID** which will be used by the assistant to manage state and assistant results. |
+| \`target\` | object, required | - | Defines the target for the assistant actions, the target options are \`dashboard\` and \`widget\`. For target \`dashboard\` all assistant results will be broadcasted to the Dashboard component, for target \`widget\` the assistant results will be display next to the component. |
+| \`enabled\` | boolean, optional | true | Allows to disable or enable the assistant at the component level. |
+| \`onAction\` | event, optional | - | Allows to pass a callback function to listen for any assistant action within the component. |
+`}
+</Markdown>
+
+<Canvas sourceState="none" story={{ height : '550px' }} of={KPIStories.Assistant} />
+<Source dark="true" code={`import React, { useEffect } from 'react';
+import { KPI, useAssistant } from '@iot-app-kit/react-components';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+
+export const KPIWithAssistant = () => {
+  const client = new IoTSitewiseAssistantClient({
+    iotSiteWiseClient
+  });
+
+  const { generateSummary } = useAssistant({
+    assistantClient: client,
+  });
+
+  useEffect(() => {
+    generateSummary({
+      componentId: 'my-kpi-component-id',
+      conversationId: 'my-conversation-id',
+      target: 'widget',
+      utterance: 'generate a summary and return the response in markdown format.',
+    });
+  }, []);
+
+  return (
+    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+      <KPI
+        query: sitewise,
+        settings: {
+          showUnit: true,
+          showName: true,
+          showTimestamp: true,
+          showAggregationAndResolution: true,
+          fontSize: 30,
+          secondaryFontSize: 12,
+          backgroundColor: '#ffffff',
+        }
+        assistant={{
+          client,
+          enabled: true,
+          componentId: 'my-kpi-component-id',
+          conversationId: 'my-conversation-id',
+          target: 'widget',
+        }}
+      />
+    </div>
+  );
+};`} />
+
+## Alarms
+
+<Canvas sourceState='hidden' of={KPIStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the KPI the alarm's state will be displayed as a label, and the alarm's threshold will be added.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be displayed on the KPI as well.

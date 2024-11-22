@@ -16,6 +16,7 @@ const preview = {
           'Overview',
           'Data sources',
           'Components',
+          'Assistant',
           'Core',
           'React hooks',
         ],

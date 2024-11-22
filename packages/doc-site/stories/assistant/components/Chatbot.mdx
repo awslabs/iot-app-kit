@@ -1,0 +1,83 @@
+import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
+import * as ChatbotStories from './Chatbot.stories';
+
+# Chatbot
+
+An AI-powered chatbot component powered by [IoT Sitewise Assistant](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/assistant-get-started.html) pre-trained on large volumes of industrial data and using a large language model (LLM).
+
+The chatbot allows users like plant managers, quality engineers, and maintenance technicians to gain insights, dive deep on question to solve problems, and get directions how to act directly from their operational and enterprise data.
+
+<Canvas sourceState="hidden" story={{ height : '500px' }} of={ChatbotStories.Standard} />
+
+<Meta of={ChatbotStories} />
+
+## Chatbot Properties
+
+The Chatbot component contains the following customizable properties.
+
+#### messages
+##### (array, required)
+This specifies a list of messages to visualize in the chatbot. The messages can be harded code or retrieved using useAssistant hooks, learn more about [useAssistant hook](/docs/hooks-useassistant--docs).
+
+Array of chat messages to display
+
+Example for messages data.
+<Source dark="true" code={`
+  <AssistantChatbot
+    messages={[
+    {
+      content: 'Hello, I am your AWS IoT SiteWise Assistant. Please ask me anything about your data.',
+      sender: 'assistant',
+      type: MessageType.TEXT,
+      id: uuid(),
+      loading: false,
+    },
+    {
+      content:
+        'Processing assistant response, please wait..',
+      sender: 'assistant',
+      type: MessageType.TEXT,
+      id: crypto.randomUUID(),
+      loading: true,
+    },
+  ]}
+  />
+`} />
+
+#### height
+##### (number, required)
+This defines a fixed height for the Chatbot. Default behavior is to use 100% of the avaliable height of the parent component.
+
+#### visible
+##### (boolean, optional)
+This defines the visible state of the chatbot, this can be used to display or not the chatbot depending on the use case. Default to `true`.
+
+#### header 
+##### (object, optional)
+This specifies the header settings for the Chatbot component. Default value is `undefined`.
+
+#### Chatbot Header props:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`headerText\` | string, required | true | The header title of the chatbot. |
+| \`showResetButton\` | boolean, optional | false | Displays the reset button or not. |
+| \`showCloseButton\` | boolean, optional | false | Displays the close button or not. |
+| \`closeIconName\` | string, optional | 'close' | The icon name used to display the close button. |
+| \`onReset\` | function, optional | - | Callback function to listen when customer clicks on the reset button.  |
+| \`onClose\` | function, optional | - | Callback function to listen when customer clicks on the close button.  |
+`}
+</Markdown>
+
+#### onSubmit 
+##### (function, optional)
+Callback function to listen when customer clicks on the send button. Default value is `undefined`.
+
+## More Examples
+
+### Loading
+<Canvas sourceState="hidden"  of={ChatbotStories.LoadingState} />
+
+### Error
+<Canvas sourceState="hidden"   of={ChatbotStories.ErrorState} />
