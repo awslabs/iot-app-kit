@@ -64,16 +64,36 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           .map((item) => getContextByComponent(item.widgetId))
           .join('');
 
-        const utterance = contexts.includes('alarmName')
-          ? EVENT_SUMMARY_DEFAULT_UTTERANCE
-          : SITUATION_SUMMARY_DEFAULT_UTTERANCE;
-        generateSummary({
-          componentId: 'dashboard',
-          target: 'dashboard',
-          conversationId: assistant.conversationId,
-          context: contexts,
-          utterance,
-        });
+        const hasAlarms = contexts.includes('alarmName');
+
+        let totalSelected = 0;
+        assistant.selectedQueries.forEach(
+          (q) => (totalSelected += q.selectedProperties)
+        );
+
+        if (hasAlarms) {
+          generateSummary({
+            componentId: 'dashboard',
+            target: 'dashboard',
+            conversationId: assistant.conversationId,
+            context: contexts,
+            utterance:
+              totalSelected === 1
+                ? EVENT_SUMMARY_DEFAULT_UTTERANCE
+                : 'generate summaries and compare and return the response in markdown format.',
+          });
+        } else {
+          generateSummary({
+            componentId: 'dashboard',
+            target: 'dashboard',
+            conversationId: assistant.conversationId,
+            context: contexts,
+            utterance:
+              totalSelected > 1
+                ? 'generate property summaries and compare and return the response in markdown format.'
+                : SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+          });
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,14 +105,14 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   ]);
 
   const handleSubmit = (utterance: string) => {
-    const componentContext = assistant.callerComponentId
-      ? getContextByComponent(assistant.callerComponentId)
-      : '';
+    const contexts = assistant.selectedQueries
+      .map((item) => getContextByComponent(item.widgetId))
+      .join('');
     invokeAssistant({
       componentId: assistant.callerComponentId ?? 'chatbot',
       conversationId: assistant.conversationId,
       utterance,
-      context: componentContext,
+      context: contexts,
       target: 'dashboard',
     });
   };

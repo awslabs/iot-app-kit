@@ -91,6 +91,7 @@ export type {
   AssistantActionType,
   AssistantProperty,
   AssistantWidgetTypes,
+  AlarmAssistantContext,
 } from './common/assistantProps';
 export { AssistantChatbot } from './components/assistant-chatbot';
 export {

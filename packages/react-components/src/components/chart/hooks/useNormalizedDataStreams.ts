@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import { bisector } from 'd3-array';
 import { uniqWith } from 'lodash';
 import { type AlarmContent } from '../../alarm-components/alarm-content/types';
-import { type AlarmAssistantContext } from '../../assistant-common/types';
+import type { AlarmAssistantContext } from '../../../common/assistantProps';
 
 const interpolateY = (
   point1: DataPointWithAlarm,

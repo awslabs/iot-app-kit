@@ -6,8 +6,10 @@ import { type TrendCursorValues } from '../../../../echarts/extensions/trendCurs
 import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
 import { type MinMaxMap } from '../../store/dataStreamMinMaxStore';
 import type { TableProps } from '@cloudscape-design/components/table';
-import type { AssistantProperty } from '../../../../common/assistantProps';
-import { type AlarmAssistantContext } from '../../../assistant-common/types';
+import type {
+  AssistantProperty,
+  AlarmAssistantContext,
+} from '../../../../common/assistantProps';
 
 type LegendTableDataStream = Pick<
   DataStream,
