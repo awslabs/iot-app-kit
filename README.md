@@ -6,7 +6,9 @@
 [![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
 
-## [Official IoT App Kit documentation site](https://awslabs.github.io/iot-app-kit/)
+## Official IoT App Kit documentation site
+
+#### Please visit [https://awslabs.github.io/iot-app-kit/](https://awslabs.github.io/iot-app-kit/) for docs, guides and more!
 
 ## Overview
 
