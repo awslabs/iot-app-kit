@@ -116,7 +116,7 @@ For more information, [Number.toFixed](https://developer.mozilla.org/en-US/docs/
 
 #### assistant
 ##### (object, optional)
-This specifies settings to enable the IoT Sitewise AI assistant within the component. Please refer to the [AWS documentation for more details about IoT Sitewise AI assistant](#). 
+This specifies settings to enable the IoT Sitewise AI assistant within the component. Please refer to the [AWS documentation for more details about IoT Sitewise AI assistant](https://aws.amazon.com/iot-sitewise/features/). 
 
 <Markdown>
 {`
@@ -131,52 +131,7 @@ This specifies settings to enable the IoT Sitewise AI assistant within the compo
 `}
 </Markdown>
 
-<Canvas sourceState="none" story={{ height : '550px' }} of={KpiStories.Assistant} />
-<Source dark="true" code={`import React, { useEffect } from 'react';
-import { KPI, useAssistant } from '@iot-app-kit/react-components';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-
-export const KPIWithAssistant = () => {
-  const client = new IoTSitewiseAssistantClient({
-    iotSiteWiseClient
-  });
-
-  const { generateSummary } = useAssistant({
-    assistantClient: client,
-  });
-
-  useEffect(() => {
-    generateSummary({
-      componentId: 'my-kpi-component-id',
-      conversationId: 'my-conversation-id',
-      target: 'widget',
-      utterance: 'generate a summary and return the response in markdown format.',
-    });
-  }, []);
-
-  return (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
-      <KPI
-        query: sitewise,
-        settings: {
-          showUnit: true,
-          showName: true,
-          showTimestamp: true,
-          showAggregationAndResolution: true,
-          fontSize: 30,
-          secondaryFontSize: 12,
-          backgroundColor: '#ffffff',
-        }
-        assistant={{
-          client,
-          componentId: 'my-kpi-component-id',
-          conversationId: 'my-conversation-id',
-          target: 'widget',
-        }}
-      />
-    </div>
-  );
-};`} />
+**Complete code examples and demos in [Assistant/Components/KPI](/iot-app-kit/?path=/docs/assistant-components-kpi--docs) docs.**
 
 ## Alarms
 
