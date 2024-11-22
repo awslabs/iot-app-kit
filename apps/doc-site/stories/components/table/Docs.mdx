@@ -269,6 +269,25 @@ If set to true, the pagination will enable for the table. Use it together with `
 ##### (number, optional)
 The number of items it should display in a table page. Available only if you specify the `paginationEnabled` property as true.
 
+#### assistant
+##### (object, optional)
+This specifies settings to enable the IoT Sitewise AI assistant within the component. Please refer to the [AWS documentation for more details about IoT Sitewise AI assistant](https://aws.amazon.com/iot-sitewise/features/). 
+
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`client\` | object, required | - | Specifies an instantiated assistant client \`IoTSitewiseAssistantClient\`, the assistant client is responsible for interfacing with the Assistant API.|
+| \`conversationId\` | string, required | - | Defines a conversation ID to be used as unique identifier for conversations with the assistant, the conversation ID can be the same for multiple components or unique, depending on use cases. |
+| \`componentId\` | string, required | - | Each component **must define an unique ID** which will be used by the assistant to manage state and assistant results. |
+| \`target\` | object, required | - | Defines the target for the assistant actions, the target options are \`dashboard\` and \`widget\`. For target \`dashboard\` all assistant results will be broadcasted to the Dashboard component, for target \`widget\` the assistant results will be display next to the component. |
+| \`enabled\` | boolean, optional | true | Allows to disable or enable the assistant at the component level. |
+| \`onAction\` | event, optional | - | Allows to pass a callback function to listen for any assistant action within the component. |
+`}
+</Markdown>
+
+**Complete code examples and demos in [Assistant/Components/Table](/iot-app-kit/?path=/docs/assistant-components-table--docs) docs.**
+
 ## Alarms
 
 <Canvas sourceState='hidden' of={TableStories.Alarm} />
