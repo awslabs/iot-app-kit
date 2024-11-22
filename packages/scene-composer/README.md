@@ -1,95 +1,22 @@
-## Note
+# IoT Application Kit
+[![NPM Version](https://img.shields.io/npm/v/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
+[![License](https://img.shields.io/npm/l/@iot-app-kit/core)](https://github.com/awslabs/iot-app-kit/blob/main/LICENSE)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit/core)](https://bundlephobia.com/package/@iot-app-kit/core)
+[![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
-**This package includes some code from other libraries listed in THIRD-PARTY-LICENSES.**
+## Official IoT App Kit documentation site
 
-# `@iot-app-kit/scene-composer`
+#### Please visit [https://awslabs.github.io/iot-app-kit/](https://awslabs.github.io/iot-app-kit/) for docs, guides and more!
 
-**Build command**
+## Overview
 
-Run the following command to build the package.
-The library will be built and copied to the `dist` folder.
+IoT Application Kit is a development library for building Industrial IoT web based applications.
 
-```bash
-npm run build
-```
+IoT App Kit is an open-source library consisting of front-end components and utilities. With IoT App Kit, you can build front-end applications and webpages to utilize IoT data. By default, IoT App Kit helps to retrieve data from [AWS IoT SiteWise](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html) and [AWS IoT TwinMaker](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html) You can also install plugins to retrieve data from your own sources. There’s no charge for using IoT App Kit.
 
-**UI Tests**
+For an example of a real world use case using the IoT App Kit, [visit this tutorial on how to use IoT App Kit](https://aws.amazon.com/blogs/iot/build-iot-applications-using-aws-iot-application-kit/)
 
-Pre-requisites: You need to have [Docker](https://docs.docker.com/get-docker/) installed locally to run UI Tests, we rely on it to provide the necessary browsers to generate consistent screenshots.
+<img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
 
-Commands:
-
-```bash
-# Run all tests once
-npm run test:ui
-
-# Check for flaky tests
-npm run test:ui:reliability
-
-# Update snapshots
-npm run test:ui:update
-```
-
-If you want to run the tests locally for whatever reason, as opposed to the docker image, you can run
-the same commands with the `--production` flag, which will run them without docker:
-
-```bash
-# Run all tests once
-npm run test:ui --production
-
-# Check for flaky tests
-npm run test:ui:reliability --production
-```
-
-**Analyze command**
-
-You can use the following tool to analyze the releasing bundle content:
-
-```bash
-npm install -g source-map-explorer # run this only once
-
-source-map-explorer dist/index.js
-```
-
-## Storybook
-
-To make the storybook site run:
-
-```bash
-npm run bootstrap # only needed first time and run at repo root level
-npm run build-storybook # run at this package
-npm run start -w packages/scene-composer
-```
-
-Optionally, if you want to pre-load AWS credentials from a local profile, you can set the `AWS_PROFILE` argument on the command line:
-
-```bash
-AWS_PROFILE=AppKit npm run start -w packages/scene-composer
-```
-
-If you want to have an AWS Scene pull live data from your TwinMaker workspace you can add a queryJson to the storybook arguments.  Because it's a JSON and not kept as part of the URL parameters the query will have to be reset if you refresh the page.  Below is an example query for a single TwinMaker property value.
-
-```bash
-[
-  {
-    "entityId": "f913470a-d011-45ca-ac84-3265f6327105",
-    "componentName": "MetabolicCageOne",
-    "properties": [{ "propertyName": "Temperature" }]
-  }
-]
-'''
-
-When using an query for live data the default data range is the last 5 minutes.  You can change this by setting the viewportDurationSecs fields to a custom value.  The field expects a number in seconds.  It does not currently support setting a fixed start and end date range for a viewport so  it work best when you have a way to regularly inject live sample date.
-
-- [Storybook Intro](https://storybook.js.org/docs/react/get-started/introduction)
-
-## Debugging
-Scene composer is embedded with a custom logging system based on [debugjs](https://www.npmjs.com/package/debug). With this being a complex component with lots of potential things going on, this system allows you to filter logs based on more specific attributes, and ultimately reduces noise.
-
-What you will notice is by default, there are very few messages in the browser console, this is because they are hidden by default from the end user, so you need to enable them in local storage. To do this, run this command in your browser console:
-
-```javascript
-localStorage.debug = '*'; // by default gives you all logging output
-localStorage.debug = '*,-verbose:*'; // don't show verbose logging
-localStorage.debug = 'ruleEvaluator*'; // only show messages related to the ruleEvaluator component
-```
+## License
+This project is licensed under the Apache-2.0 License.
