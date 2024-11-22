@@ -24,3 +24,8 @@ export type AssistantActionType =
   | 'clear-selection';
 export type AssistantWidgetTypes = 'kpi' | 'gauge' | 'table' | 'chart';
 export type ComponentId = string;
+
+export type AlarmAssistantContext = {
+  assetId?: string;
+  alarmName?: string;
+};
