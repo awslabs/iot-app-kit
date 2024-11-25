@@ -108,6 +108,15 @@ export const useTimeSeriesData = ({
   const queriesString = JSON.stringify(scrubbedQueries);
 
   useEffect(() => {
+    /**
+     * Reset datastreams whenever the query changes so that
+     * old datastreams are cleared away. This is important if
+     * the new query does not end up calling next for some
+     * reason. In that case, the datastreams state would still
+     * represent the previous queries data.
+     */
+    setDataStreams([]);
+
     const id = uuid();
     providerIdRef.current = id;
     const provider = ProviderStore.set(
