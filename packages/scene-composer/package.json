@@ -121,7 +121,7 @@
     "@vitest/coverage-v8": "^2.1.5",
     "babel-plugin-formatjs": "10.5.3",
     "copyfiles": "^2.4.1",
-    "eslint-config-iot-app-kit": "12.1.0",
+    "eslint-config-iot-app-kit": "*",
     "happy-dom": "^15.11.6",
     "husky": "8.0.3",
     "jest-extended": "^3.2.4",
