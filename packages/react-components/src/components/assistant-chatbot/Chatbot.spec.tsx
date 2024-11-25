@@ -148,7 +148,9 @@ describe(Chatbot, () => {
         onSubmit={() => {}}
       />
     );
-    expect(getByText(content)).toBeInTheDocument();
+    expect(
+      getByText(/Access Denied Exception/, { exact: false })
+    ).toBeInTheDocument();
   });
 
   it('should render prompts and be able to click on it', async () => {
@@ -210,6 +212,38 @@ describe(Chatbot, () => {
 
     await user.click(inputButton);
     expect(mockOnCLick).toBeCalledWith(message);
+  });
+
+  it('should not allow submit user message when assistant is loading', async () => {
+    const user = ue.setup();
+    const mockOnCLick = jest.fn();
+    const message = 'What is the root cause of the alarm?';
+
+    const { getByPlaceholderText, getByTestId } = render(
+      <Chatbot
+        height={400}
+        messages={[
+          {
+            content: '',
+            sender: 'assistant',
+            type: MessageType.TEXT,
+            id: 'UniqueID',
+            loading: true,
+          },
+        ]}
+        onSubmit={mockOnCLick}
+      />
+    );
+
+    const textarea = getByPlaceholderText(
+      'Ask me anything about your IoT data'
+    );
+    expect(textarea).toBeInTheDocument();
+    await user.type(textarea!, message);
+
+    const inputButton = getByTestId('assistant-chatbot-input-button');
+    expect(inputButton).toBeInTheDocument();
+    expect(inputButton).toBeDisabled();
   });
 
   it('should call onClose callback when chatbot is closed', async () => {
