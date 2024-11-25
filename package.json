@@ -12,9 +12,10 @@
     "npm": ">=10.7.0"
   },
   "workspaces": [
+    "apps/*",
+    "configuration/*",
     "examples/*",
-    "packages/*",
-    "configuration/*"
+    "packages/*"
   ],
   "scripts": {
     "install-ws": "npm install --prefer-offline --no-audit --workspaces --include-workspace-root",
