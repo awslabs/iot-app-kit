@@ -19,6 +19,7 @@
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -34,34 +35,22 @@
     "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && tsc-alias -p ./tsconfig.cjs.json && tsc-alias -p ./tsconfig.esm.json && npm run copy-assets:es && npm run copy-assets:cjs",
     "build:cjs": "tsc -b ./tsconfig.cjs.json && tsc-alias -p ./tsconfig.cjs.json && npm run copy-assets:cjs",
     "build:es": "tsc -b ./tsconfig.esm.json && tsc-alias -p ./tsconfig.esm.json && npm run copy-assets:es",
-    "build-storybook": "storybook build",
-    "clean": "rimraf dist storybook-static .turbo .cache test-results playwright-report",
+    "clean": "rimraf dist .turbo .cache test-results",
     "clean:nuke": "npm run clean && rimraf node_modules",
     "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
-    "dev": "npm start",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:dashboard": "npm run dev",
-    "start": "storybook dev -p 6006",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
-    "test:ui": "npx playwright test",
-    "test:ui:ci": "npx playwright test",
-    "test:ui:watch": "npx playwright test --ui",
     "pack": "npm pack"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.2.0",
+    "@iot-app-kit/data-mocked": "*",
     "@iot-app-kit/testing-util": "*",
     "@iot-app-kit/ts-config": "*",
-    "@playwright/test": "^1.48.2",
-    "@storybook/addon-essentials": "^8.4.5",
-    "@storybook/addon-interactions": "^8.4.5",
-    "@storybook/addon-links": "^8.4.5",
-    "@storybook/react": "^8.4.5",
-    "@storybook/react-vite": "^8.4.5",
-    "@storybook/test": "^8.4.5",
     "@tanstack/eslint-plugin-query": "^5.40.1",
     "@tanstack/react-query-devtools": "^5.40.1",
     "@testing-library/jest-dom": "^6.6.3",
@@ -82,12 +71,10 @@
     "eslint-config-iot-app-kit": "*",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "jest-extended": "^3.2.4",
-    "msw": "^2.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.1",
     "sass": "1.63.6",
-    "storybook": "^8.4.5",
     "tsc-alias": "^1.8.10",
     "tslib": "^2.5.3",
     "typescript": "^5.5.4",
@@ -133,8 +120,5 @@
     "@aws-sdk/client-iottwinmaker": "^3.354.0",
     "react": "^18",
     "react-dom": "^18"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
