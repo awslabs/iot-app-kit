@@ -8,7 +8,9 @@ export type AssistantChatbotMessageKeys =
   | 'assistant-chatbot.newChat'
   | 'assistant-chatbot.message.copy'
   | 'assistant-chatbot.message.copyError'
-  | 'assistant-chatbot.message.copySuccess';
+  | 'assistant-chatbot.message.copySuccess'
+  | 'assistant-chatbot.error.header'
+  | 'assistant-chatbot.error.defaultMessage';
 
 export const AssistantActionPanel: Messages<AssistantChatbotMessageKeys> = {
   en: {
@@ -21,5 +23,8 @@ export const AssistantActionPanel: Messages<AssistantChatbotMessageKeys> = {
     'assistant-chatbot.message.copy': 'Copy',
     'assistant-chatbot.message.copyError': 'Failed to copy',
     'assistant-chatbot.message.copySuccess': 'Content copied',
+    'assistant-chatbot.error.header': 'Assistant failure',
+    'assistant-chatbot.error.defaultMessage':
+      'An unexpected error occurred when the assistant was processing. Please try again in few seconds.',
   },
 };

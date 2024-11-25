@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect } from 'react';
+import { type CSSProperties, useEffect, useState } from 'react';
 import { AssistantButton } from './assistantButton';
 import {
   borderRadiusButton,
@@ -41,7 +41,8 @@ export const AssistantFloatingMenu = ({
   messageOverrides: DashboardMessages;
 }) => {
   const dispatch = useDispatch();
-  const { startAction, clearAll } = useAssistant({});
+  const [isAssistantLoading, setAssistantLoading] = useState<boolean>(false);
+  const { startAction, clearAll, messages } = useAssistant({});
   const assistantState = useSelector(
     (state: DashboardState) => state.assistant
   );
@@ -49,6 +50,15 @@ export const AssistantFloatingMenu = ({
   const rightOffset = assistantState.isChatbotOpen
     ? CHATBOT_OPENED_WIDTH
     : CHATBOT_CLOSED_WIDTH;
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage) {
+      setAssistantLoading(
+        lastMessage.sender === 'user' || !!lastMessage.loading
+      );
+    }
+  }, [messages]);
 
   useEffect(() => {
     clearAll();
@@ -185,7 +195,9 @@ export const AssistantFloatingMenu = ({
                   label={assistant.floatingMenu.buttonGenerateSummary}
                   onClick={handleSummary}
                   disabled={
-                    totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
+                    totalSelected === 0 ||
+                    totalSelected > MAX_ITEMS_SELECTED ||
+                    isAssistantLoading
                   }
                 />
               </div>
