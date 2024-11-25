@@ -23,6 +23,7 @@ export const useVisualizedDataStreams = (
   passedInViewport?: Viewport,
   thresholdOptions: StyledThreshold[] = []
 ) => {
+  // console.log(queries);
   const { viewport, lastUpdatedBy } = useViewport();
   const [thresholds, setThresholds] = useState<Threshold[]>([]);
 
@@ -61,6 +62,8 @@ export const useVisualizedDataStreams = (
     const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) =>
       getVisibleData(data, utilizedViewport, false)
     );
+
+    console.log(dataStreamsWithoutAlarms);
 
     return {
       hasError,

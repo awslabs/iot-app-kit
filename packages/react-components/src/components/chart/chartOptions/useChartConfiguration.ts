@@ -169,6 +169,7 @@ export const useChartConfiguration = (
    * must create a new variable that does not change unless the identifying information about the widget
    * query has changed.
    */
+  // console.log(dataStreams);
   const [dataSteamIdentifiers, setDataStreamIdentifiers] = useState(
     toDataStreamIdentifiers(dataStreams)
   );
@@ -179,6 +180,7 @@ export const useChartConfiguration = (
 
   useEffect(() => {
     const mappedDataStreams = toDataStreamIdentifiers(dataStreams);
+    // console.log(dataStreams);
     if (isEqual(mappedDataStreams, dataSteamIdentifiers)) return;
     setDataStreamIdentifiers(mappedDataStreams);
   }, [dataStreams, dataSteamIdentifiers]);

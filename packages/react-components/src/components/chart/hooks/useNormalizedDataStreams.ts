@@ -50,6 +50,7 @@ export const useNormalizedDataStreams = ({
   dataStreams,
   alarms,
 }: UseNormalizedDataStreamsOptions): DataStreamWithLatestAlarmState[] => {
+  // console.log(dataStreams);
   return useMemo(() => {
     const alarmDataStreams = createNonNullableList(
       alarms

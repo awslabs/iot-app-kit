@@ -163,6 +163,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
 
   const query = queryConfig.query;
 
+  // console.log(query);
   const queries = useQueries(query);
 
   const { assetModels = [], assets = [] } = query ?? {};

@@ -124,6 +124,7 @@ const BaseChart = ({
 
   // convert TimeSeriesDataQuery to TimeSeriesData
   const timeSeriesQueries = getTimeSeriesQueries(queries);
+  console.log(queries)
   const {
     isLoading,
     isRefreshing,

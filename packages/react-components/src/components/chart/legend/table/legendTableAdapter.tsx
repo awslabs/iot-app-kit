@@ -101,6 +101,7 @@ export const ChartLegendTableAdapter = ({
   ...options
 }: ChartLegendTableAdapterOptions) => {
   const { dataStreamMaxes, dataStreamMins } = useDataStreamMaxMin();
+  // console.log(datastreams);
   const datastreamItems = mapDataStreamInformation({
     datastreams,
     trendCursorValues,

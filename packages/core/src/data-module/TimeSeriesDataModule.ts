@@ -187,7 +187,9 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
      */
 
     const unsubscribe = () => {
-      this.unsubscribe(subscriptionId);
+      if (this.subscriptions.getSubscription(subscriptionId)) {
+        this.unsubscribe(subscriptionId);
+      }
     };
 
     const update = (subscriptionUpdate: SubscriptionUpdate<Query>) =>

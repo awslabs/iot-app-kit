@@ -62,6 +62,8 @@ export const StyledPropertiesAlarmsSection: FC<
     ),
   ];
 
+  // console.log(styledAssetQuery);
+
   const { assetModels } = useAssetModel({
     assetModelIds,
     iotSiteWiseClient: client,

@@ -31,6 +31,7 @@ export const ChartLegendTable = ({
   setSelectedItems,
   selectionType,
 }: ChartLegendTableOptions) => {
+  // console.log(datastreams);
   const { items, collectionProps } = useCollection(datastreams, {
     sorting: {},
   });

@@ -70,6 +70,8 @@ export const useTimeSeriesData = ({
   const prevViewportRef = useRef<undefined | Viewport>(undefined);
   const providerIdRef = useRef<undefined | string>(undefined);
 
+  console.log(queries);
+
   const scrubbedQueries = queries
     .map((query) => query.toQueryString())
     .map(
@@ -106,8 +108,10 @@ export const useTimeSeriesData = ({
     }));
 
   const queriesString = JSON.stringify(scrubbedQueries);
+  console.log('queriesString ', queriesString);
 
   useEffect(() => {
+    setDataStreams([]);
     const id = uuid();
     providerIdRef.current = id;
     const provider = ProviderStore.set(
@@ -134,6 +138,8 @@ export const useTimeSeriesData = ({
         setThresholds(combinedThresholds);
       },
     });
+
+    console.log('provider ', provider)
 
     return () => {
       unsubscribeProvider(id);
