@@ -119,7 +119,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [dashboard, react-components, scene-composer]
+        package:
+          [
+            { name: 'dashboard', shardIndex: 1, totalShards: 4 },
+            { name: 'dashboard', shardIndex: 2, totalShards: 4 },
+            { name: 'dashboard', shardIndex: 3, totalShards: 4 },
+            { name: 'dashboard', shardIndex: 4, totalShards: 4 },
+            { name: 'react-components', totalShards: 1, shardIndex: 1 },
+            { name: 'scene-composer', totalShards: 1, shardIndex: 1 },
+          ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -150,9 +158,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: '.turbo'
-          key: ${{ runner.os }}-turbo-playwright-${{ matrix.package}}-${{ github.sha }}
+          key: ${{ runner.os }}-turbo-playwright-${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-turbo-playwright-${{ matrix.package}}-
+            ${{ runner.os }}-turbo-playwright-${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-
 
       - name: Get installed Playwright version
         id: playwright-version
@@ -178,22 +186,14 @@ jobs:
 
       - name: Playwright
         run: |
-          npx turbo run test:ui:ci --filter=@iot-app-kit/${{matrix.package}} | tee output.log
-          if grep -q -e "Error: A snapshot doesn't exist at" -e "expect(locator).toHaveScreenshot(expected)" output.log; then
-            echo "Playwright tests failed due to a snapshot issue."
-            echo "SNAPSHOT_DIFFERENCES=true" >> $GITHUB_ENV
-            exit 1
-          elif grep -q "failed" output.log; then
-            echo "Playwright tests failed due to a non-snapshot issue."
-            exit 1
-          fi
+          npx turbo run test:ui:ci --filter=@iot-app-kit/${{ matrix.package.name }} -- --shard=${{ matrix.package.shardIndex }}/${{ matrix.package.totalShards }}
 
       - name: Test report
         id: upload-test-report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ${{ matrix.package }}-playwright-report
+          name: ${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-playwright-report
           path: packages/**/playwright-report
           retention-days: 30
 
@@ -202,15 +202,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: ${{ matrix.package }}-test-results
+          name: ${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-test-results
           path: packages/**/test-results
           retention-days: 30
-
-      - name: Comment on PR with report link
-        uses: thollander/actions-comment-pull-request@v3
-        if: ${{ failure() && env.SNAPSHOT_DIFFERENCES == 'true' }}
-        with:
-          message: |
-            ### Playwright visual snapshot differences were detected.
-            View the [Playwright report](${{ steps.upload-test-report.outputs.artifact-url }}) to review the visual differences.
-            **To approve the snapshot changes and update the snapshots, please comment:** /approve-snapshots
