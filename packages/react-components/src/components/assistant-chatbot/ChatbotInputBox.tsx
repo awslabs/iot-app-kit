@@ -112,7 +112,7 @@ export const ChatbotInputBox = ({
             iconName='send'
             variant='icon'
             onClick={handleClick}
-            disabled={!value}
+            disabled={disabled || !value}
             data-testid='assistant-chatbot-input-button'
           />
         </div>
