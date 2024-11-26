@@ -3,7 +3,6 @@ import {
   Select,
   type SelectProps,
 } from '@cloudscape-design/components';
-import { type OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 import { type ThresholdStyleType } from '@iot-app-kit/core';
 import { useState } from 'react';
@@ -13,9 +12,9 @@ export type ThresholdStyleSettingsProps = {
   updateAllThresholdStyles: (thresholdStyle: ThresholdStyleType) => void;
   convertThresholdStyleToOption: (
     thresholdStyle: ThresholdStyleType
-  ) => OptionDefinition;
+  ) => SelectProps.Option;
   convertOptionToThresholdStyle: (
-    selectedOption: OptionDefinition
+    selectedOption: SelectProps.Option
   ) => ThresholdStyleType;
   styledOptions: { label: string; value: string }[];
 };

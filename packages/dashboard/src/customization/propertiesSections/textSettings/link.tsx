@@ -1,18 +1,17 @@
+import type { InputProps } from '@cloudscape-design/components';
 import {
-  Input,
-  Toggle,
-  SpaceBetween,
   Box,
+  Input,
+  SpaceBetween,
+  Toggle,
 } from '@cloudscape-design/components';
 import type { FC } from 'react';
-import type { InputProps } from '@cloudscape-design/components';
-import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import type { TextWidget } from '~/customization/widgets/types';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 
-import './text.css';
 import { StyledExpandableSection } from '../components/styledComponents';
+import './text.css';
 
 type LinkSettingsProps = Pick<TextWidget['properties'], 'href' | 'isUrl'> & {
   updateHref: (newValue: string | undefined) => void;
@@ -62,9 +61,9 @@ const LinkSettings: FC<LinkSettingsProps> = ({
     </div>
   );
 
-  const onLinkTextChange: NonCancelableEventHandler<
-    InputProps.ChangeDetail
-  > = ({ detail: { value } }) => {
+  const onLinkTextChange: NonNullable<InputProps['onChange']> = ({
+    detail: { value },
+  }) => {
     updateHref(value);
   };
 

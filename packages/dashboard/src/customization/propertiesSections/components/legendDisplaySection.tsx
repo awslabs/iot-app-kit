@@ -1,9 +1,8 @@
-import type { FC } from 'react';
-import FormField from '@cloudscape-design/components/form-field';
 import Checkbox, {
   type CheckboxProps,
 } from '@cloudscape-design/components/checkbox';
-import { type NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
+import FormField from '@cloudscape-design/components/form-field';
+import type { FC } from 'react';
 import { type ChartLegend } from '~/customization/widgets/types';
 import { dropdownConsts } from '../constants';
 
@@ -22,7 +21,7 @@ export const LegendDisplaySection: FC<LegendDisplaySectionProps> = ({
 }) => {
   const handleVisibleChange = (
     key: string,
-    event: NonCancelableCustomEvent<CheckboxProps.ChangeDetail>
+    event: Parameters<NonNullable<CheckboxProps['onChange']>>[0]
   ) => {
     onChange({ ...visibleContent, [key]: event.detail.checked });
   };

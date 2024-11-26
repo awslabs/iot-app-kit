@@ -6,6 +6,11 @@
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
+    "@iot-app-kit/dev-env#build": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "outputLogs": "new-only"
+    },
     "build:cjs": {
       "dependsOn": ["^build:cjs"],
       "outputs": ["dist/**"],
@@ -26,19 +31,6 @@
     },
     "dev": {
       "dependsOn": ["^build:es"],
-      "outputs": ["dist/**"],
-      "persistent": true,
-      "cache": false,
-      "outputLogs": "full"
-    },
-    "dev:dashboard": {
-      "dependsOn": [
-        "@iot-app-kit/core#build:es",
-        "@iot-app-kit/core-util#build:es",
-        "@iot-app-kit/react-components#build:es",
-        "@iot-app-kit/source-iotsitewise#build:es",
-        "@iot-app-kit/testing-util#build:es"
-      ],
       "outputs": ["dist/**"],
       "persistent": true,
       "cache": false,
@@ -183,13 +175,11 @@
       "env": ["CI"],
       "outputLogs": "new-only"
     },
-    "@iot-app-kit/dashboard#test:ui:ci": {
+    "@iot-app-kit/dev-env#test:ui:ci": {
       "dependsOn": [
         "@iot-app-kit/core#build:es",
         "@iot-app-kit/core-util#build:es",
-        "@iot-app-kit/react-components#build:es",
-        "@iot-app-kit/source-iotsitewise#build:es",
-        "@iot-app-kit/testing-util#build:es"
+        "@iot-app-kit/dashboard#build:es"
       ]
     },
     "@iot-app-kit/react-components#test:ui:ci": {

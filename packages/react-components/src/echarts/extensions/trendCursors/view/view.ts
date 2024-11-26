@@ -1,24 +1,21 @@
-import * as echarts from 'echarts';
-
-import { type TrendCursorModel } from '../model';
-import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI';
-import { type SeriesModel } from 'echarts';
-import type Axis2D from 'echarts/types/src/coord/cartesian/Axis2D';
 import { round } from '@iot-app-kit/core-util';
+import * as echarts from 'echarts';
+import { type SeriesModel } from 'echarts';
+import type Axis2D from 'echarts/types/src/coord/cartesian/Axis2D.js';
+import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI.js';
 import useDataStore from '../../../../store';
-import { getGrid, getXAxisCoord, getXAxisDataValue } from './utils';
+import { formatDate } from '../../../../utils/time';
+import { type GenericSeries } from '../../../types';
+import { type TrendCursorModel } from '../model';
+import { type TrendCursor } from '../store';
 import {
   onDeleteTrendCursor,
-  onUpdateTrendCursor,
   onSetTrendCursorValues,
+  onUpdateTrendCursor,
 } from '../store/actions';
 import { POSITION, SIZE, STYLE, Z } from './constants';
-
 import deleteButtonSvg from './deleteButton.svg';
-import { type TrendCursor } from '../store';
-import { type GenericSeries } from '../../../types';
-
-import { formatDate } from '../../../../utils/time';
+import { getGrid, getXAxisCoord, getXAxisDataValue } from './utils';
 
 // Echarts doesn't expose this interface correctly
 // eslint-disable-next-line

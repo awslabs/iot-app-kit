@@ -1,6 +1,6 @@
-import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
-import { lifecycleExtension } from './lifeCycle';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension.js';
 import { actionExtension } from './echartsActions';
+import { lifecycleExtension } from './lifeCycle';
 import { TrendCursorModel } from './model';
 import { TrendCursorView } from './view';
 

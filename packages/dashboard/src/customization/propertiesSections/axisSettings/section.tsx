@@ -1,21 +1,18 @@
+import type { InputProps, ToggleProps } from '@cloudscape-design/components';
 import {
   Box,
   Input,
   SpaceBetween,
   Toggle,
 } from '@cloudscape-design/components';
-import type { FC } from 'react';
-import type { InputProps, ToggleProps } from '@cloudscape-design/components';
-import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import type { AxisSettings } from '../../settings';
-
 import * as awsui from '@cloudscape-design/design-tokens';
-
-import './section.css';
+import type { FC } from 'react';
+import type { AxisSettings } from '../../settings';
 import {
   FormLabel,
   StyledExpandableSection,
 } from '../components/styledComponents';
+import './section.css';
 
 const defaultAxisSetting: AxisSettings = {
   yAxisLabel: '',
@@ -41,19 +38,19 @@ const AxisSection: FC<AxisSectionProps> = ({
   axis = defaultAxisSetting,
   updateAxis,
 }) => {
-  const toggleShowX: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({
+  const toggleShowX: NonNullable<ToggleProps['onChange']> = ({
     detail: { checked },
   }) => {
     updateAxis({ ...axis, showX: checked });
   };
 
-  const toggleShowY: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({
+  const toggleShowY: NonNullable<ToggleProps['onChange']> = ({
     detail: { checked },
   }) => {
     updateAxis({ ...axis, showY: checked });
   };
 
-  const updateLabel: NonCancelableEventHandler<InputProps.ChangeDetail> = ({
+  const updateLabel: NonNullable<InputProps['onChange']> = ({
     detail: { value },
   }) => {
     updateAxis({

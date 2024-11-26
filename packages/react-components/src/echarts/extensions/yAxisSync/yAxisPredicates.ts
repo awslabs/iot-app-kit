@@ -1,4 +1,4 @@
-import { type LineSeriesOption } from 'echarts/types/src/chart/line/LineSeries';
+import { type LineSeriesOption } from 'echarts/types/src/chart/line/LineSeries.js';
 
 // the first y-axis is the default chart y-axis
 export const hasCustomYAxis = (option: LineSeriesOption) =>

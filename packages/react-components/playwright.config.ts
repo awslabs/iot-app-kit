@@ -1,7 +1,8 @@
+import {
+  MINUTE_IN_MS,
+  SECOND_IN_MS,
+} from '@iot-app-kit/helpers/constants/time';
 import { defineConfig, devices } from '@playwright/test';
-
-const SECOND_IN_MS = 1000;
-const MINUTE_IN_MS = 60 * SECOND_IN_MS;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -18,7 +19,7 @@ export default defineConfig({
     toHaveScreenshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
   },
   timeout: 100 * SECOND_IN_MS,
-  globalTimeout: 15 * MINUTE_IN_MS,
+  globalTimeout: 5 * MINUTE_IN_MS,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

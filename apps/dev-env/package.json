@@ -1,0 +1,51 @@
+{
+  "name": "@iot-app-kit/dev-env",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npm run dev",
+    "clean": "rimraf storybook-static .turbo .cache test-results playwright-report",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "dev": "storybook dev -p 6006",
+    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/ & tsc --noEmit",
+    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
+    "test:ui": "npx playwright test",
+    "test:ui:ci": "npx playwright test",
+    "test:ui:watch": "npx playwright test --ui"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iot-events": "^3.354.0",
+    "@aws-sdk/client-iotsitewise": "^3.696.0",
+    "@aws-sdk/client-iottwinmaker": "^3.354.0",
+    "@cloudscape-design/components": "3.0.693",
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/core-util": "*",
+    "@iot-app-kit/dashboard": "*",
+    "@iot-app-kit/data-mocked": "*",
+    "@iot-app-kit/helpers": "*",
+    "@iot-app-kit/ts-config": "*",
+    "@playwright/test": "^1.48.2",
+    "@storybook/addon-essentials": "^8.4.5",
+    "@storybook/addon-interactions": "^8.4.5",
+    "@storybook/addon-links": "^8.4.5",
+    "@storybook/react": "^8.4.5",
+    "@storybook/react-vite": "^8.4.5",
+    "@storybook/test": "^8.4.5",
+    "@types/node": "^18.16.18",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint-config-iot-app-kit": "*",
+    "lodash": "^4.17.21",
+    "msw-storybook-addon": "^2.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.46.1",
+    "rimraf": "^5.0.1",
+    "storybook": "^8.4.5",
+    "typescript": "^5.5.4",
+    "uuid": "^9.0.0",
+    "vite": "^5.4.11"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}

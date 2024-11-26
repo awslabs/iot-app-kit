@@ -1,20 +1,19 @@
 import Button from '@cloudscape-design/components/button';
+import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import DateRangePicker from '@cloudscape-design/components/date-range-picker';
 import FormField from '@cloudscape-design/components/form-field';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
-import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
-import { useViewport } from '../../hooks/useViewport';
-import { Tooltip } from '../tooltip/index';
 import {
   dateRangeToViewport,
   getViewportDateRelativeToAbsolute,
+  rangeValidator,
   relativeViewportOptions,
   viewportToDateRange,
-  rangeValidator,
 } from '@iot-app-kit/core-util';
 import { DateTime } from 'luxon';
+import { useViewport } from '../../hooks/useViewport';
+import { Tooltip } from '../tooltip/index';
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   title: string;
@@ -74,9 +73,9 @@ export const TimeSelection = ({
 }) => {
   const { viewport, setViewport } = useViewport();
 
-  const handleChangeDateRange: NonCancelableEventHandler<
-    DateRangePickerProps.ChangeDetail
-  > = (event) => {
+  const handleChangeDateRange: NonNullable<DateRangePickerProps['onChange']> = (
+    event
+  ) => {
     const { value } = event.detail;
     if (!value) return;
     setViewport(dateRangeToViewport(value), 'date-picker');

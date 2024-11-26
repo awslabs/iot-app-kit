@@ -1,11 +1,10 @@
-import minBy from 'lodash.minby';
-import maxBy from 'lodash.maxby';
+import type LineSeriesModel from 'echarts/types/src/chart/line/LineSeries.js';
 import isEqual from 'lodash.isequal';
-
-import type LineSeriesModel from 'echarts/types/src/chart/line/LineSeries';
-import { hasCustomYAxis } from './yAxisPredicates';
-import { type GenericSeries } from '../../types';
+import maxBy from 'lodash.maxby';
+import minBy from 'lodash.minby';
 import useDataStore from '../../../store';
+import { type GenericSeries } from '../../types';
+import { hasCustomYAxis } from './yAxisPredicates';
 
 export const handleSetYAxis = (model: LineSeriesModel) => {
   const appKitChartId = model.ecModel.option.appKitChartId as string;

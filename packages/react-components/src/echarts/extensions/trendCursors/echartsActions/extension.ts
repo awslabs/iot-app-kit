@@ -1,25 +1,25 @@
 // Echarts core use type does not map correctly to the echarts extension type so exporting as any
 
 import copy from 'copy-to-clipboard';
-import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension.js';
+import useDataStore from '../../../../store';
+import { onAddTrendCursor, onDeleteTrendCursor } from '../store';
+import { getXAxisDataValue } from '../view/utils';
 import {
   type AddTrendCursorAction,
   AddTrendCursorActionType,
 } from './addTrendCursors';
-import { getXAxisDataValue } from '../view/utils';
-import useDataStore from '../../../../store';
-import { onAddTrendCursor, onDeleteTrendCursor } from '../store';
-import {
-  RemoveNearestTrendCursorActionType,
-  type RemoveTrendCursorAction,
-} from './removeNearestTrendCursor';
 import { closestTrendCursor } from './closestTrendCursor';
-import { getTrendCursors } from './getTrendCursors';
 import {
   type CopyTrendCursorAction,
   CopyTrendCursorActionType,
 } from './copyNearestTrendCursor';
 import { formatTrendCursorForCopy } from './formatTrendCursorForCopy';
+import { getTrendCursors } from './getTrendCursors';
+import {
+  RemoveNearestTrendCursorActionType,
+  type RemoveTrendCursorAction,
+} from './removeNearestTrendCursor';
 
 // eslint-disable-next-line
 export const actionExtension: any = (

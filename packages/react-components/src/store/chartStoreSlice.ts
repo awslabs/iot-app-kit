@@ -1,4 +1,4 @@
-import { type StateCreator } from 'zustand/esm';
+import { type StateCreator } from 'zustand';
 import { createChartStore } from '../components/chart/store/store';
 
 export interface ChartStoreData {

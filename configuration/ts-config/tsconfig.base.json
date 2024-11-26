@@ -9,7 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveWatchOutput": true,
@@ -17,6 +16,7 @@
     "strict": true,
     "lib": ["ESNEXT", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "moduleResolution": "bundler",
     "target": "ESNEXT",
     "jsx": "react-jsx"
   }

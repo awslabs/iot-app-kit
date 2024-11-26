@@ -3,6 +3,7 @@
   "license": "Apache-2.0",
   "private": true,
   "version": "12.1.0",
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -24,7 +25,6 @@
     "clean": "rimraf dist .turbo .cache",
     "clean:nuke": "npm run clean && rimraf node_modules",
     "dev": "tsc -b ./tsconfig.esm.json --watch",
-    "dev:dashboard": "npm run dev",
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=1 --cache --cache-location .cache/eslint/",
     "lint-fix": "eslint --fix . --cache --cache-location .cache/eslint/"
