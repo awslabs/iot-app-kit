@@ -1,4 +1,5 @@
-import { upperFirst, camelCase } from 'lodash';
+import camelCase from 'lodash-es/camelCase';
+import upperFirst from 'lodash-es/upperFirst';
 
 const templateVarRegex = /{{[^{][\s\S]*?}}/g;
 

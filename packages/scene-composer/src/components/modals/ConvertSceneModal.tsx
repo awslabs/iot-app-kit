@@ -1,8 +1,7 @@
 import { Alert, Box, Button, Header, SpaceBetween } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../interfaces';

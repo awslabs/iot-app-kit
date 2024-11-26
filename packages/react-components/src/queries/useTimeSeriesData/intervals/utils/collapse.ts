@@ -1,7 +1,7 @@
 import { isBefore } from 'date-fns';
-import { sortIntervals } from './sort';
+import isEqual from 'lodash-es/isEqual';
 import { type Interval } from '../../types';
-import isEqual from 'lodash.isequal';
+import { sortIntervals } from './sort';
 
 /**
  *

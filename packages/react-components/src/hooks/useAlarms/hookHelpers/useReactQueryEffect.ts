@@ -1,6 +1,6 @@
-import { type EffectCallback } from 'react';
 import type { UseQueryResult } from '@tanstack/react-query';
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash-es/isEqual';
+import { type EffectCallback } from 'react';
 import { useCustomCompareEffect } from 'react-use';
 
 const queryAsComparable = (query: UseQueryResult) => ({

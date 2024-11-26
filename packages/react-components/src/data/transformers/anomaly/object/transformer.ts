@@ -1,12 +1,16 @@
-import unique from 'lodash/uniq';
-
+import { isAfter, isBefore } from 'date-fns';
+import unique from 'lodash-es/uniq';
 import { type DataSource } from '../../../types';
-
 import {
   type ObjectDataSource,
   ObjectDataSourceTransformer,
   type ObjectDataSourceValue,
 } from '../../object';
+import {
+  type AnomalyData,
+  type AnomalyDescription,
+  type DiagnosticData,
+} from '../output';
 import { type AnomalyObjectDataSource } from './datasource';
 import {
   type AnomalyObjectDataInput,
@@ -14,12 +18,6 @@ import {
   type Diagnostic,
   type Diagnostics,
 } from './input';
-import { isAfter, isBefore } from 'date-fns';
-import {
-  type AnomalyData,
-  type AnomalyDescription,
-  type DiagnosticData,
-} from '../output';
 
 /**
  * there can be points that have an anomaly score

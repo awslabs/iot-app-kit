@@ -1,10 +1,8 @@
 import { Box, FormField, Grid, Input, Select, SpaceBetween } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useIntl } from 'react-intl';
-
 import { Component, type Vector3 } from '../../../../models/SceneModels';
 import { type IMotionIndicatorComponentInternal } from '../../../../store';
-
 import ColorEditor from './ColorEditor';
 import { updateComponentForColorTypeSelection } from './helpers';
 import PreviewArrow from './PreviewArrow';

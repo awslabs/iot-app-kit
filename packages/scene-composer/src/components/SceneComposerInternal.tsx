@@ -1,9 +1,8 @@
 import { Mode } from '@cloudscape-design/global-styles';
 import { useViewport } from '@iot-app-kit/react-components';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
-
 import { SCENE_BODY_CLASS } from '../common/constants';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { GlobalStyles } from '../GlobalStyles';
@@ -18,7 +17,6 @@ import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
 import { generateUUID } from '../utils/mathUtils';
 import { createMaterialFromStyle } from '../utils/objectThreeStyleUtils';
-
 import DefaultErrorFallback from './DefaultErrorFallback';
 import IntlProvider from './IntlProvider';
 import StateManager from './StateManager';

@@ -1,4 +1,4 @@
-import difference from 'lodash.difference';
+import difference from 'lodash-es/difference';
 import { colorPalette } from './colorPalette';
 
 type Colorable = { color?: string };

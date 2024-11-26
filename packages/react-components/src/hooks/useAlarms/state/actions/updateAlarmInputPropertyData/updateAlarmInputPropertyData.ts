@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash-es/isEqual';
 import { combineStatusForQueries } from '../../../utils/queryStatus';
 import { type AlarmsState } from '../../types';
 import { filterDataStreamsForAlarm } from './filterDataStreamsForAlarm';

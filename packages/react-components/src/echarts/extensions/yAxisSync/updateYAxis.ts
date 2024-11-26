@@ -1,7 +1,7 @@
 import type LineSeriesModel from 'echarts/types/src/chart/line/LineSeries.js';
-import isEqual from 'lodash.isequal';
-import maxBy from 'lodash.maxby';
-import minBy from 'lodash.minby';
+import isEqual from 'lodash-es/isEqual';
+import maxBy from 'lodash-es/maxBy';
+import minBy from 'lodash-es/minBy';
 import useDataStore from '../../../store';
 import { type GenericSeries } from '../../types';
 import { hasCustomYAxis } from './yAxisPredicates';

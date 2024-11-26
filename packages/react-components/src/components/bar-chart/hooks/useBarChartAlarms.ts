@@ -1,10 +1,3 @@
-import { useState } from 'react';
-import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries';
-import { useCustomCompareEffect } from 'react-use';
-import isEqual from 'lodash.isequal';
-import { type BarChartProps } from '../barChart';
-import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
-import { type AlarmData } from '../../../hooks/useAlarms';
 import {
   type DataStream,
   type Primitive,
@@ -13,6 +6,13 @@ import {
   type ThresholdValue,
 } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
+import isEqual from 'lodash-es/isEqual';
+import { useState } from 'react';
+import { useCustomCompareEffect } from 'react-use';
+import { type AlarmData } from '../../../hooks/useAlarms';
+import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries';
+import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
+import { type BarChartProps } from '../barChart';
 
 type UseBarChartAlarmOptions = Pick<BarChartProps, 'queries' | 'viewport'> & {
   resolutionConfig?: ResolutionConfig;

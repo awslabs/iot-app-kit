@@ -1,5 +1,12 @@
 import { type Viewport } from '@iot-app-kit/core';
-import { type ConfigurationOptions, type DataSetOptions } from './types';
+import isEqual from 'lodash-es/isEqual';
+import merge from 'lodash-es/merge';
+import { useEffect, useReducer } from 'react';
+import { useCustomCompareEffect } from 'react-use';
+import { type AnomalyData } from '../../../data';
+import { useZoomableECharts } from '../../../hooks/useECharts/useZoomableECharts';
+import { type UtilizedViewportType } from '../../../hooks/useViewport/useUtilizedViewport';
+import { DEFAULT_ANOMALY_WIDGET_SETTINGS } from '../constants';
 import {
   convertDataset,
   convertGrid,
@@ -9,14 +16,7 @@ import {
   convertXAxis,
   convertYAxis,
 } from '../converters';
-import { type AnomalyData } from '../../../data';
-import { useEffect, useReducer } from 'react';
-import { useCustomCompareEffect } from 'react-use';
-import isEqual from 'lodash.isequal';
-import { DEFAULT_ANOMALY_WIDGET_SETTINGS } from '../constants';
-import { useZoomableECharts } from '../../../hooks/useECharts/useZoomableECharts';
-import merge from 'lodash.merge';
-import { type UtilizedViewportType } from '../../../hooks/useViewport/useUtilizedViewport';
+import { type ConfigurationOptions, type DataSetOptions } from './types';
 
 type AnomalyChartOptionState = {
   series: ReturnType<typeof convertSeries>;

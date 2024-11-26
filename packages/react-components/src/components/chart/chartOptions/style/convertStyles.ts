@@ -1,4 +1,5 @@
 import { type DataStream } from '@iot-app-kit/core';
+import merge from 'lodash-es/merge';
 import { type ChartOptions } from '../../types';
 import {
   type ChartStyleSettingsWithDefaults,
@@ -6,7 +7,6 @@ import {
   getDefaultStyles,
   getStyles,
 } from '../../utils/getStyles';
-import merge from 'lodash.merge';
 
 type ConvertChartOptions = Pick<
   ChartOptions,

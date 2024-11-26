@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import get from 'lodash-es/get';
 import { type DashboardWidget } from '~/types';
 
 export const disableAdd = (

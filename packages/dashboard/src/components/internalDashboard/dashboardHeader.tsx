@@ -3,12 +3,12 @@ import { type ReactNode, memo } from 'react';
 import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { TimeSelection, useViewport } from '@iot-app-kit/react-components';
 
-import Actions from '../actions';
-import type { DashboardSave, DashboardToolbar } from '~/types';
+import isEqual from 'lodash-es/isEqual';
 import { useSelector } from 'react-redux';
 import { type DashboardState } from '~/store/state';
+import type { DashboardSave, DashboardToolbar } from '~/types';
 import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
-import isEqual from 'lodash/isEqual';
+import Actions from '../actions';
 
 type DashboardHeaderProps = {
   name?: string;

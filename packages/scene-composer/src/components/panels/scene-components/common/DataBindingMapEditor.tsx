@@ -1,15 +1,13 @@
 import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
-
 import { type IValueDataBinding, type IValueDataBindingProvider } from '../../../../interfaces';
 import { type Component } from '../../../../models/SceneModels';
 import { type ISceneComponentInternal } from '../../../../store';
 import { Divider } from '../../../Divider';
 import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
-
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
 export interface ComponentWithDataBindings extends ISceneComponentInternal {

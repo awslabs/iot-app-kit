@@ -1,13 +1,11 @@
 import { type ComponentRequest, type ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
 import { type DocumentType } from '@aws-sdk/types';
-import { isEmpty } from 'lodash';
-
-import { type IMotionIndicatorComponent, KnownComponentType } from '../../interfaces';
+import isEmpty from 'lodash-es/isEmpty';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { generateUUID } from '../mathUtils';
-import { type IMotionIndicatorComponentInternal } from '../../store';
+import { type IMotionIndicatorComponent, KnownComponentType } from '../../interfaces';
 import { type Component } from '../../models/SceneModels';
-
+import { type IMotionIndicatorComponentInternal } from '../../store';
+import { generateUUID } from '../mathUtils';
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
 import { resetProperties } from './updateNodeEntity';
 

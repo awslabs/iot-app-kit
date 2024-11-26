@@ -6,22 +6,20 @@ import {
   type UpdateEntityCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
-import { isEmpty } from 'lodash';
-
+import isEmpty from 'lodash-es/isEmpty';
 import {
-  DEFAULT_PARENT_RELATIONSHIP_NAME,
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
+  DEFAULT_PARENT_RELATIONSHIP_NAME,
+  RESERVED_LAYER_ID,
   SCENE_ROOT_ENTITY_COMPONENT_NAME,
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
-  RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
-import { generateUUID } from '../mathUtils';
-import { type ISceneDocumentInternal, type ISceneNodeInternal } from '../../store';
 import { type ISceneDocument, KnownSceneProperty } from '../../interfaces';
+import { type ISceneDocumentInternal, type ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
-
+import { generateUUID } from '../mathUtils';
 import { createNodeEntity } from './createNodeEntity';
 import { processQueries } from './processQueries';
 import { updateSceneEntityComponent } from './sceneComponent';

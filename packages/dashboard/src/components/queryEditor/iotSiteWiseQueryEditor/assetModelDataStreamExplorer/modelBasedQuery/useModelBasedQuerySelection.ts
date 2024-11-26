@@ -1,18 +1,18 @@
+import {
+  type AlarmAssetModelQuery,
+  type AssetModelQuery,
+} from '@iot-app-kit/source-iotsitewise';
+import noop from 'lodash-es/noop';
+import { styledQueryWidgetOnDrop } from '~/components/queryEditor/useQuery';
 import { useSelection } from '~/customization/propertiesSection';
+import { type QueryProperties } from '~/customization/widgets/types';
+import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
+import { isJust, maybeWithDefault } from '~/util/maybe';
 import {
   type QueryConfigWidget,
   isQueryWidget,
 } from './findModelBasedQueryWidgets';
-import { type QueryProperties } from '~/customization/widgets/types';
-import { isJust, maybeWithDefault } from '~/util/maybe';
-import { noop } from 'lodash';
-import {
-  type AssetModelQuery,
-  type AlarmAssetModelQuery,
-} from '@iot-app-kit/source-iotsitewise';
-import { styledQueryWidgetOnDrop } from '~/components/queryEditor/useQuery';
-import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
-import { type IoTSiteWiseDataStreamQuery } from '~/types';
 
 const mergeAssetModelProperties = (
   currentQuery: QueryConfigWidget['properties']['queryConfig']['query'],

@@ -1,13 +1,11 @@
 import { Spinner } from '@cloudscape-design/components';
-import { isNumber } from 'lodash';
+import isNumber from 'lodash-es/isNumber';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { DEFAULT_PARENT_RELATIONSHIP_NAME, MAX_QUERY_HOP } from '../../common/entityModelConstants';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { accessStore, useSceneDocument } from '../../store';
-
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 const DeleteNodeModal: React.FC = () => {

@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react';
 import {
   type DataStream,
   type StyledThreshold,
@@ -7,10 +6,11 @@ import {
   type Viewport,
   getVisibleData,
 } from '@iot-app-kit/core';
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash-es/isEqual';
+import { useEffect, useMemo, useState } from 'react';
+import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
 import { useTimeSeriesData } from '../../../hooks/useTimeSeriesData';
 import { useViewport } from '../../../hooks/useViewport';
-import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
 
 const isNotAlarmStream = ({ streamType }: DataStream) =>
   streamType !== StreamType.ALARM;

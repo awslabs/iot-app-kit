@@ -1,6 +1,6 @@
 import type { DataPoint, TimeSeriesData } from '@iot-app-kit/core';
 import { DATA_TYPE } from '@iot-app-kit/core';
-import random from 'lodash/random';
+import random from 'lodash-es/random';
 import {
   type BarChartWidget,
   type KPIWidget,
@@ -15,10 +15,9 @@ import {
  * Shared mocks for testing purposes
  */
 import {
-  type DashboardWidgetsConfiguration,
   type DashboardWidget,
+  type DashboardWidgetsConfiguration,
 } from '../src/types';
-
 import {
   DEMO_TURBINE_ASSET_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_1,

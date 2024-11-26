@@ -1,8 +1,7 @@
 import { Box, Button, FormField, Input, Select, SpaceBetween } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
 import { MATTERPORT_ERROR } from '../../../common/constants';
 import { OPTIONS_PLACEHOLDER_VALUE } from '../../../common/internalConstants';
@@ -15,7 +14,6 @@ import {
   getMatterportConnectionList,
   getUpdatedSceneInfoForConnection,
 } from '../../../utils/matterportIntegrationUtils';
-
 import { MatterportTagSync } from './MatterportTagSync';
 
 export const MatterportIntegration: React.FC = () => {

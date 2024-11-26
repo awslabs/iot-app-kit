@@ -1,6 +1,6 @@
 import { Box } from '@cloudscape-design/components';
 import { Gauge, useViewport } from '@iot-app-kit/react-components';
-import pickBy from 'lodash/pickBy';
+import pickBy from 'lodash-es/pickBy';
 import { useSelector } from 'react-redux';
 import { useQueries } from '~/components/dashboard/queryContext';
 import WidgetTile from '~/components/widgets/tile';

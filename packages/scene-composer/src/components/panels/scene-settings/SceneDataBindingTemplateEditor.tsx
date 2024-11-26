@@ -1,8 +1,7 @@
 import { FormField, Select } from '@cloudscape-design/components';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {

@@ -1,18 +1,18 @@
-import { useCallback, useMemo } from 'react';
 import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
-import zip from 'lodash/zip';
-import groupBy from 'lodash.groupby';
+import groupBy from 'lodash-es/groupBy';
+import zip from 'lodash-es/zip';
+import { useCallback, useMemo } from 'react';
 import {
   createNonNullableList,
   createNonNullableTupleList,
 } from '../../../utils/createNonNullableList';
-import { type useTimeSeriesDataRequestManager } from '../requestManager';
 import {
   type TimeSeriesDataCacheClient,
   type TimeSeriesDataCacheKeyManager,
 } from '../cacheClient';
-import { type TimeSeriesDataRequestExecution } from '../requestExecution/requestExecution';
 import { IntervalTransformer, getViewportType } from '../intervals';
+import { type TimeSeriesDataRequestExecution } from '../requestExecution/requestExecution';
+import { type useTimeSeriesDataRequestManager } from '../requestManager';
 
 type UseRequestExecuterOptions<Request, Data> = {
   cacheClient: TimeSeriesDataCacheClient<Request, Data>;

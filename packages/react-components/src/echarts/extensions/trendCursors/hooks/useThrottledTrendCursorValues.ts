@@ -1,4 +1,4 @@
-import throttle from 'lodash.throttle';
+import throttle from 'lodash-es/throttle';
 import { useEffect, useRef, useState } from 'react';
 import useDataStore, { type StateData } from '../../../../store';
 import {

@@ -1,11 +1,11 @@
-import isEqual from 'lodash.isequal';
-import { type useTimeSeriesDataRequestManager } from './requestManager';
+import isEqual from 'lodash-es/isEqual';
+import { useMemo } from 'react';
 import { createNonNullableList } from '../../utils/createNonNullableList';
 import { aggregateStatuses } from './queryUtils';
-import { useMemo } from 'react';
-import { type useTimeSeriesDataCachedQueries } from './useCachedQueries';
 import { type useTimeSeriesDataRequestExecuter } from './requestExecution';
+import { type useTimeSeriesDataRequestManager } from './requestManager';
 import { type useTimeSeriesBisectedData } from './useBisectedData';
+import { type useTimeSeriesDataCachedQueries } from './useCachedQueries';
 
 type UseRequestStatusOptions<Request, Data> = {
   requestQueries: ReturnType<

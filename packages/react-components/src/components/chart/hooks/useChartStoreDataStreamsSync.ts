@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import differenceBy from 'lodash.differenceby';
 import { type DataStream } from '@iot-app-kit/core';
+import differenceBy from 'lodash-es/differenceBy';
+import { useEffect } from 'react';
 import { type DataStreamMetaData } from '../chartOptions/useChartConfiguration';
 import { useHighlightedDataStreams } from './useHighlightedDataStreams';
 import { useVisibleDataStreams } from './useVisibleDataStreams';

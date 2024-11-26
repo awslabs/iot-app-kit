@@ -1,6 +1,5 @@
 import { render } from '@/tests/testing-library';
-import cloneDeep from 'lodash/cloneDeep';
-
+import cloneDeep from 'lodash-es/cloneDeep';
 import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
 
 describe('DataBindingMapNameEditor', () => {

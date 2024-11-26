@@ -1,5 +1,5 @@
 import { Checkbox, FormField, TextContent } from '@cloudscape-design/components';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
 import { Fragment, useCallback, useContext, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import * as THREE from 'three';

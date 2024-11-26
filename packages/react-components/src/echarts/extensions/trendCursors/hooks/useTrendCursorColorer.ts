@@ -1,6 +1,6 @@
 import { Colorizer } from '@iot-app-kit/core-util';
+import isEqual from 'lodash-es/isEqual';
 import { useEffect, useRef } from 'react';
-import isEqual from 'lodash.isequal';
 import useDataStore from '../../../../store';
 import {
   type TrendCursor,

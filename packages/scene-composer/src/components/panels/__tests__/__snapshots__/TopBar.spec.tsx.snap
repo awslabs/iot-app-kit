@@ -5,7 +5,7 @@ exports[`<TopBar /> > should not render without camera view 1`] = `<div />`;
 exports[`<TopBar /> > should render Cameras Drop down with camera view 1`] = `
 <div>
   <div
-    class="sc-bmzYkS iWtqKS"
+    class="sc-koXPp XDIue"
     data-mocked="SpaceBetween"
     direction="horizontal"
   >

@@ -4,9 +4,9 @@ import {
   type IoTSiteWise,
 } from '@aws-sdk/client-iotsitewise';
 import { renderHook, waitFor } from '@testing-library/react';
+import merge from 'lodash-es/merge';
 import { queryClient } from '../queryClient';
 import { useHistoricalAssetPropertyValues } from './useHistoricalAssetPropertyValues';
-import merge from 'lodash.merge';
 
 const MOCK_ASSET_ID_1 = 'asset-1';
 

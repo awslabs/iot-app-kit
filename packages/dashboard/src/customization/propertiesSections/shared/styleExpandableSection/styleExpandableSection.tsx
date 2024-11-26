@@ -1,5 +1,5 @@
 import Toggle from '@cloudscape-design/components/toggle';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash-es/isFunction';
 import { type ReactNode } from 'react';
 import { StyledExpandableSection } from '../../components/styledComponents';
 import { useExpandable } from '../useExpandable';

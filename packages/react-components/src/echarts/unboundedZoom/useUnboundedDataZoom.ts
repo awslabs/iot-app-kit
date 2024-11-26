@@ -13,7 +13,7 @@ import {
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 
-import merge from 'lodash.merge';
+import merge from 'lodash-es/merge';
 import { DEFAULT_VIEWPORT } from '../../components/time-sync';
 import { useViewport } from '../../hooks/useViewport';
 import { type UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';

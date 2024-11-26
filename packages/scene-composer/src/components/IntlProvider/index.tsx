@@ -1,10 +1,9 @@
+import defaultsDeep from 'lodash-es/defaultsDeep';
+import * as PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { defaultsDeep } from 'lodash';
-import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';
-
-import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { defaultMessages, messagesMap } from '../../../translations';
+import useLogger from '../../logger/react-logger/hooks/useLogger';
 
 const DEFAULT_LOCALE = 'en-US';
 

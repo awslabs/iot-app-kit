@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 
+import Box from '@cloudscape-design/components/box';
 import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
-import Box from '@cloudscape-design/components/box';
 
-import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
+import isFunction from 'lodash-es/isFunction';
 import { FormLabel } from '../components/styledComponents';
-import { isFunction } from 'lodash';
+import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
 
 type YAxisSectionOptions = {
   visible?: boolean;

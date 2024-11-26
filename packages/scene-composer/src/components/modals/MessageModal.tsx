@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import { Box, Button, Header, Icon, SpaceBetween, StatusIndicator, TextContent } from '@cloudscape-design/components';
+import groupBy from 'lodash-es/groupBy';
 import { Fragment, useContext, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 
@@ -40,7 +40,7 @@ const MessageModal = () => {
   const showUserGuideLink = containsError || containsWarning;
 
   const messageContent = useMemo(() => {
-    const groupedMessages = _.groupBy(messages, (m) => m.category);
+    const groupedMessages = groupBy(messages, (m) => m.category);
     return [DisplayMessageCategory.Error, DisplayMessageCategory.Warning, DisplayMessageCategory.Info]
       .map((category) => {
         if (category in groupedMessages) {

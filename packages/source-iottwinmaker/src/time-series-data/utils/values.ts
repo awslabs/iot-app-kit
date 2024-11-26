@@ -1,6 +1,6 @@
-import { isNil } from 'lodash';
 import type { PropertyValue } from '@aws-sdk/client-iottwinmaker';
-import type { DataStream, DataPoint } from '@iot-app-kit/core';
+import type { DataPoint, DataStream } from '@iot-app-kit/core';
+import isNil from 'lodash-es/isNil';
 import { toValue } from '../../utils/propertyValueUtils';
 
 /**

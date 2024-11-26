@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash-es/isEqual';
 import { useState } from 'react';
 import { useCustomCompareEffect } from 'react-use';
 

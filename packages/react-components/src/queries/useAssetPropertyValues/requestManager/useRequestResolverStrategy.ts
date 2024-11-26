@@ -1,16 +1,16 @@
+import { isDurationViewport, viewportEndDate } from '@iot-app-kit/core';
+import { isAfter } from 'date-fns';
+import minBy from 'lodash-es/minBy';
 import { useCallback, useMemo, useState } from 'react';
 import { useHarmonicIntervalFn } from 'react-use';
-import { isAfter } from 'date-fns';
-import minBy from 'lodash.minby';
-import { isDurationViewport, viewportEndDate } from '@iot-app-kit/core';
 import {
   AbsoluteDurationTimeSeriesDataRequestResolver,
-  LiveDurationTimeSeriesDataRequestResolver,
-  type Viewport,
   getViewportType,
   IntervalTransformer,
-  type RequestResolverStrategy,
   LIVE_DATA_INTERVALS,
+  LiveDurationTimeSeriesDataRequestResolver,
+  type RequestResolverStrategy,
+  type Viewport,
 } from '../../useTimeSeriesData';
 import { type AssetPropertyValuesCacheClient } from '../cacheClient';
 import { type AssetPropertyValueHistoryRequest } from '../types';

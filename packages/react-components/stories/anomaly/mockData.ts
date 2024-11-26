@@ -1,5 +1,5 @@
+import shuffle from 'lodash-es/shuffle';
 import { type AnomalyObjectDataSource } from '../../src/data';
-import shuffle from 'lodash/shuffle';
 
 const randomValuePicker = (
   initialValues = [0.1, 0.1, 0.15, 0.18, 0.22, 0.25]
