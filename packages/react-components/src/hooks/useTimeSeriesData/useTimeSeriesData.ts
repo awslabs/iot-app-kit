@@ -1,26 +1,26 @@
-import { useEffect, useState, useRef } from 'react';
+import type {
+  DataStream,
+  StyleSettingsMap,
+  Threshold,
+  TimeQuery,
+  TimeSeriesData,
+  TimeSeriesDataRequest,
+  TimeSeriesDataRequestSettings,
+  Viewport,
+} from '@iot-app-kit/core';
 import { combineProviders } from '@iot-app-kit/core';
 import {
   type SiteWiseAssetQuery,
   type SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import type {
-  Viewport,
-  DataStream,
-  Threshold,
-  TimeSeriesData,
-  TimeSeriesDataRequest,
-  TimeQuery,
-  TimeSeriesDataRequestSettings,
-  StyleSettingsMap,
-} from '@iot-app-kit/core';
+import { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
 
+import isEqual from 'lodash-es/isEqual';
+import { useDataStreamStyler } from '../useColoredDataStreams/useDataStreamColorer';
 import { useViewport } from '../useViewport';
 import { ProviderStore } from './providerStore';
-import { useDataStreamStyler } from '../useColoredDataStreams/useDataStreamColorer';
-import isEqual from 'lodash.isequal';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',

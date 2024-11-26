@@ -1,5 +1,4 @@
-import { cloneDeep } from 'lodash';
-
+import cloneDeep from 'lodash-es/cloneDeep';
 import { type ISceneDocumentInternal, type ISceneNodeInternal, type RootState } from '../..';
 import { RESERVED_LAYER_ID } from '../../../common/entityModelConstants';
 import DebugLogger from '../../../logger/DebugLogger';

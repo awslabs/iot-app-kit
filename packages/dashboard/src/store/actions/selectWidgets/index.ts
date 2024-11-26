@@ -1,4 +1,4 @@
-import uniqBy from 'lodash/uniqBy';
+import uniqBy from 'lodash-es/uniqBy';
 import type { Action } from 'redux';
 import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';

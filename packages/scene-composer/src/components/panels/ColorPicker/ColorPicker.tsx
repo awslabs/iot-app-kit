@@ -1,9 +1,8 @@
 import { SpaceBetween } from '@cloudscape-design/components';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { type ColorRepresentation } from 'three';
-
 import {
   ColorPickerWrapper,
   DEFAULT_COLOR,

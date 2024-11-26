@@ -1,14 +1,11 @@
 /* eslint-disable import/first */
-import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import _ from 'lodash';
-
+import { render } from '@testing-library/react';
+import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/common/constants';
 import { LightComponentEditor } from '../../../../src/components/panels/scene-components/LightComponentEditor';
 import { LightType } from '../../../../src/models/SceneModels';
-import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/common/constants';
 import { type ILightComponentInternal, accessStore } from '../../../../src/store';
-
-import { mockNode, mockComponent } from './MockComponents';
+import { mockComponent, mockNode } from './MockComponents';
 
 const mockParse = vi.fn((_str: string, _defaultValue: number) => {
   return 2;

@@ -1,6 +1,8 @@
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
-import { cloneDeep, isEmpty, isString } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEmpty from 'lodash-es/isEmpty';
+import isString from 'lodash-es/isString';
 import type { PartialDeep } from 'type-fest';
 import { type StoreApi } from 'zustand';
 import { getGlobalSettings } from '../../common/GlobalSettings';

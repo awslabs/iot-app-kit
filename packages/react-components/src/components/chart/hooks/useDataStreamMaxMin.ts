@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash-es/isEqual';
 import { useChartStore } from '../store';
 
 export const useDataStreamMaxMin = () => {

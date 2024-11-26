@@ -40,14 +40,14 @@
   },
   "dependencies": {
     "@iot-app-kit/core": "*",
-    "lodash.difference": "4.5.0",
+    "lodash-es": "^4.17.21",
     "pako": "^2.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
     "@iot-app-kit/ts-config": "*",
-    "@types/lodash.difference": "4.5.9",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.16.18",
     "@types/pako": "^2.0.3",
     "@vitest/coverage-v8": "^2.1.5",

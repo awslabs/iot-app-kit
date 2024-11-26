@@ -1,21 +1,21 @@
-import { useCallback, useMemo, useState } from 'react';
-import { parseAlarmStateAssetProperty } from '../../../hooks/useAlarms/transformers';
-import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
-import { type ChartOptions } from '../types';
-import { useCustomCompareEffect } from 'react-use';
-import isEqual from 'lodash.isequal';
-import { type AlarmData } from '../../../hooks/useAlarms';
-import { type AlarmContent } from '../../alarm-components/alarm-content/types';
-import { mapAlarmRuleExpression } from '../../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
-import { toId } from '@iot-app-kit/source-iotsitewise';
 import {
   type DataStream,
   type Primitive,
   type Threshold,
   type ThresholdValue,
 } from '@iot-app-kit/core';
+import { toId } from '@iot-app-kit/source-iotsitewise';
+import isEqual from 'lodash-es/isEqual';
+import { useCallback, useMemo, useState } from 'react';
+import { useCustomCompareEffect } from 'react-use';
+import { type AlarmData } from '../../../hooks/useAlarms';
+import { parseAlarmStateAssetProperty } from '../../../hooks/useAlarms/transformers';
+import { mapAlarmRuleExpression } from '../../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
+import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
+import { type AlarmContent } from '../../alarm-components/alarm-content/types';
+import { type ChartOptions } from '../types';
 
 type UseChartAlarmOptions = Pick<ChartOptions, 'queries' | 'viewport'>;
 

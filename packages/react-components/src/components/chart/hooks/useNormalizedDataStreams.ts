@@ -1,12 +1,12 @@
 import { type DataPoint, type DataStream } from '@iot-app-kit/core';
 import { fromId, toId } from '@iot-app-kit/source-iotsitewise';
-import { type ChartAlarm, type ChartAlarms } from './useChartAlarms';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
-import { useMemo } from 'react';
 import { bisector } from 'd3-array';
-import { uniqWith } from 'lodash';
-import { type AlarmContent } from '../../alarm-components/alarm-content/types';
+import uniqWith from 'lodash-es/uniqWith';
+import { useMemo } from 'react';
 import type { AlarmAssistantContext } from '../../../common/assistantProps';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { type AlarmContent } from '../../alarm-components/alarm-content/types';
+import { type ChartAlarm, type ChartAlarms } from './useChartAlarms';
 
 const interpolateY = (
   point1: DataPointWithAlarm,

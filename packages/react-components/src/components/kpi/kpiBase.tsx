@@ -4,7 +4,7 @@ import {
   fontSizeBodyS,
   spaceStaticXs,
 } from '@cloudscape-design/design-tokens';
-import omitBy from 'lodash.omitby';
+import omitBy from 'lodash-es/omitBy';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
 import { Title } from '../../common/title';
 import { getAggregationFrequency } from '../../utils/aggregationFrequency';

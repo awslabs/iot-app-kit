@@ -4,7 +4,7 @@ import {
   type GetAssetPropertyValueHistory,
   type RequestResponse,
 } from '@iot-app-kit/core';
-import { take } from 'lodash';
+import take from 'lodash-es/take';
 
 export class BatchResponseProcessor {
   private entry: BatchGetAssetPropertyValueHistoryEntry;

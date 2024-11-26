@@ -1,8 +1,7 @@
 import { Button, Popover, StatusIndicator } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useMatterportObserver from '../../../hooks/useMatterportObserver';
 import useMatterportTags from '../../../hooks/useMatterportTags';

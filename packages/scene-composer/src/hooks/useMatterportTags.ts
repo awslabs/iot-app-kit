@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback } from 'react';
 import { Color } from 'three';
 import type { PartialDeep } from 'type-fest';

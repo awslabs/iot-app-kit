@@ -1,18 +1,18 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
+import { type RequestResponse } from '@iot-app-kit/core';
+import takeRight from 'lodash-es/takeRight';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
+import {
+  type ExecuteRequestStrategy,
+  type OnRequestSuccessCallback,
+} from '../../useTimeSeriesData/requestExecution/requestExecutionStrategy';
+import { type SendOptions } from '../../useTimeSeriesData/requestExecution/types';
 import {
   type AssetPropertyAggregatesRequest,
   type AssetPropertyValuesData,
   type GetAssetPropertyAggregatesRequestFunction,
 } from '../types';
-import { type SendOptions } from '../../useTimeSeriesData/requestExecution/types';
-import { type RequestResponse } from '@iot-app-kit/core';
-import {
-  type ExecuteRequestStrategy,
-  type OnRequestSuccessCallback,
-} from '../../useTimeSeriesData/requestExecution/requestExecutionStrategy';
-import takeRight from 'lodash.takeright';
 import { aggregateToDataPoint } from '../utils/toDataPoint';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
 
 export class GetAssetPropertyAggregates
   implements

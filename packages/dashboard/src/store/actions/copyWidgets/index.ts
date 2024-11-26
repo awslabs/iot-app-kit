@@ -1,4 +1,4 @@
-import intersectionBy from 'lodash/intersectionBy';
+import intersectionBy from 'lodash-es/intersectionBy';
 import type { Action } from 'redux';
 import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';

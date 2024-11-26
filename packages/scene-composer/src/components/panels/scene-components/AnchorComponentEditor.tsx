@@ -8,10 +8,9 @@ import {
   TextContent,
 } from '@cloudscape-design/components';
 import { type IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
@@ -33,7 +32,6 @@ import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../u
 import { colors } from '../../../utils/styleUtils';
 import { TextInput } from '../CommonPanelComponents';
 import { type IComponentEditorProps } from '../ComponentEditor';
-
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { DecodeSvgString } from './tag-style/ColorSelectorCombo/ColorSelectorComboUtils/DecodeSvgString';

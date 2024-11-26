@@ -1,27 +1,25 @@
 import { type ComponentRequest, type ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { type DocumentType } from '@aws-sdk/types';
-import { isEmpty } from 'lodash';
-
-import { type IEntityBindingComponent, type ISceneNode } from '../../interfaces';
+import isEmpty from 'lodash-es/isEmpty';
 import {
+  componentTypeToId,
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
-  componentTypeToId,
   RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
+import { type IEntityBindingComponent, type ISceneNode } from '../../interfaces';
 import { type ISceneComponentInternal, type ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
-
-import { attachToLayerRequest } from './sceneLayerUtils';
-import { parseTagComp } from './tagComponent';
-import { parseOverlayComp } from './overlayComponent';
-import { parseModelRefComp } from './modelRefComponent';
 import { parseCameraComp } from './cameraComponent';
-import { parseMotionIndicatorComp } from './motionIndicatorComponent';
-import { parseModelShaderComp } from './modelShaderComponent';
 import { parseLightComp } from './lightComponent';
-import { parseSubModelRefComp } from './subModelRefComponent';
+import { parseModelRefComp } from './modelRefComponent';
+import { parseModelShaderComp } from './modelShaderComponent';
+import { parseMotionIndicatorComp } from './motionIndicatorComponent';
+import { parseOverlayComp } from './overlayComponent';
 import { parsePlaneGeometryComp } from './planeGeometryComponent';
+import { attachToLayerRequest } from './sceneLayerUtils';
+import { parseSubModelRefComp } from './subModelRefComponent';
+import { parseTagComp } from './tagComponent';
 
 export enum NodeComponentProperty {
   Name = 'name',

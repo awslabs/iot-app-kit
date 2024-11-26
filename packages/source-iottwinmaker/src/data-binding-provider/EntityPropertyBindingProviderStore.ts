@@ -1,28 +1,29 @@
 import { type GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
-import { cloneDeep, isEmpty, isEqual } from 'lodash';
-
-import {
-  type IValueDataBinding,
-  type IValueDataBindingStore,
-  type IDataFieldOption,
-  type IDataBindingConfig,
-  type IValueDataBindingProviderState,
-  type ITwinMakerDataBindingContext,
-  type ITwinMakerEntityDataBindingContext,
-} from './types';
-import {
-  DataField,
-  DATA_FIELD_NAMES,
-  DATA_BINDING_CONTEXT_KEYS,
-  EMPTY_STORE_STATE,
-} from './constants';
+import { type ErrorDetails } from '@iot-app-kit/core';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEmpty from 'lodash-es/isEmpty';
+import isEqual from 'lodash-es/isEqual';
 import { type TwinMakerErrorCode } from '../common/error';
+import { type TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import {
   createDataBindingTemplateOptions,
   decorateDataBindingTemplate,
 } from '../utils/dataBindingTemplateUtils';
-import { type TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
-import { type ErrorDetails } from '@iot-app-kit/core';
+import {
+  DATA_BINDING_CONTEXT_KEYS,
+  DATA_FIELD_NAMES,
+  DataField,
+  EMPTY_STORE_STATE,
+} from './constants';
+import {
+  type IDataBindingConfig,
+  type IDataFieldOption,
+  type ITwinMakerDataBindingContext,
+  type ITwinMakerEntityDataBindingContext,
+  type IValueDataBinding,
+  type IValueDataBindingProviderState,
+  type IValueDataBindingStore,
+} from './types';
 import {
   convertDataBindingTemplateId,
   convertEntitySummariesToDataFieldOptions,

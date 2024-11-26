@@ -1,4 +1,5 @@
-import { cloneDeep, isEmpty } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEmpty from 'lodash-es/isEmpty';
 import type { PartialDeep } from 'type-fest';
 import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import type ILogger from '../../logger/ILogger';

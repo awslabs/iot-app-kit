@@ -1,30 +1,28 @@
-import { isEqual } from 'lodash';
-
+import isEqual from 'lodash-es/isEqual';
 import {
-  type IValueDataBindingProvider,
-  type IDataFieldOption,
-  type IDataBindingConfig,
-  type IValueDataBinding,
-  type IValueDataBindingStore,
-  type IValueDataBindingProviderState,
-} from '../src/interfaces';
-import {
-  ENTITY_ID_INDEX,
   COMPONENT_NAME_INDEX,
+  ENTITY_ID_INDEX,
   PROPERTY_NAME_INDEX,
 } from '../src/components/panels/scene-components/common/ValueDataBindingBuilder';
-
 import {
-  asyncLoadEntityOptions,
+  type IDataBindingConfig,
+  type IDataFieldOption,
+  type IValueDataBinding,
+  type IValueDataBindingProvider,
+  type IValueDataBindingProviderState,
+  type IValueDataBindingStore,
+} from '../src/interfaces';
+import { FIELDS, MOCK_DELAY } from './constants';
+import { type FIELD_NAME, type MockedValueDataBindingProviderStore } from './types';
+import {
   asyncLoadComponentNameOptions,
+  asyncLoadEntityOptions,
   asyncLoadPropertyNameOptions,
   cloneStoreState,
   createEmtpyStoreState,
   createIdenticalLabelOption,
   validateEntityId,
 } from './useMockedValueDataBindingProviderUtils';
-import { type FIELD_NAME, type MockedValueDataBindingProviderStore } from './types';
-import { FIELDS, MOCK_DELAY } from './constants';
 
 export const propertyNames = Object.seal(['temperature']);
 

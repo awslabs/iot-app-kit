@@ -1,7 +1,7 @@
 import type Grid from 'echarts/types/src/coord/cartesian/Grid.js';
 import { type LifecycleEvents } from 'echarts/types/src/core/lifecycle.js';
 import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension.js';
-import throttle from 'lodash.throttle';
+import throttle from 'lodash-es/throttle';
 import useDataStore from '../../../store';
 import { findMinMax } from './minMaxDataStreamSync';
 

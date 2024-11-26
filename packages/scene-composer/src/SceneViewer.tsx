@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
 import styled from 'styled-components';
-
 import { COMPOSER_FEATURES, type ISelectedDataBinding, KnownComponentType, type SceneViewerProps } from './interfaces';
 import { SceneComposerInternal, useSceneComposerApi } from './components/SceneComposerInternal';
 

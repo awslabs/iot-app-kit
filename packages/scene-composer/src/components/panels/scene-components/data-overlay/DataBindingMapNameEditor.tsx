@@ -1,8 +1,7 @@
 import { FormField } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
-
 import { type Component } from '../../../../models/SceneModels';
 import { TextInput } from '../../CommonPanelComponents';
 

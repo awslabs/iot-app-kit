@@ -1,8 +1,7 @@
-import { useEffect, useRef } from 'react';
-
 import { type DataStream, type StyleSettingsMap } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
-import difference from 'lodash.difference';
+import difference from 'lodash-es/difference';
+import { useEffect, useRef } from 'react';
 
 const hasColor = (stream: DataStream, styles: StyleSettingsMap): boolean => {
   const streamHasColor = stream.color != null;

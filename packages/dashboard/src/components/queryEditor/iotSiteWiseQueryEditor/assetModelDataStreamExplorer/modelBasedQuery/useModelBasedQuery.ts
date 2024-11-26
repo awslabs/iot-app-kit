@@ -1,14 +1,14 @@
-import { type DashboardState } from '~/store/state';
-import { isEqual } from 'lodash';
+import { type AssetResource } from '@iot-app-kit/react-components';
+import isEqual from 'lodash-es/isEqual';
+import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { onUpdateWidgetsAction } from '~/store/actions';
+import { type DashboardState } from '~/store/state';
 import {
   type QueryConfigWidget,
   findModelBasedQueryWidgets,
   hasModelBasedQuery,
 } from './findModelBasedQueryWidgets';
-import { useCallback, useMemo } from 'react';
-import { onUpdateWidgetsAction } from '~/store/actions';
-import { type AssetResource } from '@iot-app-kit/react-components';
 
 export const useModelBasedQuery = () => {
   const dispatch = useDispatch();

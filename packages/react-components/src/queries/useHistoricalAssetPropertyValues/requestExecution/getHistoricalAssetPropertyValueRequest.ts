@@ -2,11 +2,11 @@ import {
   type GetAssetPropertyValueHistory,
   type RequestResponse,
 } from '@iot-app-kit/core';
+import take from 'lodash-es/take';
 import { type HistoricalAssetPropertyValueRequest } from '../types';
-import { take } from 'lodash';
-import { mapViewport } from './mapViewport';
-import { mapTimeOrdering } from './mapTimeOrdering';
 import { DEFAULT_MAX_RESULTS } from './constants';
+import { mapTimeOrdering } from './mapTimeOrdering';
+import { mapViewport } from './mapViewport';
 
 export class GetHistoricalAssetPropertyValueRequest {
   readonly #getAssetPropertyValueHistory: GetAssetPropertyValueHistory;

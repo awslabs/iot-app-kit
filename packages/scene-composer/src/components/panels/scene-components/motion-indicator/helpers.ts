@@ -1,5 +1,4 @@
-import { isEmpty } from 'lodash';
-
+import isEmpty from 'lodash-es/isEmpty';
 import { Component } from '../../../../models/SceneModels';
 import { type IMotionIndicatorComponentInternal } from '../../../../store';
 

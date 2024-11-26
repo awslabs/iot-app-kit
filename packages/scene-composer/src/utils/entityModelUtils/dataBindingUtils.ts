@@ -4,8 +4,7 @@ import {
   type ITwinMakerDataBindingContext,
   type ITwinMakerEntityDataBindingContext,
 } from '@iot-app-kit/source-iottwinmaker';
-import { isEmpty } from 'lodash';
-
+import isEmpty from 'lodash-es/isEmpty';
 import { type ValueDataBinding } from '../../models/SceneModels';
 
 enum DataBindingPropertyKey {

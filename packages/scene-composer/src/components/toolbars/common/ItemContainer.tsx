@@ -1,8 +1,6 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { forwardRef, type ReactNode, useCallback, useState } from 'react';
-
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-
 import {
   Icon,
   SubMenuIconContainer,

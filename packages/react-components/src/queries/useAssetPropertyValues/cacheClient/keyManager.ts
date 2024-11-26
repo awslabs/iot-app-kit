@@ -1,5 +1,6 @@
-import { isUndefined, omit } from 'lodash';
-import omitBy from 'lodash.omitby';
+import isUndefined from 'lodash-es/isUndefined';
+import omit from 'lodash-es/omit';
+import omitBy from 'lodash-es/omitBy';
 import {
   type SeriaizedRequest,
   TimeSeriesDataCacheKeyManager,

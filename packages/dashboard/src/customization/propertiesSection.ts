@@ -1,7 +1,7 @@
+import isEqual from 'lodash-es/isEqual';
 import type * as React from 'react';
 import { useDispatch } from 'react-redux';
-import isEqual from 'lodash/isEqual';
-
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import {
   onMoveWidgetsAction,
   onResizeWidgetsAction,
@@ -9,9 +9,8 @@ import {
 } from '~/store/actions';
 import { type DashboardWidget, type Rect } from '~/types';
 import { getSelectionBox } from '~/util/getSelectionBox';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import { trimRectPosition } from '~/util/trimRectPosition';
 import { Just, type Maybe, Nothing } from '~/util/maybe';
+import { trimRectPosition } from '~/util/trimRectPosition';
 
 /**
  * Predicate function type for dashboard widgets

@@ -1,18 +1,17 @@
+import { MatterportViewer, type MpSdk } from '@matterport/r3f/dist';
+import { useContextBridge } from '@react-three/drei/core/useContextBridge';
+import { Canvas, type ThreeEvent, useThree } from '@react-three/fiber';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import isEmpty from 'lodash-es/isEmpty';
 import { type FC, Fragment, type ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
-import { Canvas, type ThreeEvent, useThree } from '@react-three/fiber';
-import { useContextBridge } from '@react-three/drei/core/useContextBridge';
-import { MatterportViewer, type MpSdk } from '@matterport/r3f/dist';
-import { isEmpty } from 'lodash';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 import { setMatterportSdk } from '../../common/GlobalSettings';
-import LoggingContext from '../../logger/react-logger/contexts/logging';
+import { sceneComposerIdContext, useSceneComposerId } from '../../common/sceneComposerIdContext';
+import DefaultErrorFallback from '../../components/DefaultErrorFallback';
 import { MenuBar } from '../../components/MenuBar';
-import { StaticLayout } from '../StaticLayout';
+import { SceneLayers } from '../../components/SceneLayers';
 import { WebGLCanvasManager } from '../../components/WebGLCanvasManager';
-import { FloatingToolbar } from '../../components/toolbars';
 import {
   SceneHierarchyPanel,
   SceneNodeInspectorPanel,
@@ -20,22 +19,21 @@ import {
   SettingsPanel,
   TopBar,
 } from '../../components/panels';
-import { sceneComposerIdContext, useSceneComposerId } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, accessStore } from '../../store';
-import LogProvider from '../../logger/react-logger/log-provider';
-import DefaultErrorFallback from '../../components/DefaultErrorFallback';
-import { type ExternalLibraryConfig, KnownComponentType, type MatterportConfig } from '../../interfaces';
 import { CameraPreview } from '../../components/three-fiber/CameraPreview';
-import useMatterportViewer from '../../hooks/useMatterportViewer';
-import useSelectedNode from '../../hooks/useSelectedNode';
-import { findComponentByType } from '../../utils/nodeUtils';
+import { FloatingToolbar } from '../../components/toolbars';
 import useDynamicScene from '../../hooks/useDynamicScene';
-import { SceneLayers } from '../../components/SceneLayers';
+import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSceneModal from '../../hooks/useSceneModal';
-
-import { Direction } from './components/utils';
-import ScenePanel from './components/ScenePanel';
+import useSelectedNode from '../../hooks/useSelectedNode';
+import { type ExternalLibraryConfig, KnownComponentType, type MatterportConfig } from '../../interfaces';
+import LoggingContext from '../../logger/react-logger/contexts/logging';
+import LogProvider from '../../logger/react-logger/log-provider';
+import { accessStore, useSceneDocument } from '../../store';
+import { findComponentByType } from '../../utils/nodeUtils';
+import { StaticLayout } from '../StaticLayout';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
+import ScenePanel from './components/ScenePanel';
+import { Direction } from './components/utils';
 
 const queryClient = new QueryClient();
 

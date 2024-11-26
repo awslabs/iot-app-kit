@@ -1,4 +1,7 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
+import takeRight from 'lodash-es/takeRight';
+import { nanoid } from 'nanoid';
+import { createNonNullableList } from '../../../../utils/createNonNullableList';
 import {
   type OnRequestSuccessCallback,
   type SendOptions,
@@ -9,9 +12,6 @@ import {
   type BatchGetAssetPropertyAggregatesRequestParameters,
   type BatchGetAssetPropertyAggregatesRequestResponse,
 } from '../../types';
-import { nanoid } from 'nanoid';
-import takeRight from 'lodash.takeright';
-import { createNonNullableList } from '../../../../utils/createNonNullableList';
 import { aggregateToDataPoint } from '../../utils/toDataPoint';
 
 export type BatchGetRequest = {

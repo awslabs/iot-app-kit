@@ -1,16 +1,18 @@
 import {
-  type IoTSiteWiseClient,
   type GetAssetPropertyValueRequest,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import {
   GetEntityCommand,
-  type IoTTwinMakerClient,
   type GetEntityCommandInput,
   type GetPropertyValueHistoryRequest,
+  type IoTTwinMakerClient,
 } from '@aws-sdk/client-iottwinmaker';
 import { type KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { type KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
-import { isEmpty } from 'lodash';
+import type { Endpoint } from '@aws-sdk/types';
+import isEmpty from 'lodash-es/isEmpty';
+import type { VideoData } from '../types';
 import {
   ASCENDING,
   CachedVideoAgeOutOnEdge,
@@ -22,6 +24,14 @@ import {
   VideoUploadedTimeRange,
   VideoUploadRequest,
 } from './constants';
+import type {
+  GetLastValueBeforeTimestampRequest,
+  GetLiveHLSStreamingSessionURLRequest,
+  GetOnDemandHLSStreamingSessionURLRequest,
+  TriggerVideoUploadRequest,
+  VideoDataInput,
+  VideoPlaybackMode,
+} from './types';
 import {
   getKVSDataEndpoint,
   getLiveHLSStreamingSessionURL,
@@ -36,16 +46,6 @@ import {
   createPropertyIndentifierKey,
   getSinglePropertyValueHistory,
 } from './utils/twinmakerUtils';
-import type { Endpoint } from '@aws-sdk/types';
-import type {
-  GetLastValueBeforeTimestampRequest,
-  GetLiveHLSStreamingSessionURLRequest,
-  GetOnDemandHLSStreamingSessionURLRequest,
-  TriggerVideoUploadRequest,
-  VideoDataInput,
-  VideoPlaybackMode,
-} from './types';
-import type { VideoData } from '../types';
 
 export class VideoDataImpl implements VideoData {
   workspaceId?: string;

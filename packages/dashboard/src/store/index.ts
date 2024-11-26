@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cloneDeep from 'lodash/cloneDeep';
-import merge from 'lodash/merge';
+import cloneDeep from 'lodash-es/cloneDeep';
+import merge from 'lodash-es/merge';
 import type { Store } from 'redux';
 import type { PartialDeep } from 'type-fest';
 import type { DashboardConfiguration } from '~/types';

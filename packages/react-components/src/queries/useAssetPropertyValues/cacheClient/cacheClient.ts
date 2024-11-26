@@ -1,6 +1,6 @@
-import isEqual from 'lodash.isequal';
-import omitBy from 'lodash.omitby';
-import { isUndefined } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
+import isUndefined from 'lodash-es/isUndefined';
+import omitBy from 'lodash-es/omitBy';
 import {
   type Interval,
   TimeSeriesDataCacheClient,

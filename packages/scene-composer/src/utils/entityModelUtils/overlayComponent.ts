@@ -1,13 +1,11 @@
 import { type ComponentRequest, type ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
-import { isEmpty } from 'lodash';
 import { type DocumentType } from '@aws-sdk/types';
-
-import { type IDataOverlayComponent, KnownComponentType } from '../../interfaces';
+import isEmpty from 'lodash-es/isEmpty';
 import { MAX_PROPERTY_STRING_LENGTH, componentTypeToId } from '../../common/entityModelConstants';
+import { type IDataOverlayComponent, KnownComponentType } from '../../interfaces';
 import { type Component } from '../../models/SceneModels';
 import { type IDataOverlayComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
-
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
 import { resetProperties } from './updateNodeEntity';
 

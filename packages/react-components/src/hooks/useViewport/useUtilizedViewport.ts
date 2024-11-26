@@ -1,8 +1,9 @@
 import { type Viewport } from '@iot-app-kit/core';
-import { useViewport } from './useViewport';
+import isEqual from 'lodash-es/isEqual';
 import { useCallback, useState } from 'react';
-import { useCustomCompareEffect, useEffectOnce } from 'react-use';
-import { isEqual } from 'lodash';
+import useCustomCompareEffect from 'react-use/esm/useCustomCompareEffect';
+import useEffectOnce from 'react-use/esm/useEffectOnce';
+import { useViewport } from './useViewport';
 
 export type UtilizedViewportType =
   | 'passed-in'

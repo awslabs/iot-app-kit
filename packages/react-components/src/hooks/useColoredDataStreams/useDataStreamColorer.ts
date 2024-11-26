@@ -1,8 +1,8 @@
-import { useCallback, useRef } from 'react';
 import { type DataStream, type StyleSettingsMap } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
+import difference from 'lodash-es/difference';
+import { useCallback, useRef } from 'react';
 import { bindStyleToDataStream } from '../utils/bindStylesToDataStreams';
-import difference from 'lodash.difference';
 
 type ColorMap = { [key in DataStream['id']]: string | undefined };
 

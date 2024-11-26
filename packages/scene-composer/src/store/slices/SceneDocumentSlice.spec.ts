@@ -1,24 +1,22 @@
-import cloneDeep from 'lodash/cloneDeep';
-import flushPromises from 'flush-promises';
-import { Object3D } from 'three';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
-
+import flushPromises from 'flush-promises';
+import cloneDeep from 'lodash-es/cloneDeep';
+import { Object3D } from 'three';
 import { type IAnchorComponentInternal, type IDataOverlayComponentInternal, type ISceneNodeInternal } from '..';
 import { COMPOSER_FEATURES, type IErrorDetails, KnownComponentType, KnownSceneProperty } from '../..';
+import { setFeatureConfig, setOnFlashMessage } from '../../common/GlobalSettings';
+import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
+import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
+import { updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
 import interfaceHelpers from '../helpers/interfaceHelpers';
+import { appendSceneNode } from '../helpers/sceneDocumentHelpers';
 import serializationHelpers from '../helpers/serializationHelpers';
 import { DisplayMessageCategory, SceneNodeRuntimeProperty } from '../internalInterfaces';
-import { appendSceneNode } from '../helpers/sceneDocumentHelpers';
-import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
-import { updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
-import { setFeatureConfig, setOnFlashMessage } from '../../common/GlobalSettings';
-import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
-
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 
 vi.mock('../../../src/utils/objectUtils', () => {
