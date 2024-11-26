@@ -1,17 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import { initialState } from './state';
-import { dashboardReducer } from './reducer';
+import merge from 'lodash/merge';
 import type { Store } from 'redux';
+import type { PartialDeep } from 'type-fest';
+import type { DashboardConfiguration } from '~/types';
 import type { DashboardAction } from './actions';
+import { dashboardReducer } from './reducer';
 import type { DashboardState } from './state';
-import type { RecursivePartial, DashboardConfiguration } from '~/types';
+import { initialState } from './state';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 
 export const configureDashboardStore = (
-  preloadedState?: RecursivePartial<DashboardState>
+  preloadedState?: PartialDeep<DashboardState>
 ) => {
   /**
    * Merge modifies the source object so it must be cloned or initialState
@@ -35,12 +36,12 @@ export const configureDashboardStore = (
 
 export const toDashboardState = (
   dashboardConfiguration: DashboardConfiguration
-): RecursivePartial<DashboardState> => {
+): PartialDeep<DashboardState> => {
   const { widgets, displaySettings, querySettings, defaultViewport } =
     dashboardConfiguration;
   const { numRows, numColumns, cellSize } = displaySettings;
 
-  const state: RecursivePartial<DashboardState> = {
+  const state: PartialDeep<DashboardState> = {
     grid: {
       height: numRows,
       width: numColumns,

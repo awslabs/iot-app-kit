@@ -76,6 +76,7 @@
     "sass": "1.63.6",
     "tsc-alias": "^1.8.10",
     "tslib": "^2.5.3",
+    "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
     "vite": "^5.4.11",
     "vitest": "^2.1.5"

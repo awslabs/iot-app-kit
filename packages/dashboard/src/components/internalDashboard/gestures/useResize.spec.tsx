@@ -1,11 +1,11 @@
 import { act, renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
+import type { PartialDeep } from 'type-fest';
 import type { Mock } from 'vitest';
 import { configureDashboardStore } from '~/store';
 import { onResizeWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import type { RecursivePartial } from '~/types';
 import { useResizeGestures } from './useResize';
 
 vi.mock('../../../store/actions', async () => {
@@ -23,7 +23,7 @@ beforeEach(() => {
 });
 
 const TestProvider: React.FC<{
-  storeArgs?: RecursivePartial<DashboardState>;
+  storeArgs?: PartialDeep<DashboardState>;
   children: ReactNode;
 }> = ({ storeArgs, children }) => (
   <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>

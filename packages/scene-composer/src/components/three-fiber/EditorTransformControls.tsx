@@ -103,7 +103,11 @@ export function EditorTransformControls() {
       const sceneNode = rootState.getSceneNodeByRef(selectedSceneNodeRef);
 
       if (sceneNode) {
-        let position = [controlledObject.position.x, controlledObject.position.y, controlledObject.position.z];
+        let position: [number, number, number] = [
+          controlledObject.position.x,
+          controlledObject.position.y,
+          controlledObject.position.z,
+        ];
 
         if (sceneNode.transformConstraint.snapToFloor) {
           const parentNode = rootState.getSceneNodeByRef(sceneNode.parentRef);
