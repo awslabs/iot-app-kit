@@ -1,9 +1,8 @@
-import { isEmpty } from 'lodash';
-
+import isEmpty from 'lodash-es/isEmpty';
+import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../interfaces';
 import { accessStore, useViewOptionState } from '../store';
-import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
 
 const useMatterportViewer = (): { enableMatterportViewer: boolean } => {
   const sceneComposerId = useSceneComposerId();

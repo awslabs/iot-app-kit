@@ -4,8 +4,10 @@ import {
   type DataValue,
   type GetEntityCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
-import { isEmpty, isFinite } from 'lodash';
-
+import isEmpty from 'lodash-es/isEmpty';
+import isFinite from 'lodash-es/isFinite';
+import { CURRENT_VERSION, DEFAULT_DISTANCE_UNIT, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../common/constants';
+import { RESERVED_LAYER_ID, SCENE_COMPONENT_TYPE_ID } from '../../common/entityModelConstants';
 import {
   type IComponentSettingsMap,
   type IDataBindingConfig,
@@ -17,8 +19,6 @@ import {
   KnownComponentType,
   KnownSceneProperty,
 } from '../../interfaces';
-import { SCENE_COMPONENT_TYPE_ID, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
-import { CURRENT_VERSION, DEFAULT_DISTANCE_UNIT, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../common/constants';
 import { type ISceneDocumentInternal } from '../../store';
 
 enum SceneComponentProperty {

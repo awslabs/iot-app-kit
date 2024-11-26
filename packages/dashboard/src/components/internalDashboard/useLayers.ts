@@ -1,6 +1,6 @@
+import max from 'lodash-es/max';
+import min from 'lodash-es/min';
 import { useSelector } from 'react-redux';
-import max from 'lodash/max';
-import min from 'lodash/min';
 import type { DashboardState } from '~/store/state';
 
 type Layers = {

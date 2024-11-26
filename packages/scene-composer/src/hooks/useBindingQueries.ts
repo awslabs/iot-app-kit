@@ -1,7 +1,6 @@
-import { useMemo } from 'react';
 import { type DataBase, type DataRequest, type Query, type TimeSeriesData } from '@iot-app-kit/core';
-import { isEmpty } from 'lodash';
-
+import isEmpty from 'lodash-es/isEmpty';
+import { useMemo } from 'react';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { type IValueDataBinding } from '../interfaces';
 import { accessStore } from '../store';

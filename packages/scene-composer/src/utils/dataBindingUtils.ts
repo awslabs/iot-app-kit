@@ -1,7 +1,7 @@
 import { type Primitive } from '@iot-app-kit/core';
 import jexl from 'jexl';
-import { isEqual, pick } from 'lodash';
-
+import isEqual from 'lodash-es/isEqual';
+import pick from 'lodash-es/pick';
 import { DataBindingLabelKeys } from '../common/constants';
 import {
   DataFieldTimeType,
@@ -15,7 +15,6 @@ import {
   type TargetMetadata,
 } from '../interfaces';
 import DebugLogger from '../logger/DebugLogger';
-
 import { applyDataBindingTemplate } from './dataBindingTemplateUtils';
 
 const LOG = new DebugLogger('dataBindingUtils');

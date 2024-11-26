@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import noop from 'lodash/noop';
-import throttle from 'lodash/throttle';
-import isEqual from 'lodash/isEqual';
+import { type Viewport } from '@iot-app-kit/core';
+import isEqual from 'lodash-es/isEqual';
+import noop from 'lodash-es/noop';
+import throttle from 'lodash-es/throttle';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   type DashboardConfiguration,
   type DashboardConfigurationChange,
 } from '~/types';
-import { type Viewport } from '@iot-app-kit/core';
 
 export const useStableDashboardConfiguration = ({
   dashboardConfiguration,

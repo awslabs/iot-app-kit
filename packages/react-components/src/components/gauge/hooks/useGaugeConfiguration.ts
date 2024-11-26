@@ -1,11 +1,12 @@
-import { useEffect, useReducer } from 'react';
 import { type Primitive } from '@iot-app-kit/core';
-import { type ChartRef } from '../../../hooks/useECharts';
-import { type GaugeConfigurationOptions } from '../types';
-import { isEqual, merge } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
+import merge from 'lodash-es/merge';
+import { useEffect, useReducer } from 'react';
 import { useCustomCompareEffect } from 'react-use';
-import { convertSeries } from '../converters/convertSeries';
+import { type ChartRef } from '../../../hooks/useECharts';
 import { convertDataset } from '../converters/convertDataset';
+import { convertSeries } from '../converters/convertSeries';
+import { type GaugeConfigurationOptions } from '../types';
 
 type GaugeOptionState = {
   series: ReturnType<typeof convertSeries>;

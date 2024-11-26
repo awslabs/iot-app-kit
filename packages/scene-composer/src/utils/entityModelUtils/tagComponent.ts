@@ -1,12 +1,10 @@
 import { type ComponentRequest, type ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { type DocumentType } from '@aws-sdk/types';
-import { isEmpty } from 'lodash';
-
-import { type IAnchorComponent, KnownComponentType } from '../../interfaces';
+import isEmpty from 'lodash-es/isEmpty';
 import { componentTypeToId } from '../../common/entityModelConstants';
+import { type IAnchorComponent, KnownComponentType } from '../../interfaces';
 import { type IAnchorComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
-
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
 import { resetProperties } from './updateNodeEntity';
 

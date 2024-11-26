@@ -1,4 +1,6 @@
-import { isEqual, uniqWith } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
+import uniqWith from 'lodash-es/uniqWith';
+import { createNonNullableList } from '../../../../../utils/createNonNullableList';
 import {
   extractAssetPropertyId,
   getAlarmModelNameFromAlarmSourceProperty,
@@ -10,7 +12,6 @@ import {
   type SummarizeAlarmModelsAction,
   type SummarizeAlarmModelsActionPayload,
 } from './types';
-import { createNonNullableList } from '../../../../../utils/createNonNullableList';
 
 export const onSummarizeAlarmModelsAction = (
   payload: SummarizeAlarmModelsActionPayload

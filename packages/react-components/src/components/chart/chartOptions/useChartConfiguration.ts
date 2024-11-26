@@ -3,32 +3,32 @@ import {
   type Threshold,
   type ThresholdValue,
 } from '@iot-app-kit/core';
+import { type SeriesOption } from 'echarts';
+import isEqual from 'lodash-es/isEqual';
+import uniqWith from 'lodash-es/uniqWith';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { type GenericSeries } from '../../../echarts/types';
 import {
   type ChartRef,
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
+import {
+  DEFAULT_DATA_ZOOM,
+  getDefaultChartOption,
+  PERFORMANCE_MODE_THRESHOLD,
+} from '../eChartsConstants';
+import { type ChartAlarms } from '../hooks/useChartAlarms';
+import { type useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
 import {
   type ChartDataQuality,
   type ChartOptions,
   type ChartStyleSettings,
 } from '../types';
 import { useXAxis } from './axes/xAxis';
-import { useTooltip } from './tooltip/convertTooltip';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import isEqual from 'lodash.isequal';
-import { uniqWith } from 'lodash';
-import {
-  getDefaultChartOption,
-  DEFAULT_DATA_ZOOM,
-  PERFORMANCE_MODE_THRESHOLD,
-} from '../eChartsConstants';
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
-import { type SeriesOption } from 'echarts';
-import { type GenericSeries } from '../../../echarts/types';
-import { type useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
-import { type ChartAlarms } from '../hooks/useChartAlarms';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { useTooltip } from './tooltip/convertTooltip';
 
 const toDataStreamIdentifiers = (
   dataStreams: ReturnType<typeof useNormalizedDataStreams>

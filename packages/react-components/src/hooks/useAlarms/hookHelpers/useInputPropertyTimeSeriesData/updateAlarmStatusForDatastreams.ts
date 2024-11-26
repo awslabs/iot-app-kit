@@ -1,7 +1,7 @@
 import { type DataStream } from '@iot-app-kit/core';
+import isEqual from 'lodash-es/isEqual';
 import { type AlarmData } from '../../types';
 import { combineStatusForQueries } from '../../utils/queryStatus';
-import isEqual from 'lodash.isequal';
 
 export const updateAlarmStatusForDatastreams = (
   alarm: AlarmData,

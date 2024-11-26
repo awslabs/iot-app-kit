@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useCallback, useEffect, useState } from 'react';
 
 import { type IIconPicker } from '../interface';

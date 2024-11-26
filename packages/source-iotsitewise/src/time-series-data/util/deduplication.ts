@@ -1,5 +1,5 @@
-import isEqual from 'lodash.isequal';
-import uniqWith from 'lodash.uniqwith';
+import isEqual from 'lodash-es/isEqual';
+import uniqWith from 'lodash-es/uniqWith';
 import type { BatchAggregatedEntry } from '../client/batchGetAggregatedPropertyDataPoints';
 import type { BatchHistoricalEntry } from '../client/batchGetHistoricalPropertyDataPoints';
 import type { BatchLatestEntry } from '../client/batchGetLatestPropertyDataPoints';

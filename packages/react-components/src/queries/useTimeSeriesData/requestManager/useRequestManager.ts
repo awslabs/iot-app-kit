@@ -1,9 +1,9 @@
-import { useCallback, useMemo } from 'react';
 import { useQueries } from '@tanstack/react-query';
-import { zip } from 'lodash';
+import zip from 'lodash-es/zip';
+import { useCallback, useMemo } from 'react';
+import { createNonNullableTupleList } from '../../../utils/createNonNullableList';
 import { type TimeSeriesDataCacheClient } from '../cacheClient';
 import { type Viewport } from '../types';
-import { createNonNullableTupleList } from '../../../utils/createNonNullableList';
 import { type RequestResolverStrategy, type RequestSettings } from './types';
 
 type TimeSeriesDataRequestManagerOptions<Request, Data> = {

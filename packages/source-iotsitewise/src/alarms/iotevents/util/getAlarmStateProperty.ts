@@ -1,9 +1,9 @@
 import type {
-  DescribeAssetModelResponse,
-  AssetModelProperty,
   AssetModelCompositeModel,
+  AssetModelProperty,
+  DescribeAssetModelResponse,
 } from '@aws-sdk/client-iotsitewise';
-import first from 'lodash/first';
+import first from 'lodash-es/first';
 import { isDefined } from '../../../common/predicates';
 
 const isAlarm = (model: AssetModelCompositeModel) => model.type === 'AWS/ALARM';

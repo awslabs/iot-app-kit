@@ -1,5 +1,5 @@
 import { Box, Button, FormField, Grid, Icon, Select, SpaceBetween } from '@cloudscape-design/components';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useContext, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import styled from 'styled-components';

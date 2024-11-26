@@ -1,7 +1,6 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import { useEffect, useMemo } from 'react';
 import { type Material, Mesh } from 'three';
-
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useMaterialEffect from '../../../hooks/useMaterialEffect';
 import useRuleResult from '../../../hooks/useRuleResult';

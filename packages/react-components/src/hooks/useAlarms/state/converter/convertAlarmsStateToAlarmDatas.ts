@@ -1,16 +1,16 @@
-import { isEqual, uniqWith } from 'lodash';
-
+import isEqual from 'lodash-es/isEqual';
+import uniqWith from 'lodash-es/uniqWith';
 import { type AlarmData } from '../../types';
 import { type AlarmsState } from '../types';
 import { convertAlarmRequestStateToAlarmData } from './convertAlarmRequestStateToAlarmData';
 import { convertAlarmRequestStateToInitialAlarmData } from './convertAlarmRequestStateToInitialAlarmData';
-import { isInputPropertyRequest } from './utils/isInputPropertyRequest';
 import {
   alarmDataAsComparable,
   isGettingLatestAlarmSourceValue,
   isSummarizingAlarmModels,
   isSummarizingAlarms,
 } from './utils';
+import { isInputPropertyRequest } from './utils/isInputPropertyRequest';
 
 export const convertAlarmsStateToAlarmDatas = (
   state: AlarmsState

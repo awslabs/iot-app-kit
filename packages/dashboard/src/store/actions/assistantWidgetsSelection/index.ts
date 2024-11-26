@@ -1,6 +1,6 @@
+import uniqBy from 'lodash-es/uniqBy';
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
-import { uniqBy } from 'lodash';
 
 export type AssistantSelectWidgetsActionPayload = {
   widgetId: string;

@@ -1,14 +1,12 @@
 import { FormField, SpaceBetween, Textarea } from '@cloudscape-design/components';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 import { type IDataOverlayComponentInternal, type ISceneComponentInternal, accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 import { type IComponentEditorProps } from '../ComponentEditor';
-
 import { type ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
 export interface IDataOverlayComponentEditorProps extends IComponentEditorProps {

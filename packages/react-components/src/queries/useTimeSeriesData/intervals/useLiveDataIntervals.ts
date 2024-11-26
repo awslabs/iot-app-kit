@@ -1,11 +1,11 @@
+import isEqual from 'lodash-es/isEqual';
 import { useMemo, useState } from 'react';
+import useCustomCompareEffect from 'react-use/esm/useCustomCompareEffect';
 import { type LiveDataConfiguration, type Viewport } from '../types';
 import {
   DEFAULT_LIVE_DATA_CONFIGURATION,
   convertToLiveDataIntervals,
 } from './liveData';
-import { useCustomCompareEffect } from 'react-use';
-import isEqual from 'lodash.isequal';
 
 type UseLiveDataIntervalsOptions = {
   viewport: Viewport;

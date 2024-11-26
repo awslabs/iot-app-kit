@@ -1,15 +1,15 @@
-import merge from 'lodash.merge';
-import { completeDataStreams } from '../completeDataStreams';
+import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type {
-  Threshold,
   DataStream,
   ErrorDetails,
+  Threshold,
   TimeSeriesData,
   Viewport,
 } from '@iot-app-kit/core';
-import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import merge from 'lodash-es/merge';
 import type { Alarms } from '../alarms/iotevents';
 import type { ModeledDataStream } from '../asset-modules/describeModeledDataStreamRequest/types';
+import { completeDataStreams } from '../completeDataStreams';
 
 export type TimeSeriesDataStore = {
   modeledDataStreams: ModeledDataStream[];

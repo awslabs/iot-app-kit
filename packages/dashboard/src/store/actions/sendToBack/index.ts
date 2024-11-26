@@ -1,7 +1,7 @@
-import xorBy from 'lodash/xorBy';
-import maxBy from 'lodash/maxBy';
-import minBy from 'lodash/minBy';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import maxBy from 'lodash-es/maxBy';
+import minBy from 'lodash-es/minBy';
+import xorBy from 'lodash-es/xorBy';
 import type { DashboardState } from '../../state';
 
 export interface SendWidgetsToBackAction extends PayloadAction<null> {

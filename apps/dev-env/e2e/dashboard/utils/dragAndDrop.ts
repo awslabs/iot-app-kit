@@ -1,5 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
-import zip from 'lodash/zip.js';
+import zip from 'lodash-es/zip.js';
 import { type BoundingBox, getBoundingBox } from './locator';
 import { center } from './mousePosition';
 

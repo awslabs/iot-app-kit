@@ -1,7 +1,7 @@
+import isEqual from 'lodash-es/isEqual';
+import noop from 'lodash-es/noop';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import noop from 'lodash/noop';
-import isEqual from 'lodash/isEqual';
 import { type DashboardConfigurationChange } from '~/types';
 import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 

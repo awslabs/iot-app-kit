@@ -1,7 +1,7 @@
+import isEqual from 'lodash-es/isEqual';
 import { useCallback } from 'react';
-import isEqual from 'lodash.isequal';
-import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
+import { useChartStore } from '../store';
 import { type DataStreamIdentity } from '../store/contextDataStreams';
 
 export const useHighlightedDataStreams = () => {

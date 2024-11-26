@@ -1,4 +1,4 @@
-import { render, screen, user, fireEvent, waitFor } from '@/tests/testing-library';
+import { fireEvent, render } from '@/tests/testing-library';
 import * as THREE from 'three';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, KnownComponentType } from '../../..';
 import { accessStore } from '../../../store';

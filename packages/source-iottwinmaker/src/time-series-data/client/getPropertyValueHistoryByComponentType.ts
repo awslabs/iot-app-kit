@@ -11,7 +11,8 @@ import type {
   OnSuccessCallback,
   RequestInformationAndRange,
 } from '@iot-app-kit/core';
-import { isEmpty, isEqual } from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
+import isEqual from 'lodash-es/isEqual';
 import { type TwinMakerMetadataModule } from '../../metadata-module/TwinMakerMetadataModule';
 import { isDefined, toDataType } from '../../utils/propertyValueUtils';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';

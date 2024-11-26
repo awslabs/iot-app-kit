@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { isEqual } from 'lodash';
-import { useCustomCompareEffect } from 'react-use';
 import {
   type AssetPropertyExplorerProps,
   type AssetPropertyResource,
 } from '@iot-app-kit/react-components';
+import isEqual from 'lodash-es/isEqual';
+import { useState } from 'react';
+import { useCustomCompareEffect } from 'react-use';
 
 export const useSelectedAssetModelProperties = (
   initialAssetModelProperties: NonNullable<

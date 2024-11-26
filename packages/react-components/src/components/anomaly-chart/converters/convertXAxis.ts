@@ -1,10 +1,10 @@
-import merge from 'lodash.merge';
+import merge from 'lodash-es/merge';
+import {
+  formatDate,
+  getPatternForXAxisLabelForAnomalyChart,
+} from '../../../utils/time';
 import { ANOMALY_X_AXIS } from '../constants';
 import { type ConfigurationOptions } from '../hooks/types';
-import {
-  getPatternForXAxisLabelForAnomalyChart,
-  formatDate,
-} from '../../../utils/time';
 
 export const convertXAxis = ({ axis, timeZone }: ConfigurationOptions) => {
   const show = axis?.showX ?? true;

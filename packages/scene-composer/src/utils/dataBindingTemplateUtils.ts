@@ -1,11 +1,11 @@
-import { cloneDeep, pick } from 'lodash';
 import {
   type IDataBindingConfig,
   type IDataBindingTemplate,
   type ITwinMakerDataBindingContext,
   undecorateDataBindingTemplate,
 } from '@iot-app-kit/source-iottwinmaker';
-
+import cloneDeep from 'lodash-es/cloneDeep';
+import pick from 'lodash-es/pick';
 import {
   DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
   DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,

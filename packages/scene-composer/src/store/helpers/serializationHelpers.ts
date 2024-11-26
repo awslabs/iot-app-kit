@@ -1,5 +1,4 @@
-import { isNumber } from 'lodash';
-
+import isNumber from 'lodash-es/isNumber';
 import {
   CURRENT_MAJOR_VERSION,
   CURRENT_MINOR_VERSION,
@@ -11,22 +10,25 @@ import {
 } from '../../common/constants';
 import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, SceneComposerRuntimeError } from '../../common/errors';
 import {
+  DEFAULT_FOG_COLOR,
+  DEFAULT_FOG_FAR,
+  DEFAULT_FOG_NEAR,
+  DEFAULT_GROUND_PLANE_COLOR,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
   KnownComponentType,
   KnownSceneProperty,
   type IFogSettings,
   type IGroundPlaneSettings,
   type ISceneBackgroundSetting,
-  DEFAULT_FOG_COLOR,
-  DEFAULT_FOG_NEAR,
-  DEFAULT_FOG_FAR,
-  DEFAULT_SCENE_BACKGROUND_COLOR,
-  DEFAULT_GROUND_PLANE_COLOR,
 } from '../../interfaces';
 import DebugLogger from '../../logger/DebugLogger';
-import { Component, type DistanceUnit, ModelType, type Node, type Scene } from '../../models/SceneModels';
+import { Component, ModelType, type DistanceUnit, type Node, type Scene } from '../../models/SceneModels';
+import { isValidHexCode } from '../../utils/colorUtils';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
 import { colorToHexString, generateUUID } from '../../utils/mathUtils';
 import {
+  SceneNodeRuntimeProperty,
+  isISceneComponentInternal,
   type IAnchorComponentInternal,
   type IAnimationComponentInternal,
   type ICameraComponentInternal,
@@ -37,18 +39,14 @@ import {
   type ILightComponentInternal,
   type IModelRefComponentInternal,
   type IMotionIndicatorComponentInternal,
+  type IPlaneGeometryComponentInternal,
   type IRuleBasedMapInternal,
   type ISceneComponentInternal,
   type ISceneDocumentInternal,
   type ISceneNodeInternal,
   type ISerializationErrorDetails,
   type ISubModelRefComponentInternal,
-  SceneNodeRuntimeProperty,
-  isISceneComponentInternal,
-  type IPlaneGeometryComponentInternal,
 } from '../internalInterfaces';
-import { isValidHexCode } from '../../utils/colorUtils';
-
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
 
 const LOG = new DebugLogger('serializationHelpers');
