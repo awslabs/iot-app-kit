@@ -1,12 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
-import { useMoveGestures } from './useMove';
 import type { ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import type { PartialDeep } from 'type-fest';
+import type { Mock } from 'vitest';
+import { configureDashboardStore } from '~/store';
 import { onMoveWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import type { RecursivePartial } from '~/types';
-import type { Mock } from 'vitest';
+import { useMoveGestures } from './useMove';
 
 vi.mock('../../../store/actions', async () => {
   const originalModule = await vi.importActual('../../../store/actions');
@@ -19,7 +19,7 @@ vi.mock('../../../store/actions', async () => {
 });
 
 const TestProvider: React.FC<{
-  storeArgs?: RecursivePartial<DashboardState>;
+  storeArgs?: PartialDeep<DashboardState>;
   children: ReactNode;
 }> = ({ storeArgs, children }) => (
   <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>

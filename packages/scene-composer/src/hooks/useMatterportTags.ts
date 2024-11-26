@@ -1,7 +1,8 @@
+import { isEmpty } from 'lodash';
 import { useCallback } from 'react';
 import { Color } from 'three';
-import { isEmpty } from 'lodash';
-
+import type { PartialDeep } from 'type-fest';
+import { FONT_AWESOME_PREFIX, MATTERPORT_FONTID_PROPERTY } from '../common/constants';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import {
   DefaultAnchorStatus,
@@ -10,18 +11,16 @@ import {
   KnownComponentType,
   SceneResourceType,
 } from '../interfaces';
+import { Component } from '../models/SceneModels';
 import {
   type IAnchorComponentInternal,
   type IDataOverlayComponentInternal,
   type ISceneNodeInternal,
   accessStore,
 } from '../store';
-import { type MattertagItem, type TagItem } from '../utils/matterportTagUtils';
-import { type RecursivePartial } from '../utils/typeUtils';
-import { Component } from '../models/SceneModels';
 import { generateUUID } from '../utils/mathUtils';
+import { type MattertagItem, type TagItem } from '../utils/matterportTagUtils';
 import { convertToIotTwinMakerNamespace } from '../utils/sceneResourceUtils';
-import { FONT_AWESOME_PREFIX, MATTERPORT_FONTID_PROPERTY } from '../common/constants';
 
 const getContentForOverlayComponent = (label: string, description: string): string => {
   // Do not change indentation as it affects rendering
@@ -79,7 +78,7 @@ const addTag = (
 };
 
 const updateTag = (
-  updateSceneNode: (ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean) => void,
+  updateSceneNode: (ref: string, partial: PartialDeep<ISceneNodeInternal>, isTransient?: boolean) => void,
   { ref, node, item }: UpdateTagInputs,
 ) => {
   const shouldSyncTagStyle = item.color;

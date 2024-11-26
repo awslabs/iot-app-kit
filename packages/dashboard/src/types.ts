@@ -1,23 +1,24 @@
-import {
-  type DescribeDashboardRequest,
-  type DescribeDashboardResponse,
-  type IoTSiteWise,
-  type IoTSiteWiseClient,
+import type { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import type {
+  DescribeDashboardRequest,
+  DescribeDashboardResponse,
+  IoTSiteWise,
+  IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import type { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import type { Viewport } from '@iot-app-kit/core';
-import {
-  type SiteWiseAlarmAssetModelQuery,
-  type SiteWiseAlarmQuery,
-  type SiteWiseAssetModelQuery,
-  type SiteWiseAssetQuery,
-  type SiteWisePropertyAliasQuery,
-  type SiteWiseQuery,
+import type {
+  SiteWiseAlarmAssetModelQuery,
+  SiteWiseAlarmQuery,
+  SiteWiseAssetModelQuery,
+  SiteWiseAssetQuery,
+  SiteWisePropertyAliasQuery,
+  SiteWiseQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import { type ReactElement } from 'react';
-import { type RefreshRate } from './components/refreshRate/types';
+import type { ReactElement } from 'react';
+import type { PartialDeep } from 'type-fest';
+import type { RefreshRate } from './components/refreshRate/types';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
@@ -119,19 +120,11 @@ export enum MouseClick {
   Right = 2,
 }
 
-export type RecursivePartial<T> = {
-  [P in keyof T]?: T[P] extends (infer U)[]
-    ? RecursivePartial<U>[]
-    : T[P] extends object
-    ? RecursivePartial<T[P]>
-    : T[P];
-};
-
 export type PickRequiredOptional<
   T,
   TRequired extends keyof T,
   TOptional extends keyof T
-> = Pick<T, TRequired> & RecursivePartial<Pick<T, TOptional>>;
+> = Pick<T, TRequired> & PartialDeep<Pick<T, TOptional>>;
 
 export type RequestTimeout = number;
 

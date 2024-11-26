@@ -1,17 +1,15 @@
 import { act, renderHook } from '@testing-library/react';
-import { Provider } from 'react-redux';
-
-import { configureDashboardStore } from '~/store';
-import { MockDashboardFactory } from '../../../../testing/mocks';
-
 import type { ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import type { PartialDeep } from 'type-fest';
+import { configureDashboardStore } from '~/store';
 import type { DashboardState } from '~/store/state';
-import type { RecursivePartial } from '~/types';
+import { MockDashboardFactory } from '../../../../testing/mocks';
 import { anchorable, gestureable, idable } from './determineTargetGestures';
 import { useGestures } from './index';
 
 const TestProvider: React.FC<{
-  storeArgs?: RecursivePartial<DashboardState>;
+  storeArgs?: PartialDeep<DashboardState>;
   children: ReactNode;
 }> = ({ storeArgs, children }) => (
   <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>

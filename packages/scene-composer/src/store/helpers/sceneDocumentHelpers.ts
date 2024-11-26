@@ -1,14 +1,12 @@
 import { cloneDeep, isEmpty } from 'lodash';
-
+import type { PartialDeep } from 'type-fest';
+import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import type ILogger from '../../logger/ILogger';
 import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
-import { type RecursivePartial } from '../../utils/typeUtils';
 import { type RootState } from '../Store';
 import { type ISceneDocumentInternal, type ISceneNodeInternal } from '../internalInterfaces';
-import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
-
 import { addNodeToComponentNodeMap, deleteNodeFromComponentNodeMap } from './componentMapHelpers';
 import interfaceHelpers from './interfaceHelpers';
 
@@ -165,7 +163,7 @@ export const appendSceneNode = (draft: RootState, node: ISceneNodeInternal, disa
 export const updateSceneNode = (
   draft: RootState,
   ref: string,
-  partial: RecursivePartial<ISceneNodeInternal>,
+  partial: PartialDeep<ISceneNodeInternal>,
   skipEntityUpdate?: boolean,
 ): void => {
   // cache these values before merge deep overwrites them
