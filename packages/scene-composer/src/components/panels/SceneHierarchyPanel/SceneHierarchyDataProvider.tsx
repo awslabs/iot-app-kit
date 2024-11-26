@@ -1,15 +1,13 @@
-import { type FC, createContext, useContext, useCallback, useState, useEffect, type ReactNode } from 'react';
+import { isEmpty } from 'lodash';
+import { type FC, type ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { isEmpty } from 'lodash';
-
+import type { PartialDeep } from 'type-fest';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, getFinalNodeTransform } from '../../../utils/nodeUtils';
-import { type ISceneNodeInternal, useNodeErrorState, useSceneDocument, accessStore } from '../../../store';
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { type ITransform, KnownComponentType } from '../../../interfaces';
-import { type RecursivePartial } from '../../../utils/typeUtils';
-
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { type ISceneNodeInternal, accessStore, useNodeErrorState, useSceneDocument } from '../../../store';
+import { findComponentByType, getFinalNodeTransform } from '../../../utils/nodeUtils';
 import type ISceneHierarchyNode from './model/ISceneHierarchyNode';
 
 type SelectionMode = 'single' | 'multi';
@@ -230,7 +228,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
       }
 
       // Create updates to the moving object
-      const partial: RecursivePartial<ISceneNodeInternal> = { parentRef: newParentRef };
+      const partial: PartialDeep<ISceneNodeInternal> = { parentRef: newParentRef };
       if (maintainedTransform) {
         // Update the node position to remain in its world space
         partial.transform = maintainedTransform;

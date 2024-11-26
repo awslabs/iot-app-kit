@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import { Fragment, useCallback, useContext, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import * as THREE from 'three';
-
+import type { PartialDeep } from 'type-fest';
 import { getLocalizedComponentType } from '../../common/componentTypeStings';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { TABBED_PANEL_CONTAINER_NAME } from '../../common/internalConstants';
@@ -17,8 +17,6 @@ import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { toNumber } from '../../utils/stringUtils';
-import { type RecursivePartial } from '../../utils/typeUtils';
-
 import { AddComponentMenu } from './AddComponentMenu';
 import { ExpandableInfoSection, Matrix3XInputGrid, TextInput, type Triplet } from './CommonPanelComponents';
 import { ComponentEditMenu } from './ComponentEditMenu';
@@ -56,7 +54,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
 
   const readonly: Triplet<boolean> = [false, false, false];
 
-  const handleInputChanges = (value: RecursivePartial<ISceneNodeInternal>) => {
+  const handleInputChanges = (value: PartialDeep<ISceneNodeInternal>) => {
     if (selectedSceneNodeRef && selectedSceneNode) {
       updateSceneNodeInternal(selectedSceneNodeRef, value);
     }

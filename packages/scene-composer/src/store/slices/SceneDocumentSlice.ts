@@ -1,6 +1,7 @@
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 import { cloneDeep, isEmpty, isString } from 'lodash';
+import type { PartialDeep } from 'type-fest';
 import { type StoreApi } from 'zustand';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
@@ -19,7 +20,6 @@ import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity'
 import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
-import { type RecursivePartial } from '../../utils/typeUtils';
 import { type RootState } from '../Store';
 import { addComponentToComponentNodeMap, deleteComponentFromComponentNodeMap } from '../helpers/componentMapHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
@@ -53,17 +53,17 @@ export interface ISceneDocumentSlice {
 
   updateSceneNodeInternal(
     ref: string,
-    partial: RecursivePartial<ISceneNodeInternal>,
+    partial: PartialDeep<ISceneNodeInternal>,
     isTransient?: boolean,
     skipEntityUpdate?: boolean,
   ): void;
   updateSceneNodeInternalBatch(
-    nodesMap: Record<string, RecursivePartial<ISceneNodeInternal>>,
+    nodesMap: Record<string, PartialDeep<ISceneNodeInternal>>,
     isTransient?: boolean,
     skipEntityUpdate?: boolean,
   ): void;
 
-  updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit'>>): void;
+  updateDocumentInternal(partial: PartialDeep<Pick<ISceneDocumentInternal, 'unit'>>): void;
   listSceneRuleMapIds(): string[];
   getSceneRuleMapById(id?: string): Readonly<IRuleBasedMapInternal> | undefined;
   updateSceneRuleMapById(id: string, ruleMap: IRuleBasedMapInternal): void;
