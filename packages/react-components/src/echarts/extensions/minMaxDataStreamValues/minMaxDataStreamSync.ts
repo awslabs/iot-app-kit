@@ -1,9 +1,9 @@
-import type SeriesModel from 'echarts/types/src/model/Series';
-import {
-  type SeriesOption,
-  type DefaultStatesMixin,
-} from 'echarts/types/src/util/types';
 import { round } from '@iot-app-kit/core-util';
+import type SeriesModel from 'echarts/types/src/model/Series.js';
+import {
+  type DefaultStatesMixin,
+  type SeriesOption,
+} from 'echarts/types/src/util/types.js';
 
 export const findMinMax = (
   series: SeriesModel<SeriesOption<unknown, DefaultStatesMixin>>,

@@ -1,0 +1,20 @@
+{
+  "name": "@iot-app-kit/helpers",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./constants/*": "./src/constants/*.ts"
+  },
+  "scripts": {
+    "clean": "rimraf .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
+    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/"
+  },
+  "dependencies": {
+    "@iot-app-kit/ts-config": "*",
+    "eslint-config-iot-app-kit": "*",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.5.4"
+  }
+}

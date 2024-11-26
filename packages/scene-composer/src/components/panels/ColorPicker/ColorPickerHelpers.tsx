@@ -1,6 +1,4 @@
 import { FormField, Input, type InputProps } from '@cloudscape-design/components';
-import { type BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
-import { type NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { HexColorPicker } from 'react-colorful';
 import { type ColorRepresentation } from 'three';
 import tinycolor, { type Color } from 'tinycolor2';
@@ -77,7 +75,7 @@ const FixedWidthInput: React.FC<FixedWidthInputProps> = (props) => {
 
 interface HexInputFieldProps {
   color: string;
-  onChange: NonCancelableEventHandler<BaseChangeDetail>;
+  onChange: NonNullable<InputProps['onChange']>;
   label: string;
   errorText: string | boolean;
 }
@@ -97,7 +95,7 @@ export const HexInputField: React.FC<HexInputFieldProps> = ({
 
 interface RgbInputFieldProps {
   value: string;
-  onChange: NonCancelableEventHandler<BaseChangeDetail>;
+  onChange: NonNullable<InputProps['onChange']>;
   label: string;
   testId: string;
 }

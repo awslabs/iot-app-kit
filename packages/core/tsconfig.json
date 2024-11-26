@@ -3,6 +3,7 @@
   "extends": "@iot-app-kit/ts-config/tsconfig.base.json",
   "include": ["src", "vitest.config.ts"],
   "compilerOptions": {
-    "types": ["vitest/globals", "jest-extended"]
+    "types": ["vitest/globals", "jest-extended"],
+    "moduleResolution": "bundler"
   }
 }

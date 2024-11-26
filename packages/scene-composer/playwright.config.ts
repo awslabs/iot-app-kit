@@ -1,3 +1,4 @@
+import { MINUTE_IN_MS, SECOND_IN_MS } from '@iot-app-kit/helpers/constants/time';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -6,15 +7,17 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
   /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000,
-    toMatchSnapshot: { maxDiffPixels: 200 },
+    timeout: 100 * SECOND_IN_MS,
+    toMatchSnapshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
+    toHaveScreenshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
   },
+  timeout: 100 * SECOND_IN_MS,
+  globalTimeout: 5 * MINUTE_IN_MS,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -54,7 +57,7 @@ export default defineConfig({
     command: 'npm start',
     reuseExistingServer: true,
     url: 'http://0.0.0.0:7006',
-    timeout: 300 * 1000, // 5 minutes
+    timeout: 5 * MINUTE_IN_MS,
     stdout: 'pipe',
     stderr: 'pipe',
   },

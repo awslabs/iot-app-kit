@@ -1,4 +1,4 @@
-import type GlobalModel from 'echarts/types/src/model/Global';
+import type GlobalModel from 'echarts/types/src/model/Global.js';
 import { type TrendCursorModel } from '../model';
 
 export const getTrendCursors = (ecmodel: GlobalModel) => {

@@ -8,6 +8,7 @@
     "node": ">=16",
     "npm": ">=8"
   },
+  "type": "module",
   "main": "./dist/cjs/build.js",
   "module": "./dist/esm/build.js",
   "types": "./dist/esm/build.d.ts",
@@ -30,7 +31,6 @@
     "clean": "rimraf dist coverage tmdt_local .turbo .cache && npm uninstall -g tmdt || true",
     "clean:nuke": "npm run clean && rimraf node_modules",
     "dev": "tsc -b ./tsconfig.esm.json --watch",
-    "dev:dashboard": "npm run dev",
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
@@ -42,7 +42,7 @@
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
     "pack": "npm pack",
-    "package": "node dist/cjs/build.js",
+    "package": "npx tsx ./src/build.ts",
     "package-linux": "pkg . --targets node16-linux-x64 --output tmdt_local",
     "package-mac": "pkg . --targets node16-macos-x64 --output tmdt_local"
   },

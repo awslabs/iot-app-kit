@@ -5,7 +5,7 @@ import {
   type ThresholdSettings,
   type Viewport,
 } from '@iot-app-kit/core';
-import { type OptionId } from 'echarts/types/src/util/types';
+import { type OptionId } from 'echarts/types/src/util/types.js';
 import { type AssistantProperty } from '../../common/assistantProps';
 import type { ComponentQuery } from '../../common/chartTypes';
 
