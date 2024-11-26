@@ -1,5 +1,10 @@
-import { type FC, useState } from 'react';
-
+import {
+  Button,
+  type ButtonProps,
+  SpaceBetween,
+  Toggle,
+} from '@cloudscape-design/components';
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 import {
   type ComparisonOperator,
   type StyledThreshold,
@@ -7,14 +12,7 @@ import {
   type ThresholdStyleType,
 } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
-
-import { Button, SpaceBetween, Toggle } from '@cloudscape-design/components';
-
-import {
-  type CancelableEventHandler,
-  type ClickDetail,
-} from '@cloudscape-design/components/internal/events';
-import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import { type FC, useState } from 'react';
 import type { ThresholdWithId } from '~/customization/settings';
 import { type Maybe, maybeWithDefault } from '~/util/maybe';
 import { StyledExpandableSection } from '../components/styledComponents';
@@ -238,7 +236,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
       const styledThresholdsValue = styledThresholds
         ? maybeWithDefault([], styledThresholds) ?? []
         : [];
-      const onAddNewThreshold: CancelableEventHandler<ClickDetail> = (e) => {
+      const onAddNewThreshold: NonNullable<ButtonProps['onClick']> = (e) => {
         e.stopPropagation();
         !isExpanded && setIsExpanded(true);
         const newThreshold: ThresholdWithId = {

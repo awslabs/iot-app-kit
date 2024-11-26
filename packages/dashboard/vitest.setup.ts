@@ -1,5 +1,5 @@
+import { server } from '@iot-app-kit/data-mocked/server';
 import '@testing-library/jest-dom';
-import { server } from './src/msw/server';
 
 beforeAll(() => {
   disableLogging();

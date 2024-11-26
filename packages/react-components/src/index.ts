@@ -74,6 +74,7 @@ export {
   type AssetPropertyExplorerProps,
   type AssetPropertyResource,
   type AssetResource,
+  type SelectedResources,
   type SelectionMode,
   type TimeSeriesExplorerProps,
   type TimeSeriesResource,
@@ -86,12 +87,12 @@ export { type TimeSeriesResourceWithLatestValue } from './components/resource-ex
 export { type ResourceFieldFilterOperator } from './components/resource-explorers/types/common';
 
 export type {
+  AlarmAssistantContext,
   AssistantActionEventDetail,
   AssistantActionTarget,
   AssistantActionType,
   AssistantProperty,
   AssistantWidgetTypes,
-  AlarmAssistantContext,
 } from './common/assistantProps';
 export { AssistantChatbot } from './components/assistant-chatbot';
 export {

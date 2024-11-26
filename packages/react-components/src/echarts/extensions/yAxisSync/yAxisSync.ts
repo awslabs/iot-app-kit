@@ -1,11 +1,13 @@
-import type LineSeriesModel from 'echarts/types/src/chart/line/LineSeries';
-import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
-import { handlesYAxis } from './yAxisPredicates';
+import type LineSeriesModel from 'echarts/types/src/chart/line/LineSeries.js';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension.js';
 import { handleSetYAxis } from './updateYAxis';
+import { handlesYAxis } from './yAxisPredicates';
 
 // Echarts core use type does not map correctly to the echarts extension type so exporting as any
 // eslint-disable-next-line
-export const yAxisSyncExtension: any = (registers: EChartsExtensionInstallRegisters) => {
+export const yAxisSyncExtension: any = (
+  registers: EChartsExtensionInstallRegisters
+) => {
   registers.registerUpdateLifecycle(
     'series:afterupdate',
     (_ecModel, _api, params) => {

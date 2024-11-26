@@ -1,7 +1,6 @@
-import { type NonCancelableCustomEvent } from '@cloudscape-design/components';
-import { type BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import type { InputProps } from '@cloudscape-design/components/input';
 
 // Should never return NaN
 export const numberFromDetail = (
-  event: NonCancelableCustomEvent<BaseChangeDetail>
+  event: Parameters<NonNullable<InputProps['onChange']>>[0]
 ) => parseInt(event.detail.value) || 0;

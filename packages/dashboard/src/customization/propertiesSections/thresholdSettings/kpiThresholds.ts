@@ -1,4 +1,4 @@
-import { type OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
+import { type SelectProps } from '@cloudscape-design/components/select';
 import { type ThresholdStyleType } from '@iot-app-kit/core';
 
 enum ThresholdStyleOptions {
@@ -12,7 +12,7 @@ export const styledOptionsKPI = [
 ];
 
 export const convertOptionToThresholdStyleKPI = (
-  selectedOption: OptionDefinition
+  selectedOption: SelectProps.Option
 ): ThresholdStyleType => {
   switch (selectedOption.label) {
     case ThresholdStyleOptions.asLine: {
@@ -34,7 +34,7 @@ export const convertOptionToThresholdStyleKPI = (
 
 export const convertThresholdStyleToOptionKPI = (
   thresholdStyle: ThresholdStyleType
-): OptionDefinition => {
+): SelectProps.Option => {
   if (!!thresholdStyle.visible && !!thresholdStyle.fill) {
     return styledOptionsKPI[1];
   } else {

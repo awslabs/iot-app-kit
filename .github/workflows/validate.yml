@@ -59,7 +59,10 @@ jobs:
             core,
             core-util,
             dashboard,
+            data-mocked,
+            dev-env,
             doc-site,
+            helpers,
             react-components,
             scene-composer,
             source-iotsitewise,
@@ -110,7 +113,7 @@ jobs:
             ${{ runner.os }}-test-lint-${{ matrix.package}}-
 
       - name: Validate
-        run: npx turbo run build:cjs build:es lint test --filter=@iot-app-kit/${{ matrix.package }}
+        run: npx turbo build:cjs build:es lint test --filter=@iot-app-kit/${{ matrix.package }}
 
   playwright:
     needs: repo
@@ -121,10 +124,10 @@ jobs:
       matrix:
         package:
           [
-            { name: 'dashboard', shardIndex: 1, totalShards: 4 },
-            { name: 'dashboard', shardIndex: 2, totalShards: 4 },
-            { name: 'dashboard', shardIndex: 3, totalShards: 4 },
-            { name: 'dashboard', shardIndex: 4, totalShards: 4 },
+            { name: 'dev-env', shardIndex: 1, totalShards: 4 },
+            { name: 'dev-env', shardIndex: 2, totalShards: 4 },
+            { name: 'dev-env', shardIndex: 3, totalShards: 4 },
+            { name: 'dev-env', shardIndex: 4, totalShards: 4 },
             { name: 'react-components', totalShards: 1, shardIndex: 1 },
             { name: 'scene-composer', totalShards: 1, shardIndex: 1 },
           ]
@@ -186,7 +189,7 @@ jobs:
 
       - name: Playwright
         run: |
-          npx turbo run test:ui:ci --filter=@iot-app-kit/${{ matrix.package.name }} -- --shard=${{ matrix.package.shardIndex }}/${{ matrix.package.totalShards }}
+          npx turbo test:ui:ci --filter=@iot-app-kit/${{ matrix.package.name }} -- --shard=${{ matrix.package.shardIndex }}/${{ matrix.package.totalShards }}
 
       - name: Test report
         id: upload-test-report

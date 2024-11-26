@@ -7,19 +7,16 @@ import {
   SpaceBetween,
   TextContent,
 } from '@cloudscape-design/components';
-import { type NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
 import { useCallback, useEffect, useState } from 'react';
 import { CirclePicker, type ColorResult } from 'react-color';
 import { useIntl } from 'react-intl';
-import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
 import { type ColorRepresentation } from 'three';
-
-import { colors } from '../../../../../utils/styleUtils';
 import { isValidHexCode } from '../../../../../utils/colorUtils';
-import { type IColorPickerProps } from '../interface';
+import { colors } from '../../../../../utils/styleUtils';
 import { ColorPicker } from '../../../ColorPicker/ColorPicker';
 import { hexString } from '../../../ColorPicker/ColorPickerHelpers';
-
+import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
+import { type IColorPickerProps } from '../interface';
 import {
   tmAddButton,
   tmColorPickerContainer,
@@ -108,8 +105,8 @@ export const ColorSelectorCombo = ({
     [color, onSelectColor, onUpdateCustomColors],
   );
 
-  const handleHexCodeChange = useCallback(
-    (event: NonCancelableCustomEvent<InputProps.ChangeDetail>) => {
+  const handleHexCodeChange: NonNullable<InputProps['onChange']> = useCallback(
+    (event) => {
       setNewColor(event.detail.value);
       if (isValidHexCode(event.detail.value)) {
         setHexCodeError(''); // Clear any existing error message

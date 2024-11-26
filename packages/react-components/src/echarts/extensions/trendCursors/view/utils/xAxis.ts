@@ -1,4 +1,4 @@
-import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI';
+import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI.js';
 import { getCartesianCoordinateSystem } from './coordinateSystem';
 
 export const getXAxis = (api: ExtensionAPI) => {

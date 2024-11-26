@@ -1,15 +1,17 @@
-import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
-import { findMinMax } from './minMaxDataStreamSync';
-import useDataStore from '../../../store';
+import type Grid from 'echarts/types/src/coord/cartesian/Grid.js';
+import { type LifecycleEvents } from 'echarts/types/src/core/lifecycle.js';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension.js';
 import throttle from 'lodash.throttle';
-import type Grid from 'echarts/types/src/coord/cartesian/Grid';
-import { type LifecycleEvents } from 'echarts/types/src/core/lifecycle';
+import useDataStore from '../../../store';
+import { findMinMax } from './minMaxDataStreamSync';
 
 const THROTTLE_RATE = 1000;
 
 // Echarts core use type does not map correctly to the echarts extension type so exporting as any
 // eslint-disable-next-line
-export const dataStreamMinMaxSyncExtension: any = (registers: EChartsExtensionInstallRegisters) => {
+export const dataStreamMinMaxSyncExtension: any = (
+  registers: EChartsExtensionInstallRegisters
+) => {
   const dataStreamMinMaxCallback = (
     ...args: LifecycleEvents['series:afterupdate']
   ) => {

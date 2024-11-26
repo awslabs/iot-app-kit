@@ -1,12 +1,4 @@
-import { getPlugin } from '@iot-app-kit/core';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Box, Button, type ButtonProps } from '@cloudscape-design/components';
-import {
-  type CancelableEventHandler,
-  type ClickDetail,
-} from '@cloudscape-design/components/internal/events';
 import {
   colorBackgroundButtonNormalDefault,
   colorBackgroundButtonPrimaryDefault,
@@ -15,7 +7,9 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-
+import { getPlugin } from '@iot-app-kit/core';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
 import { type DashboardWidget } from '~/types';
@@ -36,7 +30,7 @@ import { type DashboardState } from '~/store/state';
 import './widgetActions.css';
 
 type DeletableTileActionProps = {
-  handleDelete: CancelableEventHandler<ClickDetail>;
+  handleDelete: NonNullable<ButtonProps['onClick']>;
 };
 
 const DeletableTileAction = ({
@@ -72,7 +66,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
 
   const [visible, setVisible] = useState(false);
 
-  const handleDelete: CancelableEventHandler<ClickDetail> = (e) => {
+  const handleDelete: NonNullable<ButtonProps['onClick']> = (e) => {
     e.stopPropagation();
     dispatch(onChangeDashboardGridEnabledAction({ enabled: false }));
     dispatch(onSelectWidgetsAction({ widgets: [widget], union: false }));
