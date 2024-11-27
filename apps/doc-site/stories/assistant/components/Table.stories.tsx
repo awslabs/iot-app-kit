@@ -1,10 +1,14 @@
-import { useEffect } from 'react';
-import { Table, useAssistant, AssistantChatbot } from '@iot-app-kit/react-components';
 import Button from '@cloudscape-design/components/button';
-import { mockAlarmData } from '@iot-app-kit/testing-util';
 import { DATA_TYPE } from '@iot-app-kit/core';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import {
+  AssistantChatbot,
+  Table,
+  useAssistant,
+} from '@iot-app-kit/react-components';
+import { mockAlarmData } from '@iot-app-kit/testing-util';
 import { type Meta, type StoryObj } from '@storybook/react';
+import { useEffect } from 'react';
 import { MockInvokeAssistant } from '../../mockAssistantAPI';
 
 const meta: Meta<typeof Table> = {
@@ -71,24 +75,28 @@ export const Assistant: Story = {
             componentId,
             conversationId: 'mockConversationId',
             target: 'dashboard',
-            onAction:(event) => {
+            onAction: (event) => {
               if (event.type === 'selection') {
                 console.log('onAction', event);
               }
-            }
+            },
           }}
         />
         <br />
-        <Button onClick={() => {
-          clearAll();
-          generateSummary({
-            componentId,
-            conversationId: crypto.randomUUID(),
-            target: 'widget',
-            utterance:
-              'generate a summary and return the response in markdown format.',
-          });
-        }}>Generate Summary</Button>
+        <Button
+          onClick={() => {
+            clearAll();
+            generateSummary({
+              componentId,
+              conversationId: crypto.randomUUID(),
+              target: 'widget',
+              utterance:
+                'generate a summary and return the response in markdown format.',
+            });
+          }}
+        >
+          Generate Summary
+        </Button>
         <br />
         {messages.length > 0 ? (
           <AssistantChatbot
@@ -96,9 +104,9 @@ export const Assistant: Story = {
             messages={messages}
             onSubmit={() => {}}
           />
-        ): null }
+        ) : null}
       </div>
-    )
+    );
   },
   args: {
     queries: [mockAlarmData()],

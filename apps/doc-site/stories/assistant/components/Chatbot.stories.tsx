@@ -1,10 +1,14 @@
 /* eslint-disable */
 // @ts-nocheck
-import { useEffect } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { AssistantChatbot, useAssistant, MessageType } from '@iot-app-kit/react-components';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import '@cloudscape-design/global-styles/index.css';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import {
+  AssistantChatbot,
+  MessageType,
+  useAssistant,
+} from '@iot-app-kit/react-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { useEffect } from 'react';
 import { MockInvokeAssistant } from '../../mockAssistantAPI';
 
 export default {
@@ -30,10 +34,7 @@ const client = new IoTSitewiseAssistantClient({
   defaultContext: '',
 });
 
-export const Standard: ComponentStory<
-  typeof AssistantChatbot
-> = () => {
-
+export const Standard: ComponentStory<typeof AssistantChatbot> = () => {
   const { messages, invokeAssistant, clearAll, setMessages } = useAssistant({
     assistantClient: client,
   });
@@ -42,8 +43,7 @@ export const Standard: ComponentStory<
     clearAll();
     setMessages([
       {
-        content:
-          'Who are you ?',
+        content: 'Who are you ?',
         sender: 'user',
         type: MessageType.TEXT,
         id: crypto.randomUUID(),
@@ -83,14 +83,10 @@ export const Standard: ComponentStory<
   );
 };
 
-export const LoadingState: ComponentStory<
-  typeof AssistantChatbot
-> = () => {
-
+export const LoadingState: ComponentStory<typeof AssistantChatbot> = () => {
   const messages = [
     {
-      content:
-        'Processing assistant response, please wait..',
+      content: 'Processing assistant response, please wait..',
       sender: 'assistant',
       type: MessageType.TEXT,
       id: crypto.randomUUID(),
@@ -105,7 +101,7 @@ export const LoadingState: ComponentStory<
       loading: true,
     },
   ];
-  
+
   return (
     <div style={{ padding: '0.5rem' }} data-testid='processing-chatbot-story'>
       <AssistantChatbot
@@ -118,21 +114,18 @@ export const LoadingState: ComponentStory<
   );
 };
 
-export const ErrorState: ComponentStory<
-  typeof AssistantChatbot
-> = () => {
-
+export const ErrorState: ComponentStory<typeof AssistantChatbot> = () => {
   const messages = [
     {
-      content:
-        'Processing assistant response, please wait..',
+      content: 'Processing assistant response, please wait..',
       sender: 'assistant',
       type: MessageType.TEXT,
       id: crypto.randomUUID(),
       loading: true,
     },
     {
-      content: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
+      content:
+        'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
       sender: 'assistant',
       type: MessageType.ERROR,
       id: crypto.randomUUID(),
@@ -140,10 +133,11 @@ export const ErrorState: ComponentStory<
       payload: {
         accessDeniedException: {
           name: 'accessDeniedException',
-          message: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
-        }
-      }
-    }
+          message:
+            'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
+        },
+      },
+    },
   ];
 
   return (

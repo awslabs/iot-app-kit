@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 // eslint-disable-next-line import/default
-import { Gauge, useAssistant} from '@iot-app-kit/react-components';
-import {
-  mockSinWaveDataWithQuality,
-} from '@iot-app-kit/testing-util';
-import { type Meta, type StoryObj } from '@storybook/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { Gauge, useAssistant } from '@iot-app-kit/react-components';
+import { mockSinWaveDataWithQuality } from '@iot-app-kit/testing-util';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { MockInvokeAssistant } from '../../mockAssistantAPI';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
@@ -52,7 +50,7 @@ export const Assistant: Story = {
           margin: '0 auto',
         }}
       >
-        <Gauge 
+        <Gauge
           {...props}
           assistant={{
             client,
