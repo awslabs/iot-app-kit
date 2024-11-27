@@ -183,3 +183,50 @@ const DashboardPage = () => {
 };
 
 ```
+
+## IAM permissions for dashboard
+
+The following permissions policy specifies the actions required to access IoT assets and asset data in your account. Please make sure the AWS credentials provided have the following permissions in order for dashboard to operate.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "iotsitewise:ListAssets",
+              "iotsitewise:DescribeAsset",
+              "iotsitewise:ListAssociatedAssets",
+              "iotsitewise:ListAssetProperties",
+              "iotsitewise:DescribeAssetProperty",
+              "iotsitewise:GetAssetPropertyValue",
+              "iotsitewise:GetAssetPropertyValueHistory",
+              "iotsitewise:GetAssetPropertyAggregates",
+              "iotsitewise:GetInterpolatedAssetPropertyValues",
+              "iotsitewise:BatchGetAssetPropertyAggregates",
+              "iotsitewise:BatchGetAssetPropertyValue",
+              "iotsitewise:BatchGetAssetPropertyValueHistory",
+              "iotsitewise:ListAssetRelationships",
+              "iotsitewise:DescribeAssetModel",
+              "iotsitewise:ListAssetModels",
+              "iotsitewise:DescribeAssetCompositeModel",
+              "iotsitewise:DescribeAssetModelCompositeModel",
+              "iotsitewise:ListAssetModelProperties",
+              "iotsitewise:ExecuteQuery",
+              "iotsitewise:ListTimeSeries",
+              "iotsitewise:DescribeTimeSeries",
+              "iotsitewise:DescribeDataset",
+              "iotsitewise:ListDatasets",
+              "iotevents:DescribeAlarmModel",
+              "iotevents:ListTagsForResource",
+              "iottwinmaker:ListWorkspaces",
+              "iottwinmaker:ExecuteQuery",
+              "iottwinmaker:GetWorkspace",
+              "iotsitewise:InvokeAssistant"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
