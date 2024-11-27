@@ -1,8 +1,6 @@
-import { Chart, useAssistant } from '@iot-app-kit/react-components';
-import {
-  mockSinWaveData,
-} from '@iot-app-kit/testing-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { Chart, useAssistant } from '@iot-app-kit/react-components';
+import { mockSinWaveData } from '@iot-app-kit/testing-util';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { MockInvokeAssistant } from '../../mockAssistantAPI';
 
@@ -33,7 +31,7 @@ export const Assistant: Story = {
 
     return (
       <div style={{ height: '560px', width: '900px' }}>
-        Please, select an item in the table below: 
+        Please, select an item in the table below:
         <Chart
           {...{
             ...props,
@@ -53,9 +51,9 @@ export const Assistant: Story = {
             componentId: componentId1,
             conversationId: 'mockConversationId',
             target: 'widget',
-            onAction:(event) => {
-              if (event.type === 'selection') {   
-                clearAll();           
+            onAction: (event) => {
+              if (event.type === 'selection') {
+                clearAll();
                 generateSummary({
                   componentId: componentId1,
                   conversationId: crypto.randomUUID(),
@@ -64,11 +62,11 @@ export const Assistant: Story = {
                     'generate a summary and return the response in markdown format.',
                 });
               }
-            }
+            },
           }}
         />
       </div>
-    )
+    );
   },
   args: {
     queries: [mockSinWaveData()],
