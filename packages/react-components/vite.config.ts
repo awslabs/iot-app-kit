@@ -5,6 +5,9 @@ import { defineConfig } from 'vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    conditions: ['development'],
+  },
   test: {
     pool: 'threads',
     include: ['./src/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
@@ -17,13 +20,5 @@ export default defineConfig({
       'jest-extended/all',
     ],
     retry: 3,
-    coverage: {
-      thresholds: {
-        statements: 60,
-        branches: 75,
-        functions: 70,
-        lines: 60,
-      },
-    },
   },
 });

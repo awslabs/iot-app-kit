@@ -1,7 +1,7 @@
-import { initialState } from '~/store/state';
+import { initialState } from '../../../store/state';
 import {
-  updateSignificantDigits,
   onUpdateSignificantDigitsAction,
+  updateSignificantDigits,
 } from './index';
 
 it('can change significant digits', () => {

@@ -15,7 +15,7 @@ import { type CSSProperties, type ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon';
 
-import { selectedRect } from '~/util/select';
+import { selectedRect } from '../../util/select';
 
 /**
  * Component imports
@@ -41,23 +41,23 @@ import {
   onDeleteWidgetsAction,
   onPasteWidgetsAction,
   onSendWidgetsToBackAction,
-} from '~/store/actions';
-import { widgetCreator } from '~/store/actions/createWidget/presets';
+} from '../../store/actions';
+import { widgetCreator } from '../../store/actions/createWidget/presets';
 
-import { toGridPosition } from '~/util/position';
+import { toGridPosition } from '../../util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import { DefaultDashboardMessages } from '~/messages';
-import type { DashboardState } from '~/store/state';
+import { useSelectedWidgets } from '../../hooks/useSelectedWidgets';
+import { DefaultDashboardMessages } from '../../messages';
+import type { DashboardState } from '../../store/state';
 import type {
   DashboardConfigurationChange,
   DashboardSave,
   DashboardToolbar,
   DashboardWidget,
   Position,
-} from '~/types';
+} from '../../types';
 import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import type { ContextMenuProps } from '../contextMenu';
@@ -67,10 +67,10 @@ import type { UserSelectionProps } from '../userSelection';
 import type { WidgetsProps } from '../widgets/list';
 import DashboardHeader from './dashboardHeader';
 
-import { useChatbotPosition } from '~/hooks/useChatbotPosition';
-import { useDashboardViewport } from '~/hooks/useDashboardViewport';
-import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
-import { parseViewport } from '~/util/parseViewport';
+import { useChatbotPosition } from '../../hooks/useChatbotPosition';
+import { useDashboardViewport } from '../../hooks/useDashboardViewport';
+import { useSyncDashboardConfiguration } from '../../hooks/useSyncDashboardConfiguration';
+import { parseViewport } from '../../util/parseViewport';
 import Actions from '../actions';
 import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
 import { AssistantIcon } from '../assistant/assistantIcon';

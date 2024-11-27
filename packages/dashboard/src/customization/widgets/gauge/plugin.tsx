@@ -1,11 +1,11 @@
-import GaugeWidgetComponent from './component';
-import GaugeIcon from './icon';
-import type { DashboardPlugin } from '~/customization/api';
-import type { GaugeWidget } from '../types';
+import type { DashboardPlugin } from '../../../customization/api';
 import {
   GAUGE_WIDGET_INITIAL_HEIGHT,
   GAUGE_WIDGET_INITIAL_WIDTH,
 } from '../constants';
+import type { GaugeWidget } from '../types';
+import GaugeWidgetComponent from './component';
+import GaugeIcon from './icon';
 
 export const gaugePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

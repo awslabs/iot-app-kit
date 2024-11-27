@@ -1,23 +1,20 @@
-import isEqual from 'lodash-es/isEqual';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
-import { getPlugin } from '@iot-app-kit/core';
-
 import {
   colorChartsLineGrid,
   spaceScaledXs,
   spaceScaledXxxl,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
-import { type DashboardSave } from '~/types';
+import { getPlugin } from '@iot-app-kit/core';
+import isEqual from 'lodash-es/isEqual';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { onSelectWidgetsAction, onToggleReadOnly } from '../../store/actions';
+import { type DashboardSave } from '../../types';
+import { convertToDashboardConfiguration } from '../../util/convertToDashbaoardConfiguration';
 import CustomOrangeButton from '../customOrangeButton';
 import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
 import DashboardSettings from './settings';
-
-import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 
 export type ActionsProps = {
   readOnly: boolean;

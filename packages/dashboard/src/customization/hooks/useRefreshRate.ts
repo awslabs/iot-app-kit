@@ -1,7 +1,7 @@
-import { type RefreshRate } from '~/components/refreshRate/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { onUpdateRefreshRateAction } from '~/store/actions';
-import { type DashboardState } from '~/store/state';
+import { type RefreshRate } from '../../components/refreshRate/types';
+import { onUpdateRefreshRateAction } from '../../store/actions';
+import { type DashboardState } from '../../store/state';
 
 export const useRefreshRate = () => {
   const dispatch = useDispatch();

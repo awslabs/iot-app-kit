@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
 import {
   MOCK_BAR_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
+import { configureDashboardStore } from '../../../store';
 import WidgetTile from './tile';
 
 describe('WidgetTile', () => {

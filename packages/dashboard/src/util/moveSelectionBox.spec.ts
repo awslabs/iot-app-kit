@@ -1,6 +1,5 @@
-import { moveSelectionBox } from '~/util/moveSelectionBox';
-
-import { type DashboardState } from '~/store/state';
+import { type DashboardState } from '../store/state';
+import { moveSelectionBox } from '../util/moveSelectionBox';
 
 const grid = {
   width: 100,

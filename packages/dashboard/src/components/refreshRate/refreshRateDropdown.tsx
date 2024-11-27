@@ -1,13 +1,13 @@
 import { Alert, FormField, Modal, Select } from '@cloudscape-design/components';
+import { SECOND_IN_MS } from '@iot-app-kit/core';
 import { useState } from 'react';
+import invariant from 'tiny-invariant';
+import { useRefreshRate } from '../../customization/hooks/useRefreshRate';
 import {
   DEFAULT_REFRESH_RATE_OPTION,
   REFRESH_RATE_OPTIONS,
   REFRESH_RATE_OPTION_MAP,
 } from './constants';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
-import { SECOND_IN_MS } from '@iot-app-kit/core';
-import invariant from 'tiny-invariant';
 import { type RefreshRate } from './types';
 
 export const RefreshRateDropDown = () => {

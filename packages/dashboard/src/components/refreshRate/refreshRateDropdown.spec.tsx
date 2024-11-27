@@ -1,9 +1,9 @@
-import { type PropsWithChildren } from 'react';
 import { render, screen } from '@testing-library/react';
 import ue from '@testing-library/user-event';
-import { RefreshRateDropDown } from './refreshRateDropdown';
+import { type PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
+import { configureDashboardStore } from '../../store';
+import { RefreshRateDropDown } from './refreshRateDropdown';
 
 const user = ue.setup();
 

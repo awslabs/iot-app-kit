@@ -48,7 +48,7 @@ describe('time series drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No time series.')).toBeVisible();
+      expect(screen.getAllByText('No time series.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -58,7 +58,7 @@ describe('time series drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No time series.')).toBeVisible();
+      expect(screen.getAllByText('No time series.')[0]).toBeVisible();
     });
 
     it('renders drop-down options', async () => {

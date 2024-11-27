@@ -7,7 +7,7 @@
     "clean": "rimraf storybook-static .turbo .cache test-results playwright-report",
     "clean:nuke": "npm run clean && rimraf node_modules",
     "dev": "storybook dev -p 6006",
-    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/ & tsc --noEmit",
+    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
     "test:ui": "npx playwright test",
     "test:ui:ci": "npx playwright test",

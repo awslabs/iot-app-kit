@@ -1,11 +1,6 @@
 import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-import type {
-  ComparisonOperator,
-  Threshold,
-  ThresholdValue,
-} from '@iot-app-kit/core';
 import type { InputProps, SelectProps } from '@cloudscape-design/components';
 import {
   Box,
@@ -15,13 +10,18 @@ import {
   Select,
   SpaceBetween,
 } from '@cloudscape-design/components';
+import type {
+  ComparisonOperator,
+  Threshold,
+  ThresholdValue,
+} from '@iot-app-kit/core';
 
+import type { ThresholdWithId } from '../../../customization/settings';
+import ColorPicker from '../shared/colorPicker';
 import {
   DEFAULT_THRESHOLD_COLOR,
   OPS_ALLOWED_WITH_STRING,
 } from './defaultValues';
-import ColorPicker from '../shared/colorPicker';
-import type { ThresholdWithId } from '~/customization/settings';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 

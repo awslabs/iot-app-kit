@@ -1,18 +1,18 @@
 import {
-  Button,
-  SpaceBetween,
   Box,
+  Button,
   ExpandableSection,
+  SpaceBetween,
 } from '@cloudscape-design/components';
-import ColorPicker from '../shared/colorPicker';
-import type { FC } from 'react';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { FC } from 'react';
+import ColorPicker from '../shared/colorPicker';
 
-import './propertyComponent.css';
-import { getPropertyDisplay } from './getPropertyDisplay';
-import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
-import { DataStreamLabelComponent } from '../components/dataStreamLabelComponent';
 import { spaceStaticXl } from '@cloudscape-design/design-tokens';
+import type { AssetSummary } from '../../../hooks/useAssetDescriptionQueries';
+import { DataStreamLabelComponent } from '../components/dataStreamLabelComponent';
+import { getPropertyDisplay } from './getPropertyDisplay';
+import './propertyComponent.css';
 
 export type PropertyComponentProps = {
   propertyId: string;

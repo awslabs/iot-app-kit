@@ -1,14 +1,14 @@
-import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
-import NoChartData from './no-chart-data';
-import { default as lineSvgDark } from '../lineScatterChart/line-dark.svg';
-import WidgetTile from '~/components/widgets/tile/tile';
-import { configureDashboardStore } from '~/store';
+import { Provider } from 'react-redux';
 import {
   MOCK_LINE_CHART_WIDGET,
   MOCK_TEXT_WIDGET,
 } from '../../../../testing/mocks';
+import WidgetTile from '../../../components/widgets/tile/tile';
+import { configureDashboardStore } from '../../../store';
+import { default as lineSvgDark } from '../lineScatterChart/line-dark.svg';
 import StyledTextArea from '../text/styledText/textArea';
+import NoChartData from './no-chart-data';
 
 describe('NoChartData', () => {
   it('renders the correct icon and empty state widget with delete option', () => {

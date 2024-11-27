@@ -1,18 +1,18 @@
-import { Provider } from 'react-redux';
 import {
   getByLabelText,
   getByPlaceholderText,
   queryByLabelText,
   render,
 } from '@testing-library/react';
-import { configureDashboardStore } from '~/store';
-import { type DashboardWidget } from '~/types';
-import { WidgetTitle } from './index';
+import { Provider } from 'react-redux';
 import {
   MOCK_LINE_CHART_WIDGET,
-  MOCK_TEXT_WIDGET,
   MOCK_RECTANGLE_WIDGET,
+  MOCK_TEXT_WIDGET,
 } from '../../../../testing/mocks';
+import { configureDashboardStore } from '../../../store';
+import { type DashboardWidget } from '../../../types';
+import { WidgetTitle } from './index';
 
 const store = (widgets: DashboardWidget) =>
   configureDashboardStore({

@@ -3,22 +3,22 @@ import Button from '@cloudscape-design/components/button';
 
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 
-import { VerticalDivider } from '~/components/divider/verticalDivider';
-import { type SelectedAssetModel } from '../../useSelectedAssetModel';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { VerticalDivider } from '../../../../../../components/divider/verticalDivider';
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 import {
   type SelectedAsset,
   type UpdateSelectedAsset,
 } from '../../useSelectedAsset';
+import { type SelectedAssetModel } from '../../useSelectedAssetModel';
 
-import { useModalVisibility } from '~/hooks/useModalVisibility';
+import { useModalVisibility } from '../../../../../../hooks/useModalVisibility';
 import { ResetAssetModelModal } from './resetAssetModel/resetAssetModelModal';
 
 import { default as assetModelSvg } from './assetModelIcon.svg';
 
+import { useAssetModel } from '../../../../../../hooks/useAssetModel/useAssetModel';
 import './assetModelSelected.css';
-import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 
 type AssetModelSelectedOptions = {
   selectedAssetModel: SelectedAssetModel;

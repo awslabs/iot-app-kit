@@ -1,17 +1,17 @@
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '@iot-app-kit/react-components';
-import { useDispatch, useSelector } from 'react-redux';
-import type { DashboardState } from '~/store/state';
-import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
-import { useClients } from '~/components/dashboard/clientContext';
 import { useMemo } from 'react';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { useDispatch, useSelector } from 'react-redux';
+import { useClients } from '../components/dashboard/clientContext';
 import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
-} from '~/store/actions/assistantWidgetsSelection';
+} from '../store/actions/assistantWidgetsSelection';
+import { onToggleChatbotAction } from '../store/actions/toggleChatbot';
+import type { DashboardState } from '../store/state';
 
 export const useAssistantConfiguration = (widgetId: string) => {
   const dispatch = useDispatch();

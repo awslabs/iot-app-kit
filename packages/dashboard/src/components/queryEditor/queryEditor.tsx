@@ -1,12 +1,12 @@
-import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
-import { QueryEditorErrorBoundary } from './queryEditorErrorBoundary';
-import { useQuery } from './useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
-import { useIsAddButtonDisabled } from './helpers/useIsAddButtonDisabled';
+import { type DashboardWidget } from '../../types';
 import { getCorrectSelectionMode } from './helpers/getCorrectSelectionMode';
+import { useIsAddButtonDisabled } from './helpers/useIsAddButtonDisabled';
+import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 import { useAssetsForAssetModel } from './iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 import { useModelBasedQuery } from './iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
+import { QueryEditorErrorBoundary } from './queryEditorErrorBoundary';
+import { useQuery } from './useQuery';
 
 export function QueryEditor({
   iotSiteWiseClient,

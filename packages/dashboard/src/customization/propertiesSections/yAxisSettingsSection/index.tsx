@@ -1,11 +1,11 @@
-import { type PropertyLens } from '~/customization/propertiesSection';
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
+import { type PropertyLens } from '../../../customization/propertiesSection';
+import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
 import {
   type GaugeProperties,
   type GaugeWidget,
-} from '~/customization/widgets/types';
-import { type DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
+} from '../../../customization/widgets/types';
+import { type DashboardWidget } from '../../../types';
+import { maybeWithDefault } from '../../../util/maybe';
 import { YAxisSection } from '../yAxisSettings';
 
 const widgetWithCustomFontsSettings: readonly string[] = ['gauge'];

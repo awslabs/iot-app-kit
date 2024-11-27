@@ -1,13 +1,13 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { CSVDownloadButton } from './index';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   type StyledAssetQuery,
   type StyledSiteWiseQueryConfig,
-} from '~/customization/widgets/types';
+} from '../../customization/widgets/types';
+import { CSVDownloadButton } from './index';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -34,9 +34,12 @@ const mockFetchTimeSeriesData = vi.fn(() => Promise.resolve([]));
 vi.mock('../dashboard/queryContext', () => ({
   useFetchTimeSeriesData: vi.fn(() => mockFetchTimeSeriesData),
 }));
-vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
-  fetchListAssetPropertiesMap: vi.fn(),
-}));
+vi.mock(
+  '../../data/listAssetPropertiesMap/fetchListAssetPropertiesMap',
+  () => ({
+    fetchListAssetPropertiesMap: vi.fn(),
+  })
+);
 
 it('does not render button if query has no content', function () {
   render(

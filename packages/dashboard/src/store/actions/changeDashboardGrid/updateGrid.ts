@@ -1,4 +1,4 @@
-import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
+import { constrainWidgetPositionToGrid } from '../../../util/constrainWidgetPositionToGrid';
 import type { DashboardState } from '../../state';
 
 type GridProperties = keyof DashboardState['grid'];

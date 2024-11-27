@@ -1,11 +1,11 @@
 import { type PointerEventHandler, useState } from 'react';
-import { type PointClickEvent } from './types';
+import { MouseClick } from '../../../types';
 import {
   DASHBOARD_CONTAINER_ID,
   getDashboardPosition,
 } from '../getDashboardPosition';
 import { endTracker, startTracker } from './positionTracker';
-import { MouseClick } from '~/types';
+import { type PointClickEvent } from './types';
 
 export type PointerTrackerProps = {
   readOnly: boolean;

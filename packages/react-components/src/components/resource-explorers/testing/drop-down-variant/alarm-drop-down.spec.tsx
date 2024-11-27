@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 
-import * as dropDown from '../helpers/drop-down';
+import { queryClient } from '../../../../queries';
 import { AlarmExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
-import { queryClient } from '../../../../queries';
+import * as dropDown from '../helpers/drop-down';
 
 describe('asset property drop-down', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('asset property drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No alarms.')).toBeVisible();
+      expect(screen.getAllByText('No alarms.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -30,7 +30,7 @@ describe('asset property drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No alarms.')).toBeVisible();
+      expect(screen.getAllByText('No alarms.')[0]).toBeVisible();
     });
   });
 

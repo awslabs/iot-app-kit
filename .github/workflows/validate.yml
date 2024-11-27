@@ -47,7 +47,7 @@ jobs:
       - name: Git
         run: npm run test:git
 
-  unit:
+  validation:
     needs: repo
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -68,6 +68,68 @@ jobs:
             source-iotsitewise,
             source-iottwinmaker,
             tools-iottwinmaker,
+          ]
+        task: [build, lint]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: node_modules cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-${{ matrix.task }}-${{ matrix.package }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-${{ matrix.task }}-${{ matrix.package }}-
+
+      - name: Validate
+        run: npx turbo ${{ matrix.task }} --filter=@iot-app-kit/${{ matrix.package }}
+
+  unit-test:
+    needs: repo
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          [
+            { name: 'core', shardIndex: 1, totalShards: 1 },
+            { name: 'core-util', shardIndex: 1, totalShards: 1 },
+            { name: 'dashboard', shardIndex: 1, totalShards: 2 },
+            { name: 'dashboard', shardIndex: 2, totalShards: 2 },
+            { name: 'react-components', shardIndex: 1, totalShards: 2 },
+            { name: 'react-components', shardIndex: 2, totalShards: 2 },
+            { name: 'scene-composer', shardIndex: 1, totalShards: 4 },
+            { name: 'scene-composer', shardIndex: 2, totalShards: 4 },
+            { name: 'scene-composer', shardIndex: 3, totalShards: 4 },
+            { name: 'scene-composer', shardIndex: 4, totalShards: 4 },
+            { name: 'source-iotsitewise', shardIndex: 1, totalShards: 1 },
+            { name: 'source-iottwinmaker', shardIndex: 1, totalShards: 1 },
+            { name: 'tools-iottwinmaker', shardIndex: 1, totalShards: 1 },
           ]
     steps:
       - name: Checkout
@@ -100,20 +162,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: '.turbo'
-          key: ${{ runner.os }}-turbo-unit-${{ matrix.package}}-${{ github.sha }}
+          key: ${{ runner.os }}-turbo-unit-test-${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-turbo-unit-${{ matrix.package}}-
-
-      - name: Test and lint cache
-        uses: actions/cache@v4
-        with:
-          path: '**/.cache'
-          key: ${{ runner.os }}-test-lint-${{ matrix.package}}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-test-lint-${{ matrix.package}}-
+            ${{ runner.os }}-turbo-unit-test-${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-
 
       - name: Validate
-        run: npx turbo build:cjs build:es lint test --filter=@iot-app-kit/${{ matrix.package }}
+        run: npx turbo test --filter=@iot-app-kit/${{ matrix.package.name }} -- --shard=${{ matrix.package.shardIndex }}/${{ matrix.package.totalShards }}
 
   playwright:
     needs: repo
@@ -124,12 +178,28 @@ jobs:
       matrix:
         package:
           [
-            { name: 'dev-env', shardIndex: 1, totalShards: 4 },
-            { name: 'dev-env', shardIndex: 2, totalShards: 4 },
-            { name: 'dev-env', shardIndex: 3, totalShards: 4 },
-            { name: 'dev-env', shardIndex: 4, totalShards: 4 },
-            { name: 'react-components', totalShards: 1, shardIndex: 1 },
-            { name: 'scene-composer', totalShards: 1, shardIndex: 1 },
+            { name: 'dev-env', shardIndex: 1, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 2, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 3, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 4, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 5, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 6, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 7, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 8, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 9, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 10, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 11, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 12, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 13, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 14, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 15, totalShards: 16 },
+            { name: 'dev-env', shardIndex: 16, totalShards: 16 },
+            { name: 'react-components', shardIndex: 1, totalShards: 2 },
+            { name: 'react-components', shardIndex: 2, totalShards: 2 },
+            { name: 'scene-composer', shardIndex: 1, totalShards: 4 },
+            { name: 'scene-composer', shardIndex: 2, totalShards: 4 },
+            { name: 'scene-composer', shardIndex: 3, totalShards: 4 },
+            { name: 'scene-composer', shardIndex: 4, totalShards: 4 },
           ]
     steps:
       - name: Checkout

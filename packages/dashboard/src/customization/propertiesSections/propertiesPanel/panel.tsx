@@ -1,14 +1,14 @@
-import { useLayoutEffect, useState } from 'react';
 import Box from '@cloudscape-design/components/box';
-import Tabs from '@cloudscape-design/components/tabs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import Tabs from '@cloudscape-design/components/tabs';
+import { useLayoutEffect, useState } from 'react';
+import { useSelectedWidgets } from '../../../hooks/useSelectedWidgets';
+import { isJust } from '../../../util/maybe';
 import { useSelection } from '../../propertiesSection';
-import { PropertiesPanelEmpty } from './emptyPanel';
-import { StylesSection } from './styleTab';
 import { PropertiesAndAlarmsSettingsConfiguration } from '../propertiesAndAlarmsSettings';
 import { ThresholdSettingsConfiguration } from '../thresholdSettings';
-import { isJust } from '~/util/maybe';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { PropertiesPanelEmpty } from './emptyPanel';
+import { StylesSection } from './styleTab';
 
 /** Panel element responsible for rendering chart configuration sections. */
 export const PropertiesPanel = () => {

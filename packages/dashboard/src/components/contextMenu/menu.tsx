@@ -10,8 +10,8 @@ import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
-import { useClickOutside } from '~/hooks/useClickOutside';
-import type { Position } from '~/types';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import type { Position } from '../../types';
 import './menu.css';
 
 export type MenuProps = {
