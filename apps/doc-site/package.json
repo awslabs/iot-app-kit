@@ -37,6 +37,11 @@
   },
   "dependencies": {
     "@iot-app-kit/core": "*",
-    "@iot-app-kit/react-components": "*"
+    "@iot-app-kit/react-components": "*",
+    "@iot-app-kit/dashboard": "*",
+    "msw": "^2.6.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
