@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { KPI, useAssistant } from '@iot-app-kit/react-components';
 import { mockAlarmData, mockSinWaveData } from '@iot-app-kit/testing-util';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { type Meta, type StoryObj } from '@storybook/react';
+import { useEffect } from 'react';
 import { MockInvokeAssistant } from '../../mockAssistantAPI';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
@@ -84,10 +84,14 @@ export const Alarm: Story = {
 
     return (
       <div
-        style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+        style={{
+          width: '300px',
+          height: '200px',
+          border: '1px solid lightgrey',
+        }}
       >
-        <KPI 
-          {...props} 
+        <KPI
+          {...props}
           assistant={{
             client,
             enabled: true,
@@ -102,10 +106,10 @@ export const Alarm: Story = {
                   target: 'widget',
                   utterance:
                     'generate a summary and return the response in markdown format.',
-                  context: getContextByComponent(event.sourceComponentId)
+                  context: getContextByComponent(event.sourceComponentId),
                 });
               }
-            }
+            },
           }}
         />
       </div>
