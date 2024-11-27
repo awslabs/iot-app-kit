@@ -10,10 +10,10 @@
   "type": "module",
   "main": "./dist/cjs/src/index.js",
   "module": "./dist/esm/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "types": "./dist/esm/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
+      "types": "./dist/esm/src/index.d.ts",
       "require": "./dist/cjs/src/index.js",
       "import": "./dist/esm/src/index.js",
       "default": "./dist/esm/src/index.js"

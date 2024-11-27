@@ -14,10 +14,10 @@
   "types": "./dist/esm/build.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js"
+      "types": "./dist/esm/build.d.ts",
+      "require": "./dist/cjs/build.js",
+      "import": "./dist/esm/build.js",
+      "default": "./dist/esm/build.js"
     }
   },
   "bin": {
