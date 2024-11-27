@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload folder
-          path: packages/doc-site/storybook-static
+          path: apps/doc-site/storybook-static
 
       - name: Deploy to GitHub Pages
         id: deployment
