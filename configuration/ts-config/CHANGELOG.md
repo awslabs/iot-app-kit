@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.2.0 (2024-11-28)
+
+
+### Miscellaneous Chores
+
+* **ts-config:** Synchronize iot-app-kit versions
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/ts-config-v12.0.0...ts-config-v12.1.0) (2024-11-20)
 
 

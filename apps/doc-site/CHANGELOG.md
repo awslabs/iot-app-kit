@@ -1,5 +1,25 @@
 # Changelog
 
+## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.1.0...doc-site-v12.2.0) (2024-11-28)
+
+
+### Bug Fixes
+
+* 1 ([f5c414d](https://github.com/awslabs/iot-app-kit/commit/f5c414d66f851ccd4f75dca9efdc0691275985b7))
+* doc site assistant pages ([92de77f](https://github.com/awslabs/iot-app-kit/commit/92de77f3eda9de22cc076fe8bda41a51cff541fc))
+* doc site import ([030523b](https://github.com/awslabs/iot-app-kit/commit/030523bcdb2fedfccb197ba5c747f36ebf1904cf))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.2.0
+    * @iot-app-kit/react-components bumped from * to 12.2.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from * to 12.2.0
+    * eslint-config-iot-app-kit bumped from * to 12.2.0
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.0.0...doc-site-v12.1.0) (2024-11-20)
 
 

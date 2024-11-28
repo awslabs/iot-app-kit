@@ -1,5 +1,34 @@
 # Changelog
 
+## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.1.0...dashboard-v12.2.0) (2024-11-28)
+
+
+### Features
+
+* improve prompt engering for assistant dashboard ([f3a1a24](https://github.com/awslabs/iot-app-kit/commit/f3a1a24c6d27f92cdd518527806289b8d53f3b91))
+
+
+### Bug Fixes
+
+* assistant failing to fetch ([bbe3123](https://github.com/awslabs/iot-app-kit/commit/bbe3123771808e9bb1db6a0a52479380c692ff6b))
+* dashboard editor grid dot ([2b760e3](https://github.com/awslabs/iot-app-kit/commit/2b760e375002db886377810bf0cc0fa705ff3f22))
+* disable chatbot button when assistant is loading, improve error messages ([24e8dcb](https://github.com/awslabs/iot-app-kit/commit/24e8dcb805940bd3426029f8699e1b775582d2f2))
+* type-fest dep ([7afa99d](https://github.com/awslabs/iot-app-kit/commit/7afa99d2cc0d1a1565d30d52c8eaa94bbe9270af))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.2.0
+    * @iot-app-kit/core-util bumped from * to 12.2.0
+    * @iot-app-kit/react-components bumped from * to 12.2.0
+    * @iot-app-kit/source-iotsitewise bumped from * to 12.2.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from * to 12.2.0
+    * @iot-app-kit/ts-config bumped from * to 12.2.0
+    * eslint-config-iot-app-kit bumped from * to 12.2.0
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.0.0...dashboard-v12.1.0) (2024-11-20)
 
 

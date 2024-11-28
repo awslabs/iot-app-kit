@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/core-v12.1.0...core-v12.2.0) (2024-11-28)
+
+
+### Bug Fixes
+
+* build conflicts ([ab27596](https://github.com/awslabs/iot-app-kit/commit/ab2759601829e475101026485a860665fd1dd4f8))
+* fix time series data hook reactivity ([4f307ff](https://github.com/awslabs/iot-app-kit/commit/4f307ffa3f9b6be60c2b34a86af5809f299700f2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from * to 12.2.0
+    * eslint-config-iot-app-kit bumped from * to 12.2.0
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/core-v12.0.0...core-v12.1.0) (2024-11-20)
 
 

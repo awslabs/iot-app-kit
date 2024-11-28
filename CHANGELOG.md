@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.1.0...root-v12.2.0) (2024-11-28)
+
+
+### Features
+
+* improve prompt engering for assistant dashboard ([f3a1a24](https://github.com/awslabs/iot-app-kit/commit/f3a1a24c6d27f92cdd518527806289b8d53f3b91))
+
+
+### Bug Fixes
+
+* 1 ([f5c414d](https://github.com/awslabs/iot-app-kit/commit/f5c414d66f851ccd4f75dca9efdc0691275985b7))
+* assistant failing to fetch ([bbe3123](https://github.com/awslabs/iot-app-kit/commit/bbe3123771808e9bb1db6a0a52479380c692ff6b))
+* build conflicts ([ab27596](https://github.com/awslabs/iot-app-kit/commit/ab2759601829e475101026485a860665fd1dd4f8))
+* dashboard editor grid dot ([2b760e3](https://github.com/awslabs/iot-app-kit/commit/2b760e375002db886377810bf0cc0fa705ff3f22))
+* disable chatbot button when assistant is loading, improve error messages ([24e8dcb](https://github.com/awslabs/iot-app-kit/commit/24e8dcb805940bd3426029f8699e1b775582d2f2))
+* doc site assistant pages ([92de77f](https://github.com/awslabs/iot-app-kit/commit/92de77f3eda9de22cc076fe8bda41a51cff541fc))
+* doc site import ([030523b](https://github.com/awslabs/iot-app-kit/commit/030523bcdb2fedfccb197ba5c747f36ebf1904cf))
+* exports ([8dc01a2](https://github.com/awslabs/iot-app-kit/commit/8dc01a2eac39905a6c1c0304082afc091bc27006))
+* fix time series data hook reactivity ([4f307ff](https://github.com/awslabs/iot-app-kit/commit/4f307ffa3f9b6be60c2b34a86af5809f299700f2))
+* missing package-lock.json updates ([a37fafc](https://github.com/awslabs/iot-app-kit/commit/a37fafc8a5df25036f9b4d378add6b047a46d8d8))
+* **react-components:** allow vertical legend reszing when title present on widget ([5734ceb](https://github.com/awslabs/iot-app-kit/commit/5734ceb8cc888486406ce1c69bdc7b302b78001f))
+* release action ([00d5849](https://github.com/awslabs/iot-app-kit/commit/00d58498fb05b0a19028325a74539fd123359ff0))
+* release-please-manifest ([bd667e6](https://github.com/awslabs/iot-app-kit/commit/bd667e6222b5053e4ff7d446aca77774c9f32747))
+* remove lint and tests from publish-packages command ([a99ecec](https://github.com/awslabs/iot-app-kit/commit/a99ececac26392d5583e0e99a52d988ee89f0765))
+* type-fest dep ([7afa99d](https://github.com/awslabs/iot-app-kit/commit/7afa99d2cc0d1a1565d30d52c8eaa94bbe9270af))
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.0.0...root-v12.1.0) (2024-11-20)
 
 
