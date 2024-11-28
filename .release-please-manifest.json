@@ -1,7 +1,7 @@
 {
   "packages/core": "12.1.0",
   "packages/dashboard": "12.1.0",
-  "packages/doc-site": "12.1.0",
+  "apps/doc-site": "12.1.0",
   "packages/core-util": "12.1.0",
   "packages/react-components": "12.1.0",
   "packages/scene-composer": "12.1.0",
