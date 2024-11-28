@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v12.1.0...react-components-v12.2.0) (2024-11-28)
+
+
+### Features
+
+* improve prompt engering for assistant dashboard ([f3a1a24](https://github.com/awslabs/iot-app-kit/commit/f3a1a24c6d27f92cdd518527806289b8d53f3b91))
+
+
+### Bug Fixes
+
+* disable chatbot button when assistant is loading, improve error messages ([24e8dcb](https://github.com/awslabs/iot-app-kit/commit/24e8dcb805940bd3426029f8699e1b775582d2f2))
+* fix time series data hook reactivity ([4f307ff](https://github.com/awslabs/iot-app-kit/commit/4f307ffa3f9b6be60c2b34a86af5809f299700f2))
+* **react-components:** allow vertical legend reszing when title present on widget ([5734ceb](https://github.com/awslabs/iot-app-kit/commit/5734ceb8cc888486406ce1c69bdc7b302b78001f))
+* type-fest dep ([7afa99d](https://github.com/awslabs/iot-app-kit/commit/7afa99d2cc0d1a1565d30d52c8eaa94bbe9270af))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.2.0
+    * @iot-app-kit/core-util bumped from * to 12.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from * to 12.2.0
+  * devDependencies
+    * @iot-app-kit/core bumped from * to 12.2.0
+    * @iot-app-kit/source-iotsitewise bumped from * to 12.2.0
+    * @iot-app-kit/testing-util bumped from * to 12.2.0
+    * @iot-app-kit/ts-config bumped from * to 12.2.0
+    * eslint-config-iot-app-kit bumped from * to 12.2.0
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v12.0.0...react-components-v12.1.0) (2024-11-20)
 
 

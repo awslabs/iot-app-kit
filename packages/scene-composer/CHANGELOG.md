@@ -4,6 +4,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v12.1.0...scene-composer-v12.2.0) (2024-11-28)
+
+
+### Bug Fixes
+
+* build conflicts ([ab27596](https://github.com/awslabs/iot-app-kit/commit/ab2759601829e475101026485a860665fd1dd4f8))
+* exports ([8dc01a2](https://github.com/awslabs/iot-app-kit/commit/8dc01a2eac39905a6c1c0304082afc091bc27006))
+* type-fest dep ([7afa99d](https://github.com/awslabs/iot-app-kit/commit/7afa99d2cc0d1a1565d30d52c8eaa94bbe9270af))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.2.0
+    * @iot-app-kit/react-components bumped from * to 12.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from * to 12.2.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from * to 12.2.0
+    * eslint-config-iot-app-kit bumped from * to 12.2.0
+
 ## [12.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v12.0.0...scene-composer-v12.1.0) (2024-11-20)
 
 

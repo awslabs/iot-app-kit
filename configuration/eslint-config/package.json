@@ -31,5 +31,6 @@
     "@types/node": "^18.16.18",
     "eslint-import-resolver-typescript": "^3.6.0",
     "typescript": "^5.5.4"
-  }
+  },
+  "version": "12.2.0"
 }
