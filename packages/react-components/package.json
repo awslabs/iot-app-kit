@@ -120,7 +120,7 @@
     "@iot-app-kit/charts-core": "^2.1.2",
     "@iot-app-kit/core": "12.2.0",
     "@iot-app-kit/core-util": "12.2.0",
-    "@iot-app-kit/helpers": "*",
+    "@iot-app-kit/helpers": "12.2.0",
     "@iot-app-kit/source-iottwinmaker": "12.2.0",
     "@tanstack/react-query": "^5.32.1",
     "autosize": "^6.0.1",
