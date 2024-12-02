@@ -157,7 +157,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@iot-app-kit/core": "12.2.0",
-    "@iot-app-kit/helpers": "*",
     "@iot-app-kit/react-components": "12.2.0",
     "@iot-app-kit/source-iottwinmaker": "12.2.0",
     "@matterport/r3f": "0.2.7",
