@@ -24,8 +24,6 @@ const createUncurried = <T>(
 export const create = (<T>(
   stateCreator: ZustandExportedTypes.StateCreator<T>
 ) => {
-  console.log('zustand create mock');
-
   // to support curried version of create
   return typeof stateCreator === 'function'
     ? createUncurried(stateCreator)

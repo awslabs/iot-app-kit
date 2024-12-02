@@ -15,14 +15,8 @@ import {
 } from '@cloudscape-design/design-tokens';
 import { useAssistant } from '@iot-app-kit/react-components';
 import { type CSSProperties, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAssistantStore } from '../../features/assistant/useAssistantStore';
 import { type DashboardMessages } from '../../messages';
-import {
-  onAssistantCleanWidgetsSelectionAction,
-  onToggleAssistantModeAction,
-  onToggleChatbotAction,
-} from '../../store/actions';
-import type { DashboardState } from '../../store/state';
 import { VerticalDivider } from '../divider/verticalDivider';
 import { AssistantButton } from './assistantButton';
 import './assistantFloatingMenu.css';
@@ -40,16 +34,13 @@ export const AssistantFloatingMenu = ({
   width: number;
   messageOverrides: DashboardMessages;
 }) => {
-  const dispatch = useDispatch();
   const [isAssistantLoading, setAssistantLoading] = useState<boolean>(false);
-  const { startAction, clearAll, messages } = useAssistant({});
-  const assistantState = useSelector(
-    (state: DashboardState) => state.assistant
-  );
+  const { clearAll, messages } = useAssistant({});
+  const selectedQueries = useAssistantStore((store) => store.selectedQueries)
+  const isChatbotOpen = useAssistantStore((store) => store.isChatbotOpen)
+  const mode = useAssistantStore((store) => store.mode)
   const { assistant } = messageOverrides;
-  const rightOffset = assistantState.isChatbotOpen
-    ? CHATBOT_OPENED_WIDTH
-    : CHATBOT_CLOSED_WIDTH;
+  const rightOffset = isChatbotOpen ? CHATBOT_OPENED_WIDTH : CHATBOT_CLOSED_WIDTH;
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
@@ -65,39 +56,8 @@ export const AssistantFloatingMenu = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleToggleAssistantMode = () => {
-    dispatch(
-      onToggleAssistantModeAction({
-        mode: assistantState.mode === 'on' ? 'off' : 'on',
-      })
-    );
-  };
-
-  const handleClearAll = () => {
-    assistantState.selectedQueries
-      .filter((item) => ['chart', 'table'].includes(item.widgetType))
-      .forEach((query) => {
-        startAction({
-          target: 'widget',
-          componentId: query.widgetId,
-          action: 'clear-selection',
-        });
-      });
-    dispatch(onAssistantCleanWidgetsSelectionAction());
-  };
-
-  const handleSummary = () => {
-    dispatch(
-      onToggleChatbotAction({
-        open: true,
-        callerComponentId: 'dashboard',
-        action: 'summarize',
-      })
-    );
-  };
-
   let totalSelected = 0;
-  assistantState.selectedQueries.forEach(
+  selectedQueries.forEach(
     (q) => (totalSelected += q.selectedProperties)
   );
   const showAlert = totalSelected > MAX_ITEMS_SELECTED;
@@ -127,12 +87,11 @@ export const AssistantFloatingMenu = ({
         <div
           style={{
             display: 'flex',
-            justifyContent:
-              assistantState.mode === 'on' ? 'space-between' : 'end',
+            justifyContent: mode === 'on' ? 'space-between' : 'end',
             marginLeft: spaceStaticXs,
           }}
         >
-          {assistantState.mode === 'on' ? (
+          {mode === 'on' ? (
             <Box variant='span' fontSize='heading-xs'>
               {assistant.floatingMenu.propertySelection}
             </Box>
@@ -142,7 +101,7 @@ export const AssistantFloatingMenu = ({
             data-testid='assistant-menu-buttons-container'
             style={{ gap: `${spaceStaticS}`, marginLeft: spaceStaticXs }}
           >
-            {assistantState.mode === 'on' ? (
+            {mode === 'on' ? (
               <div
                 className='iot-app-kit-assistant-menu-buttons'
                 style={menuStyles}
@@ -176,8 +135,6 @@ export const AssistantFloatingMenu = ({
                   styles={{ width: '1px', height: spaceStaticS }}
                 />
                 <AssistantFloatingMenuCenterButton
-                  label={assistant.floatingMenu.buttonClearAll}
-                  onClick={handleClearAll}
                   disabled={totalSelected === 0}
                 />
                 <VerticalDivider
@@ -191,9 +148,6 @@ export const AssistantFloatingMenu = ({
                   }}
                 />
                 <AssistantFloatingMenuRightButton
-                  messageOverrides={messageOverrides}
-                  label={assistant.floatingMenu.buttonGenerateSummary}
-                  onClick={handleSummary}
                   disabled={
                     totalSelected === 0 ||
                     totalSelected > MAX_ITEMS_SELECTED ||
@@ -202,10 +156,7 @@ export const AssistantFloatingMenu = ({
                 />
               </div>
             ) : null}
-            <AssistantButton
-              label={assistant.floatingMenu.buttonAIAssistant}
-              onClick={handleToggleAssistantMode}
-            />
+            <AssistantButton />
           </div>
         </div>
       </div>

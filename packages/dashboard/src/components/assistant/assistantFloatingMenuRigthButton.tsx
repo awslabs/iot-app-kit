@@ -1,3 +1,4 @@
+import Icon from '@cloudscape-design/components/icon';
 import Popover from '@cloudscape-design/components/popover';
 import {
   borderRadiusButton,
@@ -8,23 +9,25 @@ import {
   spaceStaticXxl,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
-import { type HTMLAttributes } from 'react';
-import type { DashboardMessages } from '../../messages';
-import { AssistantIcon } from './assistantIcon';
+import { useAssistantStore } from '../../features/assistant/useAssistantStore';
 
-interface AssistantFloatingMenuRightButtonProps
-  extends HTMLAttributes<HTMLButtonElement> {
-  label: string;
-  messageOverrides: DashboardMessages;
+interface AssistantFloatingMenuRightButtonProps {
   disabled?: boolean;
 }
 
 export const AssistantFloatingMenuRightButton = ({
-  label,
-  onClick,
   disabled,
-  messageOverrides,
 }: AssistantFloatingMenuRightButtonProps) => {
+  const toggleChatbot = useAssistantStore((store) => store.toggleChatbot)
+
+  const handleSummary = () => {
+    toggleChatbot({
+      open: true,
+      callerComponentId: 'dashboard',
+      action: 'summarize',
+    })
+  };
+
   const buttonComponent = (
     <button
       className='iot-app-kit-assistant-menu-right-button'
@@ -39,8 +42,8 @@ export const AssistantFloatingMenuRightButton = ({
             }
           : {}),
       }}
-      aria-label={label}
-      onClick={disabled ? () => {} : onClick}
+      aria-label='Generate summary'
+      onClick={disabled ? () => {} : handleSummary}
     >
       <div
         style={{
@@ -50,15 +53,11 @@ export const AssistantFloatingMenuRightButton = ({
           flexWrap: 'nowrap',
         }}
       >
-        <AssistantIcon
-          role='img'
-          ariaLabel={label}
-          style={{ marginTop: spaceStaticXxs }}
-        />
+        <Icon name="gen-ai" />
         <span
           style={{ fontSize: fontSizeBodyM, fontWeight: fontWeightHeadingM }}
         >
-          {label}
+          Generate summary
         </span>
       </div>
     </button>
@@ -67,9 +66,7 @@ export const AssistantFloatingMenuRightButton = ({
   if (disabled) {
     return (
       <Popover
-        content={
-          messageOverrides.assistant.floatingMenu.buttonGenerateSummaryPopover
-        }
+        content='Select the widgets or properties below to include them to generate an AI summary.'
         triggerType='custom'
         position='left'
       >

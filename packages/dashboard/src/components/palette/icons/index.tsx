@@ -1,16 +1,6 @@
 import Box from '@cloudscape-design/components/box';
-import {
-  borderRadiusPopover,
-  colorBackgroundSegmentHover,
-  colorBorderButtonNormalDisabled,
-  colorTextBodyDefault,
-  fontSizeHeadingS,
-  spaceStaticM,
-  spaceStaticS,
-} from '@cloudscape-design/design-tokens';
 import type { DragEventHandler, FC } from 'react';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useEffect } from 'react';
 import './index.css';
 
 type PaletteComponentIconProps = {
@@ -18,59 +8,16 @@ type PaletteComponentIconProps = {
   widgetName: string;
 };
 
-const Tooltip = styled.div<{ hover: boolean }>`
-  ${({ hover }) => `visibility: ${hover ? 'visible' : 'hidden'};`}
-  font-size: ${fontSizeHeadingS};
-  color: ${colorTextBodyDefault};
-  background-color: ${colorBackgroundSegmentHover};
-  padding: ${spaceStaticS} ${spaceStaticM};
-  border-radius: ${borderRadiusPopover};
-  border-width: 2px;
-  border-color: ${colorBorderButtonNormalDisabled};
-  box-shadow: 2px 2px 2px ${colorBorderButtonNormalDisabled};
-  position: absolute;
-  left: 50%;
-  top: 105%;
-  border-style: solid;
-  z-index: 9;
-  transform: translateX(-50%);
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    left: 50%;
-    right: 50%;
-    margin: auto;
-    margin-left: -10px;
-    transform: rotate(180deg);
-  }
-  &::before {
-    bottom: 92%;
-    border-top: 11px solid ${colorBorderButtonNormalDisabled};
-    margin-bottom: 5px;
-  }
-  &::after {
-    bottom: 100%;
-    border-top: 10px solid ${colorBackgroundSegmentHover};
-    margin-top: -2px;
-    z-index: 1;
-  }
-`;
 const PaletteComponentIcon: FC<PaletteComponentIconProps> = ({
   Icon,
   widgetName,
 }) => {
-  const [hover, setHover] = useState<boolean>(false);
-
   // Without this, Firefox widget drag and drop does not work correctly.
   const ignoreDragStart: DragEventHandler = (event) => event.preventDefault();
 
   const handleEscape = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       event.stopPropagation();
-      setHover(false);
     }
   };
 
@@ -84,16 +31,9 @@ const PaletteComponentIcon: FC<PaletteComponentIconProps> = ({
   return (
     <span
       onDragStart={ignoreDragStart}
-      onMouseEnter={() => {
-        setHover(true);
-      }}
-      onMouseLeave={() => {
-        setHover(false);
-      }}
     >
       <Box padding='xxs' className='palette-component-icon ripple'>
         <Icon />
-        <Tooltip {...{ hover }}>{widgetName}</Tooltip>
       </Box>
     </span>
   );

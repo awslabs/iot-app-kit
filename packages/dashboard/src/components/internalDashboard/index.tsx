@@ -1,4 +1,4 @@
-import { ContentLayout } from '@cloudscape-design/components';
+import { ContentLayout, Icon } from '@cloudscape-design/components';
 import Box from '@cloudscape-design/components/box';
 import { I18nProvider } from '@cloudscape-design/components/i18n';
 import messages from '@cloudscape-design/components/i18n/messages/all.all';
@@ -73,7 +73,6 @@ import { useSyncDashboardConfiguration } from '../../hooks/useSyncDashboardConfi
 import { parseViewport } from '../../util/parseViewport';
 import Actions from '../actions';
 import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
-import { AssistantIcon } from '../assistant/assistantIcon';
 import { Chatbot } from '../assistant/chatbot';
 import './index.css';
 
@@ -496,13 +495,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           }
           rightPaneOptions={{
             icon: (
-              <AssistantIcon
-                role='img'
-                ariaLabel={
-                  DefaultDashboardMessages.assistant.floatingMenu
-                    .buttonAIAssistant
-                }
-              />
+              <Icon name="gen-ai" />
             ),
             iconBackground: colorForegroundControlReadOnly,
             headerText:

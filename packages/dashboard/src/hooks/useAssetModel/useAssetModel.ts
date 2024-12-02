@@ -1,8 +1,8 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { createNonNullableList } from '@iot-app-kit/helpers/lists/createNonNullableList';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import invariant from 'tiny-invariant';
-import { createNonNullableList } from '../../helpers/lists/createNonNullableList';
 import { type DashboardState } from '../../store/state';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
 import { DescribeAssetModelRequest } from './describeAssetModelRequest';

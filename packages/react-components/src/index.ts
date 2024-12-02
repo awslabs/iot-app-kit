@@ -12,7 +12,7 @@ export { KnowledgeGraph } from './components/knowledge-graph';
 export type {
   EdgeData,
   IQueryData,
-  NodeData,
+  NodeData
 } from './components/knowledge-graph';
 export { KPI } from './components/kpi/kpi';
 export { LineChart } from './components/line-chart';
@@ -20,13 +20,12 @@ export { ScatterChart } from './components/scatter-chart';
 export { StatusTimeline } from './components/status-timeline';
 export { Status } from './components/status/status';
 export { Table } from './components/table';
-export { Tooltip } from './components/tooltip';
 export { RequestVideoUpload, VideoPlayer } from './components/video-player';
 
 export { WebglContext } from '@iot-app-kit/charts';
 export {
   AppKitConfig,
-  DEFAULT_APP_KIT_CONFIG,
+  DEFAULT_APP_KIT_CONFIG
 } from './components/iot-app-kit-config';
 export { TimeSync } from './components/time-sync';
 export { TimeSelection } from './components/time-sync/timeSelection';
@@ -39,7 +38,7 @@ export { useGetConfigValue } from './store/index';
 export {
   Chart,
   type ChartOptions,
-  type ChartStyleSettingsOptions,
+  type ChartStyleSettingsOptions
 } from './components/chart';
 
 export { AnomalyChart } from './components/anomaly-chart';
@@ -48,13 +47,13 @@ export type {
   AnomalyChartDataSources,
   AnomalyChartOptions,
   AnomalyChartQueryOption,
-  AnomalyChartWithData,
+  AnomalyChartWithData
 } from './components/anomaly-chart/types';
 
 export type {
   TableColumnDefinition,
   TableItem,
-  TableItemRef,
+  TableItemRef
 } from './components/table';
 
 export { formatDate } from './utils/time';
@@ -77,7 +76,7 @@ export {
   type SelectedResources,
   type SelectionMode,
   type TimeSeriesExplorerProps,
-  type TimeSeriesResource,
+  type TimeSeriesResource
 } from './components/resource-explorers';
 
 export { type TableResourceDefinition } from './components/resource-explorers/types/table';
@@ -92,18 +91,19 @@ export type {
   AssistantActionTarget,
   AssistantActionType,
   AssistantProperty,
-  AssistantWidgetTypes,
+  AssistantWidgetTypes
 } from './common/assistantProps';
 export { AssistantChatbot } from './components/assistant-chatbot';
 export {
   EVENT_SUMMARY_DEFAULT_UTTERANCE,
-  SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+  SITUATION_SUMMARY_DEFAULT_UTTERANCE
 } from './components/assistant-panels/constants';
 export { MessageType } from './hooks/useAssistant/types';
 export type {
   AssistantAction,
   IMessage,
-  IMessageParser,
+  IMessageParser
 } from './hooks/useAssistant/types';
 export { useAssistant } from './hooks/useAssistant/useAssistant';
 export { useAssistantContext } from './hooks/useAssistantContext/useAssistantContext';
+

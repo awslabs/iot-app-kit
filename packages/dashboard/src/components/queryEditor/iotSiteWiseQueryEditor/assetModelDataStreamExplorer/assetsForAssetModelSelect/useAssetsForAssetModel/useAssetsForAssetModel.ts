@@ -1,10 +1,10 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { createNonNullableList } from '@iot-app-kit/helpers/lists/createNonNullableList';
 import {
   type QueryFunctionContext,
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
-import { createNonNullableList } from '../../../../../../helpers/lists/createNonNullableList';
 import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
 

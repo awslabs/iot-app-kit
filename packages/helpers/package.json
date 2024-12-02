@@ -1,9 +1,11 @@
 {
   "name": "@iot-app-kit/helpers",
+  "version": "12.2.0",
   "private": true,
   "type": "module",
   "exports": {
-    "./constants/*": "./src/constants/*.ts"
+    "./constants/*": "./src/constants/*.ts",
+    "./lists/*": "./src/lists/*.ts"
   },
   "scripts": {
     "clean": "rimraf .turbo .cache",

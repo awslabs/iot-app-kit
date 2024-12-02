@@ -1,10 +1,11 @@
-import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
+import { Box, SpaceBetween } from '@cloudscape-design/components';
 import {
   colorChartsLineGrid,
   spaceScaledXs,
   spaceScaledXxxl,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { SecondaryButton } from '@iot-app-kit/atoms/button/secondary';
 import { getPlugin } from '@iot-app-kit/core';
 import isEqual from 'lodash-es/isEqual';
 import { useState } from 'react';
@@ -12,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onSelectWidgetsAction, onToggleReadOnly } from '../../store/actions';
 import { type DashboardSave } from '../../types';
 import { convertToDashboardConfiguration } from '../../util/convertToDashbaoardConfiguration';
-import CustomOrangeButton from '../customOrangeButton';
 import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
 import DashboardSettings from './settings';
 
@@ -96,24 +96,10 @@ const Actions: React.FC<ActionsProps> = ({
         <SpaceBetween size='s' direction='horizontal' alignItems='end'>
           <RefreshRateDropDown />
           {editable && <Divider />}
-          {onSave && editable && defaultToolbar && (
-            <Button onClick={handleOnSave}>Save</Button>
-          )}
           {editable && defaultToolbar && (
-            <CustomOrangeButton
-              title={readOnly ? 'Edit' : 'Preview'}
-              handleClick={handleOnReadOnly}
-            />
+            <SecondaryButton onClick={handleOnReadOnly}>Preview</SecondaryButton>
           )}
-          {editable && !readOnly && (
-            <Button
-              onClick={() => setSettingVisibility(true)}
-              iconName='settings'
-              variant='icon'
-              data-testid='dashboard-visibility-button'
-              ariaLabel='Dashboard settings'
-            />
-          )}
+
           <DashboardSettings
             isVisible={dashboardSettingsVisible}
             onClose={() => setSettingVisibility(false)}

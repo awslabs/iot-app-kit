@@ -1,5 +1,6 @@
 import { handlers } from '@iot-app-kit/data-mocked/handers';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import 'tailwindcss/tailwind.css';
 
 initialize();
 

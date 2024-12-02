@@ -1,20 +1,17 @@
-import { type ReactNode } from 'react';
-
-import './index.css';
-import {
-  colorBackgroundLayoutMain,
-  colorBackgroundSegmentActive,
-  colorBorderDividerDefault,
-  spaceContainerHorizontal,
-  spaceStaticL,
-  spaceStaticXs,
-  spaceStaticXxxs,
-} from '@cloudscape-design/design-tokens';
 import Box, { type BoxProps } from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import { type IconProps } from '@cloudscape-design/components/icon';
+import {
+  colorBackgroundLayoutMain,
+  colorBorderDividerDefault,
+  spaceStaticL,
+  spaceStaticXs,
+  spaceStaticXxxs
+} from '@cloudscape-design/design-tokens';
+import { IconButton } from '@iot-app-kit/atoms/button/icon';
+import { type ReactNode } from 'react';
 import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
-import { Tooltip } from '@iot-app-kit/react-components';
+import './index.css';
 
 type CollapsiblePanelProps = {
   isPanelCollapsed: boolean;
@@ -93,25 +90,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
   );
 
   const collapsedPanel = (
-    <Tooltip
-      content={props.headerText}
-      position={borderSide === 'Left' ? 'left' : 'right'}
-    >
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-      <div
-        style={{
-          backgroundColor: props.iconBackground
-            ? props.iconBackground
-            : colorBackgroundSegmentActive,
-          margin: spaceContainerHorizontal,
-        }}
-        className='side_panels_collapsed_style'
-        onClick={props.onCollapsedPanelClick}
-        data-testid={`collapsed-${props.side}-panel-icon`}
-      >
-        {props.icon}
-      </div>
-    </Tooltip>
+    <IconButton ariaLabel='Settings'  iconName='settings' onClick={props.onCollapsedPanelClick} />
   );
 
   const panel = props.isPanelCollapsed ? collapsedPanel : expandedPanel;

@@ -1,0 +1,37 @@
+{
+  "name": "@iot-app-kit/atoms",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./alert": "./src/alerts/alert.tsx",
+    "./alert/warning": "./src/alerts/warningAlert.tsx",
+    "./button": "./src/buttons/button.tsx",
+    "./button/primary": "./src/buttons/primaryButton.tsx",
+    "./button/secondary": "./src/buttons/secondaryButton.tsx",
+    "./button/tertiary": "./src/buttons/tertiaryButton.tsx",
+    "./button/icon": "./src/buttons/iconButton.tsx",
+    "./dialog": "./src/dialogs/dialog.tsx",
+    "./dialog/footer": "./src/dialogs/dialogFooter.tsx",
+    "./dialog/useDialog": "./src/dialogs/useDialog.ts"
+  },
+  "scripts": {
+    "clean": "rimraf .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
+    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/"
+  },
+  "dependencies": {
+    "@cloudscape-design/components": "3.0.693",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@iot-app-kit/ts-config": "12.2.0",
+    "@types/react": "^18.2.12",
+    "@types/react-dom": "^18.2.5",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint-config-iot-app-kit": "12.2.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.5.4"
+  }
+}

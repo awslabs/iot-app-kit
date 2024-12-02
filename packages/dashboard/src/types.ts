@@ -7,7 +7,7 @@ import type {
 } from '@aws-sdk/client-iotsitewise';
 import type { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
-import type { Viewport } from '@iot-app-kit/core';
+import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import type {
   SiteWiseAlarmAssetModelQuery,
   SiteWiseAlarmQuery,
@@ -19,6 +19,21 @@ import type {
 import type { ReactElement } from 'react';
 import type { PartialDeep } from 'type-fest';
 import type { RefreshRate } from './components/refreshRate/types';
+
+export interface DashboardProps {
+  onDashboardConfigurationChange?: DashboardConfigurationChange;
+  onSave?: DashboardSave;
+  clientConfiguration: DashboardClientConfiguration;
+  dashboardConfiguration: DashboardConfiguration;
+  assistantConfiguration?: AssistantConfiguration;
+  edgeMode?: EdgeMode;
+  toolbar?: DashboardToolbar;
+  initialViewMode?: 'preview' | 'edit';
+  name?: string;
+  onViewportChange?: ViewportChange;
+  currentViewport?: Viewport;
+  timeZone?: string;
+}
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;

@@ -1,5 +1,4 @@
 import type { Anchor } from '../store/actions';
-import { type DashboardState } from '../store/state';
 import type { Position, Rect } from '../types';
 
 const MIN_WIDTH = 1;
@@ -17,7 +16,7 @@ export const resizeSelectionBox: (params: {
   selectionBox: Rect;
   anchor: Anchor;
   vector: Position;
-  grid: DashboardState['grid'];
+  grid: { height: number; width: number };
 }) => Rect = ({
   selectionBox,
   anchor,

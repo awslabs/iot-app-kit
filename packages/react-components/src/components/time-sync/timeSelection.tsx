@@ -1,9 +1,8 @@
-import Button from '@cloudscape-design/components/button';
 import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import DateRangePicker from '@cloudscape-design/components/date-range-picker';
 import FormField from '@cloudscape-design/components/form-field';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-
+import { IconButton } from '@iot-app-kit/atoms/button/icon';
 import {
   dateRangeToViewport,
   getViewportDateRelativeToAbsolute,
@@ -13,7 +12,6 @@ import {
 } from '@iot-app-kit/core-util';
 import { DateTime } from 'luxon';
 import { useViewport } from '../../hooks/useViewport';
-import { Tooltip } from '../tooltip/index';
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   title: string;
@@ -156,20 +154,13 @@ export const TimeSelection = ({
     >
       <SpaceBetween direction='horizontal' size='xxs' alignItems='end'>
         {isPaginationEnabled && (
-          <Tooltip
-            content={`Move back ${
-              viewport && 'duration' in viewport
-                ? viewport.duration
-                : 'selected range'
-            }`}
-            position='bottom'
-            children={
-              <Button
-                iconName='caret-left-filled'
-                onClick={handlePaginateBackward}
-                ariaLabel='Move backward'
-              />
-            }
+          <IconButton
+            type='secondary'
+            iconName='caret-left-filled'
+            onClick={handlePaginateBackward}
+            ariaLabel={`Move backward ${viewport && 'duration' in viewport
+              ? viewport.duration
+              : 'selected range'}`}
           />
         )}
         <FormField label={!hideTitle ? title : ''} data-testid='time-selection'>
@@ -196,20 +187,13 @@ export const TimeSelection = ({
         </FormField>
 
         {isPaginationEnabled && (
-          <Tooltip
-            content={`Move forward ${
-              viewport && 'duration' in viewport
-                ? viewport.duration
-                : 'selected range'
-            }`}
-            position='bottom'
-            children={
-              <Button
-                iconName='caret-right-filled'
-                onClick={handlePaginateForward}
-                ariaLabel='Move forward'
-              />
-            }
+          <IconButton
+            type='secondary'
+            iconName='caret-right-filled'
+            onClick={handlePaginateForward}
+            ariaLabel={`Move forward ${viewport && 'duration' in viewport
+              ? viewport.duration
+              : 'selected range'}`}
           />
         )}
       </SpaceBetween>

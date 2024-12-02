@@ -5,13 +5,13 @@ import Box from '@cloudscape-design/components/box';
 
 import { ExpandableSection } from '@cloudscape-design/components';
 import { getPlugin } from '@iot-app-kit/core';
+import { createNonNullableList } from '@iot-app-kit/helpers/lists/createNonNullableList';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
   type AssetResource,
 } from '@iot-app-kit/react-components';
 import { HorizontalDivider } from '../../../../components/divider/horizontalDivider';
-import { createNonNullableList } from '../../../../helpers/lists/createNonNullableList';
 import { type DashboardWidget } from '../../../../types';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';

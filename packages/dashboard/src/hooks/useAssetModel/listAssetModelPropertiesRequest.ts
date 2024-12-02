@@ -8,7 +8,7 @@ import {
   type ListAssetPropertiesCommandInput,
 } from '@aws-sdk/client-iotsitewise';
 import { type Paginator } from '@aws-sdk/types';
-import { createNonNullableList } from '../../helpers/lists/createNonNullableList';
+import { createNonNullableList } from '@iot-app-kit/helpers/lists/createNonNullableList';
 
 export class listAssetModelPropertiesRequest {
   readonly #listAssetModelPropertyPaginator: Paginator<

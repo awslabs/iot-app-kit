@@ -8,16 +8,10 @@ import {
   useAssistant,
   useAssistantContext,
 } from '@iot-app-kit/react-components';
-import 'animate.css';
 import { type FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+import { useAssistantStore } from '../../features/assistant/useAssistantStore';
 import { type DashboardMessages } from '../../messages';
-import {
-  onCleanAssistantAction,
-  onToggleChatbotAction,
-} from '../../store/actions';
-import { type DashboardState } from '../../store/state';
 import { useClients } from '../dashboard/clientContext';
 import './assistant.css';
 
@@ -29,8 +23,14 @@ export interface AssistantChatbotProps {
 export const Chatbot: FC<AssistantChatbotProps> = (
   props: AssistantChatbotProps
 ) => {
-  const dispatch = useDispatch();
-  const assistant = useSelector((state: DashboardState) => state.assistant);
+  const toggleChatbot = useAssistantStore((store) => store.toggleChatbot)
+  const cleanAssistant = useAssistantStore((store) => store.cleanAssistant)
+  const conversationId = useAssistantStore((store) => store.conversationId)
+  const action = useAssistantStore((store) => store.action)
+  const actionId = useAssistantStore((store) => store.actionId)
+  const callerComponentId = useAssistantStore((store) => store.callerComponentId)
+  const isChatbotOpen = useAssistantStore((store) => store.isChatbotOpen)
+  const selectedQueries = useAssistantStore((store) => store.selectedQueries)
   const { iotSiteWise } = useClients();
   const { getContextByComponent } = useAssistantContext();
   const initialMessages: Array<IMessage> = [
@@ -61,16 +61,16 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   }, [messages.length, initialMessages]);
 
   useEffect(() => {
-    if (assistant.action === 'summarize') {
-      if (assistant.callerComponentId === 'dashboard') {
-        const contexts = assistant.selectedQueries
+    if (action === 'summarize') {
+      if (callerComponentId === 'dashboard') {
+        const contexts = selectedQueries
           .map((item) => getContextByComponent(item.widgetId))
           .join('');
 
         const hasAlarms = contexts.includes('alarmName');
 
         let totalSelected = 0;
-        assistant.selectedQueries.forEach(
+        selectedQueries.forEach(
           (q) => (totalSelected += q.selectedProperties)
         );
 
@@ -78,7 +78,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           generateSummary({
             componentId: 'dashboard',
             target: 'dashboard',
-            conversationId: assistant.conversationId,
+            conversationId,
             context: contexts,
             utterance:
               totalSelected === 1
@@ -89,7 +89,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           generateSummary({
             componentId: 'dashboard',
             target: 'dashboard',
-            conversationId: assistant.conversationId,
+            conversationId,
             context: contexts,
             utterance:
               totalSelected > 1
@@ -101,33 +101,31 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    assistant.conversationId,
-    assistant.callerComponentId,
-    assistant.action,
-    assistant.actionId,
+    conversationId,
+    callerComponentId,
+    action,
+    actionId,
   ]);
 
   const handleSubmit = (utterance: string) => {
-    const contexts = assistant.selectedQueries
+    const contexts = selectedQueries
       .map((item) => getContextByComponent(item.widgetId))
       .join('');
     invokeAssistant({
-      componentId: assistant.callerComponentId ?? 'chatbot',
-      conversationId: assistant.conversationId,
+      componentId: callerComponentId ?? 'chatbot',
+      conversationId,
       utterance,
       context: contexts,
       target: 'dashboard',
     });
   };
 
-  const toggleChatbot = (open: boolean) => {
-    dispatch(
-      onToggleChatbotAction({
-        open,
-        callerComponentId: '',
-        action: 'divedeep',
-      })
-    );
+  const handleToggleChatbot = (open: boolean) => {
+    toggleChatbot({
+      open,
+      callerComponentId: '',
+      action: 'divedeep',
+    })
   };
 
   return (
@@ -135,7 +133,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       height={props.height}
       messages={messages}
       onSubmit={handleSubmit}
-      visible={!!assistant.isChatbotOpen}
+      visible={!!isChatbotOpen}
       header={{
         headerText:
           props.messageOverrides.assistant.floatingMenu.buttonAIAssistant,
@@ -144,9 +142,9 @@ export const Chatbot: FC<AssistantChatbotProps> = (
         onReset: () => {
           clearAll();
           setMessages(initialMessages);
-          dispatch(onCleanAssistantAction());
+          cleanAssistant()
         },
-        onClose: () => toggleChatbot(false),
+        onClose: () => handleToggleChatbot(false),
       }}
     />
   );

@@ -14,9 +14,7 @@ import {
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
 import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
-
-import { Tooltip } from '@iot-app-kit/react-components';
+import { useRef, useState } from 'react';
 import {
   type LineStyles,
   type StyledAssetPropertyQuery,
@@ -273,8 +271,7 @@ const YAxisPropertyConfig = ({
   );
 };
 
-export type StyledPropertyComponentProps = {
-  index: number;
+export interface StyledPropertyComponentProps {
   updateStyle: (newStyles: object) => void;
   assetSummary: AssetSummary;
   property: StyledAssetPropertyQuery;
@@ -283,7 +280,6 @@ export type StyledPropertyComponentProps = {
 };
 
 export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
-  index,
   assetSummary,
   property,
   updateStyle,
@@ -297,18 +293,9 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
 
   const name = property.name;
   const labelRef = useRef<HTMLDivElement | null>(null);
-  const [isNameTruncated, setIsNameTruncated] = useState(false);
   const resetStyles = (styleToReset: object) => {
     updateStyle(styleToReset); // as we add more sections, reset style values here
   };
-
-  useEffect(() => {
-    if (labelRef.current) {
-      setIsNameTruncated(
-        labelRef.current.scrollWidth > labelRef.current.clientWidth
-      );
-    }
-  }, [label]);
 
   const YAxisHeader = (
     <div style={{ display: 'flex', width: '100%' }}>
@@ -319,18 +306,14 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             updateColor={(newColor) => updateStyle({ color: newColor })}
           />
         )}
-        <Tooltip
-          content={isNameTruncated ? label : ''}
-          position={index == 0 ? 'bottom' : 'top'}
-        >
           <div
             className='property-display-label'
             style={{ marginBlock: spaceStaticXxs }}
             ref={labelRef}
+            title={`${name ?? label} ${assetName && `(${assetName})`}`}
           >
             {name ?? label} {assetName && `(${assetName})`}
           </div>
-        </Tooltip>
         <div style={{ float: 'right' }}>
           <Button
             ariaLabel='delete property'
