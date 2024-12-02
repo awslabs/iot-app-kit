@@ -1,8 +1,7 @@
-import {
-  MINUTE_IN_MS,
-  SECOND_IN_MS,
-} from '@iot-app-kit/helpers/constants/time';
 import { defineConfig, devices } from '@playwright/test';
+
+const SECOND_IN_MS = 1000;
+const MINUTE_IN_MS = 60_000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
