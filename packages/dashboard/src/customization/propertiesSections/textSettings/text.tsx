@@ -17,7 +17,7 @@ import {
 } from 'react';
 import ColorPicker from '../shared/colorPicker';
 
-import type { TextWidget } from '~/customization/widgets/types';
+import type { TextWidget } from '../../../customization/widgets/types';
 
 import { StyledExpandableSection } from '../components/styledComponents';
 import './text.css';

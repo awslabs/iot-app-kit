@@ -1,25 +1,25 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
-import type { MouseEvent, FC, ReactNode } from 'react';
+import type { FC, MouseEvent, ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { spaceStaticXs } from '@cloudscape-design/design-tokens';
 import {
-  LEFT_WIDTH_PERCENT,
-  MINIMUM_CENTER_PANE_WIDTH,
-  DEFAULT_SIDE_PANE_WIDTH,
   DEFAULT_COLLAPSED_SIDE_PANE_WIDTH,
-  MAXIMUM_PANES_PROPORTION,
+  DEFAULT_SIDE_PANE_WIDTH,
+  LEFT_WIDTH_PERCENT,
   LEFT_WIDTH_PERCENT_STORAGE_KEY,
-  MINIMUM_LEFT_SIDE_PANE_WIDTH,
   MAXIMUM_LEFT_SIDE_PANE_WIDTH,
+  MAXIMUM_PANES_PROPORTION,
+  MINIMUM_CENTER_PANE_WIDTH,
+  MINIMUM_LEFT_SIDE_PANE_WIDTH,
 } from './constants';
 
-import './index.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useResizeObserver } from 'usehooks-ts';
+import { onToggleChatbotAction } from '../../store/actions/toggleChatbot';
+import type { DashboardState } from '../../store/state';
 import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
 import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
-import { useDispatch, useSelector } from 'react-redux';
-import type { DashboardState } from '~/store/state';
-import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
-import { useResizeObserver } from 'usehooks-ts';
+import './index.css';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {
   const stored = sessionStorage.getItem(key);

@@ -1,4 +1,6 @@
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { Box, ExpandableSection } from '@cloudscape-design/components';
+import { getPlugin } from '@iot-app-kit/core';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
@@ -12,16 +14,14 @@ import {
   type SelectionMode,
 } from '@iot-app-kit/react-components';
 import { useState } from 'react';
+import { type DashboardWidget } from '../../../../types';
+import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { isModeledPropertyInvalid } from '../../helpers/isModeledPropertyInvalid';
+import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
+import { type useQuery } from '../../useQuery';
+import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
-import { getPlugin } from '@iot-app-kit/core';
-import { type useQuery } from '../../useQuery';
-import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
-import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
-import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
-import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
 
 type ModeledExplorerProps = {
   onUpdateQuery: ReturnType<typeof useQuery>[1];

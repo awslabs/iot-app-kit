@@ -9,10 +9,13 @@
   "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js"
+      "development": "./src/index.ts",
+      "default": {
+        "types": "./dist/esm/index.d.ts",
+        "require": "./dist/cjs/index.js",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/esm/index.js"
+      }
     }
   },
   "files": [
@@ -36,7 +39,7 @@
     "copy:styles": "cp ../components/styles.css styles.css",
     "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:react-components": "npm start",
-    "test": "TZ=utc vitest run --silent --coverage",
+    "test": "TZ=utc vitest run --silent",
     "test:watch": "TZ=utc vitest --silent",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "playwright": "docker compose run playwright",

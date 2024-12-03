@@ -1,8 +1,8 @@
+import type { DashboardPlugin } from '../../../customization/api';
+import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
+import type { LineScatterChartWidget } from '../types';
 import LineScatterChartWidgetComponent from './component';
 import LineIcon from './icon';
-import type { DashboardPlugin } from '~/customization/api';
-import type { LineScatterChartWidget } from '../types';
-import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const lineScatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

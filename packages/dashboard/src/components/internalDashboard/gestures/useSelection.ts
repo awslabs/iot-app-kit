@@ -1,10 +1,14 @@
-import { useCallback, useState } from 'react';
 import type * as React from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { onSelectWidgetsAction } from '~/store/actions';
-import { getSelectedWidgets, pointSelect, selectedRect } from '~/util/select';
-import type { DashboardState } from '~/store/state';
-import type { Position, Selection, DashboardWidget } from '~/types';
+import { onSelectWidgetsAction } from '../../../store/actions';
+import type { DashboardState } from '../../../store/state';
+import type { DashboardWidget, Position, Selection } from '../../../types';
+import {
+  getSelectedWidgets,
+  pointSelect,
+  selectedRect,
+} from '../../../util/select';
 import type { DragEvent } from '../../grid';
 import type { Gesture } from './types';
 

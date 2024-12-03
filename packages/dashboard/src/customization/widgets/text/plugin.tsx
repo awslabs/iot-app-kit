@@ -1,11 +1,11 @@
-import TextWidgetComponent from './component';
-import TextIcon from './icon';
-import type { DashboardPlugin } from '~/customization/api';
-import type { TextWidget } from '../types';
+import type { DashboardPlugin } from '../../../customization/api';
 import {
   TEXT_WIDGET_INITIAL_HEIGHT,
   TEXT_WIDGET_INITIAL_WIDTH,
 } from '../constants';
+import type { TextWidget } from '../types';
+import TextWidgetComponent from './component';
+import TextIcon from './icon';
 
 export const textPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

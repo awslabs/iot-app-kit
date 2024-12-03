@@ -1,6 +1,6 @@
-import parse from 'parse-duration';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
-import type { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
+import parse from 'parse-duration';
 
 const DAY_MULTIPLIER = 24;
 const WEEK_MULTIPLIER = DAY_MULTIPLIER * 7;

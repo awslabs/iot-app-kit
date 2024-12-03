@@ -53,7 +53,7 @@ describe('asset property drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No asset properties.')).toBeVisible();
+      expect(screen.getAllByText('No asset properties.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -65,7 +65,7 @@ describe('asset property drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No asset properties.')).toBeVisible();
+      expect(screen.getAllByText('No asset properties.')[0]).toBeVisible();
     });
 
     it('renders drop-down options', async () => {

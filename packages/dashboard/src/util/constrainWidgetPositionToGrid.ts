@@ -1,4 +1,4 @@
-import type { Rect } from '~/types';
+import type { Rect } from '../types';
 
 const max = Math.max;
 const min = Math.min;

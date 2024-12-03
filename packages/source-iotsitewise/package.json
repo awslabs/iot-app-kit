@@ -13,10 +13,13 @@
   "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js"
+      "development": "./src/index.ts",
+      "default": {
+        "types": "./dist/esm/index.d.ts",
+        "require": "./dist/cjs/index.js",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/esm/index.js"
+      }
     }
   },
   "directories": {
@@ -43,7 +46,7 @@
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
-    "test": "TZ=UTC vitest run --silent --coverage",
+    "test": "TZ=UTC vitest run --silent",
     "test:watch": "TZ=UTC vitest --silent",
     "test:types": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",

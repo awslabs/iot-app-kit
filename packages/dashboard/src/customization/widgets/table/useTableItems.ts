@@ -6,7 +6,7 @@ import { type StyleSettingsMap } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
-import { useClients } from '~/components/dashboard/clientContext';
+import { useClients } from '../../../components/dashboard/clientContext';
 import { type SiteWiseQueryConfig } from '../types';
 
 export const useTableItems = (

@@ -1,10 +1,9 @@
-import { transformWidget } from './transformWidget';
+import type { Anchor } from '../store/actions';
+import type { DashboardState } from '../store/state';
+import type { DashboardWidget, Rect } from '../types';
 import { getSelectionBox } from './getSelectionBox';
 import { resizeSelectionBox } from './resizeSelectionBox';
-
-import type { Rect, DashboardWidget } from '~/types';
-import type { Anchor } from '~/store/actions';
-import type { DashboardState } from '~/store/state';
+import { transformWidget } from './transformWidget';
 
 const anchors: Anchor[] = [
   'top',

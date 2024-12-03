@@ -1,13 +1,13 @@
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { AssetPropertyExplorer } from '@iot-app-kit/react-components';
+import { isModeledPropertyInvalid } from '../../../../../components/queryEditor/helpers/isModeledPropertyInvalid';
+import { propertySelectionLabel } from '../../../../../components/queryEditor/helpers/propertySelectionLabel';
+import { type DashboardWidget } from '../../../../../types';
+import { type SelectedAsset } from '../useSelectedAsset';
 import {
   type SelectedAssetModelProperties,
   type UpdateSelectedAssetModelProperties,
 } from '../useSelectedAssetModelProperties';
-import { AssetPropertyExplorer } from '@iot-app-kit/react-components';
-import { type SelectedAsset } from '../useSelectedAsset';
-import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
-import { propertySelectionLabel } from '~/components/queryEditor/helpers/propertySelectionLabel';
-import { type DashboardWidget } from '~/types';
 
 export interface AssetExplorerProps {
   selectedAssetModelProperties: SelectedAssetModelProperties;

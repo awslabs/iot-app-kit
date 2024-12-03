@@ -1,7 +1,7 @@
 import {
   SVGWrapper,
   type SVGWrapperAriaProps,
-} from '~/components/svg/svgWrapper';
+} from '../../../components/svg/svgWrapper';
 
 export const PropertiesPaneIcon = (props: SVGWrapperAriaProps) => {
   return (

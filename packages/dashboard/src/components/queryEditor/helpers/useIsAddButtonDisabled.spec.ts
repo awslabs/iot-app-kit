@@ -1,6 +1,6 @@
-import { type DashboardWidget } from '~/types';
-import { useIsAddButtonDisabled } from './useIsAddButtonDisabled';
+import { type DashboardWidget } from '../../../types';
 import * as hooks from '../useQuery';
+import { useIsAddButtonDisabled } from './useIsAddButtonDisabled';
 
 const createMockWidget = (widgetType: string): DashboardWidget => {
   return {

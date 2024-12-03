@@ -7,9 +7,6 @@
   "compilerOptions": {
     "types": [],
     "outDir": "./dist/esm",
-    "tsBuildInfoFile": "./dist/esm/.tsbuildinfo",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
+    "tsBuildInfoFile": "./dist/esm/.tsbuildinfo"
   }
 }

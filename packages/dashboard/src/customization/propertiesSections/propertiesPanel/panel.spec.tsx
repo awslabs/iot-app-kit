@@ -3,35 +3,35 @@ import {
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import {
   type RenderResult,
   act,
-  waitFor,
   cleanup,
   fireEvent,
   render,
   screen,
+  waitFor,
 } from '@testing-library/react';
-import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import { Provider } from 'react-redux';
 
-import { PropertiesPanel } from './panel';
-import { configureDashboardStore } from '~/store';
-import { type DashboardState } from '~/store/state';
+import { type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
 import { mockAssetDescription } from '../../../../testing/mocks/siteWiseSDK';
-import { type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import { type QueryWidget } from '~/customization/widgets/types';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { type DashboardIotSiteWiseClients } from '~/types';
-import {
-  createMockIoTEventsSDK,
-  createMockSiteWiseSDK,
-} from '@iot-app-kit/testing-util';
-import { ClientContext } from '~/components/dashboard/clientContext';
+import { ClientContext } from '../../../components/dashboard/clientContext';
+import { type QueryWidget } from '../../../customization/widgets/types';
+import { configureDashboardStore } from '../../../store';
+import { type DashboardState } from '../../../store/state';
+import { type DashboardIotSiteWiseClients } from '../../../types';
+import { PropertiesPanel } from './panel';
 
 const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
   assetId: 'mock-id',

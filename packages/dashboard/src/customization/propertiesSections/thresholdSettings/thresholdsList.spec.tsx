@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import { COMPARISON_OPERATOR, type StyledThreshold } from '@iot-app-kit/core';
+import { render } from '@testing-library/react';
+import { type ThresholdWithId } from '../../../customization/settings';
 import { ThresholdsList } from './thresholdsList';
-import { type ThresholdWithId } from '~/customization/settings';
 
 const comparisonOperator1 = COMPARISON_OPERATOR.EQ;
 const mockComparisonOperator1 = { label: '=', value: comparisonOperator1 };

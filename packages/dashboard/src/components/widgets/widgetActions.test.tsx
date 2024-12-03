@@ -1,11 +1,11 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { act, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../testing/mocks';
+import { configureDashboardStore } from '../../store';
 import WidgetActions from './widgetActions';
 
 describe('WidgetActions', () => {

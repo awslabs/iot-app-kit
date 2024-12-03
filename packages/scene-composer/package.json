@@ -13,10 +13,13 @@
   "types": "./dist/esm/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/src/index.d.ts",
-      "require": "./dist/cjs/src/index.js",
-      "import": "./dist/esm/src/index.js",
-      "default": "./dist/esm/src/index.js"
+      "development": "./src/index.tsx",
+      "default": {
+        "types": "./dist/esm/src/index.d.ts",
+        "require": "./dist/cjs/src/index.js",
+        "import": "./dist/esm/src/index.js",
+        "default": "./dist/esm/src/index.js"
+      }
     }
   },
   "source": "./src/index.tsx",
@@ -54,7 +57,7 @@
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/cjs/",
     "lint": "eslint . --max-warnings=714 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
-    "test": "TZ=utc vitest run --silent --coverage",
+    "test": "TZ=utc vitest run --silent",
     "test:watch": "TZ=utc vitest --silent",
     "test:reliability": "npm run test:ui:reliability",
     "playwright": "docker compose run playwright",

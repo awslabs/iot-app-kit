@@ -2,8 +2,8 @@ import {
   type AssetPropertyExplorerProps,
   type AssetPropertyResource,
 } from '@iot-app-kit/react-components';
+import { type DashboardWidget } from '../../../types';
 import { isModeledPropertyInvalid } from './isModeledPropertyInvalid';
-import { type DashboardWidget } from '~/types';
 
 export function propertySelectionLabel(
   selectedItems: AssetPropertyExplorerProps['selectedAssetProperties'],

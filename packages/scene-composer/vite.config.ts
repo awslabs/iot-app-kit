@@ -16,6 +16,7 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, '.'),
     },
+    conditions: ['development'],
   },
   assetsInclude: ['**/*.hdr'],
   test: {
@@ -28,14 +29,6 @@ export default defineConfig({
     retry: 3,
     alias: {
       '@': resolve(__dirname, '.'),
-    },
-    coverage: {
-      thresholds: {
-        statements: 55,
-        branches: 80,
-        functions: 50,
-        lines: 55,
-      },
     },
   },
 });

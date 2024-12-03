@@ -1,8 +1,8 @@
-import { useKeyPress } from '~/hooks/useKeyPress';
-import { type PointClickEvent, type DragEvent, type DropEvent } from './types';
-import { usePointerTracker } from './usePointerTracker';
+import { useKeyPress } from '../../../hooks/useKeyPress';
+import { type DragEvent, type DropEvent, type PointClickEvent } from './types';
 import { useDragMonitor } from './useDragMonitor';
 import { useDropMonitor } from './useDropMonitor';
+import { usePointerTracker } from './usePointerTracker';
 
 type GridDragAndDropProps = {
   readOnly: boolean;

@@ -1,12 +1,12 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { CSVDownloadButton } from './index';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useFetchTimeSeriesData } from '../dashboard/queryContext';
-import { type StyledAssetQuery } from '~/customization/widgets/types';
 import { type DataStream } from '@iot-app-kit/core';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { type StyledAssetQuery } from '../../customization/widgets/types';
+import { useFetchTimeSeriesData } from '../dashboard/queryContext';
+import { CSVDownloadButton } from './index';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -41,9 +41,12 @@ const mockFetchTimeSeriesData = vi.fn(() =>
 vi.mock('../dashboard/queryContext', () => ({
   useFetchTimeSeriesData: vi.fn(() => mockFetchTimeSeriesData),
 }));
-vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
-  fetchListAssetPropertiesMap: vi.fn(),
-}));
+vi.mock(
+  '../../data/listAssetPropertiesMap/fetchListAssetPropertiesMap',
+  () => ({
+    fetchListAssetPropertiesMap: vi.fn(),
+  })
+);
 
 it('console an errors if data has errors', async function () {
   render(

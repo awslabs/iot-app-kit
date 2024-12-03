@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import {
   colorBorderDividerDefault,
   colorTextHeadingDefault,
@@ -6,10 +5,11 @@ import {
   spaceScaledXxxs,
   spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
+import { memo } from 'react';
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
-} from '~/customization/componentLibraryComponentMap';
+} from '../../customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
 import './index.css';
 

@@ -7,9 +7,6 @@
   "compilerOptions": {
     "types": [],
     "outDir": "./dist/cjs",
-    "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
+    "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo"
   }
 }

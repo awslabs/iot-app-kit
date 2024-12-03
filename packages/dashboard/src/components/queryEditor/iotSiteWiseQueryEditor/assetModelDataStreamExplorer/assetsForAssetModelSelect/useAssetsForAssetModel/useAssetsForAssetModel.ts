@@ -3,9 +3,9 @@ import {
   type QueryFunctionContext,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import invariant from 'tiny-invariant';
+import { createNonNullableList } from '../../../../../../helpers/lists/createNonNullableList';
+import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
 
 export interface UseAssetModelsOptions {

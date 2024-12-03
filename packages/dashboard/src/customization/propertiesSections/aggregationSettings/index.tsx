@@ -3,16 +3,16 @@ import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import {
   type FilterPredicate,
   type PropertyLens,
-} from '~/customization/propertiesSection';
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { type LineScatterChartWidget } from '~/customization/widgets/types';
-import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
-import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
-import { type DashboardWidget } from '~/types';
+} from '../../../customization/propertiesSection';
+import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+import { type LineScatterChartWidget } from '../../../customization/widgets/types';
+import { applyAggregationToQuery } from '../../../customization/widgets/utils/assetQuery/applyAggregationToQuery';
+import { applyResolutionToQuery } from '../../../customization/widgets/utils/assetQuery/applyResolutionToQuery';
+import { type DashboardWidget } from '../../../types';
 import { AggregationAndResolutionSection } from '../lineAndScatterStyleSettings/aggregationAndResolutionSection';
 
 import { type SelectProps } from '@cloudscape-design/components';
-import { isJust, maybeWithDefault } from '~/util/maybe';
+import { isJust, maybeWithDefault } from '../../../util/maybe';
 import {
   AGGREGATE_ONLY_AGGREGATION_OPTIONS,
   AGGREGATE_ONLY_RESOLUTION_OPTIONS,

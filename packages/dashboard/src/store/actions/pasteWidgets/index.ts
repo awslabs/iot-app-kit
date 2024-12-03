@@ -2,7 +2,7 @@ import max from 'lodash-es/max';
 import minBy from 'lodash-es/minBy';
 import type { Action } from 'redux';
 import { v4 } from 'uuid';
-import type { DashboardWidget, Position } from '~/types';
+import type { DashboardWidget, Position } from '../../../types';
 import type { DashboardState } from '../../state';
 
 type PasteWidgetsActionPayload = {

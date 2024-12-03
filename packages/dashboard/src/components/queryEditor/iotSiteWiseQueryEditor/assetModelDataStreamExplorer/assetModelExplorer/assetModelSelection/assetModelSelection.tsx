@@ -1,22 +1,22 @@
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
 import Link from '@cloudscape-design/components/link';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import { AssetModelSelect } from './assetModelSelect';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
-import { AssetModelSave } from './assetModelSave';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import {
-  type SelectedAssetModel,
-  type UpdateSelectedAssetModel,
-  useSelectedAssetModel,
-} from '../../useSelectedAssetModel';
+import { HorizontalDivider } from '../../../../../../components/divider/horizontalDivider';
+import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 import {
   type SelectedAsset,
   type UpdateSelectedAsset,
   useSelectedAsset,
 } from '../../useSelectedAsset';
-import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
+import {
+  type SelectedAssetModel,
+  type UpdateSelectedAssetModel,
+  useSelectedAssetModel,
+} from '../../useSelectedAssetModel';
+import { AssetModelSave } from './assetModelSave';
+import { AssetModelSelect } from './assetModelSelect';
 
 type AssetModelSelectionOptions = {
   selectedAssetModel: SelectedAssetModel;

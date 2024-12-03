@@ -1,5 +1,5 @@
 import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
-import type { Anchor } from '~/store/actions';
+import type { Anchor } from '../../store/actions';
 import {
   anchorable,
   gestureable,

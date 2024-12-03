@@ -1,36 +1,36 @@
-import { useEffect, useRef, useState } from 'react';
-import type { FC } from 'react';
 import {
-  Button,
-  SpaceBetween,
   Box,
-  ExpandableSection,
+  Button,
   Checkbox,
-  Toggle,
+  ExpandableSection,
   FormField,
   Input,
+  SpaceBetween,
+  Toggle,
 } from '@cloudscape-design/components';
 import {
   spaceScaledXl,
   spaceStaticXl,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
+import type { FC } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import ColorPicker from '../shared/colorPicker';
+import { Tooltip } from '@iot-app-kit/react-components';
 import {
   type LineStyles,
   type StyledAssetPropertyQuery,
   type YAxisOptions,
-} from '~/customization/widgets/types';
-import { getPropertyDisplay } from './getPropertyDisplay';
-import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
-import { Tooltip } from '@iot-app-kit/react-components';
-import { LineTypeSection } from '../components/lineTypeDropdown';
+} from '../../../customization/widgets/types';
+import type { AssetSummary } from '../../../hooks/useAssetDescriptionQueries';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
+import { LineTypeSection } from '../components/lineTypeDropdown';
+import ColorPicker from '../shared/colorPicker';
+import { getPropertyDisplay } from './getPropertyDisplay';
 
-import './propertyComponent.css';
 import { DataStreamLabelComponent } from '../components/dataStreamLabelComponent';
+import './propertyComponent.css';
 
 const propertiesPadding = {
   paddingLeft: spaceScaledXl,

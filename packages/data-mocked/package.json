@@ -9,7 +9,7 @@
     "./handers": "./src/handlers.ts"
   },
   "scripts": {
-    "clean": "rimraf storybook-static .turbo .cache test-results playwright-report",
+    "clean": "rimraf .turbo .cache",
     "clean:nuke": "npm run clean && rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/"

@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import TextWidgetComponent from './component';
 import * as ReactRedux from 'react-redux';
 import type { TextProperties } from '../types';
+import TextWidgetComponent from './component';
 
-vi.mock('~/store/actions', async () => ({
-  ...(await vi.importActual('~/store/actions')),
+vi.mock('../../../store/actions', async () => ({
+  ...(await vi.importActual('../../../store/actions')),
   onChangeDashboardGridEnabledAction: vi.fn(),
 }));
 
@@ -13,7 +13,7 @@ vi.mock('react-redux', async () => ({
   useDispatch: () => vi.fn(),
 }));
 
-vi.mock('~/customization/hooks/useIsSelected', () => ({
+vi.mock('../../../customization/hooks/useIsSelected', () => ({
   useIsSelected: vi.fn(),
 }));
 

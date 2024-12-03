@@ -1,14 +1,17 @@
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { useDispatch } from 'react-redux';
-import { onUpdateWidgetsAction } from '~/store/actions';
-import { type DashboardWidget, type IoTSiteWiseDataStreamQuery } from '~/types';
-import { applyDefaultStylesToQuery } from '~/customization/widgets/utils/assetQuery/applyDefaultStylesToQuery';
-import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
-import { type QueryWidget } from '~/customization/widgets/types';
-import { assignDefaultRefId } from '~/customization/widgets/utils/assetQuery/assignDefaultRefId';
-import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
-import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
-import { getCurrentAggregationResolution } from '~/customization/widgets/utils/widgetAggregationUtils';
+import { type QueryWidget } from '../../customization/widgets/types';
+import { applyAggregationToQuery } from '../../customization/widgets/utils/assetQuery/applyAggregationToQuery';
+import { applyDefaultStylesToQuery } from '../../customization/widgets/utils/assetQuery/applyDefaultStylesToQuery';
+import { applyResolutionToQuery } from '../../customization/widgets/utils/assetQuery/applyResolutionToQuery';
+import { assignDefaultRefId } from '../../customization/widgets/utils/assetQuery/assignDefaultRefId';
+import { assignDefaultStyles } from '../../customization/widgets/utils/assignDefaultStyleSettings';
+import { getCurrentAggregationResolution } from '../../customization/widgets/utils/widgetAggregationUtils';
+import { useSelectedWidgets } from '../../hooks/useSelectedWidgets';
+import { onUpdateWidgetsAction } from '../../store/actions';
+import {
+  type DashboardWidget,
+  type IoTSiteWiseDataStreamQuery,
+} from '../../types';
 
 type WidgetWithQuery = DashboardWidget<{
   queryConfig: { query: IoTSiteWiseDataStreamQuery };

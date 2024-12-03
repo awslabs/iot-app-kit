@@ -18,6 +18,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "ESNEXT",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "customConditions": ["development"]
   }
 }

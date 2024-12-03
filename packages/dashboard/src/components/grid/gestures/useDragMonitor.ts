@@ -1,15 +1,15 @@
+import { useEffect, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
-import { ItemTypes } from '~/components/dragLayer/itemTypes';
-import { type DragEvent } from './types';
+import { ItemTypes } from '../../../components/dragLayer/itemTypes';
+import { Animator } from '../../../util/animate';
+import { constrainPosition } from './constrainPosition';
 import {
   defaultDelta,
   deltaTracker,
   endTracker,
   startTracker,
 } from './positionTracker';
-import { constrainPosition } from './constrainPosition';
-import { useEffect, useMemo } from 'react';
-import { Animator } from '~/util/animate';
+import { type DragEvent } from './types';
 
 export type DragMonitorProps = {
   dragStart: (e: DragEvent) => void;

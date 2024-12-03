@@ -1,11 +1,11 @@
-import type { FC } from 'react';
-import './legendSection.css';
-import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
-import { AlignmentDropdown } from '../components/alignmentDropdown';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { type ChartLegend } from '~/customization/widgets/types';
+import type { FC } from 'react';
+import { type ChartLegend } from '../../../customization/widgets/types';
+import { AlignmentDropdown } from '../components/alignmentDropdown';
 import { LegendDisplaySection } from '../components/legendDisplaySection';
+import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
+import './legendSection.css';
 
 type LegendSectionOptions = {
   disabled?: boolean;

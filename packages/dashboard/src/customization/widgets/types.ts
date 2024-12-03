@@ -1,29 +1,29 @@
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import type {
   StyleSettingsMap,
   StyledThreshold,
   ThresholdSettings,
 } from '@iot-app-kit/core';
 import type {
+  AssistantProperty,
+  TableColumnDefinition,
+  TableItem,
+} from '@iot-app-kit/react-components';
+import type {
   AssetPropertyQuery,
+  SiteWiseAlarmAssetModelQuery,
+  SiteWiseAlarmQuery,
+  SiteWiseAssetModelQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
-  SiteWiseAssetModelQuery,
-  SiteWiseAlarmQuery,
-  SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardWidget } from '~/types';
+import type { DashboardWidget } from '../../types';
 import type {
   AxisSettings,
   ComplexFontSettings,
   SimpleFontSettings,
   ThresholdWithId,
 } from '../settings';
-import type {
-  AssistantProperty,
-  TableColumnDefinition,
-  TableItem,
-} from '@iot-app-kit/react-components';
-import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {
   source: S;

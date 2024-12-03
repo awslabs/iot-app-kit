@@ -1,8 +1,8 @@
 import { spaceScaledXxxs } from '@cloudscape-design/design-tokens';
 import { useCallback, useEffect, useState } from 'react';
-import { useKeyPress } from '~/hooks/useKeyPress';
-import type { DashboardMessages } from '~/messages';
-import type { Position } from '~/types';
+import { useKeyPress } from '../../hooks/useKeyPress';
+import type { DashboardMessages } from '../../messages';
+import type { Position } from '../../types';
 import {
   DASHBOARD_CONTAINER_ID,
   getDashboardPosition,

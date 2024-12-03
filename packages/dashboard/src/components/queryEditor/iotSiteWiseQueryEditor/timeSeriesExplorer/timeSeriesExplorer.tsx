@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import Box from '@cloudscape-design/components/box';
-import { ResourceExplorerFooter } from '../footer/footer';
-import { QueryExtender } from '../queryExtender';
-import { type useQuery } from '../../useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
+import Box from '@cloudscape-design/components/box';
+import { getPlugin } from '@iot-app-kit/core';
 import {
   TimeSeriesExplorer,
+  type SelectionMode,
   type TimeSeriesExplorerProps,
   type TimeSeriesResource,
-  type SelectionMode,
 } from '@iot-app-kit/react-components';
-import { getPlugin } from '@iot-app-kit/core';
+import { useState } from 'react';
+import { type DashboardWidget } from '../../../../types';
+import { type useQuery } from '../../useQuery';
+import { ResourceExplorerFooter } from '../footer/footer';
+import { QueryExtender } from '../queryExtender';
 
 type UnmodeledExplorerProps = {
   onUpdateQuery: ReturnType<typeof useQuery>[1];

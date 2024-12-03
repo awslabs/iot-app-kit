@@ -1,4 +1,4 @@
-import { type HTMLAttributes } from 'react';
+import Popover from '@cloudscape-design/components/popover';
 import {
   borderRadiusButton,
   colorTextButtonNormalDisabled,
@@ -8,9 +8,9 @@ import {
   spaceStaticXxl,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
+import { type HTMLAttributes } from 'react';
+import type { DashboardMessages } from '../../messages';
 import { AssistantIcon } from './assistantIcon';
-import Popover from '@cloudscape-design/components/popover';
-import type { DashboardMessages } from '~/messages';
 
 interface AssistantFloatingMenuRightButtonProps
   extends HTMLAttributes<HTMLButtonElement> {

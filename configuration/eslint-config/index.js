@@ -37,7 +37,9 @@ module.exports = {
       pragma: 'h',
     },
     'import/resolver': {
-      typescript: true,
+      typescript: {
+        conditionNames: ['development'],
+      },
       node: true,
     },
   },

@@ -1,10 +1,10 @@
-import StatusWidgetComponent from './component';
-import type { DashboardPlugin } from '~/customization/api';
-import type { StatusWidget } from '../types';
+import type { DashboardPlugin } from '../../../customization/api';
 import {
   STATUS_WIDGET_INITIAL_HEIGHT,
   STATUS_WIDGET_INITIAL_WIDTH,
 } from '../constants';
+import type { StatusWidget } from '../types';
+import StatusWidgetComponent from './component';
 
 export const statusPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

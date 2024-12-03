@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-
-import { type DashboardState } from '~/store/state';
 import {
   onChangeDashboardCellSizeAction,
   onChangeDashboardHeightAction,
   onChangeDashboardWidthAction,
-} from '~/store/actions';
-import { onUpdateSignificantDigitsAction } from '~/store/actions/updateSignificantDigits';
+} from '../../store/actions';
+import { onUpdateSignificantDigitsAction } from '../../store/actions/updateSignificantDigits';
+import { type DashboardState } from '../../store/state';
 
 export const useGridSettings = () => {
   const dispatch = useDispatch();

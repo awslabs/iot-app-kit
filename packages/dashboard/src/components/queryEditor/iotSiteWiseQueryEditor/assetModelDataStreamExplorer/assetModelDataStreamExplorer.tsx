@@ -1,39 +1,39 @@
-import { useEffect, useState } from 'react';
 import type { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { useEffect, useState } from 'react';
 
 import Box from '@cloudscape-design/components/box';
 
-import { AssetModelExplorer } from './assetModelExplorer/assetModelExplorer';
-import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/assetModelPropertiesExplorer';
-import {
-  createInitialAssetModelResource,
-  useSelectedAssetModel,
-} from './useSelectedAssetModel';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
-import {
-  createInitialAssetModelProperties,
-  useSelectedAssetModelProperties,
-} from './useSelectedAssetModelProperties';
-import {
-  createInitialAssetResource,
-  useSelectedAsset,
-} from './useSelectedAsset';
-import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
-import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
-import { createAssetModelQuery } from './createAssetModelQuery';
+import { ExpandableSection } from '@cloudscape-design/components';
 import { getPlugin } from '@iot-app-kit/core';
-import { ResourceExplorerFooter } from '../footer/footer';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { type DashboardWidget } from '~/types';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
   type AssetResource,
 } from '@iot-app-kit/react-components';
-import { ExpandableSection } from '@cloudscape-design/components';
-import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
+import { HorizontalDivider } from '../../../../components/divider/horizontalDivider';
+import { createNonNullableList } from '../../../../helpers/lists/createNonNullableList';
+import { type DashboardWidget } from '../../../../types';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
+import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
+import { ResourceExplorerFooter } from '../footer/footer';
+import { AssetModelExplorer } from './assetModelExplorer/assetModelExplorer';
+import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/assetModelPropertiesExplorer';
 import { createAlarmModelQuery } from './createAlarmModelQuery';
+import { createAssetModelQuery } from './createAssetModelQuery';
+import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
+import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
+import {
+  createInitialAssetResource,
+  useSelectedAsset,
+} from './useSelectedAsset';
+import {
+  createInitialAssetModelResource,
+  useSelectedAssetModel,
+} from './useSelectedAssetModel';
+import {
+  createInitialAssetModelProperties,
+  useSelectedAssetModelProperties,
+} from './useSelectedAssetModelProperties';
 
 export interface AssetModelDataStreamExplorerProps {
   iotSiteWiseClient: IoTSiteWise;
