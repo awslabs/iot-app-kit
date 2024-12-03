@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/root-v12.2.0...root-v12.2.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* helpers package resolution ([2939048](https://github.com/awslabs/iot-app-kit/commit/2939048c5dc5f49167f9058eb6e2e746f7d8485e))
+
 ## [12.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.1.0...root-v12.2.0) (2024-11-28)
 
 
