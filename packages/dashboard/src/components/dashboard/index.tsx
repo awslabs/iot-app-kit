@@ -2,7 +2,6 @@ import '@cloudscape-design/global-styles/index.css';
 import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { TimeSync } from '@iot-app-kit/react-components';
-import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import debounce from 'lodash-es/debounce';
 import { memo, useMemo } from 'react';
@@ -12,7 +11,6 @@ import { FpsView } from 'react-fps';
 import { Provider } from 'react-redux';
 import { useDashboardPlugins } from '~/customization/api';
 import { PropertiesPanel } from '~/customization/propertiesSections';
-import { queryClient } from '~/data/query-client';
 import { configureDashboardStore, toDashboardState } from '~/store';
 import type {
   AssistantConfiguration,
@@ -29,6 +27,7 @@ import { ClientContext } from './clientContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
 import { QueryContext } from './queryContext';
+import { queryClient } from '~/data/query-client';
 
 export type DashboardProperties = {
   onDashboardConfigurationChange?: DashboardConfigurationChange;
@@ -102,42 +101,41 @@ const Dashboard: React.FC<DashboardProperties> = ({
       {showFPSMonitor && <FpsView height={50} width={80} />}
       <ClientContext.Provider value={clients}>
         <QueryContext.Provider value={queries}>
-          <QueryClientProvider client={queryClient}>
-            <Provider store={initialStore}>
-              <DndProvider
-                backend={TouchBackend}
-                options={{
-                  enableMouseEvents: true,
-                  enableKeyboardEvents: true,
-                }}
+          <Provider store={initialStore}>
+            <DndProvider
+              backend={TouchBackend}
+              options={{
+                enableMouseEvents: true,
+                enableKeyboardEvents: true,
+              }}
+            >
+              <TimeSync
+                initialViewport={
+                  dashboardConfiguration.defaultViewport ?? { duration: '5m' }
+                }
+                group='dashboard-timesync'
+                onViewportChange={debounceOnViewportChange}
               >
-                <TimeSync
-                  initialViewport={
-                    dashboardConfiguration.defaultViewport ?? { duration: '5m' }
+                <InternalDashboard
+                  toolbar={toolbar}
+                  onSave={onSave}
+                  editable={true}
+                  name={name}
+                  propertiesPanel={<PropertiesPanel />}
+                  defaultViewport={dashboardConfiguration.defaultViewport}
+                  currentViewport={currentViewport}
+                  onDashboardConfigurationChange={
+                    onDashboardConfigurationChange
                   }
-                  group='dashboard-timesync'
-                  onViewportChange={debounceOnViewportChange}
-                >
-                  <InternalDashboard
-                    toolbar={toolbar}
-                    onSave={onSave}
-                    editable={true}
-                    name={name}
-                    propertiesPanel={<PropertiesPanel />}
-                    defaultViewport={dashboardConfiguration.defaultViewport}
-                    currentViewport={currentViewport}
-                    onDashboardConfigurationChange={
-                      onDashboardConfigurationChange
-                    }
-                  />
-                </TimeSync>
-              </DndProvider>
-            </Provider>
-            <ReactQueryDevtools
-              initialIsOpen={false}
-              buttonPosition='bottom-left'
-            />
-          </QueryClientProvider>
+                />
+              </TimeSync>
+            </DndProvider>
+          </Provider>
+          <ReactQueryDevtools
+            client={queryClient}
+            initialIsOpen={false}
+            buttonPosition='bottom-left'
+          />
         </QueryContext.Provider>
       </ClientContext.Provider>
     </>
