@@ -9,7 +9,6 @@ import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { useViewport } from '@iot-app-kit/react-components';
 import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
 import { convertToCSVObject } from './convertToCSVObject';
-import { useQueryClient } from '@tanstack/react-query';
 import { fetchListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
 import {
   BAR_CHART_RESOLUTIONS,
@@ -17,6 +16,7 @@ import {
   EMPTY_DATA,
 } from './constants';
 import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
+import { queryClient } from '~/data/query-client';
 
 export const canOnlyDownloadLiveMode: readonly string[] = [
   'table',
@@ -48,7 +48,6 @@ export const CSVDownloadButton = ({
   fileName?: string;
 } & ButtonProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
-  const queryClient = useQueryClient();
   const fetchTimeSeriesData = useFetchTimeSeriesData();
 
   const { viewport: injectedViewport } = useViewport();

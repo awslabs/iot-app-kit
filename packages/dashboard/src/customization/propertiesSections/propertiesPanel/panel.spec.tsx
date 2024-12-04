@@ -1,3 +1,15 @@
+import { QueryClient } from '@tanstack/react-query';
+
+vi.mock('../../data/query-client', () => ({
+  queryClient: new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  }),
+}));
+
 import {
   IoTSiteWise,
   type IoTSiteWiseClient,
@@ -25,7 +37,6 @@ import {
 import { mockAssetDescription } from '../../../../testing/mocks/siteWiseSDK';
 import { type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { type QueryWidget } from '~/customization/widgets/types';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { type DashboardIotSiteWiseClients } from '~/types';
 import {
   createMockIoTEventsSDK,
@@ -62,14 +73,6 @@ const MockWidget: QueryWidget = {
     styleSettings,
   },
 };
-
-const testQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 type SetupStoreOptions = {
   widgets?: DashboardState['dashboardConfiguration']['widgets'];
@@ -112,11 +115,9 @@ const renderTestComponentAsync = async (
   const element = await waitFor(async () =>
     render(
       <ClientContext.Provider value={clientContext}>
-        <QueryClientProvider client={testQueryClient}>
-          <Provider store={setupStore({ widgets, selectedWidgets })}>
-            <PropertiesPanel />
-          </Provider>
-        </QueryClientProvider>
+        <Provider store={setupStore({ widgets, selectedWidgets })}>
+          <PropertiesPanel />
+        </Provider>
       </ClientContext.Provider>
     )
   );
