@@ -1,20 +1,23 @@
+import { QueryClient } from '@tanstack/react-query';
+
+vi.mock('../../data/query-client', () => ({
+  queryClient: new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  }),
+}));
+
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { type StyledAssetQuery } from '~/customization/widgets/types';
 import { type DataStream } from '@iot-app-kit/core';
-
-const testQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 const assetId1 = 'some-asset-id-1';
 const propertyId1 = 'some-property-id-1';
@@ -47,19 +50,17 @@ vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
 
 it('console an errors if data has errors', async function () {
   render(
-    <QueryClientProvider client={testQueryClient}>
-      <CSVDownloadButton
-        queryConfig={{
-          source: 'iotsitewise',
-          query: {
-            ...MOCK_QUERY,
-          },
-        }}
-        widgetType='line'
-        fileName='csv-test'
-        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
-      />
-    </QueryClientProvider>
+    <CSVDownloadButton
+      queryConfig={{
+        source: 'iotsitewise',
+        query: {
+          ...MOCK_QUERY,
+        },
+      }}
+      widgetType='line'
+      fileName='csv-test'
+      client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
+    />
   );
 
   const consoleErrorSpy = vi.spyOn(console, 'error');
@@ -72,19 +73,17 @@ it('console an errors if data has errors', async function () {
 
 it('does not create a file for download if data has errors', async function () {
   render(
-    <QueryClientProvider client={testQueryClient}>
-      <CSVDownloadButton
-        queryConfig={{
-          source: 'iotsitewise',
-          query: {
-            ...MOCK_QUERY,
-          },
-        }}
-        widgetType='line'
-        fileName='csv-test'
-        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
-      />
-    </QueryClientProvider>
+    <CSVDownloadButton
+      queryConfig={{
+        source: 'iotsitewise',
+        query: {
+          ...MOCK_QUERY,
+        },
+      }}
+      widgetType='line'
+      fileName='csv-test'
+      client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
+    />
   );
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
