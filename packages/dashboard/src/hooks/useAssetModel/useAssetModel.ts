@@ -7,6 +7,7 @@ import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesReque
 import { DescribeAssetModelRequest } from './describeAssetModelRequest';
 import { useSelector } from 'react-redux';
 import { type DashboardState } from '~/store/state';
+import { queryClient } from '~/data/query-client';
 
 type SingleAssetRequest = {
   assetModelId?: string;
@@ -37,16 +38,19 @@ export function useAssetModel({
     assetModelId !== undefined ? [assetModelId] : assetModelIds ?? [];
 
   const queries =
-    useQueries({
-      queries: requestIds.map((id) => ({
-        // we need assetId and hierarchyId to make a successful request
-        enabled: isEnabled(id),
-        queryKey: cacheKeyFactory.create(id),
-        queryFn: isEdgeModeEnabled
-          ? createQueryFn(iotSiteWiseClient)
-          : createModelPropertyQueryFn(iotSiteWiseClient),
-      })),
-    }) ?? [];
+    useQueries(
+      {
+        queries: requestIds.map((id) => ({
+          // we need assetId and hierarchyId to make a successful request
+          enabled: isEnabled(id),
+          queryKey: cacheKeyFactory.create(id),
+          queryFn: isEdgeModeEnabled
+            ? createQueryFn(iotSiteWiseClient)
+            : createModelPropertyQueryFn(iotSiteWiseClient),
+        })),
+      },
+      queryClient
+    ) ?? [];
 
   const assetModelResponses = createNonNullableList(
     queries.map(({ data }) => data)

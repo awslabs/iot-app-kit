@@ -2,14 +2,12 @@ import '@cloudscape-design/global-styles/index.css';
 import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { TimeSync } from '@iot-app-kit/react-components';
-import { QueryClientProvider } from '@tanstack/react-query';
 import debounce from 'lodash-es/debounce';
 import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
 import { useDashboardPlugins } from '~/customization/api';
-import { queryClient } from '~/data/query-client';
 import { configureDashboardStore, toDashboardState } from '~/store';
 import type {
   AssistantConfiguration,
@@ -72,35 +70,33 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
         <QueryContext.Provider
           value={getQueries(clientConfiguration, edgeMode)}
         >
-          <QueryClientProvider client={queryClient}>
-            <Provider
-              store={configureDashboardStore({
-                ...toDashboardState(dashboardConfiguration),
-                readOnly: true,
-                isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
-                timeZone,
-                assistant: {
-                  state: assistantConfiguration?.state ?? 'DISABLED',
-                },
-              })}
+          <Provider
+            store={configureDashboardStore({
+              ...toDashboardState(dashboardConfiguration),
+              readOnly: true,
+              isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
+              timeZone,
+              assistant: {
+                state: assistantConfiguration?.state ?? 'DISABLED',
+              },
+            })}
+          >
+            <DndProvider
+              backend={TouchBackend}
+              options={{
+                enableMouseEvents: true,
+                enableKeyboardEvents: true,
+              }}
             >
-              <DndProvider
-                backend={TouchBackend}
-                options={{
-                  enableMouseEvents: true,
-                  enableKeyboardEvents: true,
-                }}
-              >
-                <InternalDashboard
-                  editable={false}
-                  name={name}
-                  defaultViewport={dashboardConfiguration.defaultViewport}
-                  currentViewport={currentViewport}
-                  toolbar={toolbar}
-                />
-              </DndProvider>
-            </Provider>
-          </QueryClientProvider>
+              <InternalDashboard
+                editable={false}
+                name={name}
+                defaultViewport={dashboardConfiguration.defaultViewport}
+                currentViewport={currentViewport}
+                toolbar={toolbar}
+              />
+            </DndProvider>
+          </Provider>
         </QueryContext.Provider>
       </ClientContext.Provider>
     </TimeSync>
