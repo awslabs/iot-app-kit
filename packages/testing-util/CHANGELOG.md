@@ -1,5 +1,22 @@
 # Changelog
 
+## [12.2.2](https://github.com/awslabs/iot-app-kit/compare/testing-util-v12.2.1...testing-util-v12.2.2) (2024-12-04)
+
+
+### Miscellaneous Chores
+
+* **testing-util:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.2.1 to 12.2.2
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from 12.2.1 to 12.2.2
+    * eslint-config-iot-app-kit bumped from 12.2.1 to 12.2.2
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/testing-util-v12.2.0...testing-util-v12.2.1) (2024-12-03)
 
 

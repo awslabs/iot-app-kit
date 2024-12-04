@@ -1,5 +1,19 @@
 # Changelog
 
+## [12.2.2](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v12.2.1...tools-iottwinmaker-v12.2.2) (2024-12-04)
+
+
+### Miscellaneous Chores
+
+* **tools-iottwinmaker:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from 12.2.1 to 12.2.2
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v12.2.0...tools-iottwinmaker-v12.2.1) (2024-12-03)
 
 
