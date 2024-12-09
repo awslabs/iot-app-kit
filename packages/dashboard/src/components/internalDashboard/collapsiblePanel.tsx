@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react';
 
-import './index.css';
+import Box, { type BoxProps } from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import { type IconProps } from '@cloudscape-design/components/icon';
 import {
   colorBackgroundLayoutMain,
   colorBackgroundSegmentActive,
@@ -10,11 +12,9 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import Box, { type BoxProps } from '@cloudscape-design/components/box';
-import Button from '@cloudscape-design/components/button';
-import { type IconProps } from '@cloudscape-design/components/icon';
-import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
 import { Tooltip } from '@iot-app-kit/react-components';
+import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
+import './index.css';
 
 type CollapsiblePanelProps = {
   isPanelCollapsed: boolean;
@@ -105,7 +105,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
             : colorBackgroundSegmentActive,
           margin: spaceContainerHorizontal,
         }}
-        className='side_panels_collapsed_style'
+        className='side-panels-collapsed-style'
         onClick={props.onCollapsedPanelClick}
         data-testid={`collapsed-${props.side}-panel-icon`}
       >

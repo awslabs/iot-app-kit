@@ -1,5 +1,5 @@
 import StatusWidgetComponent from './component';
-import type { DashboardPlugin } from '~/customization/api';
+import type { DashboardPlugin } from '../../../customization/api';
 import type { StatusWidget } from '../types';
 import {
   STATUS_WIDGET_INITIAL_HEIGHT,

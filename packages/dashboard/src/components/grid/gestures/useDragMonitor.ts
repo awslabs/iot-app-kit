@@ -1,5 +1,5 @@
 import { useDrag } from 'react-dnd';
-import { ItemTypes } from '~/components/dragLayer/itemTypes';
+import { ItemTypes } from '../../../components/dragLayer/itemTypes';
 import { type DragEvent } from './types';
 import {
   defaultDelta,
@@ -9,7 +9,7 @@ import {
 } from './positionTracker';
 import { constrainPosition } from './constrainPosition';
 import { useEffect, useMemo } from 'react';
-import { Animator } from '~/util/animate';
+import { Animator } from '../../../util/animate';
 
 export type DragMonitorProps = {
   dragStart: (e: DragEvent) => void;

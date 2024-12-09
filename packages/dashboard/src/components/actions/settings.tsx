@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 import { type Viewport } from '@iot-app-kit/core';
 import { isNumeric } from '@iot-app-kit/core-util';
-import { numberFromDetail } from '~/util/inputEvent';
+import { numberFromDetail } from '../../util/inputEvent';
 import DecimalPlaces from '../decimalPlaces';
 import { DefaultViewport } from '../defaultViewport';
 import { useDefaultViewport } from '../defaultViewport/useDefaultViewport';

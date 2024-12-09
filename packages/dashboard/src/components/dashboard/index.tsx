@@ -9,9 +9,11 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { FpsView } from 'react-fps';
 import { Provider } from 'react-redux';
-import { useDashboardPlugins } from '~/customization/api';
-import { PropertiesPanel } from '~/customization/propertiesSections';
-import { configureDashboardStore, toDashboardState } from '~/store';
+import { useDashboardPlugins } from '../../customization/api';
+import { PropertiesPanel } from '../../customization/propertiesSections';
+import { queryClient } from '../../data/query-client';
+import { configureDashboardStore, toDashboardState } from '../../store';
+import '../../styles/variables.css';
 import type {
   AssistantConfiguration,
   DashboardClientConfiguration,
@@ -20,14 +22,12 @@ import type {
   DashboardSave,
   DashboardToolbar,
   ViewportChange,
-} from '~/types';
-import '../../styles/variables.css';
+} from '../../types';
 import InternalDashboard from '../internalDashboard';
 import { ClientContext } from './clientContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
 import { QueryContext } from './queryContext';
-import { queryClient } from '~/data/query-client';
 
 export type DashboardProperties = {
   onDashboardConfigurationChange?: DashboardConfigurationChange;

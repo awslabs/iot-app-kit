@@ -1,7 +1,7 @@
-import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
+import { nonNegative } from '../../../util/number';
 import type { DashboardState } from '../../state';
-import { nonNegative } from '~/util/number';
+import { changeGridProperty } from './updateGrid';
 
 type ChangeDashboardHeightActionPayload = {
   height: number;

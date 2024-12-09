@@ -1,7 +1,7 @@
 import {
   type AssetSummary,
   type PropertySummary,
-} from '~/hooks/useAssetDescriptionQueries';
+} from '../../../hooks/useAssetDescriptionQueries';
 
 type DisplayType = 'property' | 'alarm' | 'none';
 export const getPropertyDisplay = (

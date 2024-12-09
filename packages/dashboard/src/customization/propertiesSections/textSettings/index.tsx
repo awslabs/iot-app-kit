@@ -1,8 +1,8 @@
-import { type PropertyLens } from '~/customization/propertiesSection';
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { type TextWidget } from '~/customization/widgets/types';
-import { type DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
+import { type PropertyLens } from '../../../customization/propertiesSection';
+import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+import { type TextWidget } from '../../../customization/widgets/types';
+import { type DashboardWidget } from '../../../types';
+import { maybeWithDefault } from '../../../util/maybe';
 import LinkSettings from './link';
 import TextSettings from './text';
 

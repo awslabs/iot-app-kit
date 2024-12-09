@@ -1,0 +1,28 @@
+{
+  "name": "@iot-app-kit/packaging",
+  "version": "12.2.1",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./src/prepack.cts"
+  },
+  "scripts": {
+    "clean": "rimraf .cache .turbo",
+    "clean:nuke": "npm run clean && rimraf node_modules"
+  },
+  "devDependencies": {
+    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/ts-config": "*",
+    "@types/node": "^18.16.18",
+    "fs-extra": "^11.2.0",
+    "lodash-es": "^4.17.21",
+    "rimraf": "^5.0.1",
+    "rollup-plugin-copy": "^3.5.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.11",
+    "vite-plugin-dts": "^4.3.0"
+  }
+}

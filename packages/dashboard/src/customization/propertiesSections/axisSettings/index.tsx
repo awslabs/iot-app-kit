@@ -1,11 +1,11 @@
-import { type PropertyLens } from '~/customization/propertiesSection';
+import { type PropertyLens } from '../../../customization/propertiesSection';
 import {
   PropertiesSection,
   type PropertiesSectionProps,
-} from '~/customization/propertiesSectionComponent';
-import { type AxisSettings } from '~/customization/settings';
-import { type DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
+} from '../../../customization/propertiesSectionComponent';
+import { type AxisSettings } from '../../../customization/settings';
+import { type DashboardWidget } from '../../../types';
+import { maybeWithDefault } from '../../../util/maybe';
 import AxisSection from './section';
 
 const axisWidgetTypes: readonly string[] = [

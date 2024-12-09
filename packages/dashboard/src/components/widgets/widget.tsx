@@ -7,8 +7,8 @@ import DynamicWidgetComponent from './dynamicWidget';
 import WidgetActions from './widgetActions';
 
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardMessages } from '~/messages';
-import type { DashboardWidget } from '~/types';
+import type { DashboardMessages } from '../../messages';
+import type { DashboardWidget } from '../../types';
 import './widget.css';
 
 export type WidgetProps = {

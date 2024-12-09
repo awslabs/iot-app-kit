@@ -1,8 +1,8 @@
-import { type PropsWithChildren } from 'react';
 import { render } from '@testing-library/react';
-import DashboardHeader from './dashboardHeader';
-import { configureDashboardStore } from '~/store';
+import { type PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
+import { configureDashboardStore } from '../../store';
+import DashboardHeader from './dashboardHeader';
 
 describe('DashboardHeader', () => {
   const ProviderWrapper = ({ children }: PropsWithChildren) => (

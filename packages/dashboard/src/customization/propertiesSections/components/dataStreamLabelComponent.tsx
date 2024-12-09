@@ -6,7 +6,7 @@ import {
   Input,
   ExpandableSection,
 } from '@cloudscape-design/components';
-import { type PropertySummary } from '~/hooks/useAssetDescriptionQueries';
+import { type PropertySummary } from '../../../hooks/useAssetDescriptionQueries';
 
 type DataStreamTextBoxProps = {
   name?: string;

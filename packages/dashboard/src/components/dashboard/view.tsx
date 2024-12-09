@@ -7,16 +7,16 @@ import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
-import { useDashboardPlugins } from '~/customization/api';
-import { configureDashboardStore, toDashboardState } from '~/store';
+import { useDashboardPlugins } from '../../customization/api';
+import { configureDashboardStore, toDashboardState } from '../../store';
+import '../../styles/variables.css';
 import type {
   AssistantConfiguration,
   DashboardClientConfiguration,
   DashboardConfiguration,
   DashboardToolbar,
   ViewportChange,
-} from '~/types';
-import '../../styles/variables.css';
+} from '../../types';
 import InternalDashboard from '../internalDashboard';
 import { ClientContext } from './clientContext';
 import { getClients } from './getClients';

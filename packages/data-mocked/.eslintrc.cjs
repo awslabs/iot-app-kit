@@ -1,4 +1,19 @@
+const base = require('@iot-app-kit/eslint-config');
+
 module.exports = {
+  ...base,
   root: true,
-  extends: ['iot-app-kit'],
+  settings: {
+    ...base.settings,
+    'import/resolver': {
+      ...base.settings['import/resolver'],
+      typescript: {
+        ...base.settings['import/resolver'].typescript,
+        project: ['packages/data-mocked/tsconfig.json'],
+      },
+      node: {
+        project: ['packages/data-mocked/tsconfig.json'],
+      },
+    },
+  },
 };

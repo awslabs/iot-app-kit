@@ -5,7 +5,7 @@ import {
   getDashboardPosition,
 } from '../getDashboardPosition';
 import { endTracker, startTracker } from './positionTracker';
-import { MouseClick } from '~/types';
+import { MouseClick } from '../../../types';
 
 export type PointerTrackerProps = {
   readOnly: boolean;

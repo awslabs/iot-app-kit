@@ -1,22 +1,20 @@
 import { useState } from 'react';
-
 import { Button, type ButtonProps } from '@cloudscape-design/components';
-
-import { unparse } from 'papaparse';
-import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { useViewport } from '@iot-app-kit/react-components';
-import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
 import { convertToCSVObject } from './convertToCSVObject';
-import { fetchListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
+import { unparse } from 'papaparse';
+import { type StyledSiteWiseQueryConfig } from '../../customization/widgets/types';
+import { assetModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/assetModelQueryToAssetQuery';
+import { fetchListAssetPropertiesMap } from '../../data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
+import { useFetchTimeSeriesData } from '../dashboard/queryContext';
+import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
 import {
   BAR_CHART_RESOLUTIONS,
   DEFAULT_VIEWPORT,
   EMPTY_DATA,
 } from './constants';
-import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
-import { queryClient } from '~/data/query-client';
+import { queryClient } from '../../data/query-client';
 
 export const canOnlyDownloadLiveMode: readonly string[] = [
   'table',
