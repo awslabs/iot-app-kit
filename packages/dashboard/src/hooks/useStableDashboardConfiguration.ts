@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   type DashboardConfiguration,
   type DashboardConfigurationChange,
-} from '~/types';
+} from '../types';
 
 export const useStableDashboardConfiguration = ({
   dashboardConfiguration,

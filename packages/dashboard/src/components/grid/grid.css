@@ -1,4 +1,4 @@
-@import "../../styles/variables.css";
+@import url('../../styles/variables.css');
 
 .container {
   position: absolute;
@@ -18,7 +18,7 @@
 
   /** Offset to make the dot fall in the top left corner */
   background-position: top left;
-  background-image: url("./grid-dot.svg");
+  background-image: url('./grid-dot.svg');
   background-repeat: repeat;
   width: 100%;
   height: 100%;

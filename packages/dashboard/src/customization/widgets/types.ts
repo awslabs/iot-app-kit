@@ -11,7 +11,7 @@ import type {
   SiteWiseAlarmQuery,
   SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardWidget } from '~/types';
+import type { DashboardWidget } from '../../types';
 import type {
   AxisSettings,
   ComplexFontSettings,

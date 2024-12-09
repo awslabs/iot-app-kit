@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
+import { useStableDashboardConfiguration } from '../../hooks/useStableDashboardConfiguration';
 import Dashboard, { type DashboardProperties } from './index';
 
 export const DashboardWrapper: React.FC<DashboardProperties> = ({

@@ -1,8 +1,12 @@
+const base = require('@iot-app-kit/eslint-config');
+
 module.exports = {
+  ...base,
   root: true,
-  extends: ['iot-app-kit', 'plugin:react-hooks/recommended'],
-  plugins: ['formatjs', 'react-hooks'],
+  extends: [...base.extends, 'plugin:react-hooks/recommended'],
+  plugins: [...base.plugins, 'formatjs', 'react-hooks'],
   rules: {
+    ...base.rules,
     // note you must disable the base rule as it can report incorrect errors
     'no-template-curly-in-string': 'off',
     'no-use-before-define': 'off',
@@ -36,6 +40,7 @@ module.exports = {
     'no-throw-literal': 'error',
   },
   overrides: [
+    ...base.overrides,
     {
       files: ['*.spec.tsx', '*.spec.ts'],
       rules: {
@@ -51,14 +56,18 @@ module.exports = {
     },
   ],
   ignorePatterns: [
+    ...base.ignorePatterns,
     'src/three/GLTFLoader.js',
     'src/three/tiles3d/*',
     'tools/watch-build.js',
     'src/assets/auto-gen/icons/*',
   ],
   settings: {
+    ...base.settings,
     'import/resolver': {
+      ...base.settings['import/resolver'],
       typescript: {
+        ...base.settings['import/resolver'].typescript,
         project: ['packages/scene-composer/tsconfig.json'],
       },
       node: {

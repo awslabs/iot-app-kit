@@ -4,44 +4,6 @@ exports[`DeleteNodeModal > should render correctly for loading status 1`] = `
 <div>
   <div>
     Delete delete-node-name
-    <span
-      class="awsui_root_1612d_mmb9t_133 awsui_size-normal_1612d_mmb9t_147 awsui_variant-normal_1612d_mmb9t_171"
-    >
-      <span
-        class="awsui_circle_1612d_mmb9t_189 awsui_circle-left_1612d_mmb9t_217"
-      />
-      <span
-        class="awsui_circle_1612d_mmb9t_189 awsui_circle-right_1612d_mmb9t_222"
-      />
-    </span>
-    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
-  </div>
-</div>
-`;
-
-exports[`DeleteNodeModal > should render correctly for loading status 2`] = `
-<div>
-  <div>
-    Delete delete-node-name
-    <span
-      class="awsui_root_1612d_andhz_131 awsui_size-normal_1612d_andhz_146 awsui_variant-normal_1612d_andhz_170"
-    >
-      <span
-        class="awsui_circle_1612d_andhz_188 awsui_circle-left_1612d_andhz_216"
-      />
-      <span
-        class="awsui_circle_1612d_andhz_188 awsui_circle-right_1612d_andhz_221"
-      />
-    </span>
-    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
-  </div>
-</div>
-`;
-
-exports[`DeleteNodeModal > should render correctly for loading status 3`] = `
-<div>
-  <div>
-    Delete delete-node-name
     <div
       data-mocked="Spinner"
     />

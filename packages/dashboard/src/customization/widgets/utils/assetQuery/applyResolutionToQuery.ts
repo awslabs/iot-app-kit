@@ -1,4 +1,4 @@
-import { type IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '../../../../types';
 
 export const applyResolutionToQuery = (
   {

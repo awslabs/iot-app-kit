@@ -12,14 +12,14 @@ import {
 
 import EmptyTableComponent from './emptyTableComponent';
 
-import { useQueries } from '~/components/dashboard/queryContext';
-import { useChartSize } from '~/hooks/useChartSize';
-import type { DashboardState } from '~/store/state';
+import { useQueries } from '../../../components/dashboard/queryContext';
+import { useChartSize } from '../../../hooks/useChartSize';
+import type { DashboardState } from '../../../store/state';
 import type { TableWidget } from '../types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 
-import WidgetTile from '~/components/widgets/tile/tile';
-import { onUpdateWidgetsAction } from '~/store/actions';
+import WidgetTile from '../../../components/widgets/tile/tile';
+import { onUpdateWidgetsAction } from '../../../store/actions';
 import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 import {

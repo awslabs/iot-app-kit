@@ -17,8 +17,8 @@ import './index.css';
 import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
 import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
 import { useDispatch, useSelector } from 'react-redux';
-import type { DashboardState } from '~/store/state';
-import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
+import type { DashboardState } from '../../store/state';
+import { onToggleChatbotAction } from '../../store/actions/toggleChatbot';
 import { useResizeObserver } from 'usehooks-ts';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {

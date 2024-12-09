@@ -1,9 +1,9 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { type DashboardClientConfiguration } from '~/types';
+import { isCredentials } from '../../hooks/useAWSRegion';
+import { type DashboardClientConfiguration } from '../../types';
 import { type DashboardClientContext } from './clientContext';
-import { isCredentials } from '~/hooks/useAWSRegion';
 
 export const getClients = (
   dashboardClientConfiguration: DashboardClientConfiguration

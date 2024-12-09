@@ -1,7 +1,8 @@
+import { definePackageConfig } from '@iot-app-kit/vite-config/definePackageConfig';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default definePackageConfig({
+  iotAppKitPackage: { dirname: __dirname },
   plugins: [react()],
 });

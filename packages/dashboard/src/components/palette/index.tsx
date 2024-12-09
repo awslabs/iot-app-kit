@@ -9,7 +9,7 @@ import {
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
-} from '~/customization/componentLibraryComponentMap';
+} from '../../customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
 import './index.css';
 

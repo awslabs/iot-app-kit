@@ -4,7 +4,7 @@ import Button from '@cloudscape-design/components/button';
 import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import CustomOrangeButton from '~/components/customOrangeButton';
+import CustomOrangeButton from '../../../../../../../components/customOrangeButton';
 
 export const ResetAssetModelModal = ({
   visible,

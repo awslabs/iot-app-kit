@@ -4,7 +4,7 @@ import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
 import { type useQuery } from '../../useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
+import { type DashboardWidget } from '../../../../types';
 import {
   TimeSeriesExplorer,
   type TimeSeriesExplorerProps,

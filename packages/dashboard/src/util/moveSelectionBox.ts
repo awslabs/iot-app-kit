@@ -1,5 +1,5 @@
-import { type Position, type Rect } from '~/types';
-import { type DashboardState } from '~/store/state';
+import { type DashboardState } from '../store/state';
+import { type Position, type Rect } from '../types';
 
 export const moveSelectionBox: (params: {
   selectionBox: Rect;

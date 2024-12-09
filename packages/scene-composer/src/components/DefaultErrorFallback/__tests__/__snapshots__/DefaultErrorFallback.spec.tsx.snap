@@ -3,28 +3,6 @@
 exports[`DefaultErrorFallback > should render correctly with a Error type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Container)
-      header={
-        <Header
-          variant="h2"
-        >
-          Error
-        </Header>
-      }
-    >
-      <TextContent>
-        <p>
-          Testing an error
-        </p>
-      </TextContent>
-    </Styled(Container)>
-  }
-/>
-`;
-
-exports[`DefaultErrorFallback > should render correctly with a Error type 2`] = `
-<StaticLayout
-  modalContent={
     <Styled(MockContainer)
       header={
         <MockHeader
@@ -45,28 +23,6 @@ exports[`DefaultErrorFallback > should render correctly with a Error type 2`] = 
 `;
 
 exports[`DefaultErrorFallback > should render correctly with a SceneComposerRuntimeError type 1`] = `
-<StaticLayout
-  modalContent={
-    <Styled(Container)
-      header={
-        <Header
-          variant="h2"
-        >
-          Error
-        </Header>
-      }
-    >
-      <TextContent>
-        <p>
-          Testing a SceneComposerRuntimeError
-        </p>
-      </TextContent>
-    </Styled(Container)>
-  }
-/>
-`;
-
-exports[`DefaultErrorFallback > should render correctly with a SceneComposerRuntimeError type 2`] = `
 <StaticLayout
   modalContent={
     <Styled(MockContainer)
@@ -91,28 +47,6 @@ exports[`DefaultErrorFallback > should render correctly with a SceneComposerRunt
 exports[`DefaultErrorFallback > should render correctly with a String type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Container)
-      header={
-        <Header
-          variant="h2"
-        >
-          Error
-        </Header>
-      }
-    >
-      <TextContent>
-        <p>
-          Testing a string
-        </p>
-      </TextContent>
-    </Styled(Container)>
-  }
-/>
-`;
-
-exports[`DefaultErrorFallback > should render correctly with a String type 2`] = `
-<StaticLayout
-  modalContent={
     <Styled(MockContainer)
       header={
         <MockHeader
@@ -133,28 +67,6 @@ exports[`DefaultErrorFallback > should render correctly with a String type 2`] =
 `;
 
 exports[`DefaultErrorFallback > should render correctly with a Unknown type 1`] = `
-<StaticLayout
-  modalContent={
-    <Styled(Container)
-      header={
-        <Header
-          variant="h2"
-        >
-          Error
-        </Header>
-      }
-    >
-      <TextContent>
-        <p>
-          An unexpected error occurred.
-        </p>
-      </TextContent>
-    </Styled(Container)>
-  }
-/>
-`;
-
-exports[`DefaultErrorFallback > should render correctly with a Unknown type 2`] = `
 <StaticLayout
   modalContent={
     <Styled(MockContainer)

@@ -10,7 +10,7 @@ import type { StyleSettingsMap } from '@iot-app-kit/core';
 
 import './propertyComponent.css';
 import { getPropertyDisplay } from './getPropertyDisplay';
-import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
+import type { AssetSummary } from '../../../hooks/useAssetDescriptionQueries';
 import { DataStreamLabelComponent } from '../components/dataStreamLabelComponent';
 import { spaceStaticXl } from '@cloudscape-design/design-tokens';
 

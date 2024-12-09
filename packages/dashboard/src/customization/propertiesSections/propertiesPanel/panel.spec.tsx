@@ -1,15 +1,4 @@
 import { QueryClient } from '@tanstack/react-query';
-
-vi.mock('../../data/query-client', () => ({
-  queryClient: new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  }),
-}));
-
 import {
   IoTSiteWise,
   type IoTSiteWiseClient,
@@ -26,23 +15,32 @@ import {
 } from '@testing-library/react';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import { Provider } from 'react-redux';
-
 import { PropertiesPanel } from './panel';
-import { configureDashboardStore } from '~/store';
-import { type DashboardState } from '~/store/state';
+import { configureDashboardStore } from '../../../store';
+import { type DashboardState } from '../../../store/state';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
 import { mockAssetDescription } from '../../../../testing/mocks/siteWiseSDK';
 import { type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import { type QueryWidget } from '~/customization/widgets/types';
-import { type DashboardIotSiteWiseClients } from '~/types';
+import { type QueryWidget } from '../../../customization/widgets/types';
+import { type DashboardIotSiteWiseClients } from '../../../types';
 import {
   createMockIoTEventsSDK,
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
-import { ClientContext } from '~/components/dashboard/clientContext';
+import { ClientContext } from '../../../components/dashboard/clientContext';
+
+vi.mock('../../data/query-client', () => ({
+  queryClient: new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  }),
+}));
 
 const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
   assetId: 'mock-id',

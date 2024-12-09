@@ -3,11 +3,11 @@ import {
   type ThresholdSettings,
 } from '@iot-app-kit/core';
 
-import { type PropertyLens } from '~/customization/propertiesSection';
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { type ThresholdWithId } from '~/customization/settings';
-import { type DashboardWidget } from '~/types';
-import { type Maybe, maybeWithDefault } from '~/util/maybe';
+import { type PropertyLens } from '../../../customization/propertiesSection';
+import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+import { type ThresholdWithId } from '../../../customization/settings';
+import { type DashboardWidget } from '../../../types';
+import { type Maybe, maybeWithDefault } from '../../../util/maybe';
 import { getComparisonOperators } from './comparisonOperators';
 import ThresholdsSection from './thresholdsSection';
 
