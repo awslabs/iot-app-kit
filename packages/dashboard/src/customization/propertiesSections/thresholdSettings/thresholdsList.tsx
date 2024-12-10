@@ -1,7 +1,7 @@
 import { Box, SpaceBetween } from '@cloudscape-design/components';
 
 import { type StyledThreshold } from '@iot-app-kit/core';
-import { type ThresholdWithId } from '~/customization/settings';
+import { type ThresholdWithId } from '../../../customization/settings';
 import { type ComparisonOperators } from './comparisonOperators';
 import { ThresholdComponent } from './thresholdComponent';
 

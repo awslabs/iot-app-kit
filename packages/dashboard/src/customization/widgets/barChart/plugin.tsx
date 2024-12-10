@@ -1,6 +1,6 @@
 import BarChartWidgetComponent from './component';
 import BarIcon from './icon';
-import type { DashboardPlugin } from '~/customization/api';
+import type { DashboardPlugin } from '../../../customization/api';
 import type { BarChartWidget } from '../types';
 import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 

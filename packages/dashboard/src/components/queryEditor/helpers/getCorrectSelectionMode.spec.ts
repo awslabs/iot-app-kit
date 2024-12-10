@@ -1,4 +1,4 @@
-import { type DashboardWidget } from '~/types';
+import { type DashboardWidget } from '../../../types';
 import { getCorrectSelectionMode } from './getCorrectSelectionMode';
 
 const createMockWidget = (widgetType: string): DashboardWidget => {

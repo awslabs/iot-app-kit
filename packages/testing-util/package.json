@@ -3,43 +3,33 @@
   "license": "Apache-2.0",
   "private": true,
   "version": "12.2.1",
-  "type": "module",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/esm/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js"
-    }
-  },
   "files": [
     "dist"
   ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json",
-    "build:cjs": "tsc -b ./tsconfig.cjs.json",
-    "build:es": "tsc -b ./tsconfig.esm.json",
-    "clean": "rimraf dist .turbo .cache",
-    "clean:nuke": "npm run clean && rimraf node_modules",
-    "dev": "tsc -b ./tsconfig.esm.json --watch",
-    "dev:react-components": "npm run dev",
+    "clean": "npx rimraf .turbo .cache",
+    "clean:nuke": "npm run clean && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=1 --cache --cache-location .cache/eslint/",
     "lint-fix": "eslint --fix . --cache --cache-location .cache/eslint/"
   },
-  "dependencies": {
+  "devDependencies": {
     "@aws-sdk/client-iot-events": "3.354.0",
     "@aws-sdk/client-iotsitewise": "3.696.0",
-    "@iot-app-kit/core": "12.2.1",
-    "parse-duration": "^1.1.0"
-  },
-  "devDependencies": {
-    "@iot-app-kit/ts-config": "12.2.1",
+    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/ts-config": "*",
     "@types/node": "^18.16.18",
-    "eslint-config-iot-app-kit": "12.2.1",
+    "parse-duration": "^1.1.0",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4"
+  },
+  "iotAppKit": {
+    "scope": "protected"
   }
 }

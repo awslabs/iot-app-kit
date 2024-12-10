@@ -2,32 +2,20 @@
 
 ### Useful commands
 
-#### Run dev-env (no live packages)
+#### Run dev-env (currently only supports the dashboard)
 
 ```sh
-turbo dev --filter=@iot-app-kit/dev-env
+npm start
 ```
 
-#### Run dev-env + live dashboard
+#### Run react-components development env
 
 ```sh
-turbo dev --filter=@iot-app-kit/dev-env --filter=@iot-app-kit/dashboard
+npm start --workspace=@iot-app-kit/react-components
 ```
 
-#### Run dev-env + multiple live packages
+#### Run scene-composer development env
 
 ```sh
-turbo dev --filter=@iot-app-kit/dev-env --filter=@iot-app-kit/dashboard --filter=@iot-app-kit/react-components
-```
-
-#### Run react-components dev env (to be removed in favor of @iot-app-kit/dev-env)
-
-```sh
-turbo dev:react-components --filter=@iot-app-kit/react-components
-```
-
-#### Run react-components dev env + live packages (to be removed in favor of @iot-app-kit/dev-env)
-
-```sh
-turbo dev:react-components --filter=@iot-app-kit/react-components --filter=@iot-app-kit/source-iotsitewise
+npm start --workspace=@iot-app-kit/scene-composer
 ```

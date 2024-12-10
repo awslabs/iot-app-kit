@@ -4,7 +4,7 @@ import {
   type SiteWiseAssetQuery,
   type SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import { listAssetPropertiesWithComposite } from '~/hooks/listAssetPropertiesWithAssetDescription';
+import { listAssetPropertiesWithComposite } from '../../hooks/listAssetPropertiesWithAssetDescription';
 
 // QUERY KEY
 export const ASSET_DESCRIPTION_QUERY_KEY = ['assetDescriptions'];

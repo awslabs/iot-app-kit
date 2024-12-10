@@ -1,57 +1,58 @@
 {
   "name": "@iot-app-kit/core-util",
+  "version": "12.2.1",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.2.1",
+  "files": [
+    "dist"
+  ],
   "type": "module",
-  "main": "dist/cjs/index.js",
+  "main": "dist/cjs/index.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js"
+      "@iot-app-kit/development": "./src/index.ts",
+      "default": {
+        "types": "./dist/esm/index.d.ts",
+        "require": "./dist/cjs/index.cjs.js",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/esm/index.js"
+      }
     }
   },
-  "directories": {
-    "dist": "dist"
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json",
-    "build:cjs": "tsc -b ./tsconfig.cjs.json",
-    "build:es": "tsc -b ./tsconfig.esm.json",
-    "clean": "rimraf dist coverage .turbo .cache",
-    "clean:nuke": "npm run clean && rimraf node_modules",
-    "dev": "tsc -b ./tsconfig.esm.json --watch",
-    "dev:react-components": "npm run dev",
+    "build": "NODE_OPTIONS='--import tsx/esm' vite build",
+    "clean": "npx rimraf dist coverage .turbo .cache *.tgz",
+    "clean:nuke": "npm run clean && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
-    "test": "TZ=UTC vitest run --coverage",
-    "test:watch": "TZ=UTC vitest",
+    "test": "NODE_OPTIONS='--import tsx/esm' TZ=UTC vitest run",
+    "test:watch": "NODE_OPTIONS='--import tsx/esm' TZ=UTC vitest",
     "test:typescript": "tsc --noEmit",
-    "pack": "npm pack"
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice && iot-prepack",
+    "pack": "npm pack",
+    "postpack": "iot-postpack"
   },
   "dependencies": {
-    "@iot-app-kit/core": "12.2.1",
+    "@iot-app-kit/core": "*",
     "lodash-es": "^4.17.21",
     "pako": "^2.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
-    "@iot-app-kit/ts-config": "12.2.1",
+    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/vite-config": "*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.16.18",
     "@types/pako": "^2.0.3",
     "@vitest/coverage-v8": "^2.1.5",
-    "eslint-config-iot-app-kit": "12.2.1",
     "jest-extended": "^3.2.4",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",
@@ -61,5 +62,8 @@
   "peerDependencies": {
     "@aws-sdk/client-iot-events": "^3.354.0",
     "@aws-sdk/client-iotsitewise": "^3.696.0"
+  },
+  "iotAppKit": {
+    "scope": "public"
   }
 }

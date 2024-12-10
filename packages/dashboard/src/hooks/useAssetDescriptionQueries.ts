@@ -13,14 +13,14 @@ import type {
 } from '@iot-app-kit/source-iotsitewise';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { useClients } from '~/components/dashboard/clientContext';
+import { useClients } from '../components/dashboard/clientContext';
 import {
   createFetchSiteWiseAssetQueryDescription,
   createListAssetPropertiesMapCacheKey,
-} from '~/data/listAssetPropertiesMap/query';
-import { selectListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/selectData';
-import { queryClient } from '~/data/query-client';
-import { type DashboardState } from '~/store/state';
+} from '../data/listAssetPropertiesMap/query';
+import { selectListAssetPropertiesMap } from '../data/listAssetPropertiesMap/selectData';
+import { queryClient } from '../data/query-client';
+import { type DashboardState } from '../store/state';
 
 export type PropertySummary = {
   propertyId: AssetProperty['id'];

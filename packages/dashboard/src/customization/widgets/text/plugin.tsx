@@ -1,6 +1,6 @@
 import TextWidgetComponent from './component';
 import TextIcon from './icon';
-import type { DashboardPlugin } from '~/customization/api';
+import type { DashboardPlugin } from '../../../customization/api';
 import type { TextWidget } from '../types';
 import {
   TEXT_WIDGET_INITIAL_HEIGHT,

@@ -3,7 +3,7 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import merge from 'lodash-es/merge';
 import type { Store } from 'redux';
 import type { PartialDeep } from 'type-fest';
-import type { DashboardConfiguration } from '~/types';
+import type { DashboardConfiguration } from '../types';
 import type { DashboardAction } from './actions';
 import { dashboardReducer } from './reducer';
 import type { DashboardState } from './state';

@@ -1,4 +1,4 @@
-@import '../../styles/variables.css';
+@import url('../../styles/variables.css');
 
 .dashboard {
   height: calc(100vh - var(--dashboard-header-height));
@@ -28,13 +28,14 @@
   position: relative;
 }
 
-.dashboard .dashboard-toolbar .dashboard-toolbar-read-only, dashboard-toolbar-readonly-assistant {
+.dashboard .dashboard-toolbar .dashboard-toolbar-read-only,
+dashboard-toolbar-readonly-assistant {
   display: grid;
   grid-template-columns: auto max-content;
   grid-template-rows: auto;
 }
 
-.side_panels_collapsed_style {
+.side-panels-collapsed-style {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,14 +63,11 @@
   flex-direction: column;
   height: 100%;
   min-height: 200px;
+  position: relative;
 }
 
 .collapsible-panel-header-container {
   border-bottom: 2px solid;
-}
-
-.collapsible-panel {
-  position: relative;
 }
 
 /* subtract the collapsed right panel width plus the drag handle */
@@ -80,6 +78,7 @@
 /* subtract the collapsed left panel width */
 .collapsible-panel-right {
   max-width: calc(100vw - 84px);
+  border-left: 2px solid var(--colors-grey-border);
 }
 
 .collapsible-panel-left,
@@ -89,8 +88,4 @@
   height: 100%;
   max-height: calc(100vh - var(--toolbar-overlay-height));
   z-index: var(--stack-order-grid-inputs);
-}
-
-.collapsible-panel-right {
-  border-left: 2px solid var(--colors-grey-border);
 }
