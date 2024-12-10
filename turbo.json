@@ -34,7 +34,7 @@
       "outputLogs": "full"
     },
     "pack": {
-      "dependsOn": ["^clean", "clean", "build"],
+      "dependsOn": ["^clean", "clean", "//#clean", "build"],
       "cache": false,
       "outputLogs": "new-only"
     },
