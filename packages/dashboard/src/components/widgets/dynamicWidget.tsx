@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { createElement } from 'react';
-import { WidgetComponentMap } from '~/customization/widgetComponentMap';
-import { useAssistantConfiguration } from '~/hooks/useAssistantConfiguration';
-import type { WidgetsMessages } from '~/messages';
-import type { DashboardWidget } from '~/types';
+import { WidgetComponentMap } from '../../customization/widgetComponentMap';
+import { useAssistantConfiguration } from '../../hooks/useAssistantConfiguration';
+import type { WidgetsMessages } from '../../messages';
+import type { DashboardWidget } from '../../types';
 import './dynamicWidget.css';
 
 const IconX: FC = () => (

@@ -68,6 +68,7 @@ jobs:
             source-iotsitewise,
             source-iottwinmaker,
             tools-iottwinmaker,
+            vite-config,
           ]
     steps:
       - name: Checkout
@@ -113,7 +114,7 @@ jobs:
             ${{ runner.os }}-test-lint-${{ matrix.package}}-
 
       - name: Validate
-        run: npx turbo build:cjs build:es lint test --filter=@iot-app-kit/${{ matrix.package }}
+        run: npx turbo build lint test --filter=@iot-app-kit/${{ matrix.package }}
 
   playwright:
     needs: repo

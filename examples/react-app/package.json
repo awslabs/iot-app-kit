@@ -22,8 +22,8 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "clean": "rimraf dist .turbo",
-    "clean:nuke": "rimraf dist .turbo node_modules"
+    "clean": "npx rimraf dist .turbo",
+    "clean:nuke": "npx rimraf dist .turbo node_modules"
   },
   "eslintConfig": {
     "extends": [

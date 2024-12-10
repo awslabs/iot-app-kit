@@ -4,7 +4,7 @@ import {
 } from '@iot-app-kit/source-iotsitewise';
 import unionBy from 'lodash-es/unionBy';
 import uniq from 'lodash-es/uniq';
-import { type IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '../../../types';
 
 type AlarmModelQueryWithAssetId = Required<AlarmAssetModelQuery>;
 const alarmModelWithAssetId = (

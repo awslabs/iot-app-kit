@@ -1,8 +1,8 @@
 import { onToggleChatbotAction, toggleChatbot } from '.';
-import { initialState } from '../../state';
+import { configureDashboardStore } from '../../../store';
+import type { DashboardWidget } from '../../../types';
 import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
-import { configureDashboardStore } from '~/store';
+import { initialState } from '../../state';
 
 const setupDashboardState = (
   widgets: DashboardWidget[] = [],

@@ -1,20 +1,40 @@
 {
   "name": "@iot-app-kit/helpers",
+  "version": "12.2.1",
   "private": true,
   "type": "module",
+  "main": "./dist/cjs/index.cjs.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
-    "./constants/*": "./src/constants/*.ts"
+    ".": {
+      "@iot-app-kit/development": "./src/index.ts",
+      "default": {
+        "types": "./dist/esm/index.d.ts",
+        "require": "./dist/cjs/index.cjs.js",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/esm/index.js"
+      }
+    }
   },
   "scripts": {
-    "clean": "rimraf .turbo .cache",
-    "clean:nuke": "npm run clean && rimraf node_modules",
+    "build": "NODE_OPTIONS='--import tsx/esm' vite build",
+    "clean": "npx rimraf .turbo .cache dist",
+    "clean:nuke": "npm run clean && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
-    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/"
+    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
+    "test:typescript": "tsc --noEmit"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@iot-app-kit/eslint-config": "*",
     "@iot-app-kit/ts-config": "*",
-    "eslint-config-iot-app-kit": "*",
+    "@iot-app-kit/vite-config": "*",
     "rimraf": "^5.0.1",
-    "typescript": "^5.5.4"
+    "tsx": "^4.19.2",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.11"
+  },
+  "iotAppKit": {
+    "scope": "protected"
   }
 }

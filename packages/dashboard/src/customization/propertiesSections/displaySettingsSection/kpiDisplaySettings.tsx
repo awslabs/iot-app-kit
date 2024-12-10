@@ -1,12 +1,12 @@
 import { Box, Checkbox, FormField } from '@cloudscape-design/components';
 import { StyledExpandableSection } from '../components/styledComponents';
-import { type PropertyLens } from '~/customization/propertiesSection';
+import { type PropertyLens } from '../../../customization/propertiesSection';
 import {
   type KPIProperties,
   type StatusProperties,
-} from '~/customization/widgets/types';
-import { type DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
+} from '../../../customization/widgets/types';
+import { type DashboardWidget } from '../../../types';
+import { maybeWithDefault } from '../../../util/maybe';
 
 export const RenderDisplaySettingsSection = ({
   useProperty,

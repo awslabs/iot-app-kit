@@ -2,8 +2,8 @@ import { onUpdateWidgetsAction, updateWidgets } from '.';
 import { initialState } from '../../state';
 
 import { MOCK_TEXT_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
+import type { DashboardWidget } from '../../../types';
 import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
 
 const setupDashboardState = (
   widgets: DashboardWidget[] = []

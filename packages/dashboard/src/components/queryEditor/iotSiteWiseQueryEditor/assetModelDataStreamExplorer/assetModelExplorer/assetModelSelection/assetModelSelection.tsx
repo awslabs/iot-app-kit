@@ -3,7 +3,7 @@ import Box from '@cloudscape-design/components/box';
 import Link from '@cloudscape-design/components/link';
 
 import { AssetModelSelect } from './assetModelSelect';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
+import { HorizontalDivider } from '../../../../../../components/divider/horizontalDivider';
 import { AssetModelSave } from './assetModelSave';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {

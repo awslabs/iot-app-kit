@@ -1,6 +1,6 @@
 import type { Action } from 'redux';
+import { type RefreshRate } from '../../../components/refreshRate/types';
 import type { DashboardState } from '../../state';
-import { type RefreshRate } from '~/components/refreshRate/types';
 
 type UpdateRefreshRateActionPayload = {
   refreshRate: RefreshRate;

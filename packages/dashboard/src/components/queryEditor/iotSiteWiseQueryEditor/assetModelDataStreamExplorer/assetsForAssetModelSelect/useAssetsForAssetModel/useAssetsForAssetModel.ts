@@ -3,11 +3,11 @@ import {
   type QueryFunctionContext,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { createNonNullableList } from '../../../../../../helpers/lists/createNonNullableList';
 import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import invariant from 'tiny-invariant';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
-import { queryClient } from '~/data/query-client';
+import { queryClient } from '../../../../../../data/query-client';
 
 export interface UseAssetModelsOptions {
   iotSiteWiseClient: IoTSiteWiseClient;

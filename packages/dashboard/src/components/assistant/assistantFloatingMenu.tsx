@@ -1,33 +1,33 @@
-import { type CSSProperties, useEffect, useState } from 'react';
-import { AssistantButton } from './assistantButton';
+import Box from '@cloudscape-design/components/box';
+import Popover from '@cloudscape-design/components/popover';
+import StatusIndicator from '@cloudscape-design/components/status-indicator';
 import {
   borderRadiusButton,
+  colorBackgroundCellShaded,
+  colorBorderDividerDefault,
   colorChartsPurple1200,
   fontSizeBodyM,
-  spaceStaticM,
-  spaceStaticXxl,
-  spaceStaticS,
   fontWeightHeadingM,
-  colorBorderDividerDefault,
-  colorBackgroundCellShaded,
+  spaceStaticM,
+  spaceStaticS,
   spaceStaticXs,
+  spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
-import { VerticalDivider } from '../divider/verticalDivider';
-import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRigthButton';
-import { AssistantFloatingMenuCenterButton } from './assistantFloatingMenuCenterButton';
+import { useAssistant } from '@iot-app-kit/react-components';
+import { type CSSProperties, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { type DashboardMessages } from '../../messages';
 import {
   onAssistantCleanWidgetsSelectionAction,
   onToggleAssistantModeAction,
   onToggleChatbotAction,
-} from '~/store/actions';
-import type { DashboardState } from '~/store/state';
-import { type DashboardMessages } from '~/messages';
-import { useAssistant } from '@iot-app-kit/react-components';
-import Popover from '@cloudscape-design/components/popover';
-import StatusIndicator from '@cloudscape-design/components/status-indicator';
-import Box from '@cloudscape-design/components/box';
+} from '../../store/actions';
+import type { DashboardState } from '../../store/state';
+import { VerticalDivider } from '../divider/verticalDivider';
+import { AssistantButton } from './assistantButton';
 import './assistantFloatingMenu.css';
+import { AssistantFloatingMenuCenterButton } from './assistantFloatingMenuCenterButton';
+import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRigthButton';
 
 const MAX_ITEMS_SELECTED = 3;
 const CHATBOT_OPENED_WIDTH = 500;
