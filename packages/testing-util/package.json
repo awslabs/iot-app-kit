@@ -13,8 +13,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "clean": "npx rimraf .turbo .cache",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "clean": "npx rimraf .cache",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=1 --cache --cache-location .cache/eslint/",
     "lint-fix": "eslint --fix . --cache --cache-location .cache/eslint/"
   },

@@ -42,24 +42,20 @@ export function definePackageConfig(
   const packageJson = readPackageJson(resolve(dirname, './package.json'));
 
   const allPackages = listRegisteredPackages();
-  const protectedPackages = listRegisteredPackages({
+
+  const packageAliases = listRegisteredPackages({
     filter: { scope: 'protected' },
-  });
+  }).reduce<ViteAliasOptions>((acc, protectedPackage) => {
+    const protectedPackageShortName = getShortName(protectedPackage.name);
 
-  const packageAliases = protectedPackages.reduce<ViteAliasOptions>(
-    (acc, protectedPackage) => {
-      const protectedPackageShortName = getShortName(protectedPackage.name);
-
-      return {
-        ...acc,
-        [protectedPackage.name]: resolve(
-          dirname,
-          `../${protectedPackageShortName}/src`
-        ),
-      } satisfies ViteAliasOptions;
-    },
-    {}
-  );
+    return {
+      ...acc,
+      [protectedPackage.name]: resolve(
+        dirname,
+        `../${protectedPackageShortName}/src`
+      ),
+    } satisfies ViteAliasOptions;
+  }, {});
 
   // Package-specific configuration is recursively merged with the base
   // configuration defined here to provide packages flexibility in their
@@ -163,11 +159,8 @@ export function definePackageConfig(
         // plugin to generate the types.
         dts({
           tsconfigPath: resolve(dirname, './tsconfig.json'),
-          // The dts plugin does use all of the settings of the tsconfig.json
-          // file it is using to build the declaration files. The following
-          // options need to be set to be set. Consistency across packages
-          // enables us to avoid package-specific configuration of these
-          // options.
+          // Consistency across packages enables us to avoid package-specific
+          // configuration of these options.
           include: ['src'],
           outDir: ['dist/esm', 'dist/cjs'],
           // All of the code being distributed by a package should be contained
@@ -176,7 +169,17 @@ export function definePackageConfig(
             './src/**/*.spec.*',
             './src/**/*.test.*',
             './src/**/__mocks__',
+            './src/**/testing',
           ],
+          beforeWriteFile: (filePath, content) => {
+            // Ensure stability of declaration file path.
+            const formattedFilePath = filePath.replace('/src', '');
+
+            return {
+              filePath: formattedFilePath,
+              content,
+            };
+          },
         }),
         copyProtectedPackagesPlugin({ dir: dirname, packageJson }),
       ],

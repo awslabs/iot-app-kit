@@ -6,7 +6,8 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "NOTICE"
   ],
   "type": "module",
   "main": "./dist/cjs/index.cjs.js",
@@ -26,8 +27,10 @@
   "scripts": {
     "start": "npm run dev",
     "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run copy-assets:es && npm run copy-assets:cjs",
-    "clean": "npx rimraf dist storybook-static test-results playwright-report coverage .turbo .cache *.tgz LICENSE NOTICE",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "postbuild": "iot-postbuild",
+    "clean": "npx rimraf dist storybook-static test-results playwright-report coverage .cache *.tgz LICENSE NOTICE",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
     "dev": "NODE_OPTIONS='--import tsx/esm' storybook dev -p 6007",
