@@ -1,4 +1,4 @@
-import { type DashboardPlugin } from '~/customization/api';
+import { type DashboardPlugin } from '../../../customization/api';
 import { type StatusTimelineWidget } from '../types';
 import StatusTimelineWidgetComponent from './statusTimeline';
 import StatusTimelineIcon from './statusTimelineIcon';

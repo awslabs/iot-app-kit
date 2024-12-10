@@ -1,6 +1,6 @@
-import { RequestProcessorWorkerGroup } from './requestProcessorWorkerGroup';
 import { Observable, Subscriber } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { RequestProcessorWorkerGroup } from './requestProcessorWorkerGroup';
 
 it('test constructor', () => {
   expect(() => {
@@ -222,7 +222,7 @@ it('test finalizer deletes queries with no subscribers', () => {
   expect(workerGroup.size()).toEqual(0);
 });
 
-it('producers can run a finalizer when the last subscriber unsubscribes', (done) => {
+it('producers can run a finalizer when the last subscriber unsubscribes', async () => {
   const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
 
   const workerGroup = new RequestProcessorWorkerGroup<string, number>(() => {
@@ -243,9 +243,6 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
     }).pipe(
       finalize(() => {
         clearInterval(timeoutID);
-        // the test actually ends here when the timeout is cleared
-        // if you remove this call to done() the test will hang, timeout and fail
-        done();
       })
     );
   }, identity);

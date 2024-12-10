@@ -1,6 +1,6 @@
 import KPIWidgetComponent from './component';
 import KPIIcon from './icon';
-import type { DashboardPlugin } from '~/customization/api';
+import type { DashboardPlugin } from '../../../customization/api';
 import type { KPIWidget } from '../types';
 import {
   KPI_WIDGET_INITIAL_HEIGHT,

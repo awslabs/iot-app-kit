@@ -1,8 +1,8 @@
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import type { QueryWidget } from '../types';
-import { isDefined } from '~/util/isDefined';
-import { type IoTSiteWiseDataStreamQuery } from '~/types';
+import { isDefined } from '../../../util/isDefined';
+import { type IoTSiteWiseDataStreamQuery } from '../../../types';
 import { getCurrentAggregationResolution } from './widgetAggregationUtils';
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { colorerFromStyleSettings } from './assetQuery/defaultColors';

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
-import { onUpdateWidgetsAction } from '~/store/actions';
-import type { DashboardWidget } from '~/types';
+import { onUpdateWidgetsAction } from '../../store/actions';
+import type { DashboardWidget } from '../../types';
 
 /**
  * Helper hook that can be exposed to consumers making their own widget components

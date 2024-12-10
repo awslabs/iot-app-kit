@@ -8,13 +8,13 @@ import {
 import type { AssistantProperty } from '@iot-app-kit/react-components';
 import { type PropsWithChildren } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
+import { HorizontalDivider } from '../../../components/divider/horizontalDivider';
 import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
-} from '~/store/actions';
-import type { DashboardState } from '~/store/state';
-import { type DashboardWidget } from '~/types';
+} from '../../../store/actions';
+import type { DashboardState } from '../../../store/state';
+import { type DashboardWidget } from '../../../types';
 import './tile.css';
 
 export type WidgetTileProps = PropsWithChildren<{

@@ -9,45 +9,50 @@
     "npm": ">=8"
   },
   "type": "module",
-  "main": "./dist/cjs/build.js",
-  "module": "./dist/esm/build.js",
-  "types": "./dist/esm/build.d.ts",
+  "main": "./dist/cjs/index.cjs.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/build.d.ts",
-      "require": "./dist/cjs/build.js",
-      "import": "./dist/esm/build.js",
-      "default": "./dist/esm/build.js"
+      "@iot-app-kit/development": "./src/index.cts",
+      "default": {
+        "types": "./dist/esm/index.d.ts",
+        "require": "./dist/cjs/index.cjs.js",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/esm/index.js"
+      }
     }
   },
+  "sideEffects": [
+    "./src/configurePlatform.cts"
+  ],
   "bin": {
     "tmdt": "./dist/cjs/cli.js"
   },
   "scripts": {
-    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && npm run package",
+    "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run package",
     "build-global": "npm run clean && npm run build && npm run package && npm install -g",
-    "build:cjs": "tsc -b ./tsconfig.cjs.json && npm run package",
-    "build:es": "tsc -b ./tsconfig.esm.json",
-    "clean": "rimraf dist coverage tmdt_local .turbo .cache && npm uninstall -g tmdt || true",
-    "clean:nuke": "npm run clean && rimraf node_modules",
-    "dev": "tsc -b ./tsconfig.esm.json --watch",
-    "dev:react-components": "npm run dev",
+    "clean": "npx rimraf dist coverage tmdt_local .turbo .cache *.tgz LICENSE NOTICE && npm uninstall -g tmdt || true",
+    "clean:nuke": "npm run clean && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
-    "test": "TZ=UTC vitest run -c vitest.config.ts --silent --coverage",
-    "test:watch": "TZ=UTC vitest -c vitest.config.ts --silent",
+    "test": "NODE_OPTIONS='--import tsx/esm' TZ=UTC vitest run -c vite.config.ts --silent",
+    "test:watch": "NODE_OPTIONS='--import tsx/esm' TZ=UTC vitest -c vite.config.ts --silent",
     "test-functional": "TZ=UTC vitest --silent -c vitest.functional.ts",
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
-    "prepack": "npm run copy:license && npm run copy:notice",
+    "prepack": "npm run copy:license && npm run copy:notice && iot-prepack",
     "pack": "npm pack",
-    "package": "npx tsx ./src/build.ts",
+    "postpack": "iot-postpack",
+    "package": "npx tsx ./src/configurePlatform.cts",
     "package-linux": "pkg . --targets node16-linux-x64 --output tmdt_local",
     "package-mac": "pkg . --targets node16-macos-x64 --output tmdt_local"
   },
   "devDependencies": {
-    "@iot-app-kit/ts-config": "12.2.1",
+    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/vite-config": "*",
     "@types/node": "^18.16.18",
     "@types/prompts": "^2.4.4",
     "@types/yargs": "^17.0.24",
@@ -73,5 +78,8 @@
   },
   "pkg": {
     "scripts": "dist/cjs/**/*.js"
+  },
+  "iotAppKit": {
+    "scope": "public"
   }
 }

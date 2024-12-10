@@ -1,6 +1,6 @@
 import { useEffect, useState, type PointerEventHandler } from 'react';
-import { useIsSelected } from '~/customization/hooks/useIsSelected';
-import { MouseClick } from '~/types';
+import { useIsSelected } from '../../../../customization/hooks/useIsSelected';
+import { MouseClick } from '../../../../types';
 import type { TextWidget } from '../../types';
 import StyledText from './index';
 

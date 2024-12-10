@@ -1,6 +1,6 @@
-import { type QueryProperties } from '~/customization/widgets/types';
-import { type DashboardState } from '~/store/state';
-import { type DashboardWidget } from '~/types';
+import { type QueryProperties } from '../../../../../customization/widgets/types';
+import { type DashboardState } from '../../../../../store/state';
+import { type DashboardWidget } from '../../../../../types';
 
 export type QueryConfigWidget = DashboardWidget<QueryProperties>;
 export const isQueryWidget = (w: DashboardWidget): w is QueryConfigWidget =>

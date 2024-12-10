@@ -6,8 +6,8 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "clean": "rimraf storybook-static .turbo",
-    "clean:nuke": "npm run clean && rimraf node_modules",
+    "clean": "npx rimraf storybook-static .turbo",
+    "clean:nuke": "npm run clean && npx rimraf node_modules",
     "start": "storybook dev -p 6006",
     "dev": "npm start",
     "build": "storybook build",
@@ -15,7 +15,8 @@
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/"
   },
   "devDependencies": {
-    "@iot-app-kit/testing-util": "12.2.1",
+    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/testing-util": "*",
     "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addon-interactions": "^8.4.5",
     "@storybook/addon-links": "^8.4.5",
@@ -26,7 +27,6 @@
     "@storybook/theming": "^8.4.5",
     "@types/node": "^18.16.18",
     "@vitejs/plugin-react": "^4.3.3",
-    "eslint-config-iot-app-kit": "12.2.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -3,10 +3,10 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
 
-import { configureDashboardStore } from '~/store';
-import { initialState } from '~/store/state';
-import { type DashboardWidgetsConfiguration } from '~/types';
 import { useDashboardPlugins } from '../../customization/api';
+import { configureDashboardStore } from '../../store';
+import { initialState } from '../../store/state';
+import { type DashboardWidgetsConfiguration } from '../../types';
 import InternalDashboard from './index';
 
 import { AppKitConfig } from '@iot-app-kit/react-components';

@@ -1,4 +1,4 @@
-import type { Anchor } from '~/store/actions';
+import type { Anchor } from '../../../store/actions';
 import type { DragEvent } from '../../grid';
 
 const GESTURE_ATTRIBUTE = 'data-gesture';

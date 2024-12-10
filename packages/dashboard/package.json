@@ -20,36 +20,43 @@
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
   "type": "module",
-  "main": "./dist/cjs/index.js",
+  "main": "./dist/cjs/index.cjs.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js"
+      "@iot-app-kit/development": "./src/index.ts",
+      "default": {
+        "types": "./dist/esm/index.d.ts",
+        "require": "./dist/cjs/index.cjs.js",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/esm/index.js"
+      }
     }
   },
   "scripts": {
-    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && tsc-alias -p ./tsconfig.cjs.json && tsc-alias -p ./tsconfig.esm.json && npm run copy-assets:es && npm run copy-assets:cjs",
-    "build:cjs": "tsc -b ./tsconfig.cjs.json && tsc-alias -p ./tsconfig.cjs.json && npm run copy-assets:cjs",
-    "build:es": "tsc -b ./tsconfig.esm.json && tsc-alias -p ./tsconfig.esm.json && npm run copy-assets:es",
-    "clean": "rimraf dist .turbo .cache test-results",
-    "clean:nuke": "npm run clean && rimraf node_modules",
+    "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run copy-assets:es && npm run copy-assets:cjs",
+    "clean": "npx rimraf dist .turbo .cache *.tgz LICENSE NOTICE",
+    "clean:nuke": "npm run clean && npx rimraf node_modules",
     "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
-    "dev": "tsc -b ./tsconfig.esm.json --watch",
-    "test": "vitest run --coverage",
-    "test:watch": "vitest",
+    "test": "NODE_OPTIONS='--import tsx/esm' vitest run",
+    "test:watch": "NODE_OPTIONS='--import tsx/esm' vitest",
+    "test:typescript": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
-    "pack": "npm pack"
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice && iot-prepack",
+    "pack": "npm pack",
+    "postpack": "iot-postpack"
   },
   "devDependencies": {
     "@iot-app-kit/data-mocked": "*",
-    "@iot-app-kit/testing-util": "12.2.1",
-    "@iot-app-kit/ts-config": "12.2.1",
+    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/testing-util": "*",
+    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/vite-config": "*",
     "@tanstack/eslint-plugin-query": "^5.40.1",
     "@tanstack/react-query-devtools": "^5.40.1",
     "@testing-library/jest-dom": "^6.6.3",
@@ -65,16 +72,13 @@
     "@vitejs/plugin-react": "^4.3.3",
     "@vitest/coverage-v8": "^2.1.5",
     "copyfiles": "^2.4.1",
-    "css-loader": "6.8.1",
     "dotenv": "^16.3.1",
-    "eslint-config-iot-app-kit": "12.2.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "jest-extended": "^3.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.1",
     "sass": "1.63.6",
-    "tsc-alias": "^1.8.10",
     "tslib": "^2.5.3",
     "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
@@ -85,10 +89,10 @@
     "@cloudscape-design/components": "3.0.693",
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.32",
-    "@iot-app-kit/core": "12.2.1",
-    "@iot-app-kit/core-util": "12.2.1",
-    "@iot-app-kit/react-components": "12.2.1",
-    "@iot-app-kit/source-iotsitewise": "12.2.1",
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/core-util": "*",
+    "@iot-app-kit/react-components": "*",
+    "@iot-app-kit/source-iotsitewise": "*",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^5.40.1",
@@ -120,5 +124,8 @@
     "@aws-sdk/client-iottwinmaker": "^3.354.0",
     "react": "^18",
     "react-dom": "^18"
+  },
+  "iotAppKit": {
+    "scope": "public"
   }
 }
