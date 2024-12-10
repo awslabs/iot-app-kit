@@ -114,7 +114,7 @@ jobs:
             ${{ runner.os }}-test-lint-${{ matrix.package}}-
 
       - name: Validate
-        run: npx turbo build lint test --filter=@iot-app-kit/${{ matrix.package }}
+        run: npx turbo build lint test pack --filter=@iot-app-kit/${{ matrix.package }}
 
   playwright:
     needs: repo
