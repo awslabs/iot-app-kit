@@ -9,8 +9,7 @@
   "license": "Apache-2.0",
   "files": [
     "dist",
-    "CHANGELOG.md",
-    "*NOTICE"
+    "NOTICE"
   ],
   "repository": {
     "type": "git",
@@ -36,8 +35,10 @@
   },
   "scripts": {
     "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run copy-assets:es && npm run copy-assets:cjs",
-    "clean": "npx rimraf dist .turbo .cache *.tgz LICENSE NOTICE",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "postbuild": "iot-postbuild",
+    "clean": "npx rimraf dist .cache *.tgz LICENSE NOTICE",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
     "test": "NODE_OPTIONS='--import tsx/esm' vitest run",
