@@ -2,16 +2,16 @@ import { type FC } from 'react';
 import {
   type AssetSummary,
   useAssetDescriptionMapQuery,
-} from '~/hooks/useAssetDescriptionQueries';
+} from '../../../hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
-import { isJust } from '~/util/maybe';
+import { isJust } from '../../../util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
 import { type PropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
-import { type IoTSiteWiseDataStreamQuery } from '~/types';
-import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
+import { type IoTSiteWiseDataStreamQuery } from '../../../types';
+import { useAssetModel } from '../../../hooks/useAssetModel/useAssetModel';
 import { handleRemoveAssetModelProperty } from './handleDeleteAssetModelProperty';
 import {
   handleRemoveAlarm,

@@ -21,9 +21,9 @@ import {
   type LineStyles,
   type StyledAssetPropertyQuery,
   type YAxisOptions,
-} from '~/customization/widgets/types';
+} from '../../../customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
-import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
+import type { AssetSummary } from '../../../hooks/useAssetDescriptionQueries';
 import { Tooltip } from '@iot-app-kit/react-components';
 import { LineTypeSection } from '../components/lineTypeDropdown';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';

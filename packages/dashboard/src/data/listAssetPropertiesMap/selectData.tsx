@@ -5,7 +5,7 @@ import {
 import {
   type AssetSummary,
   type PropertySummary,
-} from '~/hooks/useAssetDescriptionQueries';
+} from '../../hooks/useAssetDescriptionQueries';
 
 const newMapPropertySummary = ({
   id,

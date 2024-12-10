@@ -1,5 +1,5 @@
-import { type DashboardState } from '~/store/state';
-import { type DashboardConfiguration } from '~/types';
+import { type DashboardState } from '../store/state';
+import { type DashboardConfiguration } from '../types';
 import { parseViewport } from './parseViewport';
 
 export const convertToDashboardConfiguration = ({

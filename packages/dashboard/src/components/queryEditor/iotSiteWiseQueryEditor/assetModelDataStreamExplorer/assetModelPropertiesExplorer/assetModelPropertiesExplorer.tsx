@@ -5,9 +5,9 @@ import {
 } from '../useSelectedAssetModelProperties';
 import { AssetPropertyExplorer } from '@iot-app-kit/react-components';
 import { type SelectedAsset } from '../useSelectedAsset';
-import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
-import { propertySelectionLabel } from '~/components/queryEditor/helpers/propertySelectionLabel';
-import { type DashboardWidget } from '~/types';
+import { isModeledPropertyInvalid } from '../../../../../components/queryEditor/helpers/isModeledPropertyInvalid';
+import { propertySelectionLabel } from '../../../../../components/queryEditor/helpers/propertySelectionLabel';
+import { type DashboardWidget } from '../../../../../types';
 
 export interface AssetExplorerProps {
   selectedAssetModelProperties: SelectedAssetModelProperties;

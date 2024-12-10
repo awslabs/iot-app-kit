@@ -1,9 +1,9 @@
 import { MOCK_TEXT_LINK_WIDGET } from '../../../../testing/mocks';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
-import { DefaultDashboardMessages } from '~/messages';
-import type { DashboardState } from '~/store/state';
+import { configureDashboardStore } from '../../../store';
+import { DefaultDashboardMessages } from '../../../messages';
+import type { DashboardState } from '../../../store/state';
 import { TextSettingsConfiguration } from './index';
 
 const state: Partial<DashboardState> = {
