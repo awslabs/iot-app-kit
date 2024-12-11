@@ -12,30 +12,35 @@
       "outputLogs": "new-only"
     },
     "clean": {
-      "cache": false,
-      "outputLogs": "new-only"
+      "dependsOn": ["//#clean:root"],
+      "cache": false
     },
-    "//#clean": {
-      "cache": false,
-      "outputLogs": "new-only"
+    "//#clean:root": {
+      "cache": false
+    },
+    "clean:turbo": {
+      "dependsOn": ["//#clean:turbo:root"],
+      "cache": false
+    },
+    "//#clean:turbo:root": {
+      "cache": false
     },
     "clean:nuke": {
-      "cache": false,
-      "outputLogs": "new-only"
+      "dependsOn": ["//#clean:nuke:root"],
+      "cache": false
     },
-    "//#clean:nuke": {
-      "cache": false,
-      "outputLogs": "new-only"
+    "//#clean:nuke:root": {
+      "cache": false
     },
     "dev": {
       "dependsOn": [],
       "persistent": true,
-      "cache": false,
+      "outputs": ["node_modules/.cache"],
       "outputLogs": "full"
     },
     "pack": {
-      "dependsOn": ["^clean", "clean", "//#clean", "build"],
-      "cache": false,
+      "dependsOn": ["^clean", "clean", "build"],
+      "outputs": ["*.tgz"],
       "outputLogs": "new-only"
     },
     "lint": {
@@ -43,16 +48,389 @@
       "outputs": [".cache/**"],
       "outputLogs": "new-only"
     },
+    "@iot-app-kit/dev-env#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/dashboard/**/*",
+        "../../packages/data-mocked/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/core#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/helpers/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/core-util#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/helpers/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/dashboard#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/data-mocked/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/helpers#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/react-components#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/scene-composer#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/source-iotsitewise#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/source-iottwinmaker#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../core/**/*",
+        "../helpers/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/tools-iottwinmaker#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
     "fix": {
       "dependsOn": [],
       "cache": false,
-      "outputs": [".cache/**"],
-      "outputLogs": "new-only"
+      "outputs": [".cache/**"]
     },
     "test": {
       "dependsOn": [],
-      "outputs": ["coverage/**", ".cache/**"],
+      "outputs": ["node_modules/.vite"],
       "outputLogs": "new-only"
+    },
+    "@iot-app-kit/core#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/helpers/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/core-util#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/helpers/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/dashboard#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/data-mocked/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/helpers#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/react-components#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/scene-composer#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/source-iotsitewise#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/source-iottwinmaker#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../core/**/*",
+        "../helpers/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/tools-iottwinmaker#test": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "test:watch": {
+      "dependsOn": [],
+      "outputs": ["node_modules/.vite"],
+      "persistent": true
     },
     "test:ui": {
       "dependsOn": [],
@@ -63,6 +441,74 @@
       "dependsOn": [],
       "env": ["CI"],
       "outputLogs": "new-only"
+    },
+    "@iot-app-kit/dev-env#test:ui:ci": {
+      "dependsOn": [],
+      "env": ["CI"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/dashboard/**/*",
+        "../../packages/data-mocked/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/react-components#test:ui:ci": {
+      "dependsOn": [],
+      "env": ["CI"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/source-iotsitewise/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/scene-composer#test:ui:ci": {
+      "dependsOn": [],
+      "env": ["CI"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
+        "../../packages/core/**/*",
+        "../../packages/core-util/**/*",
+        "../../packages/helpers/**/*",
+        "../../packages/react-components/**/*",
+        "../../packages/source-iottwinmaker/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
     },
     "start": {
       "dependsOn": ["^build"],

@@ -53,7 +53,7 @@ describe('asset property drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No asset properties.')).toBeVisible();
+      expect(screen.getAllByText('No asset properties.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -65,7 +65,7 @@ describe('asset property drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No asset properties.')).toBeVisible();
+      expect(screen.getAllByText('No asset properties.')[0]).toBeVisible();
     });
 
     it('renders drop-down options', async () => {
@@ -494,7 +494,9 @@ describe('asset property drop-down', () => {
       expect(dropDown.getOption(assetModelProperty1)).toBeVisible();
       expect(dropDown.getOption(assetModelProperty2)).toBeVisible();
       expect(dropDown.queryOption(assetModelProperty3)).not.toBeInTheDocument();
-      expect(screen.getByText('(2/3) asset properties matched')).toBeVisible();
+      expect(
+        screen.getAllByText('(2/3) asset properties matched')[0]
+      ).toBeVisible();
 
       await dropDown.clearFilter();
 
@@ -507,7 +509,9 @@ describe('asset property drop-down', () => {
       expect(dropDown.queryOption(assetModelProperty1)).not.toBeInTheDocument();
       expect(dropDown.queryOption(assetModelProperty2)).not.toBeInTheDocument();
       expect(dropDown.getOption(assetModelProperty3)).toBeVisible();
-      expect(screen.getByText('(1/3) asset properties matched')).toBeVisible();
+      expect(
+        screen.getAllByText('(1/3) asset properties matched')[0]
+      ).toBeVisible();
     });
   });
 });

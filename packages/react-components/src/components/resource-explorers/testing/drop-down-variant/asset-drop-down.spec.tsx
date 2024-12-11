@@ -42,7 +42,7 @@ describe('asset drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No assets.')).toBeVisible();
+      expect(screen.getAllByText('No assets.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -52,7 +52,7 @@ describe('asset drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No assets.')).toBeVisible();
+      expect(screen.getAllByText('No assets.')[0]).toBeVisible();
     });
 
     it('renders drop-down options', async () => {
@@ -340,7 +340,7 @@ describe('asset drop-down', () => {
       expect(dropDown.getOption(asset1)).toBeVisible();
       expect(dropDown.getOption(asset2)).toBeVisible();
       expect(dropDown.queryOption(asset3)).not.toBeInTheDocument();
-      expect(screen.getByText('(2/3) assets matched')).toBeVisible();
+      expect(screen.getAllByText('(2/3) assets matched')[0]).toBeVisible();
 
       await dropDown.clearFilter();
 
@@ -353,7 +353,7 @@ describe('asset drop-down', () => {
       expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
       expect(dropDown.queryOption(asset2)).not.toBeInTheDocument();
       expect(dropDown.getOption(asset3)).toBeVisible();
-      expect(screen.getByText('(1/3) assets matched')).toBeVisible();
+      expect(screen.getAllByText('(1/3) assets matched')[0]).toBeVisible();
 
       await dropDown.clearFilter();
       await user.keyboard('Similar Description');
@@ -361,7 +361,7 @@ describe('asset drop-down', () => {
       expect(dropDown.queryOption(asset1)).not.toBeInTheDocument();
       expect(dropDown.getOption(asset2)).toBeVisible();
       expect(dropDown.getOption(asset3)).toBeVisible();
-      expect(screen.getByText('(2/3) assets matched')).toBeVisible();
+      expect(screen.getAllByText('(2/3) assets matched')[0]).toBeVisible();
     });
   });
 });
