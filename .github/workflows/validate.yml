@@ -47,10 +47,66 @@ jobs:
       - name: Git
         run: npm run test:git
 
-  unit:
-    needs: repo
+  build-pack:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          [
+            core,
+            core-util,
+            dashboard,
+            doc-site,
+            helpers,
+            react-components,
+            scene-composer,
+            source-iotsitewise,
+            source-iottwinmaker,
+            tools-iottwinmaker,
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: node_modules cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-build-pack-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-build-pack-${{ matrix.package}}-
+
+      - name: Validate
+        run: npx turbo build pack -F @iot-app-kit/${{ matrix.package }}
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -67,8 +123,72 @@ jobs:
             scene-composer,
             source-iotsitewise,
             source-iottwinmaker,
+            testing-util,
             tools-iottwinmaker,
             vite-config,
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: node_modules cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-lint-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-lint-${{ matrix.package}}-
+
+      - name: Lint cache
+        uses: actions/cache@v4
+        with:
+          path: '**/.cache'
+          key: ${{ runner.os }}-lint-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-lint-${{ matrix.package}}-
+
+      - name: Validate
+        run: npx turbo lint -F @iot-app-kit/${{ matrix.package }}
+
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          [
+            core,
+            core-util,
+            dashboard,
+            react-components,
+            scene-composer,
+            source-iotsitewise,
+            source-iottwinmaker,
+            tools-iottwinmaker,
           ]
     steps:
       - name: Checkout
@@ -105,21 +225,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-unit-${{ matrix.package}}-
 
-      - name: Test and lint cache
-        uses: actions/cache@v4
-        with:
-          path: '**/.cache'
-          key: ${{ runner.os }}-test-lint-${{ matrix.package}}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-test-lint-${{ matrix.package}}-
-
       - name: Validate
-        run: npx turbo build lint test pack --filter=@iot-app-kit/${{ matrix.package }}
+        run: npx turbo test -F @iot-app-kit/${{ matrix.package }}
 
   playwright:
-    needs: repo
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -190,7 +301,7 @@ jobs:
 
       - name: Playwright
         run: |
-          npx turbo test:ui:ci --filter=@iot-app-kit/${{ matrix.package.name }} -- --shard=${{ matrix.package.shardIndex }}/${{ matrix.package.totalShards }}
+          npx turbo test:ui:ci -F @iot-app-kit/${{ matrix.package.name }} -- --shard=${{ matrix.package.shardIndex }}/${{ matrix.package.totalShards }}
 
       - name: Test report
         id: upload-test-report

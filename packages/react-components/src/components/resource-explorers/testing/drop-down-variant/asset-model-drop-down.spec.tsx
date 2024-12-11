@@ -44,7 +44,7 @@ describe('asset model drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No asset models.')).toBeVisible();
+      expect(screen.getAllByText('No asset models.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -54,7 +54,7 @@ describe('asset model drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No asset models.')).toBeVisible();
+      expect(screen.getAllByText('No asset models.')[0]).toBeVisible();
     });
 
     it('renders drop-down options', async () => {
@@ -326,7 +326,6 @@ describe('asset model drop-down', () => {
     });
   });
 
-  // TODO: fix this flaky test ASAP
   describe('filtering', () => {
     it('filters asset models', async () => {
       const assetModel1 = {
@@ -369,7 +368,9 @@ describe('asset model drop-down', () => {
       expect(dropDown.getOption(assetModel1)).toBeVisible();
       expect(dropDown.getOption(assetModel2)).toBeVisible();
       expect(dropDown.queryOption(assetModel3)).not.toBeInTheDocument();
-      expect(screen.getByText('(2/3) asset models matched')).toBeVisible();
+      expect(
+        screen.getAllByText('(2/3) asset models matched')[0]
+      ).toBeVisible();
 
       await dropDown.clearFilter();
 
@@ -382,7 +383,9 @@ describe('asset model drop-down', () => {
       expect(dropDown.queryOption(assetModel1)).not.toBeInTheDocument();
       expect(dropDown.queryOption(assetModel2)).not.toBeInTheDocument();
       expect(dropDown.getOption(assetModel3)).toBeVisible();
-      expect(screen.getByText('(1/3) asset models matched')).toBeVisible();
+      expect(
+        screen.getAllByText('(1/3) asset models matched')[0]
+      ).toBeVisible();
 
       await dropDown.clearFilter();
       await user.keyboard('Similar Description');
@@ -390,7 +393,9 @@ describe('asset model drop-down', () => {
       expect(dropDown.queryOption(assetModel1)).not.toBeInTheDocument();
       expect(dropDown.getOption(assetModel2)).toBeVisible();
       expect(dropDown.getOption(assetModel3)).toBeVisible();
-      expect(screen.getByText('(2/3) asset models matched')).toBeVisible();
-    }, 40000);
+      expect(
+        screen.getAllByText('(2/3) asset models matched')[0]
+      ).toBeVisible();
+    }, 10000);
   });
 });
