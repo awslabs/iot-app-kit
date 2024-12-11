@@ -2,12 +2,12 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^clean", "clean", "^build"],
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
     "@iot-app-kit/dev-env#build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^clean", "clean", "^build"],
       "outputs": [],
       "outputLogs": "new-only"
     },
@@ -39,7 +39,7 @@
       "outputLogs": "full"
     },
     "pack": {
-      "dependsOn": ["^clean", "clean", "build"],
+      "dependsOn": ["build"],
       "outputs": ["*.tgz"],
       "outputLogs": "new-only"
     },
@@ -55,6 +55,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "../../configuration/**/*",
+        "../../packages/atoms/**/*",
         "../../packages/core/**/*",
         "../../packages/core-util/**/*",
         "../../packages/dashboard/**/*",
@@ -64,6 +65,22 @@
         "../../packages/source-iotsitewise/**/*",
         "../../packages/source-iottwinmaker/**/*",
         "../../packages/testing-util/**/*",
+        "!../../configuration/**/node_modules/**/*",
+        "!../../configuration/**/.cache/**/*",
+        "!../../configuration/**/.turbo/**/*",
+        "!../../packages/**/node_modules/**/*",
+        "!../../packages/**/dist/**/*",
+        "!../../packages/**/.cache/**/*",
+        "!../../packages/**/.turbo/**/*"
+      ]
+    },
+    "@iot-app-kit/atoms#lint": {
+      "dependsOn": [],
+      "outputs": [".cache/**"],
+      "outputLogs": "new-only",
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../configuration/**/*",
         "!../../configuration/**/node_modules/**/*",
         "!../../configuration/**/.cache/**/*",
         "!../../configuration/**/.turbo/**/*",
@@ -115,6 +132,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "../../configuration/**/*",
+        "../../packages/atoms/**/*",
         "../../packages/core/**/*",
         "../../packages/core-util/**/*",
         "../../packages/data-mocked/**/*",
@@ -297,6 +315,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "../../configuration/**/*",
+        "../../packages/atoms/**/*",
         "../../packages/core/**/*",
         "../../packages/core-util/**/*",
         "../../packages/data-mocked/**/*",
@@ -449,6 +468,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "../../configuration/**/*",
+        "../../packages/atoms/**/*",
         "../../packages/core/**/*",
         "../../packages/core-util/**/*",
         "../../packages/dashboard/**/*",
