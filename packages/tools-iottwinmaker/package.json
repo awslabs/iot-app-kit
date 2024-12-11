@@ -8,6 +8,10 @@
     "node": ">=16",
     "npm": ">=8"
   },
+  "files": [
+    "dist",
+    "NOTICE"
+  ],
   "type": "module",
   "main": "./dist/cjs/index.cjs.js",
   "module": "./dist/esm/index.js",
@@ -31,9 +35,11 @@
   },
   "scripts": {
     "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run package",
+    "postbuild": "iot-postbuild",
     "build-global": "npm run clean && npm run build && npm run package && npm install -g",
-    "clean": "npx rimraf dist coverage tmdt_local .turbo .cache *.tgz LICENSE NOTICE && npm uninstall -g tmdt || true",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "clean": "npx rimraf dist coverage tmdt_local .cache *.tgz LICENSE NOTICE && npm uninstall -g tmdt || true",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
     "test": "NODE_OPTIONS='--import tsx/esm' TZ=UTC vitest run -c vite.config.ts --silent",

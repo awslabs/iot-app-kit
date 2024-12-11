@@ -6,8 +6,9 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "clean": "npx rimraf storybook-static .turbo",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "clean": "npx rimraf storybook-static",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "start": "storybook dev -p 6006",
     "dev": "npm start",
     "build": "storybook build",

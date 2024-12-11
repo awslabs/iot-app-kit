@@ -1,11 +1,20 @@
 #!/usr/bin/env -S npx tsx
 import fse from 'fs-extra';
 import { listRegisteredPackages } from '../packageRegistry';
-import { getShortName } from '../package';
+import { getShortName, type PackageName } from '../package';
 import type { PackageJson } from 'type-fest';
+import { validateBuildArtifacts } from '../validation/validateBuildArtifacts';
+import { readPackageJson } from '../packageJson';
+import { listInstalledPackages } from '../installedPackages';
+
+prepack();
 
 function prepack() {
+  console.info('*** Starting prepack. ***');
   referenceCopiedProtectedPackages();
+  validateBuildArtifacts();
+  validatePrepack();
+  console.info('*** Ending prepack. ***');
 }
 
 /**
@@ -39,4 +48,31 @@ function referenceCopiedProtectedPackages() {
   fse.writeJSONSync(packageJsonPath, packageJson, { spaces: 2 });
 }
 
-prepack();
+function validatePrepack() {
+  console.info(`*** Starting validating package.json file. ***`);
+  const packageJson = readPackageJson('./package.json');
+  const protectedPackagesInstalledAsRuntimeDependencies = listInstalledPackages(
+    packageJson,
+    {
+      filter: { scope: 'protected', dependencyType: 'dependencies' },
+    }
+  );
+
+  protectedPackagesInstalledAsRuntimeDependencies.forEach((p) => {
+    if (
+      packageJson.dependencies?.[p.name] !==
+      `file:./dist/${getShortName(p.name as PackageName)}`
+    ) {
+      console.error(
+        '*** Failure: Local dependency has incorrect version setting. ***'
+      );
+      throw new Error(
+        `[iot-app-kit] Expected local dependency version to use file reference. Found: ${
+          packageJson.dependencies?.[p.name] ?? 'No version found'
+        }.`
+      );
+    }
+  });
+
+  console.info(`*** Finished validating package.json file. ***`);
+}

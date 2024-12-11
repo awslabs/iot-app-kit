@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "clean": "npx rimraf storybook-static .turbo .cache test-results playwright-report",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "clean": "npx rimraf storybook-static .cache test-results playwright-report",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "dev": "NODE_OPTIONS='--import tsx/esm' storybook dev -p 6006",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/ & tsc --noEmit",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",

@@ -8,7 +8,8 @@
   "description": "AWS IoT TwinMaker Scene Composer Library",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "files": [
-    "dist"
+    "dist",
+    "NOTICE"
   ],
   "type": "module",
   "main": "./dist/cjs/index.cjs.js",
@@ -31,9 +32,11 @@
   },
   "scripts": {
     "build": "run-s svglint extract-msgs convert-svg build:ts copy-assets:es copy-assets:cjs",
+    "postbuild": "iot-postbuild",
     "build:ts": "NODE_OPTIONS='--import tsx/esm' vite build",
-    "clean": "npx rimraf dist coverage playwright-report test-results .turbo .cache *.tgz LICENSE NOTICE",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "clean": "npx rimraf dist coverage playwright-report test-results .cache *.tgz LICENSE NOTICE",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "pre:compile": "run-s svglint extract-msgs convert-svg",
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --jsx-runtime automatic --index-template tools/index-template.cjs -- src/assets/icons/",
     "release": "run-s build copy-assets:es copy-assets:cjs",

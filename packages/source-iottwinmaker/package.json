@@ -8,7 +8,8 @@
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
   "files": [
-    "dist"
+    "dist",
+    "NOTICE"
   ],
   "type": "module",
   "main": "./dist/cjs/index.cjs.js",
@@ -31,8 +32,10 @@
   },
   "scripts": {
     "build": "NODE_OPTIONS='--import tsx/esm' vite build",
-    "clean": "npx rimraf dist coverage .turbo .cache *.tgz LICENSE NOTICE",
-    "clean:nuke": "npm run clean && npx rimraf node_modules",
+    "postbuild": "iot-postbuild",
+    "clean": "npx rimraf dist coverage .cache *.tgz LICENSE NOTICE",
+    "clean:turbo": "npx rimraf .turbo",
+    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
     "test": "NODE_OPTIONS='--import tsx/esm' TZ=UTC vitest run",
