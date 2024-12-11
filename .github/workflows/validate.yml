@@ -55,6 +55,7 @@ jobs:
       matrix:
         package:
           [
+            atoms,
             core,
             core-util,
             dashboard,
@@ -112,6 +113,7 @@ jobs:
       matrix:
         package:
           [
+            atoms,
             core,
             core-util,
             dashboard,
