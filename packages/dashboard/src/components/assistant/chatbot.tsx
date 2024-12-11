@@ -17,7 +17,7 @@ import {
   onCleanAssistantAction,
   onToggleChatbotAction,
 } from '../../store/actions';
-import { type DashboardState } from '../../store/state';
+import { type DashboardState } from '../../store/state-old';
 import { useClients } from '../dashboard/clientContext';
 import './assistant.css';
 

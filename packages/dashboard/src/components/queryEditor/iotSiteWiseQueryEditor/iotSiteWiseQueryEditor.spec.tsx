@@ -11,7 +11,7 @@ import { resourceExplorerQueryClient } from '@iot-app-kit/react-components';
 import { render, screen, waitFor } from '@testing-library/react';
 import ue from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../store';
+import { configureDashboardStore } from '../../../store/index-old';
 import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 
 const user = ue.setup();

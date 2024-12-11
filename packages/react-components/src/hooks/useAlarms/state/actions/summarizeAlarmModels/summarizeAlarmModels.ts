@@ -1,6 +1,6 @@
 import isEqual from 'lodash-es/isEqual';
 import uniqWith from 'lodash-es/uniqWith';
-import { createNonNullableList } from '../../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   extractAssetPropertyId,
   getAlarmModelNameFromAlarmSourceProperty,
@@ -53,7 +53,7 @@ export const summarizeAlarmModels = (
             isEqual
           );
 
-          const inputPropertyIds = createNonNullableList(
+          const inputPropertyIds = compact(
             models.map((model) =>
               extractAssetPropertyId(model.alarmRule?.simpleRule?.inputProperty)
             )
@@ -71,7 +71,7 @@ export const summarizeAlarmModels = (
             isEqual
           );
 
-          const staticThresholds = createNonNullableList(
+          const staticThresholds = compact(
             models.map(getStaticThresholdAsAssetPropertyValue)
           );
 

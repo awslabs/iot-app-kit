@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { WidgetPropertiesGeneratorMap } from '../../../../customization/widgetPropertiesGeneratorMap';
-import type { DashboardState } from '../../../../store/state';
+import type { DashboardState } from '../../../state-old';
 import type { DashboardWidget } from '../../../../types';
 
 const BASE_POSITION = {

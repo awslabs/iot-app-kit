@@ -27,7 +27,7 @@
   "scripts": {
     "build": "NODE_OPTIONS='--import tsx/esm' vite build",
     "postbuild": "iot-postbuild",
-    "clean": "npx rimraf dist coverage .cache *.tgz",
+    "clean": "npx rimraf dist coverage .cache *.tgz LICENSE NOTICE",
     "clean:turbo": "npx rimraf .turbo",
     "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",

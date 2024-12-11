@@ -16,8 +16,8 @@ import {
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import { Provider } from 'react-redux';
 import { PropertiesPanel } from './panel';
-import { configureDashboardStore } from '../../../store';
-import { type DashboardState } from '../../../store/state';
+import { configureDashboardStore } from '../../../store/index-old';
+import { type DashboardState } from '../../../store/state-old';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,

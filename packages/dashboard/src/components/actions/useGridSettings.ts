@@ -6,7 +6,7 @@ import {
   onChangeDashboardWidthAction,
 } from '../../store/actions';
 import { onUpdateSignificantDigitsAction } from '../../store/actions/updateSignificantDigits';
-import { type DashboardState } from '../../store/state';
+import { type DashboardState } from '../../store/state-old';
 
 export const useGridSettings = () => {
   const dispatch = useDispatch();

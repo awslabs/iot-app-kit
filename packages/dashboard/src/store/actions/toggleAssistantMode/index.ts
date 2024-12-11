@@ -1,4 +1,4 @@
-import type { DashboardState } from '../../state';
+import type { DashboardState } from '../../state-old';
 import type { Action } from 'redux';
 
 type ToggleAssistantModeActionPayload = {

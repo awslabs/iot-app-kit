@@ -1,3 +1,4 @@
+import invariant from 'tiny-invariant';
 import type { DashboardWidget } from '../types';
 
 /**
@@ -14,3 +15,13 @@ type WidgetPropertiesGenerator<W extends DashboardWidget = DashboardWidget> = {
   };
 };
 export const WidgetPropertiesGeneratorMap: WidgetPropertiesGenerator = {};
+
+export function createProperties(
+  widgetType: string
+): DashboardWidget['properties'] {
+  const properties = WidgetPropertiesGeneratorMap[widgetType].properties;
+
+  invariant(properties, 'Expected properties to be found.');
+
+  return properties();
+}

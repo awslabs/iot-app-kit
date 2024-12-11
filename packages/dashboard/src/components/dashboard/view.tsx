@@ -8,7 +8,10 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
 import { useDashboardPlugins } from '../../customization/api';
-import { configureDashboardStore, toDashboardState } from '../../store';
+import {
+  configureDashboardStore,
+  toDashboardState,
+} from '../../store/index-old';
 import '../../styles/variables.css';
 import type {
   AssistantConfiguration,

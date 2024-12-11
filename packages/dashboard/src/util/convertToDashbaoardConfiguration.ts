@@ -1,4 +1,4 @@
-import { type DashboardState } from '../store/state';
+import { type DashboardState } from '../store/state-old';
 import { type DashboardConfiguration } from '../types';
 import { parseViewport } from './parseViewport';
 

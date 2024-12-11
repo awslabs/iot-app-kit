@@ -1,4 +1,4 @@
-import { initialState } from '../../../store/state';
+import { initialState } from '../../state-old';
 import { onUpdateRefreshRateAction, updateRefreshRate } from './index';
 
 it('it intiializes to 5 seconds', () => {

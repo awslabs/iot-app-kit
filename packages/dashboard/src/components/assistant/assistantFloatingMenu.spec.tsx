@@ -9,13 +9,13 @@ import {
   MOCK_STATUS_TIMELINE_WIDGET,
 } from '../../../testing/mocks';
 import { DefaultDashboardMessages } from '../../messages';
-import { configureDashboardStore } from '../../store';
+import { configureDashboardStore } from '../../store/index-old';
 import {
   onAssistantCleanWidgetsSelectionAction,
   onAssistantSelectWidgetsAction,
   onToggleAssistantModeAction,
 } from '../../store/actions';
-import { initialState } from '../../store/state';
+import { initialState } from '../../store/state-old';
 import { AssistantFloatingMenu } from './assistantFloatingMenu';
 
 const user = ue.setup();

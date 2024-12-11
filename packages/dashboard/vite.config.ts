@@ -18,5 +18,11 @@ export default definePackageConfig({
       '~': resolve(__dirname, 'src'),
     },
     setupFiles: ['./vitest.setup.ts'],
+    // https://vitest.dev/guide/in-source.html#setup
+    includeSource: ['src/**/*.{ts,tsx}'],
+  },
+  define: {
+    // https://vitest.dev/guide/in-source.html#production-build
+    'import.meta.vitest': 'undefined',
   },
 });

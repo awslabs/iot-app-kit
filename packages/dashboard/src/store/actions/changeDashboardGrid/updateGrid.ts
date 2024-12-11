@@ -1,5 +1,5 @@
-import { constrainWidgetPositionToGrid } from '../../../util/constrainWidgetPositionToGrid';
-import type { DashboardState } from '../../state';
+import { placeWithinRectangle } from '#grid/rectangle/nest';
+import type { DashboardState } from '../../state-old';
 
 type GridProperties = keyof DashboardState['grid'];
 type GridValues = DashboardState['grid'][GridProperties];
@@ -13,11 +13,23 @@ export const changeGridProperty = (
     ...state.grid,
     [property]: value,
   };
-  const widgets = state.dashboardConfiguration.widgets.map((w) => {
-    return constrainWidgetPositionToGrid(
-      { x: 0, y: 0, width: grid.width, height: grid.height },
-      w
+  const widgets = state.dashboardConfiguration.widgets.map((widget) => {
+    const { position: position, dimensions } = placeWithinRectangle(
+      {
+        position: { x: widget.x, y: widget.y },
+        dimensions: { height: widget.height, width: widget.width },
+      },
+      {
+        position: { x: 0, y: 0 },
+        dimensions: { width: grid.width, height: grid.height },
+      }
     );
+
+    return {
+      ...widget,
+      ...position,
+      ...dimensions,
+    };
   });
 
   return {

@@ -12,7 +12,7 @@ import { type AlarmData } from '../../../hooks/useAlarms';
 import { parseAlarmStateAssetProperty } from '../../../hooks/useAlarms/transformers';
 import { mapAlarmRuleExpression } from '../../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
 import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
 import { type AlarmContent } from '../../alarm-components/alarm-content/types';
 import { type ChartOptions } from '../types';
@@ -49,7 +49,7 @@ export const useChartAlarms = ({ queries, viewport }: UseChartAlarmOptions) => {
     }
 
     const alarmStateData = state.data ?? [];
-    const parsedAlarmStateData: ChartAlarmEvent[] = createNonNullableList(
+    const parsedAlarmStateData: ChartAlarmEvent[] = compact(
       alarmStateData.map(parseAlarmStateAssetProperty)
     ).map(
       (point): ChartAlarmEvent => ({

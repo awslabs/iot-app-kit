@@ -1,4 +1,4 @@
-import { type Position } from '../../../types';
+import { type 2DPosition } from '../../../types';
 
 /**
  *
@@ -8,12 +8,12 @@ import { type Position } from '../../../types';
  * and the delta between them
  *
  */
-const trackPosition = (defaultPosition: Position) => {
+const trackPosition = (defaultPosition: 2DPosition) => {
   let position = defaultPosition;
 
   return {
     getPosition: () => position,
-    setPosition: (newPosition: Position) => {
+    setPosition: (newPosition: 2DPosition) => {
       position = newPosition;
     },
   };

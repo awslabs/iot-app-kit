@@ -19,6 +19,7 @@ import type {
 import type { ReactElement } from 'react';
 import type { PartialDeep } from 'type-fest';
 import type { RefreshRate } from './components/refreshRate/types';
+import { Position } from '#grid/position/types';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
@@ -47,12 +48,6 @@ export type IoTSiteWiseDataStreamQuery = Partial<
 export type DashboardClientConfiguration =
   | DashboardIotSiteWiseClients
   | DashboardClientCredentials;
-
-// OnSave has an optional viewMode value which can be used to persist the dashboard's viewMode after the save action
-export type DashboardSave = (
-  dashboardConfiguration: DashboardConfiguration,
-  viewModeOnSave?: 'preview' | 'edit'
-) => Promise<void>;
 
 export type ViewportChange = (viewport: Viewport) => void;
 
@@ -108,8 +103,6 @@ export type DashboardWidgetsConfiguration<
   viewport: Viewport;
 };
 
-export type Position = { x: number; y: number };
-export type Rect = { x: number; y: number; width: number; height: number };
 export type Selection = {
   start: Position;
   end: Position;

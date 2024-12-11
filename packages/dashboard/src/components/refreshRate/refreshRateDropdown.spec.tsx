@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import ue from '@testing-library/user-event';
 import { RefreshRateDropDown } from './refreshRateDropdown';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../store';
+import { configureDashboardStore } from '../../store/index-old';
 
 const user = ue.setup();
 

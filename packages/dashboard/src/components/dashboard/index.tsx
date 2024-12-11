@@ -12,14 +12,16 @@ import { Provider } from 'react-redux';
 import { useDashboardPlugins } from '../../customization/api';
 import { PropertiesPanel } from '../../customization/propertiesSections';
 import { queryClient } from '../../data/query-client';
-import { configureDashboardStore, toDashboardState } from '../../store';
+import {
+  configureDashboardStore,
+  toDashboardState,
+} from '../../store/index-old';
 import '../../styles/variables.css';
 import type {
   AssistantConfiguration,
   DashboardClientConfiguration,
   DashboardConfiguration,
   DashboardConfigurationChange,
-  DashboardSave,
   DashboardToolbar,
   ViewportChange,
 } from '../../types';
@@ -28,6 +30,7 @@ import { ClientContext } from './clientContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
 import { QueryContext } from './queryContext';
+import type { DashboardSave } from '#features/saving/types';
 
 export type DashboardProperties = {
   onDashboardConfigurationChange?: DashboardConfigurationChange;

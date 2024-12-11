@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import type { PartialDeep } from 'type-fest';
 import type { Mock } from 'vitest';
-import { configureDashboardStore } from '../../../store';
+import { configureDashboardStore } from '../../../store/index-old';
 import { onResizeWidgetsAction } from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import { useResizeGestures } from './useResize';
 
 vi.mock('../../../store/actions', async () => {

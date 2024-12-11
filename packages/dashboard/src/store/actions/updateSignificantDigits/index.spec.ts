@@ -1,4 +1,4 @@
-import { initialState } from '../../../store/state';
+import { initialState } from '../../state-old';
 import {
   onUpdateSignificantDigitsAction,
   updateSignificantDigits,

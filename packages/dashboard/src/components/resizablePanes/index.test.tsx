@@ -2,8 +2,8 @@ import { render } from '@testing-library/react';
 import { type FC, type ReactNode } from 'react';
 
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../store';
-import { initialState } from '../../store/state';
+import { configureDashboardStore } from '../../store/index-old';
+import { initialState } from '../../store/state-old';
 import { PropertiesPaneIcon } from './assets/propertiesPaneIcon';
 import { ResizablePanes } from './index';
 

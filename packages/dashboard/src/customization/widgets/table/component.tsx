@@ -14,7 +14,7 @@ import EmptyTableComponent from './emptyTableComponent';
 
 import { useQueries } from '../../../components/dashboard/queryContext';
 import { useChartSize } from '../../../hooks/useChartSize';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import type { TableWidget } from '../types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 

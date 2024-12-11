@@ -4,7 +4,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import ue from '@testing-library/user-event';
 
 import { DefaultDashboardMessages } from '../../messages';
-import { configureDashboardStore } from '../../store';
+import { configureDashboardStore } from '../../store/index-old';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import type { ContextMenuProps } from './index';
 import ContextMenu from './index';

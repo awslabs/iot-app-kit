@@ -8,7 +8,7 @@ import { useQueryMode } from './useQueryMode';
 import { combineStatusForQueries } from '../utils/queryStatus';
 import { useLatestAssetPropertyValues } from '../../../queries';
 import { useHistoricalAssetPropertyValues } from '../../../queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   type OnUpdateAlarmStateDataAction,
   useRequestSelector,
@@ -160,16 +160,14 @@ export const useAlarmState = ({
         ] as const;
 
         const dataFromQueries = [
-          ...createNonNullableList([queries[0]?.data?.propertyValue]),
+          ...compact([queries[0]?.data?.propertyValue]),
           ...(queries[1]?.data?.assetPropertyValueHistory ?? []),
           ...(queries[2]?.data?.assetPropertyValueHistory ?? []),
           ...(queries[3]?.data?.assetPropertyValueHistory ?? []),
           ...(queries[4]?.data?.assetPropertyValueHistory ?? []),
         ];
 
-        const status = combineStatusForQueries(
-          createNonNullableList([...queries])
-        );
+        const status = combineStatusForQueries(compact([...queries]));
 
         return {
           request,

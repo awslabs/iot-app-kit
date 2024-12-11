@@ -3,8 +3,8 @@ import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { queryClient } from '../../data/query-client';
 import invariant from 'tiny-invariant';
-import { createNonNullableList } from '../../helpers/lists/createNonNullableList';
-import { type DashboardState } from '../../store/state';
+import { compact } from '@iot-app-kit/helpers';
+import { type DashboardState } from '../../store/state-old';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
 import { DescribeAssetModelRequest } from './describeAssetModelRequest';
 import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
@@ -52,9 +52,7 @@ export function useAssetModel({
       queryClient
     ) ?? [];
 
-  const assetModelResponses = createNonNullableList(
-    queries.map(({ data }) => data)
-  );
+  const assetModelResponses = compact(queries.map(({ data }) => data));
   const assetModel =
     assetModelId !== undefined ? assetModelResponses.at(0) : undefined;
   const assetModels =

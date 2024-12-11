@@ -3,9 +3,9 @@ import ue from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { DefaultDashboardMessages } from '../../messages';
-import { configureDashboardStore } from '../../store';
+import { configureDashboardStore } from '../../store/index-old';
 import { onToggleChatbotAction } from '../../store/actions';
-import { initialState } from '../../store/state';
+import { initialState } from '../../store/state-old';
 import { Chatbot } from './chatbot';
 
 const user = ue.setup();

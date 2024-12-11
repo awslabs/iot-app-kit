@@ -11,11 +11,11 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import type { Position } from '../../types';
+import type { 2DPosition } from '../../types';
 import './menu.css';
 
 export type MenuProps = {
-  position: Position & { z?: number };
+  position: 2DPosition & { z?: number };
   clickOutside?: (event: PointerEvent) => void;
   children: ReactNode;
 };

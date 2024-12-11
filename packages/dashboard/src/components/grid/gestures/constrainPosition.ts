@@ -1,4 +1,4 @@
-import { type Position } from '../../../types';
+import { type 2DPosition } from '../../../types';
 
 /**
  *
@@ -6,7 +6,7 @@ import { type Position } from '../../../types';
  *
  */
 export const constrainPosition = (params: {
-  position: Position;
+  position: 2DPosition;
   gridSize: { width: number; height: number; x: number; y: number };
 }) => {
   const { position, gridSize } = params;

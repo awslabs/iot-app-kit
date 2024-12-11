@@ -11,7 +11,7 @@ import WidgetTile from '../../../components/widgets/tile/tile';
 import { aggregateToString } from '../../../customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '../../../hooks/useChartSize';
 import { onUpdateWidgetsAction } from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import { type IoTSiteWiseDataStreamQuery } from '../../../types';
 import NoChartData from '../components/no-chart-data';
 import type {

@@ -3,7 +3,7 @@ import {
   type GetAssetPropertyValueHistoryCommandOutput,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 
 export class GetGetAssetPropertyValueHistoryRequest {
   readonly #command: GetAssetPropertyValueHistoryCommand;
@@ -59,7 +59,7 @@ export class GetGetAssetPropertyValueHistoryRequest {
         throw new Error('Error fetching all asset property values');
       }
 
-      const assetPropertyValueHistory = createNonNullableList(
+      const assetPropertyValueHistory = compact(
         responses.flatMap(
           ({ assetPropertyValueHistory }) => assetPropertyValueHistory
         )

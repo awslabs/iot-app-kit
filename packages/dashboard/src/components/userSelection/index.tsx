@@ -1,10 +1,10 @@
 import { useLayers } from '../internalDashboard/useLayers';
 
-import type { Rect } from '../../types';
+import type { Rectangle } from '../../types';
 import './index.css';
 
 export type UserSelectionProps = {
-  rect: Rect | undefined;
+  rect: Rectangle | undefined;
 };
 
 const UserSelection: React.FC<UserSelectionProps> = ({ rect }) => {

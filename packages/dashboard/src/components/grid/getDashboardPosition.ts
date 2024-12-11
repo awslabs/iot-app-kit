@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type { Position } from '../../types';
+import type { 2DPosition } from '../../types';
 
 export const DASHBOARD_CONTAINER_ID = 'container';
 
@@ -47,7 +47,7 @@ export const getDashboardPosition = (
     | MouseEvent
     | TouchEvent
     | PointerEvent
-): Position => {
+): 2DPosition => {
   const { offsetX, offsetY } = getOffsets(event);
   let totalOffsetX = offsetX;
   let totalOffsetY = offsetY;

@@ -12,7 +12,7 @@ import {
 } from '../../types';
 import { anySignal } from '../utils/anySignal';
 import { type BatchGetRequest, BatchGetRequestManager } from './requestManager';
-import { createNonNullableList } from '../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 
 export type AssetPropertyAggregatesLoaderOptions = {
   batchGetAssetPropertyAggregates: BatchGetAssetPropertyAggregatesRequestFunction;
@@ -87,7 +87,7 @@ export class AssetPropertyAggregatesLoader
 
     try {
       do {
-        const entries = createNonNullableList(
+        const entries = compact(
           requests.map((request) => request.getRequest())
         );
         abortSignal.throwIfAborted();

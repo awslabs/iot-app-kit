@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../store';
+import { configureDashboardStore } from '../../../store/index-old';
 import {
   MOCK_BAR_WIDGET,
   MOCK_LINE_CHART_WIDGET,

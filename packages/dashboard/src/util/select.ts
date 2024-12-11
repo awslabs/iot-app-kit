@@ -1,18 +1,18 @@
 import last from 'lodash-es/last';
 import sortBy from 'lodash-es/sortBy';
-import type { DashboardWidget, Position, Rect, Selection } from '../types';
-import { overlaps } from './overlaps';
+import type { DashboardWidget, 2DPosition, Rectangle, Selection } from '../types';
+import { overlaps } from '../grid/rectangle/intersects';
 
 export const getSelectedWidgets = ({
   selectedRect,
   cellSize,
   dashboardWidgets,
 }: {
-  selectedRect: Rect | undefined;
+  selectedRect: Rectangle | undefined;
   cellSize: number;
   dashboardWidgets: DashboardWidget[];
 }) => {
-  const isSelected = (rect: Rect): boolean =>
+  const isSelected = (rect: Rectangle): boolean =>
     selectedRect
       ? overlaps(
           {
@@ -37,7 +37,7 @@ export const getSelectedWidgetIds = ({
   cellSize,
   dashboardWidgets,
 }: {
-  selectedRect: Rect | undefined;
+  selectedRect: Rectangle | undefined;
   cellSize: number;
   dashboardWidgets: DashboardWidget[];
 }) =>
@@ -54,7 +54,7 @@ export const pointSelect = ({
   cellSize,
   dashboardWidgets,
 }: {
-  position: Position;
+  position: 2DPosition;
   cellSize: number;
   dashboardWidgets: DashboardWidget[];
 }): DashboardWidget | undefined => {
@@ -82,7 +82,7 @@ export const pointSelect = ({
 
 export const selectedRect = (
   selection: Selection | undefined
-): Rect | undefined => {
+): Rectangle | undefined => {
   if (!selection) {
     return undefined;
   }

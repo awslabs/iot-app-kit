@@ -8,7 +8,7 @@ import {
   type UseAlarmsOptions,
   useAlarms,
 } from '../useAlarms';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 
 /**
  *
@@ -72,7 +72,7 @@ export const useAlarmsFromQueries = <T = AlarmData>({
   }, [queries]);
 
   const requestSettings = useMemo(() => {
-    const requestSettingsFromQueries = createNonNullableList(
+    const requestSettingsFromQueries = compact(
       getAlarmQueries(queries).map(
         ({ query: { requestSettings } }) => requestSettings
       )

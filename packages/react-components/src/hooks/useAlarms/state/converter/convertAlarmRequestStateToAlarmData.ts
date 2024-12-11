@@ -1,4 +1,4 @@
-import { createNonNullableList } from '../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { type AlarmData, type AlarmRequest } from '../../types';
 import { combineStatusForQueries } from '../../utils/queryStatus';
 import { type AlarmRequestState } from '../types';
@@ -10,7 +10,7 @@ export const convertAlarmRequestStateToAlarmData = (
     ({ properties: _properties, ...alarm }) => ({
       ...alarm,
       status: combineStatusForQueries(
-        createNonNullableList([
+        compact([
           alarmRequestState.describeAssetModelQueryStatus,
           alarmRequestState.describeAssetQueryStatus,
           alarm.getLatestAlarmSourceValueQueryStatus,

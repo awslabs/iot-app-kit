@@ -13,7 +13,7 @@ import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
 } from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import { type DashboardWidget } from '../../../types';
 import './tile.css';
 

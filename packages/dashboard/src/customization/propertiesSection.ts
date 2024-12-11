@@ -7,10 +7,10 @@ import {
   onResizeWidgetsAction,
   onUpdateWidgetsAction,
 } from '../store/actions';
-import { type DashboardWidget, type Rect } from '../types';
-import { getSelectionBox } from '../util/getSelectionBox';
+import { type DashboardWidget, type Rectangle } from '../types';
+import { getSelectionBox } from '../grid/rectangle/surround';
 import { Just, type Maybe, Nothing } from '../util/maybe';
-import { trimRectPosition } from '../util/trimRectPosition';
+import { createRectangle } from '../grid/rectangle/create';
 
 /**
  * Predicate function type for dashboard widgets
@@ -120,13 +120,13 @@ export const useSelection = <W extends DashboardWidget>(
   /**
    * TECH DEBT: getSelectionBox should never be null given the above check
    */
-  const { x, y, height, width } = trimRectPosition(
+  const { x, y, height, width } = createRectangle(
     getSelectionBox(selection) ?? { ...NO_SIZE, ...NO_POSITION }
   );
 
   const useSize = (): [
-    Pick<Rect, 'height' | 'width'>,
-    (vector: Pick<Rect, 'x' | 'y'>) => void
+    Pick<Rectangle, 'height' | 'width'>,
+    (vector: Pick<Rectangle, 'x' | 'y'>) => void
   ] => [
     { height, width },
     (vector) =>
@@ -139,8 +139,8 @@ export const useSelection = <W extends DashboardWidget>(
       ),
   ];
   const usePosition = (): [
-    Pick<Rect, 'x' | 'y'>,
-    (vector: Pick<Rect, 'x' | 'y'>) => void
+    Pick<Rectangle, 'x' | 'y'>,
+    (vector: Pick<Rectangle, 'x' | 'y'>) => void
   ] => [
     { x, y },
     (vector) =>

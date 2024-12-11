@@ -2,10 +2,8 @@ import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import groupBy from 'lodash-es/groupBy';
 import zip from 'lodash-es/zip';
 import { useCallback, useMemo } from 'react';
-import {
-  createNonNullableList,
-  createNonNullableTupleList,
-} from '../../../utils/createNonNullableList';
+import { createNonNullableTupleList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   type TimeSeriesDataCacheClient,
   type TimeSeriesDataCacheKeyManager,
@@ -60,7 +58,7 @@ export const useTimeSeriesDataRequestExecuter = <Request, Data>({
   );
 
   const requests = useMemo(() => {
-    return createNonNullableList(
+    return compact(
       requestQueries.flatMap(({ queryResult }) =>
         queryResult.data?.map((request) => request)
       )

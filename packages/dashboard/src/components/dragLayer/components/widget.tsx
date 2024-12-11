@@ -6,7 +6,7 @@ import DynamicWidgetComponent, {
 
 import type { CSSProperties } from 'react';
 import type { DashboardMessages } from '../../../messages';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import './widget.css';
 
 export type DragLayerWidgetProps = {

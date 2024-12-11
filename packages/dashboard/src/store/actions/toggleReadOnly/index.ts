@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { DashboardState } from '../../state';
+import type { DashboardState } from '../../state-old';
 import { v4 as uuid } from 'uuid';
 
 export interface ToggleReadOnlyAction extends PayloadAction<null> {

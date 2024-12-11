@@ -1,4 +1,4 @@
-import { getSelectionBox } from '../../util/getSelectionBox';
+import { getSelectionBox } from '../../grid/rectangle/surround';
 import SelectionBoxAnchor from './selectionBoxAnchor';
 
 import type { DashboardWidget } from '../../types';

@@ -4,4 +4,6 @@ export {
   MINUTE_IN_MS,
   NANO_SECOND_IN_MS,
   SECOND_IN_MS,
-} from './constants/time';
+} from '#constants/time';
+export { compact } from '#lists/compact';
+export { isDefined } from '#predicates/isDefined';

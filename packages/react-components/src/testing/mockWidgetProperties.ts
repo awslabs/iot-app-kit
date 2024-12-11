@@ -5,7 +5,7 @@ import {
   type DataStream,
   COMPARISON_OPERATOR,
 } from '@iot-app-kit/core';
-import { DAY_IN_MS } from '../utils/time';
+import { DAY_IN_MS } from '@iot-app-kit/helpers';
 import { VIEWPORT } from '../utils/testUtil';
 
 export const START_DATE = new Date(2000, 0, 0);

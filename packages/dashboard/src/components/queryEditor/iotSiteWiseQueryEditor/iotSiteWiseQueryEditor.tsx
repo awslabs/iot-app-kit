@@ -4,7 +4,7 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import Tabs from '@cloudscape-design/components/tabs';
 import { useSelector } from 'react-redux';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import { type useQuery } from '../useQuery';
 import { AssetModelDataStreamExplorer } from './assetModelDataStreamExplorer/assetModelDataStreamExplorer';
 import { ModeledExplorer } from './modeledExplorer/modeledExplorer';

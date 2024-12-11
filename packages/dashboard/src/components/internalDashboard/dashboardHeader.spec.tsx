@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { type PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../store';
+import { configureDashboardStore } from '../../store/index-old';
 import DashboardHeader from './dashboardHeader';
 
 describe('DashboardHeader', () => {

@@ -1,4 +1,4 @@
-import { createNonNullableList } from '../../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { type AlarmRequest } from '../../../types';
 import { type AlarmRequestState } from '../../types';
 
@@ -9,7 +9,7 @@ export const isSummarizingAlarms = ({
   if (describeAssetQueryStatus == null && describeAssetModelQueryStatus == null)
     return true;
 
-  const successStatuses = createNonNullableList([
+  const successStatuses = compact([
     describeAssetQueryStatus?.isSuccess,
     describeAssetModelQueryStatus?.isSuccess,
   ]);

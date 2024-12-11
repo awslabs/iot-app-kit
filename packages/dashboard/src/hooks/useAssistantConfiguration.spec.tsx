@@ -3,9 +3,9 @@ import { renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider, useDispatch } from 'react-redux';
-import { configureDashboardStore } from '../store';
+import { configureDashboardStore } from '../store/index-old';
 import { onToggleReadOnly } from '../store/actions';
-import { initialState } from '../store/state';
+import { initialState } from '../store/state-old';
 import { useAssistantConfiguration } from './useAssistantConfiguration';
 
 const store = configureDashboardStore(initialState);

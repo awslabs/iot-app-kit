@@ -1,5 +1,5 @@
 import { getBreachedThreshold } from './thresholdUtils';
-import { isDefined } from './predicates';
+import { isDefined } from '@iot-app-kit/helpers';
 import { closestPoint } from './closestPoint';
 import { DATA_ALIGNMENT, StreamType } from '../common/constants';
 import type {

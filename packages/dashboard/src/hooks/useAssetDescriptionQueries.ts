@@ -20,7 +20,7 @@ import {
 } from '../data/listAssetPropertiesMap/query';
 import { selectListAssetPropertiesMap } from '../data/listAssetPropertiesMap/selectData';
 import { queryClient } from '../data/query-client';
-import { type DashboardState } from '../store/state';
+import { type DashboardState } from '../store/state-old';
 
 export type PropertySummary = {
   propertyId: AssetProperty['id'];

@@ -3,7 +3,6 @@ import {
   getNumberThresholds,
   highestPriorityThresholds,
   isHigherPriorityThresholds,
-  isThreshold,
   isThresholdBreached,
   sortThreshold,
 } from './thresholdUtils';
@@ -360,27 +359,6 @@ describe('annotation logic', () => {
       expect(getBreachedThreshold(2, thresholds)).toEqual(
         expect.objectContaining({ value: expectValue })
       );
-    });
-
-    it('returns true when the object is a threshold type', () => {
-      expect(
-        isThreshold({
-          color: 'red',
-          value: -2,
-          showValue: false,
-          comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
-        })
-      ).toBe(true);
-    });
-
-    it('returns false when the object is not of a threshold type', () => {
-      expect(
-        isThreshold({
-          color: 'red',
-          value: -2,
-          showValue: false,
-        })
-      ).toBe(false);
     });
 
     it('returns the correct breached threshold when there are two of the same threshold value for positive number', () => {

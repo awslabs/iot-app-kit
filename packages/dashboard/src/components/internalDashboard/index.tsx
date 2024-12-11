@@ -57,7 +57,7 @@ import type {
 } from '../../types';
 import { useSelectedWidgets } from '../../hooks/useSelectedWidgets';
 import { DefaultDashboardMessages } from '../../messages';
-import type { DashboardState } from '../../store/state';
+import type { DashboardState } from '../../store/state-old';
 import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import type { ContextMenuProps } from '../contextMenu';
@@ -76,6 +76,7 @@ import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
 import { AssistantIcon } from '../assistant/assistantIcon';
 import { Chatbot } from '../assistant/chatbot';
 import './index.css';
+import { DashboardFrame } from '../../frame/dashboardFrame';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -358,36 +359,34 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             )}
           </div>
         </div>
-        <ResizablePanes
-          leftPane={
+
+        <DashboardFrame
+          openLeftPanel
+          openRightPanel
+          leftPanelContent={
             <QueryEditor
               iotSiteWiseClient={iotSiteWise}
               selectedWidgets={selectedWidgets}
             />
           }
-          centerPane={
-            <div
-              className='display-area'
-              ref={(el) => setViewFrameElement(el || undefined)}
-              style={{ backgroundColor: colorBackgroundCellShaded }}
-            >
-              <GestureableGrid {...gridProps}>
-                <ContextMenu {...contextMenuProps} />
-                <Widgets {...widgetsProps} />
-                {!widgetLength && <DashboardEmptyState />}
-                {activeGesture === 'select' && (
-                  <UserSelection {...selectionProps} />
-                )}
-              </GestureableGrid>
-              <WebglContext viewFrame={viewFrame} />
-            </div>
-          }
-          rightPane={propertiesPanel}
-          rightPaneOptions={{
-            icon: <PropertiesPaneIcon role='img' ariaLabel='Configuration' />,
-            headerText: 'Configuration',
-          }}
-        />
+          rightPanelContent={propertiesPanel}
+        >
+          <div
+            className='display-area'
+            ref={(el) => setViewFrameElement(el || undefined)}
+            style={{ backgroundColor: colorBackgroundCellShaded }}
+          >
+            <GestureableGrid {...gridProps}>
+              <ContextMenu {...contextMenuProps} />
+              <Widgets {...widgetsProps} />
+              {!widgetLength && <DashboardEmptyState />}
+              {activeGesture === 'select' && (
+                <UserSelection {...selectionProps} />
+              )}
+            </GestureableGrid>
+            <WebglContext viewFrame={viewFrame} />
+          </div>
+        </DashboardFrame>
       </div>
     </ContentLayout>
   );
@@ -462,54 +461,33 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             </Box>
           </div>
         )}
-        <ResizablePanes
-          onResize={(size) => {
-            if (size.width) {
-              setResizablePanesWidth(size.width);
-            }
-          }}
-          leftPane={null}
-          centerPane={
-            <div
-              className='display-area'
-              ref={(el) => {
-                calculateChatbotDimensions();
-                setViewFrameElement(el || undefined);
-              }}
-              style={{ backgroundColor: colorBackgroundCellShaded }}
-            >
-              <ReadOnlyGrid {...grid}>
-                <AssistantFloatingMenu
-                  width={resizablePanesWidth}
-                  messageOverrides={DefaultDashboardMessages}
-                />
-                <Widgets {...widgetsProps} />
-              </ReadOnlyGrid>
-              <WebglContext viewFrame={viewFrame} />
-            </div>
-          }
-          rightPane={
+        <DashboardFrame
+          openRightPanel
+          rightPanelContent={
             <Chatbot
               height={chatbotHeight}
               messageOverrides={DefaultDashboardMessages}
             />
           }
-          rightPaneOptions={{
-            icon: (
-              <AssistantIcon
-                role='img'
-                ariaLabel={
-                  DefaultDashboardMessages.assistant.floatingMenu
-                    .buttonAIAssistant
-                }
+        >
+          <div
+            className='display-area'
+            ref={(el) => {
+              calculateChatbotDimensions();
+              setViewFrameElement(el || undefined);
+            }}
+            style={{ backgroundColor: colorBackgroundCellShaded }}
+          >
+            <ReadOnlyGrid {...grid}>
+              <AssistantFloatingMenu
+                width={resizablePanesWidth}
+                messageOverrides={DefaultDashboardMessages}
               />
-            ),
-            iconBackground: colorForegroundControlReadOnly,
-            headerText:
-              DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
-            hideHeaderWhenExpanded: true,
-          }}
-        />
+              <Widgets {...widgetsProps} />
+            </ReadOnlyGrid>
+            <WebglContext viewFrame={viewFrame} />
+          </div>
+        </DashboardFrame>
       </div>
     </ContentLayout>
   );

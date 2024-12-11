@@ -2,7 +2,7 @@ import {
   changeDashboardWidth,
   onChangeDashboardWidthAction,
 } from './changeWidth';
-import { initialState } from '../../state';
+import { initialState } from '../../state-old';
 
 it('can change the width of the dashboard', () => {
   expect(

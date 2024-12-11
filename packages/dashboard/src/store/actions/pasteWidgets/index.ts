@@ -2,11 +2,11 @@ import max from 'lodash-es/max';
 import minBy from 'lodash-es/minBy';
 import type { Action } from 'redux';
 import { v4 } from 'uuid';
-import type { DashboardWidget, Position } from '../../../types';
-import type { DashboardState } from '../../state';
+import type { DashboardWidget, 2DPosition } from '../../../types';
+import type { DashboardState } from '../../state-old';
 
 type PasteWidgetsActionPayload = {
-  position?: Position;
+  position?: 2DPosition;
 };
 export interface PasteWidgetsAction extends Action {
   type: 'PASTE_WIDGETS';
@@ -32,18 +32,18 @@ export const pasteWidgets = (
   const gridHeight = state.grid.height;
   let pasteCounter = state.pasteCounter + 1;
 
-  let offset: Position = {
+  let offset: 2DPosition = {
     x: 0,
     y: 0,
   };
-  const correctionOffset: Position = {
+  const correctionOffset: 2DPosition = {
     x: 0,
     y: 0,
   };
   if (position !== undefined) {
     pasteCounter = 0;
 
-    const cellPosition: Position = {
+    const cellPosition: 2DPosition = {
       x: position && Math.floor(position.x / cellSize),
       y: position && Math.floor(position.y / cellSize),
     };

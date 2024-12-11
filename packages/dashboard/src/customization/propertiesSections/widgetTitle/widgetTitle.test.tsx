@@ -5,7 +5,7 @@ import {
   queryByLabelText,
   render,
 } from '@testing-library/react';
-import { configureDashboardStore } from '../../../store';
+import { configureDashboardStore } from '../../../store/index-old';
 import { type DashboardWidget } from '../../../types';
 import { WidgetTitle } from './index';
 import {

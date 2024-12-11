@@ -2,8 +2,8 @@ import { act, renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import type { ReactNode } from 'react';
-import { configureDashboardStore } from '../../store';
-import { initialState } from '../../store/state';
+import { configureDashboardStore } from '../../store/index-old';
+import { initialState } from '../../store/state-old';
 import { useGridSettings } from './useGridSettings';
 
 const TestProvider: React.FC<{

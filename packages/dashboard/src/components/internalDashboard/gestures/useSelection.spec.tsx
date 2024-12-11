@@ -2,8 +2,8 @@ import { act, renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import type { PartialDeep } from 'type-fest';
-import { configureDashboardStore } from '../../../store';
-import type { DashboardState } from '../../../store/state';
+import { configureDashboardStore } from '../../../store/index-old';
+import type { DashboardState } from '../../../store/state-old';
 import { MockDashboardFactory } from '../../../../testing/mocks';
 import { useSelectionGestures } from './useSelection';
 

@@ -22,7 +22,7 @@ import {
   onToggleAssistantModeAction,
   onToggleChatbotAction,
 } from '../../store/actions';
-import type { DashboardState } from '../../store/state';
+import type { DashboardState } from '../../store/state-old';
 import { VerticalDivider } from '../divider/verticalDivider';
 import { AssistantButton } from './assistantButton';
 import './assistantFloatingMenu.css';

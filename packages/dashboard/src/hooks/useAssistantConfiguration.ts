@@ -11,7 +11,7 @@ import {
   onAssistantSelectWidgetsAction,
 } from '../store/actions/assistantWidgetsSelection';
 import { onToggleChatbotAction } from '../store/actions/toggleChatbot';
-import type { DashboardState } from '../store/state';
+import type { DashboardState } from '../store/state-old';
 
 export const useAssistantConfiguration = (widgetId: string) => {
   const dispatch = useDispatch();

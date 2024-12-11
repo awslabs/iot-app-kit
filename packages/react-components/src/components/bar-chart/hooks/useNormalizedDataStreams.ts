@@ -1,7 +1,7 @@
 import { type DataStream } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import { type BarChartAlarms } from './useBarChartAlarms';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { useMemo } from 'react';
 
 type UseNormalizedDataStreamsOptions = {
@@ -14,7 +14,7 @@ export const useNormalizedDataStreams = ({
   alarms,
 }: UseNormalizedDataStreamsOptions): DataStream[] => {
   return useMemo(() => {
-    const alarmDataStreams = createNonNullableList(
+    const alarmDataStreams = compact(
       alarms
         .filter(({ assetId, propertyId, datastream }) => {
           if (assetId == null || propertyId == null || datastream == null)

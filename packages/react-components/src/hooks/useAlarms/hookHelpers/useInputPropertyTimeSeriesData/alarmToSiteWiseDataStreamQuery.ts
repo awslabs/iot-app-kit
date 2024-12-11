@@ -1,7 +1,7 @@
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { type SiteWiseDataStreamQuery } from '@iot-app-kit/source-iotsitewise';
 import { type AlarmData } from '../../types';
-import { createNonNullableList } from '../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { type IterableElement } from 'type-fest';
 
 type Properties<PropertyId = string> = Set<PropertyId>;
@@ -17,7 +17,7 @@ const assetQueryFromAlarm = ({
 }: Pick<AlarmData, 'assetId' | 'inputProperty'>) => {
   if (assetId == null) return [];
 
-  const properties = createNonNullableList(
+  const properties = compact(
     inputProperty.map(({ property: { id } }) => id)
   ).map((propertyId) => ({ propertyId }));
 

@@ -6,8 +6,6 @@ import {
   type Primitive,
 } from '@iot-app-kit/core';
 
-import { isValid } from './predicates';
-
 /**
  * Returns only thresholds defined for number
  * @param thresholds
@@ -314,8 +312,3 @@ export const getBreachedThreshold = (
 
   return undefined;
 };
-
-export const isThreshold = isValid(
-  (maybeThreshold: Partial<Threshold>) =>
-    maybeThreshold.comparisonOperator != null
-);

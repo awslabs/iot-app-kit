@@ -1,7 +1,7 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import takeRight from 'lodash-es/takeRight';
 import { nanoid } from 'nanoid';
-import { createNonNullableList } from '../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   type OnRequestSuccessCallback,
   type SendOptions,
@@ -90,7 +90,7 @@ export class BatchGetRequestManager {
       );
       this.dataPointNumberTarget -= assetPropertyValueHistory.length;
 
-      const datapoints = createNonNullableList(
+      const datapoints = compact(
         reducedAssetPropertyValueHistory.map(toDataPoint)
       );
 

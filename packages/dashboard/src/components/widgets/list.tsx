@@ -2,7 +2,7 @@ import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
 import type { DashboardMessages } from '../../messages';
-import { type DashboardState } from '../../store/state';
+import { type DashboardState } from '../../store/state-old';
 import type { DashboardWidget } from '../../types';
 import './list.css';
 import SelectionBox from './selectionBox';

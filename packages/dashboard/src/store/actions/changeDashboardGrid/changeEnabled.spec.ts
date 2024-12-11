@@ -1,4 +1,4 @@
-import { initialState } from '../../state';
+import { initialState } from '../../state-old';
 import {
   changeDashboardGridDragEnabled,
   onChangeDashboardGridEnabledAction,

@@ -33,6 +33,15 @@
       }
     }
   },
+  "imports": {
+    "#*": {
+      "@iot-app-kit/development": [
+        "./src/*.ts",
+        "./src/*.tsx"
+      ],
+      "default": "./dist/*"
+    }
+  },
   "scripts": {
     "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run copy-assets:es && npm run copy-assets:cjs",
     "postbuild": "iot-postbuild",
@@ -90,16 +99,18 @@
     "@cloudscape-design/components": "3.0.693",
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.32",
+    "@iot-app-kit/atoms": "*",
     "@iot-app-kit/core": "*",
     "@iot-app-kit/core-util": "*",
     "@iot-app-kit/react-components": "*",
     "@iot-app-kit/source-iotsitewise": "*",
     "@popperjs/core": "^2.11.8",
-    "@reduxjs/toolkit": "^1.9.5",
+    "@reduxjs/toolkit": "^2.5.0",
     "@tanstack/react-query": "^5.40.1",
     "animate.css": "^4.1.1",
     "buffer": "^6.0.3",
     "dompurify": "^3.1.7",
+    "fp-ts": "^2.16.9",
     "is-hotkey": "^0.2.0",
     "lodash-es": "^4.17.21",
     "papaparse": "^5.4.1",
@@ -111,9 +122,13 @@
     "react-fps": "^1.0.6",
     "react-hook-form": "^7.46.1",
     "react-popper": "^2.3.0",
-    "react-redux": "^8.1.0",
+    "react-redux": "^9.2.0",
+    "react-resizable-panels": "^2.1.7",
     "react-use": "17.4.0",
-    "redux": "^4.2.1",
+    "redux-ignore": "^1.2.5",
+    "redux-undo": "^1.1.0",
+    "reselect": "^5.1.1",
+    "styled-components": "^5.3.11",
     "tiny-invariant": "^1.3.1",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.0",

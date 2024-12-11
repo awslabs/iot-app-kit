@@ -1,5 +1,5 @@
 import { changeGridProperty } from './updateGrid';
-import { initialState } from '../../state';
+import { initialState } from '../../state-old';
 
 it('can change a grid property', () => {
   expect(

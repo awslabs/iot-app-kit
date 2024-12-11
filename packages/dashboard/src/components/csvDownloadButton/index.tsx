@@ -6,7 +6,7 @@ import { convertToCSVObject } from './convertToCSVObject';
 import { unparse } from 'papaparse';
 import { type StyledSiteWiseQueryConfig } from '../../customization/widgets/types';
 import { assetModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/assetModelQueryToAssetQuery';
-import { fetchListAssetPropertiesMap } from '../../data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
+import { fetchListAssetPropertiesMap } from '../../data/fetchListAssetPropertiesMap';
 import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
 import {

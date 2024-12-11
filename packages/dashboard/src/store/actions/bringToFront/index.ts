@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import maxBy from 'lodash-es/maxBy';
 import minBy from 'lodash-es/minBy';
 import xorBy from 'lodash-es/xorBy';
-import type { DashboardState } from '../../state';
+import type { DashboardState } from '../../state-old';
 
 export interface BringWidgetsToFrontAction extends PayloadAction<null> {
   type: 'BRING_WIDGETS_TO_FRONT';

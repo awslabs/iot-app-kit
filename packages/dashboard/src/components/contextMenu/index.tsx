@@ -2,7 +2,7 @@ import { spaceScaledXxxs } from '@cloudscape-design/design-tokens';
 import { useCallback, useEffect, useState } from 'react';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import type { DashboardMessages } from '../../messages';
-import type { Position } from '../../types';
+import type { 2DPosition } from '../../types';
 import {
   DASHBOARD_CONTAINER_ID,
   getDashboardPosition,
@@ -15,7 +15,7 @@ import ContextMenuOption from './option';
 
 export type ContextMenuProps = {
   copyWidgets: () => void;
-  pasteWidgets: (position: Position) => void;
+  pasteWidgets: (position: 2DPosition) => void;
   deleteWidgets: () => void;
   bringWidgetsToFront: () => void;
   sendWidgetsToBack: () => void;
@@ -36,11 +36,11 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState<boolean>(false);
   const [contextMenuPosition, setContextMenuPosition] =
-    useState<Position | null>(null);
+    useState<2DPosition | null>(null);
 
   const { contextMenuLayer } = useLayers();
 
-  const toggleContextMenu = (position?: Position) => {
+  const toggleContextMenu = (position?: 2DPosition) => {
     if (position) {
       setContextMenuOpen(true);
       setContextMenuPosition(position);

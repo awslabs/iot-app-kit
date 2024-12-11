@@ -8,7 +8,7 @@ import {
   useLatestAssetPropertyValues,
 } from '../../../queries';
 import { combineStatusForQueries } from '../utils/queryStatus';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   type OnUpdateAlarmThresholdDataAction,
   useRequestSelector,
@@ -55,7 +55,7 @@ export const useAlarmThreshold = ({
   const requests = useRequestSelector(thresholdRequests, (alarmRequests) =>
     alarmRequests.map(({ assetId, models = [] }) => {
       // Find the threshold's source asset propertyId if it is modeled in SiteWise
-      const thresholdPropertyIds = createNonNullableList(
+      const thresholdPropertyIds = compact(
         models.map((model) =>
           extractAssetPropertyId(model.alarmRule?.simpleRule?.threshold)
         )
@@ -140,14 +140,12 @@ export const useAlarmThreshold = ({
             : undefined,
         ] as const;
 
-        const status = combineStatusForQueries(
-          createNonNullableList([...queries])
-        );
+        const status = combineStatusForQueries(compact([...queries]));
 
         return {
           request,
           data: [
-            ...createNonNullableList([queries[0]?.data?.propertyValue]),
+            ...compact([queries[0]?.data?.propertyValue]),
             ...(queries[1]?.data?.assetPropertyValueHistory ?? []),
             ...(queries[2]?.data?.assetPropertyValueHistory ?? []),
           ],

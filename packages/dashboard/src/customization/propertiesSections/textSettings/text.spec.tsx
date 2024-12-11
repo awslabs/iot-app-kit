@@ -1,8 +1,8 @@
 import { MOCK_TEXT_WIDGET } from '../../../../testing/mocks';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../store';
-import type { DashboardState } from '../../../store/state';
+import { configureDashboardStore } from '../../../store/index-old';
+import type { DashboardState } from '../../../store/state-old';
 import type { TextWidget } from '../../../customization/widgets/types';
 import { TextSettingsConfiguration } from './index';
 

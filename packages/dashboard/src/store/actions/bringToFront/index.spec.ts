@@ -1,9 +1,9 @@
 import { bringWidgetsToFront } from '.';
-import { initialState } from '../../state';
+import { initialState } from '../../state-old';
 
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
 import type { DashboardWidget } from '../../../types';
-import type { DashboardState } from '../../state';
+import type { DashboardState } from '../../state-old';
 
 const setupDashboardState = (
   widgets: DashboardWidget[] = [],

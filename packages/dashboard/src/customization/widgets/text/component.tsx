@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIsSelected } from '../../../customization/hooks/useIsSelected';
 import { onChangeDashboardGridEnabledAction } from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import type { TextWidget } from '../types';
 import './component.css';
 import TextLink from './link';

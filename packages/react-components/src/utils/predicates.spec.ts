@@ -1,28 +1,6 @@
 import { DATA_TYPE } from '@iot-app-kit/core';
-import { isNumber, isDefined, isNumberDataStream, isValid } from './predicates';
+import { isNumber, isNumberDataStream, isValid } from './predicates';
 import type { DataStream } from '@iot-app-kit/core';
-
-describe('isDefined', () => {
-  it('returns false when passed null', () => {
-    expect(isDefined(null)).toBe(false);
-  });
-
-  it('returns false when passed undefined', () => {
-    expect(isDefined(undefined)).toBe(false);
-  });
-
-  it('returns true when passed 0', () => {
-    expect(isDefined(0)).toBe(true);
-  });
-
-  it('returns true when passed NaN', () => {
-    expect(isDefined(NaN)).toBe(true);
-  });
-
-  it('returns true when passed an object', () => {
-    expect(isDefined({})).toBe(true);
-  });
-});
 
 describe('isValid', () => {
   it('returns true when pass in a predicate that always returns true.', () => {

@@ -4,7 +4,7 @@ import { useQueries } from '../../../components/dashboard/queryContext';
 import WidgetTile from '../../../components/widgets/tile';
 import { aggregateToString } from '../../../customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '../../../hooks/useChartSize';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '../../../store/state-old';
 import type { BarChartWidget } from '.././types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import { getAggregation } from '../utils/widgetAggregationUtils';

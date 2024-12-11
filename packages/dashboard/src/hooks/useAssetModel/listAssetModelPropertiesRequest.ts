@@ -8,7 +8,7 @@ import {
   type ListAssetPropertiesCommandInput,
 } from '@aws-sdk/client-iotsitewise';
 import { type Paginator } from '@aws-sdk/types';
-import { createNonNullableList } from '../../helpers/lists/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 
 export class listAssetModelPropertiesRequest {
   readonly #listAssetModelPropertyPaginator: Paginator<
@@ -47,9 +47,7 @@ export class listAssetModelPropertiesRequest {
       }
 
       // const modeledDataStreams = this.#formatDataStreams({ assetProperties, assetModelPropertiesMap });
-      const nonNullableProperties = createNonNullableList(
-        assetModelPropertiesList
-      );
+      const nonNullableProperties = compact(assetModelPropertiesList);
       return nonNullableProperties;
     } catch (error) {
       this.#handleError(error);

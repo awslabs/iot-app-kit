@@ -1,6 +1,6 @@
 import type { Action } from 'redux';
 import { nonNegative } from '../../../util/number';
-import type { DashboardState } from '../../state';
+import type { DashboardState } from '../../state-old';
 
 type UpdateSignificantDigitsActionPayload = {
   significantDigits: number;

@@ -1,12 +1,14 @@
 import type { TimeInNanos } from '@aws-sdk/client-iotsitewise';
-import { NANO_SECOND_IN_MS } from '@iot-app-kit/core';
 import parse from 'parse-duration';
 import { utcToZonedTime, format } from 'date-fns-tz';
+import {
+  NANO_SECOND_IN_MS,
+  SECOND_IN_MS,
+  MINUTE_IN_MS,
+  HOUR_IN_MS,
+  DAY_IN_MS,
+} from '@iot-app-kit/helpers';
 
-export const SECOND_IN_MS = 1000;
-export const MINUTE_IN_MS = 60 * SECOND_IN_MS;
-export const HOUR_IN_MS = 60 * MINUTE_IN_MS;
-export const DAY_IN_MS = 24 * HOUR_IN_MS;
 // Not precisely accurate, only estimates. exact duration depends on start date. use with care.
 export const MONTH_IN_MS = 30 * DAY_IN_MS;
 export const YEAR_IN_MS = 12 * MONTH_IN_MS;

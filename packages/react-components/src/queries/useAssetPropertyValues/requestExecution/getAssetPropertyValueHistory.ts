@@ -1,7 +1,7 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import { type RequestResponse } from '@iot-app-kit/core';
 import takeRight from 'lodash-es/takeRight';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   type ExecuteRequestStrategy,
   type OnRequestSuccessCallback,
@@ -90,7 +90,7 @@ export class GetAssetPropertyValueHistory
         );
         dataPointNumberTarget -= assetPropertyValueHistory.length;
 
-        const datapoints = createNonNullableList(
+        const datapoints = compact(
           reducedAssetPropertyValueHistory.map(toDataPoint)
         );
 

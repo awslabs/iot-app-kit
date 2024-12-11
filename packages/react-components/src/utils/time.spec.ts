@@ -1,17 +1,19 @@
 import {
   convertMS,
-  DAY_IN_MS,
   displayDate,
-  HOUR_IN_MS,
-  MINUTE_IN_MS,
   MONTH_IN_MS,
-  SECOND_IN_MS,
   toTimestamp,
   YEAR_IN_MS,
   formatDate,
   getPatternForXAxisLabelForAnomalyChart,
   getPatternForXAxisLabelForLineChart,
 } from './time';
+import {
+  SECOND_IN_MS,
+  MINUTE_IN_MS,
+  HOUR_IN_MS,
+  DAY_IN_MS,
+} from '@iot-app-kit/helpers';
 
 describe('convert from milliseconds', () => {
   it('throws an error when input milliseconds is less than 0', () => {

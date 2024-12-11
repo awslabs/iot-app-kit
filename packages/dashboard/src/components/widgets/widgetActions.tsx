@@ -25,7 +25,7 @@ import {
   onChangeDashboardGridEnabledAction,
   onSelectWidgetsAction,
 } from '../../store/actions';
-import { type DashboardState } from '../../store/state';
+import { type DashboardState } from '../../store/state-old';
 
 import './widgetActions.css';
 

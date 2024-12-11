@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useQueries } from '../../../components/dashboard/queryContext';
 import WidgetTile from '../../../components/widgets/tile';
 import { aggregateToString } from '../../../customization/propertiesSections/aggregationSettings/helpers';
-import { type DashboardState } from '../../../store/state';
+import { type DashboardState } from '../../../store/state-old';
 import NoChartData from '../components/no-chart-data';
 import { type StatusTimelineWidget } from '../types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';

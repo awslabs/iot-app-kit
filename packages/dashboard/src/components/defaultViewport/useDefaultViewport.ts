@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { onUpdateDefaultViewportAction } from '../../store/actions/updateDefaultViewport';
-import { type DashboardState } from '../../store/state';
+import { type DashboardState } from '../../store/state-old';
 import { parseViewport } from '../../util/parseViewport';
 
 export const useDefaultViewport = () => {

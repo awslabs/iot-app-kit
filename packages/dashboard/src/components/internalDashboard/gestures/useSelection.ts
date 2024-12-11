@@ -7,8 +7,8 @@ import {
   pointSelect,
   selectedRect,
 } from '../../../util/select';
-import type { DashboardState } from '../../../store/state';
-import type { Position, Selection, DashboardWidget } from '../../../types';
+import type { DashboardState } from '../../../store/state-old';
+import type { 2DPosition, Selection, DashboardWidget } from '../../../types';
 import type { DragEvent } from '../../grid';
 import type { Gesture } from './types';
 
@@ -41,7 +41,7 @@ export const useSelectionGestures = ({
   );
 
   const onPointSelect = useCallback(
-    ({ position, union }: { position: Position; union: boolean }) => {
+    ({ position, union }: { position: 2DPosition; union: boolean }) => {
       const intersectedWidget = pointSelect({
         dashboardWidgets,
         cellSize,

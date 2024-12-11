@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { type DashboardState } from '../store/state';
+import { type DashboardState } from '../store/state-old';
 import { type DashboardWidget } from '../types';
 
 export const useChartSize = (widget: DashboardWidget) => {

@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-
 import Box from '@cloudscape-design/components/box';
-
 import { AssetModelExplorer } from './assetModelExplorer/assetModelExplorer';
 import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/assetModelPropertiesExplorer';
 import {
   createInitialAssetModelResource,
   useSelectedAssetModel,
 } from './useSelectedAssetModel';
-import { HorizontalDivider } from '../../../../components/divider/horizontalDivider';
+import { HorizontalDivider } from '#components/divider/horizontalDivider';
 import {
   createInitialAssetModelProperties,
   useSelectedAssetModelProperties,
@@ -23,8 +21,8 @@ import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuer
 import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
 import { ResourceExplorerFooter } from '../footer/footer';
-import { createNonNullableList } from '../../../../helpers/lists/createNonNullableList';
-import { type DashboardWidget } from '../../../../types';
+import { compact } from '@iot-app-kit/helpers';
+import { type DashboardWidget } from '#types';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
@@ -121,7 +119,7 @@ export const AssetModelDataStreamExplorer = ({
         assetModels: createAssetModelQuery({
           assetModelId: selectedAssetModel[0].assetModelId,
           assetId: selectedAsset?.at(0)?.assetId,
-          assetModelPropertyIds: createNonNullableList(
+          assetModelPropertyIds: compact(
             selectedAssetModelProperties.map(({ propertyId }) => propertyId)
           ),
         }),

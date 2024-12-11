@@ -1,5 +1,5 @@
 import { createWidgets, onCreateWidgetsAction } from '.';
-import { initialState } from '../../state';
+import { initialState } from '../../state-old';
 
 import {
   MOCK_KPI_WIDGET,

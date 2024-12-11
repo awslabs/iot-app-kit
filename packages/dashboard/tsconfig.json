@@ -4,6 +4,14 @@
   "include": ["src", "e2e", "stories", "testing", "vite.config.ts"],
   "files": ["custom.d.ts", "vitest.setup.ts"],
   "compilerOptions": {
-    "types": ["vite/client", "vitest/globals", "jest-extended"]
+    "types": [
+      "vite/client",
+      "vitest/globals",
+      "vitest/importMeta",
+      "jest-extended"
+    ],
+    "paths": {
+      "#*": ["./src/*"]
+    }
   }
 }

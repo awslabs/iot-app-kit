@@ -1,6 +1,6 @@
 import type { Action } from 'redux';
 import type { DashboardWidget } from '../../../types';
-import type { DashboardState } from '../../state';
+import type { DashboardState } from '../../state-old';
 
 type DeleteWidgetsActionPayload = {
   widgets: DashboardWidget[];

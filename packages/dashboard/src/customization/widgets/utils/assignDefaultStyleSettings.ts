@@ -1,7 +1,7 @@
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import type { QueryWidget } from '../types';
-import { isDefined } from '../../../util/isDefined';
+import { compact } from '@iot-app-kit/helpers';
 import { type IoTSiteWiseDataStreamQuery } from '../../../types';
 import { getCurrentAggregationResolution } from './widgetAggregationUtils';
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
@@ -56,16 +56,20 @@ const assignDefaultColors = (
   styleSettings: StyleSettingsMap,
   siteWiseQuery: Query
 ): StyleSettingsMap => {
-  const assetRefIds =
-    siteWiseQuery.assets
-      ?.flatMap((asset) => asset.properties.map(({ refId }) => refId))
-      .filter(isDefined) ?? [];
-  const propertyRefIds =
-    siteWiseQuery.properties?.map(({ refId }) => refId).filter(isDefined) ?? [];
-  const assetModelRefIds =
-    siteWiseQuery.assetModels
-      ?.flatMap((asset) => asset.properties.map(({ refId }) => refId))
-      .filter(isDefined) ?? [];
+  const assetRefIds = compact(
+    siteWiseQuery.assets?.flatMap((asset) =>
+      asset.properties.map(({ refId }) => refId)
+    ) ?? []
+  );
+
+  const propertyRefIds = compact(
+    siteWiseQuery.properties?.map(({ refId }) => refId) ?? []
+  );
+  const assetModelRefIds = compact(
+    siteWiseQuery.assetModels?.flatMap((asset) =>
+      asset.properties.map(({ refId }) => refId)
+    ) ?? []
+  );
 
   const refIds = [...assetRefIds, ...propertyRefIds, ...assetModelRefIds];
   const applicableStyleSettings = Object.keys(styleSettings)

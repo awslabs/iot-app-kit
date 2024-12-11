@@ -4,7 +4,7 @@ import {
   createDescribeAssetPropertyQueryFn,
   isDescribeAssetPropertyEnabled,
 } from '../useDescribeAssetProperty';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { DescribeAssetPropertyCacheKeyFactory } from '../useDescribeAssetProperty/describeAssetPropertyQueryKeyFactory';
 import { queryClient } from '../queryClient';
 
@@ -38,7 +38,7 @@ export const useDescribeAssetProperties = ({
       queryClient
     ) ?? [];
 
-  const data = createNonNullableList(queries.flatMap(({ data }) => data));
+  const data = compact(queries.flatMap(({ data }) => data));
 
   const isError = queries.some(({ isError }) => isError);
   const isFetching = queries.some(({ isFetching }) => isFetching);

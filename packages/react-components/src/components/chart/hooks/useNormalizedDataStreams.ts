@@ -4,7 +4,7 @@ import { bisector } from 'd3-array';
 import uniqWith from 'lodash-es/uniqWith';
 import { useMemo } from 'react';
 import type { AlarmAssistantContext } from '../../../common/assistantProps';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { type AlarmContent } from '../../alarm-components/alarm-content/types';
 import { type ChartAlarm, type ChartAlarms } from './useChartAlarms';
 
@@ -51,7 +51,7 @@ export const useNormalizedDataStreams = ({
   alarms,
 }: UseNormalizedDataStreamsOptions): DataStreamWithLatestAlarmState[] => {
   return useMemo(() => {
-    const alarmDataStreams = createNonNullableList(
+    const alarmDataStreams = compact(
       alarms
         .filter(({ assetId, propertyId, datastream }) => {
           if (assetId == null || propertyId == null || datastream == null)

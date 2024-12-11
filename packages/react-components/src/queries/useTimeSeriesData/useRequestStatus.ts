@@ -1,6 +1,6 @@
 import isEqual from 'lodash-es/isEqual';
 import { useMemo } from 'react';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { aggregateStatuses } from './queryUtils';
 import { type useTimeSeriesDataRequestExecuter } from './requestExecution';
 import { type useTimeSeriesDataRequestManager } from './requestManager';
@@ -45,7 +45,7 @@ export const useTimeSeriesDataRequestStatus = <Request, Data>({
         return isEqual(queryRequest, data?.request);
       });
 
-      const statuses = createNonNullableList([
+      const statuses = compact([
         queryResult,
         ...requestExecutionQueryResults,
         likeCachedQuery,

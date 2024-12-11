@@ -4,8 +4,8 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
 
 import { useDashboardPlugins } from '../../customization/api';
-import { configureDashboardStore } from '../../store';
-import { initialState } from '../../store/state';
+import { configureDashboardStore } from '../../store/index-old';
+import { initialState } from '../../store/state-old';
 import { type DashboardWidgetsConfiguration } from '../../types';
 import InternalDashboard from './index';
 

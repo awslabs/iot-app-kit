@@ -1,9 +1,9 @@
 import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { parseAnomalyEvent } from './parseAnomalyEvent';
 
 export const parseAnomalyEvents = (
   assetPropertyValues: AssetPropertyValue[]
 ) => {
-  return createNonNullableList(assetPropertyValues.map(parseAnomalyEvent));
+  return compact(assetPropertyValues.map(parseAnomalyEvent));
 };

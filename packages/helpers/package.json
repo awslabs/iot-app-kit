@@ -15,26 +15,62 @@
         "import": "./dist/esm/index.js",
         "default": "./dist/esm/index.js"
       }
+    },
+    "./constants/*": {
+      "@iot-app-kit/development": "./src/constants/*.ts"
+    },
+    "./functions/*": {
+      "@iot-app-kit/development": "./src/functions/*.ts"
+    },
+    "./number/*": {
+      "@iot-app-kit/development": "./src/number/*.ts"
+    },
+    "./lists/*": {
+      "@iot-app-kit/development": "./src/lists/*.ts"
+    },
+    "./objects/*": {
+      "@iot-app-kit/development": "./src/objects/*.ts"
+    },
+    "./predicates/*": {
+      "@iot-app-kit/development": "./src/predicates/*.ts"
+    }
+  },
+  "imports": {
+    "#*": {
+      "@iot-app-kit/development": [
+        "./src/*.ts",
+        "./src/*.tsx"
+      ],
+      "default": "./dist/*"
     }
   },
   "scripts": {
-    "build": "NODE_OPTIONS='--import tsx/esm' vite build",
+    "build": "tsc --noEmit && NODE_OPTIONS='--import tsx/esm' vite build",
     "postbuild": "iot-postbuild",
     "clean": "npx rimraf .cache dist",
     "clean:turbo": "npx rimraf .turbo",
     "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
+    "test": "NODE_OPTIONS='--import tsx/esm' vitest run",
+    "test:watch": "NODE_OPTIONS='--import tsx/esm' vitest",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
     "test:typescript": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fp-ts": "^2.16.9",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@iot-app-kit/eslint-config": "*",
     "@iot-app-kit/ts-config": "*",
     "@iot-app-kit/vite-config": "*",
     "rimraf": "^5.0.1",
+    "ts-toolbelt": "^9.6.0",
     "tsx": "^4.19.2",
+    "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
-    "vite": "^5.4.11"
+    "vite": "^5.4.11",
+    "vitest": "^2.1.5"
   },
   "iotAppKit": {
     "scope": "protected"

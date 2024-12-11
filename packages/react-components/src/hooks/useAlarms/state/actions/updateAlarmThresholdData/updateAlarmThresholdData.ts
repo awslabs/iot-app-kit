@@ -7,7 +7,7 @@ import {
   type UpdateAlarmThresholdDataActionPayload,
 } from './types';
 import { uniqueSortAssetPropertyValues } from '../utils/uniqueSortAssetPropertyValues';
-import { createNonNullableList } from '../../../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { extractAssetPropertyId } from '../../../utils/parseAlarmModels';
 
 const findAssetPropertyValueSummary = (
@@ -15,7 +15,7 @@ const findAssetPropertyValueSummary = (
   summaries: UpdateAlarmThresholdDataActionPayload['assetPropertyValueSummaries']
 ) => {
   return summaries?.find(({ request }) => {
-    const thresholdPropertyIds = createNonNullableList(
+    const thresholdPropertyIds = compact(
       (alarmData.models ?? []).map((model) =>
         extractAssetPropertyId(model.alarmRule?.simpleRule?.threshold)
       )

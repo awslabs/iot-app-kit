@@ -1,20 +1,12 @@
 import type { Action } from 'redux';
 import type { DashboardWidget, Position } from '../../../types';
-import { getSelectionBox } from '../../../util/getSelectionBox';
-import { resizeSelectionBox } from '../../../util/resizeSelectionBox';
-import { transformWidget } from '../../../util/transformWidget';
-import { trimRectPosition } from '../../../util/trimRectPosition';
-import type { DashboardState } from '../../state';
+import { getSelectionBox } from '../../../grid/rectangle/surround';
+import { resizeSelectionBox } from '../../../grid/rectangle/stretch';
+import { transformWidget } from '../../../grid/rectangle/scale';
+import { createRectangle } from '../../../grid/rectangle/create';
+import type { DashboardState } from '../../state-old';
+import { Anchor } from '#grid/rectangle/types';
 
-export type Anchor =
-  | 'top-right'
-  | 'top-left'
-  | 'bottom-right'
-  | 'bottom-left'
-  | 'left'
-  | 'right'
-  | 'top'
-  | 'bottom';
 type ResizeWidgetsActionPayload = {
   anchor: Anchor;
   widgets: DashboardWidget[];
@@ -57,7 +49,7 @@ export const resizeWidgets = (
     transformWidget(
       widget,
       selectionBox,
-      complete ? trimRectPosition(newSelectionBox) : newSelectionBox
+      complete ? createRectangle(newSelectionBox) : newSelectionBox
     );
 
   const updateWidgets = (widgets: DashboardWidget[]) =>

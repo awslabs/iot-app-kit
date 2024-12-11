@@ -30,7 +30,7 @@ import {
 } from '../../hooks/useAssistantContext/utils';
 import { type AlarmData } from '../../hooks/useAlarms';
 import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -150,7 +150,7 @@ export const Table = ({
     () => [
       ...queryThresholds,
       ...thresholds,
-      ...createNonNullableList(alarms.map((a) => a.threshold)),
+      ...compact(alarms.map((a) => a.threshold)),
     ],
     [queryThresholds, thresholds, alarms]
   );

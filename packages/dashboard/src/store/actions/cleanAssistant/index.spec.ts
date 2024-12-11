@@ -1,8 +1,8 @@
 import { cleanAssistant, onCleanAssistantAction } from '.';
 import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
-import { configureDashboardStore } from '../../../store';
-import type { DashboardState } from '../../state';
-import { initialState } from '../../state';
+import { configureDashboardStore } from '../../index-old';
+import type { DashboardState } from '../../state-old';
+import { initialState } from '../../state-old';
 
 const dirtyState = {
   ...initialState,

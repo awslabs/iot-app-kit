@@ -6,7 +6,7 @@ import {
 import invariant from 'tiny-invariant';
 import { AssetPropertyValueHistoryCacheKeyFactory } from './getAssetPropertyValueHistoryQueryKeyFactory';
 import { GetGetAssetPropertyValueHistoryRequest } from './getGetAssetPropertyValueHistoryRequest';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { queryClient } from '../queryClient';
 import {
   hasClient,
@@ -66,7 +66,7 @@ export function useGetAssetPropertyValueHistory({
 
   const { pages } = data ?? { pages: [] };
 
-  const assetPropertyValueHistory = createNonNullableList(
+  const assetPropertyValueHistory = compact(
     pages.flatMap((res) => res.assetPropertyValueHistory)
   );
 

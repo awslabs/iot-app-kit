@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import NoChartData from './no-chart-data';
 import { default as lineSvgDark } from '../lineScatterChart/line-dark.svg';
 import WidgetTile from '../../../components/widgets/tile/tile';
-import { configureDashboardStore } from '../../../store';
+import { configureDashboardStore } from '../../../store/index-old';
 import {
   MOCK_LINE_CHART_WIDGET,
   MOCK_TEXT_WIDGET,

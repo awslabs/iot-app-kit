@@ -13,7 +13,7 @@ import {
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import {
   DEFAULT_DATA_ZOOM,
   getDefaultChartOption,
@@ -209,8 +209,7 @@ export const useChartConfiguration = (
   );
 
   const alarmThresholds = useMemo(
-    () =>
-      uniqWith(createNonNullableList(alarms.map((a) => a.thresholds)), isEqual),
+    () => uniqWith(compact(alarms.map((a) => a.thresholds)), isEqual),
     [alarms]
   );
 

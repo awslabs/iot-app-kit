@@ -3,11 +3,11 @@ import {
   type QueryFunctionContext,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { createNonNullableList } from '../../../../../../helpers/lists/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import invariant from 'tiny-invariant';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
-import { queryClient } from '../../../../../../data/query-client';
+import { queryClient } from '#data/query-client';
 
 export interface UseAssetModelsOptions {
   iotSiteWiseClient: IoTSiteWiseClient;
@@ -47,7 +47,7 @@ export function useAssetsForAssetModel({
 
   if (fetchAll && hasNextPage) fetchNextPage();
 
-  const assetSummaries = createNonNullableList(
+  const assetSummaries = compact(
     assetsResponses.flatMap((res) => res.assetSummaries)
   );
 

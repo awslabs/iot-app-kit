@@ -1,14 +1,14 @@
 import { type StyleSettingsMap } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
 import uniq from 'lodash-es/uniq';
-import { createNonNullableList } from '../../../../helpers/lists/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 import { type StyledAssetQuery } from '../../types';
 
 const colorsFromProperties = ({
   properties,
 }: {
   properties: { color?: string }[];
-}) => createNonNullableList(properties.map(({ color }) => color));
+}) => compact(properties.map(({ color }) => color));
 
 const applyDefault =
   (colorizer: ReturnType<typeof Colorizer>) =>
@@ -39,7 +39,7 @@ export const colorerFromStyledQuery = (query: StyledAssetQuery) => {
 };
 
 export const colorerFromStyleSettings = (styleSettings: StyleSettingsMap) => {
-  const existingColors = createNonNullableList(
+  const existingColors = compact(
     Object.values(styleSettings).map(({ color }) => color)
   );
 

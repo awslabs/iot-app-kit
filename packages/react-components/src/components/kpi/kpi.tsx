@@ -22,7 +22,7 @@ import {
   convertToSupportedTimeRange,
   serializeTimeSeriesQuery,
 } from '../../hooks/useAssistantContext/utils';
-import { createNonNullableList } from '../../utils/createNonNullableList';
+import { compact } from '@iot-app-kit/helpers';
 
 export const KPI = ({
   query,
@@ -73,7 +73,7 @@ export const KPI = ({
     () => [
       ...queryThresholds,
       ...thresholds,
-      ...createNonNullableList([transformedAlarm?.threshold]),
+      ...compact([transformedAlarm?.threshold]),
     ],
     [queryThresholds, thresholds, transformedAlarm]
   );

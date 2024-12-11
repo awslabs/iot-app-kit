@@ -58,7 +58,6 @@
   "devDependencies": {
     "@iot-app-kit/core": "*",
     "@iot-app-kit/eslint-config": "*",
-    "@iot-app-kit/helpers": "*",
     "@iot-app-kit/testing-util": "*",
     "@iot-app-kit/ts-config": "*",
     "@iot-app-kit/vite-config": "*",
@@ -120,6 +119,7 @@
     "@iot-app-kit/charts-core": "^2.1.2",
     "@iot-app-kit/core": "*",
     "@iot-app-kit/core-util": "*",
+    "@iot-app-kit/helpers": "*",
     "@iot-app-kit/source-iotsitewise": "*",
     "@iot-app-kit/source-iottwinmaker": "*",
     "@tanstack/react-query": "^5.32.1",

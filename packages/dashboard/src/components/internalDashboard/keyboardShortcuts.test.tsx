@@ -4,7 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { act } from '@testing-library/react';
 import InternalDashboard from './index';
-import { configureDashboardStore } from '../../store';
+import { configureDashboardStore } from '../../store/index-old';
 import {
   onBringWidgetsToFrontAction,
   onSelectWidgetsAction,
