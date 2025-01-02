@@ -45,6 +45,7 @@
     "@iot-app-kit/core": "*",
     "lodash-es": "^4.17.21",
     "pako": "^2.1.0",
+    "parse-duration": "^1.0.3",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
