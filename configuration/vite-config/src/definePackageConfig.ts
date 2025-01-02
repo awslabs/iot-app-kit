@@ -7,6 +7,7 @@ import {
   type UserConfig as ViteConfig,
 } from 'vite';
 import dts from 'vite-plugin-dts';
+import { externalizeDeps } from 'vite-plugin-externalize-deps';
 import { copyProtectedPackagesPlugin } from './copyPlugin';
 import { getShortName } from './package';
 import { readPackageJson } from './packageJson';
@@ -40,8 +41,6 @@ export function definePackageConfig(
   { iotAppKitPackage: { dirname }, ...customViteConfig }: PackageViteConfig
 ): ViteConfig {
   const packageJson = readPackageJson(resolve(dirname, './package.json'));
-
-  const allPackages = listRegisteredPackages();
 
   const packageAliases = listRegisteredPackages({
     filter: { scope: 'protected' },
@@ -141,19 +140,18 @@ export function definePackageConfig(
               entryFileNames: '[name].cjs.js',
             },
           ],
-          external: [
-            // Prevent node_modules from being compiled and included in the
-            // the package's dist.
-            /node_modules/,
-
-            // Prevent the package from compiling the source code of aliased
-            // protected packages.
-            ...allPackages.map(({ name }) => name),
-          ],
         },
       },
 
       plugins: [
+        // Prevent the package from compiling dependencies and changing their
+        // imports.
+        externalizeDeps({
+          deps: true,
+          devDeps: true,
+          peerDeps: true,
+          useFile: resolve(dirname, './package.json'),
+        }),
         // Vite doesn't generate declaration files automatically and does not
         // care about what's defined in the package.json. we need to use a
         // plugin to generate the types.
