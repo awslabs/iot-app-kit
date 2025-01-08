@@ -1,4 +1,5 @@
-import { type Primitive, type Threshold } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
+import { type Threshold } from '@iot-app-kit/core';
 
 export const thresholdsToColor = ({
   gaugeValue,

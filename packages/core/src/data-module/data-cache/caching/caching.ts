@@ -1,3 +1,4 @@
+import type { Primitive } from '@iot-app-kit/helpers';
 import {
   MINUTE_IN_MS,
   SECOND_IN_MS,
@@ -14,7 +15,6 @@ import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { pointBisector } from '../../../common/dataFilters';
 import type {
   DataPoint,
-  Primitive,
   RequestInformation,
   RequestInformationAndRange,
 } from '../../types';

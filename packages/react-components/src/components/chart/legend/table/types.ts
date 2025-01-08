@@ -1,4 +1,5 @@
-import { type DataStream, type Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
+import { type DataStream } from '@iot-app-kit/core';
 import type { AlarmAssistantContext } from '../../../../common/assistantProps';
 
 export type TrendCursorValues = { [id in string]?: number };

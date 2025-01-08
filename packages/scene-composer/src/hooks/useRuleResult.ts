@@ -1,4 +1,4 @@
-import { type Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
 import { useMemo } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';

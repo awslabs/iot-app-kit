@@ -5,3 +5,7 @@ export {
   NANO_SECOND_IN_MS,
   SECOND_IN_MS,
 } from './constants/time';
+
+export { toValue } from './utils/toValue';
+
+export type { Primitive } from './types';

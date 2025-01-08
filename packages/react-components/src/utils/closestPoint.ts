@@ -1,6 +1,7 @@
+import type { Primitive } from '@iot-app-kit/helpers';
 import { pointBisector } from '@iot-app-kit/core';
 import { DATA_ALIGNMENT } from '../common/constants';
-import type { DataPoint, Primitive } from '@iot-app-kit/core';
+import type { DataPoint } from '@iot-app-kit/core';
 
 /**
  * Closest Points

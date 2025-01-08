@@ -3,11 +3,9 @@ import { useRefreshRate } from '../../customization/hooks/useRefreshRate';
 import { alarmModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/alarmModelQueryToAlarmQuery';
 import { assetModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/assetModelQueryToAssetQuery';
 
-import type {
-  DataStream,
-  Primitive,
-  TimeSeriesDataQuery,
-} from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
+
+import type { DataStream, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import type {
   AlarmDataQuery,
   SiteWiseAlarmDataStreamQuery,

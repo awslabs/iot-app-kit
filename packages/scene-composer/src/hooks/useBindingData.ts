@@ -1,4 +1,5 @@
-import { type DataBase, type DurationViewport, type Primitive, type TimeSeriesData } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
+import { type DataBase, type DurationViewport, type TimeSeriesData } from '@iot-app-kit/core';
 import { type ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
 import isEmpty from 'lodash-es/isEmpty';
 import { useEffect, useMemo, useRef, useState } from 'react';
