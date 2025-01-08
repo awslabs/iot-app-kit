@@ -1,4 +1,5 @@
-import { type DataStream, type Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
+import { type DataStream } from '@iot-app-kit/core';
 import { type ChartLegend, type ChartOptions } from '../../types';
 import { ChartLegendTable } from './table';
 import { type DataStreamInformation, type TrendCursor } from './types';

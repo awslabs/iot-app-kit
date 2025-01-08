@@ -1,4 +1,4 @@
-import { type Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
 import isEqual from 'lodash-es/isEqual';
 import merge from 'lodash-es/merge';
 import { useEffect, useReducer } from 'react';

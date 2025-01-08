@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMeasure } from 'react-use';
 import { isNumeric, round } from '@iot-app-kit/core-util';
-import { type Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
 
 import Icon from '@cloudscape-design/components/icon';
 import {
@@ -24,7 +24,7 @@ import { useHighlightedDataStreams } from '../hooks/useHighlightedDataStreams';
 import './yAxisMenu.css';
 
 const getValue = (value: Primitive, significantDigits = 4) =>
-  isNumeric(value) ? `${round(value, significantDigits)}` : value.toString();
+  isNumeric(value) ? `${round(value, significantDigits)}` : value?.toString();
 
 const MENU_OFFSET = 5;
 const MENU_FONT_SIZE = 14;

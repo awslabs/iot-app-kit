@@ -5,13 +5,13 @@ import { getAlarmModelName } from './util/getAlarmModelName';
 import { parseAlarmData } from './util/parseAlarmData';
 import { getPropertyId } from './util/getPropertyId';
 import { COMPARISON_SYMBOL } from './constants';
-import { toValue } from '../../time-series-data/util/toDataPoint';
 import {
   type SiteWiseAssetModule,
   type SiteWiseAssetSession,
 } from '../../asset-modules';
 import { getAlarmSourceProperty } from './util/getAlarmSourceProperty';
 import type { Alarm, AlarmModel } from './types';
+import { toValue } from '@iot-app-kit/helpers';
 
 export class SiteWiseAlarmModule {
   private readonly client: EventsClient;
@@ -110,7 +110,8 @@ export class SiteWiseAlarmModule {
         inputPropertyId,
         thresholdPropertyId,
         comparisonOperator,
-        threshold,
+        // old synchro charts type does not support null
+        threshold: threshold === null ? '' : threshold,
         severity,
         rule,
         state,

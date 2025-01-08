@@ -1,10 +1,10 @@
-import { type Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
 import { isNumeric, round } from '@iot-app-kit/core-util';
 
 export const formatValue =
   (significantDigits = 4) =>
   (value: Primitive) =>
-    isNumeric(value) ? `${round(value, significantDigits)}` : value.toString();
+    isNumeric(value) ? `${round(value, significantDigits)}` : value?.toString();
 
 export type XYPlotTooltipValueOptions = {
   value?: Primitive;

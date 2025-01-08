@@ -1,9 +1,5 @@
-import type {
-  DataStream,
-  Primitive,
-  Threshold,
-  Viewport,
-} from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
+import type { DataStream, Threshold, Viewport } from '@iot-app-kit/core';
 import { getDataBeforeDate } from '@iot-app-kit/core';
 import { breachedThreshold } from '../../utils/breachedThreshold';
 import { createCellItem } from './createCellItem';
@@ -40,7 +36,7 @@ export const createTableItems: (
   const alarmItemsWithData = alarms.map((alarm) => {
     const isLoading = alarm.isLoading;
     return {
-      id: alarm.id as Primitive,
+      id: alarm.id as string,
       assetId: createCellItem(
         {
           value: alarm.assetId,
@@ -189,7 +185,7 @@ export const createTableItems: (
 
     const [first] = keyDataPairs;
     return {
-      id: first.data.value as Primitive,
+      id: first.data.value as string | number | boolean,
       ...keyDataPairs.reduce(
         (previous, { key, data }) => ({
           ...previous,
