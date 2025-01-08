@@ -36,6 +36,9 @@
     "typescript": "^5.5.4",
     "vite": "^5.4.11"
   },
+  "peerDependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.696.0"
+  },
   "iotAppKit": {
     "scope": "protected"
   }

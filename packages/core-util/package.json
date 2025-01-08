@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@iot-app-kit/core": "*",
+    "@iot-app-kit/helpers": "*",
     "lodash-es": "^4.17.21",
     "pako": "^2.1.0",
     "parse-duration": "^1.0.3",

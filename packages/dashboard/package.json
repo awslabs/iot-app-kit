@@ -94,6 +94,7 @@
     "@iot-app-kit/atoms": "*",
     "@iot-app-kit/core": "*",
     "@iot-app-kit/core-util": "*",
+    "@iot-app-kit/helpers": "*",
     "@iot-app-kit/react-components": "*",
     "@iot-app-kit/source-iotsitewise": "*",
     "@popperjs/core": "^2.11.8",

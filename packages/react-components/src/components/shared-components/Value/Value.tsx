@@ -1,4 +1,4 @@
-import type { Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/helpers';
 import { round } from '@iot-app-kit/core-util';
 
 export const Value: React.FC<{
