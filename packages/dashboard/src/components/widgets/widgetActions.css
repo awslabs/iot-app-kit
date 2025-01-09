@@ -1,7 +1,14 @@
+@import url("../../styles/variables.css");
+
 .widget-actions-container {
   display: flex;
   align-items: center;
   position: absolute;
   top: -18px;
   z-index: 999; /* Widget actions toolbox should be above the widget container */
+  border: var(--selection-border-width) solid var(--colors-grey-button-border)
+}
+
+.widget-actions-container:hover {
+  border: var(--selection-border-width) solid var(--selection-color);
 }
