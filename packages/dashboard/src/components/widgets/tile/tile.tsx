@@ -92,7 +92,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
       aria-description='widget tile'
       className='widget-tile'
       style={{
-        height: isSelected ? 'calc(100% + 10px)' : 'inherit',
         borderRadius: borderRadiusBadge,
         backgroundColor: colorBackgroundContainerContent,
         border: isSelected ? `2px solid ${colorBackgroundControlChecked}` : '',

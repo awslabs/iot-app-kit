@@ -1,7 +1,6 @@
 import { Box, Button, type ButtonProps } from '@cloudscape-design/components';
 import {
   colorBackgroundButtonNormalDefault,
-  colorBackgroundButtonPrimaryDefault,
   spaceStaticL,
   spaceStaticXl,
   spaceStaticXs,
@@ -110,7 +109,6 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
         height: `${spaceStaticXl}`,
         right: `${spaceStaticL}`,
         borderRadius: `${spaceStaticXs}`,
-        border: `2px solid ${colorBackgroundButtonPrimaryDefault}`,
         backgroundColor: `${colorBackgroundButtonNormalDefault}`,
         pointerEvents: 'auto',
       }}
