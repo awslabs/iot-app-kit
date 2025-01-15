@@ -4,7 +4,7 @@ import { listRegisteredPackages } from '../packageRegistry';
 import { getShortName, type PackageName } from '../package';
 import type { PackageJson } from 'type-fest';
 import { validateBuildArtifacts } from '../validation/validateBuildArtifacts';
-import { readPackageJson } from '../packageJson';
+import { LocalPackageJson, readPackageJson } from '../packageJson';
 import { listInstalledPackages } from '../installedPackages';
 
 prepack();
@@ -13,8 +13,37 @@ function prepack() {
   console.info('*** Starting prepack. ***');
   referenceCopiedProtectedPackages();
   validateBuildArtifacts();
+  removeDevDependenciesFromProtectedPackages();
   validatePrepack();
   console.info('*** Ending prepack. ***');
+}
+
+/**
+ * @remarks
+ * 
+ * Remove the devDependencies for the copied protected packages.
+ * This is to fix a bug where subsequent installs of the consuming
+ * package fail because it tries to read the devDependencies
+ */
+function removeDevDependenciesFromProtectedPackages () {
+  const packageJson = fse.readJSONSync('./package.json') as LocalPackageJson;
+
+  const protectedPackageNames = listInstalledPackages(
+    packageJson,
+    {
+      filter: { scope: 'protected', dependencyType: 'dependencies' },
+    }
+  ).map(installedPackage => installedPackage.name);
+
+  protectedPackageNames.forEach(protectedPackageName => {
+    const protectedPackageShortName = getShortName(
+      protectedPackageName
+    );
+    const jsonPath = `./dist/${protectedPackageShortName}/package.json`;
+    const json = fse.readJSONSync(jsonPath) as PackageJson;
+    json.devDependencies = {};
+    fse.writeJSONSync(jsonPath, json, { spaces: 2 });
+  });
 }
 
 /**
