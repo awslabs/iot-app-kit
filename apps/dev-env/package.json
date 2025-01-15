@@ -22,7 +22,6 @@
     "@iot-app-kit/core-util": "*",
     "@iot-app-kit/dashboard": "*",
     "@iot-app-kit/data-mocked": "*",
-    "@iot-app-kit/helpers": "*",
     "@iot-app-kit/ts-config": "*",
     "@playwright/test": "^1.48.2",
     "@storybook/addon-essentials": "^8.4.5",

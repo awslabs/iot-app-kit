@@ -1,5 +1,5 @@
 import { NANO_SECOND_IN_MS, SECOND_IN_MS } from './timeConstants';
-import type { DataPoint, Primitive } from '@iot-app-kit/core';
+import type { DataPoint } from '@iot-app-kit/core';
 import type {
   AssetPropertyValue,
   TimeInNanos,
@@ -7,6 +7,7 @@ import type {
   Aggregates,
   AggregatedValue,
 } from '@aws-sdk/client-iotsitewise';
+import { type Primitive } from '@iot-app-kit/charts-core';
 
 /** converts the TimeInNanos to milliseconds */
 export const toTimestamp = (time: TimeInNanos | undefined): number =>
@@ -24,7 +25,7 @@ export const toTimestamp = (time: TimeInNanos | undefined): number =>
  *
  * NOTE: Currently we treat booleans as strings.
  */
-export const toValue = (variant: Variant | undefined): Primitive => {
+export const toValue = (variant: Variant | undefined): Primitive | null => {
   if (variant == null) {
     throw new Error('variant is undefined');
   }
@@ -47,9 +48,7 @@ export const toValue = (variant: Variant | undefined): Primitive => {
     return booleanValue.toString();
   }
 
-  throw new Error(
-    'Expected value to have at least one property value, but instead it has none!'
-  );
+  return null;
 };
 
 /**
@@ -57,7 +56,7 @@ export const toValue = (variant: Variant | undefined): Primitive => {
  */
 export const toDataPoint = (
   assetPropertyValue: AssetPropertyValue | undefined
-): DataPoint | undefined => {
+): DataPoint<Primitive> | undefined => {
   if (assetPropertyValue == null) {
     return undefined;
   }

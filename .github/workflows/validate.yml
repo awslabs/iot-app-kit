@@ -62,7 +62,6 @@ jobs:
             data-mocked,
             dev-env,
             doc-site,
-            helpers,
             react-components,
             scene-composer,
             source-iotsitewise,

@@ -59,6 +59,6 @@ export type TimeSeriesResourceWithLatestValue =
 
 export type DataStreamResourceWithLatestValue<DataStreamResource> =
   DataStreamResource & {
-    latestValue?: number | string | boolean;
+    latestValue?: number | string | boolean | null;
     latestValueTimestamp?: number;
   };

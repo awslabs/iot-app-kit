@@ -27,7 +27,7 @@ export interface DataPoint<T extends Primitive = Primitive>
 
 export type Resolution = number;
 
-export type Primitive = string | number | boolean;
+export type Primitive = string | number | boolean | null;
 
 export type DataStreamId = string;
 

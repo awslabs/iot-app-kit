@@ -20,7 +20,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
   ],
-  plugins: ['prettier', 'react', 'jest', 'import', 'unused-imports'],
+  plugins: ['prettier', 'react', "react-hooks", 'jest', 'import', 'unused-imports'],
   globals: {
     module: true,
     process: true,
