@@ -5,7 +5,10 @@ const config = {
     '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
 
-  staticDirs: [{ from: '../assets', to: '/assets' }],
+  staticDirs: [
+    { from: '../assets', to: '/assets' }, 
+    { from: '../public', to: '/public' },
+  ],
 
   addons: [
     '@storybook/addon-links',
