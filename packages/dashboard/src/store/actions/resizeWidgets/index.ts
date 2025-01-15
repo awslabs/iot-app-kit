@@ -1,10 +1,10 @@
+import { getSelectionBox } from '~/util/getSelectionBox';
+import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
-import type { DashboardWidget, Position } from '../../../types';
-import { getSelectionBox } from '../../../util/getSelectionBox';
-import { resizeSelectionBox } from '../../../util/resizeSelectionBox';
-import { transformWidget } from '../../../util/transformWidget';
-import { trimRectPosition } from '../../../util/trimRectPosition';
+import type { Position, DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
+import { transformWidget } from '~/util/transformWidget';
+import { resizeSelectionBox } from '~/util/resizeSelectionBox';
 
 export type Anchor =
   | 'top-right'

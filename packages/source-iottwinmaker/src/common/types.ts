@@ -1,1 +1,1 @@
-export type { Primitive } from '@iot-app-kit/helpers';
+export type { Primitive } from '@iot-app-kit/core';

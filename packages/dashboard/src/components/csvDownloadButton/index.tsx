@@ -1,20 +1,22 @@
 import { useState } from 'react';
+
 import { Button, type ButtonProps } from '@cloudscape-design/components';
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { useViewport } from '@iot-app-kit/react-components';
-import { convertToCSVObject } from './convertToCSVObject';
+
 import { unparse } from 'papaparse';
-import { type StyledSiteWiseQueryConfig } from '../../customization/widgets/types';
-import { assetModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/assetModelQueryToAssetQuery';
-import { fetchListAssetPropertiesMap } from '../../data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
+import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useFetchTimeSeriesData } from '../dashboard/queryContext';
-import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
+import { useViewport } from '@iot-app-kit/react-components';
+import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
+import { convertToCSVObject } from './convertToCSVObject';
+import { useQueryClient } from '@tanstack/react-query';
+import { fetchListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
 import {
   BAR_CHART_RESOLUTIONS,
   DEFAULT_VIEWPORT,
   EMPTY_DATA,
 } from './constants';
-import { queryClient } from '../../data/query-client';
+import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
 
 export const canOnlyDownloadLiveMode: readonly string[] = [
   'table',
@@ -46,6 +48,7 @@ export const CSVDownloadButton = ({
   fileName?: string;
 } & ButtonProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const queryClient = useQueryClient();
   const fetchTimeSeriesData = useFetchTimeSeriesData();
 
   const { viewport: injectedViewport } = useViewport();

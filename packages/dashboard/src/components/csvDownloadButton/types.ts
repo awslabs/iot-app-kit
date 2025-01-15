@@ -1,4 +1,4 @@
-import type { Primitive } from '@iot-app-kit/helpers';
+import { type Primitive } from '@iot-app-kit/core';
 import { type Quality } from '@aws-sdk/client-iotsitewise';
 
 export type CSVDownloadObject = {

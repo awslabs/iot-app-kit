@@ -1,5 +1,5 @@
 import { type ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
-import type { Primitive } from '@iot-app-kit/helpers';
+import { type Primitive } from '@iot-app-kit/core';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { type ITwinMakerEntityDataBindingContext } from '../../../interfaces';

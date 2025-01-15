@@ -1,6 +1,44 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ComponentTypeIcon > it should render the Camera svg 1`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+  style={{}}
+>
+  <svg
+    data-name="Layer 1"
+    height={16}
+    width={16}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M15.12 10.2v-4l-3 2zM1 5h10v6H1z"
+    />
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the Camera svg 2`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-normal_h11ix_ayzd6_229"
+  style={{}}
+>
+  <svg
+    data-name="Layer 1"
+    height={16}
+    width={16}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M15.12 10.2v-4l-3 2zM1 5h10v6H1z"
+    />
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the Camera svg 3`] = `
 <div
   data-mocked="Icon"
 >
@@ -22,6 +60,60 @@ exports[`ComponentTypeIcon > it should render the Camera svg 1`] = `
 exports[`ComponentTypeIcon > it should render the Empty svg 1`] = `null`;
 
 exports[`ComponentTypeIcon > it should render the Light svg 1`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={17}
+    width={16}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    />
+    <path
+      d="M4.46 4.97 2.34 2.85M8 3.5v-3M11.531 4.96l2.13-2.12M13 8.5h3M11.54 12.03l2.12 2.13M8 13.5v3M4.472 12.04l-2.12 2.12M3 8.5H0"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    />
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the Light svg 2`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-normal_h11ix_ayzd6_229"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={17}
+    width={16}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    />
+    <path
+      d="M4.46 4.97 2.34 2.85M8 3.5v-3M11.531 4.96l2.13-2.12M13 8.5h3M11.54 12.03l2.12 2.13M8 13.5v3M4.472 12.04l-2.12 2.12M3 8.5H0"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    />
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the Light svg 3`] = `
 <div
   data-mocked="Icon"
 >
@@ -49,6 +141,82 @@ exports[`ComponentTypeIcon > it should render the Light svg 1`] = `
 `;
 
 exports[`ComponentTypeIcon > it should render the ModelRef svg 1`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={14}
+    width={14}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      clipPath="url(#modelref_svg__a)"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    >
+      <path
+        d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
+      />
+      <path
+        d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
+      />
+    </g>
+    <defs>
+      <clipPath
+        id="modelref_svg__a"
+      >
+        <path
+          d="M0 0h13.889v14H0z"
+          fill="#fff"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the ModelRef svg 2`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-normal_h11ix_ayzd6_229"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={14}
+    width={14}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      clipPath="url(#modelref_svg__a)"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    >
+      <path
+        d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
+      />
+      <path
+        d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
+      />
+    </g>
+    <defs>
+      <clipPath
+        id="modelref_svg__a"
+      >
+        <path
+          d="M0 0h13.889v14H0z"
+          fill="#fff"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the ModelRef svg 3`] = `
 <div
   data-mocked="Icon"
 >
@@ -87,6 +255,82 @@ exports[`ComponentTypeIcon > it should render the ModelRef svg 1`] = `
 `;
 
 exports[`ComponentTypeIcon > it should render the SubModelRef svg 1`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={14}
+    width={14}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      clipPath="url(#modelref_svg__a)"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    >
+      <path
+        d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
+      />
+      <path
+        d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
+      />
+    </g>
+    <defs>
+      <clipPath
+        id="modelref_svg__a"
+      >
+        <path
+          d="M0 0h13.889v14H0z"
+          fill="#fff"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the SubModelRef svg 2`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-normal_h11ix_ayzd6_229"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={14}
+    width={14}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      clipPath="url(#modelref_svg__a)"
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    >
+      <path
+        d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
+      />
+      <path
+        d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
+      />
+    </g>
+    <defs>
+      <clipPath
+        id="modelref_svg__a"
+      >
+        <path
+          d="M0 0h13.889v14H0z"
+          fill="#fff"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the SubModelRef svg 3`] = `
 <div
   data-mocked="Icon"
 >
@@ -125,6 +369,64 @@ exports[`ComponentTypeIcon > it should render the SubModelRef svg 1`] = `
 `;
 
 exports[`ComponentTypeIcon > it should render the Tag svg 1`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_1l964_104 awsui_size-normal-mapped-height_h11ix_1l964_158 awsui_size-normal_h11ix_1l964_154 awsui_variant-normal_h11ix_1l964_230"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={14}
+    width={14}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    >
+      <path
+        d="M7 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        fill="currentColor"
+      />
+      <path
+        d="M7 13.125A6.125 6.125 0 1 0 7 .875a6.125 6.125 0 0 0 0 12.25Z"
+        strokeWidth={2}
+      />
+    </g>
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the Tag svg 2`] = `
+<span
+  aria-hidden="true"
+  className="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-normal_h11ix_ayzd6_229"
+  style={{}}
+>
+  <svg
+    fill="none"
+    height={14}
+    width={14}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      stroke="currentColor"
+      strokeMiterlimit={10}
+    >
+      <path
+        d="M7 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        fill="currentColor"
+      />
+      <path
+        d="M7 13.125A6.125 6.125 0 1 0 7 .875a6.125 6.125 0 0 0 0 12.25Z"
+        strokeWidth={2}
+      />
+    </g>
+  </svg>
+</span>
+`;
+
+exports[`ComponentTypeIcon > it should render the Tag svg 3`] = `
 <div
   data-mocked="Icon"
 >

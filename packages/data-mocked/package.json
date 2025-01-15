@@ -1,6 +1,5 @@
 {
   "name": "@iot-app-kit/data-mocked",
-  "version": "12.2.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,19 +9,17 @@
     "./handers": "./src/handlers.ts"
   },
   "scripts": {
-    "clean": "npx rimraf .cache",
-    "clean:turbo": "npx rimraf .turbo",
-    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
-    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/ & npm run test:typescript",
-    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
-    "test:typescript": "tsc --noEmit"
+    "clean": "rimraf storybook-static .turbo .cache test-results playwright-report",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
+    "fix": "eslint --fix . --cache --cache-location ./cache/eslint/"
   },
-  "devDependencies": {
+  "dependencies": {
     "@aws-sdk/client-iotsitewise": "^3.696.0",
     "@faker-js/faker": "^8.2.0",
-    "@iot-app-kit/eslint-config": "*",
     "@iot-app-kit/ts-config": "*",
     "@types/node": "^18.16.18",
+    "eslint-config-iot-app-kit": "*",
     "msw": "^2.6.2",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",
@@ -30,8 +27,5 @@
   },
   "msw": {
     "workerDirectory": "public"
-  },
-  "iotAppKit": {
-    "scope": "protected"
   }
 }

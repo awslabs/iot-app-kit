@@ -2,20 +2,20 @@ import { act, render } from '@testing-library/react';
 import ue from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { Provider } from 'react-redux';
+import { DefaultDashboardMessages } from '~/messages';
+import { configureDashboardStore } from '~/store';
+import {
+  onAssistantCleanWidgetsSelectionAction,
+  onAssistantSelectWidgetsAction,
+  onToggleAssistantModeAction,
+} from '~/store/actions';
+import { initialState } from '~/store/state';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
   MOCK_SCATTER_CHART_WIDGET,
   MOCK_STATUS_TIMELINE_WIDGET,
 } from '../../../testing/mocks';
-import { DefaultDashboardMessages } from '../../messages';
-import { configureDashboardStore } from '../../store';
-import {
-  onAssistantCleanWidgetsSelectionAction,
-  onAssistantSelectWidgetsAction,
-  onToggleAssistantModeAction,
-} from '../../store/actions';
-import { initialState } from '../../store/state';
 import { AssistantFloatingMenu } from './assistantFloatingMenu';
 
 const user = ue.setup();

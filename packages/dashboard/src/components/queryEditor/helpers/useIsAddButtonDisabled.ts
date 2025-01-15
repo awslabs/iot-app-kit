@@ -1,4 +1,4 @@
-import { type DashboardWidget } from '../../../types';
+import { type DashboardWidget } from '~/types';
 import { useQuery } from '../useQuery';
 
 export const useIsAddButtonDisabled = (selectedWidgets: DashboardWidget[]) => {

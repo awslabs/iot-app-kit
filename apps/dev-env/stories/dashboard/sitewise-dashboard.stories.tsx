@@ -63,12 +63,14 @@ type Story = StoryObj<typeof Dashboard>;
 
 export const Main: Story = {
   render: (_story, { args }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [initialViewMode, setInitialViewMode] = useState<'preview' | 'edit'>(
       'edit'
     );
 
     // on save not only updates local storage but forces the dashboard to reload given the updated config
     // this is done to more realistically match the dashboard implementation in iot-application
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const onSave = useCallback(
       async (
         dashboard: DashboardConfiguration,

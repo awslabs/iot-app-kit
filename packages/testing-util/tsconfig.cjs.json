@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@iot-app-kit/ts-config/tsconfig.cjs.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "./dist/cjs",
+    "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo"
+  }
+}

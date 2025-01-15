@@ -1,7 +1,7 @@
 import isEqual from 'lodash-es/isEqual';
 import { useSelector } from 'react-redux';
-import type { DashboardState } from '../store/state';
-import { type DashboardWidget } from '../types';
+import type { DashboardState } from '~/store/state';
+import { type DashboardWidget } from '~/types';
 
 const compareSelectedWidgets = (a: DashboardWidget[], b: DashboardWidget[]) =>
   isEqual(a, b);

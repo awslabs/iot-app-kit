@@ -1,5 +1,4 @@
 import type { AssetSummary } from '@aws-sdk/client-iotsitewise';
-import { type Primitive } from '@iot-app-kit/helpers';
 
 export interface AssetModelResource {
   assetModelId: string;
@@ -60,6 +59,6 @@ export type TimeSeriesResourceWithLatestValue =
 
 export type DataStreamResourceWithLatestValue<DataStreamResource> =
   DataStreamResource & {
-    latestValue?: Primitive;
+    latestValue?: number | string | boolean;
     latestValueTimestamp?: number;
   };

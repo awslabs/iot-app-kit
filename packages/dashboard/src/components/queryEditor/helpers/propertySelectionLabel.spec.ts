@@ -1,4 +1,4 @@
-import { type DashboardWidget } from '../../../types';
+import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from './propertySelectionLabel';
 
 const createMockWidget = (widgetType: string): DashboardWidget => {

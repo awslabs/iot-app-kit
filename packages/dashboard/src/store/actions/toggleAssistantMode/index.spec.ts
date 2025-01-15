@@ -1,5 +1,5 @@
+import { configureDashboardStore } from '~/store';
 import { onToggleAssistantModeAction, toggleAssistantMode } from '.';
-import { configureDashboardStore } from '../../../store';
 import { initialState } from '../../state';
 
 it('initial state of assistant mode is odd', () => {

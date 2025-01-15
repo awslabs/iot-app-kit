@@ -1,6 +1,6 @@
 import GaugeWidgetComponent from './component';
 import GaugeIcon from './icon';
-import type { DashboardPlugin } from '../../../customization/api';
+import type { DashboardPlugin } from '~/customization/api';
 import type { GaugeWidget } from '../types';
 import {
   GAUGE_WIDGET_INITIAL_HEIGHT,

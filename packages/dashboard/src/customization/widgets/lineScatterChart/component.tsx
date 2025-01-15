@@ -6,13 +6,13 @@ import {
 } from '@iot-app-kit/react-components';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQueries } from '../../../components/dashboard/queryContext';
-import WidgetTile from '../../../components/widgets/tile/tile';
-import { aggregateToString } from '../../../customization/propertiesSections/aggregationSettings/helpers';
-import { useChartSize } from '../../../hooks/useChartSize';
-import { onUpdateWidgetsAction } from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
-import { type IoTSiteWiseDataStreamQuery } from '../../../types';
+import { useQueries } from '~/components/dashboard/queryContext';
+import WidgetTile from '~/components/widgets/tile/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
+import { onUpdateWidgetsAction } from '~/store/actions';
+import type { DashboardState } from '~/store/state';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 import NoChartData from '../components/no-chart-data';
 import type {
   AssetPropertyStyles,

@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
-import { widgetCreator } from '../../../store/actions/createWidget/presets';
+import { widgetCreator } from '~/store/actions/createWidget/presets';
 import DynamicWidgetComponent, {
   getDragLayerProps,
 } from '../../widgets/dynamicWidget';
 
 import type { CSSProperties } from 'react';
-import type { DashboardMessages } from '../../../messages';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardMessages } from '~/messages';
+import type { DashboardState } from '~/store/state';
 import './widget.css';
 
 export type DragLayerWidgetProps = {

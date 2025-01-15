@@ -1,7 +1,7 @@
 import isFunction from 'lodash-es/isFunction';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelectedWidgets } from '../../hooks/useSelectedWidgets';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import {
   onBringWidgetsToFrontAction,

@@ -1,6 +1,10 @@
 import { type TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
-import type { Primitive } from '@iot-app-kit/helpers';
-import type { DataPoint, ErrorDetails, Threshold } from '@iot-app-kit/core';
+import type {
+  DataPoint,
+  ErrorDetails,
+  Primitive,
+  Threshold,
+} from '@iot-app-kit/core';
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
 import type { AssistantProperty } from '../../common/assistantProps';

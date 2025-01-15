@@ -13,8 +13,8 @@ import {
 } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 import { type FC, useState } from 'react';
-import type { ThresholdWithId } from '../../../customization/settings';
-import { type Maybe, maybeWithDefault } from '../../../util/maybe';
+import type { ThresholdWithId } from '~/customization/settings';
+import { type Maybe, maybeWithDefault } from '~/util/maybe';
 import { StyledExpandableSection } from '../components/styledComponents';
 import '../propertiesSectionsStyle.css';
 import { SelectOneWidget } from '../shared/selectOneWidget';

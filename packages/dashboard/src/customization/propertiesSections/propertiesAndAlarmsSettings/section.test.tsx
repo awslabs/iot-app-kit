@@ -9,12 +9,12 @@
 // import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
 // import { configureDashboardStore } from '../../../store';
 
-// import { ClientContext } from '../../../components/dashboard/clientContext';
+// import { ClientContext } from '~/components/dashboard/clientContext';
 
 // import { mockAssetDescription } from '../../../../testing/mocks/siteWiseSDK';
 // import type { QueryWidget } from '../../widgets/types';
 // import type { DashboardState } from '../../../store/state';
-// import { DashboardIotSiteWiseClients } from '../../../types';
+// import { DashboardIotSiteWiseClients } from '~/types';
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { PropertiesAndAlarmsSettingsConfiguration } from './index';
 

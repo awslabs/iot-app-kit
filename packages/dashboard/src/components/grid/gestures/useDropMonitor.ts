@@ -1,7 +1,7 @@
 import { useDrop } from 'react-dnd';
 import { type DropEvent } from './types';
-import { type ComponentPaletteDraggable } from '../../../components/palette/types';
-import { ItemTypes } from '../../../components/dragLayer/itemTypes';
+import { type ComponentPaletteDraggable } from '~/components/palette/types';
+import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { DASHBOARD_CONTAINER_ID } from '../getDashboardPosition';
 
 export type DropMonitorProps = {

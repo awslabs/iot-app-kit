@@ -2,15 +2,15 @@ import { Box } from '@cloudscape-design/components';
 import { KPI, useViewport } from '@iot-app-kit/react-components';
 import pickBy from 'lodash-es/pickBy';
 import { useSelector } from 'react-redux';
-import { useQueries } from '../../../components/dashboard/queryContext';
-import type { DashboardState } from '../../../store/state';
-import { isDefined } from '../../../util/isDefined';
+import { useQueries } from '~/components/dashboard/queryContext';
+import type { DashboardState } from '~/store/state';
+import { isDefined } from '~/util/isDefined';
 import type { KPIWidget } from '../types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 
-import WidgetTile from '../../../components/widgets/tile';
-import { aggregateToString } from '../../../customization/propertiesSections/aggregationSettings/helpers';
+import WidgetTile from '~/components/widgets/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import './component.css';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {

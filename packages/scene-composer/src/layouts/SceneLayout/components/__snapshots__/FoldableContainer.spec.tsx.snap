@@ -9,6 +9,62 @@ exports[`FoldableContainerSnap > should render a left fold correctly 1`] = `
       class="tm-handle"
       data-testid="handle"
     >
+      <span
+        class="awsui_icon_h11ix_1l964_104 awsui_size-small-mapped-height_h11ix_1l964_139 awsui_size-small_h11ix_1l964_135 awsui_variant-normal_h11ix_1l964_230 awsui_name-angle-right_h11ix_1l964_256"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m4 1 7 7-7 7"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap > should render a left fold correctly 2`] = `
+<div>
+  <div
+    class="tm-wrapper-left"
+  >
+    <div
+      class="tm-handle"
+      data-testid="handle"
+    >
+      <span
+        class="awsui_icon_h11ix_ayzd6_101 awsui_size-small-mapped-height_h11ix_ayzd6_138 awsui_size-small_h11ix_ayzd6_134 awsui_variant-normal_h11ix_ayzd6_229 awsui_name-angle-right_h11ix_ayzd6_255"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m4 1 7 7-7 7"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap > should render a left fold correctly 3`] = `
+<div>
+  <div
+    class="tm-wrapper-left"
+  >
+    <div
+      class="tm-handle"
+      data-testid="handle"
+    >
       <div
         data-mocked="Icon"
         name="angle-right"
@@ -28,6 +84,62 @@ exports[`FoldableContainerSnap > should render a right fold correctly 1`] = `
       class="tm-handle"
       data-testid="handle"
     >
+      <span
+        class="awsui_icon_h11ix_1l964_104 awsui_size-small-mapped-height_h11ix_1l964_139 awsui_size-small_h11ix_1l964_135 awsui_variant-normal_h11ix_1l964_230 awsui_name-angle-left_h11ix_1l964_254"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 1 5 8l7 7"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap > should render a right fold correctly 2`] = `
+<div>
+  <div
+    class="tm-wrapper-right"
+  >
+    <div
+      class="tm-handle"
+      data-testid="handle"
+    >
+      <span
+        class="awsui_icon_h11ix_ayzd6_101 awsui_size-small-mapped-height_h11ix_ayzd6_138 awsui_size-small_h11ix_ayzd6_134 awsui_variant-normal_h11ix_ayzd6_229 awsui_name-angle-left_h11ix_ayzd6_253"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 1 5 8l7 7"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap > should render a right fold correctly 3`] = `
+<div>
+  <div
+    class="tm-wrapper-right"
+  >
+    <div
+      class="tm-handle"
+      data-testid="handle"
+    >
       <div
         data-mocked="Icon"
         name="angle-left"
@@ -39,6 +151,72 @@ exports[`FoldableContainerSnap > should render a right fold correctly 1`] = `
 `;
 
 exports[`FoldableContainerSnap > should toggle when handle is clicked 1`] = `
+<div>
+  <div
+    class="tm-wrapper-left"
+  >
+    <div
+      class="tm-content"
+    >
+      My Content
+    </div>
+    <div
+      class="tm-handle"
+      data-testid="handle"
+    >
+      <span
+        class="awsui_icon_h11ix_1l964_104 awsui_size-small-mapped-height_h11ix_1l964_139 awsui_size-small_h11ix_1l964_135 awsui_variant-normal_h11ix_1l964_230 awsui_name-angle-left_h11ix_1l964_254"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 1 5 8l7 7"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap > should toggle when handle is clicked 2`] = `
+<div>
+  <div
+    class="tm-wrapper-left"
+  >
+    <div
+      class="tm-content"
+    >
+      My Content
+    </div>
+    <div
+      class="tm-handle"
+      data-testid="handle"
+    >
+      <span
+        class="awsui_icon_h11ix_ayzd6_101 awsui_size-small-mapped-height_h11ix_ayzd6_138 awsui_size-small_h11ix_ayzd6_134 awsui_variant-normal_h11ix_ayzd6_229 awsui_name-angle-left_h11ix_ayzd6_253"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 1 5 8l7 7"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap > should toggle when handle is clicked 3`] = `
 <div>
   <div
     class="tm-wrapper-left"

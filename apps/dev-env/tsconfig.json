@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@iot-app-kit/ts-config/tsconfig.base.json",
-  "include": [".storybook", "stories", "msw", "e2e"],
+  "include": [".storybook", "stories", "msw"],
   "compilerOptions": {
     "types": ["vite/client"]
   }

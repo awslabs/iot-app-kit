@@ -1,4 +1,5 @@
-import { keyboardShortcuts, type ContextMenuMessages } from '../../messages';
+import { keyboardShortcuts } from '~/messages';
+import type { ContextMenuMessages } from '~/messages';
 
 type ContextMenuOptionConfiguration = {
   id: string;

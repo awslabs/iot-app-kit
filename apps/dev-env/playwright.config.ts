@@ -1,4 +1,7 @@
-import { MINUTE_IN_MS, SECOND_IN_MS } from '@iot-app-kit/helpers';
+import {
+  MINUTE_IN_MS,
+  SECOND_IN_MS,
+} from '@iot-app-kit/helpers/constants/time';
 import { defineConfig, devices } from '@playwright/test';
 
 /**

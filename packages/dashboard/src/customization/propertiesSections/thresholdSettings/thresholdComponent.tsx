@@ -21,7 +21,7 @@ import {
   OPS_ALLOWED_WITH_STRING,
 } from './defaultValues';
 import ColorPicker from '../shared/colorPicker';
-import type { ThresholdWithId } from '../../../customization/settings';
+import type { ThresholdWithId } from '~/customization/settings';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 

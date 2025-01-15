@@ -1,6 +1,6 @@
-import type { Primitive } from '@iot-app-kit/helpers';
 import {
   type DataStream,
+  type Primitive,
   type ResolutionConfig,
   type Threshold,
   type ThresholdValue,

@@ -1,46 +1,44 @@
-import CloudscapeAlert from '@cloudscape-design/components/alert';
-import CloudscapeBox from '@cloudscape-design/components/box';
-import CloudscapeButton from '@cloudscape-design/components/button';
-import CloudscapeModal from '@cloudscape-design/components/modal';
-import CloudscapeSpaceBetween from '@cloudscape-design/components/space-between';
-import { Button } from '@iot-app-kit/atoms';
-import { memo } from 'react';
+import Alert from '@cloudscape-design/components/alert';
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import Modal from '@cloudscape-design/components/modal';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
-export interface ResetAssetModelModalProps {
+import CustomOrangeButton from '~/components/customOrangeButton';
+
+export const ResetAssetModelModal = ({
+  visible,
+  onHide,
+  onReset,
+}: {
   visible: boolean;
-  onHide: VoidFunction;
-  onReset: VoidFunction;
-}
-
-export const ResetAssetModelModal = memo(
-  ({ visible, onHide, onReset }: ResetAssetModelModalProps) => {
-    return (
-      <CloudscapeModal
-        onDismiss={onHide}
-        visible={visible}
-        footer={
-          <CloudscapeBox float='right'>
-            <CloudscapeSpaceBetween direction='horizontal' size='xs'>
-              <CloudscapeButton onClick={onHide} variant='link'>
-                Cancel
-              </CloudscapeButton>
-              <Button type='primary' onClick={onReset}>
-                Reset
-              </Button>
-            </CloudscapeSpaceBetween>
-          </CloudscapeBox>
-        }
-        header='Reset asset model'
+  onHide: () => void;
+  onReset?: () => void;
+}) => {
+  return (
+    <Modal
+      onDismiss={onHide}
+      visible={visible}
+      footer={
+        <Box float='right'>
+          <SpaceBetween direction='horizontal' size='xs'>
+            <Button onClick={onHide} variant='link'>
+              Cancel
+            </Button>
+            <CustomOrangeButton title='Reset' handleClick={onReset} />
+          </SpaceBetween>
+        </Box>
+      }
+      header='Reset asset model'
+    >
+      <Alert
+        statusIconAriaLabel='Warning'
+        type='warning'
+        header='Removing this asset model will remove associated parameters from widgets on this dashboard.'
       >
-        <CloudscapeAlert
-          statusIconAriaLabel='Warning'
-          type='warning'
-          header='Removing this asset model will remove associated parameters from widgets on this dashboard.'
-        >
-          This action cannot be undone. Once reset, you may associate this
-          dashboard with a different asset model.
-        </CloudscapeAlert>
-      </CloudscapeModal>
-    );
-  }
-);
+        This action cannot be undone. Once reset, you may associate this
+        dashboard with a different asset model.
+      </Alert>
+    </Modal>
+  );
+};

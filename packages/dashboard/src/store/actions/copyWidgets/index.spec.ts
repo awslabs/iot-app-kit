@@ -6,8 +6,8 @@ import {
   MOCK_LINE_CHART_WIDGET,
   MOCK_SCATTER_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardWidget } from '../../../types';
 import type { DashboardState } from '../../state';
+import type { DashboardWidget } from '~/types';
 
 const setupDashboardState = (
   widgets: DashboardWidget[] = [],

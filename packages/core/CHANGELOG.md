@@ -3,26 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [12.3.0](https://github.com/awslabs/iot-app-kit/compare/core-v12.2.1...core-v12.3.0) (2025-01-15)
-
-
-### Features
-
-* add support for null / nan ([d6fc241](https://github.com/awslabs/iot-app-kit/commit/d6fc241df1f9b2a07196bd9c1981a8ed513d89ce))
-
-
-### Bug Fixes
-
-* packages ([613ab59](https://github.com/awslabs/iot-app-kit/commit/613ab59818934387edb255adf685356fc855d458))
-
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @iot-app-kit/eslint-config bumped from * to 12.3.0
-    * @iot-app-kit/ts-config bumped from * to 12.3.0
-
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/core-v12.2.0...core-v12.2.1) (2024-12-03)
 
 

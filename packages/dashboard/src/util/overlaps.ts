@@ -1,4 +1,4 @@
-import type { Rect } from '../types';
+import type { Rect } from '~/types';
 
 /**
  * @param a - a rectangle
