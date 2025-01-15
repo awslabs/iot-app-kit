@@ -3,19 +3,11 @@ import * as DashboardStories from './Dashboard.stories';
 
 <Meta of={DashboardStories} />
 
-# Dashboard
+# View Only Dashboard
 
-IoT dashboard component allows you to visualize and interact with operational data from AWS IoT SiteWise with a drag-and-drop dashboard building experience.
+The `dashboard` package provides a view only Dashboard component which allows users to view a provided dashboard configuration.
 
-The dashboard features include:
-
-- A resource explorer to navigate [IoT Sitewise assets](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html).
-- A grid with intuitive drag and drop support for IoT App Kit components.
-- Configuration of panels to edit dashboards.
-- Add [IoT Sitewise alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html) to your dahsboard widgets.
-
-
-<Canvas sourceState="none"  story={{height : '450px' }}  of={DashboardStories.Empty} />
+<Canvas sourceState="none"  story={{height : '450px' }}  of={DashboardStories.ViewOnly} />
 
 ## Get started
 
@@ -156,13 +148,6 @@ const dashboardConfiguration = {
 }
 `} />
 
-#### onSave
-#### (function, optional)
-
-Call this function to save the dashboard. It returns a promise that resolves when the saving is complete. 
-A rejected promise represents a failure to save. An example of the function is
-`(dashboardConfiguartion: DashboardConfiguration) => void`.
-
 #### currentViewport
 ##### (object, optional)
 
@@ -201,12 +186,6 @@ This represents the initial viewmode of the dashboard when it loads.
 This renders a function that replaces the defaul dashboard toolbar with a user-provided component. An example of the function is
 `({dashboardConfiguartion: DashboardConfiguration, viewport?: Viewport, viewmode: 'preview' | 'edit'}) => ReactElement`.
 
-#### onDashboardConfigurationChange
-##### (function, optional)
-
-Call this callback function to update the dashboard configuration. This is called when a widget is added, deleted, updated, or moved. 
-An example of the function is `(dashboardConfiguartion: DashboardConfiguration) => void`.
-
 #### assistantConfiguration 
 ##### (object, optional)
 
@@ -231,14 +210,12 @@ The **AssistantState** has the following state options:
 ## Complete Example
 
 <Source dark="true" code={`
-import { Dashboard } from '@iot-app-kit/dashboard';
+import { DashboardView } from '@iot-app-kit/dashboard';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 
 const DashboardPage = () => {
-  const [dashboardConfig, setDashboardConfig] = useState({})
-
   return (
-    <Dashboard
+    <DashboardView
       /** The credentials which the dashboard will use to make requests */
       clientConfiguration={
         awsCredentials: {
@@ -283,15 +260,11 @@ const DashboardPage = () => {
         ],
       }
 
-      /** On save, the new dashboard config is stored in the state */
-      onSave={(newConfig) => setDashboardConfig(newConfig)}
-
       /** On load, dashboard will be in edit mode */
       initialViewMode='edit'
     /> 
   );
 };
-
 `} />
 
 ## IAM permissions for dashboard
@@ -340,3 +313,9 @@ The following permissions policy specifies the actions required to access IoT as
     ]
 }
 ```
+
+## More examples
+
+### Assistant enabled
+
+<Canvas sourceState="none"  story={{height : '450px' }}  of={DashboardStories.ViewWithAssistant} />
