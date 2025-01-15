@@ -7,8 +7,8 @@ import { PropertiesPanelEmpty } from './emptyPanel';
 import { StylesSection } from './styleTab';
 import { PropertiesAndAlarmsSettingsConfiguration } from '../propertiesAndAlarmsSettings';
 import { ThresholdSettingsConfiguration } from '../thresholdSettings';
-import { isJust } from '../../../util/maybe';
-import { useSelectedWidgets } from '../../../hooks/useSelectedWidgets';
+import { isJust } from '~/util/maybe';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 /** Panel element responsible for rendering chart configuration sections. */
 export const PropertiesPanel = () => {

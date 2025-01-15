@@ -4,7 +4,7 @@ import StyleExpandableSection from '../shared/styleExpandableSection/styleExpand
 import { AlignmentDropdown } from '../components/alignmentDropdown';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { type ChartLegend } from '../../../customization/widgets/types';
+import { type ChartLegend } from '~/customization/widgets/types';
 import { LegendDisplaySection } from '../components/legendDisplaySection';
 
 type LegendSectionOptions = {

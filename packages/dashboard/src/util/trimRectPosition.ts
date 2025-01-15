@@ -1,4 +1,4 @@
-import type { Rect } from '../types';
+import type { Rect } from '~/types';
 
 export const trimRectPosition = <R extends Rect>(rect: R): R => {
   return {

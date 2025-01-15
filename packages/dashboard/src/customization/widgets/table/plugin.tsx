@@ -1,6 +1,6 @@
 import TableWidgetComponent from './component';
 import TableIcon from './icon';
-import type { DashboardPlugin } from '../../../customization/api';
+import type { DashboardPlugin } from '~/customization/api';
 import type { TableWidget } from '../types';
 import {
   TABLE_WIDGET_INITIAL_HEIGHT,

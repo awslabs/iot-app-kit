@@ -1,14 +1,14 @@
-import { type IoTSiteWiseClient, Quality } from '@aws-sdk/client-iotsitewise';
 import {
   type DataPoint,
   type DataStream,
   type HistoricalViewport,
   toSiteWiseAssetProperty,
 } from '@iot-app-kit/core';
-import { type StyledSiteWiseQueryConfig } from '../../customization/widgets/types';
-import { type AssetSummary } from '../../hooks/useAssetDescriptionQueries';
-import { getDescribedTimeSeries } from './getDescribedTimeSeries';
 import { type CSVDownloadObject } from './types';
+import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { getDescribedTimeSeries } from './getDescribedTimeSeries';
+import { type IoTSiteWiseClient, Quality } from '@aws-sdk/client-iotsitewise';
+import { type AssetSummary } from '~/hooks/useAssetDescriptionQueries';
 
 // Check if time is within passed in viewport OR within last x amount of time from request
 const isTimeWithinViewport = (

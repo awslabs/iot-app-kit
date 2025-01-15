@@ -1,7 +1,10 @@
 import { bisector } from 'd3-array';
-import type { Primitive } from '@iot-app-kit/helpers';
 import { isNumeric } from '@iot-app-kit/core-util';
-import { COMPARISON_OPERATOR, type Threshold } from '@iot-app-kit/core';
+import {
+  COMPARISON_OPERATOR,
+  type Threshold,
+  type Primitive,
+} from '@iot-app-kit/core';
 
 import { isValid } from './predicates';
 
@@ -223,11 +226,7 @@ export const getBreachedThreshold = (
     return undefined;
   }
 
-  if (
-    typeof value === 'string' ||
-    typeof value === 'boolean' ||
-    value === null
-  ) {
+  if (typeof value === 'string' || typeof value === 'boolean') {
     return (
       thresholds.find((threshold) => isThresholdBreached(value, threshold)) ||
       undefined

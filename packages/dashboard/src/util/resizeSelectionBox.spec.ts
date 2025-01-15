@@ -1,7 +1,7 @@
-import type { Anchor } from '../store/actions';
-import type { DashboardState } from '../store/state';
-import type { Rect } from '../types';
-import { resizeSelectionBox } from '../util/resizeSelectionBox';
+import { resizeSelectionBox } from '~/util/resizeSelectionBox';
+import type { Anchor } from '~/store/actions';
+import type { Rect } from '~/types';
+import type { DashboardState } from '~/store/state';
 
 const grid = {
   width: 150,

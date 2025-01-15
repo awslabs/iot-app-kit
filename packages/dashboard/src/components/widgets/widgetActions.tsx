@@ -1,6 +1,7 @@
 import { Box, Button, type ButtonProps } from '@cloudscape-design/components';
 import {
   colorBackgroundButtonNormalDefault,
+  colorBackgroundButtonPrimaryDefault,
   spaceStaticL,
   spaceStaticXl,
   spaceStaticXs,
@@ -9,9 +10,9 @@ import {
 import { getPlugin } from '@iot-app-kit/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { type StyledSiteWiseQueryConfig } from '../../customization/widgets/types';
-import { useDeleteWidgets } from '../../hooks/useDeleteWidgets';
-import { type DashboardWidget } from '../../types';
+import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
+import { type DashboardWidget } from '~/types';
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import {
   CSVDownloadButton,
@@ -23,8 +24,8 @@ import { useClients } from '../dashboard/clientContext';
 import {
   onChangeDashboardGridEnabledAction,
   onSelectWidgetsAction,
-} from '../../store/actions';
-import { type DashboardState } from '../../store/state';
+} from '~/store/actions';
+import { type DashboardState } from '~/store/state';
 
 import './widgetActions.css';
 
@@ -109,6 +110,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
         height: `${spaceStaticXl}`,
         right: `${spaceStaticL}`,
         borderRadius: `${spaceStaticXs}`,
+        border: `2px solid ${colorBackgroundButtonPrimaryDefault}`,
         backgroundColor: `${colorBackgroundButtonNormalDefault}`,
         pointerEvents: 'auto',
       }}

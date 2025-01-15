@@ -1,6 +1,6 @@
 import type * as React from 'react';
-import plugins from '../customization/pluginsConfiguration';
-import type { DashboardWidget } from '../types';
+import plugins from '~/customization/pluginsConfiguration';
+import type { DashboardWidget } from '~/types';
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,

@@ -1,9 +1,9 @@
 import { Box, Checkbox, FormField } from '@cloudscape-design/components';
 import { StyledExpandableSection } from '../components/styledComponents';
-import { type PropertyLens } from '../../../customization/propertiesSection';
-import { type GaugeProperties } from '../../../customization/widgets/types';
-import { type DashboardWidget } from '../../../types';
-import { maybeWithDefault } from '../../../util/maybe';
+import { type PropertyLens } from '~/customization/propertiesSection';
+import { type GaugeProperties } from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
+import { maybeWithDefault } from '~/util/maybe';
 
 export const RenderGaugeDisplaySettingsSection = ({
   useProperty,

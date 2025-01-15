@@ -1,7 +1,6 @@
 import type { BatchGetAssetPropertyValueSuccessEntry } from '@aws-sdk/client-iotsitewise';
 import type { DataStreamRequestEntry, DataStreamResource } from './types';
 import type { DataStreamResourceWithLatestValue } from '../../types/resources';
-import { toValue } from '@iot-app-kit/helpers';
 
 type SuccessEntry = BatchGetAssetPropertyValueSuccessEntry;
 
@@ -42,10 +41,11 @@ function createDataStreamWithLatestValue<DataStream extends DataStreamResource>(
   requestEntry: DataStreamRequestEntry<DataStream>,
   successEntry?: SuccessEntry
 ): DataStreamResourceWithLatestValue<DataStream> {
-  const variant = successEntry?.assetPropertyValue?.value;
   const dataStreamWithLatestValue = {
     ...requestEntry.dataStream,
-    latestValue: variant && toValue(variant),
+    latestValue: Object.values(
+      successEntry?.assetPropertyValue?.value ?? {}
+    ).at(0),
     latestValueTimestamp:
       successEntry?.assetPropertyValue?.timestamp?.timeInSeconds,
   };

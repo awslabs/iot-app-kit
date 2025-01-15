@@ -5,7 +5,7 @@ import { useDragLayer } from 'react-dnd';
 import DashboardWidget from './components/widget';
 import { ItemTypes } from './itemTypes';
 
-import { DefaultDashboardMessages } from '../../messages';
+import { DefaultDashboardMessages } from '~/messages';
 import './index.css';
 
 const getItemStyles = (

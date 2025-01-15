@@ -8,13 +8,13 @@ import {
 import type { AssistantProperty } from '@iot-app-kit/react-components';
 import { type PropsWithChildren } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HorizontalDivider } from '../../../components/divider/horizontalDivider';
+import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
-} from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
-import { type DashboardWidget } from '../../../types';
+} from '~/store/actions';
+import type { DashboardState } from '~/store/state';
+import { type DashboardWidget } from '~/types';
 import './tile.css';
 
 export type WidgetTileProps = PropsWithChildren<{
@@ -92,6 +92,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
       aria-description='widget tile'
       className='widget-tile'
       style={{
+        height: isSelected ? 'calc(100% + 10px)' : 'inherit',
         borderRadius: borderRadiusBadge,
         backgroundColor: colorBackgroundContainerContent,
         border: isSelected ? `2px solid ${colorBackgroundControlChecked}` : '',

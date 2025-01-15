@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import type { DashboardState } from '../../store/state';
+import type { DashboardState } from '~/store/state';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import {
   type DragEvent,

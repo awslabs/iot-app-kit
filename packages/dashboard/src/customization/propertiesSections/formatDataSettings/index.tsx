@@ -1,9 +1,9 @@
-import { type PropertyLens } from '../../../customization/propertiesSection';
-import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
-import { type CommonChartProperties } from '../../../customization/widgets/types';
-import { type DashboardWidget } from '../../../types';
-import { maybeWithDefault } from '../../../util/maybe';
-import { nonNegative } from '../../../util/number';
+import { type PropertyLens } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
+import { type CommonChartProperties } from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
+import { maybeWithDefault } from '~/util/maybe';
+import { nonNegative } from '~/util/number';
 import { DecimalPlacesSection } from './section';
 
 const isSettingsWidget = (

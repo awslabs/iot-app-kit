@@ -1,4 +1,4 @@
-import type { Primitive } from '@iot-app-kit/helpers';
+import type { Primitive } from '../data-module/types';
 
 const MAX_PRECISION = 4;
 

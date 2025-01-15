@@ -3,8 +3,7 @@ import type {
   DataType as TMDataType,
 } from '@aws-sdk/client-iottwinmaker';
 import { Type } from '@aws-sdk/client-iottwinmaker';
-import type { Primitive } from '@iot-app-kit/helpers';
-import type { DataType } from '@iot-app-kit/core';
+import type { DataType, Primitive } from '@iot-app-kit/core';
 import { DATA_TYPE } from '@iot-app-kit/core';
 import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';

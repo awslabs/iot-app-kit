@@ -18,7 +18,7 @@ import { QueryExtender } from '../queryExtender';
 import { getPlugin } from '@iot-app-kit/core';
 import { type useQuery } from '../../useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '../../../../types';
+import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';

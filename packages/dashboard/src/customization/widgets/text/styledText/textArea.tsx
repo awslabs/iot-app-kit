@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import { useEffect } from 'react';
-import { useWidgetActions } from '../../../../customization/hooks/useWidgetActions';
-import { useClickOutside } from '../../../../hooks/useClickOutside';
-import { useKeyPress } from '../../../../hooks/useKeyPress';
+import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
+import { useClickOutside } from '~/hooks/useClickOutside';
+import { useKeyPress } from '~/hooks/useKeyPress';
 import { defaultFontSettings } from './defaultFontSettings';
 
 import {

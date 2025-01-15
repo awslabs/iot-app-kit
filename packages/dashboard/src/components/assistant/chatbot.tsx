@@ -1,25 +1,22 @@
+import { type FC, useEffect } from 'react';
+import { v4 as uuid } from 'uuid';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import {
   AssistantChatbot,
-  EVENT_SUMMARY_DEFAULT_UTTERANCE,
-  type IMessage,
-  MessageType,
-  SITUATION_SUMMARY_DEFAULT_UTTERANCE,
   useAssistant,
+  MessageType,
   useAssistantContext,
+  type IMessage,
+  SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+  EVENT_SUMMARY_DEFAULT_UTTERANCE,
 } from '@iot-app-kit/react-components';
-import 'animate.css';
-import { type FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuid } from 'uuid';
-import { type DashboardMessages } from '../../messages';
-import {
-  onCleanAssistantAction,
-  onToggleChatbotAction,
-} from '../../store/actions';
-import { type DashboardState } from '../../store/state';
 import { useClients } from '../dashboard/clientContext';
+import 'animate.css';
 import './assistant.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { onCleanAssistantAction, onToggleChatbotAction } from '~/store/actions';
+import { type DashboardState } from '~/store/state';
+import { type DashboardMessages } from '~/messages';
 
 export interface AssistantChatbotProps {
   height: number;

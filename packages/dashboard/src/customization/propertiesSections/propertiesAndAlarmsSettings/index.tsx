@@ -1,14 +1,14 @@
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
-import { useClients } from '../../../components/dashboard/clientContext';
-import { type PropertyLens } from '../../../customization/propertiesSection';
-import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+import { useClients } from '~/components/dashboard/clientContext';
+import { type PropertyLens } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
   type LineScatterChartWidget,
   type QueryWidget,
   type TableWidget,
-} from '../../../customization/widgets/types';
-import { type DashboardWidget } from '../../../types';
-import { type Maybe, maybeWithDefault } from '../../../util/maybe';
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
+import { type Maybe, maybeWithDefault } from '~/util/maybe';
 import { GeneralPropertiesAlarmsSection } from './section';
 import { StyledPropertiesAlarmsSection } from './styledSection';
 

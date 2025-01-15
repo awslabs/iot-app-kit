@@ -1,21 +1,23 @@
 import { createContext, useContext } from 'react';
-import { useRefreshRate } from '../../customization/hooks/useRefreshRate';
-import { alarmModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/alarmModelQueryToAlarmQuery';
-import { assetModelQueryToSiteWiseAssetQuery } from '../../customization/widgets/utils/assetModelQueryToAssetQuery';
+import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
+import { alarmModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/alarmModelQueryToAlarmQuery';
+import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
 
-import type { Primitive } from '@iot-app-kit/helpers';
-
-import type { DataStream, TimeSeriesDataQuery } from '@iot-app-kit/core';
+import type {
+  DataStream,
+  Primitive,
+  TimeSeriesDataQuery,
+} from '@iot-app-kit/core';
 import type {
   AlarmDataQuery,
-  SiteWiseAlarmDataStreamQuery,
   SiteWiseDataStreamQuery,
   SiteWiseQuery,
+  SiteWiseAlarmDataStreamQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import type {
   DashboardIotSiteWiseQueries,
   IoTSiteWiseDataStreamQuery,
-} from '../../types';
+} from '~/types';
 
 const createTimeSeriesDataQuery = (
   iotSiteWiseQuery: SiteWiseQuery,

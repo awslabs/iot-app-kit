@@ -1,7 +1,7 @@
-import { getSelectionBox } from '../../util/getSelectionBox';
+import { getSelectionBox } from '~/util/getSelectionBox';
 import SelectionBoxAnchor from './selectionBoxAnchor';
 
-import type { DashboardWidget } from '../../types';
+import type { DashboardWidget } from '~/types';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { useLayers } from '../internalDashboard/useLayers';
 import './selectionBox.css';

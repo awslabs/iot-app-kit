@@ -1,6 +1,6 @@
 import { useLayers } from '../internalDashboard/useLayers';
 
-import type { Rect } from '../../types';
+import type { Rect } from '~/types';
 import './index.css';
 
 export type UserSelectionProps = {

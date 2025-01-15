@@ -3,7 +3,7 @@ import {
   type AssetPropertyResource,
   type TimeSeriesResource,
 } from '@iot-app-kit/react-components';
-import type { IoTSiteWiseDataStreamQuery } from '../../../../types';
+import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
 type Query = IoTSiteWiseDataStreamQuery;
 

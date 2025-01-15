@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import type * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { onResizeWidgetsAction } from '../../../store/actions';
-import { toGridPosition } from '../../../util/position';
-import type { Anchor } from '../../../store/actions';
-import type { DashboardState } from '../../../store/state';
-import type { Position, DashboardWidget } from '../../../types';
+import { onResizeWidgetsAction } from '~/store/actions';
+import { toGridPosition } from '~/util/position';
+import type { Anchor } from '~/store/actions';
+import type { DashboardState } from '~/store/state';
+import type { Position, DashboardWidget } from '~/types';
 import type { DragEvent } from '../../grid';
 import type { Gesture } from './types';
 

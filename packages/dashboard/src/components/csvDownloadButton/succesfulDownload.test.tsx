@@ -1,23 +1,16 @@
-import { QueryClient } from '@tanstack/react-query';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
-import { type DataStream, type DataType } from '@iot-app-kit/core';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   type StyledAssetQuery,
   type StyledSiteWiseQueryConfig,
-} from '../../customization/widgets/types';
+} from '~/customization/widgets/types';
+import { type DataStream, type DataType } from '@iot-app-kit/core';
 
-vi.mock('../../data/query-client', () => ({
-  queryClient: new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  }),
-}));
+const testQueryClient = new QueryClient({});
 
 const assetId1 = 'some-asset-id-1';
 const propertyId1 = 'some-property-id-1';
@@ -51,17 +44,19 @@ vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
 
 it('renders a working download button if query has content', function () {
   render(
-    <CSVDownloadButton
-      queryConfig={{
-        source: 'iotsitewise',
-        query: {
-          ...MOCK_QUERY,
-        },
-      }}
-      widgetType='line'
-      fileName='csv-test'
-      client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
-    />
+    <QueryClientProvider client={testQueryClient}>
+      <CSVDownloadButton
+        queryConfig={{
+          source: 'iotsitewise',
+          query: {
+            ...MOCK_QUERY,
+          },
+        }}
+        widgetType='line'
+        fileName='csv-test'
+        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
+      />
+    </QueryClientProvider>
   );
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
@@ -79,12 +74,14 @@ it('creates a file for download if query has content', async function () {
     },
   } as StyledSiteWiseQueryConfig;
   render(
-    <CSVDownloadButton
-      queryConfig={mockQueryConfig}
-      fileName='csv-test'
-      client={mockClient}
-      widgetType='line'
-    />
+    <QueryClientProvider client={testQueryClient}>
+      <CSVDownloadButton
+        queryConfig={mockQueryConfig}
+        fileName='csv-test'
+        client={mockClient}
+        widgetType='line'
+      />
+    </QueryClientProvider>
   );
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);

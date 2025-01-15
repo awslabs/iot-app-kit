@@ -1,0 +1,9 @@
+.btn-custom-primary {
+  border-color: var(--colors-background-button) !important;
+  background-color: var(--colors-background-button) !important;
+}
+
+.btn-custom-primary:hover {
+  border-color: var(--colors-button-hover) !important;
+  background-color: var(--colors-button-hover) !important;
+}

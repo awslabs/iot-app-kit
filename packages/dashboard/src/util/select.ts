@@ -1,6 +1,6 @@
 import last from 'lodash-es/last';
 import sortBy from 'lodash-es/sortBy';
-import type { DashboardWidget, Position, Rect, Selection } from '../types';
+import type { DashboardWidget, Position, Rect, Selection } from '~/types';
 import { overlaps } from './overlaps';
 
 export const getSelectedWidgets = ({

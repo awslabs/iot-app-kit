@@ -3,4 +3,3 @@ coverage
 storybook-static
 stencil-generated
 test-results
-playwright-report

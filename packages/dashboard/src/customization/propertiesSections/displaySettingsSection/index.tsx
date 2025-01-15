@@ -1,9 +1,9 @@
-import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
   type GaugeWidget,
   type KPIWidget,
-} from '../../../customization/widgets/types';
-import { type DashboardWidget } from '../../../types';
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
 import { RenderGaugeDisplaySettingsSection } from './gaugeDisplaySettings';
 import { RenderDisplaySettingsSection } from './kpiDisplaySettings';
 

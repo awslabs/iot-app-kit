@@ -3,13 +3,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.3.0",
+  "version": "12.2.1",
   "description": "A dashboard widget for IoT App Kit components",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
   "files": [
     "dist",
-    "NOTICE"
+    "CHANGELOG.md",
+    "*NOTICE"
   ],
   "repository": {
     "type": "git",
@@ -19,45 +20,36 @@
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
   "type": "module",
-  "main": "./dist/cjs/index.cjs.js",
+  "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "@iot-app-kit/development": "./src/index.ts",
-      "default": {
-        "types": "./dist/esm/index.d.ts",
-        "require": "./dist/cjs/index.cjs.js",
-        "import": "./dist/esm/index.js",
-        "default": "./dist/esm/index.js"
-      }
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
     }
   },
   "scripts": {
-    "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run copy-assets:es && npm run copy-assets:cjs",
-    "postbuild": "iot-postbuild",
-    "clean": "npx rimraf dist .cache *.tgz LICENSE NOTICE",
-    "clean:turbo": "npx rimraf .turbo",
-    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && tsc-alias -p ./tsconfig.cjs.json && tsc-alias -p ./tsconfig.esm.json && npm run copy-assets:es && npm run copy-assets:cjs",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json && tsc-alias -p ./tsconfig.cjs.json && npm run copy-assets:cjs",
+    "build:es": "tsc -b ./tsconfig.esm.json && tsc-alias -p ./tsconfig.esm.json && npm run copy-assets:es",
+    "clean": "rimraf dist .turbo .cache test-results",
+    "clean:nuke": "npm run clean && rimraf node_modules",
     "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
-    "test": "NODE_OPTIONS='--import tsx/esm' vitest run",
-    "test:watch": "NODE_OPTIONS='--import tsx/esm' vitest",
-    "test:typescript": "tsc --noEmit",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",
     "fix": "eslint --fix . --cache --cache-location ./cache/eslint/",
-    "copy:license": "cp ../../LICENSE LICENSE",
-    "copy:notice": "cp ../../NOTICE NOTICE",
-    "prepack": "npm run copy:license && npm run copy:notice && iot-prepack",
-    "pack": "npm pack",
-    "postpack": "iot-postpack"
+    "pack": "npm pack"
   },
   "devDependencies": {
     "@iot-app-kit/data-mocked": "*",
-    "@iot-app-kit/eslint-config": "12.3.0",
-    "@iot-app-kit/testing-util": "12.3.0",
-    "@iot-app-kit/ts-config": "12.3.0",
-    "@iot-app-kit/vite-config": "*",
+    "@iot-app-kit/testing-util": "12.2.1",
+    "@iot-app-kit/ts-config": "12.2.1",
     "@tanstack/eslint-plugin-query": "^5.40.1",
     "@tanstack/react-query-devtools": "^5.40.1",
     "@testing-library/jest-dom": "^6.6.3",
@@ -69,18 +61,20 @@
     "@types/papaparse": "^5.3.10",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
-    "@types/styled-components": "^5.1.26",
     "@types/validator": "^13.12.0",
     "@vitejs/plugin-react": "^4.3.3",
     "@vitest/coverage-v8": "^2.1.5",
     "copyfiles": "^2.4.1",
+    "css-loader": "6.8.1",
     "dotenv": "^16.3.1",
+    "eslint-config-iot-app-kit": "12.2.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "jest-extended": "^3.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.1",
     "sass": "1.63.6",
+    "tsc-alias": "^1.8.10",
     "tslib": "^2.5.3",
     "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
@@ -91,12 +85,10 @@
     "@cloudscape-design/components": "3.0.693",
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.32",
-    "@iot-app-kit/atoms": "*",
-    "@iot-app-kit/core": "12.3.0",
-    "@iot-app-kit/core-util": "12.3.0",
-    "@iot-app-kit/helpers": "*",
-    "@iot-app-kit/react-components": "12.3.0",
-    "@iot-app-kit/source-iotsitewise": "12.3.0",
+    "@iot-app-kit/core": "12.2.1",
+    "@iot-app-kit/core-util": "12.2.1",
+    "@iot-app-kit/react-components": "12.2.1",
+    "@iot-app-kit/source-iotsitewise": "12.2.1",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^5.40.1",
@@ -105,7 +97,6 @@
     "dompurify": "^3.1.7",
     "is-hotkey": "^0.2.0",
     "lodash-es": "^4.17.21",
-    "nanoid": "^5.0.9",
     "papaparse": "^5.4.1",
     "parse-duration": "^1.0.3",
     "react-dnd": "^16.0.1",
@@ -118,7 +109,6 @@
     "react-redux": "^8.1.0",
     "react-use": "17.4.0",
     "redux": "^4.2.1",
-    "styled-components": "^5.3.11",
     "tiny-invariant": "^1.3.1",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.0",
@@ -130,8 +120,5 @@
     "@aws-sdk/client-iottwinmaker": "^3.354.0",
     "react": "^18",
     "react-dom": "^18"
-  },
-  "iotAppKit": {
-    "scope": "public"
   }
 }

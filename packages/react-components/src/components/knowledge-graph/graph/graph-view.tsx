@@ -1,5 +1,6 @@
-import type cytoscape from 'cytoscape';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { type Core } from 'cytoscape';
+import type cytoscape from 'cytoscape';
 import {
   type CSSProperties,
   forwardRef,
