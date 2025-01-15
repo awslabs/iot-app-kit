@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/source-iottwinmaker",
-  "version": "12.2.1",
+  "version": "12.3.0",
   "publishConfig": {
     "access": "public"
   },
@@ -49,8 +49,8 @@
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
-    "@iot-app-kit/eslint-config": "*",
-    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/eslint-config": "12.3.0",
+    "@iot-app-kit/ts-config": "12.3.0",
     "@iot-app-kit/vite-config": "*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.16.18",
@@ -71,7 +71,7 @@
     "@aws-sdk/client-s3": "3.335.0",
     "@aws-sdk/client-secrets-manager": "3.353.0",
     "@aws-sdk/url-parser": "3.374.0",
-    "@iot-app-kit/core": "*",
+    "@iot-app-kit/core": "12.3.0",
     "@tanstack/query-core": "^4.29.15",
     "lodash-es": "^4.17.21",
     "rxjs": "^7.8.1"

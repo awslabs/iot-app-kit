@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.2.1...root-v12.3.0) (2025-01-15)
+
+
+### Features
+
+* add support for null / nan ([d6fc241](https://github.com/awslabs/iot-app-kit/commit/d6fc241df1f9b2a07196bd9c1981a8ed513d89ce))
+
+
+### Bug Fixes
+
+* 3rd-party imports during build ([d993ad5](https://github.com/awslabs/iot-app-kit/commit/d993ad569e579dd6f85850e5197f1350d48c718b))
+* clean script and dependency task management ([52bfc4c](https://github.com/awslabs/iot-app-kit/commit/52bfc4c4602387d0eb9c8f4f30d0103ae42ac517))
+* ensure protected packages do not have devDeps on pack ([fee90d3](https://github.com/awslabs/iot-app-kit/commit/fee90d37de7d2797564193ea877c8162b1cc8a63))
+* optional property check for error metadata ([1a2b661](https://github.com/awslabs/iot-app-kit/commit/1a2b66167e758b1eede4914bcf9a22b06c915e46))
+* packages ([613ab59](https://github.com/awslabs/iot-app-kit/commit/613ab59818934387edb255adf685356fc855d458))
+* remove orange button ([6f15fc3](https://github.com/awslabs/iot-app-kit/commit/6f15fc3dcd013e54217c9082b2c8a114c3eca761))
+* update hover states and alarm colors ([ef89eff](https://github.com/awslabs/iot-app-kit/commit/ef89eff222c65be33ca673aeee760fe6c7aff1ea))
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/root-v12.2.0...root-v12.2.1) (2024-12-03)
 
 

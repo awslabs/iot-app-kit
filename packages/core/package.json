@@ -1,7 +1,7 @@
 {
   "name": "@iot-app-kit/core",
   "description": "IoT Application Kit core",
-  "version": "12.2.1",
+  "version": "12.3.0",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
@@ -52,8 +52,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@iot-app-kit/eslint-config": "*",
-    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/eslint-config": "12.3.0",
+    "@iot-app-kit/ts-config": "12.3.0",
     "@iot-app-kit/vite-config": "*",
     "@types/d3-array": "^3.0.5",
     "@types/node": "^18.16.18",

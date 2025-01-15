@@ -1,5 +1,34 @@
 # Changelog
 
+## [12.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.2.1...dashboard-v12.3.0) (2025-01-15)
+
+
+### Features
+
+* add support for null / nan ([d6fc241](https://github.com/awslabs/iot-app-kit/commit/d6fc241df1f9b2a07196bd9c1981a8ed513d89ce))
+
+
+### Bug Fixes
+
+* 3rd-party imports during build ([d993ad5](https://github.com/awslabs/iot-app-kit/commit/d993ad569e579dd6f85850e5197f1350d48c718b))
+* packages ([613ab59](https://github.com/awslabs/iot-app-kit/commit/613ab59818934387edb255adf685356fc855d458))
+* remove orange button ([6f15fc3](https://github.com/awslabs/iot-app-kit/commit/6f15fc3dcd013e54217c9082b2c8a114c3eca761))
+* update hover states and alarm colors ([ef89eff](https://github.com/awslabs/iot-app-kit/commit/ef89eff222c65be33ca673aeee760fe6c7aff1ea))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.3.0
+    * @iot-app-kit/core-util bumped from * to 12.3.0
+    * @iot-app-kit/react-components bumped from * to 12.3.0
+    * @iot-app-kit/source-iotsitewise bumped from * to 12.3.0
+  * devDependencies
+    * @iot-app-kit/eslint-config bumped from * to 12.3.0
+    * @iot-app-kit/testing-util bumped from * to 12.3.0
+    * @iot-app-kit/ts-config bumped from * to 12.3.0
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.2.0...dashboard-v12.2.1) (2024-12-03)
 
 

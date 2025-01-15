@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/core-util",
-  "version": "12.2.1",
+  "version": "12.3.0",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
@@ -42,7 +42,7 @@
     "postpack": "iot-postpack"
   },
   "dependencies": {
-    "@iot-app-kit/core": "*",
+    "@iot-app-kit/core": "12.3.0",
     "@iot-app-kit/helpers": "*",
     "lodash-es": "^4.17.21",
     "pako": "^2.1.0",
@@ -51,8 +51,8 @@
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
-    "@iot-app-kit/eslint-config": "*",
-    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/eslint-config": "12.3.0",
+    "@iot-app-kit/ts-config": "12.3.0",
     "@iot-app-kit/vite-config": "*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.16.18",

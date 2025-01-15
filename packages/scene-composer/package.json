@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/scene-composer",
-  "version": "12.2.1",
+  "version": "12.3.0",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
@@ -89,9 +89,9 @@
     "@formatjs/cli": "^6.3.8",
     "@formatjs/intl": "3.1.0",
     "@formatjs/ts-transformer": "3.13.14",
-    "@iot-app-kit/eslint-config": "*",
+    "@iot-app-kit/eslint-config": "12.3.0",
     "@iot-app-kit/helpers": "*",
-    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/ts-config": "12.3.0",
     "@iot-app-kit/vite-config": "*",
     "@playwright/test": "^1.48.2",
     "@react-spring/three": "^9.7.2",
@@ -144,9 +144,9 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@iot-app-kit/core": "*",
-    "@iot-app-kit/react-components": "*",
-    "@iot-app-kit/source-iottwinmaker": "*",
+    "@iot-app-kit/core": "12.3.0",
+    "@iot-app-kit/react-components": "12.3.0",
+    "@iot-app-kit/source-iottwinmaker": "12.3.0",
     "@matterport/r3f": "0.2.7",
     "@matterport/webcomponent": "0.1.35",
     "@react-three/drei": "9.56.27",

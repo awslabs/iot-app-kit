@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/source-iotsitewise",
-  "version": "12.2.1",
+  "version": "12.3.0",
   "publishConfig": {
     "access": "public"
   },
@@ -50,9 +50,9 @@
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
-    "@iot-app-kit/eslint-config": "*",
-    "@iot-app-kit/testing-util": "*",
-    "@iot-app-kit/ts-config": "*",
+    "@iot-app-kit/eslint-config": "12.3.0",
+    "@iot-app-kit/testing-util": "12.3.0",
+    "@iot-app-kit/ts-config": "12.3.0",
     "@iot-app-kit/vite-config": "*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.16.18",
@@ -65,8 +65,8 @@
     "vitest": "^2.1.5"
   },
   "dependencies": {
-    "@iot-app-kit/core": "*",
-    "@iot-app-kit/core-util": "*",
+    "@iot-app-kit/core": "12.3.0",
+    "@iot-app-kit/core-util": "12.3.0",
     "@synchro-charts/core": "7.2.0",
     "dataloader": "^2.2.2",
     "lodash-es": "^4.17.21",
