@@ -10,7 +10,7 @@ import {
   type StatusWidget,
   type StyledAssetQuery,
   type TextWidget,
-} from '../src/customization/widgets/types';
+} from '~/customization/widgets/types';
 /**
  * Shared mocks for testing purposes
  */

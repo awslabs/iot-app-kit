@@ -6,7 +6,7 @@ import {
   Toggle,
 } from '@cloudscape-design/components';
 import type { FC } from 'react';
-import type { TextWidget } from '../../../customization/widgets/types';
+import type { TextWidget } from '~/customization/widgets/types';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 

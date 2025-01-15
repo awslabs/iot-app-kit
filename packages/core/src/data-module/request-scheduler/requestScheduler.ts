@@ -1,4 +1,4 @@
-import { SECOND_IN_MS } from '@iot-app-kit/helpers';
+import { SECOND_IN_MS } from '../../common/time';
 
 const DEFAULT_REFRESH_RATE = 5 * SECOND_IN_MS;
 

@@ -1,14 +1,14 @@
 import { getPlugin } from '@iot-app-kit/core';
-import { type PropertyLens } from '../../../customization/propertiesSection';
-import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+import { type PropertyLens } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
   type ChartLegend,
   type LineScatterChartWidget,
   type LineStyles,
   type SymbolStyles,
-} from '../../../customization/widgets/types';
-import { type DashboardWidget } from '../../../types';
-import { maybeWithDefault } from '../../../util/maybe';
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
+import { maybeWithDefault } from '~/util/maybe';
 import { YAxisSection } from '../yAxisSettings';
 import { LegendSection } from './legendSection';
 import { LineStyleSection } from './lineStyleSection';

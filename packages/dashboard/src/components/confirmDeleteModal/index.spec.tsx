@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import ConfirmDeleteModal from './index';
 
 describe('Confirm Delete Modal', () => {
@@ -12,15 +12,15 @@ describe('Confirm Delete Modal', () => {
       handleCancel: vi.fn(),
       handleSubmit: vi.fn(),
     };
-    render(<ConfirmDeleteModal {...props} />);
+    const { getByText, getByTestId } = render(
+      <ConfirmDeleteModal {...props} />
+    );
 
     // Assert that the header, description, cancel button, and submit button are rendered correctly
-    expect(screen.getByText('Confirmation')).toBeInTheDocument();
-    expect(
-      screen.getByText('Are you sure you want to submit?')
-    ).toBeInTheDocument();
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
-    expect(screen.getByText('Submit')).toBeInTheDocument();
+    expect(getByText('Confirmation')).toBeInTheDocument();
+    expect(getByText('Are you sure you want to submit?')).toBeInTheDocument();
+    expect(getByText('Cancel')).toBeInTheDocument();
+    expect(getByTestId('custom-orange-button')).toBeInTheDocument();
   });
 
   test('calls handleCancel when cancel button is clicked', () => {
@@ -54,8 +54,8 @@ describe('Confirm Delete Modal', () => {
       handleCancel: vi.fn(),
       handleSubmit,
     };
-    render(<ConfirmDeleteModal {...props} />);
-    const submitButton = screen.getByText('Submit');
+    const { getByTestId } = render(<ConfirmDeleteModal {...props} />);
+    const submitButton = getByTestId('custom-orange-button');
 
     fireEvent.click(submitButton); // Simulate clicking the submit button
 

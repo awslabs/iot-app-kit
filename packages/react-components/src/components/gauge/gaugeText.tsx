@@ -9,7 +9,7 @@ import {
 import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
 import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
 import { getPreciseValue } from '../../utils/getPreciseValue';
-import type { Primitive } from '@iot-app-kit/helpers';
+import { type Primitive } from '@iot-app-kit/core';
 import { GaugeErrorText } from './gaugeErrorText';
 import { type AlarmContent } from '../alarm-components/alarm-content/types';
 import { type AssistantProperty } from '../../common/assistantProps';

@@ -1,8 +1,11 @@
-@import url('../../styles/variables.css');
+@import "../../styles/variables.css";
 
 .custom-drag-layer {
   position: fixed;
   pointer-events: none;
   z-index: var(--stack-order-drag-layer);
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

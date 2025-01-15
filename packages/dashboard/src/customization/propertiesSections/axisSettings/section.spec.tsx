@@ -1,9 +1,9 @@
 import { MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../store';
-import { DefaultDashboardMessages } from '../../../messages';
+import { configureDashboardStore } from '~/store';
+import { DefaultDashboardMessages } from '~/messages';
 import { render } from '@testing-library/react';
-import type { DashboardState } from '../../../store/state';
+import type { DashboardState } from '~/store/state';
 import { AxisSettingsConfiguration } from './index';
 
 const state: Partial<DashboardState> = {

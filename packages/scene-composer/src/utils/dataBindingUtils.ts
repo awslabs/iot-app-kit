@@ -1,4 +1,4 @@
-import type { Primitive } from '@iot-app-kit/helpers';
+import { type Primitive } from '@iot-app-kit/core';
 import jexl from 'jexl';
 import isEqual from 'lodash-es/isEqual';
 import pick from 'lodash-es/pick';

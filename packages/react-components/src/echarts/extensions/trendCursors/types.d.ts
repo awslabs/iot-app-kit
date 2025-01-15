@@ -1,1 +1,1 @@
-declare module 'echarts/lib/chart/line/poly' {}
+declare module 'echarts/lib/chart/line/poly';

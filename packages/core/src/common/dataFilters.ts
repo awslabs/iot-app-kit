@@ -1,11 +1,9 @@
 import { bisector } from 'd3-array';
 
-import type { Primitive } from '@iot-app-kit/helpers';
-
 import { isHistoricalViewport } from './predicates';
 import { parseDuration } from './time';
 import type { Viewport } from '../data-module/data-cache/requestTypes';
-import type { DataPoint } from '../data-module/types';
+import type { DataPoint, Primitive } from '../data-module/types';
 
 // By doing the mapping to a date within the bisector
 // we eliminate the need to iterate over the entire data.

@@ -4,7 +4,7 @@
   "include": [
     "src",
     "functional-tests",
-    "vite.config.ts",
+    "vitest.config.ts",
     "vitest.functional.ts"
   ],
   "compilerOptions": {

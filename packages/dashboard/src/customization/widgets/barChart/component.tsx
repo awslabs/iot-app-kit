@@ -1,10 +1,10 @@
 import { BarChart, useViewport } from '@iot-app-kit/react-components';
 import { useSelector } from 'react-redux';
-import { useQueries } from '../../../components/dashboard/queryContext';
-import WidgetTile from '../../../components/widgets/tile';
-import { aggregateToString } from '../../../customization/propertiesSections/aggregationSettings/helpers';
-import { useChartSize } from '../../../hooks/useChartSize';
-import type { DashboardState } from '../../../store/state';
+import { useQueries } from '~/components/dashboard/queryContext';
+import WidgetTile from '~/components/widgets/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
+import type { DashboardState } from '~/store/state';
 import type { BarChartWidget } from '.././types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import { getAggregation } from '../utils/widgetAggregationUtils';

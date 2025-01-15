@@ -70,16 +70,13 @@ describe('toDataPoint', () => {
     });
   });
 
-  it('does not throw error when no property values passed in', () => {
-    /**
-     * changing this functionality to patch support null / nan data
-     */
+  it('throws error when no property values passed in', () => {
     expect(() =>
       toDataPoint({
         timestamp: { timeInSeconds: SECONDS },
         value: {},
       })
-    ).not.toThrowError();
+    ).toThrowError();
   });
 
   it('converts correctly for a string value', () => {

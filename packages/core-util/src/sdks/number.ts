@@ -1,4 +1,4 @@
-import type { Primitive } from '@iot-app-kit/helpers';
+import type { Primitive } from '@iot-app-kit/core';
 
 /**
  * Rounds a number to a given precision

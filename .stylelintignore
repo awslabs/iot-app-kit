@@ -1,0 +1,11 @@
+build/
+dist/
+www/
+loader/
+node_modules/
+examples/
+**/coverage/*
+coverage/
+packages/dashboard/src/components/internalDashboard/index.css
+packages/react-components/styles.css
+storybook-static

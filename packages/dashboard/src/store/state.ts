@@ -1,10 +1,10 @@
-import { v4 as uuid } from 'uuid';
 import type {
   AssistantStateTypes,
   DashboardTimeSeriesSettings,
   DashboardWidget,
-} from '../types';
-import { deepFreeze } from '../util/deepFreeze';
+} from '~/types';
+import { deepFreeze } from '~/util/deepFreeze';
+import { v4 as uuid } from 'uuid';
 
 export type DashboardState<
   Properties extends Record<string, unknown> = Record<string, unknown>

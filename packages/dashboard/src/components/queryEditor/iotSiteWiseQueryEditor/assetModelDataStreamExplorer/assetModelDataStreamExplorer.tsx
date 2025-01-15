@@ -9,7 +9,7 @@ import {
   createInitialAssetModelResource,
   useSelectedAssetModel,
 } from './useSelectedAssetModel';
-import { HorizontalDivider } from '../../../../components/divider/horizontalDivider';
+import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import {
   createInitialAssetModelProperties,
   useSelectedAssetModelProperties,
@@ -23,8 +23,8 @@ import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuer
 import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
 import { ResourceExplorerFooter } from '../footer/footer';
-import { createNonNullableList } from '../../../../helpers/lists/createNonNullableList';
-import { type DashboardWidget } from '../../../../types';
+import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { type DashboardWidget } from '~/types';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,

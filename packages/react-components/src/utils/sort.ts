@@ -1,5 +1,4 @@
-import type { Primitive } from '@iot-app-kit/helpers';
-import type { DataPoint } from '@iot-app-kit/core';
+import type { DataPoint, Primitive } from '@iot-app-kit/core';
 
 /**
  * Sorts points in order of their points values.

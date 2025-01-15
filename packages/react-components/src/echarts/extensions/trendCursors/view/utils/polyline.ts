@@ -1,4 +1,3 @@
-// @ts-expect-error there is no type safety here
 import { ECPolyline } from 'echarts/lib/chart/line/poly';
 
 export const createPolyLineFromPoints = (points: Float32Array) => {

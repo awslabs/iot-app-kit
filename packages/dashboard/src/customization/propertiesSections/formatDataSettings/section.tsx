@@ -4,8 +4,8 @@ import './section.css';
 
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
 import { isNumeric } from '@iot-app-kit/core';
-import DecimalPlaces from '../../../components/decimalPlaces';
-import { useSelectedWidgets } from '../../../hooks/useSelectedWidgets';
+import DecimalPlaces from '~/components/decimalPlaces';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import {
   FormLabel,
   StyledExpandableSection,

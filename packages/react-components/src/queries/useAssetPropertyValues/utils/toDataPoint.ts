@@ -1,6 +1,5 @@
 import { NANO_SECOND_IN_MS, SECOND_IN_MS } from './timeConstants';
-import type { Primitive } from '@iot-app-kit/helpers';
-import type { DataPoint } from '@iot-app-kit/core';
+import type { DataPoint, Primitive } from '@iot-app-kit/core';
 import type {
   AssetPropertyValue,
   TimeInNanos,

@@ -67,9 +67,8 @@ export class AssetPropertyValueFactory {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
       value: {
-        // nullValue: { valueType: 'I' },
         integerValue: faker.number.int({ min: 0, max: 100 }),
-      } as any,
+      },
     };
 
     return assetPropertyValue;
@@ -82,9 +81,8 @@ export class AssetPropertyValueFactory {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
       value: {
-        // nullValue: { valueType: 'D' },
         doubleValue: faker.number.float({ min: 0, max: 100, precision: 0.001 }),
-      } as any,
+      },
     };
 
     return assetPropertyValue;
@@ -97,9 +95,8 @@ export class AssetPropertyValueFactory {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
       value: {
-        // nullValue: { valueType: 'B' },
         booleanValue: faker.datatype.boolean(),
-      } as any,
+      },
     };
 
     return assetPropertyValue;
@@ -112,9 +109,8 @@ export class AssetPropertyValueFactory {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
       value: {
-        // nullValue: { valueType: 'S' },
         stringValue: faker.helpers.arrayElement(['ON', 'OFF']),
-      } as any,
+      },
     };
 
     return assetPropertyValue;
@@ -210,7 +206,6 @@ export function batchGetAssetPropertyValueHistoryHandler() {
     };
 
     await delay();
-
     return HttpResponse.json(response, { status: 200 });
   });
 }

@@ -1,7 +1,7 @@
 import { type StyleSettingsMap } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
 import uniq from 'lodash-es/uniq';
-import { createNonNullableList } from '../../../../helpers/lists/createNonNullableList';
+import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { type StyledAssetQuery } from '../../types';
 
 const colorsFromProperties = ({

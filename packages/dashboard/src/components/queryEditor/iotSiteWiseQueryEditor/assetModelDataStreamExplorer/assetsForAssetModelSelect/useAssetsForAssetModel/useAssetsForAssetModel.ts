@@ -3,11 +3,10 @@ import {
   type QueryFunctionContext,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { createNonNullableList } from '../../../../../../helpers/lists/createNonNullableList';
+import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import invariant from 'tiny-invariant';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
-import { queryClient } from '../../../../../../data/query-client';
 
 export interface UseAssetModelsOptions {
   iotSiteWiseClient: IoTSiteWiseClient;
@@ -34,16 +33,13 @@ export function useAssetsForAssetModel({
     isError,
     error,
     isLoading,
-  } = useInfiniteQuery(
-    {
-      enabled: isEnabled(assetModelId),
-      queryKey: cacheKeyFactory.create(),
-      queryFn: createQueryFn(iotSiteWiseClient),
-      getNextPageParam: ({ nextToken }) => nextToken,
-      initialPageParam: undefined,
-    },
-    queryClient
-  );
+  } = useInfiniteQuery({
+    enabled: isEnabled(assetModelId),
+    queryKey: cacheKeyFactory.create(),
+    queryFn: createQueryFn(iotSiteWiseClient),
+    getNextPageParam: ({ nextToken }) => nextToken,
+    initialPageParam: undefined,
+  });
 
   if (fetchAll && hasNextPage) fetchNextPage();
 

@@ -5,7 +5,7 @@ import {
   REFRESH_RATE_OPTIONS,
   REFRESH_RATE_OPTION_MAP,
 } from './constants';
-import { useRefreshRate } from '../../customization/hooks/useRefreshRate';
+import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
 import { SECOND_IN_MS } from '@iot-app-kit/core';
 import invariant from 'tiny-invariant';
 import { type RefreshRate } from './types';

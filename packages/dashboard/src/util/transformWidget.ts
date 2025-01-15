@@ -1,4 +1,4 @@
-import type { DashboardWidget, Rect } from '../types';
+import type { Rect, DashboardWidget } from '~/types';
 
 export const transformWidget: (
   widget: DashboardWidget,

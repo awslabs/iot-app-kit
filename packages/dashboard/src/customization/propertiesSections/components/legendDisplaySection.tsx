@@ -3,7 +3,7 @@ import Checkbox, {
 } from '@cloudscape-design/components/checkbox';
 import FormField from '@cloudscape-design/components/form-field';
 import type { FC } from 'react';
-import { type ChartLegend } from '../../../customization/widgets/types';
+import { type ChartLegend } from '~/customization/widgets/types';
 import { dropdownConsts } from '../constants';
 
 type LegendDisplaySectionProps = {

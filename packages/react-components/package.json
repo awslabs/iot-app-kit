@@ -1,45 +1,47 @@
 {
   "name": "@iot-app-kit/react-components",
-  "version": "12.3.0",
+  "version": "12.2.1",
   "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "dist",
-    "NOTICE"
-  ],
+  "source": "./src/index.ts",
   "type": "module",
-  "main": "./dist/cjs/index.cjs.js",
+  "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "@iot-app-kit/development": "./src/index.ts",
-      "default": {
-        "types": "./dist/esm/index.d.ts",
-        "require": "./dist/cjs/index.cjs.js",
-        "import": "./dist/esm/index.js",
-        "default": "./dist/esm/index.js"
-      }
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
     }
   },
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "*NOTICE",
+    "*styles.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "start": "npm run dev",
-    "build": "NODE_OPTIONS='--import tsx/esm' vite build && npm run copy-assets:es && npm run copy-assets:cjs",
-    "postbuild": "iot-postbuild",
-    "clean": "npx rimraf dist storybook-static test-results playwright-report coverage .cache *.tgz LICENSE NOTICE",
-    "clean:turbo": "npx rimraf .turbo",
-    "clean:nuke": "npm run clean && npm run clean:turbo && npx rimraf node_modules",
+    "start": "storybook dev -p 6007",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && npm run copy-assets:es && npm run copy-assets:cjs",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json && npm run copy-assets:cjs",
+    "build:es": "tsc -b ./tsconfig.esm.json && npm run copy-assets:es",
+    "clean": "rimraf dist storybook-static test-results coverage .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
     "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
-    "dev": "NODE_OPTIONS='--import tsx/esm' storybook dev -p 6007",
-    "test": "NODE_OPTIONS='--import tsx/esm' TZ=utc vitest run --silent",
-    "test:watch": "NODE_OPTIONS='--import tsx/esm' TZ=utc vitest --silent",
-    "test:typescript": "tsc --noEmit",
+    "copy:styles": "cp ../components/styles.css styles.css",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
+    "dev:react-components": "npm start",
+    "test": "TZ=utc vitest run --silent --coverage",
+    "test:watch": "TZ=utc vitest --silent",
+    "test:types": "tsc -p ./tsconfig.json --noEmit",
     "playwright": "docker compose run playwright",
     "test:ui": "if test \"$NODE_ENV\" = \"production\"; then npm run _test:ui:ci ; else npm run _test:ui:local ; fi",
-    "test:ui:ci": "NODE_OPTIONS='-C @iot-app-kit/development' npx playwright test",
+    "test:ui:ci": "npx playwright test",
     "test:ui:reliability": "if test \"$NODE_ENV\" = \"production\"; then npm run _test:ui:reliability:ci ; else npm run _test:ui:reliability:local ; fi",
     "_test:ui:ci": "npx playwright test",
     "_test:ui:local": "npm run playwright -- npx playwright test",
@@ -51,16 +53,14 @@
     "fix": "eslint --fix . --cache --cache-location .cache/eslint/",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
-    "prepack": "npm run copy:license && npm run copy:notice && iot-prepack",
-    "pack": "npm pack",
-    "postpack": "iot-postpack"
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
   },
   "devDependencies": {
-    "@iot-app-kit/core": "12.3.0",
-    "@iot-app-kit/eslint-config": "12.3.0",
-    "@iot-app-kit/testing-util": "12.3.0",
-    "@iot-app-kit/ts-config": "12.3.0",
-    "@iot-app-kit/vite-config": "*",
+    "@iot-app-kit/core": "12.2.1",
+    "@iot-app-kit/source-iotsitewise": "12.2.1",
+    "@iot-app-kit/testing-util": "12.2.1",
+    "@iot-app-kit/ts-config": "12.2.1",
     "@playwright/test": "^1.48.2",
     "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addon-links": "^8.4.5",
@@ -93,6 +93,7 @@
     "babel-plugin-formatjs": "10.5.3",
     "copyfiles": "^2.4.1",
     "cytoscape": "^3.25.0",
+    "eslint-config-iot-app-kit": "12.2.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "flush-promises": "^1.0.2",
     "jest-extended": "^3.2.4",
@@ -117,12 +118,9 @@
     "@cloudscape-design/global-styles": "1.0.32",
     "@iot-app-kit/charts": "^2.1.2",
     "@iot-app-kit/charts-core": "^2.1.2",
-    "@iot-app-kit/core": "12.3.0",
-    "@iot-app-kit/core-util": "12.3.0",
-    "@iot-app-kit/helpers": "*",
-    "@iot-app-kit/source-iotsitewise": "12.3.0",
-    "@iot-app-kit/source-iottwinmaker": "12.3.0",
-    "@popperjs/core": "^2.11.8",
+    "@iot-app-kit/core": "12.2.1",
+    "@iot-app-kit/core-util": "12.2.1",
+    "@iot-app-kit/source-iottwinmaker": "12.2.1",
     "@tanstack/react-query": "^5.32.1",
     "autosize": "^6.0.1",
     "color": "^4.2.3",
@@ -137,7 +135,6 @@
     "is-hotkey": "^0.2.0",
     "lodash-es": "^4.17.21",
     "luxon": "^3.5.0",
-    "nanoid": "^5.0.9",
     "parse-duration": "^1.0.3",
     "react-cytoscapejs": "^2.0.0",
     "react-error-boundary": "^4.0.10",
@@ -149,13 +146,11 @@
     "remark-gfm": "^4.0.0",
     "styled-components": "^5.3.11",
     "tiny-invariant": "^1.3.1",
-    "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.0",
     "video.js": "8.3.0",
     "zustand": "^4.5.2"
   },
   "peerDependencies": {
-    "@aws-sdk/client-iot-events": "^3.354.0",
     "@aws-sdk/client-iotsitewise": "^3.696.0",
     "cytoscape": "^3.25",
     "react": "^18",
@@ -164,8 +159,5 @@
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
-  "homepage": "https://github.com/awslabs/iot-app-kit#readme",
-  "iotAppKit": {
-    "scope": "public"
-  }
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme"
 }

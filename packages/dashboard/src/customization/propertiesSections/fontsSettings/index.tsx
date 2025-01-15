@@ -11,14 +11,14 @@ import {
   type FilterPredicate,
   type PropertyLens,
   useSelection,
-} from '../../../customization/propertiesSection';
-import { PropertiesSection } from '../../../customization/propertiesSectionComponent';
+} from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
   type GaugeProperties,
   type GaugeWidget,
-} from '../../../customization/widgets/types';
-import { type DashboardWidget } from '../../../types';
-import { maybeWithDefault } from '../../../util/maybe';
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
+import { maybeWithDefault } from '~/util/maybe';
 import { StyledExpandableSection } from '../components/styledComponents';
 
 const widgetWithCustomDisplaySettings: readonly string[] = ['gauge'];

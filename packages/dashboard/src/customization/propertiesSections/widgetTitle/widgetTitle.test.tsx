@@ -5,8 +5,8 @@ import {
   queryByLabelText,
   render,
 } from '@testing-library/react';
-import { configureDashboardStore } from '../../../store';
-import { type DashboardWidget } from '../../../types';
+import { configureDashboardStore } from '~/store';
+import { type DashboardWidget } from '~/types';
 import { WidgetTitle } from './index';
 import {
   MOCK_LINE_CHART_WIDGET,

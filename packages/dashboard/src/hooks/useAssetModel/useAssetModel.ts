@@ -1,13 +1,12 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
-import { queryClient } from '../../data/query-client';
 import invariant from 'tiny-invariant';
-import { createNonNullableList } from '../../helpers/lists/createNonNullableList';
-import { type DashboardState } from '../../store/state';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
-import { DescribeAssetModelRequest } from './describeAssetModelRequest';
+import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
+import { DescribeAssetModelRequest } from './describeAssetModelRequest';
+import { useSelector } from 'react-redux';
+import { type DashboardState } from '~/store/state';
 
 type SingleAssetRequest = {
   assetModelId?: string;
@@ -38,19 +37,16 @@ export function useAssetModel({
     assetModelId !== undefined ? [assetModelId] : assetModelIds ?? [];
 
   const queries =
-    useQueries(
-      {
-        queries: requestIds.map((id) => ({
-          // we need assetId and hierarchyId to make a successful request
-          enabled: isEnabled(id),
-          queryKey: cacheKeyFactory.create(id),
-          queryFn: isEdgeModeEnabled
-            ? createQueryFn(iotSiteWiseClient)
-            : createModelPropertyQueryFn(iotSiteWiseClient),
-        })),
-      },
-      queryClient
-    ) ?? [];
+    useQueries({
+      queries: requestIds.map((id) => ({
+        // we need assetId and hierarchyId to make a successful request
+        enabled: isEnabled(id),
+        queryKey: cacheKeyFactory.create(id),
+        queryFn: isEdgeModeEnabled
+          ? createQueryFn(iotSiteWiseClient)
+          : createModelPropertyQueryFn(iotSiteWiseClient),
+      })),
+    }) ?? [];
 
   const assetModelResponses = createNonNullableList(
     queries.map(({ data }) => data)

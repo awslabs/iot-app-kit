@@ -1,12 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "dist",
-    "declarationMap": true,
-    "sourceMap": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
@@ -20,8 +18,6 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "ESNEXT",
-    "jsx": "react-jsx",
-    /* Flag used to import local package types directly from source during development. */
-    "customConditions": ["@iot-app-kit/development"]
+    "jsx": "react-jsx"
   }
 }

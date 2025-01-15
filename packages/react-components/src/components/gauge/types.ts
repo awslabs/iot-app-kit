@@ -1,8 +1,8 @@
-import type { Primitive } from '@iot-app-kit/helpers';
 import {
   type StyleSettingsMap,
   type Threshold,
   type Viewport,
+  type Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 import { type AssistantProperty } from '../../common/assistantProps';

@@ -37,9 +37,7 @@ module.exports = {
       pragma: 'h',
     },
     'import/resolver': {
-      typescript: {
-        conditionNames: ['@iot-app-kit/development'],
-      },
+      typescript: true,
       node: true,
     },
   },

@@ -1,7 +1,3 @@
-import type { Primitive } from '@iot-app-kit/helpers';
-
-export type { Primitive } from '@iot-app-kit/helpers';
-
 import { type AggregateType, type Quality } from '@aws-sdk/client-iotsitewise';
 import type {
   TimeSeriesDataRequest,
@@ -30,6 +26,8 @@ export interface DataPoint<T extends Primitive = Primitive>
 }
 
 export type Resolution = number;
+
+export type Primitive = string | number | boolean;
 
 export type DataStreamId = string;
 

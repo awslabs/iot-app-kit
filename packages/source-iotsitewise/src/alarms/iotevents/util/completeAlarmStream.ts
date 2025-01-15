@@ -35,7 +35,7 @@ export const completeAlarmStream = ({
   if (!assetModel) {
     if (
       isIoTEventsAlarmStateProperty(
-        dataStream.data[dataStream.data?.length - 1]?.y ?? undefined
+        dataStream.data[dataStream.data?.length - 1]?.y
       )
     ) {
       return {

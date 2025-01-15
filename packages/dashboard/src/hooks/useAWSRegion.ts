@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   type DashboardClientConfiguration,
   type DashboardClientCredentials,
-} from '../types';
+} from '~/types';
 
 export const isCredentials = (
   dashboardClientConfiguration: DashboardClientConfiguration

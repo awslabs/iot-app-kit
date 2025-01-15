@@ -42,32 +42,32 @@ export const transformAlarmStateToDataStream = (
 
 export const ALARM_STATE_THRESHOLDS = [
   {
-    color: '#D13112',
+    color: '#D91515',
     value: 'Active',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
-    color: '#1E8102',
+    color: '#037F0C',
     value: 'Normal',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
-    color: '#F89256',
+    color: '#8D6605',
     value: 'Latched',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
-    color: '#697078',
+    color: '#656871',
     value: 'Disabled',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
-    color: '#3184C2',
+    color: '#656871',
     value: 'Acknowledged',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
-    color: '#879596',
+    color: '#656871',
     value: 'SnoozeDisabled',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },

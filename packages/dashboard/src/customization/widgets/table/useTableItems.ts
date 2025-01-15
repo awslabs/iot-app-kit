@@ -6,9 +6,8 @@ import { type StyleSettingsMap } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
-import { useClients } from '../../../components/dashboard/clientContext';
+import { useClients } from '~/components/dashboard/clientContext';
 import { type SiteWiseQueryConfig } from '../types';
-import { queryClient } from '../../../data/query-client';
 
 export const useTableItems = (
   query: SiteWiseQueryConfig['query'],
@@ -19,18 +18,15 @@ export const useTableItems = (
   const assets = query?.assets ?? [];
   const assetIds = assets.map(({ assetId }) => assetId);
 
-  const queries = useQueries(
-    {
-      queries: iotSiteWiseClient
-        ? assetIds.map((assetId) => ({
-            enabled: Boolean(assetId),
-            queryKey: new AssetCacheKeyFactory(assetId).create(),
-            queryFn: createQueryFn(iotSiteWiseClient),
-          }))
-        : [],
-    },
-    queryClient
-  );
+  const queries = useQueries({
+    queries: iotSiteWiseClient
+      ? assetIds.map((assetId) => ({
+          enabled: Boolean(assetId),
+          queryKey: new AssetCacheKeyFactory(assetId).create(),
+          queryFn: createQueryFn(iotSiteWiseClient),
+        }))
+      : [],
+  });
 
   const assetItems = assets.flatMap(({ assetId, properties }) =>
     properties

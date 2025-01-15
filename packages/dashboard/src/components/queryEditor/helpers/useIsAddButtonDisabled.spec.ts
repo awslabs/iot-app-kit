@@ -1,4 +1,4 @@
-import { type DashboardWidget } from '../../../types';
+import { type DashboardWidget } from '~/types';
 import { useIsAddButtonDisabled } from './useIsAddButtonDisabled';
 import * as hooks from '../useQuery';
 
