@@ -11,8 +11,8 @@ const DASHBOARD_STORAGE_NAMESPACE = 'connected-dashboard';
 
 const DEFAULT_DASHBOARD_CONFIG = {
   displaySettings: {
-    numColumns: 100,
-    numRows: 100,
+    numColumns: 200,
+    numRows: 200,
   },
   widgets: [],
   defaultViewport: { duration: '10m' },
