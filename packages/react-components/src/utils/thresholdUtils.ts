@@ -226,7 +226,11 @@ export const getBreachedThreshold = (
     return undefined;
   }
 
-  if (typeof value === 'string' || typeof value === 'boolean') {
+  if (
+    typeof value === 'string' ||
+    typeof value === 'boolean' ||
+    value === null
+  ) {
     return (
       thresholds.find((threshold) => isThresholdBreached(value, threshold)) ||
       undefined

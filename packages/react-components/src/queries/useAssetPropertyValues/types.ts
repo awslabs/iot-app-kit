@@ -8,6 +8,7 @@ import {
   type GetAssetPropertyValueHistoryRequest,
   type GetAssetPropertyValueHistoryResponse,
 } from '@aws-sdk/client-iotsitewise';
+import { type Primitive } from '@iot-app-kit/charts-core';
 import {
   type RequestFunction,
   type RequestParameters,
@@ -84,7 +85,7 @@ export type AssetPropertyValuesRequest =
   | AssetPropertyValueHistoryRequest
   | AssetPropertyAggregatesRequest;
 
-export type AssetPropertyValuesData = DataPoint[];
+export type AssetPropertyValuesData = DataPoint<Primitive>[];
 
 export type AssetPropertyValuesRequestFunctions = {
   getAssetPropertyValueHistory?: GetAssetPropertyValueHistoryRequestFunction;

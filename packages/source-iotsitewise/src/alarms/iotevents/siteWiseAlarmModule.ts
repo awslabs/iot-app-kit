@@ -110,7 +110,8 @@ export class SiteWiseAlarmModule {
         inputPropertyId,
         thresholdPropertyId,
         comparisonOperator,
-        threshold,
+        // old synchro charts type does not support null
+        threshold: threshold === null ? '' : threshold,
         severity,
         rule,
         state,

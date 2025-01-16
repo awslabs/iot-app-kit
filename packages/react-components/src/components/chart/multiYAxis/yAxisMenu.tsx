@@ -24,7 +24,7 @@ import { useHighlightedDataStreams } from '../hooks/useHighlightedDataStreams';
 import './yAxisMenu.css';
 
 const getValue = (value: Primitive, significantDigits = 4) =>
-  isNumeric(value) ? `${round(value, significantDigits)}` : value.toString();
+  isNumeric(value) ? `${round(value, significantDigits)}` : value?.toString();
 
 const MENU_OFFSET = 5;
 const MENU_FONT_SIZE = 14;

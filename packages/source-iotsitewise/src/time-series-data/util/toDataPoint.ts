@@ -47,9 +47,24 @@ export const toValue = (variant: Variant | undefined): Primitive => {
     return booleanValue.toString();
   }
 
-  throw new Error(
-    'Expected value to have at least one property value, but instead it has none!'
-  );
+  if ('nullValue' in variant && variant.nullValue != null) {
+    /**
+     * nullValue is not a nullish value
+     * it's an object with the string type of
+     * what the value should be.
+     */
+    return null;
+  }
+
+  /**
+   * A variant with no properties is treated
+   * as null data so that datastreams do not
+   * break when the sdk updates
+   */
+  return null;
+  // throw new Error(
+  //   'Expected value to have at least one property value, but instead it has none!'
+  // );
 };
 
 /**
