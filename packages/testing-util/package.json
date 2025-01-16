@@ -2,7 +2,7 @@
   "name": "@iot-app-kit/testing-util",
   "license": "Apache-2.0",
   "private": true,
-  "version": "12.3.0",
+  "version": "12.4.0",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -32,13 +32,13 @@
   "dependencies": {
     "@aws-sdk/client-iot-events": "3.354.0",
     "@aws-sdk/client-iotsitewise": "3.696.0",
-    "@iot-app-kit/core": "12.3.0",
+    "@iot-app-kit/core": "12.4.0",
     "parse-duration": "^1.1.0"
   },
   "devDependencies": {
-    "@iot-app-kit/ts-config": "12.3.0",
+    "@iot-app-kit/ts-config": "12.4.0",
     "@types/node": "^18.16.18",
-    "eslint-config-iot-app-kit": "12.3.0",
+    "eslint-config-iot-app-kit": "12.4.0",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4"
   }
