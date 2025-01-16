@@ -1,5 +1,22 @@
 # Changelog
 
+## [12.4.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v12.3.0...testing-util-v12.4.0) (2025-01-16)
+
+
+### Features
+
+* add null/NaN support ([450fc70](https://github.com/awslabs/iot-app-kit/commit/450fc7080f11e908b9f2bf53218f674b9b9b6185))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.3.0 to 12.4.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from 12.3.0 to 12.4.0
+    * eslint-config-iot-app-kit bumped from 12.3.0 to 12.4.0
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/testing-util-v12.2.0...testing-util-v12.2.1) (2024-12-03)
 
 

@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.3.0",
+  "version": "12.4.0",
   "description": "AWS IoT TwinMaker source for IoT Application Kit",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -58,19 +58,19 @@
     "@aws-sdk/client-s3": "3.335.0",
     "@aws-sdk/client-secrets-manager": "3.353.0",
     "@aws-sdk/url-parser": "3.374.0",
-    "@iot-app-kit/core": "12.3.0",
+    "@iot-app-kit/core": "12.4.0",
     "@tanstack/query-core": "^4.29.15",
     "lodash-es": "^4.17.21",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.696.0",
-    "@iot-app-kit/ts-config": "12.3.0",
+    "@iot-app-kit/ts-config": "12.4.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.16.18",
     "@vitest/coverage-v8": "^2.1.5",
     "aws-sdk-client-mock": "^1.0.0",
-    "eslint-config-iot-app-kit": "12.3.0",
+    "eslint-config-iot-app-kit": "12.4.0",
     "flush-promises": "^1.0.2",
     "jest-extended": "^3.2.4",
     "rimraf": "^5.0.1",

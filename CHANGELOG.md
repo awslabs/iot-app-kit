@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.3.0...root-v12.4.0) (2025-01-16)
+
+
+### Features
+
+* add null/NaN support ([450fc70](https://github.com/awslabs/iot-app-kit/commit/450fc7080f11e908b9f2bf53218f674b9b9b6185))
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/root-v12.2.0...root-v12.2.1) (2024-12-03)
 
 

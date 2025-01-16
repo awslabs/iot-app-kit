@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.3.0",
+  "version": "12.4.0",
   "description": "IoT Application Kit core",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -51,12 +51,12 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@iot-app-kit/ts-config": "12.3.0",
+    "@iot-app-kit/ts-config": "12.4.0",
     "@types/d3-array": "^3.0.5",
     "@types/node": "^18.16.18",
     "@types/uuid": "^9.0.2",
     "@vitest/coverage-v8": "^2.1.5",
-    "eslint-config-iot-app-kit": "12.3.0",
+    "eslint-config-iot-app-kit": "12.4.0",
     "flush-promises": "^1.0.2",
     "jest-extended": "^3.2.4",
     "rimraf": "^5.0.1",
