@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v12.2.1...source-iotsitewise-v12.3.0) (2025-01-16)
+
+
+### Features
+
+* add support for null / nan ([d6fc241](https://github.com/awslabs/iot-app-kit/commit/d6fc241df1f9b2a07196bd9c1981a8ed513d89ce))
+
+
+### Bug Fixes
+
+* optional property check for error metadata ([1a2b661](https://github.com/awslabs/iot-app-kit/commit/1a2b66167e758b1eede4914bcf9a22b06c915e46))
+* packages ([613ab59](https://github.com/awslabs/iot-app-kit/commit/613ab59818934387edb255adf685356fc855d458))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.2.1 to 12.3.0
+    * @iot-app-kit/core-util bumped from 12.2.1 to 12.3.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from 12.2.1 to 12.3.0
+    * @iot-app-kit/ts-config bumped from 12.2.1 to 12.3.0
+    * eslint-config-iot-app-kit bumped from 12.2.1 to 12.3.0
+
 ## [12.2.1](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v12.2.0...source-iotsitewise-v12.2.1) (2024-12-03)
 
 
