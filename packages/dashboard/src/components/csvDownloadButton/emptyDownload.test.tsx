@@ -1,21 +1,24 @@
+import { QueryClient } from '@tanstack/react-query';
+
+vi.mock('../../data/query-client', () => ({
+  queryClient: new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  }),
+}));
+
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   type StyledAssetQuery,
   type StyledSiteWiseQueryConfig,
 } from '~/customization/widgets/types';
-
-const testQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 const assetId1 = 'some-asset-id-1';
 const propertyId1 = 'some-property-id-1';
@@ -40,17 +43,15 @@ vi.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
 
 it('does not render button if query has no content', function () {
   render(
-    <QueryClientProvider client={testQueryClient}>
-      <CSVDownloadButton
-        queryConfig={{
-          source: 'iotsitewise',
-          query: MOCK_EMPTY_QUERY,
-        }}
-        widgetType='line'
-        fileName='csv-test'
-        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
-      />
-    </QueryClientProvider>
+    <CSVDownloadButton
+      queryConfig={{
+        source: 'iotsitewise',
+        query: MOCK_EMPTY_QUERY,
+      }}
+      widgetType='line'
+      fileName='csv-test'
+      client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
+    />
   );
 
   expect(screen.queryByTestId(/csv-download-button/)).toBeNull();
@@ -66,14 +67,12 @@ it('creates a file for download if data is empty', async function () {
     },
   } as StyledSiteWiseQueryConfig;
   render(
-    <QueryClientProvider client={testQueryClient}>
-      <CSVDownloadButton
-        queryConfig={mockQueryConfig}
-        fileName='csv-test'
-        widgetType='line'
-        client={mockClient}
-      />
-    </QueryClientProvider>
+    <CSVDownloadButton
+      queryConfig={mockQueryConfig}
+      fileName='csv-test'
+      widgetType='line'
+      client={mockClient}
+    />
   );
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);

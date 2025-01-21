@@ -19,6 +19,7 @@ import {
   createListAssetPropertiesMapCacheKey,
 } from '~/data/listAssetPropertiesMap/query';
 import { selectListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/selectData';
+import { queryClient } from '~/data/query-client';
 import { type DashboardState } from '~/store/state';
 
 export type PropertySummary = {
@@ -161,7 +162,7 @@ export const useAssetDescriptionMapQuery = (
     siteWiseQuery
   );
 
-  return useQuery(query);
+  return useQuery(query, queryClient);
 };
 
 const createListAssetPropertiesMapQuery = (
