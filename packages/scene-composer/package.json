@@ -145,7 +145,7 @@
     "ts-transform-react-intl": "^0.4.1",
     "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
-    "vite": "^5.4.11",
+    "vite": "^5.4.12",
     "vite-plugin-node-polyfills": "^0.22.0",
     "vitest": "^2.1.5",
     "vitest-canvas-mock": "^0.3.3"

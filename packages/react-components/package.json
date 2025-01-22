@@ -106,7 +106,7 @@
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
-    "vite": "^5.4.11",
+    "vite": "^5.4.12",
     "vitest": "^2.1.5",
     "vitest-canvas-mock": "^0.3.3"
   },
