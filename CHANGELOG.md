@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.4.0...root-v12.5.0) (2025-02-03)
+
+
+### Features
+
+* **dashboard:** remove query client provider ([708b0cc](https://github.com/awslabs/iot-app-kit/commit/708b0cc5ac94830b99cfc6055a2f4d399b6d889d))
+* **doc-site:** update dashboard view docs ([2eccc83](https://github.com/awslabs/iot-app-kit/commit/2eccc8303e4e795efdf1d32e2c33bc53bfbab5c5))
+
 ## [12.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v12.3.0...root-v12.4.0) (2025-01-16)
 
 

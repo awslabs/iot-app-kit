@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "12.4.0",
+  "version": "12.5.0",
   "engines": {
     "node": ">=16",
     "npm": ">=8"
@@ -47,7 +47,7 @@
     "package-mac": "pkg . --targets node16-macos-x64 --output tmdt_local"
   },
   "devDependencies": {
-    "@iot-app-kit/ts-config": "12.4.0",
+    "@iot-app-kit/ts-config": "12.5.0",
     "@types/node": "^18.16.18",
     "@types/prompts": "^2.4.4",
     "@types/yargs": "^17.0.24",
