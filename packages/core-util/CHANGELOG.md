@@ -1,5 +1,22 @@
 # Changelog
 
+## [12.5.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v12.4.0...core-util-v12.5.0) (2025-02-03)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.4.0 to 12.5.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from 12.4.0 to 12.5.0
+    * eslint-config-iot-app-kit bumped from 12.4.0 to 12.5.0
+
 ## [12.4.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v12.3.0...core-util-v12.4.0) (2025-01-16)
 
 

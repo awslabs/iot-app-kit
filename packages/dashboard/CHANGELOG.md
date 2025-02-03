@@ -1,5 +1,26 @@
 # Changelog
 
+## [12.5.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.4.0...dashboard-v12.5.0) (2025-02-03)
+
+
+### Features
+
+* **dashboard:** remove query client provider ([708b0cc](https://github.com/awslabs/iot-app-kit/commit/708b0cc5ac94830b99cfc6055a2f4d399b6d889d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.4.0 to 12.5.0
+    * @iot-app-kit/core-util bumped from 12.4.0 to 12.5.0
+    * @iot-app-kit/react-components bumped from 12.4.0 to 12.5.0
+    * @iot-app-kit/source-iotsitewise bumped from 12.4.0 to 12.5.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from 12.4.0 to 12.5.0
+    * @iot-app-kit/ts-config bumped from 12.4.0 to 12.5.0
+    * eslint-config-iot-app-kit bumped from 12.4.0 to 12.5.0
+
 ## [12.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v12.3.0...dashboard-v12.4.0) (2025-01-16)
 
 

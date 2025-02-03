@@ -1,5 +1,24 @@
 # Changelog
 
+## [12.5.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.4.0...doc-site-v12.5.0) (2025-02-03)
+
+
+### Features
+
+* **doc-site:** update dashboard view docs ([2eccc83](https://github.com/awslabs/iot-app-kit/commit/2eccc8303e4e795efdf1d32e2c33bc53bfbab5c5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.4.0 to 12.5.0
+    * @iot-app-kit/react-components bumped from 12.4.0 to 12.5.0
+    * @iot-app-kit/dashboard bumped from 12.4.0 to 12.5.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from 12.4.0 to 12.5.0
+    * eslint-config-iot-app-kit bumped from 12.4.0 to 12.5.0
+
 ## [12.4.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.3.0...doc-site-v12.4.0) (2025-01-16)
 
 
