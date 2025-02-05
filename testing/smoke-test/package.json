@@ -1,0 +1,35 @@
+{
+  "name": "smoke-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "clean": "rimraf *.tgz playwright-report test-results dist",
+    "clean:nuke": "rimraf *.tgz playwright-report test-results node_modules",
+    "dev": "vite",
+    "test": "npx playwright test",
+    "test:smoke": "npm run test && npm run build"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iot-events": "^3.354.0",
+    "@aws-sdk/client-iotsitewise": "^3.696.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^18.16.18",
+    "@types/react": "^18.2.12",
+    "@types/react-dom": "^18.2.5",
+    "@vitejs/plugin-react": "^4.3.3",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.12",
+    "vite-plugin-dynamic-import": "^1.6.0"
+  },
+  "volta": {
+    "node": "18.20.5",
+    "npm": "10.8.2"
+  }
+}
