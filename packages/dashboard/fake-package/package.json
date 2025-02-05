@@ -1,25 +1,9 @@
 {
-  "name": "@iot-app-kit/dashboard",
-  "publishConfig": {
-    "access": "public"
-  },
+  "name": "fake-package",
   "version": "12.5.0",
-  "description": "A dashboard widget for IoT App Kit components",
-  "homepage": "https://github.com/awslabs/iot-app-kit#readme",
-  "license": "Apache-2.0",
   "files": [
-    "dist",
-    "CHANGELOG.md",
-    "*NOTICE",
-    "fake-package"
+    "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/awslabs/iot-app-kit.git"
-  },
-  "bugs": {
-    "url": "https://github.com/awslabs/iot-app-kit/issues"
-  },
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -113,8 +97,7 @@
     "tiny-invariant": "^1.3.1",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.0",
-    "validator": "^13.12.0",
-    "fake-package": "file:./fake-package"
+    "validator": "^13.12.0"
   },
   "peerDependencies": {
     "@aws-sdk/client-iot-events": "^3.354.0",
