@@ -20,6 +20,7 @@ npm-debug.log
 *.sublime-project
 *.sublime-workspace
 *.docx
+*.tgz
 
 .idea/
 .vscode/
