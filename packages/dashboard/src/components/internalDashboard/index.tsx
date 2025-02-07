@@ -51,13 +51,10 @@ import { useKeyboardShortcuts } from './keyboardShortcuts';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { DefaultDashboardMessages } from '~/messages';
 import type { DashboardState } from '~/store/state';
-import type {
-  DashboardConfigurationChange,
-  DashboardSave,
-  DashboardToolbar,
-  DashboardWidget,
-  Position,
-} from '~/types';
+import type { DashboardConfigurationChange } from '~/types/dashboard-props';
+import type { DashboardSave } from '~/types/saving';
+import type { RegisteredWidget } from '~/types/widgets';
+import type { DashboardToolbar, Position } from '~/types';
 import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import type { ContextMenuProps } from '../contextMenu';
@@ -147,7 +144,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 
   const metricsRecorder = getPlugin('metricsRecorder');
 
-  const createWidgets = (widgets: DashboardWidget[]) => {
+  const createWidgets = (widgets: RegisteredWidget[]) => {
     dispatch(
       onCreateWidgetsAction({
         widgets,
@@ -226,7 +223,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 
     const { x, y } = toGridPosition(position, cellSize);
 
-    const widget: DashboardWidget = {
+    const widget: RegisteredWidget = {
       ...widgetPresets,
       x: Math.floor(x),
       y: Math.floor(y),

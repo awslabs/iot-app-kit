@@ -9,13 +9,10 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
 import { useDashboardPlugins } from '~/customization/api';
 import { configureDashboardStore, toDashboardState } from '~/store';
-import type {
-  AssistantConfiguration,
-  DashboardClientConfiguration,
-  DashboardConfiguration,
-  DashboardToolbar,
-  ViewportChange,
-} from '~/types';
+import type { AssistantConfiguration, DashboardToolbar } from '~/types';
+import type { DashboardClientConfiguration } from '~/types/sdk-clients';
+import type { DashboardConfiguration } from '~/types/dashboard-configuration';
+import type { ViewportChange } from '~/types/dashboard-props';
 import '../../styles/variables.css';
 import InternalDashboard from '../internalDashboard';
 import { ClientContext } from './clientContext';

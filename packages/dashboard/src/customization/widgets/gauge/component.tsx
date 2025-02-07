@@ -7,11 +7,13 @@ import WidgetTile from '~/components/widgets/tile';
 import { useChartSize } from '~/hooks/useChartSize';
 import type { DashboardState } from '~/store/state';
 import { isDefined } from '~/util/isDefined';
-import type { GaugeWidget } from '../types';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import './component.css';
+import type { DashboardWidgetInstance } from '~/widgets/configuration';
 
-const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
+const GaugeWidgetComponent = (
+  widget: Extract<DashboardWidgetInstance, { type: 'gauge' }>
+) => {
   const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits

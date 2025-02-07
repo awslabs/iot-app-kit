@@ -1,7 +1,5 @@
-import {
-  type DashboardClientConfiguration,
-  type DashboardIotSiteWiseQueries,
-} from '~/types';
+import type { DashboardClientConfiguration } from '~/types/sdk-clients';
+import type { DashboardIotSiteWiseQueries } from '~/types/queries';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { getClients } from './getClients';
 import { type EdgeMode } from '@iot-app-kit/core';

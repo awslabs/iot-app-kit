@@ -4,13 +4,13 @@ import { useMoveGestures } from './useMove';
 import { useResizeGestures } from './useResize';
 import { useSelectionGestures } from './useSelection';
 import type { DashboardState } from '~/store/state';
-import type { DashboardWidget } from '~/types';
+import type { RegisteredWidget } from '~/types/widgets';
 import type { DragEvent, PointClickEvent } from '../../grid';
 import type { Gesture } from './types';
 
 type GestureHooksProps = {
-  dashboardWidgets: DashboardWidget[];
-  selectedWidgets: DashboardWidget[];
+  dashboardWidgets: RegisteredWidget[];
+  selectedWidgets: RegisteredWidget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 

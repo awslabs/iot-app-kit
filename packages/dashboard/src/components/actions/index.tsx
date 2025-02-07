@@ -12,7 +12,7 @@ import {
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
-import { type DashboardSave } from '~/types';
+import type { DashboardSave } from '~/types/saving';
 import CustomOrangeButton from '../customOrangeButton';
 import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
 import DashboardSettings from './settings';
