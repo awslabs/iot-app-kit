@@ -1,12 +1,10 @@
-import { moveWidgets, onMoveWidgetsAction } from './index';
-import type { DashboardState } from '../../state';
-import { initialState } from '../../state';
-
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
-import type { DashboardWidget } from '~/types';
+import { initialState, type DashboardState } from '../../state';
+import { moveWidgets, onMoveWidgetsAction } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = []
+  widgets: WidgetInstance[] = []
 ): DashboardState => ({
   ...initialState,
   grid: {
@@ -21,7 +19,7 @@ const setupDashboardState = (
 });
 
 describe('move', () => {
-  it('does nothing if given an empty list of widgets', () => {
+  it('does nothing if given an empty list of widget-instance', () => {
     expect(
       moveWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
@@ -148,7 +146,7 @@ describe('move', () => {
     );
   });
 
-  it('shifts only selected widgets when multiple widgets are on the dashboard', () => {
+  it('shifts only selected widget-instance when multiple widget-instance are on the dashboard', () => {
     const widget1 = MockWidgetFactory.getKpiWidget({
       x: 0,
       y: 0,
@@ -194,7 +192,7 @@ describe('move', () => {
     );
   });
 
-  it('snaps widgets to the grid when the move action is complete', () => {
+  it('snaps widget-instance to the grid when the move action is complete', () => {
     const widget1 = MockWidgetFactory.getKpiWidget({
       x: 0,
       y: 0,

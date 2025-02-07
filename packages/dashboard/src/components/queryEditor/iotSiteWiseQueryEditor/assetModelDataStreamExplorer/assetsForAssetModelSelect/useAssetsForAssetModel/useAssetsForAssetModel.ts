@@ -3,7 +3,7 @@ import {
   type QueryFunctionContext,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { compact } from '~/helpers/lists/compact';
 import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import invariant from 'tiny-invariant';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
@@ -47,7 +47,7 @@ export function useAssetsForAssetModel({
 
   if (fetchAll && hasNextPage) fetchNextPage();
 
-  const assetSummaries = createNonNullableList(
+  const assetSummaries = compact(
     assetsResponses.flatMap((res) => res.assetSummaries)
   );
 
@@ -88,8 +88,6 @@ export const createQueryFn = (client: IoTSiteWiseClient) => {
       signal,
     });
 
-    const response = await request.send();
-
-    return response;
+    return request.send();
   };
 };

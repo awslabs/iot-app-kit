@@ -1,34 +1,35 @@
-import { useRef, type FC } from 'react';
+import { useRef } from 'react';
 import { useDrag } from 'react-dnd';
-
 import { ItemTypes } from '../dragLayer/itemTypes';
-import PaletteComponentIcon from './icons';
-
+import { PaletteComponentIcon } from './icons';
 import type { ComponentPaletteDraggable } from './types';
-
+import { type SVGIcon } from '~/features/widget-plugins/plugin';
 import './component.css';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-type PaletteComponentProps = {
-  name: string;
-  componentTag: string;
-  IconComponent: React.FC;
-  onAddWidget: (componentTag: string) => void;
-};
+export interface PaletteComponentProps<
+  WidgetType extends RegisteredWidgetType
+> {
+  widgetName: string;
+  componentTag: WidgetType;
+  icon: { light: SVGIcon; dark: SVGIcon };
+  onAddWidget: (componentTag: WidgetType) => void;
+}
 
-const PaletteComponent: FC<PaletteComponentProps> = ({
+export const PaletteComponent = <WidgetType extends RegisteredWidgetType>({
   componentTag,
-  name,
-  IconComponent,
+  widgetName,
+  icon,
   onAddWidget,
-}) => {
+}: PaletteComponentProps<WidgetType>) => {
   const node = useRef(null);
 
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: ItemTypes.Component,
-      item: (): ComponentPaletteDraggable => {
+      item: (): ComponentPaletteDraggable<WidgetType> => {
         return {
-          componentTag,
+          widgetType: componentTag,
           rect: node.current
             ? (node.current as Element).getBoundingClientRect()
             : null, // Used to determine the cursor offset from the upper left corner on drop
@@ -60,17 +61,15 @@ const PaletteComponent: FC<PaletteComponentProps> = ({
   return (
     <li ref={node}>
       <button
-        aria-label={`add ${name} widget`}
+        aria-label={`add ${widgetName} widget`}
         className='palette-button'
         ref={dragRef}
         draggable='true'
         onKeyDown={handleKeyDown}
         onClick={handleClick}
       >
-        <PaletteComponentIcon widgetName={name} Icon={IconComponent} />
+        <PaletteComponentIcon widgetName={widgetName} icon={icon} />
       </button>
     </li>
   );
 };
-
-export default PaletteComponent;

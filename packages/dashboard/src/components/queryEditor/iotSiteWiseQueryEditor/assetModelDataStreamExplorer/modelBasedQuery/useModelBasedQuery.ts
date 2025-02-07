@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onUpdateWidgetsAction } from '~/store/actions';
 import { type DashboardState } from '~/store/state';
 import {
-  type QueryConfigWidget,
   findModelBasedQueryWidgets,
   hasModelBasedQuery,
 } from './findModelBasedQueryWidgets';
@@ -17,8 +16,8 @@ export const useModelBasedQuery = () => {
     isEqual
   );
   const modelBasedWidgets = useMemo(
-    () => findModelBasedQueryWidgets(dashboardConfiguration),
-    [dashboardConfiguration]
+    () => findModelBasedQueryWidgets(dashboardConfiguration.widgets),
+    [dashboardConfiguration.widgets]
   );
   const hasModelBasedQueryWidgets = hasModelBasedQuery(dashboardConfiguration);
   const firstWidget = useMemo(

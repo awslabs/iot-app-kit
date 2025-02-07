@@ -28,7 +28,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   unit,
   name,
   isLoading,
-  significantDigits,
+  decimalPlaces,
   error,
   titleText,
   alarmContent,
@@ -50,7 +50,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
       name,
       settings,
       unit,
-      significantDigits,
+      significantDigits: decimalPlaces,
       error,
     },
     options.theme

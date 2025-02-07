@@ -1,16 +1,15 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import {
-  createMockIoTEventsSDK,
-  createMockSiteWiseSDK,
-} from '@iot-app-kit/testing-util';
-
-import { DashboardWrapper as Dashboard } from './wrapper';
-import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import {
   IoTSiteWise,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { type RefreshRate } from '../refreshRate/types';
+import { DashboardWrapper as Dashboard } from './wrapper';
 
 const config = {
   credentials: {

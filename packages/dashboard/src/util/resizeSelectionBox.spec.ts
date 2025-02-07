@@ -1,6 +1,6 @@
 import { resizeSelectionBox } from '~/util/resizeSelectionBox';
 import type { Anchor } from '~/store/actions';
-import type { Rect } from '~/types';
+import type { Rectangle } from '~/types';
 import type { DashboardState } from '~/store/state';
 
 const grid = {
@@ -133,7 +133,7 @@ describe('should not horizontally resize selection box below minimum height', ()
     });
   });
 });
-const withinGrid = (newRect: Rect, gridRect: Rect) => {
+const withinGrid = (newRect: Rectangle, gridRect: Rectangle) => {
   const { x, y, width, height } = newRect;
   const { x: gridX, y: gridY, width: gridWidth, height: gridHeight } = gridRect;
 

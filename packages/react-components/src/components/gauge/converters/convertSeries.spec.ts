@@ -6,7 +6,7 @@ describe('convertSeries', () => {
     const settings = { yMin: 0, yMax: 100, gaugeThickness: 20 };
     const result = convertSeries({
       unit: '°C',
-      significantDigits: 2,
+      decimalPlaces: 2,
       thresholds: [],
       settings,
     });
@@ -23,7 +23,7 @@ describe('convertSeries', () => {
     ];
     const result = convertSeries({
       unit: '°C',
-      significantDigits: 2,
+      decimalPlaces: 2,
       thresholds,
       settings,
     });

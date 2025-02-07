@@ -1,4 +1,5 @@
-import { Box, Button, type ButtonProps } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import Button, { type ButtonProps } from '@cloudscape-design/components/button';
 import {
   colorBackgroundButtonNormalDefault,
   colorBackgroundButtonPrimaryDefault,
@@ -10,33 +11,32 @@ import {
 import { getPlugin } from '@iot-app-kit/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import type { RegisteredWidgetType } from '~/features/widget-plugins/registry';
 import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
-import { type DashboardWidget } from '~/types';
-import ConfirmDeleteModal from '../confirmDeleteModal';
-import {
-  CSVDownloadButton,
-  canOnlyDownloadLiveMode,
-  isQueryEmpty,
-} from '../csvDownloadButton';
-import { useClients } from '../dashboard/clientContext';
-
+import type { StyledSiteWiseQueryConfig } from '~/plugins/xy-plot/types';
 import {
   onChangeDashboardGridEnabledAction,
   onSelectWidgetsAction,
 } from '~/store/actions';
 import { type DashboardState } from '~/store/state';
-
+import { ConfirmDeleteModal } from '~/components/confirmDeleteModal';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import {
+  canOnlyDownloadLiveMode,
+  CSVDownloadButton,
+  isQueryEmpty,
+} from '../csvDownloadButton';
+import { useClients } from '../dashboard/clientContext';
 import './widgetActions.css';
 
-type DeletableTileActionProps = {
+export interface DeletableTileActionProps extends ButtonProps {
   handleDelete: NonNullable<ButtonProps['onClick']>;
-};
+}
 
-const DeletableTileAction = ({
+export const DeletableTileAction = ({
   handleDelete,
   variant,
-}: DeletableTileActionProps & ButtonProps) => {
+}: DeletableTileActionProps) => {
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
@@ -54,7 +54,13 @@ const DeletableTileAction = ({
   );
 };
 
-const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
+export interface WidgetActionsProps<Type extends RegisteredWidgetType> {
+  widget: WidgetInstance<Type>;
+}
+
+export const WidgetActions = <Type extends RegisteredWidgetType>({
+  widget,
+}: WidgetActionsProps<Type>) => {
   const dispatch = useDispatch();
   const isEdgeModeEnabled = useSelector(
     (state: DashboardState) => state.isEdgeModeEnabled
@@ -151,5 +157,3 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
     </div>
   );
 };
-
-export default WidgetActions;

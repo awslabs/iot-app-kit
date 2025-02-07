@@ -1,5 +1,4 @@
-import { type HTMLAttributes } from 'react';
-import { AssistantIcon } from './assistantIcon';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import {
   borderRadiusButton,
   colorBackgroundButtonNormalDefault,
@@ -10,7 +9,8 @@ import {
   spaceStaticXxl,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
-import SpaceBetween from '@cloudscape-design/components/space-between';
+import { type HTMLAttributes } from 'react';
+import { AssistantIcon } from './assistantIcon';
 
 interface AssistantButtonProps extends HTMLAttributes<HTMLButtonElement> {
   label: string;

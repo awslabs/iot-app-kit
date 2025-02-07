@@ -1,12 +1,10 @@
-import { deleteWidgets, onDeleteWidgetsAction } from './index';
-import { initialState } from '../../state';
-
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { initialState, type DashboardState } from '../../state';
+import { deleteWidgets, onDeleteWidgetsAction } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = []
+  widgets: WidgetInstance[] = []
 ): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
@@ -15,7 +13,7 @@ const setupDashboardState = (
   },
 });
 
-it('returns no widgets when deleting widgets from an empty dashboard', () => {
+it('returns no widget-instance when deleting widget-instance from an empty dashboard', () => {
   expect(
     deleteWidgets(
       setupDashboardState(),
@@ -26,7 +24,7 @@ it('returns no widgets when deleting widgets from an empty dashboard', () => {
   ).toEqual([]);
 });
 
-it('returns original dashboard when no widgets are specified to be deleted', () => {
+it('returns original dashboard when no widget-instance are specified to be deleted', () => {
   expect(
     deleteWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
@@ -37,7 +35,7 @@ it('returns original dashboard when no widgets are specified to be deleted', () 
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
-it('removes widgets to be delete from dashboard configuration', () => {
+it('removes widget-instance to be delete from dashboard configuration', () => {
   expect(
     deleteWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
@@ -48,7 +46,7 @@ it('removes widgets to be delete from dashboard configuration', () => {
   ).toEqual([]);
 });
 
-it('does not remove any widgets when widget id specified is not present in the dashbaord configuration', () => {
+it('does not remove any widget-instance when widget id specified is not present in the dashbaord configuration', () => {
   expect(
     deleteWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
@@ -59,7 +57,7 @@ it('does not remove any widgets when widget id specified is not present in the d
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
-it('only deletes widget that is specified to be deleted when there are multiple widgets present', () => {
+it('only deletes widget that is specified to be deleted when there are multiple widget-instance present', () => {
   const widget1 = MockWidgetFactory.getKpiWidget({ id: 'widget-1' });
   const widget2 = MockWidgetFactory.getKpiWidget({ id: 'widget-2' });
   const widget3 = MockWidgetFactory.getKpiWidget({ id: 'widget-3' });

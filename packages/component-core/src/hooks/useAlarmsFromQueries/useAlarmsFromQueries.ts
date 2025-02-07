@@ -16,7 +16,7 @@ import { createNonNullableList } from '@iot-app-kit/core';
  * into useAlarms hook request objects and settings
  *
  * This hook is meant to be used within react-components
- * charts and widgets to make it easy to call useAlarms
+ * charts and widget-instance to make it easy to call useAlarms
  * without having to filter different query types
  * and map clients / settings into the correct
  * options object.

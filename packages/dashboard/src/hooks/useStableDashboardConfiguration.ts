@@ -3,10 +3,8 @@ import isEqual from 'lodash-es/isEqual';
 import noop from 'lodash-es/noop';
 import throttle from 'lodash-es/throttle';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  type DashboardConfiguration,
-  type DashboardConfigurationChange,
-} from '~/types';
+import { type DashboardConfiguration } from '~/features/dashboard-configuration/dashboard-configuration';
+import { type DashboardConfigurationChange } from '~/types/dashboard-props';
 
 export const useStableDashboardConfiguration = ({
   dashboardConfiguration,

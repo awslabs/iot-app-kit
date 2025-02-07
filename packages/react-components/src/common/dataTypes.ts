@@ -21,7 +21,7 @@ export type AlarmsConfig = {
  * Messages which can be customized. i.e. for internationalization, or business domain specific jargon.
  */
 export type MessageOverrides = {
-  /** value label utilized in some widgets */
+  /** value label utilized in some widget-instance */
   liveTimeFrameValueLabel?: string;
   historicalTimeFrameValueLabel?: string;
   /** no data streams present - msg displayed when there are no data streams present */

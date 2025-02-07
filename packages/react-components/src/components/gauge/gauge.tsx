@@ -35,7 +35,7 @@ export const Gauge = ({
   titleText,
   styles,
   settings,
-  significantDigits,
+  decimalPlaces,
   theme,
   assistant,
 }: GaugeProps) => {
@@ -127,7 +127,7 @@ export const Gauge = ({
       error={error?.msg}
       settings={{ ...DEFAULT_GAUGE_STYLES, ...settings, color }}
       thresholds={allThresholds}
-      significantDigits={significantDigits}
+      significantDigits={decimalPlaces}
       theme={theme}
       assistant={assistant}
     />

@@ -1,8 +1,8 @@
+import { initialState } from '../../state';
 import {
   changeDashboardWidth,
   onChangeDashboardWidthAction,
 } from './changeWidth';
-import { initialState } from '../../state';
 
 it('can change the width of the dashboard', () => {
   expect(

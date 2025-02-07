@@ -1,18 +1,24 @@
 import last from 'lodash-es/last';
 import sortBy from 'lodash-es/sortBy';
-import type { DashboardWidget, Position, Rect, Selection } from '~/types';
+import type { Position, Rectangle } from '~/types';
 import { overlaps } from './overlaps';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+
+export interface Selection {
+  start: Position;
+  end: Position;
+}
 
 export const getSelectedWidgets = ({
   selectedRect,
   cellSize,
   dashboardWidgets,
 }: {
-  selectedRect: Rect | undefined;
+  selectedRect: Rectangle | undefined;
   cellSize: number;
-  dashboardWidgets: DashboardWidget[];
+  dashboardWidgets: WidgetInstance[];
 }) => {
-  const isSelected = (rect: Rect): boolean =>
+  const isSelected = (rect: Rectangle): boolean =>
     selectedRect
       ? overlaps(
           {
@@ -28,26 +34,25 @@ export const getSelectedWidgets = ({
 };
 
 /**
- * Returns all widget id's of the widgets which intersect the given selection.
+ * Returns all widget id's of the widget-instance which intersect the given selection.
  *
- * This is utilized to determine what widgets are selected upon making a selection gesture.
+ * This is utilized to determine what widget-instance are selected upon making a selection gesture.
  */
 export const getSelectedWidgetIds = ({
   selectedRect,
   cellSize,
   dashboardWidgets,
 }: {
-  selectedRect: Rect | undefined;
+  selectedRect: Rectangle | undefined;
   cellSize: number;
-  dashboardWidgets: DashboardWidget[];
+  dashboardWidgets: WidgetInstance[];
 }) =>
   getSelectedWidgets({ selectedRect, cellSize, dashboardWidgets }).map(
     (widget) => widget.id
   );
 
 /**
- *
- * return the first widget that intersects a position
+ * Returns the first widget that intersects a position.
  */
 export const pointSelect = ({
   position,
@@ -56,12 +61,10 @@ export const pointSelect = ({
 }: {
   position: Position;
   cellSize: number;
-  dashboardWidgets: DashboardWidget[];
-}): DashboardWidget | undefined => {
-  /**
-   * TODO edge case where bottom most pixel on a widget does not pick up the intersection
-   * and the top most pixel above a widget picks up the intersection
-   */
+  dashboardWidgets: WidgetInstance[];
+}): WidgetInstance | undefined => {
+  // TODO: edge case where bottom most pixel on a widget does not pick up the intersection
+  // and the top most pixel above a widget picks up the intersection
   const { x, y } = position;
   const intersectedWidgets = getSelectedWidgets({
     selectedRect: { x, y, width: 1, height: 1 },
@@ -82,7 +85,7 @@ export const pointSelect = ({
 
 export const selectedRect = (
   selection: Selection | undefined
-): Rect | undefined => {
+): Rectangle | undefined => {
   if (!selection) {
     return undefined;
   }

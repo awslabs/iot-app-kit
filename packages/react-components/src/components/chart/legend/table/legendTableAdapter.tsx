@@ -84,7 +84,7 @@ type ChartLegendTableAdapterOptions = ChartLegend & {
   trendCursorValues: TrendCursorValues[];
   trendCursors: TrendCursor[];
   chartId?: string;
-  significantDigits: ChartOptions['significantDigits'];
+  significantDigits: ChartOptions['decimalPlaces'];
   assistant?: AssistantProperty;
   selectedItems?: DataStreamInformation[];
   setSelectedItems?: (selectedItems: DataStreamInformation[]) => void;

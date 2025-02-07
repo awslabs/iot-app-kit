@@ -113,7 +113,7 @@ type ChartConfigurationOptions = Pick<
   ChartOptions,
   | 'axis'
   | 'backgroundColor'
-  | 'significantDigits'
+  | 'decimalPlaces'
   | 'legend'
   | 'id'
   | 'styleSettings'
@@ -154,7 +154,7 @@ export const useChartConfiguration = (
     axis,
     gestures,
     backgroundColor,
-    significantDigits,
+    decimalPlaces,
     styleSettings,
     thresholds,
     defaultVisualizationType,
@@ -219,7 +219,7 @@ export const useChartConfiguration = (
   const { series, yAxis } = useSeriesAndYAxis(dataSteamIdentifiers, {
     styleSettings,
     defaultVisualizationType,
-    significantDigits,
+    significantDigits: decimalPlaces,
     axis,
     thresholds,
     alarmThresholds,
@@ -230,7 +230,7 @@ export const useChartConfiguration = (
   });
 
   const tooltip = useTooltip({
-    significantDigits,
+    significantDigits: decimalPlaces,
     series,
     showBadDataIcons,
     showUncertainDataIcons,

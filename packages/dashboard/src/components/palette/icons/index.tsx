@@ -8,15 +8,12 @@ import {
   spaceStaticM,
   spaceStaticS,
 } from '@cloudscape-design/design-tokens';
-import type { DragEventHandler, FC } from 'react';
+import type { DragEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import './index.css';
-
-type PaletteComponentIconProps = {
-  Icon: React.FC;
-  widgetName: string;
-};
+import { type SVGIcon } from '~/features/widget-plugins/plugin';
+import { WidgetIcon } from '~/features/widget-customization/widget-icon';
 
 const Tooltip = styled.div<{ hover: boolean }>`
   ${({ hover }) => `visibility: ${hover ? 'visible' : 'hidden'};`}
@@ -34,6 +31,7 @@ const Tooltip = styled.div<{ hover: boolean }>`
   border-style: solid;
   z-index: 9;
   transform: translateX(-50%);
+
   &::before,
   &::after {
     content: '';
@@ -46,11 +44,13 @@ const Tooltip = styled.div<{ hover: boolean }>`
     margin-left: -10px;
     transform: rotate(180deg);
   }
+
   &::before {
     bottom: 92%;
     border-top: 11px solid ${colorBorderButtonNormalDisabled};
     margin-bottom: 5px;
   }
+
   &::after {
     bottom: 100%;
     border-top: 10px solid ${colorBackgroundSegmentHover};
@@ -58,10 +58,16 @@ const Tooltip = styled.div<{ hover: boolean }>`
     z-index: 1;
   }
 `;
-const PaletteComponentIcon: FC<PaletteComponentIconProps> = ({
-  Icon,
+
+export interface PaletteComponentIconProps {
+  icon: { light: SVGIcon; dark: SVGIcon };
+  widgetName: string;
+}
+
+export const PaletteComponentIcon = ({
+  icon,
   widgetName,
-}) => {
+}: PaletteComponentIconProps) => {
   const [hover, setHover] = useState<boolean>(false);
 
   // Without this, Firefox widget drag and drop does not work correctly.
@@ -92,11 +98,9 @@ const PaletteComponentIcon: FC<PaletteComponentIconProps> = ({
       }}
     >
       <Box padding='xxs' className='palette-component-icon ripple'>
-        <Icon />
+        <WidgetIcon widgetName={widgetName} icon={icon} />
         <Tooltip {...{ hover }}>{widgetName}</Tooltip>
       </Box>
     </span>
   );
 };
-
-export default PaletteComponentIcon;

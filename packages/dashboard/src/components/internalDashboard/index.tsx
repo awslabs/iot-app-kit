@@ -9,31 +9,24 @@ import {
   colorForegroundControlReadOnly,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { type Viewport, getPlugin } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { WebglContext } from '@iot-app-kit/react-components';
 import { type CSSProperties, type ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon';
-
 import { selectedRect } from '~/util/select';
-
-/**
- * Component imports
- */
-import ContextMenu from '../contextMenu';
+import { ContextMenu } from '~/components/contextMenu';
+import { Palette } from '~/components/palette';
 import { useClients } from '../dashboard/clientContext';
-import CustomDragLayer from '../dragLayer';
+import { CustomDragLayer } from '../dragLayer';
+import type { DropEvent } from '../grid';
 import { GestureableGrid, ReadOnlyGrid } from '../grid';
-import ComponentPalette from '../palette';
 import { QueryEditor } from '../queryEditor';
 import { ResizablePanes } from '../resizablePanes';
-import UserSelection from '../userSelection';
-import Widgets from '../widgets/list';
-import DashboardEmptyState from './dashboardEmptyState';
-
-/**
- * Store imports
- */
+import { UserSelection } from '../userSelection';
+import type { WidgetsProps } from '../widgets/list';
+import { Widgets } from '../widgets/list';
+import { DashboardEmptyState } from './dashboardEmptyState';
 import {
   onBringWidgetsToFrontAction,
   onCopyWidgetsAction,
@@ -42,42 +35,39 @@ import {
   onPasteWidgetsAction,
   onSendWidgetsToBackAction,
 } from '~/store/actions';
-import { widgetCreator } from '~/store/actions/createWidget/presets';
-
+import create from '~/features/widget-instance/create';
 import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
-
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import { DefaultDashboardMessages } from '~/messages';
+import { useSelectedWidgets } from '~/features/selection/use-selected-widgets';
 import type { DashboardState } from '~/store/state';
-import type {
-  DashboardConfigurationChange,
-  DashboardSave,
-  DashboardToolbar,
-  DashboardWidget,
-  Position,
-} from '~/types';
+import type { DashboardConfigurationChange } from '~/types/dashboard-props';
+import type { DashboardSave } from '~/types/saving';
+import type { DashboardToolbar, Position } from '~/types';
 import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
-import ConfirmDeleteModal from '../confirmDeleteModal';
-import type { ContextMenuProps } from '../contextMenu';
-import type { DropEvent, GesturableGridProps } from '../grid';
+import { ConfirmDeleteModal } from '../confirmDeleteModal';
 import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
-import type { UserSelectionProps } from '../userSelection';
-import type { WidgetsProps } from '../widgets/list';
-import DashboardHeader from './dashboardHeader';
-
+import { DashboardHeader } from './dashboardHeader';
 import { useChatbotPosition } from '~/hooks/useChatbotPosition';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 import { parseViewport } from '~/util/parseViewport';
-import Actions from '../actions';
+import { Actions } from '~/components/actions';
 import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
 import { AssistantIcon } from '../assistant/assistantIcon';
 import { Chatbot } from '../assistant/chatbot';
 import './index.css';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-type InternalDashboardProperties = {
+const defaultUserSelect = { userSelect: 'initial' } satisfies CSSProperties;
+const disabledUserSelect = { userSelect: 'none' } satisfies CSSProperties;
+const dashboardToolbarBottomBorder = {
+  borderBottom: `solid ${spaceScaledXxxs} ${colorBorderDividerDefault}`,
+  backgroundColor: colorBackgroundLayoutMain,
+} satisfies CSSProperties;
+
+export interface InternalDashboardProps {
   onSave?: DashboardSave;
   editable?: boolean;
   name?: string;
@@ -86,12 +76,9 @@ type InternalDashboardProperties = {
   currentViewport?: Viewport;
   toolbar?: DashboardToolbar;
   onDashboardConfigurationChange?: DashboardConfigurationChange;
-};
+}
 
-const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
-const disabledUserSelect: CSSProperties = { userSelect: 'none' };
-
-const InternalDashboard: React.FC<InternalDashboardProperties> = ({
+export const InternalDashboard = ({
   onSave,
   onDashboardConfigurationChange,
   editable,
@@ -99,7 +86,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   propertiesPanel,
   currentViewport,
   toolbar,
-}) => {
+}: InternalDashboardProps) => {
   useSyncDashboardConfiguration({ onDashboardConfigurationChange });
 
   const { iotSiteWiseClient, iotTwinMakerClient, iotSiteWise } = useClients();
@@ -145,9 +132,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 
   const dispatch = useDispatch();
 
-  const metricsRecorder = getPlugin('metricsRecorder');
-
-  const createWidgets = (widgets: DashboardWidget[]) => {
+  const createWidgets = (widgets: WidgetInstance[]) => {
     dispatch(
       onCreateWidgetsAction({
         widgets,
@@ -215,89 +200,49 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     cellSize,
   });
 
-  const onAddWidget = ({
-    componentTag,
+  const onAddWidget = <WidgetType extends RegisteredWidgetType>({
+    widgetType,
     position,
   }: {
-    componentTag: string;
+    widgetType: WidgetType;
     position: Position;
   }) => {
-    const widgetPresets = widgetCreator(grid)(componentTag);
+    const widgetPresets = create(grid)(widgetType);
 
     const { x, y } = toGridPosition(position, cellSize);
 
-    const widget: DashboardWidget = {
+    const widget: WidgetInstance<WidgetType> = {
       ...widgetPresets,
       x: Math.floor(x),
       y: Math.floor(y),
       z: 0,
     };
     createWidgets([widget]);
-
-    const widgetType = widget.type;
-    metricsRecorder?.record({
-      contexts: {
-        widgetType,
-      },
-      metricName: 'DashboardWidgetAdd',
-      metricValue: 1,
-    });
   };
 
-  const onDrop = (e: DropEvent) => {
+  const onDrop = <WidgetType extends RegisteredWidgetType>(
+    e: DropEvent<WidgetType>
+  ) => {
     const { item, position } = e;
-    const componentTag = item.componentTag;
+    const componentTag = item.widgetType;
 
-    onAddWidget({ componentTag, position });
+    onAddWidget({ widgetType: componentTag, position });
   };
 
   // Adds the widget to the start of the dashboard
   // Provides an accessible way to add a widget
-  const onAddWidgetFromPalette = (componentTag: string) => {
-    onAddWidget({ componentTag, position: { x: 0, y: 0 } });
-  };
-
-  /**
-   *
-   * Child component props configuration
-   */
-  const gridProps: GesturableGridProps = {
-    readOnly: readOnly,
-    grid,
-    click: onPointClick,
-    dragStart: onGestureStart,
-    drag: onGestureUpdate,
-    dragEnd: onGestureEnd,
-    drop: onDrop,
+  const onAddWidgetFromPalette = <WidgetType extends RegisteredWidgetType>(
+    widgetType: WidgetType
+  ) => {
+    onAddWidget({ widgetType, position: { x: 0, y: 0 } });
   };
 
   const widgetsProps: WidgetsProps = {
     readOnly,
     dashboardConfiguration,
     selectedWidgets,
-    messageOverrides: DefaultDashboardMessages,
     cellSize,
     dragEnabled: grid.enabled,
-  };
-
-  const selectionProps: UserSelectionProps = {
-    rect: selectedRect(userSelection),
-  };
-
-  const contextMenuProps: ContextMenuProps = {
-    messageOverrides: DefaultDashboardMessages,
-    copyWidgets,
-    pasteWidgets,
-    deleteWidgets,
-    sendWidgetsToBack,
-    bringWidgetsToFront,
-    hasCopiedWidgets: copiedWidgets.length > 0,
-    hasSelectedWidgets: selectedWidgets.length > 0,
-  };
-
-  const dashboardToolbarBottomBorder = {
-    borderBottom: `solid ${spaceScaledXxxs} ${colorBorderDividerDefault}`,
-    backgroundColor: colorBackgroundLayoutMain,
   };
 
   if (
@@ -347,7 +292,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
               alignItems: 'center',
             }}
           >
-            <ComponentPalette onAddWidget={onAddWidgetFromPalette} />
+            <Palette onAddWidget={onAddWidgetFromPalette} />
             {toolbar && (
               <Actions
                 key='3'
@@ -371,12 +316,28 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
               ref={(el) => setViewFrameElement(el || undefined)}
               style={{ backgroundColor: colorBackgroundCellShaded }}
             >
-              <GestureableGrid {...gridProps}>
-                <ContextMenu {...contextMenuProps} />
+              <GestureableGrid
+                readOnly={readOnly}
+                grid={grid}
+                click={onPointClick}
+                dragStart={onGestureStart}
+                drag={onGestureUpdate}
+                dragEnd={onGestureEnd}
+                drop={onDrop}
+              >
+                <ContextMenu
+                  copyWidgets={copyWidgets}
+                  pasteWidgets={pasteWidgets}
+                  deleteWidgets={deleteWidgets}
+                  sendWidgetsToBack={sendWidgetsToBack}
+                  bringWidgetsToFront={bringWidgetsToFront}
+                  hasCopiedWidgets={copiedWidgets.length > 0}
+                  hasSelectedWidgets={selectedWidgets.length > 0}
+                />
                 <Widgets {...widgetsProps} />
                 {!widgetLength && <DashboardEmptyState />}
                 {activeGesture === 'select' && (
-                  <UserSelection {...selectionProps} />
+                  <UserSelection rectangle={selectedRect(userSelection)} />
                 )}
               </GestureableGrid>
               <WebglContext viewFrame={viewFrame} />
@@ -479,34 +440,24 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
               style={{ backgroundColor: colorBackgroundCellShaded }}
             >
               <ReadOnlyGrid {...grid}>
-                <AssistantFloatingMenu
-                  width={resizablePanesWidth}
-                  messageOverrides={DefaultDashboardMessages}
-                />
+                <AssistantFloatingMenu width={resizablePanesWidth} />
                 <Widgets {...widgetsProps} />
               </ReadOnlyGrid>
               <WebglContext viewFrame={viewFrame} />
             </div>
           }
-          rightPane={
-            <Chatbot
-              height={chatbotHeight}
-              messageOverrides={DefaultDashboardMessages}
-            />
-          }
+          rightPane={<Chatbot height={chatbotHeight} />}
           rightPaneOptions={{
             icon: (
               <AssistantIcon
                 role='img'
-                ariaLabel={
-                  DefaultDashboardMessages.assistant.floatingMenu
-                    .buttonAIAssistant
-                }
+                // TODO: FIX
+                ariaLabel=''
               />
             ),
             iconBackground: colorForegroundControlReadOnly,
-            headerText:
-              DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
+            // TODO: FIX
+            headerText: '',
             hideHeaderWhenExpanded: true,
           }}
         />
@@ -545,5 +496,3 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     </I18nProvider>
   );
 };
-
-export default InternalDashboard;

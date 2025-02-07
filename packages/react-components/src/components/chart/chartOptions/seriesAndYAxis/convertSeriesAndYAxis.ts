@@ -92,7 +92,7 @@ const convertSeries = (
     lineStyle,
     lineThickness,
     emphasis,
-    significantDigits,
+    decimalPlaces,
     hidden,
   }: ChartStyleSettingsWithDefaults,
   {
@@ -151,10 +151,10 @@ const convertSeries = (
       opacity,
     },
     animation: false,
-    appKitSignificantDigits: significantDigits,
+    appKitSignificantDigits: decimalPlaces,
     appKitColor: color,
 
-    label: createAlarmLabel(significantDigits, showAlarmIcons),
+    label: createAlarmLabel(decimalPlaces, showAlarmIcons),
   } as GenericSeries;
 
   return addVisualizationSpecificOptions(visualizationType, genericSeries);
@@ -276,7 +276,7 @@ export const useSeriesAndYAxis = (
   datastreams: DataStreamInfo[],
   {
     defaultVisualizationType,
-    significantDigits,
+    decimalPlaces,
     styleSettings,
     axis,
     thresholds,
@@ -287,7 +287,7 @@ export const useSeriesAndYAxis = (
     showAlarmIcons,
   }: Pick<
     ChartOptions,
-    'defaultVisualizationType' | 'styleSettings' | 'significantDigits'
+    'defaultVisualizationType' | 'styleSettings' | 'decimalPlaces'
   > & {
     thresholds: Threshold[];
     axis?: ChartAxisOptions;
@@ -325,7 +325,7 @@ export const useSeriesAndYAxis = (
         const hidden = isDataStreamHidden(datastream);
         const chartStylesWithDefaults = convertStyles({
           styleSettings,
-          significantDigits,
+          significantDigits: decimalPlaces,
           defaultVisualizationType,
           emphasis,
           hidden,

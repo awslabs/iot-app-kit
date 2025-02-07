@@ -1,40 +1,35 @@
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { useState } from 'react';
+import type { RegisteredWidgetType } from '~/features/widget-plugins/registry';
 import {
   gestureable,
   idable,
 } from '../internalDashboard/gestures/determineTargetGestures';
-import DynamicWidgetComponent from './dynamicWidget';
-import WidgetActions from './widgetActions';
-
-import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardMessages } from '~/messages';
-import type { DashboardWidget } from '~/types';
+import { DynamicWidgetComponent } from './dynamicWidget';
+import { WidgetActions } from './widgetActions';
 import './widget.css';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export type WidgetProps = {
+export interface WidgetProps<WidgetType extends RegisteredWidgetType> {
   readOnly: boolean;
   query?: SiteWiseQuery;
   isSelected: boolean;
   numSelected: number;
   cellSize: number;
-  widget: DashboardWidget;
-  messageOverrides: DashboardMessages;
-};
+  widget: WidgetInstance<WidgetType>;
+}
 
 /**
- *
  * Component used to position a widget on the dashboard and
  * mark it with the handles required to capture gestures
- *
  */
-const WidgetComponent: React.FC<WidgetProps> = ({
+export const WidgetComponent = <WidgetType extends RegisteredWidgetType>({
   cellSize,
   widget,
-  messageOverrides,
   isSelected,
   numSelected,
   readOnly,
-}) => {
+}: WidgetProps<WidgetType>) => {
   const { x, y, z, width, height } = widget;
   const [showActionButtons, setShowActionButtons] = useState(false);
 
@@ -64,12 +59,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
       onMouseLeave={() => setShowActionButtons(false)}
     >
       {widgetActions()}
-      <DynamicWidgetComponent
-        widget={widget}
-        widgetsMessages={messageOverrides.widgets}
-      />
+      <DynamicWidgetComponent widget={widget} />
     </div>
   );
 };
-
-export default WidgetComponent;

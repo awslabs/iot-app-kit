@@ -1,12 +1,10 @@
-import { type Position } from '~/types';
+import type { Position } from '~/types';
 
 /**
- *
  * Closure for tracking a position
  *
  * used in the grid for keeping track of gesture positions
  * and the delta between them
- *
  */
 const trackPosition = (defaultPosition: Position) => {
   let position = defaultPosition;

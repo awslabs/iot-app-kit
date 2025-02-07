@@ -28,7 +28,7 @@ export const Status = ({
       thresholds={thresholds}
       aggregationType={aggregationType}
       settings={settings}
-      significantDigits={significantDigits}
+      decimalPlaces={significantDigits}
     />
   );
 };

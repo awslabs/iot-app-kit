@@ -1,11 +1,10 @@
-import { onToggleChatbotAction, toggleChatbot } from '.';
-import { initialState } from '../../state';
-import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
 import { configureDashboardStore } from '~/store';
+import { initialState, type DashboardState } from '../../state';
+import { onToggleChatbotAction, toggleChatbot } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = [],
+  widgets: WidgetInstance[] = [],
   pasteCounter = 0
 ): DashboardState => ({
   ...initialState,

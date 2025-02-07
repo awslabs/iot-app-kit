@@ -1,22 +1,13 @@
-import { type QueryProperties } from '~/customization/widgets/types';
-import { type DashboardState } from '~/store/state';
-import { type DashboardWidget } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export type QueryConfigWidget = DashboardWidget<QueryProperties>;
-export const isQueryWidget = (w: DashboardWidget): w is QueryConfigWidget =>
-  'queryConfig' in w.properties;
-
-export const findModelBasedQueryWidgets = (
-  dashboardConfiguration: DashboardState['dashboardConfiguration']
-) =>
-  dashboardConfiguration.widgets
-    .filter(isQueryWidget)
+export const findModelBasedQueryWidgets = (widgets: WidgetInstance[]) =>
+  widgets
+    .filter((w) => 'queryConfig' in w.properties)
     .filter(
       (w) =>
-        (w.properties.queryConfig.query?.assetModels ?? []).length > 0 ||
-        (w.properties.queryConfig.query?.alarmModels ?? []).length > 0
+        (w.properties.queryConfig?.query?.assetModels ?? []).length > 0 ||
+        (w.properties.queryConfig?.query?.alarmModels ?? []).length > 0
     );
 
-export const hasModelBasedQuery = (
-  dashboardConfiguration: DashboardState['dashboardConfiguration']
-) => findModelBasedQueryWidgets(dashboardConfiguration).length > 0;
+export const hasModelBasedQuery = (widgets: WidgetInstance[]) =>
+  findModelBasedQueryWidgets(widgets).length > 0;

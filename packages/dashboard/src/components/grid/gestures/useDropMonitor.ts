@@ -1,23 +1,24 @@
 import { useDrop } from 'react-dnd';
-import { type DropEvent } from './types';
-import { type ComponentPaletteDraggable } from '~/components/palette/types';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
+import type { ComponentPaletteDraggable } from '~/components/palette/types';
 import { DASHBOARD_CONTAINER_ID } from '../getDashboardPosition';
+import type { DropEvent } from './types';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-export type DropMonitorProps = {
-  drop: (e: DropEvent) => void;
-};
+export interface DropMonitorProps<WidgetType extends RegisteredWidgetType> {
+  drop: (e: DropEvent<WidgetType>) => void;
+}
 
 /**
- *
  * Handles triggering the drop gesture raised on the attached dropRef
- *
  */
-export const useDropMonitor = ({ drop }: DropMonitorProps) => {
+export const useDropMonitor = <WidgetType extends RegisteredWidgetType>({
+  drop,
+}: DropMonitorProps<WidgetType>) => {
   const [{ isOver }, dropRef] = useDrop(
     () => ({
       accept: [ItemTypes.Component],
-      drop: (item: ComponentPaletteDraggable, monitor) => {
+      drop: (item: ComponentPaletteDraggable<WidgetType>, monitor) => {
         const initialClientOffset = monitor.getInitialClientOffset(); // where the cursor was in the viewport when the drag started;
         const clientOffset = monitor.getClientOffset(); // where cursor is in the viewport when drop occurs;
         const gridRect = document

@@ -1,9 +1,10 @@
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
 
-type UpdateDefaultViewportActionPayload = {
-  defaultViewport?: string;
-};
+interface UpdateDefaultViewportActionPayload {
+  defaultViewport?: string | undefined;
+}
+
 export interface UpdateDefaultViewportAction extends Action {
   type: 'UPDATE_DEFAULT_VIEWPORT';
   payload: UpdateDefaultViewportActionPayload;

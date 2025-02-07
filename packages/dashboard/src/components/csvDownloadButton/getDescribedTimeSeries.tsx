@@ -4,8 +4,6 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import invariant from 'tiny-invariant';
 
-const isEnabled = (input?: string): input is string => Boolean(input);
-
 export const getDescribedTimeSeries = async ({
   client,
   assetId,
@@ -18,7 +16,7 @@ export const getDescribedTimeSeries = async ({
   alias?: string;
 }) => {
   invariant(
-    isEnabled(alias) || (isEnabled(assetId) && isEnabled(propertyId)),
+    Boolean(alias) || (Boolean(assetId) && Boolean(propertyId)),
     'Expected alias or assetID+propertyID to be defined as required by the enabled flag.'
   );
 

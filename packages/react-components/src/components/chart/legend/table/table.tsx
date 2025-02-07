@@ -11,7 +11,7 @@ import './table.css';
 type ChartLegendTableOptions = ChartLegend & {
   datastreams: DataStreamInformation[];
   trendCursors: TrendCursor[];
-  significantDigits: ChartOptions['significantDigits'];
+  significantDigits: ChartOptions['decimalPlaces'];
   assistant?: AssistantProperty;
   selectedItems?: DataStreamInformation[];
   setSelectedItems?: (selectedItems: DataStreamInformation[]) => void;
@@ -41,7 +41,7 @@ export const ChartLegendTable = ({
         trendCursors,
         width: Number(width),
         visibleContent,
-        significantDigits,
+        significantDigits: decimalPlaces,
       }),
     [width, trendCursors, visibleContent, significantDigits]
   );

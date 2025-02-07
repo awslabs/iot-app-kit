@@ -2,7 +2,6 @@ import { render, renderHook, waitFor } from '@testing-library/react';
 import ue from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { Provider, useDispatch } from 'react-redux';
-import { DefaultDashboardMessages } from '~/messages';
 import { configureDashboardStore } from '~/store';
 import { onToggleChatbotAction } from '~/store/actions';
 import { initialState } from '~/store/state';
@@ -27,7 +26,7 @@ describe('Chatbot', () => {
   it('renders correctly', () => {
     const { getByText } = render(
       <TestProvider>
-        <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 
@@ -37,7 +36,7 @@ describe('Chatbot', () => {
   it('should close the chatbot', async () => {
     const { getByRole } = render(
       <TestProvider>
-        <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 
@@ -50,7 +49,7 @@ describe('Chatbot', () => {
   it('should clean assistant state and create a new conversationId when reset button is clicked', async () => {
     const { getByRole } = render(
       <TestProvider>
-        <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 
@@ -68,7 +67,7 @@ describe('Chatbot', () => {
   it('should open chatbot when summarization is requested from widget', async () => {
     render(
       <TestProvider>
-        <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 
@@ -97,7 +96,7 @@ describe('Chatbot', () => {
   it('should open chatbot when summarization is requested within the dashboard', async () => {
     render(
       <TestProvider>
-        <Chatbot height={0} messageOverrides={DefaultDashboardMessages} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 

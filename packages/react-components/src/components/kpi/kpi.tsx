@@ -36,7 +36,7 @@ export const KPI = ({
   titleText,
   styles,
   settings,
-  significantDigits,
+  decimalPlaces,
   timeZone,
   assistant,
 }: {
@@ -47,7 +47,7 @@ export const KPI = ({
   styles?: StyleSettingsMap;
   aggregationType?: string;
   settings?: Partial<KPISettings>;
-  significantDigits?: number;
+  decimalPlaces?: number;
   timeZone?: string;
   assistant?: AssistantProperty;
 }) => {
@@ -143,7 +143,7 @@ export const KPI = ({
       unit={unit}
       isLoading={isLoading}
       error={error?.msg}
-      significantDigits={significantDigits}
+      significantDigits={decimalPlaces}
       timeZone={timeZone}
       titleText={titleText}
       assistant={assistant}

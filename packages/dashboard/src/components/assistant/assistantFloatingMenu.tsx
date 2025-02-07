@@ -1,52 +1,59 @@
+import Box from '@cloudscape-design/components/box';
+import Popover from '@cloudscape-design/components/popover';
+import StatusIndicator from '@cloudscape-design/components/status-indicator';
+import { useAssistant } from '@iot-app-kit/react-components';
 import { type CSSProperties, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AssistantButton } from './assistantButton';
 import {
   borderRadiusButton,
+  colorBackgroundCellShaded,
+  colorBorderDividerDefault,
   colorChartsPurple1200,
   fontSizeBodyM,
-  spaceStaticM,
-  spaceStaticXxl,
-  spaceStaticS,
   fontWeightHeadingM,
-  colorBorderDividerDefault,
-  colorBackgroundCellShaded,
+  spaceStaticM,
+  spaceStaticS,
   spaceStaticXs,
+  spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
-import { VerticalDivider } from '../divider/verticalDivider';
-import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRigthButton';
-import { AssistantFloatingMenuCenterButton } from './assistantFloatingMenuCenterButton';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   onAssistantCleanWidgetsSelectionAction,
   onToggleAssistantModeAction,
   onToggleChatbotAction,
 } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import { type DashboardMessages } from '~/messages';
-import { useAssistant } from '@iot-app-kit/react-components';
-import Popover from '@cloudscape-design/components/popover';
-import StatusIndicator from '@cloudscape-design/components/status-indicator';
-import Box from '@cloudscape-design/components/box';
+import { VerticalDivider } from '~/features/widget-customization/atoms/vertical-divider';
+import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRightButton';
+import { AssistantFloatingMenuCenterButton } from './assistantFloatingMenuCenterButton';
 import './assistantFloatingMenu.css';
 
+const menuStyles = {
+  height: spaceStaticXxl,
+  borderRadius: borderRadiusButton,
+  border: `2px solid ${colorChartsPurple1200}`,
+  backgroundColor: colorBackgroundCellShaded,
+  color: colorChartsPurple1200,
+  fontSize: fontSizeBodyM,
+  fontWeight: fontWeightHeadingM,
+} satisfies CSSProperties;
 const MAX_ITEMS_SELECTED = 3;
 const CHATBOT_OPENED_WIDTH = 500;
 const CHATBOT_CLOSED_WIDTH = 90;
 
+export interface AssistantFloatingMenuProps {
+  width: number;
+}
+
 export const AssistantFloatingMenu = ({
   width,
-  messageOverrides,
-}: {
-  width: number;
-  messageOverrides: DashboardMessages;
-}) => {
+}: AssistantFloatingMenuProps) => {
   const dispatch = useDispatch();
   const [isAssistantLoading, setAssistantLoading] = useState<boolean>(false);
   const { startAction, clearAll, messages } = useAssistant({});
   const assistantState = useSelector(
     (state: DashboardState) => state.assistant
   );
-  const { assistant } = messageOverrides;
   const rightOffset = assistantState.isChatbotOpen
     ? CHATBOT_OPENED_WIDTH
     : CHATBOT_CLOSED_WIDTH;
@@ -111,16 +118,6 @@ export const AssistantFloatingMenu = ({
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
 
-  const menuStyles: CSSProperties = {
-    height: spaceStaticXxl,
-    borderRadius: borderRadiusButton,
-    border: `2px solid ${colorChartsPurple1200}`,
-    backgroundColor: colorBackgroundCellShaded,
-    color: colorChartsPurple1200,
-    fontSize: fontSizeBodyM,
-    fontWeight: fontWeightHeadingM,
-  };
-
   return (
     <div className='iot-app-kit-assistant-menu-container'>
       <div className='iot-app-kit-assistant-menu' style={floatingMenuStyles}>
@@ -134,7 +131,8 @@ export const AssistantFloatingMenu = ({
         >
           {assistantState.mode === 'on' ? (
             <Box variant='span' fontSize='heading-xs'>
-              {assistant.floatingMenu.propertySelection}
+              Select the checkboxes in the widgets below and click on Generate
+              summary to see the AI generated summaries.
             </Box>
           ) : null}
           <div
@@ -151,12 +149,8 @@ export const AssistantFloatingMenu = ({
                   {showAlert ? (
                     <Box color='text-status-error'>
                       <Popover
-                        header={
-                          assistant.floatingMenu.error.propertyLimitHeader
-                        }
-                        content={
-                          assistant.floatingMenu.error.propertyLimitMessage
-                        }
+                        header='Property limit reached'
+                        content='You can select up to 3 properties to summarize using generative AI for now. More options are coming soon.'
                         position='left'
                       >
                         <span className='iot-app-kit-assistant-menu-left-button'>
@@ -176,7 +170,7 @@ export const AssistantFloatingMenu = ({
                   styles={{ width: '1px', height: spaceStaticS }}
                 />
                 <AssistantFloatingMenuCenterButton
-                  label={assistant.floatingMenu.buttonClearAll}
+                  label='Clear all'
                   onClick={handleClearAll}
                   disabled={totalSelected === 0}
                 />
@@ -191,8 +185,7 @@ export const AssistantFloatingMenu = ({
                   }}
                 />
                 <AssistantFloatingMenuRightButton
-                  messageOverrides={messageOverrides}
-                  label={assistant.floatingMenu.buttonGenerateSummary}
+                  label='Generate summary'
                   onClick={handleSummary}
                   disabled={
                     totalSelected === 0 ||
@@ -203,7 +196,7 @@ export const AssistantFloatingMenu = ({
               </div>
             ) : null}
             <AssistantButton
-              label={assistant.floatingMenu.buttonAIAssistant}
+              label='AI Assistant'
               onClick={handleToggleAssistantMode}
             />
           </div>

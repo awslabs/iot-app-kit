@@ -5,8 +5,8 @@ import { type GaugeProps } from '../types';
 export const useGaugeFormatterValue = ({
   unit,
   settings,
-  significantDigits,
-}: Pick<GaugeProps, 'settings' | 'significantDigits'> & {
+  decimalPlaces,
+}: Pick<GaugeProps, 'settings' | 'decimalPlaces'> & {
   unit?: string;
 }) => {
   const getFormatterValue = useCallback(

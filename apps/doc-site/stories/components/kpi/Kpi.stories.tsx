@@ -149,6 +149,6 @@ export const SignificantDigits: Story = {
     settings: {
       showDataQuality: true,
     },
-    significantDigits: 2,
+    decimalPlaces: 2,
   },
 };

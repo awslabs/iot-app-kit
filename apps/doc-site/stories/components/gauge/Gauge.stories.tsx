@@ -206,7 +206,7 @@ export const SignificantDigits: Story = {
   ),
   args: {
     query: mockSinWaveDataWithQuality({ frequency: '5s', positiveOnly: true }),
-    significantDigits: 2,
+    decimalPlaces: 2,
   },
 };
 

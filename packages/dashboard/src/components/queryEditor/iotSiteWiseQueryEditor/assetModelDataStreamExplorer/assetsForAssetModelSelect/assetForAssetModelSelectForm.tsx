@@ -1,11 +1,11 @@
 import FormField from '@cloudscape-design/components/form-field';
 import {
   AssetForAssetModelSelect,
-  type AssetForAssetModelSelectOptions,
+  type AssetForAssetModelSelectProps,
 } from './assetForAssetModelSelect';
 
 export const AssetForAssetModelSelectForm = (
-  props: AssetForAssetModelSelectOptions
+  props: AssetForAssetModelSelectProps
 ) => (
   <FormField
     label='Default asset'

@@ -20,7 +20,7 @@ export type GaugeProps = {
   titleText?: string;
   styles?: StyleSettingsMap;
   settings?: GaugeSettings;
-  significantDigits?: number;
+  decimalPlaces?: number;
   theme?: string;
   assistant?: AssistantProperty;
 };
@@ -28,7 +28,7 @@ export type GaugeProps = {
 export type GaugeBaseProperties = WidgetSettings &
   Pick<
     GaugeProps,
-    'thresholds' | 'settings' | 'significantDigits' | 'theme' | 'size'
+    'thresholds' | 'settings' | 'decimalPlaces' | 'theme' | 'size'
   > & {
     isLoading?: boolean;
     alarmContent?: AlarmContent;
@@ -49,7 +49,7 @@ export type GaugeSettings = {
 
 export type GaugeConfigurationOptions = Pick<
   GaugeProps,
-  'thresholds' | 'settings' | 'significantDigits'
+  'thresholds' | 'settings' | 'decimalPlaces'
 > & {
   gaugeValue?: Primitive;
   name?: string;

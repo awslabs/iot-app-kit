@@ -1,16 +1,16 @@
 import {
+  type AssetModelPropertySummary,
+  DescribeAssetCommand,
   type IoTSiteWiseClient,
-  paginateListAssetProperties,
   type IoTSiteWisePaginationConfiguration,
+  type ListAssetModelPropertiesCommandInput,
   type ListAssetPropertiesCommandInput,
   type ListAssetPropertiesCommandOutput,
-  DescribeAssetCommand,
   paginateListAssetModelProperties,
-  type ListAssetModelPropertiesCommandInput,
-  type AssetModelPropertySummary,
+  paginateListAssetProperties,
 } from '@aws-sdk/client-iotsitewise';
 import { type Paginator } from '@aws-sdk/types';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { compact } from '~/helpers/lists/compact';
 
 export class listAssetPropertiesWithComposite {
   readonly #listAssetPropertyPaginator: Paginator<
@@ -87,38 +87,29 @@ export class listAssetPropertiesWithComposite {
           ...assetSummary, // this goes second so the type property is overwritten correctly
         };
       });
-      const nonNullableProperties = createNonNullableList(allProperties);
-      return nonNullableProperties;
+
+      return compact(allProperties);
     } catch (error) {
       this.#handleError(error);
     }
   }
 
   #createDescribeCommand(assetId: string): DescribeAssetCommand {
-    const command = new DescribeAssetCommand({ assetId });
-    return command;
+    return new DescribeAssetCommand({ assetId });
   }
 
   #createAssetPropertyPaginator(
     paginatorConfig: IoTSiteWisePaginationConfiguration,
     commandParams: ListAssetPropertiesCommandInput
   ) {
-    const paginator = paginateListAssetProperties(
-      paginatorConfig,
-      commandParams
-    );
-    return paginator;
+    return paginateListAssetProperties(paginatorConfig, commandParams);
   }
 
   #createAssetModelPropertyPaginator(
     paginatorConfig: IoTSiteWisePaginationConfiguration,
     commandParams: ListAssetModelPropertiesCommandInput
   ) {
-    const paginator = paginateListAssetModelProperties(
-      paginatorConfig,
-      commandParams
-    );
-    return paginator;
+    return paginateListAssetModelProperties(paginatorConfig, commandParams);
   }
 
   #handleError(error: unknown): never {

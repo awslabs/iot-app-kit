@@ -1,12 +1,10 @@
-import { selectWidgets, onSelectWidgetsAction } from '.';
-import { initialState } from '../../state';
-
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
   MOCK_SCATTER_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
+import { initialState, type DashboardState } from '../../state';
+import { selectWidgets, onSelectWidgetsAction } from './index';
 
 const dashboardState: DashboardState = {
   ...initialState,
@@ -20,7 +18,7 @@ const dashboardState: DashboardState = {
   },
 };
 
-it('does nothing if no widgets are provided', () => {
+it('does nothing if no widget-instance are provided', () => {
   expect(
     selectWidgets(
       dashboardState,
@@ -76,7 +74,7 @@ it('adds a single widget to a selection', () => {
   ).toEqual([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]);
 });
 
-it('adds multiple widgets to a selection', () => {
+it('adds multiple widget-instance to a selection', () => {
   const state = selectWidgets(
     dashboardState,
     onSelectWidgetsAction({

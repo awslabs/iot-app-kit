@@ -1,7 +1,6 @@
 import { spaceScaledXxxs } from '@cloudscape-design/design-tokens';
 import { useCallback, useEffect, useState } from 'react';
 import { useKeyPress } from '~/hooks/useKeyPress';
-import type { DashboardMessages } from '~/messages';
 import type { Position } from '~/types';
 import {
   DASHBOARD_CONTAINER_ID,
@@ -9,23 +8,21 @@ import {
 } from '../grid/getDashboardPosition';
 import { useLayers } from '../internalDashboard/useLayers';
 import { createContextMenuOptions } from './contextMenuOptions';
-import Menu from './menu';
+import { Menu } from './menu';
+import { ContextMenuOption } from './option';
 import './menu.css';
-import ContextMenuOption from './option';
 
-export type ContextMenuProps = {
-  copyWidgets: () => void;
+export interface ContextMenuProps {
+  copyWidgets: VoidFunction;
   pasteWidgets: (position: Position) => void;
-  deleteWidgets: () => void;
-  bringWidgetsToFront: () => void;
-  sendWidgetsToBack: () => void;
-  messageOverrides: DashboardMessages;
+  deleteWidgets: VoidFunction;
+  bringWidgetsToFront: VoidFunction;
+  sendWidgetsToBack: VoidFunction;
   hasCopiedWidgets: boolean;
   hasSelectedWidgets: boolean;
-};
+}
 
-const ContextMenu: React.FC<ContextMenuProps> = ({
-  messageOverrides,
+export const ContextMenu = ({
   hasCopiedWidgets,
   hasSelectedWidgets,
   copyWidgets,
@@ -33,7 +30,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   deleteWidgets,
   bringWidgetsToFront,
   sendWidgetsToBack,
-}) => {
+}: ContextMenuProps) => {
   const [contextMenuOpen, setContextMenuOpen] = useState<boolean>(false);
   const [contextMenuPosition, setContextMenuPosition] =
     useState<Position | null>(null);
@@ -86,7 +83,6 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   const sendToBackAction = withClose(() => sendWidgetsToBack());
 
   const configuration = createContextMenuOptions({
-    messages: messageOverrides.contextMenu,
     actions: {
       copyAction,
       pasteAction,
@@ -127,5 +123,3 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     </div>
   ) : null;
 };
-
-export default ContextMenu;

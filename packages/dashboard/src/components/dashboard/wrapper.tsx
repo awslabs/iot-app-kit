@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
-import Dashboard, { type DashboardProperties } from './index';
+import { Dashboard, type DashboardProps } from './index';
 
-export const DashboardWrapper: React.FC<DashboardProperties> = ({
+export const DashboardWrapper = ({
   onSave,
   clientConfiguration,
   dashboardConfiguration,
@@ -15,7 +15,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
   onDashboardConfigurationChange,
   timeZone,
   assistantConfiguration,
-}) => {
+}: DashboardProps) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const stableOnViewportChange = useMemo(() => onViewportChange, []);
   const stableToolbar = useMemo(() => toolbar, []);
@@ -23,7 +23,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
   /**
    * The purpose of this component is to ensure that the dashboard configuration
    * object is stable across onDashboardConfigurationChange events. These events
-   * will occur whenever the internal dashboard congifuration object
+   * will occur whenever the internal dashboard configuration object
    * changes. As a result, if the user decides to manage their own state,
    * we want to protect against unnecessary re-renders, and will only
    * pass a new property to the Dashboard if it is structurally different.

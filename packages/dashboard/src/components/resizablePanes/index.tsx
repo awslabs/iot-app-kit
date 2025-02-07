@@ -1,25 +1,29 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
-import type { MouseEvent, FC, ReactNode } from 'react';
-
 import { spaceStaticXs } from '@cloudscape-design/design-tokens';
 import {
-  LEFT_WIDTH_PERCENT,
-  MINIMUM_CENTER_PANE_WIDTH,
-  DEFAULT_SIDE_PANE_WIDTH,
-  DEFAULT_COLLAPSED_SIDE_PANE_WIDTH,
-  MAXIMUM_PANES_PROPORTION,
-  LEFT_WIDTH_PERCENT_STORAGE_KEY,
-  MINIMUM_LEFT_SIDE_PANE_WIDTH,
-  MAXIMUM_LEFT_SIDE_PANE_WIDTH,
-} from './constants';
-
-import './index.css';
-import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
-import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useResizeObserver } from 'usehooks-ts';
 import type { DashboardState } from '~/store/state';
 import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
-import { useResizeObserver } from 'usehooks-ts';
+import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
+import {
+  DEFAULT_COLLAPSED_SIDE_PANE_WIDTH,
+  DEFAULT_SIDE_PANE_WIDTH,
+  LEFT_WIDTH_PERCENT,
+  LEFT_WIDTH_PERCENT_STORAGE_KEY,
+  MAXIMUM_LEFT_SIDE_PANE_WIDTH,
+  MAXIMUM_PANES_PROPORTION,
+  MINIMUM_CENTER_PANE_WIDTH,
+  MINIMUM_LEFT_SIDE_PANE_WIDTH,
+} from './constants';
+import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
+import './index.css';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {
   const stored = sessionStorage.getItem(key);
@@ -30,12 +34,12 @@ const getSessionStorageNumber = (key: string, fallback: number) => {
 const getStoredLeftWidthPercent = () =>
   getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
 
-export type Size = {
+export interface Size {
   width?: number;
   height?: number;
-};
+}
 
-type ResizablePanesProps = {
+export interface ResizablePanesProps {
   leftPane?: ReactNode;
   centerPane: ReactNode;
   rightPane: ReactNode;
@@ -46,14 +50,14 @@ type ResizablePanesProps = {
     hideHeaderWhenExpanded?: boolean;
   };
   onResize?: (size: Size) => void;
-};
+}
 
-export const ResizablePanes: FC<ResizablePanesProps> = ({
+export const ResizablePanes = ({
   leftPane,
   centerPane,
   rightPane,
   ...props
-}) => {
+}: ResizablePanesProps) => {
   const panes = useRef(null);
   const dispatch = useDispatch();
 
@@ -189,12 +193,9 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
     setPointerEvents('auto');
   };
 
-  /**
-   * Because the width of left/right panes is hardcoded, resizing the screen
-   * to a smaller width can cause collisions. This method resizes side panes
-   * proportionally when the screen is resized to prevent these collisions.
-   */
-
+  // Because the width of left/right panes is hardcoded, resizing the screen
+  // to a smaller width can cause collisions. This method resizes side panes
+  // proportionally when the screen is resized to prevent these collisions.
   const resizeSidePanes = useCallback(() => {
     const el = panes.current as HTMLElement | null;
     if (!el) return;
@@ -299,13 +300,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
     return () => window.removeEventListener('resize', handleWindowResize);
   }, [leftPaneWidth, isLeftPaneCollapsed, resizeSidePanes]);
 
-  /**
-   *
-   * Accessibility patch
-   * In order to avoid horizontal scrolling when the window is small or zoomed in far
-   * we will only have one panel open at a time
-   * after the panes element is smaller than the threshold
-   */
+  // Accessibility patch
+  // In order to avoid horizontal scrolling when the window is small or zoomed in far
+  // we will only have one panel open at a time
+  // after the panes element is smaller than the threshold
   const handleClosePanelIfScreenSizeIsTooSmall = (
     panelToClose: 'left' | 'right'
   ) => {

@@ -24,22 +24,18 @@ export class DescribeAssetModelRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, {
+      return this.#client.send(this.#command, {
         abortSignal: this.#signal,
       });
-
-      return response;
     } catch (error) {
       this.#handleError(error);
     }
   }
 
   #createCommand(assetModelId?: string) {
-    const command = new DescribeAssetModelCommand({
+    return new DescribeAssetModelCommand({
       assetModelId,
     });
-
-    return command;
   }
 
   #handleError(error: unknown): never {
