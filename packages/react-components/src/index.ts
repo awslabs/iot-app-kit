@@ -15,10 +15,7 @@ export type {
   NodeData,
 } from './components/knowledge-graph';
 export { KPI } from './components/kpi/kpi';
-export { LineChart } from './components/line-chart';
-export { ScatterChart } from './components/scatter-chart';
 export { StatusTimeline } from './components/status-timeline';
-export { Status } from './components/status/status';
 export { Table } from './components/table';
 export { Tooltip } from './components/tooltip';
 export { RequestVideoUpload, VideoPlayer } from './components/video-player';

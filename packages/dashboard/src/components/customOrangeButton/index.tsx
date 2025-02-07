@@ -1,9 +1,8 @@
 import { colorBackgroundHomeHeader } from '@cloudscape-design/design-tokens';
-import { Button, type ButtonProps } from '@cloudscape-design/components';
-
+import Button, { type ButtonProps } from '@cloudscape-design/components/button';
 import './index.css';
 
-const CustomOrangeButton = ({
+export const CustomOrangeButton = ({
   title,
   handleClick,
   ...rest
@@ -19,5 +18,3 @@ const CustomOrangeButton = ({
     </Button>
   );
 };
-
-export default CustomOrangeButton;

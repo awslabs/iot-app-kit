@@ -1,15 +1,13 @@
-import { toggleReadOnly } from '.';
-import { initialState } from '../../state';
-
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { initialState, type DashboardState } from '../../state';
+import { toggleReadOnly } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = [],
+  widgets: WidgetInstance[] = [],
   pasteCounter = 0
 ): DashboardState => ({
   ...initialState,
@@ -21,11 +19,11 @@ const setupDashboardState = (
   readOnly: false,
 });
 
-it('can toggle the state if no widgets are present', () => {
+it('can toggle the state if no widget-instance are present', () => {
   expect(toggleReadOnly(setupDashboardState([])).readOnly).toEqual(true);
 });
 
-it('can toggle the state if widgets are present', () => {
+it('can toggle the state if widget-instance are present', () => {
   expect(
     toggleReadOnly(
       setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET])

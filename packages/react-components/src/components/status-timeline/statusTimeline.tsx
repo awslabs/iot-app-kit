@@ -1,31 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useRef } from 'react';
+import type { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import {
-  type StyleSettingsMap,
-  type Threshold,
-  type Viewport,
-} from '@iot-app-kit/core';
-import {
-  StatusTimeline as StatusTimelineBaseWrongType,
   type LineChart,
+  StatusTimeline as StatusTimelineBaseWrongType,
 } from '@iot-app-kit/charts';
 import type {
-  DataStream as DataStreamViz,
   Annotations,
+  DataStream as DataStreamViz,
 } from '@iot-app-kit/charts-core';
-import { useViewport, useTimeSeriesData } from '@iot-app-kit/component-core';
-import { type AssistantProperty } from '../../common/assistantProps';
-import { DEFAULT_LEGEND, ECHARTS_GESTURE } from '../../common/constants';
-import { getAdjustedChartHeight, Title } from '../../common/title';
-import { useResizeObserver } from 'usehooks-ts';
 import {
   type ComponentQuery,
-  useAlarms,
   convertAlarmQueryToAlarmRequest,
   DEFAULT_VIEWPORT,
   getAlarmQueries,
   getTimeSeriesQueries,
+  useAlarms,
+  useTimeSeriesData,
+  useViewport,
 } from '@iot-app-kit/component-core';
+import { type AssistantProperty } from '../../common/assistantProps';
+import { DEFAULT_LEGEND, ECHARTS_GESTURE } from '../../common/constants';
+import { getAdjustedChartHeight, Title } from '../../common/title';
+import { useResizeObserver } from 'usehooks-ts';
 import {
   ALARM_STATE_THRESHOLDS,
   transformAlarmStateToDataStream,
@@ -35,7 +32,9 @@ import {
 const StatusTimelineBase: typeof LineChart =
   StatusTimelineBaseWrongType as unknown as typeof LineChart;
 
-type StatusTimelineAxisSettings = { showX?: boolean };
+interface StatusTimelineAxisSettings {
+  showX?: boolean;
+}
 
 export const StatusTimeline = ({
   queries,

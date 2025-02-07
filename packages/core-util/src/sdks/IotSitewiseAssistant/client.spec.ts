@@ -1,5 +1,5 @@
 import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { IoTSitewiseAssistantClient } from './client';
+import { IoTSiteWiseAssistantClient } from './client';
 
 vi.mock('@aws-sdk/client-iotsitewise');
 
@@ -67,7 +67,7 @@ describe('AssistantClient', () => {
 
   it('createAssistantClient return a new instance', () => {
     const mockInvokeAssistant = vi.fn().mockResolvedValue({ body: [] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -81,7 +81,7 @@ describe('AssistantClient', () => {
 
   it('can set iotSiteWiseClient', () => {
     const mockInvokeAssistant = vi.fn().mockResolvedValue({ body: [] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -110,7 +110,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response2, response3] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -137,7 +137,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response1, response2] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -165,7 +165,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response3] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -192,7 +192,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [response3] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -223,7 +223,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockRejectedValue(new Error('assistant 5xx error'));
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -253,7 +253,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseAccessDeniedException] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -284,7 +284,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseInternalFailureException] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -316,7 +316,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseLimitExceededException] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -347,7 +347,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseResourceNotFoundException] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
@@ -379,7 +379,7 @@ describe('AssistantClient', () => {
     const mockInvokeAssistant = vi
       .fn()
       .mockResolvedValue({ body: [responseThrottlingException] });
-    const client = new IoTSitewiseAssistantClient({
+    const client = new IoTSiteWiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,

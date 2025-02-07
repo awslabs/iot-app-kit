@@ -1,7 +1,7 @@
-import {
-  type AssetModelProperty,
-  type AssetProperty,
-  type AssetPropertyValue,
+import type {
+  AssetModelProperty,
+  AssetProperty,
+  AssetPropertyValue,
 } from '@aws-sdk/client-iotsitewise';
 import type { AlarmProperty } from '../types';
 
@@ -23,10 +23,8 @@ export const constructAlarmProperty = (
     data = [
       {
         value: {
-          /**
-           * The only available data without an asset reference
-           * for an AssetModelProperty is an attribute default value
-           */
+          // The only available data without an asset reference
+          // for an AssetModelProperty is an attribute default value
           stringValue: (property as AssetModelProperty)?.type?.attribute
             ?.defaultValue,
         },

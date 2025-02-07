@@ -9,27 +9,27 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { FpsView } from 'react-fps';
 import { Provider } from 'react-redux';
-import { useDashboardPlugins } from '~/customization/api';
-import { PropertiesPanel } from '~/customization/propertiesSections';
 import { queryClient } from '~/data/query-client';
 import { configureDashboardStore, toDashboardState } from '~/store';
+import type { DashboardClientConfiguration } from '~/features/queries/sdk-clients';
+import type { DashboardConfiguration } from '~/features/dashboard-configuration/dashboard-configuration';
 import type {
-  AssistantConfiguration,
-  DashboardClientConfiguration,
-  DashboardConfiguration,
   DashboardConfigurationChange,
-  DashboardSave,
-  DashboardToolbar,
   ViewportChange,
-} from '~/types';
+} from '~/types/dashboard-props';
+import type { DashboardSave } from '~/types/saving';
+import type { AssistantConfiguration, DashboardToolbar } from '~/types';
 import '../../styles/variables.css';
-import InternalDashboard from '../internalDashboard';
+import { InternalDashboard } from '../internalDashboard';
 import { ClientContext } from './clientContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
-import { QueryContext } from './queryContext';
+import { QueryContext } from '~/features/queries/query-context';
 
-export type DashboardProperties = {
+// install widget-plugins dir
+import '~/plugins';
+
+export interface DashboardProps {
   onDashboardConfigurationChange?: DashboardConfigurationChange;
   onSave?: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
@@ -42,104 +42,106 @@ export type DashboardProperties = {
   onViewportChange?: ViewportChange;
   currentViewport?: Viewport;
   timeZone?: string;
-};
+}
+
+export type DashboardProperties = DashboardProps; // backwards compatible alias
 
 const showFPSMonitor = localStorage.getItem('DASHBOARD_SHOW_FPS');
 
-const Dashboard: React.FC<DashboardProperties> = ({
-  onSave,
-  clientConfiguration,
-  dashboardConfiguration,
-  edgeMode = 'disabled',
-  initialViewMode,
-  toolbar,
-  name,
-  currentViewport,
-  onViewportChange,
-  onDashboardConfigurationChange,
-  timeZone,
-  assistantConfiguration,
-}) => {
-  useDashboardPlugins();
-  const debounceOnViewportChange = onViewportChange
-    ? debounce(onViewportChange, 100)
-    : undefined;
-
-  const readOnly = useMemo(() => {
-    return initialViewMode && initialViewMode === 'preview';
-  }, [initialViewMode]);
-
-  const initialStore = useMemo(() => {
-    return configureDashboardStore({
-      ...toDashboardState(dashboardConfiguration),
-      readOnly,
-      isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
-      timeZone: timeZone,
-      assistant: {
-        state: assistantConfiguration?.state ?? 'DISABLED',
-      },
-    });
-  }, [
+export const Dashboard = memo(
+  ({
+    onSave,
+    clientConfiguration,
     dashboardConfiguration,
-    edgeMode,
-    readOnly,
+    edgeMode = 'disabled',
+    initialViewMode,
+    toolbar,
+    name,
+    currentViewport,
+    onViewportChange,
+    onDashboardConfigurationChange,
     timeZone,
-    assistantConfiguration?.state,
-  ]);
+    assistantConfiguration,
+  }: DashboardProperties) => {
+    const debounceOnViewportChange = onViewportChange
+      ? debounce(onViewportChange, 100)
+      : undefined;
 
-  const clients = useMemo(
-    () => getClients(clientConfiguration),
-    [clientConfiguration]
-  );
-  const queries = useMemo(
-    () => getQueries(clientConfiguration, edgeMode),
-    [clientConfiguration, edgeMode]
-  );
+    const readOnly = useMemo(() => {
+      return initialViewMode && initialViewMode === 'preview';
+    }, [initialViewMode]);
 
-  return (
-    <>
-      {showFPSMonitor && <FpsView height={50} width={80} />}
-      <ClientContext.Provider value={clients}>
-        <QueryContext.Provider value={queries}>
-          <Provider store={initialStore}>
-            <DndProvider
-              backend={TouchBackend}
-              options={{
-                enableMouseEvents: true,
-                enableKeyboardEvents: true,
-              }}
-            >
-              <TimeSync
-                initialViewport={
-                  dashboardConfiguration.defaultViewport ?? { duration: '5m' }
-                }
-                group='dashboard-timesync'
-                onViewportChange={debounceOnViewportChange}
+    const initialStore = useMemo(() => {
+      return configureDashboardStore({
+        ...toDashboardState(dashboardConfiguration),
+        readOnly,
+        isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
+        timeZone: timeZone,
+        assistant: {
+          state: assistantConfiguration?.state ?? 'DISABLED',
+        },
+      });
+    }, [
+      dashboardConfiguration,
+      edgeMode,
+      readOnly,
+      timeZone,
+      assistantConfiguration?.state,
+    ]);
+
+    const clients = useMemo(
+      () => getClients(clientConfiguration),
+      [clientConfiguration]
+    );
+    const queries = useMemo(
+      () => getQueries(clientConfiguration, edgeMode),
+      [clientConfiguration, edgeMode]
+    );
+
+    // const selectedWidgets = useSelectedWidgets();
+
+    return (
+      <>
+        {showFPSMonitor && <FpsView height={50} width={80} />}
+        <ClientContext.Provider value={clients}>
+          <QueryContext.Provider value={queries}>
+            <Provider store={initialStore}>
+              <DndProvider
+                backend={TouchBackend}
+                options={{
+                  enableMouseEvents: true,
+                  enableKeyboardEvents: true,
+                }}
               >
-                <InternalDashboard
-                  toolbar={toolbar}
-                  onSave={onSave}
-                  editable={true}
-                  name={name}
-                  propertiesPanel={<PropertiesPanel />}
-                  defaultViewport={dashboardConfiguration.defaultViewport}
-                  currentViewport={currentViewport}
-                  onDashboardConfigurationChange={
-                    onDashboardConfigurationChange
+                <TimeSync
+                  initialViewport={
+                    dashboardConfiguration.defaultViewport ?? { duration: '5m' }
                   }
-                />
-              </TimeSync>
-            </DndProvider>
-          </Provider>
-          <ReactQueryDevtools
-            client={queryClient}
-            initialIsOpen={false}
-            buttonPosition='bottom-left'
-          />
-        </QueryContext.Provider>
-      </ClientContext.Provider>
-    </>
-  );
-};
-
-export default memo(Dashboard);
+                  group='dashboard-timesync'
+                  onViewportChange={debounceOnViewportChange}
+                >
+                  <InternalDashboard
+                    toolbar={toolbar}
+                    onSave={onSave}
+                    editable={true}
+                    name={name}
+                    defaultViewport={dashboardConfiguration.defaultViewport}
+                    currentViewport={currentViewport}
+                    onDashboardConfigurationChange={
+                      onDashboardConfigurationChange
+                    }
+                  />
+                </TimeSync>
+              </DndProvider>
+            </Provider>
+            <ReactQueryDevtools
+              client={queryClient}
+              initialIsOpen={false}
+              buttonPosition='bottom-left'
+            />
+          </QueryContext.Provider>
+        </ClientContext.Provider>
+      </>
+    );
+  }
+);

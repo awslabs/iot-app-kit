@@ -1,5 +1,5 @@
-import { mergeAssetQueries } from './mergeAssetQueries';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { mergeAssetQueries } from './mergeAssetQueries';
 
 const MOCK_QUERY: SiteWiseAssetQuery = {
   assets: [

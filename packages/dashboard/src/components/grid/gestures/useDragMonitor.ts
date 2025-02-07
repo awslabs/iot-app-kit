@@ -1,6 +1,7 @@
+import { useEffect, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
-import { type DragEvent } from './types';
+import { Animator } from '~/util/animate';
 import {
   defaultDelta,
   deltaTracker,
@@ -8,10 +9,9 @@ import {
   startTracker,
 } from './positionTracker';
 import { constrainPosition } from './constrainPosition';
-import { useEffect, useMemo } from 'react';
-import { Animator } from '~/util/animate';
+import type { DragEvent } from './types';
 
-export type DragMonitorProps = {
+export interface DragMonitorProps {
   dragStart: (e: DragEvent) => void;
   dragEnd: (e: DragEvent) => void;
   drag: (e: DragEvent) => void;
@@ -21,12 +21,10 @@ export type DragMonitorProps = {
   readOnly: boolean;
   enabled: boolean;
   dashboardGrid: DOMRect | null;
-};
+}
 
 /**
- *
  * Handles triggering the drag gestures raised on the attached dragRef
- *
  */
 export const useDragMonitor = ({
   setCancelClick,
@@ -71,7 +69,7 @@ export const useDragMonitor = ({
         return {
           monitor,
           type: monitor.getItemType(),
-          isDragging: !!monitor.isDragging(),
+          isDragging: monitor.isDragging(),
           clientOffset: monitor.getClientOffset(),
         };
       },

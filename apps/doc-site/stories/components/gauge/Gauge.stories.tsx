@@ -3,8 +3,8 @@ import { Gauge } from '@iot-app-kit/react-components';
 import {
   mockAlarmData,
   mockSinWaveDataWithQuality,
-  mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
+  mockTimeSeriesDataQueryWithError,
 } from '@iot-app-kit/testing-util';
 import { type Meta, type StoryObj } from '@storybook/react';
 

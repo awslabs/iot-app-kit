@@ -1,17 +1,18 @@
 import { type PropsWithChildren } from 'react';
 import { SizedGrid } from './sizedGrid';
 
-export type ReadOnlyGridProps = PropsWithChildren<{
+export interface ReadOnlyGridProps extends PropsWithChildren {
   width: number;
   height: number;
   cellSize: number;
-}>;
-export const ReadOnlyGrid: React.FC<ReadOnlyGridProps> = ({
+}
+
+export const ReadOnlyGrid = ({
   width,
   height,
   cellSize,
   children,
-}) => (
+}: ReadOnlyGridProps) => (
   <SizedGrid
     highlighted={false}
     showGuides={false}

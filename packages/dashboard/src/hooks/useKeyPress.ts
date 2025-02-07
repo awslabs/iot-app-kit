@@ -2,10 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { isHotkey } from 'is-hotkey';
 
 type KeyPressCallback = (e: KeyboardEvent | ClipboardEvent) => void;
-type KeyPressOptions = {
+
+interface KeyPressOptions {
   callback?: KeyPressCallback;
   filter?: (e: KeyboardEvent | ClipboardEvent) => boolean;
-};
+}
 
 /**
  * Keyboard press handler

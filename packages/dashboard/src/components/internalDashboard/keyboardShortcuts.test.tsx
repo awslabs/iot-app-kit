@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { act } from '@testing-library/react';
-import InternalDashboard from './index';
+import { InternalDashboard } from './index';
 import { configureDashboardStore } from '../../store';
 import {
   onBringWidgetsToFrontAction,

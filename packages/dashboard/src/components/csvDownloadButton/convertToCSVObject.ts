@@ -4,11 +4,11 @@ import {
   type HistoricalViewport,
   toSiteWiseAssetProperty,
 } from '@iot-app-kit/core';
-import { type CSVDownloadObject } from './types';
-import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { getDescribedTimeSeries } from './getDescribedTimeSeries';
 import { type IoTSiteWiseClient, Quality } from '@aws-sdk/client-iotsitewise';
 import { type AssetSummary } from '~/hooks/useAssetDescriptionQueries';
+import { getDescribedTimeSeries } from './getDescribedTimeSeries';
+import { type CSVDownloadObject } from './types';
+import { type SiteWiseQueryConfig } from '~/features/queries/queries';
 
 // Check if time is within passed in viewport OR within last x amount of time from request
 const isTimeWithinViewport = (
@@ -27,7 +27,7 @@ export const convertToCSVObject = async ({
   listAssetPropertiesMap,
 }: {
   dataStreams: DataStream[];
-  queryConfig: StyledSiteWiseQueryConfig;
+  queryConfig: SiteWiseQueryConfig | undefined;
   client?: IoTSiteWiseClient;
   viewport: HistoricalViewport;
   listAssetPropertiesMap: Record<string, AssetSummary>;
@@ -47,9 +47,9 @@ export const convertToCSVObject = async ({
       data,
       error: dataStreamError,
     } = dataStream;
-    const isUnmodeledData = queryConfig.query?.properties?.some(
-      (pr) => pr.propertyAlias === id
-    );
+    const isUnmodeledData =
+      queryConfig?.query?.properties?.some((pr) => pr.propertyAlias === id) ??
+      false;
     const { data: unmodeledDescribedTimeSeries, hasError } = isUnmodeledData
       ? await getDescribedTimeSeries({
           client,

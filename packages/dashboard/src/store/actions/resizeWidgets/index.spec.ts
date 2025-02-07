@@ -1,12 +1,10 @@
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
+import { initialState, type DashboardState } from '../../state';
 import { onResizeWidgetsAction, resizeWidgets } from './index';
-
-import type { DashboardState } from '../../state';
-import { initialState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = []
+  widgets: WidgetInstance[] = []
 ): DashboardState => ({
   ...initialState,
   grid: {
@@ -20,7 +18,7 @@ const setupDashboardState = (
   },
 });
 
-it('does nothing if no widgets are provided', () => {
+it('does nothing if no widget-instance are provided', () => {
   expect(
     resizeWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
@@ -107,7 +105,7 @@ describe('top-left anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 10,
       y: 10,
@@ -225,7 +223,7 @@ describe('top anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 20,
       y: 20,
@@ -343,7 +341,7 @@ describe('top-right anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 2,
       y: 2,
@@ -461,7 +459,7 @@ describe('right anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 2,
       y: 2,
@@ -579,7 +577,7 @@ describe('bottom-right anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 2,
       y: 2,
@@ -697,7 +695,7 @@ describe('bottom anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 2,
       y: 2,
@@ -815,7 +813,7 @@ describe('bottom-left anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 2,
       y: 2,
@@ -933,7 +931,7 @@ describe('left anchor', () => {
     );
   });
 
-  it('does resize multiple widgets', () => {
+  it('does resize multiple widget-instance', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
       x: 2,
       y: 2,

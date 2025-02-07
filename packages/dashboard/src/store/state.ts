@@ -1,14 +1,10 @@
-import type {
-  AssistantStateTypes,
-  DashboardTimeSeriesSettings,
-  DashboardWidget,
-} from '~/types';
-import { deepFreeze } from '~/util/deepFreeze';
+import type { AssistantStateTypes } from '~/types';
 import { v4 as uuid } from 'uuid';
+import type { DashboardTimeSeriesSettings } from '~/features/dashboard-configuration/dashboard-configuration';
+import type { WidgetInstance } from '~/features/widget-instance/instance';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-export type DashboardState<
-  Properties extends Record<string, unknown> = Record<string, unknown>
-> = {
+export interface DashboardState {
   isEdgeModeEnabled: boolean;
   grid: {
     enabled: boolean;
@@ -17,44 +13,33 @@ export type DashboardState<
     cellSize: number;
   };
   readOnly: boolean;
-  selectedWidgets: DashboardWidget<Properties>[];
-  copiedWidgets: DashboardWidget<Properties>[];
+  selectedWidgets: WidgetInstance[];
+  copiedWidgets: WidgetInstance[];
   pasteCounter: number;
   dashboardConfiguration: {
-    widgets: DashboardWidget<Properties>[];
+    widgets: WidgetInstance[];
     querySettings?: DashboardTimeSeriesSettings;
     defaultViewport?: string;
   };
-  significantDigits: number;
+  decimalPlaces?: number | undefined;
   timeZone?: string;
   assistant: {
     state: AssistantStateTypes;
     conversationId: string;
-
     isChatbotOpen: boolean;
     callerComponentId?: string;
     action?: string;
     actionId?: string;
-
     mode: 'on' | 'off';
     selectedQueries: {
       widgetId: string;
-      widgetType: string;
+      widgetType: RegisteredWidgetType;
       selectedProperties: number;
     }[];
   };
-};
+}
 
-/**
- * default state for the dashboard to use.
- *
- * We want to prevent modification of this object
- * since it is exported as a singleton and will be
- * used to setup the initial dashboard state between
- * different instances of dashboard.
- *
- */
-export const initialState: DashboardState = deepFreeze({
+export const initialState = {
   isEdgeModeEnabled: false,
   grid: {
     enabled: true,
@@ -72,7 +57,7 @@ export const initialState: DashboardState = deepFreeze({
       refreshRate: 5000,
     },
   },
-  significantDigits: 4,
+  decimalPlaces: 4,
   assistant: {
     state: 'PASSIVE',
     conversationId: uuid(),
@@ -80,4 +65,4 @@ export const initialState: DashboardState = deepFreeze({
     mode: 'off',
     selectedQueries: [],
   },
-});
+} satisfies DashboardState;

@@ -1,28 +1,26 @@
 import { type PointerEventHandler, useState } from 'react';
-import { type PointClickEvent } from './types';
+import { MouseClick } from '~/types';
 import {
   DASHBOARD_CONTAINER_ID,
   getDashboardPosition,
 } from '../getDashboardPosition';
 import { endTracker, startTracker } from './positionTracker';
-import { MouseClick } from '~/types';
+import { type PointClickEvent } from './types';
 
-export type PointerTrackerProps = {
+export interface PointerTrackerProps {
   readOnly: boolean;
   enabled: boolean;
   union: boolean;
   click: (e: PointClickEvent) => void;
-};
+}
 
 /**
- *
  * Tracks the pointer position and intended target of the drag and drop gesture
  *
  * Tracks the current bounding rect of the grid area which is used to
  * make sure drag operations are correctly handled when the pointer leaves the grid
  *
  * Handles the point click gesture
- *
  */
 export const usePointerTracker = ({
   readOnly,

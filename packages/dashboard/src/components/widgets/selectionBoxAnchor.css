@@ -1,9 +1,6 @@
 @import "../../styles/variables.css";
 
-/**
- * Draggable corners for the selection box
- */
-
+/* Draggable corners for the selection box */
 .selection-box-corner {
   z-index: 99999999999999;
   position: absolute;
@@ -39,10 +36,7 @@
   left: calc(-1 * var(--selection-box-size) / 2);
 }
 
-/**
- * Draggable sides for the selection box
- */
-
+/* Draggable sides for the selection box */
 .selection-box-side {
   position: absolute;
   pointer-events: all;

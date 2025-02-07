@@ -8,7 +8,7 @@ import { useCustomCompareEffect } from 'react-use';
  * helper hook that wants to use the alarms state
  * object to map the its corresponding requets.
  *
- * For eg. mapping alarmModel names off the state.
+ * e.g., mapping alarmModel names off the state.
  * OR mapping asset property queries off the state
  */
 export const useRequestSelector = <State, SelectedState>(

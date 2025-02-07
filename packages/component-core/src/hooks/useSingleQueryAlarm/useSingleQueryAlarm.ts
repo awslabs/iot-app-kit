@@ -1,8 +1,6 @@
 import {
   type DataStream,
-  type Primitive,
   type Threshold,
-  type ThresholdValue,
   type Viewport,
 } from '@iot-app-kit/core';
 import isEqual from 'lodash-es/isEqual';
@@ -16,22 +14,22 @@ import { parseAlarmStateAssetProperty } from '../useAlarms/transformers';
 import { mapAlarmRuleExpression } from '../useAlarms/transformers/mapAlarmRuleExpression';
 import { useAlarmsFromQueries } from '../useAlarmsFromQueries';
 
-type UseSingleQueryAlarmOptions = {
+interface UseSingleQueryAlarmOptions {
   query: ComponentQuery;
   viewport?: Viewport;
-};
+}
 
-export type SingleQueryAlarm = {
+export interface SingleQueryAlarm {
   alarmContent?: AlarmContent;
   status?: AlarmDataStatus;
-  threshold?: Threshold<ThresholdValue>;
-  datastream?: DataStream<Primitive>;
-};
+  threshold?: Threshold;
+  datastream?: DataStream;
+}
 
 /**
  * Wrapper for useAlarms that sets up the transform function and memoizes the alarm response.
  *
- * Built for widgets that support a single query like KPI and Gauge.
+ * Built for widget-instance that support a single query like KPI and Gauge.
  *
  * The transform function extracts the alarmContent for connecting with the assistant, the
  * alarm query status, the alarm threshold, and the input property data stream generated
@@ -97,5 +95,3 @@ export const useSingleQueryAlarm = ({
   // Only return a single alarm
   return internalAlarmsState.at(0);
 };
-
-export type BarChartAlarms = ReturnType<typeof useSingleQueryAlarm>;

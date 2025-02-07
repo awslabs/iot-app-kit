@@ -1,20 +1,17 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
 import {
   AppKitConfig,
   DEFAULT_APP_KIT_CONFIG,
 } from '@iot-app-kit/react-components';
-import { useDashboardPlugins } from '../../customization/api';
-import Palette from './index';
+import { Palette } from './index';
 
 const ComponentPaletteTestComponent = ({
   onAddWidget,
 }: {
   onAddWidget: typeof vi.fn;
 }) => {
-  useDashboardPlugins();
   return (
     <AppKitConfig
       customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}

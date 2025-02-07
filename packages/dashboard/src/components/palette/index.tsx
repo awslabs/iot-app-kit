@@ -6,12 +6,12 @@ import {
   spaceScaledXxxs,
   spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
-import {
-  ComponentLibraryComponentMap,
-  ComponentLibraryComponentOrdering,
-} from '~/customization/componentLibraryComponentMap';
-import PaletteComponent from './component';
+import { PaletteComponent } from './component';
 import './index.css';
+import {
+  type RegisteredWidgetType,
+  Registry,
+} from '~/features/widget-plugins/registry';
 
 const widgetFont = {
   color: colorTextHeadingDefault,
@@ -25,11 +25,13 @@ const divider = {
 
 const Divider = () => <div style={divider} />;
 
-type PaletteOptions = {
-  onAddWidget: (componentTag: string) => void;
-};
+export interface PaletteProps {
+  onAddWidget: (widgetType: RegisteredWidgetType) => void;
+}
 
-const Palette = ({ onAddWidget }: PaletteOptions) => {
+export const Palette = memo(({ onAddWidget }: PaletteProps) => {
+  const widgetPlugins = Registry.list();
+
   return (
     <div
       className='widget-panel'
@@ -39,15 +41,13 @@ const Palette = ({ onAddWidget }: PaletteOptions) => {
       <h4 style={widgetFont}>Widgets</h4>
       <Divider />
       <ul className='component-palette-widgets' aria-label='widget panel'>
-        {ComponentLibraryComponentOrdering.map((widgetType) => {
-          const [name, iconComponent] =
-            ComponentLibraryComponentMap[widgetType];
+        {widgetPlugins.map(({ configuration: { type, name, icon } }) => {
           return (
             <PaletteComponent
-              key={widgetType}
-              componentTag={widgetType}
-              name={name}
-              IconComponent={iconComponent}
+              key={type}
+              componentTag={type}
+              widgetName={name}
+              icon={icon}
               onAddWidget={onAddWidget}
             />
           );
@@ -55,6 +55,4 @@ const Palette = ({ onAddWidget }: PaletteOptions) => {
       </ul>
     </div>
   );
-};
-
-export default memo(Palette);
+});

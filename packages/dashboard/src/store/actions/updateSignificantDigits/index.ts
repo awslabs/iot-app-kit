@@ -1,10 +1,10 @@
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
-import { nonNegative } from '~/util/number';
 
-type UpdateSignificantDigitsActionPayload = {
-  significantDigits: number;
-};
+interface UpdateSignificantDigitsActionPayload {
+  decimalPlaces?: number | undefined;
+}
+
 export interface UpdateSignificantDigitsAction extends Action {
   type: 'UPDATE_SIGNIFICANT_DIGITS';
   payload: UpdateSignificantDigitsActionPayload;
@@ -22,5 +22,5 @@ export const updateSignificantDigits = (
   action: UpdateSignificantDigitsAction
 ): DashboardState => ({
   ...state,
-  significantDigits: nonNegative(action.payload.significantDigits),
+  decimalPlaces: action.payload.decimalPlaces,
 });

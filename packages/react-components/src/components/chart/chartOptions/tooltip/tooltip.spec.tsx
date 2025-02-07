@@ -10,7 +10,7 @@ const mockDataStream1 = {
   name: 'fake datastream',
   color: 'red',
   value: 10,
-  significantDigits: 4,
+  decimalPlaces: 4,
   quality: 'GOOD' as DataPoint['quality'],
 } satisfies IdentifiableDataStreamOptions;
 
@@ -19,7 +19,7 @@ const mockDataStream2 = {
   name: 'fake datastream 2',
   color: 'blue',
   value: 20,
-  significantDigits: 4,
+  decimalPlaces: 4,
   quality: 'BAD' as DataPoint['quality'],
 } satisfies IdentifiableDataStreamOptions;
 

@@ -1,9 +1,8 @@
 import {
-  ListAssetModelPropertiesCommand,
   type IoTSiteWiseClient,
+  ListAssetModelPropertiesCommand,
   type ListAssetModelPropertiesCommandInput,
 } from '@aws-sdk/client-iotsitewise';
-
 import type {
   AssetModelId,
   AssetModelProperty,
@@ -14,6 +13,7 @@ interface CacheItem {
   assetModelProperties: AssetModelProperty[];
   nextToken: string | undefined;
 }
+
 type AssetModelPropertyCache = Record<AssetModelId, CacheItem>;
 
 export class SearchAssetModelPropertyListsRequest {
@@ -95,11 +95,7 @@ export class SearchAssetModelPropertyListsRequest {
     assetModelPropertyId: AssetModelPropertyId;
     assetModelProperties: AssetModelProperty[];
   }): AssetModelProperty | undefined {
-    const assetModelProperty = assetModelProperties.find(
-      ({ id }) => id === assetModelPropertyId
-    );
-
-    return assetModelProperty;
+    return assetModelProperties.find(({ id }) => id === assetModelPropertyId);
   }
 
   #createCommand(
@@ -108,15 +104,11 @@ export class SearchAssetModelPropertyListsRequest {
       'assetModelId' | 'nextToken'
     >
   ) {
-    const FILTER = 'ALL';
-    const MAX_RESULTS = 250;
-    const command = new ListAssetModelPropertiesCommand({
+    return new ListAssetModelPropertiesCommand({
       ...input,
-      filter: FILTER,
-      maxResults: MAX_RESULTS,
+      filter: 'ALL',
+      maxResults: 250,
     });
-
-    return command;
   }
 
   #handleError(error: unknown): never {

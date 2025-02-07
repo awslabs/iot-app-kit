@@ -1,44 +1,26 @@
+import { type CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
-import { widgetCreator } from '~/store/actions/createWidget/presets';
-import DynamicWidgetComponent, {
-  getDragLayerProps,
-} from '../../widgets/dynamicWidget';
-
-import type { CSSProperties } from 'react';
-import type { DashboardMessages } from '~/messages';
+import type { RegisteredWidgetType } from '~/features/widget-plugins/registry';
 import type { DashboardState } from '~/store/state';
+import { createWidgetInstance } from '~/features/widget-instance/create';
+import { DynamicWidgetComponent } from '../../widgets/dynamicWidget';
 import './widget.css';
 
-export type DragLayerWidgetProps = {
-  componentTag: string;
-  messageOverrides: DashboardMessages;
-};
+export interface DragLayerWidgetProps {
+  widgetType: RegisteredWidgetType;
+}
 
-const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({
-  componentTag,
-  messageOverrides,
-}) => {
+export const DragLayerWidget = ({ widgetType }: DragLayerWidgetProps) => {
   const grid = useSelector((state: DashboardState) => state.grid);
-
-  const widgetPreset = widgetCreator(grid)(componentTag);
-
-  const { width, height } = widgetPreset;
-
+  const widgetInstance = createWidgetInstance(grid)(widgetType);
   const styles: CSSProperties = {
-    width: grid.cellSize * width + 'px',
-    height: grid.cellSize * height + 'px',
+    width: grid.cellSize * widgetInstance.width + 'px',
+    height: grid.cellSize * widgetInstance.height + 'px',
   };
 
   return (
     <div style={styles} className='drag-layer-widget'>
-      <DynamicWidgetComponent
-        {...getDragLayerProps({
-          widget: widgetPreset,
-          widgetsMessages: messageOverrides.widgets,
-        })}
-      />
+      <DynamicWidgetComponent widget={widgetInstance} />
     </div>
   );
 };
-
-export default DragLayerWidget;

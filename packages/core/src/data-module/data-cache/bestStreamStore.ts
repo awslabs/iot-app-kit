@@ -9,7 +9,7 @@ const ascendingSort = (a: number, b: number): number => a - b;
  * Get Best Stream Store
  *
  * Returns the best data stream store based on what resolution and/or aggregation we would like to visualize
- * on connected widgets
+ * on connected widget-instance
  * This will be the store with the smallest resolution which is not smaller than the requested resolution,
  * that is not in a loading or error state.
  */

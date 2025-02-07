@@ -64,10 +64,7 @@ export const updateAlarmStateData = (
   alarm: AlarmData,
   { data, viewport }: { data: AssetPropertyValue[]; viewport?: Viewport }
 ): AlarmData => {
-  /**
-   * If there is no state property the queries will
-   * be disabled and data will be empty
-   */
+  // If there is no state property the queries will be disabled and data will be empty
   if (!alarm.state) return alarm;
 
   const currentData = alarm.state.data;
@@ -101,17 +98,12 @@ export const updateAlarmThresholdData = (
     viewport?: Viewport;
   }
 ): AlarmData => {
-  /**
-   * If there is no models property the queries will
-   * be disabled and data will be empty
-   */
+  // If there is no models property the queries will be disabled and data will be empty
   if (!alarm.models) return alarm;
 
   const currentData = alarm.thresholds ?? [];
 
-  /**
-   * If there is a static threshold then that should be used as the alarm threshold
-   **/
+  // If there is a static threshold then that should be used as the alarm threshold
   if (
     staticData.length &&
     shouldUpdateAlarmStateData(currentData, staticData)

@@ -1,32 +1,23 @@
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { Action, Dispatch } from 'redux';
 import type {
-  DataStreamId,
-  Resolution,
   DataStream,
+  DataStreamId,
   RequestInformationAndRange,
+  Resolution,
 } from '../types';
 import type { ErrorDetails } from '../../common/types';
 
-/**
- *
- * Redux Actions used to communicated to `<bp-data-store />`
- *
- * Presents an external interface for bp-connector implementations to hook
- * data sources to the bp-components.
- */
-
-/**
- * On Request
- */
+// Redux Actions used to communicated to `<bp-data-store />`
+// Presents an external interface for bp-connector implementations to hook
+// data sources to the bp-components.
 
 export const REQUEST = 'REQUEST';
+
 export interface RequestData extends Action<'REQUEST'> {
   type: typeof REQUEST;
   payload: RequestInformationAndRange;
 }
-
-export type OnRequest = (payload: RequestData['payload']) => [Date, Date][];
 
 export const onRequestAction = (
   payload: RequestData['payload']
@@ -35,16 +26,8 @@ export const onRequestAction = (
   payload,
 });
 
-export const onRequest =
-  (payload: RequestData['payload']) => (dispatch: Dispatch) => {
-    dispatch(onRequestAction(payload));
-  };
-
-/**
- * On Error
- */
-
 export const ERROR = 'ERROR';
+
 export interface ErrorResponse extends Action<'ERROR'> {
   type: typeof ERROR;
   payload: {
@@ -81,11 +64,8 @@ export const onError =
     dispatch(onErrorAction(id, resolution, error, aggregationType));
   };
 
-/**
- * On Success
- */
-
 export const SUCCESS = 'SUCCESS';
+
 export interface SuccessResponse extends Action<'SUCCESS'> {
   type: typeof SUCCESS;
   payload: {
@@ -96,6 +76,7 @@ export interface SuccessResponse extends Action<'SUCCESS'> {
     requestInformation: RequestInformationAndRange;
   };
 }
+
 export const onSuccessAction = (
   id: DataStreamId,
   data: DataStream,

@@ -3,8 +3,7 @@ import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-
-import CustomOrangeButton from '~/components/customOrangeButton';
+import { CustomOrangeButton } from '~/components/customOrangeButton';
 
 export const ResetAssetModelModal = ({
   visible,
@@ -12,8 +11,8 @@ export const ResetAssetModelModal = ({
   onReset,
 }: {
   visible: boolean;
-  onHide: () => void;
-  onReset?: () => void;
+  onHide: VoidFunction;
+  onReset?: VoidFunction;
 }) => {
   return (
     <Modal

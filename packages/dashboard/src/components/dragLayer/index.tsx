@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
-import type { XYCoord } from 'react-dnd';
-import { useDragLayer } from 'react-dnd';
-
-import DashboardWidget from './components/widget';
+import { useDragLayer, type XYCoord } from 'react-dnd';
+import { DragLayerWidget } from './components/widget';
 import { ItemTypes } from './itemTypes';
-
-import { DefaultDashboardMessages } from '~/messages';
 import './index.css';
 
 const getItemStyles = (
@@ -27,11 +23,11 @@ const getItemStyles = (
   };
 };
 
-export type CustomDragLayerProps = {
+export interface CustomDragLayerProps {
   onDrag: (isDragging: boolean) => void;
-};
+}
 
-const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ onDrag }) => {
+export const CustomDragLayer = ({ onDrag }: CustomDragLayerProps) => {
   const { itemType, isDragging, item, initialOffset, currentOffset } =
     useDragLayer((monitor) => {
       return {
@@ -50,12 +46,7 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ onDrag }) => {
   const layer = () => {
     switch (itemType) {
       case ItemTypes.Component:
-        return (
-          <DashboardWidget
-            componentTag={item.componentTag}
-            messageOverrides={DefaultDashboardMessages}
-          />
-        );
+        return <DragLayerWidget widgetType={item.componentTag} />;
       default:
         return null;
     }
@@ -71,5 +62,3 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ onDrag }) => {
     </div>
   );
 };
-
-export default CustomDragLayer;

@@ -7,11 +7,12 @@ import type { DashboardState } from '~/store/state';
 import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
 import { useClients } from '~/components/dashboard/clientContext';
 import { useMemo } from 'react';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { IoTSiteWiseAssistantClient } from '@iot-app-kit/core-util';
 import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
 } from '~/store/actions/assistantWidgetsSelection';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
 export const useAssistantConfiguration = (widgetId: string) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export const useAssistantConfiguration = (widgetId: string) => {
 
   const assistantClient = useMemo(
     () =>
-      new IoTSitewiseAssistantClient({
+      new IoTSiteWiseAssistantClient({
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         iotSiteWiseClient: iotSiteWise!,
       }),
@@ -64,7 +65,9 @@ export const useAssistantConfiguration = (widgetId: string) => {
           dispatch(
             onAssistantSelectWidgetsAction({
               widgetId: event.sourceComponentId,
-              widgetType: event.sourceComponentType ?? '',
+              // FIXME: type of source component is string and not widget type
+              widgetType: (event.sourceComponentType ??
+                '') as RegisteredWidgetType,
               selectedProperties,
             })
           );

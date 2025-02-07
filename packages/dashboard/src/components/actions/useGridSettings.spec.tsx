@@ -1,7 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { Provider } from 'react-redux';
-
 import type { ReactNode } from 'react';
+import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { initialState } from '~/store/state';
 import { useGridSettings } from './useGridSettings';
@@ -20,7 +19,7 @@ it('has initial values', () => {
   expect(result.current.rows).toBe(initialState.grid.height);
   expect(result.current.columns).toBe(initialState.grid.width);
   expect(result.current.cellSize).toBe(initialState.grid.cellSize);
-  expect(result.current.significantDigits).toBe(initialState.significantDigits);
+  expect(result.current.significantDigits).toBe(initialState.decimalPlaces);
 });
 
 it('has can change values', () => {
@@ -46,7 +45,7 @@ it('has can change values', () => {
   });
   expect(result.current.columns).toBe(initialWidth + 1);
 
-  const initialSignificantDigits = initialState.significantDigits;
+  const initialSignificantDigits = initialState.decimalPlaces;
   act(() => {
     result.current.onChangeSignificantDigits(initialSignificantDigits + 1);
   });

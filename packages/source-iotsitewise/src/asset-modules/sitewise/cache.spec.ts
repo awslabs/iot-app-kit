@@ -1,10 +1,9 @@
 import { SiteWiseAssetCache } from './cache';
-import { LoadingStateEnum } from './types';
 import { ASSET_MODEL_ID, sampleAssetModel } from '../../__mocks__/assetModel';
 import {
-  sampleAssetSummary,
   ASSET_ID,
   sampleAssetDescription,
+  sampleAssetSummary,
 } from '../../__mocks__/asset';
 import { samplePropertyValue } from '../../__mocks__/assetPropertyValue';
 
@@ -71,12 +70,12 @@ describe('cacheAssetHierarchy', () => {
     cache.appendHierarchyResults(
       HIERARCHY_ID,
       [sampleAssetSummary],
-      LoadingStateEnum.LOADING,
+      'LOADING',
       'next1'
     );
     expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({
       assetIds: [ASSET_ID],
-      loadingStage: LoadingStateEnum.LOADING,
+      loadingStage: 'LOADING',
       paginationToken: 'next1',
     });
   });
@@ -85,21 +84,21 @@ describe('cacheAssetHierarchy', () => {
     cache.appendHierarchyResults(
       HIERARCHY_ID,
       [sampleAssetSummary],
-      LoadingStateEnum.PAUSED,
+      'PAUSED',
       'next2'
     );
     expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({
       assetIds: [ASSET_ID, ASSET_ID],
-      loadingStage: LoadingStateEnum.PAUSED,
+      loadingStage: 'PAUSED',
       paginationToken: 'next2',
     });
   });
 
   it('returns the updated loading state for a hierarchy when it is changed', () => {
-    cache.setHierarchyLoadingState(HIERARCHY_ID, LoadingStateEnum.LOADED);
+    cache.setHierarchyLoadingState(HIERARCHY_ID, 'LOADED');
     expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({
       assetIds: [ASSET_ID, ASSET_ID],
-      loadingStage: LoadingStateEnum.LOADED,
+      loadingStage: 'LOADED',
       paginationToken: 'next2',
     });
   });

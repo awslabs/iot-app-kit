@@ -1,8 +1,8 @@
 import isFunction from 'lodash-es/isFunction';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import { useKeyPress } from '../../hooks/useKeyPress';
+import { useSelectedWidgets } from '~/features/selection/use-selected-widgets';
+import { useKeyPress } from '~/hooks/useKeyPress';
 import {
   onBringWidgetsToFrontAction,
   onCopyWidgetsAction,
@@ -10,12 +10,12 @@ import {
   onPasteWidgetsAction,
   onSelectWidgetsAction,
   onSendWidgetsToBackAction,
-} from '../../store/actions';
+} from '~/store/actions';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
-type useKeyboardShortcutsProps = {
-  deleteWidgets?: () => void;
-};
+interface useKeyboardShortcutsProps {
+  deleteWidgets?: VoidFunction | undefined;
+}
 
 export const useKeyboardShortcuts = ({
   deleteWidgets: handleDeleteWidgetModal,
@@ -58,19 +58,16 @@ export const useKeyboardShortcuts = ({
     } else {
       dispatch(
         onDeleteWidgetsAction({
-          widgets: selectedWidgets,
+          widgetIds: selectedWidgets,
         })
       );
     }
   }, [selectedWidgets, dispatch, handleDeleteWidgetModal]);
 
-  /**
-   * Keyboard hotkey / shortcut configuration
-   * key press filter makes sure that the event is not coming from
-   * other areas where we might use keyboard interactions such as
-   * the settings pane or a text area in a widget
-   */
-
+  // Keyboard hotkey / shortcut configuration
+  // key press filter makes sure that the event is not coming from
+  // other areas where we might use keyboard interactions such as
+  // the settings pane or a text area in a widget
   const keyPressFilter = (e: KeyboardEvent | ClipboardEvent) =>
     e.target !== null &&
     e.target instanceof Element &&

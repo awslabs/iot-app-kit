@@ -9,7 +9,7 @@ const viewportMap: Map<string, Viewport> = new Map();
  * Publicly exposed manager of viewport groups. Allows components, both internally to IoT App Kit,
  * and external components / code to broadcast updates to viewports within a group.
  *
- * Utilized to allow widgets to provide a synchronized view into data - an example can be
+ * Utilized to allow widget-instance to provide a synchronized view into data - an example can be
  * found at https://synchrocharts.com/#/Features/Synchronization
  */
 export const viewportManager = {

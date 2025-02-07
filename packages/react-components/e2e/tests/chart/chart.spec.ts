@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const TEST_PAGE =
-  '/iframe.html?args=&id=widgets-base-chart--default-base-chart';
+  '/iframe.html?args=&id=widget-instance-base-chart--default-base-chart';
 
 test('line chart default settings', async ({ page }) => {
   await page.goto(TEST_PAGE);

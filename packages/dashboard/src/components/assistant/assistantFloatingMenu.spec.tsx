@@ -2,7 +2,6 @@ import { act, render } from '@testing-library/react';
 import ue from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { Provider } from 'react-redux';
-import { DefaultDashboardMessages } from '~/messages';
 import { configureDashboardStore } from '~/store';
 import {
   onAssistantCleanWidgetsSelectionAction,
@@ -27,10 +26,7 @@ const TestProvider: React.FC<{
 
 const Component = () => (
   <TestProvider>
-    <AssistantFloatingMenu
-      width={500}
-      messageOverrides={DefaultDashboardMessages}
-    />
+    <AssistantFloatingMenu width={500} />
   </TestProvider>
 );
 
@@ -39,7 +35,7 @@ describe('Chatbot', () => {
     const { getByRole } = render(<Component />);
     expect(
       getByRole('button', {
-        name: DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
+        name: 'AI Assistant',
       })
     ).toBeInTheDocument();
   });
@@ -49,19 +45,18 @@ describe('Chatbot', () => {
 
     await user.click(
       getByRole('button', {
-        name: DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
+        name: 'AI Assistant',
       })
     );
 
     expect(
       getByRole('button', {
-        name: DefaultDashboardMessages.assistant.floatingMenu.buttonClearAll,
+        name: 'Clear all',
       })
     ).toBeInTheDocument();
     expect(
       getByRole('button', {
-        name: DefaultDashboardMessages.assistant.floatingMenu
-          .buttonGenerateSummary,
+        name: 'Generate summary',
       })
     ).toBeInTheDocument();
   });
@@ -79,18 +74,17 @@ describe('Chatbot', () => {
 
     expect(
       queryByRole('button', {
-        name: DefaultDashboardMessages.assistant.floatingMenu.buttonClearAll,
+        name: 'Clear all',
       })
     ).toBeNull();
     expect(
       queryByRole('button', {
-        name: DefaultDashboardMessages.assistant.floatingMenu
-          .buttonGenerateSummary,
+        name: 'Generate summary',
       })
     ).toBeNull();
   });
 
-  it('should display error message when number of widgets selected bigger than max allowed', async () => {
+  it('should display error message when number of widget-instance selected bigger than max allowed', async () => {
     const { getByText, getByRole } = render(<Component />);
 
     act(() => {
@@ -149,8 +143,7 @@ describe('Chatbot', () => {
 
     expect(
       getByText(
-        DefaultDashboardMessages.assistant.floatingMenu.error
-          .propertyLimitMessage
+        'You can select up to 3 properties to summarize using generative AI for now. More options are coming soon.'
       )
     ).toBeInTheDocument();
   });
@@ -183,7 +176,7 @@ it('should clear all selection if clear all button is clicked', async () => {
 
   await user.click(
     getByRole('button', {
-      name: DefaultDashboardMessages.assistant.floatingMenu.buttonClearAll,
+      name: 'Clear all',
     })
   );
 
@@ -217,8 +210,7 @@ it('should open the chatbot when generate summary is clicked', async () => {
 
   await user.click(
     getByRole('button', {
-      name: DefaultDashboardMessages.assistant.floatingMenu
-        .buttonGenerateSummary,
+      name: 'Generate summary',
     })
   );
 

@@ -1,29 +1,24 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { type SiteWiseComponentSession } from '../component-session';
 import {
-  timeSeriesDataSession,
-  assetSession,
   alarmsSession,
+  assetSession,
+  timeSeriesDataSession,
 } from '../sessions';
 import type {
+  DataModuleSubscription,
   Provider,
   ProviderObserver,
+  SubscriptionUpdate,
   TimeSeriesData,
   Viewport,
-  DataModuleSubscription,
-  SubscriptionUpdate,
 } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
 
-/**
- * Provider for SiteWise time series data
- */
+/** Provider for SiteWise time series data */
 export class SiteWiseTimeSeriesDataProvider
   implements Provider<TimeSeriesData[]>
 {
-  private update: (
-    subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>
-  ) => void = () => {};
   public session: SiteWiseComponentSession;
   public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
 
@@ -72,4 +67,8 @@ export class SiteWiseTimeSeriesDataProvider
       },
     });
   }
+
+  private update: (
+    subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>
+  ) => void = () => {};
 }

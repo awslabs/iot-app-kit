@@ -43,7 +43,7 @@ export type SiteWiseAnomalyDataSourceOptions = {
 /**
  * Query to get parsed Anomaly Results from SiteWise
  * These events are mapped into an Anomaly datasource
- * to be used within appkit charts / widgets
+ * to be used within appkit charts / widget-instance
  *
  * Events are fetched by asset or assetModel.
  * The anomnaly model is determined by using the assetId

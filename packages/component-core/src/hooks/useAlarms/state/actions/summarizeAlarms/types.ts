@@ -1,42 +1,39 @@
-import {
-  type DescribeAssetModelResponse,
-  type DescribeAssetResponse,
+import type {
+  DescribeAssetModelResponse,
+  DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
-import {
-  type AlarmAssetModelRequest,
-  type AlarmAssetRequest,
-  type AlarmCompositeModelRequest,
-  type AlarmDataStatus,
-  type AlarmInputPropertyRequest,
+import type {
+  AlarmAssetModelRequest,
+  AlarmAssetRequest,
+  AlarmCompositeModelRequest,
+  AlarmDataStatus,
+  AlarmInputPropertyRequest,
 } from '../../../types';
 
 /**
  * Summarize Alarms
  */
-export type AlarmAssetSummary = {
-  /**
-   * dont depend on UseQueryResult
-   * map out data and status
-   */
+export interface AlarmAssetSummary {
+  // dont depend on UseQueryResult map out data and status
   request:
     | AlarmCompositeModelRequest
     | AlarmInputPropertyRequest
     | AlarmAssetRequest;
   status: AlarmDataStatus;
   data: DescribeAssetResponse | undefined;
-};
+}
 
-export type AlarmAssetModelSummary = {
+export interface AlarmAssetModelSummary {
   request: AlarmAssetModelRequest;
   status: AlarmDataStatus;
   data: DescribeAssetModelResponse | undefined;
-};
+}
 
-export type SummarizeAlarmActionPayload = {
+export interface SummarizeAlarmActionPayload {
   assetModelSummaries?: AlarmAssetModelSummary[];
   assetSummaries?: AlarmAssetSummary[];
-};
+}
 
-export type SummarizeAlarmAction = SummarizeAlarmActionPayload & {
+export interface SummarizeAlarmAction extends SummarizeAlarmActionPayload {
   type: 'SUMMARIZE_ALARMS';
-};
+}

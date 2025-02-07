@@ -1,10 +1,16 @@
+import type { DashboardState } from './state';
 import { initialState } from './state';
+import type { DashboardAction } from './actions';
 import {
+  assistantCleanWidgetsSelection,
+  assistantDeselectWidgets,
+  assistantSelectWidgets,
   bringWidgetsToFront,
   changeDashboardCellSize,
   changeDashboardGridDragEnabled,
   changeDashboardHeight,
   changeDashboardWidth,
+  cleanAssistant,
   copyWidgets,
   deleteWidgets,
   moveWidgets,
@@ -12,23 +18,16 @@ import {
   resizeWidgets,
   selectWidgets,
   sendWidgetsToBack,
-  toggleReadOnly,
-  toggleChatbot,
   toggleAssistantMode,
-  assistantSelectWidgets,
-  assistantDeselectWidgets,
+  toggleChatbot,
+  toggleReadOnly,
+  updateDefaultViewport,
+  updateRefreshRate,
   updateSignificantDigits,
   updateWidgets,
-  updateRefreshRate,
-  updateDefaultViewport,
-  assistantCleanWidgetsSelection,
-  cleanAssistant,
 } from './actions';
-
 import { createWidgets } from './actions/createWidget';
 import type { Reducer } from 'redux';
-import type { DashboardState } from './state';
-import type { DashboardAction } from './actions';
 
 export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
   state: DashboardState = initialState,

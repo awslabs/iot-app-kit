@@ -1,14 +1,14 @@
 /**
  * Log represents a single event message to record.
  */
-export type Log = {
+export interface Log {
   /**
    * Additional contexts to include.
    */
   contexts?: Record<string, string>;
   message: string;
   timestamp?: Date;
-};
+}
 
 /**
  * Logger gathers/emits {@link Log}.

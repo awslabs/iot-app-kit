@@ -1,6 +1,8 @@
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
+
 export const isModeledPropertyInvalid = (
   dataType?: string,
-  widgetType?: string
+  widgetType?: RegisteredWidgetType
 ) => {
   if (!widgetType || !dataType) return false;
 

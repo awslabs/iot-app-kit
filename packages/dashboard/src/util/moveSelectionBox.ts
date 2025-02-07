@@ -1,11 +1,11 @@
-import { type Position, type Rect } from '~/types';
+import type { Position, Rectangle } from '~/types';
 import { type DashboardState } from '~/store/state';
 
 export const moveSelectionBox: (params: {
-  selectionBox: Rect;
+  selectionBox: Rectangle;
   vector: Position;
   grid: DashboardState['grid'];
-}) => Rect = ({ selectionBox, vector, grid }) => {
+}) => Rectangle = ({ selectionBox, vector, grid }) => {
   const newRect = { ...selectionBox };
   if (newRect.x + vector.x < 0) {
     vector.x = 0 - newRect.x;

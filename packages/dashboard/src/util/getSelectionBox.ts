@@ -1,9 +1,10 @@
-import type { Rect, DashboardWidget } from '~/types';
+import type { Rectangle } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-// Returns the smallest rectangle which can contain all the selected widgets
+// Returns the smallest rectangle which can contain all the selected widget-instance
 export const getSelectionBox = (
-  selectedWidgets: DashboardWidget[]
-): Rect | null => {
+  selectedWidgets: WidgetInstance[]
+): Rectangle | null => {
   if (selectedWidgets.length === 0) {
     return null;
   }

@@ -12,7 +12,7 @@ const constructEndpoint =
     ),
   });
 
-export const getEndpointPovider = ({
+export const getEndpointProvider = ({
   subDomain,
   awsRegion,
   awsPartition,

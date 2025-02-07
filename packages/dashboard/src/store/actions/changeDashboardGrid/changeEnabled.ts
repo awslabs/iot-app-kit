@@ -2,9 +2,10 @@ import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
 
-type ChangeDashboardGridEnabledPayload = {
+export interface ChangeDashboardGridEnabledPayload {
   enabled: boolean;
-};
+}
+
 export interface ChangeDashboardGridEnabledAction extends Action {
   type: 'CHANGE_ENABLED';
   payload?: ChangeDashboardGridEnabledPayload;

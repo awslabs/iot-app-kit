@@ -1,9 +1,10 @@
-import { type DataStream } from '@iot-app-kit/core';
+import type { DataStream } from '@iot-app-kit/core';
 
-export type UpdateAlarmInputDataActionPayload = {
+export interface UpdateAlarmInputDataActionPayload {
   dataStreams?: DataStream[];
-};
+}
 
-export type UpdateAlarmInputDataAction = UpdateAlarmInputDataActionPayload & {
+export interface UpdateAlarmInputDataAction
+  extends UpdateAlarmInputDataActionPayload {
   type: 'UPDATE_ALARM_INPUT_PROPERTY_DATA';
-};
+}

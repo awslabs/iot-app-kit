@@ -1,39 +1,58 @@
-export enum DashboardWidgetType {
-  XYPlot = 'xy-plot',
-  LineScatterChart = 'line-scatter-chart',
-  LineChart = 'line-chart',
-  ScatterChart = 'scatter-chart',
-  BarChart = 'bar-chart',
-  Kpi = 'kpi',
-  Status = 'status',
-  StatusTimeline = 'status-timeline',
-  Table = 'table',
-  Text = 'text',
-}
+import { XY_PLOT_WIDGET_TYPE as IAK_XY_PLOT_TYPE } from '~/plugins/xy-plot/constants';
+import { BAR_CHART_WIDGET_TYPE as IAK_BAR_CHART_TYPE } from '~/plugins/bar-chart/constants';
+import { KPI_WIDGET_TYPE as IAK_KPI_TYPE } from '~/plugins/kpi/constants';
+import { STATUS_TIMELINE_WIDGET_TYPE as IAK_STATUS_TIMELINE_TYPE } from '~/plugins/status-timeline/constants';
+import { TABLE_WIDGET_TYPE as IAK_TABLE_TYPE } from '~/plugins/table/constants';
+import { type AssetPropertyQuery } from '@iot-app-kit/source-iotsitewise';
 
-export enum MonitorWidgetType {
-  LineChart = 'sc-line-chart',
-  ScatterChart = 'sc-scatter-chart',
-  BarChart = 'sc-bar-chart',
-  StatusTimeline = 'sc-status-timeline',
-  Kpi = 'sc-kpi',
-  StatusGrid = 'sc-status-grid',
-  Table = 'sc-table',
-}
+const SC_LINE_CHART_TYPE = 'sc-line-chart';
+const SC_SCATTER_CHART_TYPE = 'sc-scatter-chart';
+const SC_BAR_CHART_TYPE = 'sc-bar-chart';
+const SC_KPI_TYPE = 'sc-kpi';
+const SC_STATUS_GRID_TYPE = 'sc-status-grid';
+const SC_STATUS_TIMELINE_TYPE = 'sc-status-timeline';
+const SC_TABLE_TYPE = 'sc-table';
 
-export enum SiteWiseWidgetType {
-  LINE_CHART = 'monitor-line-chart',
-  BAR_CHART = 'monitor-bar-chart',
-  SCATTER_CHART = 'monitor-scatter-chart',
-  STATUS_TIMELINE = 'monitor-status-timeline',
-  KPI = 'monitor-kpi',
-  STATUS_GRID = 'monitor-status-grid',
-  TABLE = 'monitor-table',
-}
-export interface MonitorTrend {
-  type: string;
-  color: string;
-}
+const MONITOR_LINE_CHART_TYPE = 'monitor-line-chart';
+const MONITOR_SCATTER_CHART_TYPE = 'monitor-scatter-chart';
+const MONITOR_BAR_CHART_TYPE = 'monitor-bar-chart';
+const MONITOR_KPI_TYPE = 'monitor-kpi';
+const MONITOR_STATUS_GRID_TYPE = 'monitor-status-grid';
+const MONITOR_STATUS_TIMELINE_TYPE = 'monitor-status-timeline';
+const MONITOR_TABLE_TYPE = 'monitor-table';
+
+export const widgetMap = {
+  [SC_LINE_CHART_TYPE]: IAK_XY_PLOT_TYPE,
+  [SC_SCATTER_CHART_TYPE]: IAK_XY_PLOT_TYPE,
+  [SC_BAR_CHART_TYPE]: IAK_BAR_CHART_TYPE,
+  [SC_KPI_TYPE]: IAK_KPI_TYPE,
+  [SC_STATUS_GRID_TYPE]: IAK_KPI_TYPE,
+  [SC_STATUS_TIMELINE_TYPE]: IAK_STATUS_TIMELINE_TYPE,
+  [SC_TABLE_TYPE]: IAK_TABLE_TYPE,
+
+  [MONITOR_LINE_CHART_TYPE]: IAK_XY_PLOT_TYPE,
+  [MONITOR_SCATTER_CHART_TYPE]: IAK_XY_PLOT_TYPE,
+  [MONITOR_BAR_CHART_TYPE]: IAK_BAR_CHART_TYPE,
+  [MONITOR_KPI_TYPE]: IAK_KPI_TYPE,
+  [MONITOR_STATUS_GRID_TYPE]: IAK_KPI_TYPE,
+  [MONITOR_STATUS_TIMELINE_TYPE]: IAK_STATUS_TIMELINE_TYPE,
+  [MONITOR_TABLE_TYPE]: IAK_TABLE_TYPE,
+} as const;
+
+export type WidgetMap = typeof widgetMap;
+
+export type ReverseWidgetMap = {
+  [K in keyof WidgetMap as WidgetMap[K]]: K;
+};
+
+export const isMappedToWidget = <WidgetType extends keyof ReverseWidgetMap>(
+  widgetType: WidgetType,
+  widget: ForeignWidgetInstance
+): widget is ForeignWidgetInstance<WidgetType> => {
+  return widgetMap[widget.type as keyof WidgetMap] === widgetType;
+};
+
+export type ForeignWidgetType = keyof typeof widgetMap;
 
 export interface MonitorAnalysis {
   trends?: string[]; // We don't currently support trend lines but Monitor does
@@ -65,8 +84,10 @@ export interface MonitorProperties {
   colorDataAcrossThresholds: boolean;
 }
 
-export interface MonitorWidget {
-  type: MonitorWidgetType | SiteWiseWidgetType;
+export interface ForeignWidgetInstance<
+  WidgetType extends keyof ReverseWidgetMap = keyof ReverseWidgetMap
+> {
+  type: ReverseWidgetMap[WidgetType];
   title: string;
   x: number;
   y: number;
@@ -78,36 +99,8 @@ export interface MonitorWidget {
   alarms?: string[]; // We don't currently support alarms but Monitor does
 }
 
-export interface SiteWiseMonitorDashboardDefinition {
-  widgets?: MonitorWidget[];
+export interface ForeignDashboardDefinition {
+  widgets?: ForeignWidgetInstance[];
 }
 
-export interface ApplicationProperty {
-  propertyId: string;
-  aggregationType?: string;
-  resolution?: string;
-  refId?: string;
-  color?: string;
-  name?: string;
-}
-
-interface ApplicationAsset {
-  assetId: string;
-  properties: ApplicationProperty[];
-}
-
-interface ApplicationQuery {
-  properties: string[];
-  assets: ApplicationAsset[];
-}
-
-interface ApplicationQueryConfig {
-  source: string;
-  query: ApplicationQuery;
-}
-
-export interface QueryConfig {
-  queryConfig: ApplicationQueryConfig;
-}
-
-export type AssetMap = Record<string, ApplicationProperty[]>;
+export type AssetMap = Record<string, AssetPropertyQuery[]>;

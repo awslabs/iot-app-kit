@@ -1,4 +1,4 @@
-import DataSourceStore from './dataSourceStore';
+import { DataSourceStore } from './dataSourceStore';
 import type { DataSource } from '../types';
 
 it('initiate a request on a registered data source', () => {

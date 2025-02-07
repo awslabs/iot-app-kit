@@ -1,4 +1,4 @@
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { initialize, type Resolution } from '@iot-app-kit/source-iotsitewise';
 import {
   type AggregateType,
   type IoTSiteWiseClient,
@@ -19,7 +19,7 @@ export const buildTransformAlarmForSingleQueryWidgets =
     iotSiteWiseClient?: IoTSiteWiseClient;
     iotEventsClient?: IoTEventsClient;
     aggregationType?: AggregateType;
-    resolution?: string;
+    resolution?: Resolution;
   }) =>
   (alarm: AlarmData) => {
     const { inputProperty, assetId, status, state } = alarm;

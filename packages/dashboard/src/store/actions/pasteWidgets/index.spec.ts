@@ -1,16 +1,14 @@
-import { onPasteWidgetsAction, pasteWidgets } from '.';
-import { initialState } from '../../state';
-
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { initialState, type DashboardState } from '../../state';
+import { onPasteWidgetsAction, pasteWidgets } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = [],
-  copiedWidgets: DashboardWidget[] = []
+  widgets: WidgetInstance[] = [],
+  copiedWidgets: WidgetInstance[] = []
 ): DashboardState => ({
   ...initialState,
   grid: {
@@ -84,7 +82,7 @@ it('paste single widget a second time, shifts the position down', () => {
   );
 });
 
-it('paste multiple widgets', () => {
+it('paste multiple widget-instance', () => {
   expect(
     pasteWidgets(
       setupDashboardState(
@@ -143,7 +141,7 @@ it('pastes a widget at a specific location', () => {
   );
 });
 
-it('pastes multiple widgets at a specific location', () => {
+it('pastes multiple widget-instance at a specific location', () => {
   expect(
     pasteWidgets(
       setupDashboardState(
@@ -180,7 +178,7 @@ it('pastes multiple widgets at a specific location', () => {
   );
 });
 
-it('selects the widgets that are pasted', () => {
+it('selects the widget-instance that are pasted', () => {
   const selectedWidgets = pasteWidgets(
     setupDashboardState(
       [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
@@ -191,7 +189,7 @@ it('selects the widgets that are pasted', () => {
     })
   ).selectedWidgets;
 
-  // the newly pasted widgets are selected
+  // the newly pasted widget-instance are selected
   expect(selectedWidgets).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -207,7 +205,7 @@ it('selects the widgets that are pasted', () => {
     ])
   );
 
-  // the initial copied widgets are not selected
+  // the initial copied widget-instance are not selected
   expect(selectedWidgets).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -248,7 +246,7 @@ it('pastes a widget at right edge location', () => {
   );
 });
 
-it('pastes multiple widgets at right edge location', () => {
+it('pastes multiple widget-instance at right edge location', () => {
   expect(
     pasteWidgets(
       setupDashboardState(

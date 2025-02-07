@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import CustomOrangeButton from './index';
+import { CustomOrangeButton } from './index';
 
 describe('CustomOrangeButton', () => {
   const title = 'Test Button';
@@ -11,6 +11,7 @@ describe('CustomOrangeButton', () => {
     );
     expect(getByText(title)).toBeInTheDocument();
   });
+
   test('calls handleClick when button is clicked', () => {
     const { getByRole } = render(
       <CustomOrangeButton title={title} handleClick={handleClick} />

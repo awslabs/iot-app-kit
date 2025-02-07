@@ -8,7 +8,7 @@ import {
   mockThresholdAssetProperty,
 } from '../testing/alarms';
 import { transformAlarmsToThreshold } from './transformAlarmsToThreshold';
-import { COMPARATOR_MAP } from '../common/constants';
+import { COMPARISON_OPERATOR_TEXT_LABEL_MAP } from '../common/constants';
 import { type AlarmData } from '../hooks/useAlarms';
 import { DATA_STREAM } from '../testing/mockWidgetProperties';
 
@@ -37,7 +37,9 @@ describe('transformAlarmsToThreshold', () => {
     expect(alarmThreshold?.label?.text).toContain(
       MOCK_ALARM_INPUT_PROPERTY_NAME
     );
-    expect(alarmThreshold?.label?.text).toContain(COMPARATOR_MAP.GT);
+    expect(alarmThreshold?.label?.text).toContain(
+      COMPARISON_OPERATOR_TEXT_LABEL_MAP.GT
+    );
     expect(alarmThreshold?.label?.text).toContain(
       mockThresholdAssetProperty.value?.doubleValue?.toString()
     );

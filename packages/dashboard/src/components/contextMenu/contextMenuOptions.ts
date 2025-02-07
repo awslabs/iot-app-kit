@@ -1,52 +1,59 @@
-import { keyboardShortcuts } from '~/messages';
-import type { ContextMenuMessages } from '~/messages';
+import { isMacLike } from '~/util/browser';
 
-type ContextMenuOptionConfiguration = {
+const mod = isMacLike ? '⌘' : 'Ctrl';
+export const keyboardShortcuts = {
+  mod,
+  copy: `${mod}C`,
+  paste: `${mod}V`,
+  bringToFront: ']',
+  sendToBack: '[',
+};
+
+interface ContextMenuOptionConfiguration {
   id: string;
-  action: () => void;
+  action: VoidFunction;
   text: string;
   disabled: boolean;
   hotkey?: string;
-};
+}
 
-type ContextMenuSectionConfiguration = {
+interface ContextMenuSectionConfiguration {
   id: string;
   options: ContextMenuOptionConfiguration[];
-};
+}
 
 export type ContextMenuConfiguration = ContextMenuSectionConfiguration[];
 
-export type ContextMenuConfigurationProps = {
-  messages: ContextMenuMessages;
+export interface ContextMenuConfigurationProps {
   actions: {
-    copyAction: () => void;
-    pasteAction: () => void;
-    deleteAction: () => void;
-    bringToFrontAction: () => void;
-    sendToBackAction: () => void;
+    copyAction: VoidFunction;
+    pasteAction: VoidFunction;
+    deleteAction: VoidFunction;
+    bringToFrontAction: VoidFunction;
+    sendToBackAction: VoidFunction;
   };
   state: {
     hasSelectedWidgets: boolean;
     hasCopiedWidgets: boolean;
   };
-};
+}
 
 type OptionCreator = (
   props: ContextMenuConfigurationProps
 ) => ContextMenuOptionConfiguration;
 
-type ContextMenuConfigurationCreator = {
+interface ContextMenuConfigurationCreator {
   id: string;
   options: OptionCreator[];
-};
+}
 
 const createCopyOption: OptionCreator = (
   props: ContextMenuConfigurationProps
 ): ContextMenuOptionConfiguration => {
-  const { actions, messages, state } = props;
+  const { actions, state } = props;
   return {
     id: 'copy',
-    text: messages.copyText,
+    text: 'Copy',
     hotkey: keyboardShortcuts.copy,
     disabled: !state.hasSelectedWidgets,
     action: actions.copyAction,
@@ -56,10 +63,10 @@ const createCopyOption: OptionCreator = (
 const createPasteOption: OptionCreator = (
   props: ContextMenuConfigurationProps
 ): ContextMenuOptionConfiguration => {
-  const { actions, messages, state } = props;
+  const { actions, state } = props;
   return {
     id: 'paste',
-    text: messages.pasteText,
+    text: 'Paste',
     hotkey: keyboardShortcuts.paste,
     disabled: !state.hasCopiedWidgets,
     action: actions.pasteAction,
@@ -69,10 +76,10 @@ const createPasteOption: OptionCreator = (
 const createDeleteOption: OptionCreator = (
   props: ContextMenuConfigurationProps
 ): ContextMenuOptionConfiguration => {
-  const { actions, messages, state } = props;
+  const { actions, state } = props;
   return {
     id: 'delete',
-    text: messages.deleteText,
+    text: 'Delete',
     disabled: !state.hasSelectedWidgets,
     action: actions.deleteAction,
   };
@@ -81,10 +88,10 @@ const createDeleteOption: OptionCreator = (
 const createBringToFrontOption: OptionCreator = (
   props: ContextMenuConfigurationProps
 ): ContextMenuOptionConfiguration => {
-  const { actions, messages, state } = props;
+  const { actions, state } = props;
   return {
     id: 'bringToFront',
-    text: messages.bringToFrontText,
+    text: 'Bring to front',
     hotkey: keyboardShortcuts.bringToFront,
     disabled: !state.hasSelectedWidgets,
     action: actions.bringToFrontAction,
@@ -94,10 +101,10 @@ const createBringToFrontOption: OptionCreator = (
 const createSendToBackOption: OptionCreator = (
   props: ContextMenuConfigurationProps
 ): ContextMenuOptionConfiguration => {
-  const { actions, messages, state } = props;
+  const { actions, state } = props;
   return {
     id: 'sendToBack',
-    text: messages.sendToBackText,
+    text: 'Send to back',
     hotkey: keyboardShortcuts.sendToBack,
     disabled: !state.hasSelectedWidgets,
     action: actions.sendToBackAction,

@@ -64,7 +64,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
       <Gauge
         viewport={{ duration: '5m' }}
         size={size}
-        significantDigits={significantDigits}
+        decimalPlaces={significantDigits}
         query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
         settings={settings as GaugeSettings}
         titleText='Average Speed'

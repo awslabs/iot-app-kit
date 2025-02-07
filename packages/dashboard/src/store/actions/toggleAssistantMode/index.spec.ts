@@ -1,6 +1,6 @@
 import { configureDashboardStore } from '~/store';
-import { onToggleAssistantModeAction, toggleAssistantMode } from '.';
 import { initialState } from '../../state';
+import { onToggleAssistantModeAction, toggleAssistantMode } from './index';
 
 it('initial state of assistant mode is odd', () => {
   expect(initialState.assistant.mode).toEqual('off');

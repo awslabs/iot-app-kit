@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react';
-
-import './index.css';
+import Box, { type BoxProps } from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import { type IconProps } from '@cloudscape-design/components/icon';
 import {
   colorBackgroundLayoutMain,
   colorBackgroundSegmentActive,
@@ -10,23 +10,22 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import Box, { type BoxProps } from '@cloudscape-design/components/box';
-import Button from '@cloudscape-design/components/button';
-import { type IconProps } from '@cloudscape-design/components/icon';
-import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
 import { Tooltip } from '@iot-app-kit/react-components';
+import { type ReactNode } from 'react';
+import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
+import './index.css';
 
-type CollapsiblePanelProps = {
+export interface CollapsiblePanelProps {
   isPanelCollapsed: boolean;
   panelWidth: number;
-  onCollapsedPanelClick: () => void;
+  onCollapsedPanelClick: VoidFunction;
   panelContent: ReactNode;
   icon: ReactNode;
   iconBackground?: string;
   side: 'right' | 'left';
   headerText: string;
   hideHeaderWhenExpanded?: boolean;
-};
+}
 
 export function CollapsiblePanel(props: CollapsiblePanelProps) {
   // Used to set the borderRight or borderLeft prop of the pane

@@ -6,7 +6,7 @@ import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../testing/mocks';
-import WidgetActions from './widgetActions';
+import { WidgetActions } from './widgetActions';
 
 describe('WidgetActions', () => {
   it('can remove a widget', function () {

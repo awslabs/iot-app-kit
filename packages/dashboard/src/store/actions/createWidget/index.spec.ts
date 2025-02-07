@@ -1,13 +1,12 @@
-import { createWidgets, onCreateWidgetsAction } from '.';
-import { initialState } from '../../state';
-
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
   MOCK_SCATTER_CHART_WIDGET,
 } from '../../../../testing/mocks';
+import { initialState } from '../../state';
+import { createWidgets, onCreateWidgetsAction } from './index';
 
-it('does nothing if no widgets are provided', () => {
+it('does nothing if no widget-instance are provided', () => {
   expect(
     createWidgets(
       initialState,
@@ -29,7 +28,7 @@ it('adds a widget to an empty dashboard', () => {
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
-it('adds a widget to a dashboard with existing widgets', () => {
+it('adds a widget to a dashboard with existing widget-instance', () => {
   const state = createWidgets(
     initialState,
     onCreateWidgetsAction({
@@ -47,7 +46,7 @@ it('adds a widget to a dashboard with existing widgets', () => {
   ).toEqual([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]);
 });
 
-it('adds multiple widgets to a dashboard with existing widgets', () => {
+it('adds multiple widget-instance to a dashboard with existing widget-instance', () => {
   const state = createWidgets(
     initialState,
     onCreateWidgetsAction({
@@ -70,7 +69,7 @@ it('adds multiple widgets to a dashboard with existing widgets', () => {
   ]);
 });
 
-it('selects the widgets that are created', () => {
+it('selects the widget-instance that are created', () => {
   const selectedWidgets = createWidgets(
     initialState,
     onCreateWidgetsAction({

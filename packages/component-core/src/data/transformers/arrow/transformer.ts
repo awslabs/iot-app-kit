@@ -1,6 +1,6 @@
 import { type DataSource, type DataSourceTransformer } from '../../types';
 import { type ArrowDataSource } from './dataSource';
-import { type ArrowDataSourceValue, FieldType } from './input';
+import { type ArrowDataSourceValue, type FieldType } from './input';
 
 /**
  * Abstract arrow transformer
@@ -13,33 +13,6 @@ export abstract class ArrowDataSourceTransformer<
   Description
 > implements DataSourceTransformer<TransformedData, Description>
 {
-  #validField(field: unknown, length: number) {
-    return (
-      field != null &&
-      typeof field === 'object' &&
-      'name' in field &&
-      typeof field.name === 'string' &&
-      'type' in field &&
-      typeof field.type === 'string' &&
-      Object.values(FieldType).includes(field.type as FieldType) &&
-      'values' in field &&
-      Array.isArray(field.values) &&
-      field.values.length === length
-    );
-  }
-
-  #validFields(data: object) {
-    return (
-      'fields' in data &&
-      Array.isArray(data.fields) &&
-      'length' in data &&
-      typeof data.length === 'number' &&
-      data.fields.every((field) =>
-        this.#validField(field, data.length as number)
-      )
-    );
-  }
-
   canTransform(
     datasource: DataSource
   ): datasource is ArrowDataSource<DataSourceValue> {
@@ -58,4 +31,35 @@ export abstract class ArrowDataSourceTransformer<
   ): TransformedData;
 
   abstract describe(dataSource: ArrowDataSource<DataSourceValue>): Description;
+
+  #validField(field: unknown, length: number) {
+    return (
+      field != null &&
+      typeof field === 'object' &&
+      'name' in field &&
+      typeof field.name === 'string' &&
+      'type' in field &&
+      typeof field.type === 'string' &&
+      Object.values([
+        'number',
+        'string',
+        'time',
+      ] satisfies FieldType[]).includes(field.type as FieldType) &&
+      'values' in field &&
+      Array.isArray(field.values) &&
+      field.values.length === length
+    );
+  }
+
+  #validFields(data: object) {
+    return (
+      'fields' in data &&
+      Array.isArray(data.fields) &&
+      'length' in data &&
+      typeof data.length === 'number' &&
+      data.fields.every((field) =>
+        this.#validField(field, data.length as number)
+      )
+    );
+  }
 }

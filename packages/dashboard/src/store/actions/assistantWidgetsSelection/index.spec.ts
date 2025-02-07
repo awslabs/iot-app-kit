@@ -1,17 +1,16 @@
 import {
+  MOCK_KPI_WIDGET,
+  MOCK_LINE_CHART_WIDGET,
+} from '../../../../testing/mocks';
+import { initialState, type DashboardState } from '../../state';
+import {
   assistantCleanWidgetsSelection,
   assistantDeselectWidgets,
   assistantSelectWidgets,
   onAssistantCleanWidgetsSelectionAction,
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
-} from '.';
-import { initialState } from '../../state';
-import {
-  MOCK_KPI_WIDGET,
-  MOCK_LINE_CHART_WIDGET,
-} from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
+} from './index';
 
 const dashboardState: DashboardState = {
   ...initialState,
@@ -40,7 +39,7 @@ it('selects a single widget', () => {
   ]);
 });
 
-it('selects two widgets', () => {
+it('selects two widget-instance', () => {
   const state = assistantSelectWidgets(
     dashboardState,
     onAssistantSelectWidgetsAction({
@@ -119,7 +118,7 @@ it('does nothing if widget deselect was not previously selected', () => {
   ]);
 });
 
-it('clean all widgets selection', () => {
+it('clean all widget-instance selection', () => {
   let state = assistantSelectWidgets(
     dashboardState,
     onAssistantSelectWidgetsAction({

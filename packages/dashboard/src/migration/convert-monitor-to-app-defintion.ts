@@ -1,9 +1,4 @@
 import { nanoid } from 'nanoid';
-import {
-  type DashboardConfiguration,
-  type DashboardWidget,
-  type MigrateDashboard,
-} from '../types';
 import { removeCollisions } from './collision-logic';
 import {
   appCellPerMonitorSquareHeight,
@@ -19,52 +14,30 @@ import {
   getStyleSettings,
 } from './getters';
 import {
-  DashboardWidgetType,
-  MonitorWidgetType,
-  SiteWiseWidgetType,
   type AssetMap,
+  type ForeignDashboardDefinition,
+  type ForeignWidgetInstance,
+  type ForeignWidgetType,
+  isMappedToWidget,
   type MonitorAnnotations,
   type MonitorMetric,
-  type MonitorWidget,
-  type QueryConfig,
-  type SiteWiseMonitorDashboardDefinition,
+  type ReverseWidgetMap,
+  type WidgetMap,
+  widgetMap,
 } from './types';
-
-const convertType = (monitorChartType: string) => {
-  switch (monitorChartType) {
-    case SiteWiseWidgetType.LINE_CHART:
-    case MonitorWidgetType.LineChart:
-      return DashboardWidgetType.XYPlot;
-    case SiteWiseWidgetType.BAR_CHART:
-    case MonitorWidgetType.BarChart:
-      return DashboardWidgetType.BarChart;
-    case SiteWiseWidgetType.SCATTER_CHART:
-    case MonitorWidgetType.ScatterChart:
-      return DashboardWidgetType.XYPlot;
-    case SiteWiseWidgetType.STATUS_TIMELINE:
-    case MonitorWidgetType.StatusTimeline:
-      return DashboardWidgetType.StatusTimeline;
-    case SiteWiseWidgetType.TABLE:
-    case MonitorWidgetType.Table:
-      return DashboardWidgetType.Table;
-    case SiteWiseWidgetType.KPI:
-    case MonitorWidgetType.Kpi:
-      return DashboardWidgetType.Kpi;
-    case SiteWiseWidgetType.STATUS_GRID:
-    case MonitorWidgetType.StatusGrid:
-      return DashboardWidgetType.Status;
-    default:
-      return DashboardWidgetType.XYPlot;
-  }
-};
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { type SiteWiseQueryConfig } from '~/features/queries/queries';
+import { type MigrateDashboard } from '~/types';
+import { type DashboardConfiguration } from '~/features/dashboard-configuration/dashboard-configuration';
+import { type RegisteredWidgetPlugins } from '~/features/widget-plugins/registry';
 
 const convertHeight = (height: number) => {
-  // Add some space between widgets by subtracting 0.5
+  // Add some space between widget-instance by subtracting 0.5
   return Math.max(height * appCellPerMonitorSquareHeight - 0.5, minHeight);
 };
 
 const convertWidth = (width: number) => {
-  // Add some space between widgets by subtracting 0.5
+  // Add some space between widget-instance by subtracting 0.5
   return Math.max(width * appCellsPerMonitorSquareWidth - 0.5, minWidth);
 };
 
@@ -100,7 +73,7 @@ const convertThresholds = (monitorAnnotations?: MonitorAnnotations) => {
 
 const convertMetricsToQueryConfig = (
   monitorMetrics: MonitorMetric[],
-  widgetType: MonitorWidgetType | SiteWiseWidgetType
+  widgetType: ForeignWidgetType
 ) => {
   const assetMap: AssetMap = {};
   const refIds = [];
@@ -126,7 +99,7 @@ const convertMetricsToQueryConfig = (
     }
   }
 
-  const assets = [];
+  const assets: NonNullable<SiteWiseQueryConfig['query']>['assets'] = [];
   const assetIds = Object.keys(assetMap);
   for (const assetId of assetIds) {
     const properties = assetMap[assetId];
@@ -135,25 +108,23 @@ const convertMetricsToQueryConfig = (
     }
   }
 
-  const queryConfig: QueryConfig = {
-    queryConfig: {
-      source: 'iotsitewise',
-      query: {
-        properties: [],
-        assets,
-      },
+  const queryConfig: SiteWiseQueryConfig = {
+    source: 'iotsitewise',
+    query: {
+      properties: [],
+      assets,
     },
   };
 
   return { queryConfig, refIds };
 };
 
-const convertProperties = (
-  widgetType: MonitorWidgetType | SiteWiseWidgetType,
+const convertProperties = <WidgetType extends ForeignWidgetType>(
+  widgetType: WidgetType,
   monitorMetrics?: MonitorMetric[],
   monitorAnnotations?: MonitorAnnotations,
   monitorTitle?: string
-) => {
+): RegisteredWidgetPlugins[WidgetMap[WidgetType]]['properties'] => {
   if (monitorMetrics) {
     const staticProperties = getStaticProperties(widgetType);
     const { queryConfig, refIds } = convertMetricsToQueryConfig(
@@ -169,111 +140,108 @@ const convertProperties = (
       ...thresholds,
       ...styleSettings,
       title: monitorTitle,
-    };
+    } as RegisteredWidgetPlugins[WidgetMap[WidgetType]]['properties'];
   }
+
   return getStaticProperties(widgetType);
 };
 
 const convertKpiAndGridWidget = (
-  monitorWidget: MonitorWidget
-): DashboardWidget[] => {
-  // For each metric in a monitor widget, create an application widget
-  if (monitorWidget.metrics) {
-    const appWidgets = [];
-    const { widgetWidth, widgetHeight, maxXCoord } =
-      getKPIAndGridData(monitorWidget);
+  foreignWidget: ForeignWidgetInstance<'kpi'>
+): WidgetInstance<'kpi'>[] => {
+  const kpiWidgets: WidgetInstance<'kpi'>[] = [];
 
-    let row = monitorWidget.y;
-    let column = monitorWidget.x;
+  // For each metric in a monitor widget, create an application widget
+  if (foreignWidget.metrics) {
+    const { widgetWidth, widgetHeight, maxXCoord } =
+      getKPIAndGridData(foreignWidget);
+
+    let row = foreignWidget.y;
+    let column = foreignWidget.x;
 
     const rowLength = widgetHeight;
     const columnLength = widgetWidth;
 
-    for (const [index, metric] of monitorWidget.metrics.entries()) {
-      const queryConfig: QueryConfig = {
-        queryConfig: {
-          source: 'iotsitewise',
-          query: {
-            properties: [],
-            assets: [
-              {
-                assetId: metric.assetId,
-                properties: [
-                  {
-                    propertyId: metric.propertyId,
-                    resolution: '0',
-                  },
-                ],
-              },
-            ],
-          },
+    for (const [index, metric] of foreignWidget.metrics.entries()) {
+      const queryConfig: SiteWiseQueryConfig = {
+        source: 'iotsitewise',
+        query: {
+          properties: [],
+          assets: [
+            {
+              assetId: metric.assetId,
+              properties: [
+                {
+                  propertyId: metric.propertyId,
+                  resolution: '0',
+                },
+              ],
+            },
+          ],
         },
       };
 
-      const newAppWidget: DashboardWidget = {
-        type: convertType(monitorWidget.type),
+      const newAppWidget: WidgetInstance<'kpi'> = {
+        type: widgetMap[foreignWidget.type],
         id: nanoid(12),
         x: convertX(column),
         y: convertY(row),
-        z: index, // Stack widgets in case of overlap
+        z: index, // Stack widget-instance in case of overlap
         width: convertWidth(widgetWidth),
         height: convertHeight(widgetHeight),
         properties: {
           primaryFont: {},
           secondaryFont: {},
-          title: monitorWidget.title,
+          title: foreignWidget.title,
           ...queryConfig,
           showTimestamp: true,
           showAggregationAndResolution: true,
-          resolution: '0',
           showUnit: true,
         },
       };
-      appWidgets.push(newAppWidget);
+      kpiWidgets.push(newAppWidget);
 
       // At end of widget width, reset to row below and start at left-most column
       if (column >= maxXCoord) {
         row = row + rowLength;
-        column = monitorWidget.x;
+        column = foreignWidget.x;
       } else {
         column = column + columnLength;
       }
     }
-
-    return appWidgets;
   }
-  return [];
+
+  return kpiWidgets;
 };
 
-export const convertWidget = (
-  widget: MonitorWidget,
+export const convertWidget = <WidgetType extends keyof ReverseWidgetMap>(
+  widget: ForeignWidgetInstance<WidgetType>,
   index?: number
-): DashboardWidget[] => {
+): WidgetInstance<WidgetType>[] => {
+  const widgetType = widgetMap[widget.type];
   // One-to-many relationship for KPI and Status Timeline in Monitor-to-Application conversion
-  if (
-    widget.type === MonitorWidgetType.Kpi ||
-    widget.type === MonitorWidgetType.StatusGrid ||
-    widget.type === SiteWiseWidgetType.KPI ||
-    widget.type === SiteWiseWidgetType.STATUS_GRID
-  ) {
-    return convertKpiAndGridWidget(widget);
+  //if (widgetMap[widget.type] === 'kpi') {
+  if (isMappedToWidget('kpi', widget)) {
+    return convertKpiAndGridWidget(widget) as WidgetInstance<WidgetType>[];
   } else {
+    const properties = convertProperties(
+      widget.type,
+      widget.metrics,
+      widget.annotations,
+      widget.title
+    ) as WidgetInstance<WidgetType>['properties'];
+
     return [
       {
-        type: convertType(widget.type),
+        type: widgetType,
         id: nanoid(12),
         x: convertX(widget.x),
         y: convertY(widget.y),
-        z: index ?? 0, // Stack widgets in case of overlap
+        z: index ?? 0, // Stack widget-instance in case of overlap
         width: convertWidth(widget.width),
         height: convertHeight(widget.height),
-        properties: convertProperties(
-          widget.type,
-          widget.metrics,
-          widget.annotations,
-          widget.title
-        ),
-      },
+        properties,
+      } as WidgetInstance<WidgetType>,
     ];
   }
 };
@@ -296,15 +264,14 @@ export const migrateDashboard: MigrateDashboard = async ({
     });
     const monitorDashboardDefinitionString = response.dashboardDefinition;
     if (monitorDashboardDefinitionString) {
-      const monitorDashboardDefinition: SiteWiseMonitorDashboardDefinition =
-        JSON.parse(
-          // sitewise dashboards with custom property names add a new line to the end of the string,
-          // which was erroring in JSON.parse. ex: "label":"Custom Name\n" would throw the error
-          // "JSON.parse: bad control character in string literal"
+      const monitorDashboardDefinition: ForeignDashboardDefinition = JSON.parse(
+        // sitewise dashboards with custom property names add a new line to the end of the string,
+        // which was erroring in JSON.parse. ex: "label":"Custom Name\n" would throw the error
+        // "JSON.parse: bad control character in string literal"
 
-          // eslint-disable-next-line no-control-regex
-          monitorDashboardDefinitionString.replace(/[\u0000-\u0019]+/g, '')
-        );
+        // eslint-disable-next-line no-control-regex
+        monitorDashboardDefinitionString.replace(/[\u0000-\u0019]+/g, '')
+      );
       if (monitorDashboardDefinition.widgets) {
         // run collision algorithm to remove overlaps
         monitorDashboardDefinition.widgets = removeCollisions(

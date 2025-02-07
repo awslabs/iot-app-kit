@@ -1,10 +1,10 @@
 import type {
-  ResponseStream,
-  IoTSiteWise,
   InvokeAssistantRequest,
+  IoTSiteWise,
+  ResponseStream,
 } from '@aws-sdk/client-iotsitewise';
 
-export type AssistantClientInstanceParams = {
+export interface AssistantClientInstanceParams {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
   defaultContext?: string;
 
@@ -22,15 +22,16 @@ export type AssistantClientInstanceParams = {
    * onError is called when the streaming api returns an error or an exception in the response.
    */
   onError?: AssistantClientInvocationErrorHandler;
-};
+}
 
-export type AssistantClientInstance = {
+export interface AssistantClientInstance {
   invoke: (
     utterance: string,
     options: { context?: string; conversationId?: string }
   ) => string;
+
   setIotSiteWiseClient(iotSiteWiseClient: IoTSiteWise): void;
-};
+}
 
 export interface AssistantInvocationRequest extends InvokeAssistantRequest {
   componentId: string;
@@ -41,29 +42,29 @@ export type AssistantClientInvocationCompleteHandler = (
   response: AssistantClientInvocationResponse
 ) => void;
 
-export type AssistantClientInvocationResponse = {
+export interface AssistantClientInvocationResponse {
   conversationId: string | undefined;
   body: ResponseStream;
-};
+}
 
 export type AssistantClientInvocationResponseHandler = (
   request: AssistantInvocationRequest,
   response: AssistantClientInvocationResponse
 ) => void;
 
-export type AssistantClientInvocationError = {
+export interface AssistantClientInvocationError {
   name?: string;
   message?: string;
-};
+}
 
 export type AssistantClientInvocationErrorHandler = (
   request: AssistantInvocationRequest,
   error: AssistantClientInvocationError
 ) => void;
 
-export type InvokeAssistantOptions = {
+export interface InvokeAssistantOptions {
   componentId: string;
   conversationId: string;
   utterance: string;
   context?: string;
-};
+}

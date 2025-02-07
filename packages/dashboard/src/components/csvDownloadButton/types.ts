@@ -1,7 +1,7 @@
-import { type Primitive } from '@iot-app-kit/core';
-import { type Quality } from '@aws-sdk/client-iotsitewise';
+import type { Quality } from '@aws-sdk/client-iotsitewise';
+import type { Primitive } from '@iot-app-kit/core';
 
-export type CSVDownloadObject = {
+export interface CSVDownloadObject {
   timestamp: string;
   dataQuality: Quality;
   value?: Primitive;
@@ -15,4 +15,4 @@ export type CSVDownloadObject = {
   dataType?: string;
   dataTypeSpec?: string;
   propertyId?: string;
-};
+}

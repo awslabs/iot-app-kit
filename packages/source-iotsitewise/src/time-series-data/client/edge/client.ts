@@ -2,24 +2,21 @@ import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getAggregatedPropertyDataPoints } from './getAggregatedPropertyDataPoints';
 import { getHistoricalPropertyDataPoints } from './getHistoricalPropertyDataPoints';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
-import {
-  type AggregatedPropertyParams,
-  type HistoricalPropertyParams,
-  type LatestPropertyParams,
+import type {
+  AggregatedPropertyParams,
+  HistoricalPropertyParams,
+  LatestPropertyParams,
 } from '../client';
 
 export class SiteWiseClientEdge {
-  private siteWiseSdk: IoTSiteWiseClient;
+  private readonly siteWiseSdk: IoTSiteWiseClient;
 
   constructor(siteWiseSdk: IoTSiteWiseClient) {
     this.siteWiseSdk = siteWiseSdk;
   }
 
   getLatestPropertyDataPoint(params: LatestPropertyParams): Promise<void> {
-    return getLatestPropertyDataPoint({
-      client: this.siteWiseSdk,
-      ...params,
-    });
+    return getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...params });
   }
 
   getHistoricalPropertyDataPoints(

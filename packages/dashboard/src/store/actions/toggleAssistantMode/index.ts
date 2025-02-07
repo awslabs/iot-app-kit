@@ -1,9 +1,9 @@
-import type { DashboardState } from '../../state';
 import type { Action } from 'redux';
+import type { DashboardState } from '../../state';
 
-type ToggleAssistantModeActionPayload = {
+export interface ToggleAssistantModeActionPayload {
   mode: 'on' | 'off';
-};
+}
 
 export interface ToggleAssistantModeAction extends Action {
   type: 'TOGGLE_ASSISTANT_MODE';

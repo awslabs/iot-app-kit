@@ -1,17 +1,19 @@
-import {
-  type AggregateType,
-  type AssetModelProperty,
-  type AssetProperty,
-  type AssetPropertyValue,
-  type IoTSiteWiseClient,
+import type {
+  AggregateType,
+  AssetModelProperty,
+  AssetProperty,
+  AssetPropertyValue,
+  IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import {
-  type DescribeAlarmModelResponse,
-  type IoTEventsClient,
+import type {
+  DescribeAlarmModelResponse,
+  IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
-
 import type { DataStream, ResolutionConfig, Viewport } from '@iot-app-kit/core';
-import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import type {
+  AlarmDataQuery,
+  Resolution,
+} from '@iot-app-kit/source-iotsitewise';
 
 /**
  * Execution status of the alarms queries
@@ -28,16 +30,16 @@ export type AlarmDataStatus = {
  * The SiteWise property construct for the alarm state, type, and source
  * Reference the entire asset or assetModel property object and its data values
  */
-export type AlarmProperty = {
+export interface AlarmProperty {
   property: AssetProperty | AssetModelProperty;
   data?: AssetPropertyValue[];
-};
+}
 
 /**
  * An alarm construct containing the collection of API responses from IoT SiteWise
  * and IoT Events that define an alarm.
  */
-export type AlarmData = {
+export interface AlarmData {
   /**
    * The asset model where a SiteWise alarm composite model is defined.
    */
@@ -114,12 +116,12 @@ export type AlarmData = {
    * Execution status of the alarms queries
    */
   status: AlarmDataStatus;
-};
+}
 
 /**
  * AlarmData with additional fields for internal processing
  */
-export type AlarmDataInternal = {
+export interface AlarmDataInternal extends AlarmData {
   /**
    * The alarm request which spawned the alarm.
    */
@@ -130,18 +132,18 @@ export type AlarmDataInternal = {
    * Used to assign a property object to the inputProperty field.
    */
   properties?: (AssetProperty | AssetModelProperty)[];
-} & AlarmData;
+}
 
 /**
  * Request data for a single alarm by its composite model id.
  * Results in a 1 to 1 - request to alarm model.
  */
-export type AlarmCompositeModelRequest = {
+export interface AlarmCompositeModelRequest {
   assetId: string;
   assetCompositeModelId: string;
   inputPropertyId?: never;
   assetModelId?: never;
-};
+}
 
 /**
  * Request data for all alarms that use an input asset property
@@ -153,23 +155,23 @@ export type AlarmCompositeModelRequest = {
  * property is currently describing an alarm and not
  * an older version of an Events alarm model.
  */
-export type AlarmInputPropertyRequest = {
+export interface AlarmInputPropertyRequest {
   assetId: string;
   inputPropertyId: string;
   assetCompositeModelId?: never;
   assetModelId?: never;
-};
+}
 
 /**
  * Request data for all alarms on an asset.
  * Results in a 1 to many - request to alarm models.
  */
-export type AlarmAssetRequest = {
+export interface AlarmAssetRequest {
   assetId: string;
   inputPropertyId?: never;
   assetCompositeModelId?: never;
   assetModelId?: never;
-};
+}
 
 /**
  * Request metadata for all alarms on an asset model.
@@ -178,12 +180,12 @@ export type AlarmAssetRequest = {
  * Note: only alarm composite model descriptions are available
  * on asset models. There is no data without an asset instance.
  */
-export type AlarmAssetModelRequest = {
+export interface AlarmAssetModelRequest {
   assetModelId: string;
   assetId?: never;
   inputPropertyId?: never;
   assetCompositeModelId?: never;
-};
+}
 
 export type AlarmRequest =
   | AlarmCompositeModelRequest
@@ -215,7 +217,7 @@ export interface UseAlarmsHookSettings {
 
 export interface UseAlarmsInputPropertyTimeSeriesDataSettings {
   aggregationType?: AggregateType;
-  resolution?: string;
+  resolution?: Resolution;
   resolutionConfig?: ResolutionConfig;
 }
 
@@ -231,13 +233,9 @@ export interface UseAlarmsInputPropertyTimeSeriesDataSettings {
  */
 export interface UseAlarmsOptions<T = AlarmData> {
   iotSiteWiseClient?: IoTSiteWiseClient;
-
   iotEventsClient?: IoTEventsClient;
-
   timeSeriesData?: AlarmDataQuery['timeSeriesData'];
-
   requests?: AlarmRequest[];
-
   viewport?: Viewport;
 
   /**
@@ -276,6 +274,6 @@ export interface UseAlarmsOptions<T = AlarmData> {
  * If no transform is provided the generic return type of useAlarms
  * is enforced to be AlarmData.
  */
-export type UseAlarmOptionsWithoutTransform = UseAlarmsOptions & {
+export interface UseAlarmOptionsWithoutTransform extends UseAlarmsOptions {
   transform?: never;
-};
+}

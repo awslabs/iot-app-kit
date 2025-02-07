@@ -1,9 +1,13 @@
 import {
   MINUTE_IN_MS,
-  SECOND_IN_MS,
   parseDuration,
+  SECOND_IN_MS,
 } from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
+import type {
+  Interval,
+  IntervalStructure,
+} from '../../../common/intervalStructure';
 import {
   addInterval,
   intersect,
@@ -19,19 +23,12 @@ import type {
   RequestInformationAndRange,
 } from '../../types';
 import type {
-  Interval,
-  IntervalStructure,
-} from '../../../common/intervalStructure';
-import type {
   CacheSettings,
   DataStreamsStore,
   DataStreamStore,
   TTLDurationMapping,
 } from '../types';
-import type {
-  TimeSeriesDataRequestSettings,
-  TimeSeriesDataRequest,
-} from '../requestTypes';
+import type { TimeSeriesDataRequest } from '../requestTypes';
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,
@@ -367,18 +364,6 @@ export const checkCacheForRecentPoint = ({
     }
     return false;
   }
-  return false;
-};
-
-// Validates request config to see if we need to make a fetch Request
-// This will expand in future to accomodate more requestConfig variants
-export const validateRequestConfig = (
-  requestConfig: TimeSeriesDataRequestSettings | undefined
-) => {
-  if (requestConfig) {
-    return requestConfig.fetchMostRecentBeforeStart;
-  }
-
   return false;
 };
 

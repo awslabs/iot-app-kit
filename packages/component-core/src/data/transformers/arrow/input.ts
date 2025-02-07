@@ -1,10 +1,6 @@
 import { type StylesObject } from '../input';
 
-export enum FieldType {
-  time = 'time',
-  number = 'number',
-  string = 'string',
-}
+export type FieldType = 'time' | 'number' | 'string';
 
 export interface Field<T = unknown> {
   /**

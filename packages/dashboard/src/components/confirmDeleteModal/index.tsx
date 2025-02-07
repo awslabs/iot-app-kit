@@ -1,15 +1,11 @@
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import Modal from '@cloudscape-design/components/modal';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { type ReactElement } from 'react';
+import { CustomOrangeButton } from '../customOrangeButton';
 
-import {
-  Box,
-  Button,
-  Modal,
-  SpaceBetween,
-} from '@cloudscape-design/components';
-
-import CustomOrangeButton from '../customOrangeButton';
-
-interface ConfirmDeleteModalProps {
+export interface ConfirmDeleteModalProps {
   headerTitle: string;
   cancelTitle?: string;
   submitTitle: string;
@@ -20,7 +16,7 @@ interface ConfirmDeleteModalProps {
   handleSubmit: () => void;
 }
 
-const ConfirmDeleteModal = ({
+export const ConfirmDeleteModal = ({
   headerTitle,
   cancelTitle = 'Cancel',
   submitTitle,
@@ -56,5 +52,3 @@ const ConfirmDeleteModal = ({
     </Modal>
   );
 };
-
-export default ConfirmDeleteModal;

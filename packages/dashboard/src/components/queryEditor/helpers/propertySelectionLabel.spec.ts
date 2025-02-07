@@ -1,7 +1,10 @@
-import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from './propertySelectionLabel';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-const createMockWidget = (widgetType: string): DashboardWidget => {
+const createMockWidget = <WidgetType extends RegisteredWidgetType>(
+  widgetType: WidgetType
+): WidgetInstance<WidgetType> => {
   return {
     type: widgetType,
     id: 'test-id',
@@ -11,7 +14,7 @@ const createMockWidget = (widgetType: string): DashboardWidget => {
     height: 20,
     width: 20,
     properties: {},
-  };
+  } as WidgetInstance<WidgetType>;
 };
 
 const mockAssetProperty = {

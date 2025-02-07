@@ -1,1 +1,0 @@
-export { ScatterChart } from './scatterChart';

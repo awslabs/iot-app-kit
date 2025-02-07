@@ -1,10 +1,8 @@
+import type { Interval } from '../../../common/intervalStructure';
 import { intersect } from '../../../common/intervalStructure';
 import type { HistoricalRequest, TTLDurationMapping } from '../types';
-import type { Interval } from '../../../common/intervalStructure';
 
 /**
- * Ge Expired Cache Intervals
- *
  * Given a mapping of caching rules and the number of milliseconds behind present time,
  * return intervals represent which caches are expired
  */
@@ -35,5 +33,6 @@ export const getExpiredCacheIntervals = (
   const expiredIntervals = caches.map(
     ({ duration, ttl }) => [now - duration, now - ttl] as Interval
   );
+
   return intersect(expiredIntervals, [[start.getTime(), end.getTime()]]);
 };

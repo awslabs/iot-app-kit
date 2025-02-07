@@ -1,15 +1,15 @@
-import { type DataStream, type DataType } from '@iot-app-kit/core';
-import { convertToCSVObject } from './convertToCSVObject';
-import {
-  type StyledAssetQuery,
-  type StyledSiteWiseQueryConfig,
-} from '~/customization/widgets/types';
-import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 import {
   type IoTSiteWiseClient,
   type PropertyDataType,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
+import { type DataStream, type DataType } from '@iot-app-kit/core';
+import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import type {
+  StyledAssetQuery,
+  StyledSiteWiseQueryConfig,
+} from '~/plugins/xy-plot/types';
+import { convertToCSVObject } from './convertToCSVObject';
 
 const ASSET_ID_1 = 'some-asset-id-1';
 const PROPERTY_ID_1 = 'some-property-id-1';

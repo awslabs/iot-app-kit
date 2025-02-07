@@ -1,9 +1,9 @@
-import { type PascalCaseStateName } from '../useAlarms/transformers';
+import type { PascalCaseStateName } from '../useAlarms/transformers';
 
-export type AlarmContent = {
+export interface AlarmContent {
   alarmName?: string;
   alarmExpression?: string;
   assetId?: string;
   alarmState?: PascalCaseStateName;
   severity?: number;
-};
+}

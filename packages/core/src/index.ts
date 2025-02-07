@@ -46,10 +46,7 @@ export const HOUR_IN_MS = 60 * MINUTE_IN_MS;
 export const DAY_IN_MS = 24 * HOUR_IN_MS;
 
 export type { Log, Logger } from './logger/logger.interface';
-export type {
-  Metric,
-  MetricsRecorder,
-} from './metricRecorder/metricsRecorder.interface';
+export type { Metric, MetricsRecorder } from './metricRecorder/metricsRecorder';
 export { getPlugin, registerPlugin } from './plugins/pluginsRegistry';
 
 // Request functions

@@ -1,7 +1,10 @@
-import { type DashboardWidget } from '~/types';
 import { getCorrectSelectionMode } from './getCorrectSelectionMode';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-const createMockWidget = (widgetType: string): DashboardWidget => {
+const createMockWidget = <WidgetType extends RegisteredWidgetType>(
+  widgetType: WidgetType
+): WidgetInstance<WidgetType> => {
   return {
     type: widgetType,
     id: 'test-id',
@@ -11,7 +14,7 @@ const createMockWidget = (widgetType: string): DashboardWidget => {
     height: 20,
     width: 20,
     properties: {},
-  };
+  } as WidgetInstance<WidgetType>;
 };
 
 describe('Get correct selection mode', () => {

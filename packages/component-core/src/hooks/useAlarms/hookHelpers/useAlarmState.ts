@@ -43,9 +43,7 @@ export const useAlarmState = ({
 
   const queryMode = useQueryMode({ fetchOnlyLatest, viewport });
 
-  /**
-   * Fetch only the latest value if there is no viewport present
-   */
+  // Fetch only the latest value if there is no viewport present
   const latestValueQueriesEnabled = queryMode === 'LATEST';
   const latestValueQueries = useLatestAssetPropertyValues({
     iotSiteWiseClient,
@@ -54,11 +52,9 @@ export const useAlarmState = ({
     refreshRate,
   });
 
-  /**
-   * Fetch only the most recent asset property value before the viewport
-   * end, useful for components that only need to show a subset
-   * of points within the viewport.
-   */
+  // Fetch only the most recent asset property value before the viewport
+  // end, useful for components that only need to show a subset
+  // of points within the viewport.
   const mostRecentBeforeEndValueQueriesEnabled = queryMode !== 'LATEST';
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
     enabled: mostRecentBeforeEndValueQueriesEnabled,
@@ -70,11 +66,9 @@ export const useAlarmState = ({
     refreshRate,
   });
 
-  /**
-   * Fetch only the most recent asset property value before the viewport
-   * start, useful for components that have data in the viewport but
-   * need to fill in data from before the start of the viewport.
-   */
+  // Fetch only the most recent asset property value before the viewport
+  // start, useful for components that have data in the viewport but
+  // need to fill in data from before the start of the viewport.
   const mostRecentBeforeStartValueQueriesEnabled = queryMode !== 'LATEST';
   const mostRecentBeforeStartValueQueries = useHistoricalAssetPropertyValues({
     enabled: mostRecentBeforeStartValueQueriesEnabled,
@@ -86,9 +80,7 @@ export const useAlarmState = ({
     refreshRate: Infinity,
   });
 
-  /**
-   * Fetch all asset property values within the viewport
-   */
+  // Fetch all asset property values within the viewport
   const historicalQueriesInViewportEnabled =
     queryMode === 'LIVE' || queryMode === 'HISTORICAL';
   const historicalQueriesInViewport = useHistoricalAssetPropertyValues({
@@ -99,16 +91,13 @@ export const useAlarmState = ({
     refreshRate: Infinity,
   });
 
-  /**
-   * If we are in a live viewport, we want to poll for the latest
-   * asset property values in that viewport. To do this we use
-   * the refreshRate for the latest value, and modify the
-   * viewport to only be 2X the refreshRate.
-   *
-   * For example:
-   * This means that if we refresh the alarms every 5s,
-   * we fetch the last 10s of alarm state every 5s.
-   */
+  // If we are in a live viewport, we want to poll for the latest
+  // asset property values in that viewport. To do this we use
+  // the refreshRate for the latest value, and modify the
+  // viewport to only be 2X the refreshRate.
+  // For example:
+  // This means that if we refresh the alarms every 5s,
+  // we fetch the last 10s of alarm state every 5s.
   const latestQueriesInLiveViewportEnabled = queryMode === 'LIVE';
   const latestQueriesViewport =
     refreshRate !== undefined && refreshRate !== Infinity
@@ -134,15 +123,13 @@ export const useAlarmState = ({
         const historicalQueryInViewport = historicalQueriesInViewport[index];
         const latestQueryInLiveViewport = latestQueriesInLiveViewport[index];
 
-        /**
-         * derive status and data from only those queries
-         * who are enabled. It is possible that disabled
-         * queries return data if they were enabled in other
-         * useAlarms hooks for the same request.
-         * This could lead to a scenario where we return
-         * different data than requested and with a status that
-         * is not accurate.
-         */
+        // derive status and data from only those queries
+        // who are enabled. It is possible that disabled
+        // queries return data if they were enabled in other
+        // useAlarms hooks for the same request.
+        // This could lead to a scenario where we return
+        // different data than requested and with a status that
+        // is not accurate.
         const queries = [
           latestValueQueriesEnabled ? latestValueQuery : undefined,
           mostRecentBeforeEndValueQueriesEnabled

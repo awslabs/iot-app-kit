@@ -1,29 +1,16 @@
-import {
-  BatchGetAssetPropertyValueHistoryErrorCode,
-  Quality,
+import type {
+  AssetPropertyValue,
+  BatchGetAssetPropertyAggregatesResponse,
+  BatchGetAssetPropertyValueHistoryErrorEntry,
+  BatchGetAssetPropertyValueHistoryResponse,
+  BatchGetAssetPropertyValueResponse,
+  GetAssetPropertyAggregatesResponse,
+  GetAssetPropertyValueHistoryResponse,
+  GetAssetPropertyValueResponse,
 } from '@aws-sdk/client-iotsitewise';
-import type { AssetPropertyValue, GetAssetPropertyAggregatesResponse, GetAssetPropertyValueHistoryResponse, GetAssetPropertyValueResponse, BatchGetAssetPropertyValueHistoryResponse, BatchGetAssetPropertyAggregatesResponse, BatchGetAssetPropertyValueResponse, BatchGetAssetPropertyValueHistoryErrorEntry } from "@aws-sdk/client-iotsitewise";
+import { BatchGetAssetPropertyValueHistoryErrorCode, Quality } from '@aws-sdk/client-iotsitewise';
 
-/**
- * Mocks, related to a SiteWise Assert property value
- *
- * Learn more at the documentation:
- * https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValue.html
- */
-
-export const ASSET_PROPERTY_INTEGER_VALUE: GetAssetPropertyValueResponse = {
-  propertyValue: {
-    value: {
-      integerValue: 10,
-    },
-    timestamp: {
-      timeInSeconds: 1000,
-      offsetInNanos: 44,
-    },
-  },
-};
-
-export const ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse = {
+export const ASSET_PROPERTY_VALUE_HISTORY = {
   assetPropertyValueHistory: [
     {
       value: {
@@ -44,9 +31,9 @@ export const ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse 
       },
     },
   ],
-};
+} satisfies GetAssetPropertyValueHistoryResponse;
 
-export const BATCH_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResponse = {
+export const BATCH_ASSET_PROPERTY_VALUE_HISTORY = {
   successEntries: [
     {
       entryId: '0-0',
@@ -116,21 +103,21 @@ export const BATCH_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHisto
   ],
   errorEntries: [],
   skippedEntries: [],
-};
+} satisfies BatchGetAssetPropertyValueHistoryResponse;
 
-export const BATCH_ASSET_PROPERTY_ERROR_ENTRY: BatchGetAssetPropertyValueHistoryErrorEntry = {
+export const BATCH_ASSET_PROPERTY_ERROR_ENTRY = {
   entryId: '0-0',
   errorMessage: 'assetId 1 not found',
   errorCode: BatchGetAssetPropertyValueHistoryErrorCode.ResourceNotFoundException,
-};
+} satisfies BatchGetAssetPropertyValueHistoryErrorEntry;
 
-export const BATCH_ASSET_PROPERTY_ERROR: BatchGetAssetPropertyValueHistoryResponse = {
+export const BATCH_ASSET_PROPERTY_ERROR = {
   successEntries: [],
   errorEntries: [BATCH_ASSET_PROPERTY_ERROR_ENTRY],
   skippedEntries: [],
-};
+} satisfies BatchGetAssetPropertyValueHistoryResponse;
 
-export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
+export const AGGREGATE_VALUES = {
   aggregatedValues: [
     {
       timestamp: new Date(2000, 0, 0, 1),
@@ -151,9 +138,9 @@ export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
       },
     },
   ],
-};
+} satisfies GetAssetPropertyAggregatesResponse;
 
-export const BATCH_ASSET_PROPERTY_AGGREGATES: BatchGetAssetPropertyAggregatesResponse = {
+export const BATCH_ASSET_PROPERTY_AGGREGATES = {
   successEntries: [
     {
       entryId: '0-0',
@@ -174,9 +161,9 @@ export const BATCH_ASSET_PROPERTY_AGGREGATES: BatchGetAssetPropertyAggregatesRes
   ],
   errorEntries: [],
   skippedEntries: [],
-};
+} satisfies BatchGetAssetPropertyAggregatesResponse;
 
-export const BATCH_ASSET_PROPERTY_DOUBLE_VALUE: BatchGetAssetPropertyValueResponse = {
+export const BATCH_ASSET_PROPERTY_DOUBLE_VALUE = {
   successEntries: [
     {
       entryId: '0-0',
@@ -205,9 +192,9 @@ export const BATCH_ASSET_PROPERTY_DOUBLE_VALUE: BatchGetAssetPropertyValueRespon
   ],
   errorEntries: [],
   skippedEntries: [],
-};
+} satisfies BatchGetAssetPropertyValueResponse;
 
-export const ASSET_PROPERTY_DOUBLE_VALUE: GetAssetPropertyValueResponse = {
+export const ASSET_PROPERTY_DOUBLE_VALUE = {
   propertyValue: {
     value: {
       doubleValue: 10.123,
@@ -217,9 +204,9 @@ export const ASSET_PROPERTY_DOUBLE_VALUE: GetAssetPropertyValueResponse = {
       offsetInNanos: 99000004,
     },
   },
-};
+} satisfies GetAssetPropertyValueResponse;
 
-export const ASSET_PROPERTY_STRING_VALUE: GetAssetPropertyValueResponse = {
+export const ASSET_PROPERTY_STRING_VALUE = {
   propertyValue: {
     value: {
       stringValue: 'im a string',
@@ -229,12 +216,13 @@ export const ASSET_PROPERTY_STRING_VALUE: GetAssetPropertyValueResponse = {
       offsetInNanos: 44,
     },
   },
-};
-export const samplePropertyValue: AssetPropertyValue = {
+} satisfies GetAssetPropertyValueResponse;
+
+export const samplePropertyValue = {
   value: { stringValue: undefined, booleanValue: undefined, doubleValue: undefined, integerValue: 1234 },
   quality: Quality.GOOD,
   timestamp: {
     timeInSeconds: 100,
     offsetInNanos: 100,
   },
-};
+} satisfies AssetPropertyValue;

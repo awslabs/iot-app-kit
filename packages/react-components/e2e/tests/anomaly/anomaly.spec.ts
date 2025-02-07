@@ -2,11 +2,11 @@ import { expect, test } from '@playwright/test';
 
 const TEST_IFRAME = '#storybook-preview-iframe';
 const TEST_PAGE_DEFAULT_SETTINGS =
-  '/?path=/story/widgets-anomaly--default-settings-anomaly-chart';
+  '/?path=/story/widget-instance-anomaly--default-settings-anomaly-chart';
 const TEST_PAGE_HIDDEN_SECTIONS =
-  '/?path=/story/widgets-anomaly--anomaly-chart-hidden-axis-and-timestamp';
+  '/?path=/story/widget-instance-anomaly--anomaly-chart-hidden-axis-and-timestamp';
 const TEST_PAGE_ERROR_STATE =
-  '/?path=/story/widgets-anomaly--anomaly-chart-error-state';
+  '/?path=/story/widget-instance-anomaly--anomaly-chart-error-state';
 
 test.describe('test anomaly chart', () => {
   test('anomaly chart default settings', async ({ page }) => {

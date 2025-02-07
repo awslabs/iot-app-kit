@@ -1,4 +1,13 @@
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type DataStream, type DataType } from '@iot-app-kit/core';
+import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 import { QueryClient } from '@tanstack/react-query';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import type {
+  StyledAssetQuery,
+  StyledSiteWiseQueryConfig,
+} from '~/plugins/xy-plot/types';
+import { CSVDownloadButton } from './index';
 
 vi.mock('../../data/query-client', () => ({
   queryClient: new QueryClient({
@@ -9,17 +18,6 @@ vi.mock('../../data/query-client', () => ({
     },
   }),
 }));
-
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
-
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { CSVDownloadButton } from './index';
-import {
-  type StyledAssetQuery,
-  type StyledSiteWiseQueryConfig,
-} from '~/customization/widgets/types';
-import { type DataStream, type DataType } from '@iot-app-kit/core';
 
 const assetId1 = 'some-asset-id-1';
 const propertyId1 = 'some-property-id-1';

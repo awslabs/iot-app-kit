@@ -7,7 +7,7 @@ describe('useGaugeFormatterValue', () => {
       useGaugeFormatterValue({
         unit: 'kg',
         settings: { showUnit: true },
-        significantDigits: 2,
+        decimalPlaces: 2,
       })
     );
 
@@ -21,7 +21,7 @@ describe('useGaugeFormatterValue', () => {
       useGaugeFormatterValue({
         unit: 'kg',
         settings: { showUnit: false },
-        significantDigits: 2,
+        decimalPlaces: 2,
       })
     );
 
@@ -32,7 +32,7 @@ describe('useGaugeFormatterValue', () => {
     const { result } = renderHook(() =>
       useGaugeFormatterValue({
         settings: { showUnit: true },
-        significantDigits: 2,
+        decimalPlaces: 2,
       })
     );
 
@@ -44,7 +44,7 @@ describe('useGaugeFormatterValue', () => {
       useGaugeFormatterValue({
         unit: 'kg',
         settings: { showUnit: true },
-        significantDigits: 2,
+        decimalPlaces: 2,
       })
     );
 
@@ -62,7 +62,7 @@ describe('useGaugeFormatterValue', () => {
       useGaugeFormatterValue({
         unit: 'kg',
         settings: { showUnit: true },
-        significantDigits: 3,
+        decimalPlaces: 3,
       })
     );
 
@@ -77,7 +77,7 @@ describe('useGaugeFormatterValue', () => {
         useGaugeFormatterValue({
           unit,
           settings: { showUnit },
-          significantDigits: digits,
+          decimalPlaces: digits,
         }),
       {
         initialProps: { unit: 'kg', showUnit: true, digits: 2 },

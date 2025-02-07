@@ -3,12 +3,12 @@ import {
   type AssetPropertyResource,
 } from '@iot-app-kit/react-components';
 import { isModeledPropertyInvalid } from './isModeledPropertyInvalid';
-import { type DashboardWidget } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 export function propertySelectionLabel(
   selectedItems: AssetPropertyExplorerProps['selectedAssetProperties'],
   modeledDataStream: AssetPropertyResource,
-  selectedWidgets: DashboardWidget[]
+  selectedWidgets: WidgetInstance[]
 ) {
   if (
     isModeledPropertyInvalid(
@@ -23,9 +23,7 @@ export function propertySelectionLabel(
     (item) => item.propertyId === modeledDataStream.propertyId
   );
 
-  if (!isPropertySelected) {
-    return `Select modeled data stream ${modeledDataStream.name}`;
-  } else {
-    return `Deselect modeled data stream ${modeledDataStream.name}`;
-  }
+  return !isPropertySelected
+    ? `Select modeled data stream ${modeledDataStream.name}`
+    : `Deselect modeled data stream ${modeledDataStream.name}`;
 }

@@ -3,21 +3,17 @@ import { Grid, type GridProps } from './grid';
 export type SizedGridProps = GridProps;
 
 /**
- *
  * Wrapper component to be used where we want to render a Grid.
- *
- * Consumed by the editor dashboard and readonly dashboard.
- *
  */
-export const SizedGrid: React.FC<SizedGridProps> = ({
+export const SizedGrid = ({
   width,
   height,
   cellSize,
   showGuides,
   highlighted,
   children,
-}) => {
-  const gridComponent = (
+}: SizedGridProps) => {
+  return (
     <Grid
       width={width}
       height={height}
@@ -27,5 +23,4 @@ export const SizedGrid: React.FC<SizedGridProps> = ({
       children={children}
     />
   );
-  return gridComponent;
 };

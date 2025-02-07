@@ -1,8 +1,8 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 
-import { type SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
-import { getEndpointPovider, DEFAULT_REGION } from './endpointProvider';
+import { type SiteWiseDataSourceInitialization } from './siteWiseDataSourceInitialization';
+import { DEFAULT_REGION, getEndpointProvider } from './endpointProvider';
 
 const subDomain = 'iotevents';
 
@@ -17,12 +17,12 @@ export const eventsSdk = ({
 }) =>
   new IoTEventsClient({
     region: awsRegion || DEFAULT_REGION,
-    endpoint: getEndpointPovider({ subDomain, awsRegion, awsPartition }),
+    endpoint: getEndpointProvider({ subDomain, awsRegion, awsPartition }),
     credentials,
   });
 
 export const getIotEventsClient = (
-  input: SiteWiseDataSourceInitalization
+  input: SiteWiseDataSourceInitialization
 ): IoTEventsClient => {
   const { iotEventsClient, awsCredentials, awsRegion } = input;
 

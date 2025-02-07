@@ -1,13 +1,15 @@
 import max from 'lodash-es/max';
 import minBy from 'lodash-es/minBy';
 import type { Action } from 'redux';
-import { v4 } from 'uuid';
-import type { DashboardWidget, Position } from '~/types';
+import type { Position } from '~/types';
 import type { DashboardState } from '../../state';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { nanoid } from 'nanoid';
 
-type PasteWidgetsActionPayload = {
+export interface PasteWidgetsActionPayload {
   position?: Position;
-};
+}
+
 export interface PasteWidgetsAction extends Action {
   type: 'PASTE_WIDGETS';
   payload: PasteWidgetsActionPayload;
@@ -48,39 +50,38 @@ export const pasteWidgets = (
       y: position && Math.floor(position.y / cellSize),
     };
 
-    // getting widgets group's left most cell value
-    const leftmostWidget: DashboardWidget =
+    // getting widget-instance group's left most cell value
+    const leftmostWidget: WidgetInstance =
       minBy(copyGroup, 'x') || copyGroup[0];
     const groupLeftX = leftmostWidget.x;
 
-    // getting widgets group's top most cell value
-    const topmostWidget: DashboardWidget =
-      minBy(copyGroup, 'y') || copyGroup[0];
+    // getting widget-instance group's top most cell value
+    const topmostWidget: WidgetInstance = minBy(copyGroup, 'y') || copyGroup[0];
     const groupTopY = topmostWidget.y;
 
-    // getting widgets group's right most cell value
+    // getting widget-instance group's right most cell value
     const widgetsRightPos = copyGroup.map((widget) => {
       return widget.x + widget.width;
     });
     const groupRightX = max(widgetsRightPos) || gridWidth;
 
-    // getting widgets group's bottom most cell value
+    // getting widget-instance group's bottom most cell value
     const widgetsBottomPos = copyGroup.map((widget) => {
       return widget.y + widget.height;
     });
     const groupBottomY = max(widgetsBottomPos) || gridHeight;
 
-    // calculating widgets group's width & height
+    // calculating widget-instance group's width & height
     const groupWidth = groupRightX - groupLeftX;
     const groupHeight = groupBottomY - groupTopY;
 
-    // setting offset postion
+    // setting offset position
     offset = {
       x: cellPosition.x - groupLeftX,
       y: cellPosition.y - groupTopY,
     };
 
-    // setting correction offset position if widgets group's width or height is going off the grid
+    // setting correction offset position if widget-instance group's width or height is going off the grid
     if (cellPosition.x + groupWidth > gridWidth) {
       correctionOffset.x = cellPosition.x + groupWidth - gridWidth;
     }
@@ -91,7 +92,7 @@ export const pasteWidgets = (
 
   const widgetsToPaste = copyGroup.map((widget) => ({
     ...widget,
-    id: v4(),
+    id: nanoid(),
     x: offset.x + widget.x + pasteCounter - correctionOffset.x,
     y: offset.y + widget.y + pasteCounter - correctionOffset.y,
   }));

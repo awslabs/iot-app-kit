@@ -5,11 +5,11 @@ type ComponentID = string;
 type ContextData = object;
 type ContextPerComponent = Record<ComponentID, ContextData>;
 
-export type AssistantContextState = {
+export interface AssistantContextState {
   context: ContextPerComponent;
-};
+}
 
-export type AssistantContextActions = {
+export interface AssistantContextActions {
   setContextByComponent: (
     componentID: ComponentID,
     context: ContextData
@@ -18,7 +18,7 @@ export type AssistantContextActions = {
     componentID: ComponentID,
     context: ContextData
   ) => void;
-};
+}
 
 export type AssistantContextStore = AssistantContextState &
   AssistantContextActions;

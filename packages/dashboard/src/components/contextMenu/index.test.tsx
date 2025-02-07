@@ -1,13 +1,9 @@
-import { Provider } from 'react-redux';
-
 import { act, render, screen, waitFor } from '@testing-library/react';
 import ue from '@testing-library/user-event';
-
-import { DefaultDashboardMessages } from '~/messages';
+import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
-import type { ContextMenuProps } from './index';
-import ContextMenu from './index';
+import { ContextMenu, type ContextMenuProps } from './index';
 
 const user = ue.setup();
 
@@ -56,7 +52,6 @@ const clickOption = async (option: string) => {
 describe('ContextMenu', () => {
   it('can toggle', async () => {
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: false,
       copyWidgets: () => {},
@@ -90,7 +85,6 @@ describe('ContextMenu', () => {
     const copyWidgets = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: true,
       copyWidgets,
@@ -114,7 +108,6 @@ describe('ContextMenu', () => {
     const copyWidgets = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: false,
       copyWidgets,
@@ -138,7 +131,6 @@ describe('ContextMenu', () => {
     const pasteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: true,
       hasSelectedWidgets: false,
       copyWidgets: () => {},
@@ -158,11 +150,10 @@ describe('ContextMenu', () => {
     expect(pasteWidgets).toBeCalled();
   });
 
-  it('does not paste if there are no copied widgets', async () => {
+  it('does not paste if there are no copied widget-instance', async () => {
     const pasteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: false,
       copyWidgets: () => {},
@@ -186,7 +177,6 @@ describe('ContextMenu', () => {
     const deleteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: true,
       copyWidgets: () => {},
@@ -206,11 +196,10 @@ describe('ContextMenu', () => {
     expect(deleteWidgets).toBeCalled();
   });
 
-  it('does not delete if there are no selected widgets', async () => {
+  it('does not delete if there are no selected widget-instance', async () => {
     const deleteWidgets = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: false,
       copyWidgets: () => {},
@@ -234,7 +223,6 @@ describe('ContextMenu', () => {
     const bringWidgetsToFront = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: true,
       copyWidgets: () => {},
@@ -254,11 +242,10 @@ describe('ContextMenu', () => {
     expect(bringWidgetsToFront).toBeCalled();
   });
 
-  it('does not bring to front if there are no selected widgets', async () => {
+  it('does not bring to front if there are no selected widget-instance', async () => {
     const bringWidgetsToFront = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: false,
       copyWidgets: () => {},
@@ -282,7 +269,6 @@ describe('ContextMenu', () => {
     const sendWidgetsToBack = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: true,
       copyWidgets: () => {},
@@ -302,11 +288,10 @@ describe('ContextMenu', () => {
     expect(sendWidgetsToBack).toBeCalled();
   });
 
-  it('does not send to back if there are no selected widgets', async () => {
+  it('does not send to back if there are no selected widget-instance', async () => {
     const sendWidgetsToBack = vi.fn();
 
     const args: ContextMenuProps = {
-      messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
       hasSelectedWidgets: false,
       copyWidgets: () => {},

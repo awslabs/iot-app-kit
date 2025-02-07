@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
-import SubscriptionStore from './subscription-store/subscriptionStore';
-import DataSourceStore from './data-source-store/dataSourceStore';
+import { SubscriptionStore } from './subscription-store/subscriptionStore';
+import { DataSourceStore } from './data-source-store/dataSourceStore';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { requestRange } from './data-cache/requestRange';
 import { getRequestInformations } from './data-cache/caching/caching';
@@ -17,7 +17,7 @@ import type {
   SubscriptionUpdate,
   TimeSeriesData,
 } from './types';
-import type { DataStreamsStore, CacheSettings } from './data-cache/types';
+import type { CacheSettings, DataStreamsStore } from './data-cache/types';
 import type {
   TimeSeriesDataRequest,
   TimeSeriesDataRequestSettings,
@@ -38,13 +38,10 @@ interface IotAppKitDataModuleConfiguration {
 }
 
 export class TimeSeriesDataModule<Query extends DataStreamQuery> {
-  private dataCache: DataCache;
-
+  private readonly dataCache: DataCache;
   private subscriptions: SubscriptionStore<Query>;
-
-  private dataSourceStore: DataSourceStore<Query>;
-
-  private cacheSettings: CacheSettings;
+  private readonly dataSourceStore: DataSourceStore<Query>;
+  private readonly cacheSettings: CacheSettings;
 
   /**
    * Create a new data module, optionally with a pre-hydrated data cache.
@@ -68,6 +65,75 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
       cacheSettings: this.cacheSettings,
     });
   }
+
+  public getCachedDataStreams = async ({
+    viewport,
+    queries,
+    emitDataStreams,
+    settings,
+  }: {
+    viewport: Viewport;
+    queries: Query[];
+    emitDataStreams: (dataStreams: DataStream[]) => void;
+    settings?: TimeSeriesDataRequestSettings;
+  }) => {
+    const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({
+      queries,
+      request: { viewport, settings },
+    });
+
+    // create request information on every dataStream requested
+    // so they can be used to get cached data
+    const requestInformations = requestedStreams.map((stream) => ({
+      start: viewportStartDate(viewport),
+      end: viewportEndDate(viewport),
+      ...stream,
+    })) as RequestInformationAndRange[];
+
+    return this.dataCache.getCachedDataForRange(
+      requestInformations,
+      emitDataStreams
+    );
+  };
+
+  public subscribeToDataStreams = (
+    { queries, request }: DataModuleSubscription<Query>,
+    callback: (data: TimeSeriesData) => void
+  ): SubscriptionResponse<Query> => {
+    const subscriptionId = v4();
+
+    /**
+     * subscription management
+     */
+
+    const unsubscribe = () => {
+      if (this.subscriptions.getSubscription(subscriptionId)) {
+        this.unsubscribe(subscriptionId);
+      }
+    };
+
+    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) =>
+      this.update(subscriptionId, subscriptionUpdate);
+
+    this.subscriptions.addSubscription(subscriptionId, {
+      queries,
+      request,
+      emit: callback,
+      fulfill: () => {
+        const viewport = this.getAdjustedViewport(request);
+        if (viewport.start < viewport.end) {
+          this.fulfillQueries({
+            viewport,
+            queries,
+            request,
+            unsubscribe,
+          });
+        }
+      },
+    });
+
+    return { unsubscribe, update };
+  };
 
   /**
    * Fulfill query
@@ -143,76 +209,6 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     );
 
     return { start, end };
-  };
-
-  public getCachedDataStreams = async ({
-    viewport,
-    queries,
-    emitDataStreams,
-    settings,
-  }: {
-    viewport: Viewport;
-    queries: Query[];
-    emitDataStreams: (dataStreams: DataStream[]) => void;
-    settings?: TimeSeriesDataRequestSettings;
-  }) => {
-    const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({
-      queries,
-      request: { viewport, settings },
-    });
-
-    // create request information on every dataStream requested
-    // so they can be used to get cached data
-    const requestInformations = requestedStreams.map((stream) => ({
-      start: viewportStartDate(viewport),
-      end: viewportEndDate(viewport),
-      ...stream,
-    })) as RequestInformationAndRange[];
-
-    const unsubscribe = this.dataCache.getCachedDataForRange(
-      requestInformations,
-      emitDataStreams
-    );
-    return unsubscribe;
-  };
-
-  public subscribeToDataStreams = (
-    { queries, request }: DataModuleSubscription<Query>,
-    callback: (data: TimeSeriesData) => void
-  ): SubscriptionResponse<Query> => {
-    const subscriptionId = v4();
-
-    /**
-     * subscription management
-     */
-
-    const unsubscribe = () => {
-      if (this.subscriptions.getSubscription(subscriptionId)) {
-        this.unsubscribe(subscriptionId);
-      }
-    };
-
-    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) =>
-      this.update(subscriptionId, subscriptionUpdate);
-
-    this.subscriptions.addSubscription(subscriptionId, {
-      queries,
-      request,
-      emit: callback,
-      fulfill: () => {
-        const viewport = this.getAdjustedViewport(request);
-        if (viewport.start < viewport.end) {
-          this.fulfillQueries({
-            viewport,
-            queries,
-            request,
-            unsubscribe,
-          });
-        }
-      },
-    });
-
-    return { unsubscribe, update };
   };
 
   private update = async (

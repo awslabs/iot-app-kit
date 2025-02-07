@@ -6,10 +6,8 @@ export class AssetsForAssetModelCacheKeyFactory {
   }
 
   create() {
-    const cacheKey = [
+    return [
       { resource: 'assets for asset model', assetModelId: this.#assetModelId },
     ] as const;
-
-    return cacheKey;
   }
 }

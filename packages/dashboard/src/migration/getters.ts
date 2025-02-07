@@ -9,27 +9,28 @@ import {
 } from './constants';
 import { convertResolution } from './convert-resolution';
 import {
-  type ApplicationProperty,
+  type ForeignWidgetInstance,
+  type ForeignWidgetType,
   type MonitorMetric,
-  type MonitorWidget,
-  MonitorWidgetType,
-  type SiteWiseWidgetType,
 } from './types';
+import { type TableWidgetProperties } from '~/plugins/table/types';
+import { type PartialDeep } from 'type-fest';
+import { type StyledAssetPropertyQuery } from '~/plugins/xy-plot/types';
 
-export const getStaticProperties = (
-  widgetType: MonitorWidgetType | SiteWiseWidgetType
+export const getStaticProperties = <WidgetType extends ForeignWidgetType>(
+  widgetType: WidgetType
 ) => {
   switch (widgetType) {
-    case MonitorWidgetType.LineChart:
+    case 'monitor-line-chart':
       return lineChartProperties;
-    case MonitorWidgetType.BarChart:
+    case 'monitor-bar-chart':
       return barChartProperties;
-    case MonitorWidgetType.ScatterChart:
+    case 'monitor-scatter-chart':
       return scatterChartProperties;
-    case MonitorWidgetType.StatusTimeline:
+    case 'monitor-status-timeline':
       return timelineProperties;
-    case MonitorWidgetType.Table:
-      return {};
+    case 'monitor-table':
+      return {} as const satisfies PartialDeep<TableWidgetProperties>;
     default:
       return lineChartProperties;
   }
@@ -37,20 +38,20 @@ export const getStaticProperties = (
 
 export const getProperty = (
   metric: MonitorMetric,
-  widgetType: MonitorWidgetType | SiteWiseWidgetType,
+  widgetType: ForeignWidgetType,
   index: number
 ) => {
-  let property: ApplicationProperty = {
-    aggregationType: defaultAggregationType, // Monitor has no aggregationType and appliation defaults to AVERAGE
+  let property: StyledAssetPropertyQuery = {
+    aggregationType: defaultAggregationType, // Monitor has no aggregationType and application defaults to AVERAGE
     propertyId: metric.propertyId,
     name: metric.label,
     resolution: convertResolution(widgetType, metric.resolution),
   };
 
   if (
-    widgetType === MonitorWidgetType.BarChart ||
-    widgetType === MonitorWidgetType.StatusTimeline ||
-    widgetType === MonitorWidgetType.Table
+    widgetType === 'monitor-bar-chart' ||
+    widgetType === 'monitor-status-timeline' ||
+    widgetType === 'monitor-table'
   ) {
     const refId = uuid();
     property = {
@@ -58,8 +59,8 @@ export const getProperty = (
       refId,
     };
   } else if (
-    widgetType === MonitorWidgetType.LineChart ||
-    widgetType === MonitorWidgetType.ScatterChart
+    widgetType === 'monitor-line-chart' ||
+    widgetType === 'monitor-scatter-chart'
   ) {
     const refId = uuid();
     property = {
@@ -72,14 +73,15 @@ export const getProperty = (
 };
 
 export const getStyleSettings = (
-  widgetType: MonitorWidgetType | SiteWiseWidgetType,
+  widgetType: ForeignWidgetType,
   refIds: string[]
 ) => {
   let styleSettings = {};
+
   if (
-    widgetType === MonitorWidgetType.BarChart ||
-    widgetType === MonitorWidgetType.StatusTimeline ||
-    widgetType === MonitorWidgetType.Table
+    widgetType === 'monitor-bar-chart' ||
+    widgetType === 'monitor-status-timeline' ||
+    widgetType === 'monitor-table'
   ) {
     for (const [index, refId] of refIds.entries()) {
       styleSettings = {
@@ -89,12 +91,12 @@ export const getStyleSettings = (
         },
       };
     }
-    return { styleSettings };
+
+    return styleSettings;
   }
-  return undefined;
 };
 
-export const getKPIAndGridData = (monitorWidget: MonitorWidget) => {
+export const getKPIAndGridData = (monitorWidget: ForeignWidgetInstance) => {
   const numWidgets = monitorWidget.metrics?.length;
   let widgetHeight = 1;
   let widgetWidth = 1;

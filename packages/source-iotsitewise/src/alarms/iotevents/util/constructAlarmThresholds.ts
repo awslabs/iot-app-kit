@@ -2,8 +2,9 @@ import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { ALARM_STATUS, ALARM_STATUS_MAP, AWSUI_RED_600 } from '../constants';
 import { toId } from '../../../time-series-data/util/dataStreamId';
 import { isNumber, isString } from '../../../common/predicates';
-import type { Threshold } from '@synchro-charts/core';
-import type { PascalCaseStateName, Alarm } from '../types';
+import type { Alarm, PascalCaseStateName } from '../types';
+import type { Threshold } from '@iot-app-kit/core';
+import { nanoid } from 'nanoid';
 
 export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
   const propertyStreamId = toId({
@@ -20,7 +21,7 @@ export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
   const state = ALARM_STATUS[upperCaseStateName];
   const alarmStatus = ALARM_STATUS_MAP[state];
 
-  const inputPropertyThreshold: Threshold = {
+  const inputPropertyThreshold = {
     comparisonOperator: alarm.comparisonOperator,
     severity: alarm.severity,
     value: isNumber(alarm.threshold)
@@ -33,7 +34,8 @@ export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
     showValue: true,
     icon: alarmStatus.icon,
     description: alarm.rule,
-  };
+    id: nanoid(),
+  } satisfies Threshold;
 
   const alarmStatePropertyThresholds = Object.keys(ALARM_STATUS_MAP).map(
     (alarmStatus) => {
@@ -47,6 +49,7 @@ export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
         comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [alarmStreamId],
         description: alarm.rule,
+        id: nanoid(),
       };
     }
   );

@@ -46,7 +46,7 @@ const meta = {
       yMax: DEFAULT_GAUGE_STYLES.yMax,
     },
     thresholds: [THRESHOLD_1, THRESHOLD_2, THRESHOLD_3],
-    significantDigits: 4,
+    decimalPlaces: 4,
   },
   parameters: {
     layout: 'fullscreen',

@@ -12,7 +12,7 @@ export function QueryEditorErrorBoundary({
     <ErrorBoundary
       fallbackRender={({ error }) => (
         <Box padding={{ top: 'l' }} textAlign='center'>
-          <b>An error occured.</b>
+          <b>An error occurred.</b>
 
           <Box variant='p' color='inherit'>
             An error occurred when displaying the query editor.

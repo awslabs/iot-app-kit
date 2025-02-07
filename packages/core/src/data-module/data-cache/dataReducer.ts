@@ -1,10 +1,10 @@
+import type { AsyncActions } from './dataActions';
 import { ERROR, REQUEST, SUCCESS } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
 import { mergeHistoricalRequests } from './mergeHistoricalRequests';
 import { parseDuration } from '../../common/time';
 import type { Reducer } from 'redux';
-import type { AsyncActions } from './dataActions';
 import type { DataStreamsStore } from './types';
 
 /**
@@ -12,7 +12,6 @@ import type { DataStreamsStore } from './types';
  *
  * Manages error status, loading status, and indexed data points
  */
-
 export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
   state: DataStreamsStore = {},
   action: AsyncActions

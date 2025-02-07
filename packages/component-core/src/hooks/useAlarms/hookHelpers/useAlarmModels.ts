@@ -10,11 +10,11 @@ import {
 } from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
 
-export type UseAlarmModelsOptions = {
+export interface UseAlarmModelsOptions extends QueryOptionsGlobal {
   iotEventsClient?: IoTEventsClient;
   requests?: Pick<AlarmData, 'source'>[];
   onSummarizeAlarmModels: OnSummarizeAlarmModelsAction;
-} & QueryOptionsGlobal;
+}
 
 /**
  * useAlarmModels is a hook used to describe the IoT Events alarm model

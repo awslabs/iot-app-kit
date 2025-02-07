@@ -1,12 +1,11 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
-
-import { type SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
-import { getEndpointPovider, DEFAULT_REGION } from './endpointProvider';
+import { type SiteWiseDataSourceInitialization } from './siteWiseDataSourceInitialization';
+import { DEFAULT_REGION, getEndpointProvider } from './endpointProvider';
 
 const subDomain = 'iotsitewise';
 
-export const sitewiseSdk = ({
+export const siteWiseSdk = ({
   credentials,
   awsRegion,
   awsPartition,
@@ -17,12 +16,12 @@ export const sitewiseSdk = ({
 }) =>
   new IoTSiteWiseClient({
     region: awsRegion || DEFAULT_REGION,
-    endpoint: getEndpointPovider({ subDomain, awsRegion, awsPartition }),
+    endpoint: getEndpointProvider({ subDomain, awsRegion, awsPartition }),
     credentials,
   });
 
 export const getSiteWiseClient = (
-  input: SiteWiseDataSourceInitalization
+  input: SiteWiseDataSourceInitialization
 ): IoTSiteWiseClient => {
   const { iotSiteWiseClient, awsCredentials, awsRegion } = input;
 
@@ -31,7 +30,7 @@ export const getSiteWiseClient = (
   }
 
   if (awsCredentials) {
-    return sitewiseSdk({ credentials: awsCredentials, awsRegion });
+    return siteWiseSdk({ credentials: awsCredentials, awsRegion });
   }
 
   throw Error('IoTSiteWiseClient not found or credentials missing');

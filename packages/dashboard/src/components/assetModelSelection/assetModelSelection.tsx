@@ -6,30 +6,30 @@ import {
   spaceScaledXxxs,
   spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
-
+import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/useQuery/useModelBasedQuery';
 import { AssetModelSelect } from './assetModelSelect';
-import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
 import './assetModelSelection.css';
+import { type CSSProperties } from 'react';
 
-type AssetModelSelectionOptions = {
+const assetModelSelectionControlId = 'asset-model-select-dropdown';
+const divider = {
+  borderLeft: `solid ${spaceScaledXxxs} ${colorBorderDividerDefault}`,
+  height: spaceStaticXxl,
+  margin: `0 ${spaceScaledS}`,
+} satisfies CSSProperties;
+
+const Divider = () => <div style={divider} />;
+
+interface AssetModelSelectionProps {
   iotSiteWiseClient: IoTSiteWise;
-};
+}
 
 export const AssetModelSelection = ({
   iotSiteWiseClient,
-}: AssetModelSelectionOptions) => {
+}: AssetModelSelectionProps) => {
   const { assetModelId, assetIds, hasModelBasedQuery, updateSelectedAsset } =
     useModelBasedQuery();
   const selectedAssetId = assetIds?.at(0);
-  const assetModelSelectionControlId = 'asset-model-select-dropdown';
-
-  const divider = {
-    borderLeft: `solid ${spaceScaledXxxs} ${colorBorderDividerDefault}`,
-    height: spaceStaticXxl,
-    margin: `0 ${spaceScaledS}`,
-  };
-
-  const Divider = () => <div style={divider} />;
 
   if (!hasModelBasedQuery || !assetModelId) return null;
 

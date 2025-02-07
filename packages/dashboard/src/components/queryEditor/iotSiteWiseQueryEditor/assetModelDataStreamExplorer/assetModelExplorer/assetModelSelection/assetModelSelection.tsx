@@ -1,10 +1,9 @@
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
 import Link from '@cloudscape-design/components/link';
-
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { AssetModelSelect } from './assetModelSelect';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
-import { AssetModelSave } from './assetModelSave';
+import { HorizontalDivider } from '~/features/widget-customization/atoms/horizontal-divider';
+import { AssetModelSaveButton } from './assetModelSaveButton';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
   type SelectedAssetModel,
@@ -18,13 +17,13 @@ import {
 } from '../../useSelectedAsset';
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 
-type AssetModelSelectionOptions = {
+export interface AssetModelSelectionProps {
   selectedAssetModel: SelectedAssetModel;
   onSelectAssetModel: UpdateSelectedAssetModel;
   selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
   iotSiteWiseClient: IoTSiteWise;
-};
+}
 
 export const AssetModelSelection = ({
   selectedAssetModel,
@@ -32,7 +31,7 @@ export const AssetModelSelection = ({
   selectedAsset,
   setSelectedAsset,
   iotSiteWiseClient,
-}: AssetModelSelectionOptions) => {
+}: AssetModelSelectionProps) => {
   const [currentSelectedAssetModel, selectCurrentAssetModel] =
     useSelectedAssetModel(selectedAssetModel);
 
@@ -68,7 +67,10 @@ export const AssetModelSelection = ({
         iotSiteWiseClient={iotSiteWiseClient}
       />
       <HorizontalDivider />
-      <AssetModelSave disabled={!currentSelectedAssetModel} onSave={onSave} />
+      <AssetModelSaveButton
+        disabled={!currentSelectedAssetModel}
+        onSave={onSave}
+      />
     </SpaceBetween>
   );
 };

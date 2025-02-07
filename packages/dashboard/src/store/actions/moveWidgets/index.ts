@@ -1,16 +1,17 @@
-import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
-import type { Position, DashboardWidget } from '~/types';
-import type { DashboardState } from '../../state';
+import type { Position } from '~/types';
+import { trimRectPosition } from '~/util/trimRectPosition';
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { moveSelectionBox } from '~/util/moveSelectionBox';
 import { transformWidget } from '~/util/transformWidget';
+import type { DashboardState } from '../../state';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-type MoveWidgetsActionPayload = {
-  widgets: DashboardWidget[];
+export interface MoveWidgetsActionPayload {
+  widgets: WidgetInstance[];
   vector: Position;
   complete?: boolean;
-};
+}
 
 export interface MoveWidgetsAction extends Action {
   type: 'MOVE_WIDGETS';
@@ -39,14 +40,14 @@ export const moveWidgets = (
     grid: state.grid,
   });
 
-  const mover = (widget: DashboardWidget) =>
+  const mover = (widget: WidgetInstance) =>
     transformWidget(
       widget,
       selectionBox,
       complete ? trimRectPosition(newSelectionBox) : newSelectionBox
     );
 
-  const updateWidgets = (widgets: DashboardWidget[]) =>
+  const updateWidgets = (widgets: WidgetInstance[]) =>
     widgets.map((widget) => {
       if (!selectedWidgetIds.includes(widget.id)) return widget;
       return mover(widget);

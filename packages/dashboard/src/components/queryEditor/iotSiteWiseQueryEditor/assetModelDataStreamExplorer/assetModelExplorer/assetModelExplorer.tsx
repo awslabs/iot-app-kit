@@ -1,23 +1,20 @@
 import { AssetModelSelection } from './assetModelSelection/assetModelSelection';
 import { AssetModelSelected } from './assetModelSelection/assetModelSelected';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import {
-  type SelectedAssetModel,
-  type UpdateSelectedAssetModel,
+import type {
+  SelectedAssetModel,
+  UpdateSelectedAssetModel,
 } from '../useSelectedAssetModel';
-import {
-  type SelectedAsset,
-  type UpdateSelectedAsset,
-} from '../useSelectedAsset';
+import type { SelectedAsset, UpdateSelectedAsset } from '../useSelectedAsset';
 
-type AssetModelExplorerOptions = {
+export interface AssetModelExplorerProps {
   selectedAssetModel: SelectedAssetModel;
   setSelectedAssetModel: UpdateSelectedAssetModel;
   selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
-  onResetSelectedAssetModel: () => void;
+  onResetSelectedAssetModel: VoidFunction;
   iotSiteWiseClient: IoTSiteWise;
-};
+}
 
 export const AssetModelExplorer = ({
   selectedAssetModel,
@@ -26,7 +23,7 @@ export const AssetModelExplorer = ({
   setSelectedAsset,
   onResetSelectedAssetModel,
   iotSiteWiseClient,
-}: AssetModelExplorerOptions) => {
+}: AssetModelExplorerProps) => {
   return selectedAssetModel.length > 0 ? (
     <AssetModelSelected
       iotSiteWiseClient={iotSiteWiseClient}

@@ -1,10 +1,10 @@
+import type { Anchor } from '~/store/actions';
+import type { DashboardState } from '~/store/state';
+import type { Rectangle } from '~/types';
 import { transformWidget } from './transformWidget';
 import { getSelectionBox } from './getSelectionBox';
 import { resizeSelectionBox } from './resizeSelectionBox';
-
-import type { Rect, DashboardWidget } from '~/types';
-import type { Anchor } from '~/store/actions';
-import type { DashboardState } from '~/store/state';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const anchors: Anchor[] = [
   'top',
@@ -22,19 +22,21 @@ const grid = {
   cellSize: 1,
 } as DashboardState['grid'];
 describe('resize single widget', () => {
-  const baseWidget: DashboardWidget = {
+  const baseWidget: WidgetInstance = {
     id: 'widget',
     x: 0,
     y: 0,
     z: 0,
     width: 100,
     height: 100,
-    type: 'MOCK_WIDGET',
-    properties: {},
+    type: 'text',
+    properties: {
+      value: '',
+    },
   };
 
-  const selectionBox: Rect = baseWidget;
-  const transformerToBeTested = (newSelectionBox: Rect) =>
+  const selectionBox: Rectangle = baseWidget;
+  const transformerToBeTested = (newSelectionBox: Rectangle) =>
     transformWidget(baseWidget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {
@@ -44,9 +46,9 @@ describe('resize single widget', () => {
       vector: { x: 10, y: 10 },
       grid,
     });
-    const expected: Rect = { ...baseWidget, ...newSelectionBox };
+    const expected: Rectangle = { ...baseWidget, ...newSelectionBox };
     const result = transformerToBeTested(newSelectionBox);
-    const keys = ['x', 'y', 'width', 'height'] as (keyof Rect)[];
+    const keys = ['x', 'y', 'width', 'height'] as (keyof Rectangle)[];
     keys.forEach((key) => {
       it(`should resize widget gives correct '${key}' when on ${anchor}`, () => {
         expect(result[key]).toBeCloseTo(expected[key]);
@@ -55,7 +57,7 @@ describe('resize single widget', () => {
   });
 });
 
-describe('resize multiple widgets', () => {
+describe('resize multiple widget-instance', () => {
   const widgets = [
     {
       x: 10,
@@ -71,11 +73,11 @@ describe('resize multiple widgets', () => {
       width: 10,
       height: 10,
     },
-  ] as DashboardWidget[];
+  ] as WidgetInstance[];
 
   const selectionBox = getSelectionBox(widgets)!;
   const transformerToBeTested =
-    (newSelectionBox: Rect) => (widget: DashboardWidget) =>
+    (newSelectionBox: Rectangle) => (widget: WidgetInstance) =>
       transformWidget(widget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {

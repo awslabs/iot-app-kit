@@ -2,7 +2,7 @@ import { MockWidgetFactory } from '../../testing/mocks';
 import { getSelectedWidgetIds, pointSelect, selectedRect } from './select';
 
 describe('getSelectedIds', () => {
-  it('returns no ids when dashboard has no widgets', () => {
+  it('returns no ids when dashboard has no widget-instance', () => {
     expect(
       getSelectedWidgetIds({
         dashboardWidgets: [],
@@ -48,7 +48,7 @@ describe('getSelectedIds', () => {
     ).toEqual(['some-id']);
   });
 
-  it('returns no ids when the widgets are not overlapping the selected rectangle', () => {
+  it('returns no ids when the widget-instance are not overlapping the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
         dashboardWidgets: [
@@ -66,7 +66,7 @@ describe('getSelectedIds', () => {
     ).toEqual([]);
   });
 
-  it('returns only ids of overlapping widgets when multiple widgets provided', () => {
+  it('returns only ids of overlapping widget-instance when multiple widget-instance provided', () => {
     expect(
       getSelectedWidgetIds({
         dashboardWidgets: [
@@ -166,7 +166,7 @@ describe('pointSelect', () => {
     ).toEqual(expect.objectContaining({ id: 'some-id-2' }));
   });
 
-  it('returns the top most widget if point is contained within 2 overlapping widgets', () => {
+  it('returns the top most widget if point is contained within 2 overlapping widget-instance', () => {
     expect(
       pointSelect({
         dashboardWidgets: [

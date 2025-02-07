@@ -1,5 +1,6 @@
 import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
+import { type CSSProperties } from 'react';
 import {
   colorBorderStatusError,
   colorBorderStatusSuccess,
@@ -14,13 +15,13 @@ import {
 } from '@iot-app-kit/component-core';
 import './alarmStateText.css';
 
-export type AlarmStateTextOptions = {
+export interface AlarmStateTextProps {
   alarmState?: PascalCaseStateName;
   status?: AlarmDataStatus;
   isLoading?: boolean;
   inheritFontColor?: boolean;
-  additionalStyles?: React.CSSProperties;
-};
+  additionalStyles?: CSSProperties;
+}
 
 export const AlarmStateText = ({
   alarmState,
@@ -28,7 +29,7 @@ export const AlarmStateText = ({
   isLoading,
   inheritFontColor,
   additionalStyles,
-}: AlarmStateTextOptions) => {
+}: AlarmStateTextProps) => {
   let icon = null;
   let text = null;
   let styles: React.CSSProperties = {
@@ -157,7 +158,7 @@ export const AlarmStateText = ({
       break;
   }
 
-  const alarmStateText = (
+  return (
     <div
       data-testid='alarm-state-text'
       className='alarm-state alarm-state-text'
@@ -168,6 +169,4 @@ export const AlarmStateText = ({
       </div>
     </div>
   );
-
-  return alarmStateText;
 };

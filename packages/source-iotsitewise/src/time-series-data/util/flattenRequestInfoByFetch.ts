@@ -9,24 +9,15 @@ export const flattenRequestInfoByFetch = ({
   const infos: RequestInformationAndRange[] = [];
 
   if (fetchMostRecentBeforeStart) {
-    infos.push({
-      ...rest,
-      fetchMostRecentBeforeStart,
-    });
+    infos.push({ ...rest, fetchMostRecentBeforeStart });
   }
 
   if (fetchMostRecentBeforeEnd) {
-    infos.push({
-      ...rest,
-      fetchMostRecentBeforeEnd,
-    });
+    infos.push({ ...rest, fetchMostRecentBeforeEnd });
   }
 
   if (fetchFromStartToEnd) {
-    infos.push({
-      ...rest,
-      fetchFromStartToEnd,
-    });
+    infos.push({ ...rest, fetchFromStartToEnd });
   }
 
   return infos;

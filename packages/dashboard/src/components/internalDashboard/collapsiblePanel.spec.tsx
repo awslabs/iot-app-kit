@@ -1,12 +1,9 @@
 import { act, render, screen } from '@testing-library/react';
-
-import { CollapsiblePanel } from './collapsiblePanel';
 import { DEFAULT_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
+import { CollapsiblePanel } from './collapsiblePanel';
 
 const panelContent = `Temperature monitoring`;
-
 const panelWidth = DEFAULT_SIDE_PANE_WIDTH;
-
 const mockIcon = 'mockIcon';
 const headerText = 'Configuration';
 

@@ -1,11 +1,12 @@
 import { initialState } from '~/store/state';
 import { onUpdateRefreshRateAction, updateRefreshRate } from './index';
 
-it('it intiializes to 5 seconds', () => {
+it('it initializes to 5 seconds', () => {
   expect(
     initialState.dashboardConfiguration.querySettings?.refreshRate
   ).toEqual(5000);
 });
+
 it('can change refresh rate', () => {
   expect(
     updateRefreshRate(

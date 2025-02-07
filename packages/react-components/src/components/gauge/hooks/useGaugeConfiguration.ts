@@ -8,12 +8,12 @@ import { convertDataset } from '../converters/convertDataset';
 import { convertSeries } from '../converters/convertSeries';
 import { type GaugeConfigurationOptions } from '../types';
 
-type GaugeOptionState = {
+interface GaugeOptionState {
   series: ReturnType<typeof convertSeries>;
   dataset: ReturnType<typeof convertDataset>;
   replaceMerge: string[];
   mergeOption?: { notMerge: boolean };
-};
+}
 
 type UpdateGaugeAction =
   | { type: 'updateData'; value?: Primitive }

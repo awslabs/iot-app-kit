@@ -1,9 +1,7 @@
 import { type Position } from '~/types';
 
 /**
- *
  * prevent a position from leaving the grid rectangle
- *
  */
 export const constrainPosition = (params: {
   position: Position;

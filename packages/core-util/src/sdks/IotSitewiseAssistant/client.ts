@@ -2,19 +2,19 @@ import type { IoTSiteWise, ResponseStream } from '@aws-sdk/client-iotsitewise';
 import type {
   AssistantClientInstanceParams,
   AssistantClientInvocationCompleteHandler,
-  AssistantClientInvocationResponseHandler,
-  AssistantClientInvocationErrorHandler,
-  InvokeAssistantOptions,
-  AssistantInvocationRequest,
   AssistantClientInvocationError,
+  AssistantClientInvocationErrorHandler,
+  AssistantClientInvocationResponseHandler,
+  AssistantInvocationRequest,
+  InvokeAssistantOptions,
 } from './types';
 
-export class IoTSitewiseAssistantClient {
-  private iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
-  private defaultContext?: string;
+export class IoTSiteWiseAssistantClient {
   public onResponse?: AssistantClientInvocationResponseHandler;
   public onComplete?: AssistantClientInvocationCompleteHandler;
   public onError?: AssistantClientInvocationErrorHandler;
+  private iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
+  private defaultContext?: string;
 
   constructor({
     iotSiteWiseClient,
@@ -66,7 +66,7 @@ export class IoTSitewiseAssistantClient {
       ? `given this context: ${mergedContext}`
       : '';
 
-    invokeAssistant({
+    void invokeAssistant({
       iotSiteWiseClient: this.iotSiteWiseClient,
       payload: {
         componentId,
@@ -93,7 +93,7 @@ export class IoTSitewiseAssistantClient {
     context,
     utterance,
   }: InvokeAssistantOptions) {
-    const defaultSummaryUtterance = `Given these Sitewise Asset and Properties as context, 
+    const defaultSummaryUtterance = `Given these Sitewise Asset and Properties as context,
     please generate a summary of these sitewise properties provided.`;
 
     return this.invoke({

@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import type { SetRequired } from 'type-fest';
 import type {
   AlarmData,
-  UseAlarmsOptions,
   UseAlarmOptionsWithoutTransform,
+  UseAlarmsOptions,
 } from './types';
 import {
   useAlarmAssets,
@@ -72,25 +72,18 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onUpdateAlarmStateData,
     onUpdateAlarmThresholdData,
   } = useAlarmsState();
-  /**
-   * Fetch alarm summaries based on the request
-   * (e.g. all alarms for an asset or assetModel)
-   */
+  // Fetch alarm summaries based on the request (e.g., all alarms for an asset or assetModel)
   useAlarmAssets({
     iotSiteWiseClient,
     requests,
     onSummarizeAlarms,
   });
 
-  /**
-   * Fetch latest asset property values for alarms with a type property.
-   * Data should be available for all alarms fetched for an asset.
-   */
+  // Fetch latest asset property values for alarms with a type property.
+  // Data should be available for all alarms fetched for an asset.
   useAlarmTypes({
     iotSiteWiseClient,
-    /**
-     * alarm datas are populated by onSummarizeAlarms
-     */
+    // alarm datas are populated by onSummarizeAlarms
     requests: state.alarms.flatMap((alarm) =>
       alarm.alarmDatas.map((alarmData) => ({
         assetId: alarmData.assetId,
@@ -100,16 +93,12 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onUpdateAlarmTypeData,
   });
 
-  /**
-   * Fetch latest asset property values for alarms with a source property.
-   * Data should be available for all alarms fetched for an asset, where
-   * the alarm type is "IOT_EVENTS".
-   */
+  // Fetch latest asset property values for alarms with a source property.
+  // Data should be available for all alarms fetched for an asset, where
+  // the alarm type is "IOT_EVENTS".
   useAlarmSources({
     iotSiteWiseClient,
-    /**
-     * alarm datas are populated by onSummarizeAlarms
-     */
+    // alarm datas are populated by onSummarizeAlarms
     requests: state.alarms.flatMap((alarm) =>
       alarm.alarmDatas.map((alarmData) => ({
         assetId: alarmData.assetId,
@@ -119,11 +108,9 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onUpdateAlarmSourceData,
   });
 
-  /**
-   * Fetch IoT Events alarm models for each alarm
-   * Only supported for alarms with type "IOT_EVENTS"
-   * and data available for the source asset property.
-   */
+  // Fetch IoT Events alarm models for each alarm
+  // Only supported for alarms with type "IOT_EVENTS"
+  // and data available for the source asset property.
   useAlarmModels({
     iotEventsClient,
     onSummarizeAlarmModels,
@@ -148,10 +135,8 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     ...inputPropertyTimeSeriesDataSettings,
   });
 
-  /**
-   * Fetch latest asset property values for alarms with a state property.
-   * Data should be available for all alarms fetched for an asset.
-   */
+  // Fetch latest asset property values for alarms with a state property.
+  // Data should be available for all alarms fetched for an asset.
   useAlarmState({
     requests: state.alarms.flatMap((alarm) =>
       alarm.alarmDatas.map((alarmData) => ({
@@ -165,18 +150,13 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     ...settings,
   });
 
-  /**
-   * Fetch alarm threshold values from the alarm model or from a
-   * SiteWise asset property.
-   */
+  // Fetch alarm threshold values from the alarm model or from a SiteWise asset property.
   useAlarmThreshold({
     iotSiteWiseClient,
     onUpdateAlarmThresholdData,
-    /**
-     * Only request thresholds for alarms
-     * that don't have static thresholds defined.
-     * Static thresholds set on summarize alarm models
-     */
+
+    // Only request thresholds for alarms that don't have static thresholds defined.
+    // Static thresholds set on summarize alarm models
     requests: state.alarms.flatMap((alarm) =>
       alarm.alarmDatas
         .filter((alarm) => (alarm.thresholds ?? []).length === 0)

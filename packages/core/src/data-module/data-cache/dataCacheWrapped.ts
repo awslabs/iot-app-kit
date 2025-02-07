@@ -2,24 +2,24 @@ import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { configureStore } from './createStore';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
-import { type Observable, map, startWith, pairwise, from } from 'rxjs';
+import { from, map, type Observable, pairwise, startWith } from 'rxjs';
 import { delay, filter } from 'rxjs/operators';
 import { toDataStreams } from './toDataStreams';
 import type { Store } from 'redux';
 import type {
-  Resolution,
-  RequestInformation,
   DataStream,
+  RequestInformation,
   RequestInformationAndRange,
+  Resolution,
 } from '../types';
 import type { DataStreamsStore } from './types';
 import type { ErrorDetails } from '../../common/types';
 import { hasIntervalForRange } from './dateUtils';
 
-type StoreChange = {
+interface StoreChange {
   prevDataCache: DataStreamsStore;
   currDataCache: DataStreamsStore;
-};
+}
 
 /**
  * Referential comparison of information related to the requested information.
@@ -41,13 +41,10 @@ const hasRequestedInformationChanged = (
     requestInformation.aggregationType
   );
 
-  const hasChanged = prevDataStreamStore != currDataStreamStore;
-  return hasChanged;
+  return prevDataStreamStore != currDataStreamStore;
 };
 
 /**
- * Data Cache Wrapper
- *
  * A wrapper around the existing data-cache, as is currently used within SiteWise Monitor.
  *
  * This wrapped component allows us to evolve the API of the data-cache, without altering the currently utilized data-cache.
@@ -167,12 +164,9 @@ export class DataCache {
       });
   };
 
-  /**
-   * data-cache bindings
-   *
-   * data-cache utilizes a redux store, the below methods are for ease of use, so you don't have to worry about
-   * coordinating the dispatching of the action throughout the file.
-   */
+  // data-cache bindings
+  // data-cache utilizes a redux store, the below methods are for ease of use, so you don't have to worry about
+  // coordinating the dispatching of the action throughout the file.
 
   public onSuccess = (
     dataStreams: DataStream[],

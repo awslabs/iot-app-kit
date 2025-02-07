@@ -1,13 +1,8 @@
-import { type SeriesOption, type TooltipComponentOption } from 'echarts';
-
-import {
-  type ChartAlarms,
-  type ChartDataQuality,
-  type ChartOptions,
-} from '../../types';
+import type { SeriesOption, TooltipComponentOption } from 'echarts';
+import type { ChartAlarms, ChartDataQuality, ChartOptions } from '../../types';
 import { useMemo } from 'react';
 import { formatter } from './formatter';
-import { type GenericSeries } from '../../../../echarts/types';
+import type { GenericSeries } from '../../../../echarts/types';
 
 type ColorMap = { [key in string]: string };
 const useColorMap = (series: SeriesOption[]) => {

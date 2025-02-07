@@ -1,1 +1,0 @@
-export { QueryExtender } from './queryExtender';

@@ -1,19 +1,18 @@
-import {
-  type AnnotationValue,
-  COMPARISON_OPERATOR,
-  type ComparisonOperator,
-  type StyledThreshold,
+import type {
+  AnnotationValue,
+  ComparisonOperator,
+  StyledThreshold,
 } from '@iot-app-kit/core';
-import { COMPARATOR_MAP } from '@iot-app-kit/component-core';
+import { COMPARISON_OPERATOR_TEXT_LABEL_MAP } from '@iot-app-kit/component-core';
 
 const comparisonOperatorToLowerYAxis = (
   comparisonOperator: ComparisonOperator,
   value: AnnotationValue
 ) => {
   switch (comparisonOperator) {
-    case COMPARISON_OPERATOR.GT:
-    case COMPARISON_OPERATOR.GTE:
-    case COMPARISON_OPERATOR.EQ:
+    case 'GT':
+    case 'GTE':
+    case 'EQ':
       return value;
     default:
       return undefined;
@@ -25,9 +24,9 @@ const comparisonOperatorToUpperYAxis = (
   value: AnnotationValue
 ) => {
   switch (comparisonOperator) {
-    case COMPARISON_OPERATOR.LT:
-    case COMPARISON_OPERATOR.LTE:
-    case COMPARISON_OPERATOR.EQ:
+    case 'LT':
+    case 'LTE':
+    case 'EQ':
       return value;
     default:
       return undefined;
@@ -46,7 +45,9 @@ export const convertThresholds = (thresholds?: StyledThreshold[]) => {
         .filter((t) => typeof t.value === 'number')
         .map((t) => ({
           label: {
-            formatter: `${COMPARATOR_MAP[t.comparisonOperator]} ${t.value}`,
+            formatter: `${
+              COMPARISON_OPERATOR_TEXT_LABEL_MAP[t.comparisonOperator]
+            } ${t.value}`,
             color: t.color,
           },
           lineStyle: {

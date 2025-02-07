@@ -1,11 +1,10 @@
-import { assetHierarchyQueryKey, HIERARCHY_ROOT_ID } from './sitewise/types';
-import { lastValueFrom, Observable, type Subscription } from 'rxjs';
 import type {
   AssetHierarchyQuery,
   HierarchyAssetSummaryList,
-  SiteWiseAssetModuleInterface,
   SiteWiseAssetSessionInterface,
 } from './sitewise/types';
+import { assetHierarchyQueryKey, HIERARCHY_ROOT_ID } from './sitewise/types';
+import { lastValueFrom, Observable, type Subscription } from 'rxjs';
 import type {
   AssetPropertyValue,
   AssetSummary,
@@ -74,17 +73,6 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     this.replayData = replayData;
   }
 
-  private _requestAssetSummary(query: {
-    assetId: string;
-  }): Observable<AssetSummary> {
-    return new Observable<AssetSummary>((observer) => {
-      if (this.replayData.errors.length > 0) {
-        observer.error(this.replayData.errors);
-      } else {
-        observer.next(this.replayData.assets.get(query.assetId));
-      }
-    });
-  }
   requestAssetSummary(
     query: { assetId: string },
     observer: {
@@ -94,6 +82,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     return this._requestAssetSummary(query).subscribe(observer);
   }
+
   fetchAssetSummary(query: { assetId: string }): Promise<AssetSummary> {
     return lastValueFrom(this._requestAssetSummary(query));
   }
@@ -105,6 +94,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
       observer.next(this.replayData.models.get(query.assetModelId));
     });
   }
+
   requestAssetModel(
     query: { assetModelId: string },
     observer: {
@@ -114,6 +104,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     return this._requestAssetModel(query).subscribe(observer);
   }
+
   fetchAssetModel(query: {
     assetModelId: string;
   }): Promise<DescribeAssetModelResponse> {
@@ -130,6 +121,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
       );
     });
   }
+
   requestAssetPropertyValue(
     query: { assetId: string; propertyId: string },
     observer: {
@@ -139,6 +131,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     return this._requestAssetPropertyValue(query).subscribe(observer);
   }
+
   fetchAssetPropertyValue(query: {
     assetId: string;
     propertyId: string;
@@ -160,6 +153,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
       }
     });
   }
+
   requestAssetHierarchy(
     query: { assetId?: string | undefined; assetHierarchyId: string },
     observer: {
@@ -169,6 +163,7 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     return this._requestAssetHierarchy(query).subscribe(observer);
   }
+
   fetchAssetHierarchy(query: {
     assetId?: string | undefined;
     assetHierarchyId: string;
@@ -189,27 +184,29 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
       }
     });
   }
+
   requestRootAssets(observer: {
     next: (assetSummary: HierarchyAssetSummaryList) => void;
     error?: (err: ErrorDetails[]) => void;
   }): Subscription {
     return this._requestRootAssets().subscribe(observer);
   }
+
   fetchRootAssets(): Promise<HierarchyAssetSummaryList> {
     return lastValueFrom(this._requestRootAssets());
   }
 
   close(): void {}
-}
 
-export class MockSiteWiseAssetModule implements SiteWiseAssetModuleInterface {
-  private readonly replayData: MockSiteWiseAssetsReplayData;
-
-  constructor(replayData: MockSiteWiseAssetsReplayData) {
-    this.replayData = replayData;
-  }
-
-  startSession(): SiteWiseAssetSessionInterface {
-    return new MockSiteWiseAssetSession(this.replayData);
+  private _requestAssetSummary(query: {
+    assetId: string;
+  }): Observable<AssetSummary> {
+    return new Observable<AssetSummary>((observer) => {
+      if (this.replayData.errors.length > 0) {
+        observer.error(this.replayData.errors);
+      } else {
+        observer.next(this.replayData.assets.get(query.assetId));
+      }
+    });
   }
 }

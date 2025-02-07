@@ -1,6 +1,3 @@
-import { isHotkey } from 'is-hotkey';
-import { useState } from 'react';
-
 import {
   borderRadiusDropdown,
   colorBackgroundControlDisabled,
@@ -10,39 +7,39 @@ import {
   spaceScaledXs,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { isHotkey } from 'is-hotkey';
+import { type CSSProperties, useState } from 'react';
 import './option.css';
 
-export type ContextMenuOptionProps = {
+const disabledStyle = {
+  color: colorBackgroundControlDisabled,
+  cursor: 'not-allowed',
+} satisfies CSSProperties;
+
+const hoverStyle = {
+  backgroundColor: colorBackgroundDropdownItemHover,
+  border: `${spaceScaledXxxs} solid ${colorBorderControlDefault}`,
+} satisfies CSSProperties;
+
+const nonHoverStyle = {
+  border: `${spaceScaledXxxs} solid rgba(0,0,0,0)`,
+} satisfies CSSProperties;
+
+export interface ContextMenuOptionProps {
   disabled: boolean;
   text: string;
   hotkey?: string;
-  action: () => void;
-};
+  action: VoidFunction;
+}
 
-const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
+export const ContextMenuOption = ({
   disabled,
   text,
   hotkey,
   action,
-}) => {
+}: ContextMenuOptionProps) => {
   const [hover, setHover] = useState(false);
 
-  let hoverStyle;
-  if (hover) {
-    hoverStyle = {
-      backgroundColor: colorBackgroundDropdownItemHover,
-      border: `${spaceScaledXxxs} solid ${colorBorderControlDefault}`,
-    };
-  } else {
-    hoverStyle = {
-      border: `${spaceScaledXxxs} solid rgba(0,0,0,0)`,
-    };
-  }
-
-  const disabledStyle = {
-    color: colorBackgroundControlDisabled,
-    cursor: 'not-allowed',
-  };
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li
@@ -57,7 +54,7 @@ const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
         action();
       }}
       style={{
-        ...hoverStyle,
+        ...(hover ? hoverStyle : nonHoverStyle),
         ...(disabled && disabledStyle),
         padding: `${spaceScaledXs} ${spaceScaledL}`,
         lineHeight: spaceScaledL,
@@ -72,5 +69,3 @@ const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
     </li>
   );
 };
-
-export default ContextMenuOption;

@@ -5,16 +5,16 @@ import {
 import Tabs from '@cloudscape-design/components/tabs';
 import { useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
-import { type useQuery } from '../useQuery';
+import { type useQuery } from './useQuery/useQuery';
 import { AssetModelDataStreamExplorer } from './assetModelDataStreamExplorer/assetModelDataStreamExplorer';
 import { ModeledExplorer } from './modeledExplorer/modeledExplorer';
-import { type DashboardWidget } from '~/types';
 import { UnmodeledExplorer } from './timeSeriesExplorer/timeSeriesExplorer';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 export interface IoTSiteWiseQueryEditorProps {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
   iotSiteWiseClient: IoTSiteWise;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: WidgetInstance[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
   currentSelectedAsset?: AssetSummary;
@@ -33,7 +33,7 @@ export function IoTSiteWiseQueryEditor({
   );
   const timeZone = useSelector((state: DashboardState) => state.timeZone);
   const significantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
+    (state: DashboardState) => state.decimalPlaces
   );
 
   const modeledTab = {

@@ -2,7 +2,7 @@ import type {
   AssistantClientInvocationError,
   AssistantClientInvocationResponse,
   AssistantInvocationRequest,
-  IoTSitewiseAssistantClient,
+  IoTSiteWiseAssistantClient,
 } from '@iot-app-kit/core-util';
 import { useEffect, useState } from 'react';
 import { type ComponentId } from '../../common/assistantProps';
@@ -17,7 +17,7 @@ import type {
 } from './types';
 
 export interface IUseAssistant {
-  assistantClient?: IoTSitewiseAssistantClient;
+  assistantClient?: IoTSiteWiseAssistantClient;
 
   /** optional but a default implementation will be provided */
   messageParser?: IMessageParser & MessageParser;

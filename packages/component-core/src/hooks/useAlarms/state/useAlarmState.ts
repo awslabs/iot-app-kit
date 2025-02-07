@@ -1,12 +1,11 @@
 import { useCallback, useMemo, useReducer } from 'react';
 import { alarmsStateReducer } from './reducer';
 import {
-  type SummarizeAlarmActionPayload,
   onSummarizeAlarmAction,
   onSummarizeAlarmModelsAction,
   onUpdateAlarmSourceDataAction,
+  type SummarizeAlarmActionPayload,
 } from './actions';
-import { convertAlarmsStateToAlarmDatas } from './converter';
 import { type UpdateAlarmSourceDataActionPayload } from './actions/updateAlarmSourceData/types';
 import { type UpdateAlarmTypeDataActionPayload } from './actions/updateAlarmTypeData/types';
 import { onUpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData';
@@ -17,6 +16,7 @@ import { type UpdateAlarmStateDataActionPayload } from './actions/updateAlarmSta
 import { onUpdateAlarmStateDataAction } from './actions/updateAlarmStateData/updateAlarmStateData';
 import { type UpdateAlarmThresholdDataActionPayload } from './actions/updateAlarmThresholdData/types';
 import { onUpdateAlarmThresholdDataAction } from './actions/updateAlarmThresholdData';
+import { convertAlarmsStateToAlarmDatas } from './converter/convertAlarmsStateToAlarmDatas';
 
 export const useAlarmsState = () => {
   const [state, dispatch] = useReducer(alarmsStateReducer, { alarms: [] });

@@ -6,17 +6,17 @@ import {
 } from '../../useSelectedAssetModel';
 import { AssetModelExplorer } from '@iot-app-kit/react-components';
 
-type AssetModelSelectOptions = {
+export interface AssetModelSelectProps {
   selectedAssetModel?: SelectedAssetModel;
   onSelectAssetModel: UpdateSelectedAssetModel;
   iotSiteWiseClient: IoTSiteWise;
-};
+}
 
 export const AssetModelSelect = ({
   iotSiteWiseClient,
   selectedAssetModel,
   onSelectAssetModel,
-}: AssetModelSelectOptions) => {
+}: AssetModelSelectProps) => {
   return (
     <FormField
       label='Asset model'

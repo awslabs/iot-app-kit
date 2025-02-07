@@ -5,16 +5,16 @@ import {
   spaceStaticM,
 } from '@cloudscape-design/design-tokens';
 import {
+  type MouseEvent,
   useCallback,
   useEffect,
   useMemo,
   useState,
-  type MouseEvent,
 } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import { Resizable, type ResizeHandle } from 'react-resizable';
 import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
-import { useViewport, getTimeSeriesQueries } from '@iot-app-kit/component-core';
+import { getTimeSeriesQueries, useViewport } from '@iot-app-kit/component-core';
 import { useChartConfiguration } from './chartOptions/useChartConfiguration';
 import { useChartDataset } from './chartOptions/useChartDataset';
 import ChartContextMenu from './contextMenu/ChartContextMenu';
@@ -24,9 +24,8 @@ import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import Legend from './legend/table';
 import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 import { type ChartOptions } from './types';
-
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
-import { Title, getAdjustedChartHeight } from '../../common/title';
+import { getAdjustedChartHeight, Title } from '../../common/title';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import {

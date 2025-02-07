@@ -14,11 +14,11 @@ const CORNERS: Anchor[] = [
 ];
 const SIDES: Anchor[] = ['top', 'right', 'bottom', 'left'];
 
-export type SelectionBoxAnchorProps = {
+export interface SelectionBoxAnchorProps {
   anchor: Anchor;
-};
+}
 
-const SelectionBoxAnchor: React.FC<SelectionBoxAnchorProps> = ({ anchor }) => {
+export const SelectionBoxAnchor = ({ anchor }: SelectionBoxAnchorProps) => {
   const isCorner = CORNERS.includes(anchor);
   const isSide = SIDES.includes(anchor);
   const cornerClass = isCorner
@@ -41,5 +41,3 @@ const SelectionBoxAnchor: React.FC<SelectionBoxAnchorProps> = ({ anchor }) => {
     />
   );
 };
-
-export default SelectionBoxAnchor;

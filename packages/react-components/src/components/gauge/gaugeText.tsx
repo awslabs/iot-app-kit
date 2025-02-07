@@ -127,7 +127,7 @@ export const GaugeText = ({
             unitFontSize: settings?.unitFontSize,
             showUnit: settings?.showUnit,
             significantDigits,
-            isLoading: isLoading,
+            isLoading,
           })}
         {!isLoading && hasVisibleName && (
           <div className='gauge-property-name'>{name}</div>

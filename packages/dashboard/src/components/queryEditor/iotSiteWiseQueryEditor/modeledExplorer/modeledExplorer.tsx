@@ -1,4 +1,5 @@
-import { Box, ExpandableSection } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
@@ -14,24 +15,23 @@ import {
 import { useState } from 'react';
 import { isModeledPropertyInvalid } from '../../helpers/isModeledPropertyInvalid';
 import { ResourceExplorerFooter } from '../footer/footer';
-import { QueryExtender } from '../queryExtender';
-import { getPlugin } from '@iot-app-kit/core';
-import { type useQuery } from '../../useQuery';
+import { type useQuery } from '../useQuery/useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { QueryExtender } from '~/components/queryEditor/iotSiteWiseQueryEditor/queryExtender/queryExtender';
 
-type ModeledExplorerProps = {
+export interface ModeledExplorerProps {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
   iotSiteWiseClient: IoTSiteWise;
   correctSelectionMode: SelectionMode;
   addButtonDisabled: boolean;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: WidgetInstance[];
   timeZone?: string;
   significantDigits?: number;
-};
+}
 
 export const ModeledExplorer = ({
   onUpdateQuery,
@@ -55,8 +55,6 @@ export const ModeledExplorer = ({
   >([]);
 
   const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
-
-  const metricsRecorder = getPlugin('metricsRecorder');
 
   const resetPropertiesAndAlarms = () => {
     setSelectedAssetProperties([]);
@@ -185,18 +183,6 @@ export const ModeledExplorer = ({
             selectedAssetProperties,
             selectedAlarms
           );
-          if (selectedAssetProperties.length > 0) {
-            metricsRecorder?.record({
-              metricName: 'ModeledDataStreamAdd',
-              metricValue: 1,
-            });
-          }
-          if (selectedAlarms.length > 0) {
-            metricsRecorder?.record({
-              metricName: 'AlarmStreamAdd',
-              metricValue: 1,
-            });
-          }
 
           resetPropertiesAndAlarms();
         }}

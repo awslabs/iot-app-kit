@@ -2,16 +2,16 @@ import { SECOND_IN_MS } from '../../common/time';
 
 const DEFAULT_REFRESH_RATE = 5 * SECOND_IN_MS;
 
-type IntervalDetail = {
+interface IntervalDetail {
   intervalId: NodeJS.Timeout;
   refreshRate: number;
   refreshExpiration?: number;
-  cb: () => void;
-};
+  cb: VoidFunction;
+}
 
-type IntervalMap = {
+interface IntervalMap {
   [id: string]: IntervalDetail;
-};
+}
 
 export default class RequestScheduler {
   private intervalMap: IntervalMap = {};
@@ -31,7 +31,7 @@ export default class RequestScheduler {
     id: string;
     refreshRate?: number;
     refreshExpiration?: number;
-    cb: () => void;
+    cb: VoidFunction;
     synchronize?: boolean;
   }) {
     if (this.isScheduled(id)) {

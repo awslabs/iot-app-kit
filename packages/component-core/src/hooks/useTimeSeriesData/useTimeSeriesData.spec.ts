@@ -1,7 +1,8 @@
 import { renderHook } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { useTimeSeriesData } from './useTimeSeriesData';
-import type { DataStream, TimeSeriesData, Threshold } from '@iot-app-kit/core';
+import type { DataStream, Threshold, TimeSeriesData } from '@iot-app-kit/core';
+import { nanoid } from 'nanoid';
 
 it('returns no time series data when query returns no time series data', () => {
   const queries = [mockTimeSeriesDataQuery([])];
@@ -41,11 +42,13 @@ it('returns time series data when the number of time series queries changes', ()
     comparisonOperator: 'GT',
     value: 10,
     color: 'black',
+    id: nanoid(),
   };
   const THRESHOLD_2: Threshold = {
     comparisonOperator: 'GT',
     value: 100,
     color: 'black',
+    id: nanoid(),
   };
 
   const DATA_STREAM_1: DataStream = {
@@ -110,11 +113,13 @@ it.skip('returns time series data when the number of queries within one time ser
     comparisonOperator: 'GT',
     value: 10,
     color: 'black',
+    id: nanoid(),
   };
   const THRESHOLD_2: Threshold = {
     comparisonOperator: 'GT',
     value: 100,
     color: 'black',
+    id: nanoid(),
   };
 
   const DATA_STREAM_1: DataStream = {
@@ -204,11 +209,13 @@ it('combines multiple time series data results into a single time series data', 
     comparisonOperator: 'GT',
     value: 10,
     color: 'black',
+    id: nanoid(),
   };
   const THRESHOLD_2: Threshold = {
     comparisonOperator: 'GT',
     value: 100,
     color: 'black',
+    id: nanoid(),
   };
   const DATA_STREAM_1: DataStream = {
     refId: 'red',
@@ -364,6 +371,7 @@ it('returns thresholds from time series data provider', () => {
     comparisonOperator: 'GT',
     value: 10,
     color: 'black',
+    id: nanoid(),
   };
   const TIME_SERIES_DATA: TimeSeriesData = {
     dataStreams: [],

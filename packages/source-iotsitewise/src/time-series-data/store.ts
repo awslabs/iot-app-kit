@@ -11,7 +11,7 @@ import type { Alarms } from '../alarms/iotevents';
 import type { ModeledDataStream } from '../asset-modules/describeModeledDataStreamRequest/types';
 import { completeDataStreams } from '../completeDataStreams';
 
-export type TimeSeriesDataStore = {
+export interface TimeSeriesDataStore {
   modeledDataStreams: ModeledDataStream[];
   dataStreams: DataStream[];
   viewport: Viewport;
@@ -19,7 +19,7 @@ export type TimeSeriesDataStore = {
   assetModels: Record<string, DescribeAssetModelResponse>;
   alarms: Alarms;
   errors: Record<string, ErrorDetails>;
-};
+}
 
 export class CreateTimeSeriesDataStore {
   private readonly state: TimeSeriesDataStore;

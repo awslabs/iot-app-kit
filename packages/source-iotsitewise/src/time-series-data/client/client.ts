@@ -4,35 +4,35 @@ import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalProper
 import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
 import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
 import type {
-  OnSuccessCallback,
   ErrorCallback,
+  OnSuccessCallback,
   RequestInformationAndRange,
 } from '@iot-app-kit/core';
 import type { SiteWiseDataSourceSettings } from '../types';
 
-export type LatestPropertyParams = {
+export interface LatestPropertyParams {
   requestInformations: RequestInformationAndRange[];
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
-};
+}
 
-export type HistoricalPropertyParams = {
-  requestInformations: RequestInformationAndRange[];
-  maxResults?: number;
-  onError: ErrorCallback;
-  onSuccess: OnSuccessCallback;
-};
-
-export type AggregatedPropertyParams = {
+export interface HistoricalPropertyParams {
   requestInformations: RequestInformationAndRange[];
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
-};
+}
 
-export type SiteWiseClientSettings = {
+export interface AggregatedPropertyParams {
+  requestInformations: RequestInformationAndRange[];
+  maxResults?: number;
+  onError: ErrorCallback;
+  onSuccess: OnSuccessCallback;
+}
+
+export interface SiteWiseClientSettings {
   batchDuration?: SiteWiseDataSourceSettings['batchDuration'];
-};
+}
 
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;

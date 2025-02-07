@@ -51,13 +51,9 @@ export function useLatestAlarmPropertyValues({
   });
 
   return useMemo(() => {
-    /**
-     * Walk through the alarmDataList to inject the asset property value for a matching request.
-     *
-     * filteredIndex tracks progress through the filtered request list and associated query responses.
-     *
-     * Both lists have the same order, where the alarmDataList may have more elements than the filtered list.
-     */
+    // Walk through the alarmDataList to inject the asset property value for a matching request.
+    // filteredIndex tracks progress through the filtered request list and associated query responses.
+    // Both lists have the same order, where the alarmDataList may have more elements than the filtered list.
     let filteredIndex = 0;
     return (
       alarmDataList?.map((alarmData) => {

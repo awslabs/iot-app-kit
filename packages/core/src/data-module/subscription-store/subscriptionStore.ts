@@ -1,5 +1,5 @@
 import { type DataCache } from '../data-cache/dataCacheWrapped';
-import type DataSourceStore from '../data-source-store/dataSourceStore';
+import type { DataSourceStore } from '../data-source-store/dataSourceStore';
 import RequestScheduler from '../request-scheduler/requestScheduler';
 import { viewportEndDate } from '../../common/viewport';
 import { maxCacheDuration } from '../data-cache/caching/caching';
@@ -16,7 +16,7 @@ import * as RefreshRate from './refreshRate';
  *
  * Manages the collection of subscriptions
  */
-export default class SubscriptionStore<Query extends DataStreamQuery> {
+export class SubscriptionStore<Query extends DataStreamQuery> {
   private dataSourceStore: DataSourceStore<Query>;
   private dataCache: DataCache;
   private cacheSettings: CacheSettings;

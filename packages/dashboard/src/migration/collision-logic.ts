@@ -1,14 +1,14 @@
-import { type MonitorWidget } from './types';
+import { type ForeignWidgetInstance } from './types';
 
-/**
+/*
  * The logic for this collision algorithm has been uplifted from the
- * vue-grid-layout library to be used with Sitewise Monitor widgets.
- *  {@link https://github.com/jbaysolutions/vue-grid-layout/tree/master vue-grid-layout Github}
+ * vue-grid-layout library to be used with SiteWise Monitor widget-instance.
+ * {@link https://github.com/jbaysolutions/vue-grid-layout/tree/master vue-grid-layout GitHub}
  */
 
-export type LayoutItem = MonitorWidget & {
+export interface LayoutItem extends ForeignWidgetInstance {
   moved?: boolean;
-};
+}
 
 type Layout = NonNullable<Array<LayoutItem>>;
 

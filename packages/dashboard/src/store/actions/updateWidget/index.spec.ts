@@ -1,12 +1,10 @@
-import { onUpdateWidgetsAction, updateWidgets } from '.';
-import { initialState } from '../../state';
-
 import { MOCK_TEXT_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { initialState, type DashboardState } from '../../state';
+import { onUpdateWidgetsAction, updateWidgets } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = []
+  widgets: WidgetInstance[] = []
 ): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
@@ -15,7 +13,7 @@ const setupDashboardState = (
   },
 });
 
-it('does nothing if no widgets are provided', () => {
+it('does nothing if no widget-instance are provided', () => {
   expect(
     updateWidgets(
       setupDashboardState(),
@@ -39,7 +37,7 @@ it('updates a widget on the dashboard', () => {
   ).toEqual([updatedWidget]);
 });
 
-it('updates multiple widgets to a dashboard', () => {
+it('updates multiple widget-instance to a dashboard', () => {
   const widgetA = MockWidgetFactory.getTextWidget({ id: 'widgetA' });
   const widgetB = MockWidgetFactory.getTextWidget({ id: 'widgetB' });
 

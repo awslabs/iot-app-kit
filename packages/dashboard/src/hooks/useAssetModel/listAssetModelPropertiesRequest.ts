@@ -1,14 +1,14 @@
 import {
   type IoTSiteWiseClient,
-  paginateListAssetProperties,
-  paginateListAssetModelProperties,
   type IoTSiteWisePaginationConfiguration,
-  type ListAssetPropertiesCommandInput,
   type ListAssetModelPropertiesCommandInput,
   type ListAssetModelPropertiesCommandOutput,
+  type ListAssetPropertiesCommandInput,
+  paginateListAssetModelProperties,
+  paginateListAssetProperties,
 } from '@aws-sdk/client-iotsitewise';
 import { type Paginator } from '@aws-sdk/types';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { compact } from '~/helpers/lists/compact';
 
 export class listAssetModelPropertiesRequest {
   readonly #listAssetModelPropertyPaginator: Paginator<
@@ -46,11 +46,7 @@ export class listAssetModelPropertiesRequest {
         assetModelPropertiesList.push(...assetModelPropertySummaries);
       }
 
-      // const modeledDataStreams = this.#formatDataStreams({ assetProperties, assetModelPropertiesMap });
-      const nonNullableProperties = createNonNullableList(
-        assetModelPropertiesList
-      );
-      return nonNullableProperties;
+      return compact(assetModelPropertiesList);
     } catch (error) {
       this.#handleError(error);
     }
@@ -60,22 +56,14 @@ export class listAssetModelPropertiesRequest {
     paginatorConfig: IoTSiteWisePaginationConfiguration,
     commandParams: ListAssetPropertiesCommandInput
   ) {
-    const paginator = paginateListAssetProperties(
-      paginatorConfig,
-      commandParams
-    );
-    return paginator;
+    return paginateListAssetProperties(paginatorConfig, commandParams);
   }
 
   #createAssetModelPropertyPaginator(
     paginatorConfig: IoTSiteWisePaginationConfiguration,
     commandParams: ListAssetModelPropertiesCommandInput
   ) {
-    const paginator = paginateListAssetModelProperties(
-      paginatorConfig,
-      commandParams
-    );
-    return paginator;
+    return paginateListAssetModelProperties(paginatorConfig, commandParams);
   }
 
   #handleError(error: unknown): never {

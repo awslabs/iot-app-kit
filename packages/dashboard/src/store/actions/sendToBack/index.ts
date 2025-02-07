@@ -19,7 +19,7 @@ export const sendWidgetsToBack = (state: DashboardState): DashboardState => {
 
   const unselectedWidgets = xorBy(widgets, selectedWidgets, 'id');
 
-  // We don't need to do anything if all widgets are selected
+  // We don't need to do anything if all widget-instance are selected
   if (unselectedWidgets.length === 0) {
     return state;
   }
