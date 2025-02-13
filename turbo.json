@@ -6,6 +6,10 @@
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
+    "pack": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
     "@iot-app-kit/dev-env#build": {
       "dependsOn": ["^build"],
       "outputs": [],
@@ -49,10 +53,6 @@
       "persistent": true,
       "cache": false,
       "outputLogs": "full"
-    },
-    "pack": {
-      "dependsOn": [],
-      "outputLogs": "new-only"
     },
     "lint": {
       "dependsOn": ["^build:es"],
