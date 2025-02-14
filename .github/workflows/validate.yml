@@ -209,7 +209,6 @@ jobs:
           retention-days: 30
 
   smoke-test:
-    needs: repo
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -225,33 +224,6 @@ jobs:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-
-      - name: node_modules cache
-        id: npm-cache
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
-
-      - name: Install monorepo dependencies (not including smoke-test package)
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        shell: bash
-        env:
-          NODE_OPTIONS: '--max_old_space_size=8192'
-        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
-
-      - name: Build and pack iot-app-kit packages
-        run: ./prep-smoke-test-env.sh
-
-      - name: Validate package installation
-        run: npm run validate:installation
-        working-directory: ./testing/smoke-test
-
-      - name: Validate package bundling
-        run: npm run validate:bundling
-        working-directory: ./testing/smoke-test
 
       - name: Get installed Playwright version
         id: playwright-version
@@ -278,6 +250,5 @@ jobs:
         run: npx playwright install-deps
         working-directory: ./testing/smoke-test
 
-      - name: Validate package runtime
-        run: npm run validate:runtime
-        working-directory: ./testing/smoke-test
+      - name: Run smoke test
+        run: ./smoke-test.sh -n
