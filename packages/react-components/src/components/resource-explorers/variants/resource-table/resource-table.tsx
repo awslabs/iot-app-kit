@@ -16,6 +16,7 @@ import { ResourceTablePagination } from './resource-table-pagination';
 import { ResourceTableSearch } from './resource-table-search';
 import { ResourceTableTitle } from './resource-table-title';
 import { ResourceTableUserSettings } from './resource-table-user-settings';
+import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
 
 export function ResourceTable<Resource>({
   resourceName,
@@ -101,7 +102,7 @@ export function ResourceTable<Resource>({
   );
 
   return (
-    <>
+    <div style={{ backgroundColor: colorBackgroundContainerContent }}>
       <ResourceTableHeader
         title={
           isTitleEnabled && (
@@ -180,7 +181,7 @@ export function ResourceTable<Resource>({
         resizableColumns
         ariaLabels={ariaLabels}
       />
-    </>
+    </div>
   );
 }
 
