@@ -20,6 +20,7 @@ export type Tokens = Pick<
   | 'colorBackgroundButtonPrimaryDefault'
   | 'colorBackgroundButtonPrimaryDisabled'
   | 'colorBackgroundButtonPrimaryHover'
+  | 'colorBackgroundContainerContent'
   | 'colorBackgroundControlChecked'
   | 'colorBackgroundControlDefault'
   | 'colorBackgroundControlDisabled'

@@ -27,6 +27,7 @@ export const applyTokens = (tokens?: Tokens) => {
       tokens?.colorBackgroundButtonPrimaryDisabled,
     colorBackgroundButtonPrimaryHover:
       tokens?.colorBackgroundButtonPrimaryHover,
+    colorBackgroundContainerContent: tokens?.colorBackgroundContainerContent,
     colorBackgroundControlChecked: tokens?.colorBackgroundControlChecked,
     colorBackgroundControlDefault: tokens?.colorBackgroundControlDefault,
     colorBackgroundControlDisabled: tokens?.colorBackgroundControlDisabled,
