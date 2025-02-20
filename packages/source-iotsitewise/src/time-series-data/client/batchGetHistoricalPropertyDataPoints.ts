@@ -163,7 +163,7 @@ const sendRequest = ({
       Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
         onError({
           entryId,
-          errorCode: e?.$metadata.httpStatusCode,
+          errorCode: e.$metadata?.httpStatusCode,
           errorMessage: e.message,
         });
       });
