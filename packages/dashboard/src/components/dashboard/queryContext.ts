@@ -17,7 +17,7 @@ import type {
 import type {
   DashboardIotSiteWiseQueries,
   IoTSiteWiseDataStreamQuery,
-} from '~/types';
+} from '~/types/queries';
 
 const createTimeSeriesDataQuery = (
   iotSiteWiseQuery: SiteWiseQuery,

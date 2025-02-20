@@ -1,7 +1,9 @@
-import { type DashboardWidget } from '~/types';
+import type { RegisteredWidget, RegisteredWidgetType } from '~/types/widgets';
 import { getCorrectSelectionMode } from './getCorrectSelectionMode';
 
-const createMockWidget = (widgetType: string): DashboardWidget => {
+const createMockWidget = (
+  widgetType: RegisteredWidgetType
+): RegisteredWidget => {
   return {
     type: widgetType,
     id: 'test-id',
@@ -10,6 +12,7 @@ const createMockWidget = (widgetType: string): DashboardWidget => {
     z: 0,
     height: 20,
     width: 20,
+    // @ts-expect-error not handling properties
     properties: {},
   };
 };
@@ -30,8 +33,6 @@ describe('Get correct selection mode', () => {
   });
 
   it('returns multi if bar', () => {
-    expect(getCorrectSelectionMode([createMockWidget('bar-chart')])).toBe(
-      'multi'
-    );
+    expect(getCorrectSelectionMode([createMockWidget('bar')])).toBe('multi');
   });
 });

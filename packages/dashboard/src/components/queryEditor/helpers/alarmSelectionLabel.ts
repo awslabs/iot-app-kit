@@ -1,6 +1,6 @@
-import {
-  type AlarmExplorerProps,
-  type AlarmResource,
+import type {
+  AlarmExplorerProps,
+  AlarmResource,
 } from '@iot-app-kit/react-components';
 
 export function alarmSelectionLabel(

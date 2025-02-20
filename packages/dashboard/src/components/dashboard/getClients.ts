@@ -1,7 +1,7 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { type DashboardClientConfiguration } from '~/types';
+import type { DashboardClientConfiguration } from '~/types/sdk-clients';
 import { type DashboardClientContext } from './clientContext';
 import { isCredentials } from '~/hooks/useAWSRegion';
 

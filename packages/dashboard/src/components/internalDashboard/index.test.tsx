@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import { configureDashboardStore } from '~/store';
 import { initialState } from '~/store/state';
-import { type DashboardWidgetsConfiguration } from '~/types';
+import { type DashboardConfiguration } from '~/types/dashboard-configuration';
 import { useDashboardPlugins } from '../../customization/api';
 import InternalDashboard from './index';
 
@@ -14,7 +14,8 @@ import { AppKitConfig } from '@iot-app-kit/react-components';
 // eslint-disable-next-line no-restricted-imports
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
+const EMPTY_DASHBOARD: DashboardConfiguration = {
+  displaySettings: { numColumns: 100, numRows: 100 },
   widgets: [],
   viewport: { duration: '10m' },
 };

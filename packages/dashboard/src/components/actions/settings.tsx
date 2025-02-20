@@ -16,10 +16,10 @@ import { useDefaultViewport } from '../defaultViewport/useDefaultViewport';
 import LabeledInput from '../util/labeledInput';
 import { useGridSettings } from './useGridSettings';
 
-export type DashboardSettingsProps = {
+export interface DashboardSettingsProps {
   onClose: () => void;
   isVisible: boolean;
-};
+}
 
 const DashboardSettings: React.FC<DashboardSettingsProps> = ({
   onClose,

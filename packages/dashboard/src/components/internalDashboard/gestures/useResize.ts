@@ -5,13 +5,14 @@ import { onResizeWidgetsAction } from '~/store/actions';
 import { toGridPosition } from '~/util/position';
 import type { Anchor } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import type { Position, DashboardWidget } from '~/types';
+import type { Position } from '~/types';
+import type { RegisteredWidget } from '~/types/widgets';
 import type { DragEvent } from '../../grid';
 import type { Gesture } from './types';
 
 type ResizeHooksProps = {
   setActiveGesture: React.Dispatch<React.SetStateAction<Gesture>>;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: RegisteredWidget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 

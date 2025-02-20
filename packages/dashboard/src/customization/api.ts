@@ -1,34 +1,38 @@
 import type * as React from 'react';
 import plugins from '~/customization/pluginsConfiguration';
-import type { DashboardWidget } from '~/types';
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
 } from './componentLibraryComponentMap';
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
+import type {
+  Widget,
+  DashboardWidgetRegistry,
+  RegisteredWidgetType,
+} from '~/types/widgets';
 
-type RenderFunc<T extends DashboardWidget> = (widget: T) => React.ReactElement;
+type RenderFunc<W extends Widget> = (widget: W) => React.ReactElement;
 
-type WidgetRegistrationOptions<T extends DashboardWidget> = {
-  render: RenderFunc<T>;
+type WidgetRegistrationOptions<T extends RegisteredWidgetType> = {
+  render: RenderFunc<Widget<T>>;
   componentLibrary?: {
     name: string;
     icon: React.FC;
   };
-  properties?: () => T['properties'];
-  initialSize?: Pick<DashboardWidget, 'height' | 'width'>;
+  properties?: () => DashboardWidgetRegistry[T];
+  initialSize?: Pick<Widget, 'height' | 'width'>;
 };
-type RegisterWidget = <T extends DashboardWidget>(
-  type: string,
+type RegisterWidget<T extends RegisteredWidgetType> = (
+  type: T,
   options: WidgetRegistrationOptions<T>
 ) => void;
 
 /**
  * function to register a new widget type in the dashboard
  */
-export const registerWidget: RegisterWidget = <T extends DashboardWidget>(
-  type: string,
+export const registerWidget = <T extends RegisteredWidgetType>(
+  type: T,
   options: WidgetRegistrationOptions<T>
 ) => {
   const { render, componentLibrary, properties, initialSize } = options;
@@ -48,8 +52,8 @@ export const registerWidget: RegisterWidget = <T extends DashboardWidget>(
   }
 };
 
-export type DashboardPlugin = {
-  install: (options: { registerWidget: RegisterWidget }) => void;
+export type DashboardPlugin<T extends RegisteredWidgetType> = {
+  install: (options: { registerWidget: RegisterWidget<T> }) => void;
 };
 
 const resetMaps = () => {

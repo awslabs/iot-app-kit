@@ -6,7 +6,8 @@ import { TimeSelection, useViewport } from '@iot-app-kit/react-components';
 import isEqual from 'lodash-es/isEqual';
 import { useSelector } from 'react-redux';
 import { type DashboardState } from '~/store/state';
-import type { DashboardSave, DashboardToolbar } from '~/types';
+import type { DashboardSave } from '~/types/saving';
+import type { DashboardToolbar } from '~/types';
 import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 import Actions from '../actions';
 

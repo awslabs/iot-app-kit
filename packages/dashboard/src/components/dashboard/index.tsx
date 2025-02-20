@@ -13,15 +13,14 @@ import { useDashboardPlugins } from '~/customization/api';
 import { PropertiesPanel } from '~/customization/propertiesSections';
 import { queryClient } from '~/data/query-client';
 import { configureDashboardStore, toDashboardState } from '~/store';
+import type { DashboardClientConfiguration } from '~/types/sdk-clients';
+import type { DashboardConfiguration } from '~/types/dashboard-configuration';
 import type {
-  AssistantConfiguration,
-  DashboardClientConfiguration,
-  DashboardConfiguration,
   DashboardConfigurationChange,
-  DashboardSave,
-  DashboardToolbar,
   ViewportChange,
-} from '~/types';
+} from '~/types/dashboard-props';
+import type { DashboardSave } from '~/types/saving';
+import type { AssistantConfiguration, DashboardToolbar } from '~/types';
 import '../../styles/variables.css';
 import InternalDashboard from '../internalDashboard';
 import { ClientContext } from './clientContext';

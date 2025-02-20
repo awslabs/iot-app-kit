@@ -11,7 +11,7 @@ import type {
   SiteWiseAlarmQuery,
   SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardWidget } from '~/types';
+import type { RegisteredWidget } from '~/types/widgets';
 import type {
   AxisSettings,
   ComplexFontSettings,
@@ -24,45 +24,6 @@ import type {
   TableItem,
 } from '@iot-app-kit/react-components';
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
-
-export type QueryConfig<S, T> = {
-  source: S;
-  query: T;
-};
-
-export type SiteWiseQueryConfig = QueryConfig<
-  'iotsitewise',
-  | ((Partial<SiteWiseAssetQuery> &
-      Partial<SiteWisePropertyAliasQuery> &
-      Partial<SiteWiseAssetModelQuery>) &
-      Partial<SiteWiseAlarmQuery> &
-      Partial<SiteWiseAlarmAssetModelQuery>)
-  | undefined
->;
-
-export type QueryProperties = {
-  styleSettings?: StyleSettingsMap;
-  queryConfig: SiteWiseQueryConfig;
-};
-
-export type KPIProperties = QueryProperties & {
-  title?: string;
-  primaryFont: SimpleFontSettings;
-  secondaryFont: SimpleFontSettings;
-  showAggregationAndResolution?: boolean;
-  showValue?: boolean;
-  showUnit?: boolean;
-  showIcon?: boolean;
-  showName?: boolean;
-  showTimestamp?: boolean;
-  showDataQuality?: boolean;
-  thresholds?: StyledThreshold[];
-  backgroundColor?: string;
-  significantDigits?: number;
-  assistant?: AssistantProperty;
-};
-
-export type KPIPropertiesKeys = keyof KPIProperties;
 
 export type StatusProperties = QueryProperties & {
   title?: string;
@@ -206,18 +167,6 @@ export type LineScatterChartProperties = LineAndScatterStyles & {
 
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;
 
-export type BarChartProperties = QueryProperties & {
-  title?: string;
-  thresholds?: ThresholdWithId[];
-  thresholdSettings?: ThresholdSettings;
-  axis?: AxisSettings;
-  significantDigits?: number;
-  resolution?: string;
-  aggregationType?: AggregateType;
-};
-
-export type BarChartPropertiesKeys = keyof BarChartProperties;
-
 export type TableProperties = QueryProperties & {
   title?: string;
   thresholds?: ThresholdWithId[];
@@ -258,21 +207,6 @@ export type LineProperties = {
   thickness?: number;
 };
 
-export type GaugeProperties = QueryProperties & {
-  title?: string;
-  gaugeThickness?: number;
-  showName?: boolean;
-  showUnit?: boolean;
-  fontSize?: number;
-  labelFontSize?: number;
-  unitFontSize?: number;
-  yMin?: number;
-  yMax?: number;
-  thresholds?: StyledThreshold[];
-  significantDigits?: number;
-  assistant?: AssistantProperty;
-};
-
 type ChartPropertiesUnion =
   | KPIProperties
   | StatusProperties
@@ -289,16 +223,15 @@ export type CommonChartProperties = Pick<
   ChartPropertiesKeysIntersection
 >;
 
-export type QueryWidget = DashboardWidget<QueryProperties>;
+export type QueryWidget = RegisteredWidget<QueryProperties>;
 
-export type GaugeWidget = DashboardWidget<GaugeProperties>;
-export type KPIWidget = DashboardWidget<KPIProperties>;
-export type StatusWidget = DashboardWidget<StatusProperties>;
+export type GaugeWidget = RegisteredWidget<GaugeProperties>;
+export type KPIWidget = RegisteredWidget<KPIProperties>;
+export type StatusWidget = RegisteredWidget<StatusProperties>;
 export type LineScatterChartWidget =
-  DashboardWidget<LineScatterChartProperties>;
-export type BarChartWidget = DashboardWidget<BarChartProperties>;
-export type TableWidget = DashboardWidget<TableProperties>;
-export type TextWidget = DashboardWidget<TextProperties>;
-export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;
-export type RectangleWidget = DashboardWidget<RectangleProperties>;
-export type LineWidget = DashboardWidget<LineProperties>;
+  RegisteredWidget<LineScatterChartProperties>;
+export type TableWidget = RegisteredWidget<TableProperties>;
+export type TextWidget = RegisteredWidget<TextProperties>;
+export type StatusTimelineWidget = RegisteredWidget<StatusTimelineProperties>;
+export type RectangleWidget = RegisteredWidget<RectangleProperties>;
+export type LineWidget = RegisteredWidget<LineProperties>;
