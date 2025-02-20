@@ -13,6 +13,7 @@ import {
   StoryWithClearedResourceCache,
   StoryWithSelectableResource,
   StoryWithTanstackDevTools,
+  StoryWithTheming,
 } from './decorators';
 
 export default {
@@ -28,6 +29,7 @@ export default {
     StoryWithTanstackDevTools,
     StoryWithClearedResourceCache,
     StoryWithSelectableResource,
+    StoryWithTheming,
   ],
   argTypes: {
     ...SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,

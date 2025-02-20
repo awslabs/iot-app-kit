@@ -42,7 +42,11 @@ describe('asset drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No assets.')).toBeVisible();
+      /**
+       * cloudscape added an extra span for screenreaders
+       * that is detected by the testing framework
+       */
+      expect(screen.getAllByText('No assets.')[0]).toBeVisible();
     });
 
     it('renders a multi-select drop-down without configuration', async () => {
@@ -52,7 +56,7 @@ describe('asset drop-down', () => {
 
       await dropDown.open();
 
-      expect(screen.getByText('No assets.')).toBeVisible();
+      expect(screen.getAllByText('No assets.')[0]).toBeVisible();
     });
 
     it('renders drop-down options', async () => {

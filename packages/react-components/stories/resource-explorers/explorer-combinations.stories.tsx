@@ -14,12 +14,17 @@ import { client, eventsClient } from './data-source';
 import {
   StoryWithClearedResourceCache,
   StoryWithTanstackDevTools,
+  StoryWithTheming,
 } from './decorators';
 
 export default {
   title: 'Resource Explorers/Combinations',
   component: AssetExplorer,
-  decorators: [StoryWithTanstackDevTools, StoryWithClearedResourceCache],
+  decorators: [
+    StoryWithTanstackDevTools,
+    StoryWithClearedResourceCache,
+    StoryWithTheming,
+  ],
 } satisfies Meta<typeof AssetExplorer>;
 
 export function AssetExplorerPlusAssetPropertyExplorer() {
