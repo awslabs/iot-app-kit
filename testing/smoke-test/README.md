@@ -32,4 +32,4 @@ The current scope includes explicitly validating the `dashboard` package and imp
 ## Relationships
 
 - `smoke-test` relies on CI orchestration (see `.github/workflows/validate.yml`) to facilitate package validation.
-- `prep-smoke-test-env.sh` is an executable script called by the CI orchestration to prepare the smoke test environment. The script incrementally builds and tars the packages, modifies their `package.json`s to depend on the tarballs along the way.
+- `smoke-test.sh` is an executable script for the smoke test.

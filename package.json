@@ -53,6 +53,7 @@
     "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.28.0",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@playwright/test": "^1.48.2",
