@@ -11,8 +11,8 @@ import {
   highestPriorityThreshold,
   thresholdAppliesToDataStream,
 } from './breachedThreshold';
-import { COMPARISON_OPERATOR } from '../common/constants';
-import type { Threshold } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/component-core';
+import { type Threshold } from '@iot-app-kit/core';
 
 describe('annotation logic', () => {
   describe.each`

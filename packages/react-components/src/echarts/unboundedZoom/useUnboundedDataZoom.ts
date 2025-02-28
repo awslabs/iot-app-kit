@@ -15,8 +15,10 @@ import { useEffectOnce, useUpdateEffect } from 'react-use';
 
 import merge from 'lodash-es/merge';
 import { DEFAULT_VIEWPORT } from '../../components/time-sync';
-import { useViewport } from '../../hooks/useViewport';
-import { type UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';
+import {
+  type UtilizedViewportType,
+  useViewport,
+} from '@iot-app-kit/component-core';
 import useIntlStore from '../../translations';
 import {
   DEFAULT_DATA_ZOOM,

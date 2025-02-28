@@ -14,7 +14,7 @@ export const useGaugeFormatterValue = ({
       if (!value) return '-';
       return `{value|${getPreciseValue(value, significantDigits)}} ${
         settings?.showUnit && unit ? '{unit| ' + unit + '}' : ''
-      }`;
+      }`.trim();
     },
     [settings?.showUnit, significantDigits, unit]
   );

@@ -9,10 +9,8 @@ import type {
   XAXisComponentOption,
   YAXisComponentOption,
 } from 'echarts';
-import {
-  formatDate,
-  getPatternForXAxisLabelForLineChart,
-} from '../../utils/time';
+import { getPatternForXAxisLabelForLineChart } from '../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 import { type ChartAxisOptions, type ChartLegend } from './types';
 
 export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {

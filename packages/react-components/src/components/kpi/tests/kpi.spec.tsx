@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { KPI } from '../kpi';
-import { COMPARISON_OPERATOR, type Viewport } from '@iot-app-kit/core';
+import {
+  COMPARISON_OPERATOR,
+  type Viewport,
+  formatDate,
+} from '@iot-app-kit/core';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { formatDate } from '../../../utils/time';
 
 export const VIEWPORT = { duration: '5m' };
 export const PREVIOUS_VALUE = 123.21239;
@@ -81,9 +84,13 @@ const mockUserViewport: {
   group: string;
 } = { viewport: undefined, setViewport: vi.fn(), group: 'group' };
 
-vi.mock('../../../hooks/useViewport', () => ({
-  useViewport: vi.fn(() => mockUserViewport),
-}));
+vi.mock('@iot-app-kit/component-core', async () => {
+  const actual = await vi.importActual('@iot-app-kit/component-core');
+  return {
+    ...actual,
+    useViewport: vi.fn(() => mockUserViewport),
+  };
+});
 
 // a default KPI widget has all values, text, dates, etc. set to be visible
 describe('default kpi widget', () => {

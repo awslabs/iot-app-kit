@@ -4,7 +4,9 @@ import {
   AnomalyObjectDataSourceTransformer,
   AnomalyArrowDataSourceTransformer,
   DataSourceLoader,
-} from '../../data';
+  DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT,
+  useUtilizedViewport,
+} from '@iot-app-kit/component-core';
 
 import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
 
@@ -14,8 +16,6 @@ import { Timestamp } from '../timestampBar';
 import { AnomalyChartError } from './anomalyChartError';
 import { useTransformedData } from './hooks/useTransformedData';
 import { AnomalyChartEmpty } from './anomalyChartEmpty';
-import { useUtilizedViewport } from '../../hooks/useViewport/useUtilizedViewport';
-import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from '../../queries/useSiteWiseAnomalyDataSource/constants';
 import useDataStore from '../../store';
 
 /**

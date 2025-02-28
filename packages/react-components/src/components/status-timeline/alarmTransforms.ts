@@ -3,11 +3,11 @@ import {
   type DataPoint,
   type DataStream,
 } from '@iot-app-kit/core';
-import type { AlarmData } from '../../hooks/useAlarms';
 import {
   parseAlarmStateAssetProperty,
   type PascalCaseStateName,
-} from '../../hooks/useAlarms/transformers';
+  type AlarmData,
+} from '@iot-app-kit/component-core';
 import { CHART_ALARM_ERROR } from '../../common/constants';
 
 export const transformAlarmStateToDataStream = (

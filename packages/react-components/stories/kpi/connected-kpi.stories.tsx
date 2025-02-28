@@ -22,7 +22,7 @@ export default {
 } as Meta<typeof KPI>;
 
 export const ConnectedKPIWidget = () => {
-  const hasAlarmIds = process.env.ALARM_COMPOSITE_MODEL_ID_1 !== null;
+  const hasAlarmIds = import.meta.env.VITE_ALARM_COMPOSITE_MODEL_ID_1 !== null;
 
   if (!queryConfigured()) {
     return (

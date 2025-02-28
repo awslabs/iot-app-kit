@@ -3,7 +3,7 @@ import { type DataStream } from '@iot-app-kit/core';
 import { useVisibleDataStreams } from '../../../../hooks/useVisibleDataStreams';
 import { type DataStreamInformation } from '../../types';
 import { AlarmStateText } from '../../../../../alarm-components/alarm-state/alarmStateText';
-import { type PascalCaseStateName } from '../../../../../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '@iot-app-kit/component-core';
 
 export const LatestAlarmStateValueCell = ({
   id,

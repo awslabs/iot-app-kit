@@ -1,6 +1,6 @@
 import Box from '@cloudscape-design/components/box';
 import useDataStore from '../../../store';
-import { formatDate } from '../../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 
 export const TooltipDate = ({ date }: { date: string }) => {
   const timeZone = useDataStore().timeZone;

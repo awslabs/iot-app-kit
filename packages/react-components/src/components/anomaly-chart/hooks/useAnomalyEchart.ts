@@ -3,9 +3,11 @@ import isEqual from 'lodash-es/isEqual';
 import merge from 'lodash-es/merge';
 import { useEffect, useReducer } from 'react';
 import { useCustomCompareEffect } from 'react-use';
-import { type AnomalyData } from '../../../data';
+import {
+  type AnomalyData,
+  type UtilizedViewportType,
+} from '@iot-app-kit/component-core';
 import { useZoomableECharts } from '../../../hooks/useECharts/useZoomableECharts';
-import { type UtilizedViewportType } from '../../../hooks/useViewport/useUtilizedViewport';
 import { DEFAULT_ANOMALY_WIDGET_SETTINGS } from '../constants';
 import {
   convertDataset,

@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '@iot-app-kit/component-core';
 import {
   alarmAcknowledgedIcon,
   alarmActiveIcon,

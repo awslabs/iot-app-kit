@@ -1,7 +1,7 @@
 import { type DataStream } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import { type BarChartAlarms } from './useBarChartAlarms';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { createNonNullableList } from '@iot-app-kit/core';
 import { useMemo } from 'react';
 
 type UseNormalizedDataStreamsOptions = {

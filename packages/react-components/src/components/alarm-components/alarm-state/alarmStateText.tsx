@@ -8,8 +8,10 @@ import {
   spaceScaledXxs,
 } from '@cloudscape-design/design-tokens';
 import { Spinner } from '@cloudscape-design/components';
-import { type AlarmDataStatus } from '../../../hooks/useAlarms';
-import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import {
+  type AlarmDataStatus,
+  type PascalCaseStateName,
+} from '@iot-app-kit/component-core';
 import './alarmStateText.css';
 
 export type AlarmStateTextOptions = {

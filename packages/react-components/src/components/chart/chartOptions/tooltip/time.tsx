@@ -1,5 +1,5 @@
 import { fontWeightHeadingS } from '@cloudscape-design/design-tokens';
-import { FULL_DATE, formatDate } from '../../../../utils/time';
+import { FULL_DATE, formatDate } from '@iot-app-kit/core';
 import useDataStore from '../../../../store';
 
 export type XYPlotTooltipTimeOptions = {

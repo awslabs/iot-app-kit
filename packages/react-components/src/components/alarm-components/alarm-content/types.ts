@@ -1,4 +1,4 @@
-import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '@iot-app-kit/component-core';
 
 export type AlarmContent = {
   alarmName?: string;

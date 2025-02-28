@@ -13,20 +13,19 @@ import type {
   DataStream as DataStreamViz,
   Annotations,
 } from '@iot-app-kit/charts-core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport, useTimeSeriesData } from '@iot-app-kit/component-core';
 import { type AssistantProperty } from '../../common/assistantProps';
-import {
-  DEFAULT_LEGEND,
-  DEFAULT_VIEWPORT,
-  ECHARTS_GESTURE,
-} from '../../common/constants';
+import { DEFAULT_LEGEND, ECHARTS_GESTURE } from '../../common/constants';
 import { getAdjustedChartHeight, Title } from '../../common/title';
-import type { ComponentQuery } from '../../common/chartTypes';
-import { useAlarms } from '../../hooks/useAlarms';
 import { useResizeObserver } from 'usehooks-ts';
-import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
-import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
+import {
+  type ComponentQuery,
+  useAlarms,
+  convertAlarmQueryToAlarmRequest,
+  DEFAULT_VIEWPORT,
+  getAlarmQueries,
+  getTimeSeriesQueries,
+} from '@iot-app-kit/component-core';
 import {
   ALARM_STATE_THRESHOLDS,
   transformAlarmStateToDataStream,

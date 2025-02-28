@@ -1,8 +1,6 @@
 import merge from 'lodash-es/merge';
-import {
-  formatDate,
-  getPatternForXAxisLabelForAnomalyChart,
-} from '../../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
+import { getPatternForXAxisLabelForAnomalyChart } from '../../../utils/time';
 import { ANOMALY_X_AXIS } from '../constants';
 import { type ConfigurationOptions } from '../hooks/types';
 

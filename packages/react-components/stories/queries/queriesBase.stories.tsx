@@ -6,17 +6,17 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { sub } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
 import { TimeSelection, TimeSync, useViewport } from '../../src';
-import { useAlarms } from '../../src/hooks/useAlarms';
 import {
+  useAlarms,
   queryClient,
   useDescribeAssetModelCompositeModel,
   useDescribeAssetProperty,
   useGetAssetPropertyValueHistory,
-} from '../../src/queries';
-import { useHistoricalAssetPropertyValues } from '../../src/queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
-import { useLatestAssetPropertyValues } from '../../src/queries/useLatestAssetPropertyValues/useLatestAssetPropertyValues';
-import { useSiteWiseAnomalyDataSource } from '../../src/queries/useSiteWiseAnomalyDataSource';
-import { isDurationViewport } from '../../src/utils/isDurationViewport';
+  useHistoricalAssetPropertyValues,
+  useLatestAssetPropertyValues,
+  useSiteWiseAnomalyDataSource,
+  isDurationViewport,
+} from '@iot-app-kit/component-core';
 import { getEnvCredentials, getRegion } from '../utils/query';
 
 const ASSET_MODEL_ID = '4c8e3da0-d3ec-4818-86b3-44a1e6b98531';

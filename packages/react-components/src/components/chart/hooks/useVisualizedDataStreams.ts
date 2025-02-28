@@ -8,9 +8,12 @@ import {
 } from '@iot-app-kit/core';
 import isEqual from 'lodash-es/isEqual';
 import { useEffect, useMemo, useState } from 'react';
-import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
-import { useTimeSeriesData } from '../../../hooks/useTimeSeriesData';
-import { useViewport } from '../../../hooks/useViewport';
+import { StreamType } from '../../../common/constants';
+import {
+  useViewport,
+  useTimeSeriesData,
+  DEFAULT_VIEWPORT,
+} from '@iot-app-kit/component-core';
 
 const isNotAlarmStream = ({ streamType }: DataStream) =>
   streamType !== StreamType.ALARM;

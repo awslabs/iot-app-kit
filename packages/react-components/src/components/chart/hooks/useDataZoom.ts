@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { useEffectOnce } from 'react-use';
 import { ECHARTS_GESTURE } from '../../../common/constants';
-import { useViewport } from '../../../hooks/useViewport';
+import { useViewport } from '@iot-app-kit/component-core';
 import { convertViewportToMs } from '../../../utils/convertViewportToMs';
 import { DEFAULT_VIEWPORT } from '../../time-sync';
 import {
