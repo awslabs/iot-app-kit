@@ -1,4 +1,6 @@
 import parse from 'parse-duration';
+import { utcToZonedTime, format } from 'date-fns-tz';
+import { type TimeInNanos } from '@aws-sdk/client-iotsitewise';
 
 export const NANO_SECOND_IN_MS = 1 / 1000000;
 export const SECOND_IN_MS = 1000;
@@ -10,6 +12,7 @@ export const MONTH_IN_MS = 30 * DAY_IN_MS;
 export const YEAR_IN_MS = 12 * MONTH_IN_MS;
 
 // Global time format strings
+export const DEFAULT_DATE_TIME = 'yyyy-MM-dd hh:mm:ss aaaa';
 export const SHORT_TIME = 'hh:mm a';
 export const FULL_DATE = 'yyy-MM-dd hh:mm:ss a';
 
@@ -156,3 +159,33 @@ export const parseDuration = (duration: number | string): number => {
   // if duration is a string but we cannot parse it, we default to 10 mins.
   return parsedTime != null ? parsedTime : 10 * MINUTE_IN_MS;
 };
+
+// https://date-fns.org/v3.6.0/docs/Time-Zones#date-fns-tz
+// converts an epoch date to a formatted string in a specific timeZone
+export const formatDate = (
+  dateTime: number,
+  options?: { timeZone?: string; pattern?: string }
+) => {
+  const formatPattern = options?.pattern ?? DEFAULT_DATE_TIME;
+
+  const userTimeZone =
+    options?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Convert epoch time to a zoned date object
+  const zonedDate = utcToZonedTime(new Date(dateTime), userTimeZone);
+
+  const formattedString = format(zonedDate, formatPattern, {
+    timeZone: userTimeZone,
+  });
+
+  return formattedString;
+};
+
+/** converts the TimeInNanos to milliseconds */
+export const toTimestamp = (time: TimeInNanos | undefined): number =>
+  (time &&
+    Math.floor(
+      (time.timeInSeconds || 0) * SECOND_IN_MS +
+        (time.offsetInNanos || 0) * NANO_SECOND_IN_MS
+    )) ||
+  0;

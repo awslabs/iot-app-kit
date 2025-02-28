@@ -17,7 +17,7 @@ import {
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
 import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
-import { isAlarmState } from '../../hooks/useAlarms/transformers';
+import { isAlarmState } from '@iot-app-kit/component-core';
 
 const dataQuality = ({ quality }: { quality: DataPoint['quality'] }) => {
   const color =

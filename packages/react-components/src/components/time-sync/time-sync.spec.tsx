@@ -1,7 +1,7 @@
 import { viewportManager } from '@iot-app-kit/core';
 import { render, screen } from '@testing-library/react';
 import { TimeSync } from './index';
-import { useViewport } from '../../hooks/useViewport/useViewport';
+import { useViewport } from '@iot-app-kit/component-core';
 
 afterEach(() => {
   viewportManager.reset();

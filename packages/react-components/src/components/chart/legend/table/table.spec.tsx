@@ -2,7 +2,7 @@ import { render, renderHook, screen } from '@testing-library/react';
 import { ChartLegendTable } from './table';
 import { type DataStreamInformation, type TrendCursor } from './types';
 import { useChartStore } from '../../store';
-import { formatDate } from '../../../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 
 const setupStore = () => {
   renderHook(() => useChartStore((state) => state.unHighlightDataStream));

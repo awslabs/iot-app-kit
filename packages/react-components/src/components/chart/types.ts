@@ -7,7 +7,7 @@ import {
 } from '@iot-app-kit/core';
 import { type OptionId } from 'echarts/types/src/util/types.js';
 import { type AssistantProperty } from '../../common/assistantProps';
-import type { ComponentQuery } from '../../common/chartTypes';
+import type { ComponentQuery } from '@iot-app-kit/component-core';
 
 export type YAxisOptions = {
   yLabel?: string;

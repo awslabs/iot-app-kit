@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo } from 'react';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport, useTimeSeriesData } from '@iot-app-kit/component-core';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { CHART_ALARM_ERROR, DEFAULT_VIEWPORT } from '../../common/constants';
+import { CHART_ALARM_ERROR } from '../../common/constants';
 import type { AssistantProperty } from '../../common/assistantProps';
-import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import {
+  viewportEndDate,
+  viewportStartDate,
+  createNonNullableList,
+} from '@iot-app-kit/core';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import type {
@@ -15,14 +18,16 @@ import type {
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
-import type { ComponentQuery } from '../../common/chartTypes';
-import { getTimeSeriesQueries } from '../../utils/queries';
-import { useSingleQueryAlarm } from '../../hooks/useSingleQueryAlarm';
+import {
+  useSingleQueryAlarm,
+  getTimeSeriesQueries,
+  type ComponentQuery,
+  DEFAULT_VIEWPORT,
+} from '@iot-app-kit/component-core';
 import {
   convertToSupportedTimeRange,
   serializeTimeSeriesQuery,
 } from '../../hooks/useAssistantContext/utils';
-import { createNonNullableList } from '../../utils/createNonNullableList';
 
 export const KPI = ({
   query,

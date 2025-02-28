@@ -5,7 +5,7 @@ import { type AssistantProperty } from '../../common/assistantProps';
 import {
   type AnomalyArrowDataSource,
   type AnomalyObjectDataSource,
-} from '../../data';
+} from '@iot-app-kit/component-core';
 
 export type TooltipSort = 'value' | 'alphabetical';
 export type ThemeMode = 'light' | 'dark';

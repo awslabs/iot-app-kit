@@ -5,7 +5,7 @@ import type {
   PropertyAliasQuery,
   SiteWiseDataStreamQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import { type ComponentQuery } from '../../common/chartTypes';
+import { type ComponentQuery } from '@iot-app-kit/component-core';
 
 export const convertToSupportedTimeRange = (start: Date, end: Date) => {
   let startISO = start.toISOString();

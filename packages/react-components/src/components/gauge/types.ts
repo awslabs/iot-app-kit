@@ -6,9 +6,11 @@ import {
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 import { type AssistantProperty } from '../../common/assistantProps';
-import type { ComponentQuery } from '../../common/chartTypes';
 import type { AlarmContent } from '../alarm-components/alarm-content/types';
-import { type AlarmDataStatus } from '../../hooks/useAlarms';
+import {
+  type AlarmDataStatus,
+  type ComponentQuery,
+} from '@iot-app-kit/component-core';
 
 export type GaugeProps = {
   size?: { width: number; height: number };

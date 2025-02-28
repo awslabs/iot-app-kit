@@ -14,7 +14,7 @@ describe('Tooltip', () => {
 
   it('renders the tooltip content correctly', () => {
     const { getByText } = render(
-      <Tooltip content='Tooltip content' position='top'>
+      <Tooltip content='Tooltip content' position='bottom'>
         {' '}
         <button>Button</button>{' '}
       </Tooltip>

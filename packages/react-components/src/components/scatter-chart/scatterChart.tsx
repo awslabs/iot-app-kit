@@ -10,14 +10,14 @@ import {
   type TimeSeriesDataQuery,
   type Viewport,
 } from '@iot-app-kit/core';
-import { type AxisSettings, type ChartSize } from '../../common/chartTypes';
+import { DEFAULT_LEGEND, ECHARTS_GESTURE } from '../../common/constants';
 import {
-  DEFAULT_LEGEND,
   DEFAULT_VIEWPORT,
-  ECHARTS_GESTURE,
-} from '../../common/constants';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
+  useViewport,
+  useTimeSeriesData,
+  type AxisSettings,
+  type ChartSize,
+} from '@iot-app-kit/component-core';
 
 export interface ScatterChartProps {
   queries: TimeSeriesDataQuery[];

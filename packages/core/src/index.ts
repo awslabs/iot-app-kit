@@ -15,7 +15,14 @@ export { toSiteWiseAssetProperty } from './common/dataStreamId';
 
 // Viewport utilities
 export { isDurationViewport, isHistoricalViewport } from './common/predicates';
-export { parseDuration } from './common/time';
+export {
+  parseDuration,
+  formatDate,
+  toTimestamp,
+  convertMS,
+  FULL_DATE,
+  DEFAULT_DATE_TIME,
+} from './common/time';
 export { viewportEndDate, viewportStartDate } from './common/viewport';
 export { viewportManager } from './viewportManager/viewportManager';
 
@@ -68,3 +75,5 @@ export type {
   RequestResponse,
   RequestTimeout,
 } from './requestFunctions';
+
+export { createNonNullableList } from './common/createNonNullableList';

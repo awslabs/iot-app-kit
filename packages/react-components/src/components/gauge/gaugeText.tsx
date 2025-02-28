@@ -13,7 +13,7 @@ import { type Primitive } from '@iot-app-kit/core';
 import { GaugeErrorText } from './gaugeErrorText';
 import { type AlarmContent } from '../alarm-components/alarm-content/types';
 import { type AssistantProperty } from '../../common/assistantProps';
-import { type AlarmDataStatus } from '../../hooks/useAlarms';
+import { type AlarmDataStatus } from '@iot-app-kit/component-core';
 import { Spinner } from '@cloudscape-design/components';
 
 const getFormattedValue = ({

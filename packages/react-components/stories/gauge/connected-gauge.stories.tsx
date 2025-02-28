@@ -42,7 +42,7 @@ export default {
 
 //TODO: Getting the data from token not working
 export const ConnectedGuage: ComponentStory<typeof Gauge> = ({ settings }) => {
-  const hasAlarmIds = process.env.ALARM_COMPOSITE_MODEL_ID_1 !== null;
+  const hasAlarmIds = import.meta.env.VITE_ALARM_COMPOSITE_MODEL_ID_1 !== null;
   const { viewport } = useViewport();
   if (!queryConfigured()) {
     return (

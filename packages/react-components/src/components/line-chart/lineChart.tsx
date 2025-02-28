@@ -10,14 +10,14 @@ import type {
   DataStream as DataStreamViz,
   YAnnotation,
 } from '@iot-app-kit/charts-core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
 import {
-  DEFAULT_LEGEND,
+  useViewport,
+  useTimeSeriesData,
   DEFAULT_VIEWPORT,
-  ECHARTS_GESTURE,
-} from '../../common/constants';
-import { type AxisSettings, type ChartSize } from '../../common/chartTypes';
+  type AxisSettings,
+  type ChartSize,
+} from '@iot-app-kit/component-core';
+import { DEFAULT_LEGEND, ECHARTS_GESTURE } from '../../common/constants';
 
 export interface LineChartProps {
   queries: TimeSeriesDataQuery[];

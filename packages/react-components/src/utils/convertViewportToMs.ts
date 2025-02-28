@@ -1,5 +1,5 @@
 import { type Viewport, parseDuration } from '@iot-app-kit/core';
-import { isDurationViewport } from './isDurationViewport';
+import { isDurationViewport } from '@iot-app-kit/component-core';
 
 // TODO: test this once echarts live mode is supported
 // the width here represents the width of the view port in milli seconds

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from '../kpiBase';
 import type { DataPoint } from '@iot-app-kit/core';
-import { formatDate } from '../../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 
 describe('name', () => {
   it('renders name when showName is true', () => {

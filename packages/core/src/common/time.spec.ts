@@ -2,10 +2,12 @@ import {
   convertMS,
   DAY_IN_MS,
   displayDate,
+  formatDate,
   HOUR_IN_MS,
   MINUTE_IN_MS,
   MONTH_IN_MS,
   SECOND_IN_MS,
+  toTimestamp,
   YEAR_IN_MS,
 } from './time';
 
@@ -239,5 +241,74 @@ describe('display date', () => {
         })
       ).toBe('12/31/1999');
     });
+  });
+});
+
+describe('formatDate', () => {
+  it('correctly converts to a different timezone', () => {
+    const date = new Date(0).getTime();
+
+    const formattedDate = formatDate(date, { timeZone: 'America/Denver' });
+
+    // UTC-7
+    expect(formattedDate).toBe('1969-12-31 05:00:00 p.m.');
+
+    const formattedDate2 = formatDate(date, { timeZone: 'Asia/Tokyo' });
+
+    // UTC+9
+    expect(formattedDate2).toBe('1970-01-01 09:00:00 a.m.');
+  });
+
+  it('converts date to specified pattern', () => {
+    const date = new Date(0).getTime();
+
+    const formattedDate = formatDate(date, {
+      timeZone: 'America/Denver',
+      pattern: 'hh:mm a',
+    });
+    expect(formattedDate).toBe('05:00 PM');
+  });
+});
+
+describe('toTimestamp', () => {
+  it('can handle an undefined time', () => {
+    expect(toTimestamp(undefined)).toBe(0);
+    expect(
+      toTimestamp({
+        timeInSeconds: undefined,
+        offsetInNanos: undefined,
+      })
+    ).toBe(0);
+  });
+  it('converts a time with seconds and nanos to milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: 0.1,
+        offsetInNanos: 1000000,
+      })
+    ).toBe(101);
+  });
+  it('converts a time with only seconds to milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: 0.1,
+      })
+    ).toBe(100);
+  });
+  it('converts a time with only nanos to milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: undefined,
+        offsetInNanos: 1000000,
+      })
+    ).toBe(1);
+  });
+  it('does not return fractional milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: undefined,
+        offsetInNanos: 1000,
+      })
+    ).toBe(0);
   });
 });

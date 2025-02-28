@@ -7,9 +7,11 @@ import {
 } from '../../echarts';
 import { useUnboundedDataZoom } from '../../echarts/unboundedZoom';
 import { type Viewport } from '@iot-app-kit/core';
-import { useViewport } from '../useViewport';
 import { useMeasure } from 'react-use';
-import { type UtilizedViewportType } from '../useViewport/useUtilizedViewport';
+import {
+  type UtilizedViewportType,
+  useViewport,
+} from '@iot-app-kit/component-core';
 
 configureEchartsPlugins();
 

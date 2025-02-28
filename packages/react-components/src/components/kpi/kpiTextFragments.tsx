@@ -1,10 +1,10 @@
 import Spinner from '@cloudscape-design/components/spinner';
 import { Value } from '../shared-components';
 import { DataQualityText } from '../data-quality/data-quality-text';
-import { formatDate } from '../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
 import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
-import { type AlarmDataStatus } from '../../hooks/useAlarms';
+import { type AlarmDataStatus } from '@iot-app-kit/component-core';
 import type { DataPoint } from '@iot-app-kit/core';
 import { Alert, Box } from '@cloudscape-design/components';
 import { type AlarmContent } from '../alarm-components/alarm-content/types';
