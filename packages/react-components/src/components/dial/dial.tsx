@@ -1,13 +1,15 @@
 import { DialBase } from './dialBase';
-import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
+import { ECHARTS_GESTURE } from '../../common/constants';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport, useTimeSeriesData } from '@iot-app-kit/component-core';
 import type { Threshold, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
 import type { DialSettings } from './types';
 import { DEFAULT_DIAL_SETTINGS } from './constants';
-import type { ComponentQuery } from '../../common/chartTypes';
-import { getTimeSeriesQueries } from '../../utils/queries';
+import {
+  DEFAULT_VIEWPORT,
+  type ComponentQuery,
+  getTimeSeriesQueries,
+} from '@iot-app-kit/component-core';
 
 export const Dial = ({
   query,

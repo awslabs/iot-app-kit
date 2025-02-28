@@ -43,6 +43,23 @@
         "@iot-app-kit/react-components#build:es",
         "@iot-app-kit/source-iotsitewise#build:es",
         "@iot-app-kit/source-iottwinmaker#build:es",
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
+      ],
+      "outputs": ["dist/**"],
+      "persistent": true,
+      "cache": false,
+      "outputLogs": "full"
+    },
+    "dev:resource-explorer": {
+      "dependsOn": [
+        "@iot-app-kit/core#build:es",
+        "@iot-app-kit/component-core#build:es",
+        "@iot-app-kit/core-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/source-iotsitewise#build:es",
+        "@iot-app-kit/source-iottwinmaker#build:es",
         "@iot-app-kit/testing-util#build:es"
       ],
       "outputs": ["dist/**"],
@@ -81,7 +98,20 @@
         "@iot-app-kit/react-components#build:es",
         "@iot-app-kit/source-iotsitewise#build:es",
         "@iot-app-kit/source-iottwinmaker#build:es",
-        "@iot-app-kit/testing-util#build:es"
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
+      ]
+    },
+    "@iot-app-kit/resource-explorer#lint": {
+      "dependsOn": [
+        "@iot-app-kit/core#build:es",
+        "@iot-app-kit/core-util#build:es",
+        "@iot-app-kit/source-iotsitewise#build:es",
+        "@iot-app-kit/source-iottwinmaker#build:es",
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
       ]
     },
     "@iot-app-kit/scene-composer#lint": {
@@ -139,7 +169,20 @@
         "@iot-app-kit/react-components#build:es",
         "@iot-app-kit/source-iotsitewise#build:es",
         "@iot-app-kit/source-iottwinmaker#build:es",
-        "@iot-app-kit/testing-util#build:es"
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
+      ]
+    },
+    "@iot-app-kit/resource-explorer#test": {
+      "dependsOn": [
+        "@iot-app-kit/core#build:es",
+        "@iot-app-kit/core-util#build:es",
+        "@iot-app-kit/source-iotsitewise#build:es",
+        "@iot-app-kit/source-iottwinmaker#build:es",
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
       ]
     },
     "@iot-app-kit/scene-composer#test": {
@@ -189,7 +232,20 @@
         "@iot-app-kit/react-components#build:es",
         "@iot-app-kit/source-iotsitewise#build:es",
         "@iot-app-kit/source-iottwinmaker#build:es",
-        "@iot-app-kit/testing-util#build:es"
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
+      ]
+    },
+    "@iot-app-kit/resource-explorer#test:ui:ci": {
+      "dependsOn": [
+        "@iot-app-kit/core#build:es",
+        "@iot-app-kit/core-util#build:es",
+        "@iot-app-kit/source-iotsitewise#build:es",
+        "@iot-app-kit/source-iottwinmaker#build:es",
+        "@iot-app-kit/testing-util#build:es",
+        "@iot-app-kit/resource-explorer#build:es",
+        "@iot-app-kit/component-core#build:es"
       ]
     },
     "@iot-app-kit/scene-composer#test:ui:ci": {

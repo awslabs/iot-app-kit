@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo } from 'react';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
-import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import {
-  CHART_ALARM_ERROR,
+  useViewport,
+  useTimeSeriesData,
+  useSingleQueryAlarm,
+  getTimeSeriesQueries,
   DEFAULT_VIEWPORT,
-  ECHARTS_GESTURE,
-} from '../../common/constants';
+} from '@iot-app-kit/component-core';
+import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
+import { CHART_ALARM_ERROR, ECHARTS_GESTURE } from '../../common/constants';
 import {
   type DataStream,
   viewportEndDate,
@@ -21,12 +22,10 @@ import {
   DEFAULT_GAUGE_STYLES,
 } from './constants';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
-import { getTimeSeriesQueries } from '../../utils/queries';
 import {
   convertToSupportedTimeRange,
   serializeTimeSeriesQuery,
 } from '../../hooks/useAssistantContext/utils';
-import { useSingleQueryAlarm } from '../../hooks/useSingleQueryAlarm';
 
 export const Gauge = ({
   size,

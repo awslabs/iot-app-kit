@@ -1,4 +1,4 @@
-import { convertMS } from './time';
+import { convertMS } from '@iot-app-kit/core';
 
 const aggregateToString = (aggregate: string): string => {
   return aggregate.replace(/_/g, ' ').toLowerCase();

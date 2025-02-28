@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { TableBase } from './tableBase';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport, useTimeSeriesData } from '@iot-app-kit/component-core';
 import type { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import { type UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import {
@@ -15,22 +14,27 @@ import { DEFAULT_TABLE_MESSAGES } from './messages';
 import type { TableProps as TableBaseProps } from '@cloudscape-design/components';
 import type { AssistantProperty } from '../../common/assistantProps';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
-import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import {
+  viewportEndDate,
+  viewportStartDate,
+  createNonNullableList,
+} from '@iot-app-kit/core';
 import { TableHeader } from './tableHeader';
 import { TableAssistantResults } from './tableAssistantResults';
 import { IntlProvider } from 'react-intl';
-import type { ComponentQuery } from '../../common/chartTypes';
-import { getTimeSeriesQueries } from '../../utils/queries';
-import { useAlarmsFromQueries } from '../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
-import { parseAlarmStateAssetProperty } from '../../hooks/useAlarms/transformers';
-import { mapAlarmRuleExpression } from '../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
+import {
+  type ComponentQuery,
+  getTimeSeriesQueries,
+  useAlarmsFromQueries,
+  parseAlarmStateAssetProperty,
+  mapAlarmRuleExpression,
+  type AlarmData,
+  transformAlarmsToThreshold,
+} from '@iot-app-kit/component-core';
 import {
   convertToSupportedTimeRange,
   getSelectedQueriesAndProperties,
 } from '../../hooks/useAssistantContext/utils';
-import { type AlarmData } from '../../hooks/useAlarms';
-import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
-import { createNonNullableList } from '../../utils/createNonNullableList';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 

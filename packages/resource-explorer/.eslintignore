@@ -1,0 +1,5 @@
+dist
+coverage
+storybook-static
+stencil-generated
+test-results

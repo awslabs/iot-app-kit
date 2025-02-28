@@ -1,4 +1,7 @@
-import { type AnomalyData, type AnomalyDescription } from '../../../data';
+import {
+  type AnomalyData,
+  type AnomalyDescription,
+} from '@iot-app-kit/component-core';
 import { type ThemeMode, type TooltipSort } from '../types';
 
 export type ConfigurationOptions = {

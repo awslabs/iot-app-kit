@@ -8,7 +8,7 @@ import type {
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
 import type { AssistantProperty } from '../../common/assistantProps';
-import { type PascalCaseStateName } from '../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '@iot-app-kit/component-core';
 
 export type TableItemRef = {
   $cellRef: {

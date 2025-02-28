@@ -1,5 +1,4 @@
 import { type LegendConfig } from '@iot-app-kit/charts-core';
-import type { Viewport } from '@iot-app-kit/core';
 
 /**
  * Stream type is a classification of a `DataStream`, which contains with it additional structure and features specific
@@ -28,24 +27,6 @@ export enum LEGEND_POSITION {
   RIGHT = 'RIGHT',
   BOTTOM = 'BOTTOM',
 }
-
-export enum COMPARISON_OPERATOR {
-  LESS_THAN = 'LT',
-  GREATER_THAN = 'GT',
-  LESS_THAN_EQUAL = 'LTE',
-  GREATER_THAN_EQUAL = 'GTE',
-  EQUAL = 'EQ',
-  CONTAINS = 'CONTAINS',
-}
-
-export const COMPARATOR_MAP = {
-  GTE: '>=',
-  GT: '>',
-  LTE: '<=',
-  LT: '<',
-  EQ: '=',
-  CONTAINS: 'Contains',
-};
 
 export enum StatusIconType {
   ERROR = 'error',
@@ -84,8 +65,6 @@ export const enum POINT_TYPE {
 export enum TREND_TYPE {
   LINEAR = 'linear-regression',
 }
-
-export const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
 export const DEFAULT_LEGEND: LegendConfig = {
   position: LEGEND_POSITION.BOTTOM,

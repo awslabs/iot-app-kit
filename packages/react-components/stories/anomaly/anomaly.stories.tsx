@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { TimeSelection, TimeSync } from '../../src';
 import { AnomalyChart } from '../../src/components/anomaly-chart';
 import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-chart/tests/mockDataSources';
-import { queryClient } from '../../src/queries';
+import { queryClient } from '@iot-app-kit/component-core';
 import { getEnvCredentials, getRegion } from '../utils/query';
 import { ConnectedAnomalyChart } from './connected-anomaly-chart';
 import { errorMockDatasource } from './mockData';

@@ -4,7 +4,7 @@ import {
   type ComparisonOperator,
   type StyledThreshold,
 } from '@iot-app-kit/core';
-import { COMPARATOR_MAP } from '../../../common/constants';
+import { COMPARATOR_MAP } from '@iot-app-kit/component-core';
 
 const comparisonOperatorToLowerYAxis = (
   comparisonOperator: ComparisonOperator,

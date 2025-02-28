@@ -7,8 +7,7 @@ import { Spinner } from '@cloudscape-design/components';
 
 import './timestamp.css';
 import { convertViewportToMs } from '../../utils/convertViewportToMs';
-import { type Viewport } from '@iot-app-kit/core';
-import { formatDate } from '../../utils/time';
+import { type Viewport, formatDate } from '@iot-app-kit/core';
 import useDataStore from '../../store';
 
 type TimestampProps = {

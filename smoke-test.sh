@@ -326,6 +326,8 @@ log_debug "Creating ephemeral patch changeset: ${CHANGESET_FILE}"
   echo "'@iot-app-kit/core-util': patch"
   echo "'@iot-app-kit/dashboard': patch"
   echo "'@iot-app-kit/react-components': patch"
+  echo "'@iot-app-kit/resource-explorer': patch"
+  echo "'@iot-app-kit/component-core': patch"
   echo "'@iot-app-kit/source-iotsitewise': patch"
   echo "'@iot-app-kit/source-iottwinmaker': patch"
   echo "---"
@@ -343,6 +345,8 @@ if ! npm publish -w @iot-app-kit/core \
                  -w @iot-app-kit/core-util \
                  -w @iot-app-kit/dashboard \
                  -w @iot-app-kit/react-components \
+                 -w @iot-app-kit/resource-explorer \
+                 -w @iot-app-kit/component-core \
                  -w @iot-app-kit/source-iotsitewise \
                  -w @iot-app-kit/source-iottwinmaker; then
   log_error "Failed to publish packages."

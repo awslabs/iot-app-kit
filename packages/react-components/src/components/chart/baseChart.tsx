@@ -14,7 +14,7 @@ import {
 import { HotKeys } from 'react-hotkeys';
 import { Resizable, type ResizeHandle } from 'react-resizable';
 import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport, getTimeSeriesQueries } from '@iot-app-kit/component-core';
 import { useChartConfiguration } from './chartOptions/useChartConfiguration';
 import { useChartDataset } from './chartOptions/useChartDataset';
 import ChartContextMenu from './contextMenu/ChartContextMenu';
@@ -35,7 +35,6 @@ import {
 } from '../../hooks/useAssistantContext/utils';
 import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
 import useDataStore from '../../store';
-import { getTimeSeriesQueries } from '../../utils/queries';
 import { Timestamp } from '../timestampBar';
 import './chart.css';
 import {

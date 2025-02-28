@@ -2,7 +2,7 @@ import { type Meta, type StoryFn } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnomalyChart } from '../../src/components/anomaly-chart';
 import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-chart/tests/mockDataSources';
-import { queryClient } from '../../src/queries';
+import { queryClient } from '@iot-app-kit/component-core';
 
 export default {
   title: 'Widgets/Anomaly',

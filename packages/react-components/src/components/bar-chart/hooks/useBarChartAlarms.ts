@@ -9,9 +9,11 @@ import { toId } from '@iot-app-kit/source-iotsitewise';
 import isEqual from 'lodash-es/isEqual';
 import { useState } from 'react';
 import { useCustomCompareEffect } from 'react-use';
-import { type AlarmData } from '../../../hooks/useAlarms';
-import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries';
-import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
+import {
+  type AlarmData,
+  useAlarmsFromQueries,
+  transformAlarmsToThreshold,
+} from '@iot-app-kit/component-core';
 import { type BarChartProps } from '../barChart';
 
 type UseBarChartAlarmOptions = Pick<BarChartProps, 'queries' | 'viewport'> & {

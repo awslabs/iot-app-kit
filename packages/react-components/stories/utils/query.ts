@@ -7,8 +7,8 @@ import {
 
 export const getEnvCredentials = () => {
   if (
-    process.env.AWS_ACCESS_KEY_ID == null ||
-    process.env.AWS_SECRET_ACCESS_KEY == null
+    import.meta.env.VITE_AWS_ACCESS_KEY_ID == null ||
+    import.meta.env.VITE_AWS_SECRET_ACCESS_KEY == null
   ) {
     throw new Error(
       'Missing credentials: must provide the following env variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN within .env'
@@ -16,37 +16,37 @@ export const getEnvCredentials = () => {
   }
   return {
     // Provided by `.env` environment variable file
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    sessionToken: process.env.AWS_SESSION_TOKEN,
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+    sessionToken: import.meta.env.VITE_AWS_SESSION_TOKEN,
   };
 };
 
 export const getRegion = () => {
-  if (process.env.AWS_REGION == null) {
+  if (import.meta.env.VITE_AWS_REGION == null) {
     throw new Error(
       'Missing credentials: Must provide the following env variables: AWS_REGION'
     );
   }
-  return process.env.AWS_REGION;
+  return import.meta.env.VITE_AWS_REGION;
 };
 
 const getAssetQuery = () => {
   if (
-    process.env.ASSET_ID_1 == null ||
-    process.env.PROPERTY_ID_1 == null ||
-    process.env.PROPERTY_ID_2 == null ||
-    process.env.PROPERTY_ID_3 == null
+    import.meta.env.VITE_ASSET_ID_1 == null ||
+    import.meta.env.VITE_PROPERTY_ID_1 == null ||
+    import.meta.env.VITE_PROPERTY_ID_2 == null ||
+    import.meta.env.VITE_PROPERTY_ID_3 == null
   ) {
     throw new Error(
       'Missing configuration: Must provide the following env variables: ASSET_ID_1. PROPERTY_ID_1. PROPERTY_ID_2 and PROPERTY_ID_3'
     );
   }
   return {
-    assetId: process.env.ASSET_ID_1,
-    propertyId1: process.env.PROPERTY_ID_1,
-    propertyId2: process.env.PROPERTY_ID_2,
-    propertyId3: process.env.PROPERTY_ID_3,
+    assetId: import.meta.env.VITE_ASSET_ID_1,
+    propertyId1: import.meta.env.VITE_PROPERTY_ID_1,
+    propertyId2: import.meta.env.VITE_PROPERTY_ID_2,
+    propertyId3: import.meta.env.VITE_PROPERTY_ID_3,
   };
 };
 
@@ -84,12 +84,6 @@ export const getTimeSeriesDataQuery = (
           {
             refId: '2',
             propertyId: propertyId2,
-            aggregationType: 'AVERAGE',
-            resolution: '1m',
-          },
-          {
-            refId: '3',
-            propertyId: '3179e83f-6d3b-41fd-b131-5f21ff01a7b3',
             aggregationType: 'AVERAGE',
             resolution: '1m',
           },
@@ -133,7 +127,7 @@ export const getSingleValueAlarmDataQuery = (
   }
 
   const { assetId } = getAssetQuery();
-  const alarmId1 = process.env.ALARM_COMPOSITE_MODEL_ID_1;
+  const alarmId1 = import.meta.env.VITE_ALARM_COMPOSITE_MODEL_ID_1;
 
   if (!alarmId1) return getIotSiteWiseQuery().alarmData({});
 
@@ -156,6 +150,7 @@ export const getSingleValueAlarmDataQuery = (
 
 export const queryConfigured = () => {
   try {
+    console.log(import.meta.env);
     getEnvCredentials();
     getRegion();
     getAssetQuery();

@@ -119,6 +119,8 @@
     "@iot-app-kit/charts-core": "^2.1.2",
     "@iot-app-kit/core": "12.5.0",
     "@iot-app-kit/core-util": "12.5.0",
+    "@iot-app-kit/component-core": "12.5.0",
+    "@iot-app-kit/resource-explorer": "12.5.0",
     "@iot-app-kit/source-iotsitewise": "12.5.0",
     "@iot-app-kit/source-iottwinmaker": "12.5.0",
     "@tanstack/react-query": "^5.32.1",

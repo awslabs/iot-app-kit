@@ -4,7 +4,7 @@ import { type SeriesModel } from 'echarts';
 import type Axis2D from 'echarts/types/src/coord/cartesian/Axis2D.js';
 import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI.js';
 import useDataStore from '../../../../store';
-import { formatDate } from '../../../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 import { type GenericSeries } from '../../../types';
 import { type TrendCursorModel } from '../model';
 import { type TrendCursor } from '../store';

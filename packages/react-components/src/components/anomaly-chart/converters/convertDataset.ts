@@ -1,4 +1,4 @@
-import { type AnomalyData } from '../../../data';
+import { type AnomalyData } from '@iot-app-kit/component-core';
 import { SORT_TRANSFORM } from '../constants';
 
 const isEmptyDataSet = (data: AnomalyData | undefined) =>

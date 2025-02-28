@@ -12,19 +12,15 @@ import type {
   DataStream as DataStreamViz,
   YAnnotation,
 } from '@iot-app-kit/charts-core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport, useTimeSeriesData } from '@iot-app-kit/component-core';
+import { DEFAULT_LEGEND, ECHARTS_GESTURE } from '../../common/constants';
 import {
-  DEFAULT_LEGEND,
   DEFAULT_VIEWPORT,
-  ECHARTS_GESTURE,
-} from '../../common/constants';
-import { getTimeSeriesQueries } from '../../utils/queries';
-import {
+  getTimeSeriesQueries,
   type AxisSettings,
   type ChartSize,
   type ComponentQuery,
-} from '../../common/chartTypes';
+} from '@iot-app-kit/component-core';
 import { type AssistantProperty } from '../../common/assistantProps';
 import { Title, getAdjustedChartHeight } from '../../common/title';
 import { useBarChartAlarms, useNormalizedDataStreams } from './hooks';

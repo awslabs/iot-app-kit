@@ -1,4 +1,4 @@
-import { formatDate } from '../../../../../../utils/time';
+import { formatDate } from '@iot-app-kit/core';
 import useDataStore from '../../../../../../store';
 
 type TrendCursorColumnHeaderOptions = {

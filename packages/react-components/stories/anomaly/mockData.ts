@@ -1,5 +1,5 @@
 import shuffle from 'lodash-es/shuffle';
-import { type AnomalyObjectDataSource } from '../../src/data';
+import { type AnomalyObjectDataSource } from '@iot-app-kit/component-core';
 
 const randomValuePicker = (
   initialValues = [0.1, 0.1, 0.15, 0.18, 0.22, 0.25]

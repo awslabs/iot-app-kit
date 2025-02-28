@@ -12,7 +12,7 @@ import {
   viewportToDateRange,
 } from '@iot-app-kit/core-util';
 import { DateTime } from 'luxon';
-import { useViewport } from '../../hooks/useViewport';
+import { useViewport } from '@iot-app-kit/component-core';
 import { Tooltip } from '../tooltip/index';
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {

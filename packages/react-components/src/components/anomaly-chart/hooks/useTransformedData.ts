@@ -3,8 +3,8 @@ import {
   type AnomalyData,
   type AnomalyDescription,
   type DataSourceLoader,
-} from '../../../data';
-import { useSiteWiseAnomalyDataSource } from '../../../queries';
+} from '@iot-app-kit/component-core';
+import { useSiteWiseAnomalyDataSource } from '@iot-app-kit/component-core';
 import { type AnomalyChartWithData } from '../types';
 
 type UseTransformedDataOptions = AnomalyChartWithData & {

@@ -32,8 +32,8 @@ export { TimeSync } from './components/time-sync';
 export { TimeSelection } from './components/time-sync/timeSelection';
 
 export { useHasFeatureFlag } from './hooks/useHasFeatureFlag';
-export { useTimeSeriesData } from './hooks/useTimeSeriesData';
-export { useViewport } from './hooks/useViewport';
+export { useTimeSeriesData } from '@iot-app-kit/component-core';
+export { useViewport } from '@iot-app-kit/component-core';
 export { useGetConfigValue } from './store/index';
 
 export {
@@ -57,7 +57,7 @@ export type {
   TableItemRef,
 } from './components/table';
 
-export { formatDate } from './utils/time';
+export { formatDate } from '@iot-app-kit/core';
 
 export {
   AlarmExplorer,
@@ -78,13 +78,10 @@ export {
   type SelectionMode,
   type TimeSeriesExplorerProps,
   type TimeSeriesResource,
-} from './components/resource-explorers';
-
-export { type TableResourceDefinition } from './components/resource-explorers/types/table';
-
-export { type TimeSeriesResourceWithLatestValue } from './components/resource-explorers/types/resources';
-
-export { type ResourceFieldFilterOperator } from './components/resource-explorers/types/common';
+  type TableResourceDefinition,
+  type TimeSeriesResourceWithLatestValue,
+  type ResourceFieldFilterOperator,
+} from '@iot-app-kit/resource-explorer';
 
 export type {
   AlarmAssistantContext,

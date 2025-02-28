@@ -1,6 +1,8 @@
-import { type AnomalyArrowDataSource } from '../../../data/transformers/anomaly/arrow/datasource';
-import { type AnomalyObjectDataSource } from '../../../data/transformers/anomaly/object/datasource';
-import { FieldType } from '../../../data/transformers/arrow';
+import {
+  type AnomalyArrowDataSource,
+  type AnomalyObjectDataSource,
+  FieldType,
+} from '@iot-app-kit/component-core';
 
 export const MOCK_DATA_SOURCE_EMPTY_SUCCESS: AnomalyObjectDataSource = {
   state: 'success',

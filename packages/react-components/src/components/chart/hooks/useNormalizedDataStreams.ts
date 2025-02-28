@@ -4,7 +4,7 @@ import { bisector } from 'd3-array';
 import uniqWith from 'lodash-es/uniqWith';
 import { useMemo } from 'react';
 import type { AlarmAssistantContext } from '../../../common/assistantProps';
-import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { createNonNullableList } from '@iot-app-kit/core';
 import { type AlarmContent } from '../../alarm-components/alarm-content/types';
 import { type ChartAlarm, type ChartAlarms } from './useChartAlarms';
 
