@@ -1,4 +1,5 @@
 import type { Primitive } from '@iot-app-kit/core';
+import { isNaN, isNumber } from 'lodash-es';
 
 /**
  * Rounds a number to a given precision
@@ -26,5 +27,11 @@ export const round = (num: number, precision?: number): string => {
 /**
  * Checks if value can be used as a number
  */
-export const isNumeric = (value: Primitive): value is number =>
-  /^(\+|-)?(Infinity|\d+)(\.\d+)?e?((\+|-)?\d+)?$/.test(String(value));
+export const isNumeric = (value: Primitive): value is number => {
+  if (typeof value !== 'number' && typeof value !== 'string') {
+    return false;
+  }
+
+  const test = Number(value);
+  return isNumber(test) && !isNaN(test);
+};
