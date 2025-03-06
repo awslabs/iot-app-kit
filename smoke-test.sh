@@ -260,7 +260,6 @@ check_for_dependencies() {
   check_for_package git
   check_for_package curl
   check_for_package pgrep
-  check_for_playwright
 }
 
 ###############################################################################
@@ -373,6 +372,8 @@ log_info "Validating bundling"
 if ! smoke_test_run_cmd npm run validate:bundling; then
   log_error "Bundling validation failed."
 fi
+
+check_for_playwright
 
 log_info "Validating runtime"
 if ! smoke_test_run_cmd npm run validate:runtime; then
