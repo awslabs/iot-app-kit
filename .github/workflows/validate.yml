@@ -225,30 +225,5 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "::set-output name=version::$(npm info @playwright/test version)"
-        working-directory: ./testing/smoke-test
-
-      - name: Playwright cache (smoke test)
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: '${{ runner.os }}-playwright-smoke-test-${{ steps.playwright-version.outputs.version }}'
-          restore-keys: |
-            ${{ runner.os }}-playwright-smoke-test-
-
-      - name: Install Playwright with dependencies
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
-        working-directory: ./testing/smoke-test
-
-      - name: Install Playwright's dependencies
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps
-        working-directory: ./testing/smoke-test
-
       - name: Run smoke test
-        run: ./smoke-test.sh -n
+        run: ./smoke-test.sh -dn
