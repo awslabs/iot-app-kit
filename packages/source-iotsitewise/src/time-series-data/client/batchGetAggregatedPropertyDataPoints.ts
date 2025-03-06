@@ -5,6 +5,10 @@ import {
   TimeOrdering,
   type BatchGetAssetPropertyAggregatesErrorEntry,
   type BatchGetAssetPropertyAggregatesSuccessEntry,
+  type IoTSiteWiseServiceException,
+  AccessDeniedException,
+  InvalidRequestException,
+  ResourceNotFoundException,
 } from '@aws-sdk/client-iotsitewise';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
@@ -164,14 +168,20 @@ const sendRequest = ({
         });
       }
     })
-    .catch((e) => {
-      Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
-        onError({
-          entryId,
-          errorCode: e.$metadata?.httpStatusCode,
-          errorMessage: e.message,
+    .catch((e: IoTSiteWiseServiceException) => {
+      if (
+        e instanceof AccessDeniedException ||
+        e instanceof InvalidRequestException ||
+        e instanceof ResourceNotFoundException
+      ) {
+        Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
+          onError({
+            entryId,
+            errorCode: e.name,
+            errorMessage: e.message,
+          });
         });
-      });
+      }
     });
 };
 
