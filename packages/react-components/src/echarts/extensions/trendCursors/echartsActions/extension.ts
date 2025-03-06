@@ -31,6 +31,7 @@ export const actionExtension: any = (
       if (
         !event ||
         !trendCursor ||
+        !api ||
         ecmodel.getOption().appKitChartId !== chartId ||
         getTrendCursors(ecmodel).length > 4
       )
@@ -47,7 +48,8 @@ export const actionExtension: any = (
   registers.registerAction(
     RemoveNearestTrendCursorActionType,
     ({ event, chartId }: RemoveTrendCursorAction, ecmodel, api) => {
-      if (!event || ecmodel.getOption().appKitChartId !== chartId) return;
+      if (!event || !api || ecmodel.getOption().appKitChartId !== chartId)
+        return;
 
       const date = getXAxisDataValue(event.offsetX, api);
 
@@ -67,7 +69,12 @@ export const actionExtension: any = (
   registers.registerAction(
     CopyTrendCursorActionType,
     ({ event, chartId }: CopyTrendCursorAction, ecmodel, api) => {
-      if (!event || !chartId || ecmodel.getOption().appKitChartId !== chartId)
+      if (
+        !event ||
+        !chartId ||
+        !api ||
+        ecmodel.getOption().appKitChartId !== chartId
+      )
         return;
 
       const date = getXAxisDataValue(event.offsetX, api);
