@@ -1,23 +1,23 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
+import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { compact } from '~/helpers/lists/compact';
 import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
 import { DescribeAssetModelRequest } from './describeAssetModelRequest';
 import { useSelector } from 'react-redux';
 import { type DashboardState } from '~/store/state';
 import { queryClient } from '~/data/query-client';
 
-type SingleAssetRequest = {
+interface SingleAssetRequest {
   assetModelId?: string;
   assetModelIds?: never;
-};
+}
 
-type MultiAssetRequest = {
+interface MultiAssetRequest {
   assetModelIds?: string[];
   assetModelId?: never;
-};
+}
 
 export type UseAssetModelOptions = {
   iotSiteWiseClient: IoTSiteWiseClient;
@@ -52,9 +52,7 @@ export function useAssetModel({
       queryClient
     ) ?? [];
 
-  const assetModelResponses = createNonNullableList(
-    queries.map(({ data }) => data)
-  );
+  const assetModelResponses = compact(queries.map(({ data }) => data));
   const assetModel =
     assetModelId !== undefined ? assetModelResponses.at(0) : undefined;
   const assetModels =
@@ -117,8 +115,7 @@ function createModelPropertyQueryFn(client: IoTSiteWiseClient) {
       client,
       signal,
     });
-    const response = await request.send();
 
-    return response;
+    return request.send();
   };
 }

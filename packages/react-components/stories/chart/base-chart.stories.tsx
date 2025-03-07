@@ -33,7 +33,7 @@ export default {
       options: chartTypes,
       defaultValue: undefined,
     },
-    significantDigits: { control: { type: 'number', defaultValue: undefined } },
+    decimalPlaces: { control: { type: 'number', defaultValue: undefined } },
     size: {
       control: { type: 'object' },
       defaultValue: { width: 800, height: 500 },
@@ -52,7 +52,7 @@ type StoryInputs = ChartOptions & { showAllVisualizationTypes: boolean };
 
 export const BaseChartExample: StoryFn<FC<StoryInputs>> = ({
   id,
-  significantDigits,
+  decimalPlaces,
   size,
   styleSettings,
   legend,
@@ -69,7 +69,7 @@ export const BaseChartExample: StoryFn<FC<StoryInputs>> = ({
             key={index}
             id={id}
             defaultVisualizationType={chartType}
-            significantDigits={significantDigits}
+            decimalPlaces={decimalPlaces}
             size={size}
             onChartOptionsChange={() => {}}
             styleSettings={styleSettings}
@@ -87,7 +87,7 @@ export const BaseChartExample: StoryFn<FC<StoryInputs>> = ({
 export const SiteWiseConnectedBaseChartExample: StoryFn<FC<StoryInputs>> = ({
   showAllVisualizationTypes,
   id,
-  significantDigits,
+  decimalPlaces,
   defaultVisualizationType,
   size,
   styleSettings,
@@ -119,7 +119,7 @@ export const SiteWiseConnectedBaseChartExample: StoryFn<FC<StoryInputs>> = ({
   const options = {
     id,
     defaultVisualizationType,
-    significantDigits,
+    decimalPlaces: decimalPlaces,
     size,
     styleSettings,
     viewport,

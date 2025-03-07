@@ -67,7 +67,7 @@ test.describe('test Line Widget Styling changes', () => {
   });
 
   test.describe('Y Axis', () => {
-    test('verify y-axis text change is reflects on the widgets', async ({
+    test('verify y-axis text change is reflects on the widget-instance', async ({
       page,
       browser,
     }) => {

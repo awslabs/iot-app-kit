@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-const TEST_PAGE = '/iframe.html?args=&id=widgets-kpi--default-kpi';
+const TEST_PAGE = '/iframe.html?args=&id=widget-instance-kpi--default-kpi';
 const TEST_PAGE_HIDDEN_SETTINGS =
-  '/iframe.html?args=&id=widgets-kpi--kpi-hidden-settings';
-const TEST_PAGE_THRESHOLD = '/iframe.html?args=&id=widgets-kpi--kpi-thresholds';
+  '/iframe.html?args=&id=widget-instance-kpi--kpi-hidden-settings';
+const TEST_PAGE_THRESHOLD =
+  '/iframe.html?args=&id=widget-instance-kpi--kpi-thresholds';
 
 test('kpi', async ({ page }) => {
   await page.goto(TEST_PAGE);

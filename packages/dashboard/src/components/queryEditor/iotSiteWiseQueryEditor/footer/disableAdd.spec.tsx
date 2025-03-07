@@ -1,5 +1,5 @@
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
-import { type SiteWiseQueryConfig } from '~/customization/widgets/types';
+import { type SiteWiseQueryConfig } from '~/features/queries/queries';
 
 const commonTests = ({
   objectWithoutProperties,
@@ -216,7 +216,7 @@ const commonTests = ({
   });
 };
 describe(disableAdd, () => {
-  it('should return true if no selected widgets', () => {
+  it('should return true if no selected widget-instance', () => {
     expect(disableAdd([], 0)).toBeTruthy();
   });
 

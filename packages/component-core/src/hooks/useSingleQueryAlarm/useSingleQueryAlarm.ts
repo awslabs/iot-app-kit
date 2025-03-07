@@ -31,7 +31,7 @@ export type SingleQueryAlarm = {
 /**
  * Wrapper for useAlarms that sets up the transform function and memoizes the alarm response.
  *
- * Built for widgets that support a single query like KPI and Gauge.
+ * Built for widget-instance that support a single query like KPI and Gauge.
  *
  * The transform function extracts the alarmContent for connecting with the assistant, the
  * alarm query status, the alarm threshold, and the input property data stream generated

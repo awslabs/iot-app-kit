@@ -85,7 +85,7 @@ test.describe('Test Text Widget', () => {
     // confirm delete modal
     await dashboardWithTextWidget.confirmModalDeleteButton.click();
 
-    // verify no widgets
+    // verify no widget-instance
     widget = dashboardWithTextWidget.gridArea.locator('[data-gesture=widget]');
     await expect(widget).not.toBeVisible();
   });

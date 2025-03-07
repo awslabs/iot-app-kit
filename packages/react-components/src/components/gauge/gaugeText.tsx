@@ -126,7 +126,7 @@ export const GaugeText = ({
             fontSize: settings?.fontSize,
             unitFontSize: settings?.unitFontSize,
             showUnit: settings?.showUnit,
-            significantDigits,
+            significantDigits: decimalPlaces,
             isLoading: isLoading,
           })}
         {!isLoading && hasVisibleName && (

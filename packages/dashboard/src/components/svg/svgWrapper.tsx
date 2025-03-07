@@ -1,17 +1,18 @@
 import { type CSSProperties, type PropsWithChildren } from 'react';
 
-export type SVGWrapperAriaProps = {
+export interface SVGWrapperAriaProps {
   role: string;
   ariaLabel: string;
   style?: CSSProperties;
-};
+}
 
-type SVGWrapperProps = PropsWithChildren &
-  SVGWrapperAriaProps & {
-    width: string;
-    height: string;
-    viewBox: string;
-  };
+export interface SVGWrapperProps
+  extends PropsWithChildren,
+    SVGWrapperAriaProps {
+  width: string;
+  height: string;
+  viewBox: string;
+}
 
 export const SVGWrapper = ({ ariaLabel, ...props }: SVGWrapperProps) => {
   return (

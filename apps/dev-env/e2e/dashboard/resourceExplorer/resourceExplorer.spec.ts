@@ -248,7 +248,7 @@ test(' adding properties to widget clears selection on resource explorer (modele
   await expect(checkedProperty).not.toBeChecked();
 });
 
-test(' changing widgets filters properties correctly (modeled)', async ({
+test(' changing widget-instance filters properties correctly (modeled)', async ({
   page,
 }) => {
   await page.goto(TEST_PAGE);

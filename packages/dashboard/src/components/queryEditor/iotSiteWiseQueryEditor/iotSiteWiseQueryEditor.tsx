@@ -33,7 +33,7 @@ export function IoTSiteWiseQueryEditor({
   );
   const timeZone = useSelector((state: DashboardState) => state.timeZone);
   const significantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
+    (state: DashboardState) => state.decimalPlaces
   );
 
   const modeledTab = {

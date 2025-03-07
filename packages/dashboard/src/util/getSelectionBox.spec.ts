@@ -1,7 +1,7 @@
 import { MockWidgetFactory } from '../../testing/mocks';
 import { getSelectionBox } from './getSelectionBox';
 
-it('returns no rectangle if no widgets', () => {
+it('returns no rectangle if no widget-instance', () => {
   expect(getSelectionBox([])).toBe(null);
 });
 

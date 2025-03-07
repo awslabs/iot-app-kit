@@ -1,10 +1,11 @@
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
-import type { Position, DashboardWidget } from '~/types';
+import type { Position } from '~/types';
 import type { DashboardState } from '../../state';
 import { transformWidget } from '~/util/transformWidget';
 import { resizeSelectionBox } from '~/util/resizeSelectionBox';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 export type Anchor =
   | 'top-right'
@@ -15,12 +16,13 @@ export type Anchor =
   | 'right'
   | 'top'
   | 'bottom';
-type ResizeWidgetsActionPayload = {
+
+export interface ResizeWidgetsActionPayload {
   anchor: Anchor;
-  widgets: DashboardWidget[];
+  widgets: WidgetInstance[];
   vector: Position;
   complete?: boolean;
-};
+}
 
 export interface ResizeWidgetsAction extends Action {
   type: 'RESIZE_WIDGETS';
@@ -36,12 +38,9 @@ export const onResizeWidgetsAction = (
 
 export const resizeWidgets = (
   state: DashboardState,
-  action: ResizeWidgetsAction
+  { payload: { anchor, widgets, vector, complete } }: ResizeWidgetsAction
 ): DashboardState => {
-  const { anchor, widgets, vector, complete } = action.payload;
-
   const selectedWidgetIds = widgets.map((w) => w.id);
-
   const selectionBox = getSelectionBox(widgets);
 
   if (!selectionBox) return state;
@@ -53,14 +52,14 @@ export const resizeWidgets = (
     grid: state.grid,
   });
 
-  const resizer = (widget: DashboardWidget) =>
+  const resizer = (widget: WidgetInstance) =>
     transformWidget(
       widget,
       selectionBox,
       complete ? trimRectPosition(newSelectionBox) : newSelectionBox
     );
 
-  const updateWidgets = (widgets: DashboardWidget[]) =>
+  const updateWidgets = (widgets: WidgetInstance[]) =>
     widgets.map((widget) => {
       if (!selectedWidgetIds.includes(widget.id)) return widget;
       return resizer(widget);

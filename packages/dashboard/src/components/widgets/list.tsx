@@ -1,32 +1,29 @@
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
-import type { DashboardMessages } from '~/messages';
 import { type DashboardState } from '~/store/state';
-import type { DashboardWidget } from '~/types';
+import { SelectionBox } from './selectionBox';
+import { WidgetComponent } from './widget';
 import './list.css';
-import SelectionBox from './selectionBox';
-import WidgetComponent from './widget';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export type WidgetsProps = {
+export interface WidgetsProps {
   readOnly: boolean;
   query?: SiteWiseQuery;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: WidgetInstance[];
   cellSize: number;
   dragEnabled: boolean;
-  messageOverrides: DashboardMessages;
-};
+}
 
-const Widgets: React.FC<WidgetsProps> = ({
+export const Widgets = ({
   dashboardConfiguration,
   selectedWidgets,
   cellSize,
   dragEnabled,
-  messageOverrides,
   query,
   readOnly,
-}) => {
+}: WidgetsProps) => {
   const { widgets } = dashboardConfiguration;
   const isSelected = (id: string) =>
     includes(
@@ -52,7 +49,6 @@ const Widgets: React.FC<WidgetsProps> = ({
         <WidgetComponent
           readOnly={readOnly}
           query={query}
-          messageOverrides={messageOverrides}
           isSelected={isSelected(widget.id)}
           numSelected={selectedWidgets.length}
           key={widget.id}
@@ -63,5 +59,3 @@ const Widgets: React.FC<WidgetsProps> = ({
     </div>
   );
 };
-
-export default Widgets;

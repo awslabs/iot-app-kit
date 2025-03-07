@@ -72,6 +72,7 @@ export const ALARM_STREAM: DataStream<string> = {
 };
 
 export const ALARM_THRESHOLD: Threshold<string> = {
+  id: 'alarm-threshold',
   value: ALARM,
   color: 'orange',
   comparisonOperator: COMPARISON_OPERATOR.EQ,

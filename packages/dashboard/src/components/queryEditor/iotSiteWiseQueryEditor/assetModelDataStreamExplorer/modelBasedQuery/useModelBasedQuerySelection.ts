@@ -3,15 +3,10 @@ import {
   type AssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import noop from 'lodash-es/noop';
-import { styledQueryWidgetOnDrop } from '~/components/queryEditor/useQuery';
-import { useSelection } from '~/customization/propertiesSection';
-import { type QueryProperties } from '~/customization/widgets/types';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
-import { type IoTSiteWiseDataStreamQuery } from '~/types';
-import { isJust, maybeWithDefault } from '~/util/maybe';
 import {
-  type QueryConfigWidget,
   isQueryWidget,
+  type QueryConfigWidget,
 } from './findModelBasedQueryWidgets';
 
 const mergeAssetModelProperties = (
@@ -68,7 +63,7 @@ const mergeAlarmModelCompositeModelIds = (
 export const useModelBasedQuerySelection = () => {
   const selection = useSelection({ filter: isQueryWidget });
 
-  // xy-plot widgets are styled query objects
+  // xy-plot widget-instance are styled query objects
   const selectionType = selection?.type;
 
   const defaultQuery: QueryProperties = {

@@ -1,27 +1,28 @@
+import type { Rectangle } from '~/types';
 import { useLayers } from '../internalDashboard/useLayers';
-
-import type { Rect } from '~/types';
 import './index.css';
 
-export type UserSelectionProps = {
-  rect: Rect | undefined;
-};
+export interface UserSelectionProps {
+  rectangle: Rectangle | undefined;
+}
 
-const UserSelection: React.FC<UserSelectionProps> = ({ rect }) => {
+export const UserSelection = ({ rectangle }: UserSelectionProps) => {
   const { userSelectionLayer } = useLayers();
 
-  return rect ? (
+  if (!rectangle) {
+    return null;
+  }
+
+  return (
     <div
       className='select-rect'
       style={{
-        left: `${rect.x}px`,
-        top: `${rect.y}px`,
-        width: `${rect.width}px`,
-        height: `${rect.height}px`,
+        left: `${rectangle.x}px`,
+        top: `${rectangle.y}px`,
+        width: `${rectangle.width}px`,
+        height: `${rectangle.height}px`,
         zIndex: userSelectionLayer,
       }}
-    ></div>
-  ) : null;
+    />
+  );
 };
-
-export default UserSelection;

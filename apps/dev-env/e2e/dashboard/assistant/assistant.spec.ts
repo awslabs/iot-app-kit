@@ -10,7 +10,7 @@ test('dashboard has assistant enabled', async ({ page }) => {
   ).toBeVisible();
 });
 
-test('enable assistant mode and selects widgets', async ({ page }) => {
+test('enable assistant mode and selects widget-instance', async ({ page }) => {
   await page.goto(TEST_PAGE);
 
   const assistantBtn = await page.getByRole('button', {
@@ -31,7 +31,7 @@ test('enable assistant mode and selects widgets', async ({ page }) => {
   expect(await summaryBtn.isDisabled()).toBeFalsy();
 });
 
-test('disable assistant buttons when selects more than 3 widgets', async ({
+test('disable assistant buttons when selects more than 3 widget-instance', async ({
   page,
 }) => {
   await page.goto(TEST_PAGE);

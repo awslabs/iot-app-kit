@@ -1,12 +1,12 @@
-import { moveSelectionBox } from '~/util/moveSelectionBox';
-
 import { type DashboardState } from '~/store/state';
+import { moveSelectionBox } from './moveSelectionBox';
 
 const grid = {
   width: 100,
   height: 100,
   cellSize: 1,
 } as DashboardState['grid'];
+
 describe('moveSelectionBox', () => {
   const widget1 = { x: 0, y: 0, width: 10, height: 10 };
 

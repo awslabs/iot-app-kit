@@ -1,5 +1,5 @@
 /**
- * Types for transformed data to be used in our widgets
+ * Types for transformed data to be used in our widget-instance
  */
 // extension of the Primitive value used in DataPoint
 export type DataValue = number | string | boolean | Date;
@@ -20,6 +20,8 @@ export type DataSource<Value = unknown> = {
 
 export interface DataSourceTransformer<TransformedData, Description> {
   canTransform: (dataSource: DataSource) => boolean;
+
   transform(dataSource: DataSource): TransformedData;
+
   describe(dataSource: DataSource): Description;
 }

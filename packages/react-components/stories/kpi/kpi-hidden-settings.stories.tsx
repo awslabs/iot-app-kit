@@ -7,7 +7,7 @@ export default {
   component: KPI,
   argTypes: {
     color: { control: { type: 'color' } },
-    significantDigits: { control: { type: 'number' } },
+    decimalPlaces: { control: { type: 'number' } },
   },
   controls: { disable: true },
   parameters: {

@@ -452,7 +452,7 @@ const BaseChart = ({
               trendCursors={trendCursors}
               trendCursorValues={trendCursorValues}
               width={rightLegendWidth.toString()}
-              significantDigits={options.significantDigits}
+              significantDigits={options.decimalPlaces}
               {...assistantSelection}
             />
           </div>

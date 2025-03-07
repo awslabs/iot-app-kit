@@ -56,7 +56,7 @@ const createAssetNameColumnDefinition =
   });
 
 const createLatestValueColumnDefinition = (
-  significantDigits: ChartOptions['significantDigits']
+  significantDigits: ChartOptions['decimalPlaces']
 ): LegendTableColumnDefinitions[1] => ({
   id: 'Latest value',
   sortingField: 'latestValue',
@@ -133,7 +133,7 @@ export const createTableLegendColumnDefinitions = ({
   trendCursors: TrendCursor[];
   width: number;
   visibleContent: ChartLegend['visibleContent'];
-  significantDigits: ChartOptions['significantDigits'];
+  significantDigits: ChartOptions['decimalPlaces'];
 }) => {
   const trendCursorColumnDefinitions = trendCursors
     .sort((a, b) => a.date - b.date)

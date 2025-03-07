@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import { type DashboardState } from '~/store/state';
 import {
   onChangeDashboardCellSizeAction,
@@ -15,7 +14,7 @@ export const useGridSettings = () => {
     (state: DashboardState) => state.grid
   );
   const significantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
+    (state: DashboardState) => state.decimalPlaces
   );
 
   const onChangeNumberOfColumns = (columns: number) => {
@@ -27,10 +26,12 @@ export const useGridSettings = () => {
   const onChangeCellSize = (updatedCellSize: number) => {
     dispatch(onChangeDashboardCellSizeAction({ cellSize: updatedCellSize }));
   };
-  const onChangeSignificantDigits = (updatedSignificantDigits: number) => {
+  const onChangeSignificantDigits = (
+    updatedDecimalPlaces?: number | undefined
+  ) => {
     dispatch(
       onUpdateSignificantDigitsAction({
-        significantDigits: updatedSignificantDigits,
+        decimalPlaces: updatedDecimalPlaces,
       })
     );
   };

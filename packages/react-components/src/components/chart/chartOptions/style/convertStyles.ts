@@ -10,14 +10,14 @@ import {
 
 type ConvertChartOptions = Pick<
   ChartOptions,
-  'defaultVisualizationType' | 'styleSettings' | 'significantDigits'
+  'defaultVisualizationType' | 'styleSettings' | 'decimalPlaces'
 >;
 
 export const convertStyles =
   ({
     defaultVisualizationType,
     styleSettings,
-    significantDigits,
+    decimalPlaces,
     emphasis,
     hidden,
   }: ConvertChartOptions & { emphasis?: Emphasis } & { hidden?: boolean }) =>

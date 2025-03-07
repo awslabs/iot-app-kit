@@ -7,7 +7,7 @@ interface PluginsRegistry {
 }
 
 /**
- * Internal object to hold all of the plugins.
+ * Internal object to hold all of the widget-plugins.
  *
  * @emarks Not exported to encapsulate the registry
  */

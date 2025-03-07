@@ -81,7 +81,7 @@ export type ChartStyleSettingsOptions = {
 
   yAxis?: YAxisOptions; // allows us to do multiple y axis
 
-  significantDigits?: number; // allows us to customize decimals at a property level
+  decimalPlaces?: number; // allows us to customize decimals at a property level
   name?: string; // Used to custom label the datastream name
 };
 
@@ -114,7 +114,7 @@ export type ChartOptions = {
   backgroundColor?: string;
   fontSettings?: SimpleFontSettings;
   legend?: ChartLegend;
-  significantDigits?: number;
+  decimalPlaces?: number;
   theme?: string;
   id?: string;
   dataQuality?: ChartDataQuality;

@@ -1,10 +1,10 @@
 import {
-  DescribeAssetCommand,
   type AssetCompositeModel,
   type AssetProperty,
+  DescribeAssetCommand,
+  type DescribeAssetCommandOutput,
   type DescribeAssetResponse,
   type IoTSiteWiseClient,
-  type DescribeAssetCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type {
   SiteWiseAlarmQuery,
@@ -22,27 +22,27 @@ import { selectListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/sele
 import { queryClient } from '~/data/query-client';
 import { type DashboardState } from '~/store/state';
 
-export type PropertySummary = {
+export interface PropertySummary {
   propertyId: AssetProperty['id'];
   name: AssetProperty['name'];
   unit: AssetProperty['unit'];
   dataType: AssetProperty['dataType'];
   alias: AssetProperty['alias'];
-};
+}
 
-export type AlarmSummary = {
+export interface AlarmSummary {
   name: AssetCompositeModel['name'];
   id: AssetCompositeModel['id'];
   properties: PropertySummary[];
-};
+}
 
-export type AssetSummary = {
+export interface AssetSummary {
   assetId: DescribeAssetResponse['assetId'];
   assetName: DescribeAssetResponse['assetName'];
   properties: PropertySummary[];
   alarms: AlarmSummary[];
   assetCompositeModels?: AssetCompositeModel[];
-};
+}
 
 const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
   client.send(new DescribeAssetCommand({ assetId }));

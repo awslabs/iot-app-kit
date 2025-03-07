@@ -12,8 +12,9 @@ export type DataRequest = {
   viewport?: Viewport;
   settings?: TimeSeriesDataRequestSettings;
 };
+
 /**
- * Request Information utilized by consumers of the widgets to connect the `data-provider` to their data source.
+ * Request Information utilized by consumers of the widget-instance to connect the `data-provider` to their data source.
  */
 export interface TimeSeriesDataRequest extends DataRequest {
   viewport: Viewport;

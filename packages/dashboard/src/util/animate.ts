@@ -1,4 +1,4 @@
-type Animation = () => void;
+type Animation = VoidFunction;
 
 const FPS = 60;
 export const MS_PER_FRAME = 1000 / FPS;

@@ -12,6 +12,7 @@ import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
 } from '~/store/actions/assistantWidgetsSelection';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
 export const useAssistantConfiguration = (widgetId: string) => {
   const dispatch = useDispatch();
@@ -64,7 +65,9 @@ export const useAssistantConfiguration = (widgetId: string) => {
           dispatch(
             onAssistantSelectWidgetsAction({
               widgetId: event.sourceComponentId,
-              widgetType: event.sourceComponentType ?? '',
+              // FIXME: type of source component is string and not widget type
+              widgetType: (event.sourceComponentType ??
+                '') as RegisteredWidgetType,
               selectedProperties,
             })
           );

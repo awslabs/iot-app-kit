@@ -20,7 +20,7 @@ export type ChartStyleSettingsWithDefaults = Omit<
 
 export const getDefaultStyles = (
   defaultVisualizationType?: ChartStyleSettingsOptions['visualizationType'],
-  significantDigits?: ChartStyleSettingsOptions['significantDigits']
+  significantDigits?: ChartStyleSettingsOptions['decimalPlaces']
 ): ChartStyleSettingsWithDefaults => {
   return {
     visualizationType: defaultVisualizationType ?? 'line',
@@ -30,7 +30,7 @@ export const getDefaultStyles = (
     lineStyle: 'solid',
     lineThickness: 2,
     yAxis: undefined,
-    significantDigits: significantDigits ?? 4,
+    decimalPlaces: significantDigits ?? 4,
     emphasis: 'none',
     hidden: false,
     name: '',

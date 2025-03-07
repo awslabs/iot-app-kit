@@ -1,9 +1,9 @@
-import {
-  type AlarmResource,
-  type AssetPropertyResource,
-  type TimeSeriesResource,
+import type {
+  AlarmResource,
+  AssetPropertyResource,
+  TimeSeriesResource,
 } from '@iot-app-kit/react-components';
-import type { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/features/queries/queries';
 
 type Query = IoTSiteWiseDataStreamQuery;
 
@@ -21,60 +21,11 @@ export class QueryExtender {
       ...currentAlarmQueries,
       ...newAlarmQueries,
     ]);
-    const extendedQuery = {
+
+    return {
       ...this.#currentQuery,
       alarms: dedupedAlarmQueries,
     };
-
-    return extendedQuery;
-  }
-
-  #createAlarmQueries(
-    alarmDataStreams: readonly AlarmResource[]
-  ): NonNullable<Query['alarms']> {
-    const assetQueriesWithProperties = alarmDataStreams.map<
-      NonNullable<Query['alarms']>[number]
-    >(({ assetId, assetCompositeModelId }) => ({
-      assetId,
-      alarmComponents: [{ assetCompositeModelId }],
-    }));
-
-    return assetQueriesWithProperties;
-  }
-
-  #dedupeAlarmQueries(alarmQueries: NonNullable<Query['alarms']>) {
-    const dedupedAlarmQueries = alarmQueries.reduce<
-      NonNullable<Query['alarms']>
-    >((acc, currentQuery) => {
-      const existingQueryIndex = acc.findIndex(
-        (alarmQuery) => alarmQuery.assetId === currentQuery.assetId
-      );
-
-      if (existingQueryIndex !== -1) {
-        const existingAlarmsComponents = new Set(
-          acc[existingQueryIndex].alarmComponents.map(
-            (p) => p.assetCompositeModelId
-          )
-        );
-        const newAlarmComponents = currentQuery.alarmComponents.filter(
-          (p) => !existingAlarmsComponents.has(p.assetCompositeModelId)
-        );
-
-        acc[existingQueryIndex] = {
-          ...acc[existingQueryIndex],
-          alarmComponents: [
-            ...acc[existingQueryIndex].alarmComponents,
-            ...newAlarmComponents,
-          ],
-        };
-
-        return acc;
-      }
-
-      return [...acc, currentQuery];
-    }, []);
-
-    return dedupedAlarmQueries;
   }
 
   public extendAssetQueries(
@@ -86,66 +37,11 @@ export class QueryExtender {
       ...currentAssetQueries,
       ...newAssetQueries,
     ]);
-    const extendedQuery = {
+
+    return {
       ...this.#currentQuery,
       assets: dedupedAssetQueries,
     };
-
-    return extendedQuery;
-  }
-
-  #createAssetQueries(
-    modeledDataStreams: readonly AssetPropertyResource[]
-  ): NonNullable<Query['assets']> {
-    const assetQueriesWithProperties = modeledDataStreams
-      .filter(this.#isModeledDataStream)
-      .map<NonNullable<Query['assets']>[number]>(
-        ({ assetId, propertyId: propertyId }) => ({
-          assetId,
-          properties: [{ propertyId }],
-        })
-      );
-
-    return assetQueriesWithProperties;
-  }
-
-  #isModeledDataStream(
-    dataStream: AssetPropertyResource | TimeSeriesResource
-  ): dataStream is AssetPropertyResource {
-    return (
-      Object.hasOwn(dataStream, 'propertyId') &&
-      Object.hasOwn(dataStream, 'assetId')
-    );
-  }
-
-  #dedupeAssetQueries(assetQueries: NonNullable<Query['assets']>) {
-    const dedupedAssetQueries = assetQueries.reduce<
-      NonNullable<Query['assets']>
-    >((acc, currentQuery) => {
-      const existingQueryIndex = acc.findIndex(
-        (assetQuery) => assetQuery.assetId === currentQuery.assetId
-      );
-
-      if (existingQueryIndex !== -1) {
-        const existingProperties = new Set(
-          acc[existingQueryIndex].properties.map((p) => p.propertyId)
-        );
-        const newProperties = currentQuery.properties.filter(
-          (p) => !existingProperties.has(p.propertyId)
-        );
-
-        acc[existingQueryIndex] = {
-          ...acc[existingQueryIndex],
-          properties: [...acc[existingQueryIndex].properties, ...newProperties],
-        };
-
-        return acc;
-      }
-
-      return [...acc, currentQuery];
-    }, []);
-
-    return dedupedAssetQueries;
   }
 
   public extendPropertyAliasQueries(
@@ -158,41 +54,134 @@ export class QueryExtender {
       ...currentPropertyAliasQueries,
       ...newPropertyAliasQueries,
     ]);
-    const extendedQuery = {
+
+    return {
       ...this.#currentQuery,
       properties: dedupedPropertyAliasQueries,
     };
+  }
 
-    return extendedQuery;
+  #createAlarmQueries(
+    alarmDataStreams: readonly AlarmResource[]
+  ): NonNullable<Query['alarms']> {
+    return alarmDataStreams.map<NonNullable<Query['alarms']>[number]>(
+      ({ assetId, assetCompositeModelId }) => ({
+        assetId,
+        alarmComponents: [{ assetCompositeModelId }],
+      })
+    );
+  }
+
+  #dedupeAlarmQueries(alarmQueries: NonNullable<Query['alarms']>) {
+    return alarmQueries.reduce<NonNullable<Query['alarms']>>(
+      (acc, currentQuery) => {
+        const existingQueryIndex = acc.findIndex(
+          (alarmQuery) => alarmQuery.assetId === currentQuery.assetId
+        );
+
+        if (existingQueryIndex !== -1) {
+          const existingAlarmsComponents = new Set(
+            acc[existingQueryIndex].alarmComponents.map(
+              (p) => p.assetCompositeModelId
+            )
+          );
+          const newAlarmComponents = currentQuery.alarmComponents.filter(
+            (p) => !existingAlarmsComponents.has(p.assetCompositeModelId)
+          );
+
+          acc[existingQueryIndex] = {
+            ...acc[existingQueryIndex],
+            alarmComponents: [
+              ...acc[existingQueryIndex].alarmComponents,
+              ...newAlarmComponents,
+            ],
+          };
+
+          return acc;
+        }
+
+        return [...acc, currentQuery];
+      },
+      []
+    );
+  }
+
+  #createAssetQueries(
+    modeledDataStreams: readonly AssetPropertyResource[]
+  ): NonNullable<Query['assets']> {
+    return modeledDataStreams
+      .filter(this.#isModeledDataStream)
+      .map<NonNullable<Query['assets']>[number]>(
+        ({ assetId, propertyId: propertyId }) => ({
+          assetId,
+          properties: [{ propertyId }],
+        })
+      );
+  }
+
+  #isModeledDataStream(
+    dataStream: AssetPropertyResource | TimeSeriesResource
+  ): dataStream is AssetPropertyResource {
+    return (
+      Object.hasOwn(dataStream, 'propertyId') &&
+      Object.hasOwn(dataStream, 'assetId')
+    );
+  }
+
+  #dedupeAssetQueries(assetQueries: NonNullable<Query['assets']>) {
+    return assetQueries.reduce<NonNullable<Query['assets']>>(
+      (acc, currentQuery) => {
+        const existingQueryIndex = acc.findIndex(
+          (assetQuery) => assetQuery.assetId === currentQuery.assetId
+        );
+
+        if (existingQueryIndex !== -1) {
+          const existingProperties = new Set(
+            acc[existingQueryIndex].properties.map((p) => p.propertyId)
+          );
+          const newProperties = currentQuery.properties.filter(
+            (p) => !existingProperties.has(p.propertyId)
+          );
+
+          acc[existingQueryIndex] = {
+            ...acc[existingQueryIndex],
+            properties: [
+              ...acc[existingQueryIndex].properties,
+              ...newProperties,
+            ],
+          };
+
+          return acc;
+        }
+
+        return [...acc, currentQuery];
+      },
+      []
+    );
   }
 
   #createPropertyAliasQueries(
     unmodeledDataStreams: readonly TimeSeriesResource[]
   ) {
-    const propertyAliasQueries = unmodeledDataStreams.map(
-      (unmodeledDataStream) => ({
-        propertyAlias: unmodeledDataStream.alias ?? '',
-      })
-    );
-
-    return propertyAliasQueries;
+    return unmodeledDataStreams.map((unmodeledDataStream) => ({
+      propertyAlias: unmodeledDataStream.alias ?? '',
+    }));
   }
 
   #dedupePropertyAliasQueries(queries: NonNullable<Query['properties']>) {
-    const propertyAliasQueries = queries.reduce<
-      NonNullable<Query['properties']>
-    >((acc, currentQuery) => {
-      const existingQuery = acc.find(
-        (query) => query.propertyAlias === currentQuery.propertyAlias
-      );
+    return queries.reduce<NonNullable<Query['properties']>>(
+      (acc, currentQuery) => {
+        const existingQuery = acc.find(
+          (query) => query.propertyAlias === currentQuery.propertyAlias
+        );
 
-      if (existingQuery) {
-        return acc;
-      }
+        if (existingQuery) {
+          return acc;
+        }
 
-      return [...acc, currentQuery];
-    }, []);
-
-    return propertyAliasQueries;
+        return [...acc, currentQuery];
+      },
+      []
+    );
   }
 }

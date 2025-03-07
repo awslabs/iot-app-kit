@@ -1,9 +1,7 @@
 import type { Position } from '~/types';
 
 /**
- *
- * Scale a position in real pixels on the grid to its grid position based on the grid cell size
- *
+ * Scale a position in real pixels on the grid to its grid position based on the grid cell size.
  */
 export const toGridPosition = (
   position: Position,

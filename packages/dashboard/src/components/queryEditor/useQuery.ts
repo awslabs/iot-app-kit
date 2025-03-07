@@ -1,22 +1,23 @@
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgets } from '~/features/selection/use-selected-widgets';
 import { useDispatch } from 'react-redux';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { type DashboardWidget, type IoTSiteWiseDataStreamQuery } from '~/types';
 import { applyDefaultStylesToQuery } from '~/customization/widgets/utils/assetQuery/applyDefaultStylesToQuery';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
-import { type QueryWidget } from '~/customization/widgets/types';
 import { assignDefaultRefId } from '~/customization/widgets/utils/assetQuery/assignDefaultRefId';
 import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
-import { getCurrentAggregationResolution } from '~/customization/widgets/utils/widgetAggregationUtils';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { type IoTSiteWiseDataStreamQuery } from '~/features/queries/queries';
 
-type WidgetWithQuery = DashboardWidget<{
-  queryConfig: { query: IoTSiteWiseDataStreamQuery };
-}>;
+export type WidgetWithQuery = WidgetInstance & {
+  properties: {
+    queryConfig: { query: IoTSiteWiseDataStreamQuery };
+  };
+};
 
 export const styledQueryWidgetOnDrop = (
   updatedQuery: IoTSiteWiseDataStreamQuery,
-  widget: QueryWidget
+  widget: WidgetWithQuery
 ) => {
   const { aggregation, resolution } = getCurrentAggregationResolution(widget);
 
@@ -141,7 +142,7 @@ function createUpdatedWidget(
   widget: WidgetWithQuery,
   newQuery: IoTSiteWiseDataStreamQuery
 ): WidgetWithQuery {
-  const updatedWidget = {
+  return {
     ...widget,
     properties: {
       ...widget.properties,
@@ -151,8 +152,6 @@ function createUpdatedWidget(
       },
     },
   };
-
-  return updatedWidget;
 }
 
 function createUpdateAction(updatedWidget: WidgetWithQuery) {

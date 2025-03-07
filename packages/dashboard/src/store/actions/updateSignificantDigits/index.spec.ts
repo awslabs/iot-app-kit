@@ -1,7 +1,7 @@
 import { initialState } from '~/store/state';
 import {
-  updateSignificantDigits,
   onUpdateSignificantDigitsAction,
+  updateSignificantDigits,
 } from './index';
 
 it('can change significant digits', () => {
@@ -9,18 +9,18 @@ it('can change significant digits', () => {
     updateSignificantDigits(
       initialState,
       onUpdateSignificantDigitsAction({
-        significantDigits: 10,
+        decimalPlaces: 10,
       })
-    ).significantDigits
+    ).decimalPlaces
   ).toEqual(10);
 
   expect(
     updateSignificantDigits(
       initialState,
       onUpdateSignificantDigitsAction({
-        significantDigits: 2,
+        decimalPlaces: 2,
       })
-    ).significantDigits
+    ).decimalPlaces
   ).toEqual(2);
 });
 
@@ -29,8 +29,8 @@ it('does not change significant digits to a negative number', () => {
     updateSignificantDigits(
       initialState,
       onUpdateSignificantDigitsAction({
-        significantDigits: -2,
+        decimalPlaces: -2,
       })
-    ).significantDigits
+    ).decimalPlaces
   ).toEqual(0);
 });

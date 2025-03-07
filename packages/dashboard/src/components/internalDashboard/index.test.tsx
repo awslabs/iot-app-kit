@@ -2,19 +2,18 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
-
 import { configureDashboardStore } from '~/store';
 import { initialState } from '~/store/state';
-import { type DashboardWidgetsConfiguration } from '~/types';
-import { useDashboardPlugins } from '../../customization/api';
-import InternalDashboard from './index';
+import { type DashboardConfiguration } from '~/features/dashboard-configuration/dashboard-configuration';
+import { InternalDashboard } from './index';
 
 import { AppKitConfig } from '@iot-app-kit/react-components';
 // FIXME: Export DEFAULT_APP_KIT_CONFIG from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
+const EMPTY_DASHBOARD: DashboardConfiguration = {
+  displaySettings: { numColumns: 100, numRows: 100 },
   widgets: [],
   viewport: { duration: '10m' },
 };
@@ -154,7 +153,6 @@ it.skip('empty state within the dashboard when no widget is selected', function 
   };
 
   const InternalDashboardAux = () => {
-    useDashboardPlugins();
     return <InternalDashboard editable={true} />;
   };
 

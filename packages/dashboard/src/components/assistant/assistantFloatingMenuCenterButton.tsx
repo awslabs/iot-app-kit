@@ -1,12 +1,12 @@
-import { type HTMLAttributes } from 'react';
 import {
   fontSizeBodyM,
   fontWeightHeadingM,
   spaceStaticM,
   spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
+import { type HTMLAttributes } from 'react';
 
-interface AssistantFloatingMenCenterButtonProps
+export interface AssistantFloatingMenCenterButtonProps
   extends HTMLAttributes<HTMLButtonElement> {
   label: string;
   disabled?: boolean;

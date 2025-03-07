@@ -1,16 +1,15 @@
 import { copyWidgets, onCopyWidgetsAction } from '.';
+import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
-
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
   MOCK_SCATTER_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = [],
+  widgets: WidgetInstance[] = [],
   pasteCounter = 0
 ): DashboardState => ({
   ...initialState,
@@ -21,7 +20,7 @@ const setupDashboardState = (
   pasteCounter,
 });
 
-it('does nothing if no widgets are provided', () => {
+it('does nothing if no widget-instance are provided', () => {
   expect(
     copyWidgets(
       setupDashboardState(),
@@ -43,7 +42,7 @@ it('adds one widget to the copy group', () => {
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
-it('adds many widgets to the copy group', () => {
+it('adds many widget-instance to the copy group', () => {
   expect(
     copyWidgets(
       setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]),

@@ -1,21 +1,23 @@
-import { type Position } from '~/types';
+import type { Position } from '~/types';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-export type DragEvent = {
+export interface DragEvent {
   target?: EventTarget;
   start: Position;
   end: Position;
   vector: Position;
   union: boolean;
-};
-export type PointClickEvent = {
+}
+
+export interface PointClickEvent {
   target?: EventTarget;
   position: Position;
   union: boolean;
-};
+}
 
-export type DropEvent = {
+export interface DropEvent<WidgetType extends RegisteredWidgetType> {
   position: Position;
   item: {
-    componentTag: string;
+    widgetType: WidgetType;
   };
-};
+}

@@ -27,7 +27,7 @@ export const useTooltip = ({
   showUncertainDataIcons,
   showAlarmIcons,
 }: {
-  significantDigits: ChartOptions['significantDigits'];
+  significantDigits: ChartOptions['decimalPlaces'];
   series: SeriesOption[];
 } & ChartDataQuality &
   ChartAlarms) => {
@@ -40,7 +40,7 @@ export const useTooltip = ({
   return useMemo<TooltipComponentOption>(
     () => ({
       formatter: formatter({
-        significantDigits,
+        significantDigits: decimalPlaces,
         colorMap,
         showBadDataIcons,
         showUncertainDataIcons,

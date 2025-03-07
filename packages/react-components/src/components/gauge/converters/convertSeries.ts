@@ -11,7 +11,7 @@ import {
 
 export const convertSeries = ({
   unit,
-  significantDigits,
+  decimalPlaces,
   thresholds,
   settings,
 }: GaugeConfigurationOptions) => {

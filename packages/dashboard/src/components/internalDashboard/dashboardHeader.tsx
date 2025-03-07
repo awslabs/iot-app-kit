@@ -1,25 +1,26 @@
-import { type ReactNode, memo } from 'react';
-
-import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import Header from '@cloudscape-design/components/header';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { TimeSelection, useViewport } from '@iot-app-kit/react-components';
-
 import isEqual from 'lodash-es/isEqual';
+import { memo, type ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { type DashboardState } from '~/store/state';
-import type { DashboardSave, DashboardToolbar } from '~/types';
-import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
-import Actions from '../actions';
+import type { DashboardSave } from '~/types/saving';
+import type { DashboardToolbar } from '~/types';
+import { convertToDashboardConfiguration } from '~/util/convertToDashboardConfiguration';
+import { Actions } from '../actions';
 
-type DashboardHeaderProps = {
+export interface DashboardHeaderProps {
   name?: string;
   editable?: boolean;
   toolbar?: DashboardToolbar;
   onSave?: DashboardSave;
-};
+}
 
-type DefaultDashboardHeaderProps = DashboardHeaderProps & {
+export interface DefaultDashboardHeaderProps extends DashboardHeaderProps {
   readOnly: boolean;
-};
+}
 
 const HeaderContainer = ({ children }: { children: ReactNode }) => {
   return (
@@ -61,36 +62,32 @@ const DefaultDashboardHeader = ({
   );
 };
 
-const DashboardHeader = ({
-  toolbar,
-  onSave,
-  editable,
-  name,
-}: DashboardHeaderProps) => {
-  const { viewport } = useViewport();
-  const mappedDashboardConfiguration = useSelector(
-    convertToDashboardConfiguration,
-    isEqual
-  );
-  const readOnly = useSelector((state: DashboardState) => state.readOnly);
+export const DashboardHeader = memo(
+  ({ toolbar, onSave, editable, name }: DashboardHeaderProps) => {
+    const { viewport } = useViewport();
+    const mappedDashboardConfiguration = useSelector(
+      convertToDashboardConfiguration,
+      isEqual
+    );
+    const readOnly = useSelector((state: DashboardState) => state.readOnly);
 
-  if (toolbar) {
-    const userProvidedToolbar = toolbar({
-      viewport,
-      viewmode: readOnly ? 'preview' : 'edit',
-      dashboardConfiguration: mappedDashboardConfiguration,
-    });
-    return <HeaderContainer>{userProvidedToolbar}</HeaderContainer>;
+    if (toolbar) {
+      const userProvidedToolbar = toolbar({
+        viewport,
+        viewmode: readOnly ? 'preview' : 'edit',
+        dashboardConfiguration: mappedDashboardConfiguration,
+      });
+
+      return <HeaderContainer>{userProvidedToolbar}</HeaderContainer>;
+    }
+
+    return (
+      <DefaultDashboardHeader
+        name={name}
+        editable={editable}
+        readOnly={readOnly}
+        onSave={onSave}
+      />
+    );
   }
-
-  return (
-    <DefaultDashboardHeader
-      name={name}
-      editable={editable}
-      readOnly={readOnly}
-      onSave={onSave}
-    />
-  );
-};
-
-export default memo(DashboardHeader);
+);

@@ -1,22 +1,20 @@
-import { useState } from 'react';
-
-import { Button, type ButtonProps } from '@cloudscape-design/components';
-
-import { unparse } from 'papaparse';
-import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { useFetchTimeSeriesData } from '../dashboard/queryContext';
+import Button, { type ButtonProps } from '@cloudscape-design/components/button';
 import { useViewport } from '@iot-app-kit/react-components';
-import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
-import { convertToCSVObject } from './convertToCSVObject';
+import { unparse } from 'papaparse';
+import { useState } from 'react';
 import { fetchListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
+import { queryClient } from '~/data/query-client';
+import type { StyledSiteWiseQueryConfig } from '~/plugins/xy-plot/types';
+import { useFetchTimeSeriesData } from '~/features/queries/query-context';
+import { convertViewportToHistoricalViewport } from '~/helpers/dateTimeUtil';
+import { convertToCSVObject } from './convertToCSVObject';
 import {
   BAR_CHART_RESOLUTIONS,
   DEFAULT_VIEWPORT,
   EMPTY_DATA,
 } from './constants';
-import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
-import { queryClient } from '~/data/query-client';
+import { assetModelQueryToSiteWiseAssetQuery } from '~/features/queries/transform-asset-model-query';
 
 export const canOnlyDownloadLiveMode: readonly string[] = [
   'table',
@@ -35,18 +33,20 @@ export const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   );
 };
 
+export interface CSVDownloadButtonProps extends ButtonProps {
+  queryConfig: StyledSiteWiseQueryConfig;
+  client: IoTSiteWiseClient;
+  widgetType: string;
+  fileName?: string;
+}
+
 export const CSVDownloadButton = ({
   queryConfig,
   fileName,
   client,
   widgetType,
   ...rest
-}: {
-  queryConfig: StyledSiteWiseQueryConfig;
-  client: IoTSiteWiseClient;
-  widgetType: string;
-  fileName?: string;
-} & ButtonProps) => {
+}: CSVDownloadButtonProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const fetchTimeSeriesData = useFetchTimeSeriesData();
 
@@ -76,7 +76,7 @@ export const CSVDownloadButton = ({
       calculatedViewport.end.getTime() > requestDateMS;
 
     // since fetchTimeSeriesData is async it'll wait for future viewports to be in cache
-    // to avoid this, if viewport is in the future we dont request time series data
+    // to avoid this, if viewport is in the future we don't request time series data
     const { assetModels = [], assets = [] } = queryConfig.query ?? {};
     const combinedAssets = assetModelQueryToSiteWiseAssetQuery({
       assetModels,

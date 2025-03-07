@@ -101,7 +101,7 @@ test.skip('dashboard resize, move, and select gestures', async ({ page }) => {
   await expect(grid.selection()).toBeVisible();
 });
 
-test('dashboard add and remove multiple widgets', async ({ page }) => {
+test('dashboard add and remove multiple widget-instance', async ({ page }) => {
   await page.goto(TEST_PAGE);
 
   const grid = gridUtil(page);

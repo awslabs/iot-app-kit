@@ -1,11 +1,12 @@
-import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
-import type { DashboardState } from '../../state';
 import { nonNegative } from '~/util/number';
+import type { DashboardState } from '../../state';
+import { changeGridProperty } from './updateGrid';
 
-type ChangeDashboardCellSizeActionPayload = {
+export interface ChangeDashboardCellSizeActionPayload {
   cellSize: number;
-};
+}
+
 export interface ChangeDashboardCellSizeAction extends Action {
   type: 'CHANGE_CELL_SIZE';
   payload: ChangeDashboardCellSizeActionPayload;

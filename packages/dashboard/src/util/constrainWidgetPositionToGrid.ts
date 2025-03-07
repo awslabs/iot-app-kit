@@ -1,10 +1,10 @@
-import type { Rect } from '~/types';
+import type { Rectangle } from '~/types';
 
 const max = Math.max;
 const min = Math.min;
 
-export const constrainWidgetPositionToGrid: <R extends Rect = Rect>(
-  gridRect: Rect,
+export const constrainWidgetPositionToGrid: <R extends Rectangle = Rectangle>(
+  gridRect: Rectangle,
   rect: R
 ) => R = (gridRect, rect) => ({
   ...rect,

@@ -7,6 +7,26 @@ import type {
   RefId,
 } from '@iot-app-kit/core';
 
+export const AUTO_RESOLUTION = undefined;
+export const RAW_RESOLUTION = '0';
+export const ONE_MINUTE_RESOLUTION = '1m';
+export const FIFTEEN_MINUTE_RESOLUTION = '15m';
+export const ONE_HOUR_RESOLUTION = '1h';
+export const ONE_DAY_RESOLUTION = '1d';
+
+export type AutoResolution = typeof AUTO_RESOLUTION;
+export type RawResolution = typeof RAW_RESOLUTION;
+export type OneMinuteResolution = typeof ONE_MINUTE_RESOLUTION;
+export type FifteenMinuteResolution = typeof FIFTEEN_MINUTE_RESOLUTION;
+export type OneHourResolution = typeof ONE_HOUR_RESOLUTION;
+export type OneDayResolution = typeof ONE_DAY_RESOLUTION;
+export type AggregateResolution =
+  | OneMinuteResolution
+  | FifteenMinuteResolution
+  | OneHourResolution
+  | OneDayResolution;
+export type Resolution = AutoResolution | RawResolution | AggregateResolution;
+
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html
  */
@@ -30,7 +50,7 @@ export type RequestSettings = {
 export type AssetPropertyQuery = {
   propertyId: string;
   refId?: RefId;
-  resolution?: string;
+  resolution?: Resolution;
   cacheSettings?: CacheSettings;
   aggregationType?: AggregateType;
   alarms?: boolean;
@@ -39,7 +59,7 @@ export type AssetPropertyQuery = {
 export type PropertyAliasQuery = {
   propertyAlias: PropertyAlias;
   refId?: RefId;
-  resolution?: string;
+  resolution?: Resolution;
   aggregationType?: AggregateType;
   cacheSettings?: CacheSettings;
 };
@@ -47,7 +67,7 @@ export type PropertyAliasQuery = {
 type AssetModelPropertyQuery = {
   propertyId: string;
   refId?: RefId;
-  resolution?: string;
+  resolution?: Resolution;
   cacheSettings?: CacheSettings;
   aggregationType?: AggregateType;
 };
@@ -120,7 +140,7 @@ export type SiteWiseAlarmQuery = {
   alarms: AlarmQuery[];
   requestSettings?: RequestSettings & {
     aggregationType?: AggregateType;
-    resolution?: string;
+    resolution?: Resolution;
   };
 };
 

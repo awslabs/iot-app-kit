@@ -1,10 +1,10 @@
 import type { Action } from 'redux';
-import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-type DeleteWidgetsActionPayload = {
-  widgets: DashboardWidget[];
-};
+export interface DeleteWidgetsActionPayload {
+  widgets: WidgetInstance[];
+}
 
 export interface DeleteWidgetsAction extends Action {
   type: 'DELETE_WIDGETS';
