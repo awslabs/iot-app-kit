@@ -9,7 +9,7 @@ import {
   colorForegroundControlReadOnly,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { type Viewport, getPlugin } from '@iot-app-kit/core';
+import { getPlugin, type Viewport } from '@iot-app-kit/core';
 import { WebglContext } from '@iot-app-kit/react-components';
 import { type CSSProperties, type ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,17 +17,21 @@ import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon'
 
 import { selectedRect } from '~/util/select';
 
+import type { ContextMenuProps } from '../contextMenu';
 /**
  * Component imports
  */
 import ContextMenu from '../contextMenu';
 import { useClients } from '../dashboard/clientContext';
 import CustomDragLayer from '../dragLayer';
+import type { DropEvent, GesturableGridProps } from '../grid';
 import { GestureableGrid, ReadOnlyGrid } from '../grid';
 import ComponentPalette from '../palette';
 import { QueryEditor } from '../queryEditor';
 import { ResizablePanes } from '../resizablePanes';
+import type { UserSelectionProps } from '../userSelection';
 import UserSelection from '../userSelection';
+import type { WidgetsProps } from '../widgets/list';
 import Widgets from '../widgets/list';
 import DashboardEmptyState from './dashboardEmptyState';
 
@@ -38,7 +42,6 @@ import {
   onBringWidgetsToFrontAction,
   onCopyWidgetsAction,
   onCreateWidgetsAction,
-  onDeleteWidgetsAction,
   onPasteWidgetsAction,
   onSendWidgetsToBackAction,
 } from '~/store/actions';
@@ -60,11 +63,7 @@ import type {
 } from '~/types';
 import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
 import ConfirmDeleteModal from '../confirmDeleteModal';
-import type { ContextMenuProps } from '../contextMenu';
-import type { DropEvent, GesturableGridProps } from '../grid';
 import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
-import type { UserSelectionProps } from '../userSelection';
-import type { WidgetsProps } from '../widgets/list';
 import DashboardHeader from './dashboardHeader';
 
 import { useChatbotPosition } from '~/hooks/useChatbotPosition';
@@ -76,6 +75,7 @@ import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
 import { AssistantIcon } from '../assistant/assistantIcon';
 import { Chatbot } from '../assistant/chatbot';
 import './index.css';
+import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -179,25 +179,16 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     dispatch(onSendWidgetsToBackAction());
   };
 
-  const deleteWidgets = () => {
-    setVisible(true);
-  };
-
-  const onDelete = () => {
-    dispatch(
-      onDeleteWidgetsAction({
-        widgets: selectedWidgets,
-      })
-    );
+  const deleteWidgets = useDeleteWidgets();
+  const onPressDelete = () => setVisible(true);
+  const handleDelete = () => {
+    deleteWidgets(selectedWidgets.map(({ id }) => id));
     setVisible(false);
   };
 
-  const widgetLength = dashboardConfiguration.widgets.length;
+  useKeyboardShortcuts({ onPressDelete });
 
-  /**
-   * setup keyboard shortcuts for actions
-   */
-  useKeyboardShortcuts({ deleteWidgets });
+  const widgetLength = dashboardConfiguration.widgets.length;
 
   /**
    * setup gesture handling for grid
@@ -288,7 +279,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     messageOverrides: DefaultDashboardMessages,
     copyWidgets,
     pasteWidgets,
-    deleteWidgets,
+    deleteWidgets: onPressDelete,
     sendWidgetsToBack,
     bringWidgetsToFront,
     hasCopiedWidgets: copiedWidgets.length > 0,
@@ -540,7 +531,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         }
         handleDismiss={() => setVisible(false)}
         handleCancel={() => setVisible(false)}
-        handleSubmit={onDelete}
+        handleSubmit={handleDelete}
       />
     </I18nProvider>
   );
