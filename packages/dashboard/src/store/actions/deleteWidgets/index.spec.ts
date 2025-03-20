@@ -1,8 +1,8 @@
 import { deleteWidgets, onDeleteWidgetsAction } from './index';
+import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
 import type { DashboardWidget } from '~/types';
 
 const setupDashboardState = (
@@ -20,7 +20,7 @@ it('returns no widgets when deleting widgets from an empty dashboard', () => {
     deleteWidgets(
       setupDashboardState(),
       onDeleteWidgetsAction({
-        widgets: [],
+        widgetIds: [],
       })
     ).dashboardConfiguration.widgets
   ).toEqual([]);
@@ -31,7 +31,7 @@ it('returns original dashboard when no widgets are specified to be deleted', () 
     deleteWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
       onDeleteWidgetsAction({
-        widgets: [],
+        widgetIds: [],
       })
     ).dashboardConfiguration.widgets
   ).toEqual([MOCK_KPI_WIDGET]);
@@ -42,7 +42,7 @@ it('removes widgets to be delete from dashboard configuration', () => {
     deleteWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
       onDeleteWidgetsAction({
-        widgets: [MOCK_KPI_WIDGET],
+        widgetIds: [MOCK_KPI_WIDGET.id],
       })
     ).dashboardConfiguration.widgets
   ).toEqual([]);
@@ -53,7 +53,7 @@ it('does not remove any widgets when widget id specified is not present in the d
     deleteWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
       onDeleteWidgetsAction({
-        widgets: [MockWidgetFactory.getKpiWidget({ id: 'does-not-exit' })],
+        widgetIds: [MockWidgetFactory.getKpiWidget({ id: 'does-not-exit' }).id],
       })
     ).dashboardConfiguration.widgets
   ).toEqual([MOCK_KPI_WIDGET]);
@@ -68,7 +68,7 @@ it('only deletes widget that is specified to be deleted when there are multiple 
     deleteWidgets(
       setupDashboardState([widget1, widget2, widget3]),
       onDeleteWidgetsAction({
-        widgets: [widget1, widget2],
+        widgetIds: [widget1.id, widget2.id],
       })
     ).dashboardConfiguration.widgets
   ).toEqual([widget3]);
