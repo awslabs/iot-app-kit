@@ -1,13 +1,14 @@
 import { defaultResolution } from './constants';
-import { MonitorWidgetType, type SiteWiseWidgetType } from './types';
+import { type ForeignWidgetType } from './types';
+import { type Resolution } from '@iot-app-kit/source-iotsitewise';
 
 export const convertResolution = (
-  widgetType: MonitorWidgetType | SiteWiseWidgetType,
-  resolution?: string
-) => {
+  widgetType: ForeignWidgetType,
+  resolution?: string | 'raw'
+): Resolution => {
   if (
-    widgetType === MonitorWidgetType.StatusTimeline ||
-    widgetType === MonitorWidgetType.Table
+    widgetType === 'monitor-status-timeline' ||
+    widgetType === 'monitor-table'
   ) {
     // Timeline has resolution set to 0
     return '0';
@@ -17,7 +18,7 @@ export const convertResolution = (
     if (resolution === 'raw') {
       return defaultResolution;
     }
-    return resolution;
+    return resolution as Resolution;
   }
   return defaultResolution;
 };

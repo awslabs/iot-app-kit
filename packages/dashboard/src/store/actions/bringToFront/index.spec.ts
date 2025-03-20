@@ -1,13 +1,12 @@
-import { bringWidgetsToFront } from '.';
-import { initialState } from '../../state';
-
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
+import { initialState } from '../../state';
 import type { DashboardState } from '../../state';
-import type { DashboardWidget } from '~/types';
+import { bringWidgetsToFront } from './index';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 const setupDashboardState = (
-  widgets: DashboardWidget[] = [],
-  selectedWidgets: DashboardWidget[] = []
+  widgets: WidgetInstance[] = [],
+  selectedWidgets: WidgetInstance[] = []
 ): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
@@ -17,14 +16,14 @@ const setupDashboardState = (
   selectedWidgets,
 });
 
-it('does nothing if there are no widgets selected', () => {
+it('does nothing if there are no widget-instance selected', () => {
   expect(
     bringWidgetsToFront(setupDashboardState([MOCK_KPI_WIDGET]))
       .dashboardConfiguration.widgets
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
-it('does nothing if there all widgets are selected', () => {
+it('does nothing if there all widget-instance are selected', () => {
   expect(
     bringWidgetsToFront(
       setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET])
@@ -55,7 +54,7 @@ it('moves selected widget to front', () => {
   );
 });
 
-it('moves group of widgets and retains their relative order', () => {
+it('moves group of widget-instance and retains their relative order', () => {
   const MOCK_WIDGET = MockWidgetFactory.getKpiWidget({
     id: 'widget-1',
   });

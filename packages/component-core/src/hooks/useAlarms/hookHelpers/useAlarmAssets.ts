@@ -7,11 +7,11 @@ import type { QueryOptionsGlobal } from '../../../queries/common/types';
 import { type OnSummarizeAlarmAction, useRequestSelector } from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
 
-export type UseAlarmAssetsOptions = {
+export interface UseAlarmAssetsOptions extends QueryOptionsGlobal {
   iotSiteWiseClient?: IoTSiteWiseClient;
   requests?: AlarmRequest[];
   onSummarizeAlarms: OnSummarizeAlarmAction;
-} & QueryOptionsGlobal;
+}
 
 /**
  * useAlarmAssets is a hook used to describe the asset or assetModel

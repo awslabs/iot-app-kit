@@ -1,11 +1,12 @@
-import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
-import type { DashboardState } from '../../state';
 import { nonNegative } from '~/util/number';
+import type { DashboardState } from '../../state';
+import { changeGridProperty } from './updateGrid';
 
-type ChangeDashboardHeightActionPayload = {
+export interface ChangeDashboardHeightActionPayload {
   height: number;
-};
+}
+
 export interface ChangeDashboardHeightAction extends Action {
   type: 'CHANGE_HEIGHT';
   payload: ChangeDashboardHeightActionPayload;

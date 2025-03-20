@@ -1,18 +1,14 @@
 import { useDispatch } from 'react-redux';
-import { type DashboardWidget } from '..';
 import { onDeleteWidgetsAction } from '~/store/actions';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { useCallback } from 'react';
 
 export const useDeleteWidgets = () => {
   const dispatch = useDispatch();
-  const onDelete = (toDelete: DashboardWidget | DashboardWidget[]) => {
-    dispatch(
-      onDeleteWidgetsAction({
-        widgets: Array.isArray(toDelete) ? toDelete : [toDelete],
-      })
-    );
-  };
 
-  return {
-    onDelete,
-  };
+  return useCallback(
+    (widgetIds: readonly WidgetInstance['id'][]) =>
+      dispatch(onDeleteWidgetsAction({ widgetIds })),
+    [dispatch]
+  );
 };

@@ -92,13 +92,12 @@ export const getStaticThresholdAsAssetPropertyValue = (
        * The threshold value field is a string on the alarm model
        * but we model it as a double in SiteWise
        */
-      const thresholdAssetPropertyValue: AssetPropertyValue = {
+      return {
         value: {
           doubleValue: parseFloat(threshold),
         },
         timestamp,
       };
-      return thresholdAssetPropertyValue;
     }
   }
 };

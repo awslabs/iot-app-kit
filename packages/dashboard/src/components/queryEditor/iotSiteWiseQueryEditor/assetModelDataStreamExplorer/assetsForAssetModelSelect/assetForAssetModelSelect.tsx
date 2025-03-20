@@ -1,33 +1,29 @@
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import {
-  type SelectedAsset,
-  type UpdateSelectedAsset,
-} from '../useSelectedAsset';
+import type { SelectedAsset, UpdateSelectedAsset } from '../useSelectedAsset';
 import {
   AssetExplorer,
   type AssetResource,
 } from '@iot-app-kit/react-components';
 import { type SelectedAssetModel } from '../useSelectedAssetModel';
 
-/*
-AssetForAssetModelSelect renders the Asset Explorer for when an Asset Model has
-already been selected in the Dynamic Assets tab. This drop down changes the asset
-of the query on any chart that has a asset model query.
-*/
-
-export type AssetForAssetModelSelectOptions = {
+export interface AssetForAssetModelSelectProps {
   selectedAsset: SelectedAsset;
   selectedAssetModel: SelectedAssetModel;
   onSelectAsset: UpdateSelectedAsset;
   iotSiteWiseClient: IoTSiteWise;
-};
+}
 
+/**
+ * AssetForAssetModelSelect renders the Asset Explorer for when an Asset Model has
+ * already been selected in the Dynamic Assets tab. This drop down changes the asset
+ * of the query on any chart that has a asset model query.
+ */
 export const AssetForAssetModelSelect = ({
   iotSiteWiseClient,
   selectedAsset,
   selectedAssetModel,
   onSelectAsset,
-}: AssetForAssetModelSelectOptions) => {
+}: AssetForAssetModelSelectProps) => {
   return (
     <AssetExplorer
       iotSiteWiseClient={iotSiteWiseClient}

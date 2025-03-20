@@ -4,10 +4,7 @@
   height: calc(100vh - var(--dashboard-header-height));
   display: flex;
   flex-direction: column;
-
-  /**
-    * css resets to prevent parent styles affecting the dashboard
-    */
+  /* css resets to prevent parent styles affecting the dashboard */
   text-align: initial;
 }
 

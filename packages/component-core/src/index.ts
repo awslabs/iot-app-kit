@@ -45,8 +45,7 @@ export type {
   ComponentQuery,
 } from './common/chartTypes';
 export {
-  COMPARISON_OPERATOR,
-  COMPARATOR_MAP,
+  COMPARISON_OPERATOR_TEXT_LABEL_MAP,
   DEFAULT_VIEWPORT,
 } from './common/constants';
 export {
@@ -55,7 +54,6 @@ export {
   DataSourceLoader,
   AnomalyObjectDataSourceTransformer,
   AnomalyArrowDataSourceTransformer,
-  FieldType,
   type AnomalyObjectDataSource,
   type AnomalyArrowDataSource,
 } from './data';

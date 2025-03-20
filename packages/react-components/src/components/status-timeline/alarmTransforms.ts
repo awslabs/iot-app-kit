@@ -2,13 +2,15 @@ import {
   COMPARISON_OPERATOR,
   type DataPoint,
   type DataStream,
+  type Threshold,
 } from '@iot-app-kit/core';
 import {
+  type AlarmData,
   parseAlarmStateAssetProperty,
   type PascalCaseStateName,
-  type AlarmData,
 } from '@iot-app-kit/component-core';
 import { CHART_ALARM_ERROR } from '../../common/constants';
+import { nanoid } from 'nanoid';
 
 export const transformAlarmStateToDataStream = (
   alarm: AlarmData
@@ -42,33 +44,39 @@ export const transformAlarmStateToDataStream = (
 
 export const ALARM_STATE_THRESHOLDS = [
   {
+    id: nanoid(),
     color: '#D91515',
     value: 'Active',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
+    id: nanoid(),
     color: '#037F0C',
     value: 'Normal',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
+    id: nanoid(),
     color: '#8D6605',
     value: 'Latched',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
+    id: nanoid(),
     color: '#656871',
     value: 'Disabled',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
+    id: nanoid(),
     color: '#656871',
     value: 'Acknowledged',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
   {
+    id: nanoid(),
     color: '#656871',
     value: 'SnoozeDisabled',
     comparisonOperator: COMPARISON_OPERATOR.EQ,
   },
-];
+] satisfies Threshold[];

@@ -1,11 +1,11 @@
 import { NANO_SECOND_IN_MS, SECOND_IN_MS } from './timeConstants';
 import type { DataPoint, Primitive } from '@iot-app-kit/core';
 import type {
+  AggregatedValue,
+  Aggregates,
   AssetPropertyValue,
   TimeInNanos,
   Variant,
-  Aggregates,
-  AggregatedValue,
 } from '@aws-sdk/client-iotsitewise';
 
 /** converts the TimeInNanos to milliseconds */
@@ -48,23 +48,16 @@ export const toValue = (variant: Variant | undefined): Primitive => {
   }
 
   if ('nullValue' in variant && variant.nullValue != null) {
-    /**
-     * nullValue is not a nullish value
-     * it's an object with the string type of
-     * what the value should be.
-     */
+    // nullValue is not a nullish value
+    // it's an object with the string type of
+    // what the value should be.
     return null;
   }
 
-  /**
-   * A variant with no properties is treated
-   * as null data so that datastreams do not
-   * break when the sdk updates
-   */
+  // A variant with no properties is treated
+  // as null data so that datastreams do not
+  // break when the sdk updates
   return null;
-  // throw new Error(
-  //   'Expected value to have at least one property value, but instead it has none!'
-  // );
 };
 
 /**

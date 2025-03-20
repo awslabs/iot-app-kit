@@ -1,5 +1,8 @@
 import { type AggregateType } from '@aws-sdk/client-iotsitewise';
-import { type SiteWiseDataStreamQuery } from '@iot-app-kit/source-iotsitewise';
+import type {
+  Resolution,
+  SiteWiseDataStreamQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import { type AlarmData } from '../../types';
 import { createNonNullableList } from '@iot-app-kit/core';
 import { type IterableElement } from 'type-fest';
@@ -52,12 +55,12 @@ const toSiteWiseDataStreamQuery =
     resolution,
   }: {
     aggregationType: AggregateType;
-    resolution?: string;
+    resolution?: Resolution;
   }) =>
   (
     query: SiteWiseDataStreamQuery,
     assetQueryMapEntry: IterableElement<AssetQuery>
-  ) => {
+  ): SiteWiseDataStreamQuery => {
     const [assetId, propertiesSet] = assetQueryMapEntry;
     const assetQuery = {
       assetId,
@@ -75,26 +78,16 @@ export const alarmToSiteWiseDataStreamQuery = (
   {
     aggregationType,
     resolution,
-  }: { aggregationType: AggregateType; resolution?: string }
-) => {
-  /**
-   * Get a unique list of assetIds and their
-   * associated propertyIds.
-   */
+  }: { aggregationType: AggregateType; resolution?: Resolution }
+): SiteWiseDataStreamQuery => {
+  // Get a unique list of assetIds and their associated propertyIds.
   const assetQueryMap = alarms
     .map(assetQueryFromAlarm)
     .reduce<AssetQuery>(uniqueAssetQuery, new Map());
 
-  /**
-   * map unique asset + properties into
-   * a sitewise datastream query
-   */
-  const siteWiseDataStreamQuery = [
-    ...assetQueryMap.entries(),
-  ].reduce<SiteWiseDataStreamQuery>(
+  // map unique asset + properties into a sitewise datastream query
+  return [...assetQueryMap.entries()].reduce<SiteWiseDataStreamQuery>(
     toSiteWiseDataStreamQuery({ aggregationType, resolution }),
     { assets: [] }
   );
-
-  return siteWiseDataStreamQuery;
 };

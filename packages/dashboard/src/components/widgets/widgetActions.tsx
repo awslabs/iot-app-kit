@@ -1,4 +1,5 @@
-import { Box, Button, type ButtonProps } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
 import {
   colorBackgroundButtonNormalDefault,
   colorBackgroundButtonPrimaryDefault,
@@ -7,95 +8,77 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import { getPlugin } from '@iot-app-kit/core';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
-import { type DashboardWidget } from '~/types';
-import ConfirmDeleteModal from '../confirmDeleteModal';
 import {
-  CSVDownloadButton,
-  canOnlyDownloadLiveMode,
-  isQueryEmpty,
-} from '../csvDownloadButton';
-import { useClients } from '../dashboard/clientContext';
-
+  type CSSProperties,
+  type MouseEvent,
+  useCallback,
+  useState,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RegisteredWidgetType } from '~/features/widget-plugins/registry';
+import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
 import {
   onChangeDashboardGridEnabledAction,
   onSelectWidgetsAction,
 } from '~/store/actions';
 import { type DashboardState } from '~/store/state';
-
+import { ConfirmDeleteModal } from '~/components/confirmDeleteModal';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import {
+  canOnlyDownloadLiveMode,
+  CSVDownloadButton,
+  isQueryEmpty,
+} from '../csvDownloadButton';
+import { useClients } from '../dashboard/clientContext';
 import './widgetActions.css';
 
-type DeletableTileActionProps = {
-  handleDelete: NonNullable<ButtonProps['onClick']>;
-};
+const style = {
+  margin: `${spaceStaticXxxs} ${spaceStaticXs}`,
+  height: `${spaceStaticXl}`,
+  right: `${spaceStaticL}`,
+  borderRadius: `${spaceStaticXs}`,
+  border: `2px solid ${colorBackgroundButtonPrimaryDefault}`,
+  backgroundColor: `${colorBackgroundButtonNormalDefault}`,
+  pointerEvents: 'auto',
+} satisfies CSSProperties;
 
-const DeletableTileAction = ({
-  handleDelete,
-  variant,
-}: DeletableTileActionProps & ButtonProps) => {
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-  };
+export interface WidgetActionsProps<WidgetType extends RegisteredWidgetType> {
+  widget: WidgetInstance<WidgetType>;
+}
 
-  return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div onMouseDown={handleMouseDown}>
-      <Button
-        onClick={handleDelete}
-        ariaLabel='delete widget'
-        variant={variant ?? 'icon'}
-        iconName='close'
-      />
-    </div>
-  );
-};
-
-const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
+export const WidgetActions = <WidgetType extends RegisteredWidgetType>({
+  widget,
+}: WidgetActionsProps<WidgetType>) => {
   const dispatch = useDispatch();
   const isEdgeModeEnabled = useSelector(
     (state: DashboardState) => state.isEdgeModeEnabled
   );
   const { iotSiteWiseClient } = useClients();
-  const { onDelete } = useDeleteWidgets();
-  const metricsRecorder = getPlugin('metricsRecorder');
+  const deleteWidgets = useDeleteWidgets();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
 
-  const [visible, setVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleDelete: NonNullable<ButtonProps['onClick']> = (e) => {
-    e.stopPropagation();
+  const handleDelete = useCallback(() => {
     dispatch(onChangeDashboardGridEnabledAction({ enabled: false }));
     dispatch(onSelectWidgetsAction({ widgets: [widget], union: false }));
-    setVisible(true);
-  };
+    setIsVisible(true);
+  }, [widget, dispatch]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
-    setVisible(false);
-  };
+    setIsVisible(false);
+  }, [dispatch]);
 
-  const handleSubmit = () => {
-    const widgetType = widget.type;
-    onDelete(widget);
+  const handleSubmit = useCallback(() => {
+    deleteWidgets([widget.id]);
     dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
-    setVisible(false);
-
-    metricsRecorder?.record({
-      contexts: {
-        widgetType,
-      },
-      metricName: 'DashboardWidgetDelete',
-      metricValue: 1,
-    });
-  };
+    setIsVisible(false);
+  }, [deleteWidgets, widget.id, dispatch]);
 
   const isEmptyQuery =
     widget.type !== 'text' &&
-    isQueryEmpty(widget.properties.queryConfig as StyledSiteWiseQueryConfig);
+    isQueryEmpty(widget.properties.queryConfig?.query);
   const cannotDownload = canOnlyDownloadLiveMode.some((t) => t === widget.type);
 
   if (readOnly && (isEmptyQuery || cannotDownload || isEdgeModeEnabled))
@@ -105,31 +88,19 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
     <div
       className='widget-actions-container'
       aria-label='widget-actions-container'
-      style={{
-        margin: `${spaceStaticXxxs} ${spaceStaticXs}`,
-        height: `${spaceStaticXl}`,
-        right: `${spaceStaticL}`,
-        borderRadius: `${spaceStaticXs}`,
-        border: `2px solid ${colorBackgroundButtonPrimaryDefault}`,
-        backgroundColor: `${colorBackgroundButtonNormalDefault}`,
-        pointerEvents: 'auto',
-      }}
+      style={style}
     >
-      {!isEdgeModeEnabled && widget.type !== 'text' && iotSiteWiseClient && (
+      {!isEdgeModeEnabled && iotSiteWiseClient && widget.type !== 'text' && (
         <CSVDownloadButton
           fileName={`${widget.properties.title ?? widget.type}`}
           client={iotSiteWiseClient}
           widgetType={widget.type}
-          queryConfig={
-            widget.properties.queryConfig as StyledSiteWiseQueryConfig
-          }
+          queryConfig={widget.properties.queryConfig}
         />
       )}
-      {!readOnly && (
-        <DeletableTileAction variant='icon' handleDelete={handleDelete} />
-      )}
+      {!readOnly && <DeletableTileAction onClick={handleDelete} />}
       <ConfirmDeleteModal
-        visible={visible}
+        visible={isVisible}
         headerTitle='Delete selected widget?'
         cancelTitle='Cancel'
         submitTitle='Delete'
@@ -152,4 +123,25 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
   );
 };
 
-export default WidgetActions;
+interface DeletableTileActionProps {
+  onClick: VoidFunction;
+}
+
+const DeletableTileAction = ({ onClick }: DeletableTileActionProps) => {
+  const handleMouseDown = useCallback(
+    (e: MouseEvent) => e.stopPropagation(),
+    []
+  );
+
+  return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div onMouseDown={handleMouseDown}>
+      <Button
+        onClick={onClick}
+        ariaLabel='delete widget'
+        variant='icon'
+        iconName='close'
+      />
+    </div>
+  );
+};

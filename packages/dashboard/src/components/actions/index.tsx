@@ -1,30 +1,21 @@
-import isEqual from 'lodash-es/isEqual';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
-import { getPlugin } from '@iot-app-kit/core';
-
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import {
   colorChartsLineGrid,
   spaceScaledXs,
   spaceScaledXxxl,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import isEqual from 'lodash-es/isEqual';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
-import { type DashboardSave } from '~/types';
-import CustomOrangeButton from '../customOrangeButton';
+import type { DashboardSave } from '~/types/saving';
+import { convertToDashboardConfiguration } from '~/util/convertToDashboardConfiguration';
+import { CustomOrangeButton } from '../customOrangeButton';
 import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
-import DashboardSettings from './settings';
-
-import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
-
-export type ActionsProps = {
-  readOnly: boolean;
-  defaultToolbar?: boolean;
-  onSave?: DashboardSave;
-  editable?: boolean;
-};
+import { DashboardSettings } from './settings';
 
 const Divider = () => (
   <div
@@ -37,12 +28,20 @@ const Divider = () => (
   />
 );
 
-const Actions: React.FC<ActionsProps> = ({
+export interface ActionsProps {
+  readOnly: boolean;
+  defaultToolbar?: boolean;
+  onSave?: DashboardSave;
+  editable?: boolean;
+}
+
+export const Actions = ({
   editable,
   defaultToolbar = true,
   readOnly,
   onSave,
-}) => {
+}: ActionsProps) => {
+  const dispatch = useDispatch();
   const mappedDashboardConfiguration = useSelector(
     convertToDashboardConfiguration,
     isEqual
@@ -50,18 +49,10 @@ const Actions: React.FC<ActionsProps> = ({
 
   const [dashboardSettingsVisible, setDashboardSettingsVisible] =
     useState(false);
-  const dispatch = useDispatch();
-
-  const metricsRecorder = getPlugin('metricsRecorder');
 
   const handleOnSave = () => {
     if (!onSave) return;
     onSave(mappedDashboardConfiguration, readOnly ? 'preview' : 'edit');
-
-    metricsRecorder?.record({
-      metricName: 'DashboardSave',
-      metricValue: 1,
-    });
   };
 
   const handleOnReadOnly = () => {
@@ -72,21 +63,6 @@ const Actions: React.FC<ActionsProps> = ({
         union: false,
       })
     );
-
-    metricsRecorder?.record({
-      // When it is readOnly, it is toggled to Edit; Preview otherwise
-      metricName: readOnly ? 'DashboardEdit' : 'DashboardPreview',
-      metricValue: 1,
-    });
-  };
-
-  const setSettingVisibility = (visibility: boolean) => {
-    setDashboardSettingsVisible(visibility);
-
-    metricsRecorder?.record({
-      metricName: visibility ? 'DashboardSettingOpen' : 'DashboardSettingClose',
-      metricValue: 1,
-    });
   };
 
   return (
@@ -110,7 +86,7 @@ const Actions: React.FC<ActionsProps> = ({
           )}
           {editable && !readOnly && (
             <Button
-              onClick={() => setSettingVisibility(true)}
+              onClick={() => setDashboardSettingsVisible(true)}
               iconName='settings'
               variant='icon'
               data-testid='dashboard-visibility-button'
@@ -119,12 +95,10 @@ const Actions: React.FC<ActionsProps> = ({
           )}
           <DashboardSettings
             isVisible={dashboardSettingsVisible}
-            onClose={() => setSettingVisibility(false)}
+            onClose={() => setDashboardSettingsVisible(false)}
           />
         </SpaceBetween>
       </div>
     </Box>
   );
 };
-
-export default Actions;

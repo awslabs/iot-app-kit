@@ -3,9 +3,9 @@ import { isNumeric, round } from '@iot-app-kit/core-util';
 import { type DataStreamInformation, type TrendCursor } from '../types';
 import { DataStreamCell, DataStreamColumnHeader } from './datastream';
 import { TrendCursorCell, TrendCursorColumnHeader } from './trendCursor';
-import { MaximumColumnHeader, MaximumCell } from './maximumValue';
+import { MaximumCell, MaximumColumnHeader } from './maximumValue';
 import { AssetNameCell, AssetNameColumnHeader } from './assetName';
-import { MinimumColumnHeader, MinimumCell } from './minimumValue';
+import { MinimumCell, MinimumColumnHeader } from './minimumValue';
 import { type ChartLegend, type ChartOptions } from '../../../types';
 import { LatestValueCell, LatestValueColumnHeader } from './latestValue';
 import {

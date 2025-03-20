@@ -4,20 +4,20 @@ import { type COMPARISON_OPERATOR, type Primitive } from '@synchro-charts/core';
 export type UpperCaseStateName = keyof typeof ALARM_STATUS;
 export type PascalCaseStateName = (typeof ALARM_STATUS)[UpperCaseStateName];
 
-export type AlarmModel = {
+export interface AlarmModel {
   inputPropertyId: string;
   comparisonOperator: COMPARISON_OPERATOR;
   thresholdPropertyId: string;
   severity: number;
-};
+}
 
-export type Alarm = AlarmModel & {
+export interface Alarm extends AlarmModel {
   assetId: string;
   alarmStatePropertyId: string;
   threshold: Primitive;
   rule: string;
   state: string;
-};
+}
 
 type AlarmStreamId = string;
 

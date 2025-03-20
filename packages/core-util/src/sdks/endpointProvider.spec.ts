@@ -1,7 +1,7 @@
-import { getEndpointPovider } from './endpointProvider';
+import { getEndpointProvider } from './endpointProvider';
 
 it('constructs endpoint correctly', async () => {
-  const provider = getEndpointPovider({
+  const provider = getEndpointProvider({
     subDomain: 'test',
     awsRegion: 'us-west-2',
     awsPartition: 'aws',

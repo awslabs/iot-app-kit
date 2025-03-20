@@ -9,7 +9,7 @@ import {
   createInitialAssetModelResource,
   useSelectedAssetModel,
 } from './useSelectedAssetModel';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
+import { HorizontalDivider } from '~/features/widget-customization/atoms/horizontal-divider';
 import {
   createInitialAssetModelProperties,
   useSelectedAssetModelProperties,
@@ -18,13 +18,11 @@ import {
   createInitialAssetResource,
   useSelectedAsset,
 } from './useSelectedAsset';
-import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
-import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
+import { useModelBasedQuery } from '../useQuery/useModelBasedQuery';
+import { useModelBasedQuerySelection } from '../useQuery/useModelBasedQuerySelection';
 import { createAssetModelQuery } from './createAssetModelQuery';
-import { getPlugin } from '@iot-app-kit/core';
 import { ResourceExplorerFooter } from '../footer/footer';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { type DashboardWidget } from '~/types';
+import { compact } from '~/helpers/lists/compact';
 import {
   AlarmExplorer,
   type AlarmExplorerProps,
@@ -34,10 +32,11 @@ import { ExpandableSection } from '@cloudscape-design/components';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { createAlarmModelQuery } from './createAlarmModelQuery';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 export interface AssetModelDataStreamExplorerProps {
   iotSiteWiseClient: IoTSiteWise;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: WidgetInstance[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
   timeZone?: string;
@@ -54,8 +53,6 @@ export const AssetModelDataStreamExplorer = ({
   significantDigits,
   currentSelectedAsset,
 }: AssetModelDataStreamExplorerProps) => {
-  const metricsRecorder = getPlugin('metricsRecorder');
-
   const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
 
   const {
@@ -121,15 +118,10 @@ export const AssetModelDataStreamExplorer = ({
         assetModels: createAssetModelQuery({
           assetModelId: selectedAssetModel[0].assetModelId,
           assetId: selectedAsset?.at(0)?.assetId,
-          assetModelPropertyIds: createNonNullableList(
+          assetModelPropertyIds: compact(
             selectedAssetModelProperties.map(({ propertyId }) => propertyId)
           ),
         }),
-      });
-
-      metricsRecorder?.record({
-        metricName: 'AssetModelDataStreamAdd',
-        metricValue: 1,
       });
     }
   };

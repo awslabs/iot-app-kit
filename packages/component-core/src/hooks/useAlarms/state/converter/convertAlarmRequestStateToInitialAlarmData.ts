@@ -11,15 +11,13 @@ export const convertAlarmRequestStateToInitialAlarmData = (
       assetId: alarmRequestState.request.assetId,
       assetModelId: alarmRequestState.request.assetModelId,
       compositeModelId: alarmRequestState.request.assetCompositeModelId,
-      /**
-       * Status will combine the first 4 queries
-       * because we will not know which alarm an input
-       * property query will be associated to until
-       * the describe alarm models query has completed.
-       * Until then, we will map those request types
-       * as initial alarm data using the combined
-       * status from all queries.
-       */
+      // Status will combine the first 4 queries
+      // because we will not know which alarm an input
+      // property query will be associated to until
+      // the describe alarm models query has completed.
+      // Until then, we will map those request types
+      // as initial alarm data using the combined
+      // status from all queries.
       status: combineStatusForQueries(
         createNonNullableList([
           alarmRequestState.describeAssetModelQueryStatus,

@@ -2,11 +2,11 @@ import type { DashboardState } from '../../state';
 import type { Action } from 'redux';
 import { v4 as uuid } from 'uuid';
 
-type ToggleChatbotActionPayload = {
+export interface ToggleChatbotActionPayload {
   open: boolean;
   callerComponentId: string;
   action?: 'summarize' | 'divedeep';
-};
+}
 
 export interface ToggleChatbotAction extends Action {
   type: 'TOGGLE_CHATBOT';

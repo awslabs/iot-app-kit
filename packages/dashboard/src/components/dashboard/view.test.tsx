@@ -1,15 +1,14 @@
-import { render } from '@testing-library/react';
-import {
-  createMockIoTEventsSDK,
-  createMockSiteWiseSDK,
-} from '@iot-app-kit/testing-util';
-import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import {
   IoTSiteWise,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-
-import DashboardView from './view';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
+import { render } from '@testing-library/react';
+import { DashboardView } from './view';
 
 const config = {
   credentials: {

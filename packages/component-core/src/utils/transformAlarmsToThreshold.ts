@@ -1,7 +1,8 @@
-import { type Threshold } from '@iot-app-kit/core';
+import { type ComparisonOperator, type Threshold } from '@iot-app-kit/core';
 import { type AlarmData } from '../hooks/useAlarms';
 import { IoTEventsToSynchroChartsComparisonOperator } from '@iot-app-kit/source-iotsitewise';
-import { COMPARATOR_MAP, type COMPARISON_OPERATOR } from '../common/constants';
+import { COMPARISON_OPERATOR_TEXT_LABEL_MAP } from '../common/constants';
+import { nanoid } from 'nanoid';
 
 const createThreshold = ({
   thresholdValue,
@@ -13,7 +14,7 @@ const createThreshold = ({
   thresholdValue: number;
   severity: number | undefined;
   labelText: string;
-  comparisonOperator: COMPARISON_OPERATOR;
+  comparisonOperator: ComparisonOperator;
   dataStreamId?: string;
 }): Threshold => {
   return {
@@ -27,6 +28,7 @@ const createThreshold = ({
     },
     comparisonOperator: comparisonOperator,
     dataStreamIds: dataStreamId ? [dataStreamId] : undefined,
+    id: nanoid(),
   };
 };
 
@@ -50,10 +52,10 @@ export const transformAlarmsToThreshold = (
     if (thresholdValue && comparisonOperator && inputProperty) {
       const scComparisonOperator = IoTEventsToSynchroChartsComparisonOperator[
         comparisonOperator
-      ] as COMPARISON_OPERATOR;
+      ] as ComparisonOperator;
 
       return createThreshold({
-        labelText: `${inputProperty.property.name} ${COMPARATOR_MAP[scComparisonOperator]} ${thresholdValue}`,
+        labelText: `${inputProperty.property.name} ${COMPARISON_OPERATOR_TEXT_LABEL_MAP[scComparisonOperator]} ${thresholdValue}`,
         thresholdValue: thresholdValue,
         severity: model.severity,
         comparisonOperator: scComparisonOperator,

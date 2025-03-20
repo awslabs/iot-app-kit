@@ -10,13 +10,13 @@ export const isAlarmState = (state?: string): state is PascalCaseStateName => {
   return Object.values(ALARM_STATUS).includes(state as PascalCaseStateName);
 };
 
-type SiteWiseRuleEvaluation = {
+interface SiteWiseRuleEvaluation {
   simpleRule?: {
     inputProperty?: number;
     operator?: string;
     threshold?: number;
   };
-};
+}
 
 export const isRuleEvaluation = (
   ruleEvaluation?: unknown

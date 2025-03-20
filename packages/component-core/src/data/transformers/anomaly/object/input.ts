@@ -1,10 +1,11 @@
 import { type ObjectDataSourceValue } from '../../object';
 import { type AnomalyStyles } from '../input';
 
-export type Diagnostic = {
+export interface Diagnostic {
   name: string;
   value: number;
-};
+}
+
 export type Diagnostics = Diagnostic[];
 
 export type AnomalyObjectDataInput = {

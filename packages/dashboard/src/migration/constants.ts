@@ -1,8 +1,14 @@
 import {
-  type MonitorWidgetType,
-  type MonitorMetric,
+  type ForeignWidgetInstance,
+  type ForeignWidgetType,
   type MonitorAnnotations,
+  type MonitorMetric,
+  type WidgetMap,
 } from './types';
+import { type XYPlotProperties } from '~/plugins/xy-plot/types';
+import { type Aggregation } from '~/features/widget-customization/common/aggregation/aggregation-field';
+import { type PartialDeep } from 'type-fest';
+import { type StatusTimelineProperties } from '~/plugins/status-timeline/types';
 
 export const defaultDisplaySettings = {
   numRows: 100,
@@ -11,7 +17,7 @@ export const defaultDisplaySettings = {
   significantDigits: 4,
 };
 export const defaultResolution = '1m';
-export const defaultAggregationType = 'AVERAGE';
+export const defaultAggregationType: Aggregation = 'AVERAGE';
 
 /**
  * Default Monitor size is 3x3 squares
@@ -61,7 +67,7 @@ export const lineChartProperties = {
     position: 'right',
     height: '30%',
   },
-};
+} as const satisfies PartialDeep<XYPlotProperties>;
 
 export const scatterChartProperties = {
   ...defaultProperties,
@@ -79,23 +85,23 @@ export const scatterChartProperties = {
   legend: {
     visible: true,
   },
-};
+} as const satisfies PartialDeep<XYPlotProperties>;
 
 export const timelineProperties = {
   axis: {
     showY: true,
     showX: true,
   },
-};
+} as const satisfies PartialDeep<StatusTimelineProperties>;
 
 export const createMonitorChartWidget = (
-  widgetType: MonitorWidgetType,
+  widgetType: ForeignWidgetType,
   metrics: MonitorMetric[],
   annotations?: MonitorAnnotations,
   title?: string,
   x?: number,
   y?: number
-) => {
+): ForeignWidgetInstance<WidgetMap[ForeignWidgetType]> => {
   return {
     type: widgetType,
     title: title ?? 'test',

@@ -1,4 +1,4 @@
-import { type AggregateType, type Quality } from '@aws-sdk/client-iotsitewise';
+import type { AggregateType, Quality } from '@aws-sdk/client-iotsitewise';
 import type {
   TimeSeriesDataRequest,
   Viewport,
@@ -8,16 +8,16 @@ import type { ErrorDetails, Threshold } from '../common/types';
 
 export type { CacheSettings } from './data-cache/types';
 
-export type StreamAssociation = {
+export interface StreamAssociation {
   id: DataStreamId;
   type: StreamType;
-};
+}
 
 export type Timestamp = number;
 
-export type DataPointBase<T extends Primitive = Primitive> = {
+export interface DataPointBase<T extends Primitive = Primitive> {
   y: T;
-};
+}
 
 export interface DataPoint<T extends Primitive = Primitive>
   extends DataPointBase<T> {
@@ -44,7 +44,7 @@ export interface TimeSeriesData extends DataBase {
 // Reference which can be used to associate styles to the associated results from a query
 export type RefId = string;
 
-export type RequestInformation = {
+export interface RequestInformation {
   id: DataStreamId;
   resolution: string;
   refId?: RefId;
@@ -55,11 +55,12 @@ export type RequestInformation = {
   aggregationType?: AggregateType;
   // Mechanism to associate some information about how the request should be made
   meta?: Record<string, string | number | boolean>;
-};
-export type RequestInformationAndRange = RequestInformation & {
+}
+
+export interface RequestInformationAndRange extends RequestInformation {
   start: Date;
   end: Date;
-};
+}
 
 export type DataType = 'NUMBER' | 'STRING' | 'BOOLEAN';
 
@@ -127,6 +128,7 @@ export type DataStreamCallback = (
   dataStreams: DataStream[],
   requestInformation: RequestInformationAndRange
 ) => void;
+
 export type OnSuccessCallback = (
   dataStreams: DataStream[],
   requestInformation: RequestInformationAndRange,
@@ -134,25 +136,25 @@ export type OnSuccessCallback = (
   end: Date
 ) => void;
 
-export type QuerySubscription<Query extends DataStreamQuery> = {
+export interface QuerySubscription<Query extends DataStreamQuery> {
   queries: Query[];
   request: TimeSeriesDataRequest;
   emit: (data: TimeSeriesData) => void;
   // Initiate requests for the subscription
-  fulfill: () => void;
-};
+  fulfill: VoidFunction;
+}
 
 export type Subscription<Query extends DataStreamQuery = AnyDataStreamQuery> =
   QuerySubscription<Query>;
 
-export type DataModuleSubscription<Query extends DataStreamQuery> = {
+export interface DataModuleSubscription<Query extends DataStreamQuery> {
   request: TimeSeriesDataRequest;
   queries: Query[];
-};
+}
 
-export type DataStreamQuery = {
+export interface DataStreamQuery {
   cacheSettings?: CacheSettings;
-};
+}
 
 export type AnyDataStreamQuery = DataStreamQuery & any;
 
@@ -172,26 +174,29 @@ export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<
   Omit<Subscription<Query>, 'emit'>
 >;
 
-export type DataSourceRequest<Query extends DataStreamQuery> = {
+export interface DataSourceRequest<Query extends DataStreamQuery> {
   request: TimeSeriesDataRequest;
   query: Query;
   onSuccess: OnSuccessCallback;
   onError: ErrorCallback;
-};
+}
 
-export type StyleSettingsMap = { [refId: string]: BaseStyleSettings };
+export interface StyleSettingsMap {
+  [refId: string]: BaseStyleSettings;
+}
 
 // Style settings sharable by all components
-export type BaseStyleSettings = {
+export interface BaseStyleSettings {
   name?: string;
   detailedName?: string;
   color?: string; // CSS color string, i.e. 'red' or '#ffffff'
   unit?: string;
-};
-export type SubscriptionResponse<Query extends DataStreamQuery> = {
+}
+
+export interface SubscriptionResponse<Query extends DataStreamQuery> {
   /** Unsubscribe from the subscription. This will prevent any of the previously subscribed to data, from being requested by the data-module. */
-  unsubscribe: () => void;
+  unsubscribe: VoidFunction;
 
   /** Update the subscription. This will immediately evaluate if a new query must be requested */
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => Promise<void>;
-};
+}

@@ -80,7 +80,7 @@ const alarmInfo = ({
 
 /**
  * parses time series data and returns the thresholds, data streams and data points of interest
- * in widgets that display a single data point in time (i.e. KPI, Status, Gauge, Dial, etc.)
+ * in widget-instance that display a single data point in time (i.e. KPI, Status, Gauge, Dial, etc.)
  */
 export const widgetPropertiesFromInputs = (input: {
   dataStreams: DataStream[];

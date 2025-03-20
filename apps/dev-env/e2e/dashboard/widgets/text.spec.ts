@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { ConfigPanel } from '../configPanel/ConfigPanel';
 import { createNewDashboardWithWidget } from '../createDashboardWidget';
 

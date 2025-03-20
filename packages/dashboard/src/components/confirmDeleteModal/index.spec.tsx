@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import ConfirmDeleteModal from './index';
+import { ConfirmDeleteModal } from './index';
 
 describe('Confirm Delete Modal', () => {
   test('renders correctly', () => {

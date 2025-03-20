@@ -1,24 +1,24 @@
 import { RequestProcessor } from './requestProcessor';
 import { SiteWiseAssetCache } from './cache';
 import { Observable } from 'rxjs';
-import { HIERARCHY_ROOT_ID, LoadingStateEnum } from './types';
-import { sampleAssetModel } from '../../__mocks__/assetModel';
-import { sampleAssetSummary } from '../../__mocks__/asset';
-import { ASSET_PROPERTY_STRING_VALUE } from '../../__mocks__/assetPropertyValue';
-import type {
-  AssetSummary,
-  AssetPropertyValue,
-  DescribeAssetCommandOutput,
-  DescribeAssetModelResponse,
-  DescribeAssetModelCommandOutput,
-  GetAssetPropertyValueCommandOutput,
-  ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandOutput,
-} from '@aws-sdk/client-iotsitewise';
 import type {
   HierarchyAssetSummaryList,
   SiteWiseAssetDataSource,
 } from './types';
+import { HIERARCHY_ROOT_ID } from './types';
+import { sampleAssetModel } from '../../__mocks__/assetModel';
+import { sampleAssetSummary } from '../../__mocks__/asset';
+import { ASSET_PROPERTY_STRING_VALUE } from '../../__mocks__/assetPropertyValue';
+import type {
+  AssetPropertyValue,
+  AssetSummary,
+  DescribeAssetCommandOutput,
+  DescribeAssetModelCommandOutput,
+  DescribeAssetModelResponse,
+  GetAssetPropertyValueCommandOutput,
+  ListAssetsCommandOutput,
+  ListAssociatedAssetsCommandOutput,
+} from '@aws-sdk/client-iotsitewise';
 import type { ModeledDataStream } from '../describeModeledDataStreamRequest/types';
 
 it('initializes', () => {
@@ -169,7 +169,7 @@ describe('Request an Asset Hierarchy of a parent Asset', () => {
       expect({
         assetHierarchyId: 'hierarchyId',
         assets: [sampleAssetSummary],
-        loadingState: LoadingStateEnum.LOADED,
+        loadingState: 'LOADED',
       }).toEqual(result);
     });
   });
@@ -209,7 +209,7 @@ describe('Request the root assets', () => {
       expect({
         assetHierarchyId: HIERARCHY_ROOT_ID,
         assets: [sampleAssetSummary],
-        loadingState: LoadingStateEnum.LOADED,
+        loadingState: 'LOADED',
       }).toEqual(result);
 
       expect(mockListAssets).toHaveBeenCalled();
@@ -223,7 +223,7 @@ describe('Request the root assets', () => {
       expect({
         assetHierarchyId: HIERARCHY_ROOT_ID,
         assets: [sampleAssetSummary],
-        loadingState: LoadingStateEnum.LOADED,
+        loadingState: 'LOADED',
       }).toEqual(result);
 
       expect(mockListAssets).not.toHaveBeenCalled();

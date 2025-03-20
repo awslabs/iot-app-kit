@@ -1,10 +1,11 @@
-import type { Rect, DashboardWidget } from '~/types';
+import type { Rectangle } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export const transformWidget: (
-  widget: DashboardWidget,
-  pre: Rect,
-  curr: Rect
-) => DashboardWidget = (widget, prev, curr) => {
+export const transformWidget: <Widget extends WidgetInstance>(
+  widget: Widget,
+  pre: Rectangle,
+  curr: Rectangle
+) => Widget = (widget, prev, curr) => {
   const offsetX = widget.x - prev.x;
   const offsetY = widget.y - prev.y;
 

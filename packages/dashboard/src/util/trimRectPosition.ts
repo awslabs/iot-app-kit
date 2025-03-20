@@ -1,6 +1,6 @@
-import type { Rect } from '~/types';
+import type { Rectangle } from '~/types';
 
-export const trimRectPosition = <R extends Rect>(rect: R): R => {
+export const trimRectPosition = <R extends Rectangle>(rect: R): R => {
   return {
     ...rect,
     x: Math.round(rect.x),

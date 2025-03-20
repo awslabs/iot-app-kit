@@ -1,10 +1,10 @@
-import type { Position, Rect } from '~/types';
+import type { Position, Rectangle } from '~/types';
 import type { Anchor } from '~/store/actions';
 import { type DashboardState } from '~/store/state';
 
 const MIN_WIDTH = 1;
 const MIN_HEIGHT = 1;
-const rectWithinMin = (rect: Rect): Rect => {
+const rectWithinMin = (rect: Rectangle): Rectangle => {
   const { width, height } = rect;
 
   return {
@@ -14,11 +14,11 @@ const rectWithinMin = (rect: Rect): Rect => {
   };
 };
 export const resizeSelectionBox: (params: {
-  selectionBox: Rect;
+  selectionBox: Rectangle;
   anchor: Anchor;
   vector: Position;
   grid: DashboardState['grid'];
-}) => Rect = ({
+}) => Rectangle = ({
   selectionBox,
   anchor,
   vector,

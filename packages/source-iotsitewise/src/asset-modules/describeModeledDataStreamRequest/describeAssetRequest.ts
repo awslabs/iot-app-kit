@@ -3,7 +3,6 @@ import {
   type DescribeAssetCommandOutput,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-
 import type { Asset, AssetId } from './types';
 
 type AssetCache = Record<AssetId, Asset>;
@@ -56,9 +55,7 @@ export class DescribeAssetRequest {
   }
 
   #createCommand(assetId: AssetId) {
-    const command = new DescribeAssetCommand({ assetId });
-
-    return command;
+    return new DescribeAssetCommand({ assetId });
   }
 
   #cacheAsset(assetId: AssetId, asset: Asset): void {

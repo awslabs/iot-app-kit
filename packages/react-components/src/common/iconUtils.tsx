@@ -1,8 +1,8 @@
 import type { StatusIconType } from '@iot-app-kit/core';
 
-type Icons = {
+interface Icons {
   [statusIcon: string]: (color?: string, size?: number) => JSX.Element;
-};
+}
 
 const DEFAULT_SIZE_PX = 16;
 
@@ -20,6 +20,7 @@ export const icons: Icons = {
       </svg>
     );
   },
+
   active(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg

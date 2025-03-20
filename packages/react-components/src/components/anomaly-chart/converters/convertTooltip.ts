@@ -3,17 +3,17 @@ import { type ConfigurationOptions } from '../hooks/types';
 import { type AnomalyChartTooltipData, tooltipAsString } from '../tooltip';
 
 import {
-  colorBorderControlDefault,
   colorBackgroundContainerContent,
+  colorBorderControlDefault,
 } from '@cloudscape-design/design-tokens';
 
 export const convertTooltip = ({
-  decimalPlaces,
+  significantDigits,
   tooltipSort,
-}: Pick<ConfigurationOptions, 'decimalPlaces' | 'tooltipSort'>) => ({
+}: Pick<ConfigurationOptions, 'significantDigits' | 'tooltipSort'>) => ({
   ...ANOMALY_TOOLTIP,
   formatter: (data: AnomalyChartTooltipData[]) =>
-    tooltipAsString({ data, decimalPlaces, tooltipSort }),
+    tooltipAsString({ data, decimalPlaces: significantDigits, tooltipSort }),
   borderColor: colorBorderControlDefault,
   backgroundColor: colorBackgroundContainerContent,
 });

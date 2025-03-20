@@ -1,7 +1,7 @@
-import { QueryCache, QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
+import { MINUTE_IN_MS } from '@iot-app-kit/core';
 
-// 10 minutes
-const STALE_TIME = 1000 * 60 * 10;
+const STALE_TIME = MINUTE_IN_MS * 10;
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -9,5 +9,4 @@ export const queryClient = new QueryClient({
       staleTime: STALE_TIME,
     },
   },
-  queryCache: new QueryCache({}),
 });

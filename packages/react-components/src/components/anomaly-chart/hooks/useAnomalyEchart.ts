@@ -50,7 +50,7 @@ const reducer = (
     const {
       description,
       loading,
-      decimalPlaces,
+      significantDigits,
       tooltipSort,
       axis,
       showTimestamp,
@@ -65,7 +65,7 @@ const reducer = (
       ...state,
       series,
       legend: convertLegend(),
-      tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
+      tooltip: convertTooltip({ significantDigits, tooltipSort }),
       yAxis: convertYAxis({ axis }),
       xAxis: convertXAxis({ axis, timeZone: state.timeZone }),
       grid: convertGrid({ axis, showTimestamp }),
@@ -78,7 +78,7 @@ const reducer = (
 
 const initialState = ({
   description,
-  decimalPlaces,
+  significantDigits,
   tooltipSort,
   data,
   axis,
@@ -89,7 +89,7 @@ const initialState = ({
     dataset: convertDataset(data),
     series: convertSeries({ description }),
     legend: convertLegend(),
-    tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
+    tooltip: convertTooltip({ significantDigits, tooltipSort }),
     yAxis: convertYAxis({ axis }),
     xAxis: convertXAxis({ axis, timeZone }),
     grid: convertGrid({ axis, showTimestamp }),

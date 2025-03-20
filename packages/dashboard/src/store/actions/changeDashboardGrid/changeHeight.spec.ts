@@ -1,8 +1,8 @@
+import { initialState } from '../../state';
 import {
   changeDashboardHeight,
   onChangeDashboardHeightAction,
 } from './changeHeight';
-import { initialState } from '../../state';
 
 it('can change the height of the dashboard', () => {
   expect(

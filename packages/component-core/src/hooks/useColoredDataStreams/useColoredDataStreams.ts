@@ -56,10 +56,10 @@ export const useColoredDataStreams = ({
   dataStreams: DataStream[];
   colorer?: ReturnType<typeof Colorizer>;
   styleSettings?: StyleSettingsMap;
-}) => {
+}): DataStream[] => {
   const { getColor } = useColorMap({ dataStreams, colorer: customColorer });
 
-  const streams = dataStreams.map((stream) => {
+  return dataStreams.map((stream) => {
     // Only provide default if one is not already present in the data stream, and none is specified in the associated style settings.
     if (hasColor(stream, styleSettings)) return stream;
 
@@ -70,6 +70,4 @@ export const useColoredDataStreams = ({
       color,
     };
   });
-
-  return streams;
 };

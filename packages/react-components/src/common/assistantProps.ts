@@ -1,4 +1,4 @@
-import { type IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { type IoTSiteWiseAssistantClient } from '@iot-app-kit/core-util';
 
 export interface AssistantActionEventDetail {
   type: AssistantActionType;
@@ -8,7 +8,7 @@ export interface AssistantActionEventDetail {
 }
 
 export interface AssistantProperty {
-  client: IoTSitewiseAssistantClient;
+  client: IoTSiteWiseAssistantClient;
   conversationId: string;
   componentId: string;
   target: AssistantActionTarget;
@@ -25,7 +25,7 @@ export type AssistantActionType =
 export type AssistantWidgetTypes = 'kpi' | 'gauge' | 'table' | 'chart';
 export type ComponentId = string;
 
-export type AlarmAssistantContext = {
+export interface AlarmAssistantContext {
   assetId?: string;
   alarmName?: string;
-};
+}

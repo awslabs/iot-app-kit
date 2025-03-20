@@ -5,8 +5,8 @@ import {
   type AlarmCompositeModelRequest,
   type AlarmData,
   type AlarmInputPropertyRequest,
-  type UseAlarmsOptions,
   useAlarms,
+  type UseAlarmsOptions,
 } from '../useAlarms';
 import { createNonNullableList } from '@iot-app-kit/core';
 
@@ -16,7 +16,7 @@ import { createNonNullableList } from '@iot-app-kit/core';
  * into useAlarms hook request objects and settings
  *
  * This hook is meant to be used within react-components
- * charts and widgets to make it easy to call useAlarms
+ * charts and widget-instance to make it easy to call useAlarms
  * without having to filter different query types
  * and map clients / settings into the correct
  * options object.
@@ -95,7 +95,7 @@ export const useAlarmsFromQueries = <T = AlarmData>({
     };
   }, [queries]);
 
-  const alarms = useAlarms<T>({
+  return useAlarms<T>({
     requests,
     transform,
     viewport,
@@ -110,6 +110,4 @@ export const useAlarmsFromQueries = <T = AlarmData>({
       resolution: requestSettings.resolution,
     },
   });
-
-  return alarms;
 };

@@ -45,8 +45,8 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   useGaugeConfiguration(
     chartRef,
     {
-      thresholds: thresholds,
-      gaugeValue: gaugeValue,
+      thresholds,
+      gaugeValue,
       name,
       settings,
       unit,

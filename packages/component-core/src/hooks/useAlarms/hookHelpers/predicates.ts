@@ -1,4 +1,3 @@
-import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import type {
   AlarmAssetModelRequest,
   AlarmAssetRequest,
@@ -22,7 +21,3 @@ export const isAssetRequest = (
 export const isAlarmProperty = (
   property?: AlarmProperty
 ): property is AlarmProperty => !!property?.property;
-
-export const isAssetPropertyValue = (
-  assetPropertyValue?: AssetPropertyValue
-): assetPropertyValue is AssetPropertyValue => Boolean(assetPropertyValue);

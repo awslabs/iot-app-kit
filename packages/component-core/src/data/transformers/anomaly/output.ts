@@ -12,14 +12,14 @@ export type AnomalyDataShape = {
 
 export type AnomalyData = Data<AnomalyDataShape>;
 
-export type DiagnosticDescription = {
+export interface DiagnosticDescription {
   id: string;
   name: string;
-};
+}
 
 export type DiagnosticDescriptions = DiagnosticDescription[];
 
-export type AnomalyDescription = AnomalyStyles & {
+export interface AnomalyDescription extends AnomalyStyles {
   diagnostics: DiagnosticDescriptions;
   dataExtent?: HistoricalViewport;
-};
+}

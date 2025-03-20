@@ -1,24 +1,24 @@
 import { useState } from 'react';
-import { determineTargetGestures } from './determineTargetGestures';
-import { useMoveGestures } from './useMove';
-import { useResizeGestures } from './useResize';
-import { useSelectionGestures } from './useSelection';
 import type { DashboardState } from '~/store/state';
-import type { DashboardWidget } from '~/types';
 import type { DragEvent, PointClickEvent } from '../../grid';
+import { determineTargetGestures } from './determineTargetGestures';
+import { useMoveWidgets } from './use-move-widgets';
+import { useResizeWidgets } from './use-resize-widgets';
+import { useSelectWidgets } from './use-select-widgets';
 import type { Gesture } from './types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-type GestureHooksProps = {
-  dashboardWidgets: DashboardWidget[];
-  selectedWidgets: DashboardWidget[];
+export interface UseGestureOptions {
+  dashboardWidgets: WidgetInstance[];
+  selectedWidgets: WidgetInstance[];
   cellSize: DashboardState['grid']['cellSize'];
-};
+}
 
 export const useGestures = ({
   dashboardWidgets,
   selectedWidgets,
   cellSize,
-}: GestureHooksProps) => {
+}: UseGestureOptions) => {
   const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(
     undefined
   );
@@ -29,17 +29,17 @@ export const useGestures = ({
     onSelectionStart,
     onSelectionUpdate,
     onSelectionEnd,
-  } = useSelectionGestures({
+  } = useSelectWidgets({
     setActiveGesture,
     dashboardWidgets,
     cellSize: cellSize,
   });
-  const { onMoveStart, onMoveUpdate, onMoveEnd } = useMoveGestures({
+  const { onMoveStart, onMoveUpdate, onMoveEnd } = useMoveWidgets({
     setActiveGesture,
     selectedWidgets,
     cellSize: cellSize,
   });
-  const { onResizeStart, onResizeUpdate, onResizeEnd } = useResizeGestures({
+  const { onResizeStart, onResizeUpdate, onResizeEnd } = useResizeWidgets({
     setActiveGesture,
     selectedWidgets,
     cellSize: cellSize,

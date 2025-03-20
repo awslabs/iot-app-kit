@@ -1,9 +1,7 @@
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
-
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
-
-import { VerticalDivider } from '~/components/divider/verticalDivider';
+import { VerticalDivider } from '~/features/widget-customization/atoms/vertical-divider';
 import { type SelectedAssetModel } from '../../useSelectedAssetModel';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
@@ -11,22 +9,19 @@ import {
   type SelectedAsset,
   type UpdateSelectedAsset,
 } from '../../useSelectedAsset';
-
 import { useModalVisibility } from '~/hooks/useModalVisibility';
 import { ResetAssetModelModal } from './resetAssetModel/resetAssetModelModal';
-
 import { default as assetModelSvg } from './assetModelIcon.svg';
-
 import './assetModelSelected.css';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 
-type AssetModelSelectedOptions = {
+export interface AssetModelSelectedProps {
   selectedAssetModel: SelectedAssetModel;
   selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
-  onResetSelectedAssetModel?: () => void;
+  onResetSelectedAssetModel?: VoidFunction;
   iotSiteWiseClient: IoTSiteWise;
-};
+}
 
 export const AssetModelSelected = ({
   selectedAsset,
@@ -34,7 +29,7 @@ export const AssetModelSelected = ({
   setSelectedAsset,
   onResetSelectedAssetModel,
   iotSiteWiseClient,
-}: AssetModelSelectedOptions) => {
+}: AssetModelSelectedProps) => {
   const { visible, onHide, onShow } = useModalVisibility();
 
   const { assetModel } = useAssetModel({
@@ -50,7 +45,10 @@ export const AssetModelSelected = ({
           gap: spaceScaledXxs,
         }}
       >
-        <img src={assetModelSvg} alt='Selected asset model icon' />
+        <img
+          src={assetModelSvg as unknown as string}
+          alt='Selected asset model icon'
+        />
         <VerticalDivider
           classNames={['reset-selected-asset-model-vertical-divider']}
         />

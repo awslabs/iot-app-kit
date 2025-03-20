@@ -1,4 +1,4 @@
-import { type AlarmDataState, type AlarmsState } from '../../types';
+import type { AlarmDataState, AlarmsState } from '../../types';
 import {
   type UpdateAlarmTypeDataAction,
   type UpdateAlarmTypeDataActionPayload,

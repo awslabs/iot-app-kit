@@ -7,14 +7,14 @@ import { AssetPropertyExplorer } from '@iot-app-kit/react-components';
 import { type SelectedAsset } from '../useSelectedAsset';
 import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
 import { propertySelectionLabel } from '~/components/queryEditor/helpers/propertySelectionLabel';
-import { type DashboardWidget } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export interface AssetExplorerProps {
+export interface AssetModelPropertiesExplorerProps {
   selectedAssetModelProperties: SelectedAssetModelProperties;
   iotSiteWiseClient: IoTSiteWise;
   selectedAsset: SelectedAsset;
   selectAssetModelProperties: UpdateSelectedAssetModelProperties;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: WidgetInstance[];
   timeZone?: string;
   significantDigits?: number;
   correctSelectionMode: 'single' | 'multi';
@@ -29,7 +29,7 @@ export const AssetModelPropertiesExplorer = ({
   timeZone,
   significantDigits,
   correctSelectionMode,
-}: AssetExplorerProps) => {
+}: AssetModelPropertiesExplorerProps) => {
   return (
     <AssetPropertyExplorer
       iotSiteWiseClient={iotSiteWiseClient}

@@ -1,19 +1,20 @@
 import { type GetAssetPropertyValueResponse } from '@aws-sdk/client-iotsitewise';
 import { type AlarmDataStatus } from '../../../types';
 
-export type AssetPropertyValueSummary = {
+export interface AssetPropertyValueSummary {
   request: {
     assetId?: string;
     propertyId?: string;
   };
   status: AlarmDataStatus;
   data: GetAssetPropertyValueResponse | undefined;
-};
+}
 
-export type UpdateAlarmTypeDataActionPayload = {
+export interface UpdateAlarmTypeDataActionPayload {
   assetPropertyValueSummaries?: AssetPropertyValueSummary[];
-};
+}
 
-export type UpdateAlarmTypeDataAction = UpdateAlarmTypeDataActionPayload & {
+export interface UpdateAlarmTypeDataAction
+  extends UpdateAlarmTypeDataActionPayload {
   type: 'UPDATE_ALARM_TYPE_DATA';
-};
+}

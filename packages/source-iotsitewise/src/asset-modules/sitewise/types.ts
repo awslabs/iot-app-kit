@@ -17,7 +17,7 @@ import type {
 import type { ErrorDetails } from '@iot-app-kit/core';
 import type { ModeledDataStream } from '../describeModeledDataStreamRequest';
 
-export type SiteWiseAssetDataSource = {
+export interface SiteWiseAssetDataSource {
   describeAsset: (
     input: DescribeAssetCommandInput
   ) => Promise<DescribeAssetCommandOutput>;
@@ -38,101 +38,93 @@ export type SiteWiseAssetDataSource = {
     assetId: string;
     assetModelId: string;
   }) => Promise<ModeledDataStream | undefined | never>;
-};
+}
 
-export type AssetSummaryQuery = {
+export interface AssetSummaryQuery {
   assetId: string;
-};
+}
 
-export type AssetModelQuery = {
+export interface AssetModelQuery {
   assetModelId: string;
-};
+}
 
-export type AssetPropertyValueQuery = {
+export interface AssetPropertyValueQuery {
   assetId: string;
   propertyId: string;
-};
+}
 
-export type AssetHierarchyQuery = {
+export interface AssetHierarchyQuery {
   assetId?: string;
   assetHierarchyId: string;
-};
+}
 
 export function assetHierarchyQueryKey(query: AssetHierarchyQuery): string {
   return (query.assetId ? query.assetId + ':' : '') + query.assetHierarchyId;
 }
 
-export enum LoadingStateEnum {
-  NOT_LOADED,
-  LOADING,
-  PAUSED,
-  LOADED,
-}
+export type LoadingState = 'NOT_LOADED' | 'LOADING' | 'PAUSED' | 'LOADED';
 
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 
-export type CachedAssetSummaryBlock = {
+export interface CachedAssetSummaryBlock {
   assetIds: string[];
-  loadingStage: LoadingStateEnum;
+  loadingStage: LoadingState;
   paginationToken: string | undefined;
-};
+}
 
-export type HierarchyAssetSummaryList = {
+export interface HierarchyAssetSummaryList {
   assetHierarchyId: string;
   assets: AssetSummary[];
-  loadingState: LoadingStateEnum;
-};
+  loadingState: LoadingState;
+}
 
 export interface SiteWiseAssetModuleInterface {
-  startSession(): SiteWiseAssetSessionInterface;
+  startSession: () => SiteWiseAssetSessionInterface;
 }
 
 export interface SiteWiseAssetSessionInterface {
-  fetchAssetSummary(query: AssetSummaryQuery): Promise<AssetSummary>;
-  requestAssetSummary(
+  fetchAssetSummary: (query: AssetSummaryQuery) => Promise<AssetSummary>;
+  requestAssetSummary: (
     query: AssetSummaryQuery,
     observer: {
       next: (assetSummary: AssetSummary) => void;
       error?: (err: ErrorDetails[]) => void;
     }
-  ): Subscription;
-
-  fetchAssetModel(query: AssetModelQuery): Promise<DescribeAssetModelResponse>;
-  requestAssetModel(
+  ) => Subscription;
+  fetchAssetModel: (
+    query: AssetModelQuery
+  ) => Promise<DescribeAssetModelResponse>;
+  requestAssetModel: (
     query: AssetModelQuery,
     observer: {
       next: (assetSummary: DescribeAssetModelResponse) => void;
       error?: (err: ErrorDetails[]) => void;
     }
-  ): Subscription;
-
-  fetchAssetPropertyValue(
+  ) => Subscription;
+  fetchAssetPropertyValue: (
     query: AssetPropertyValueQuery
-  ): Promise<AssetPropertyValue>;
-  requestAssetPropertyValue(
+  ) => Promise<AssetPropertyValue>;
+  requestAssetPropertyValue: (
     query: AssetPropertyValueQuery,
     observer: {
       next: (assetSummary: AssetPropertyValue) => void;
       error?: (err: ErrorDetails[]) => void;
     }
-  ): Subscription;
-
-  fetchAssetHierarchy(
+  ) => Subscription;
+  fetchAssetHierarchy: (
     query: AssetHierarchyQuery
-  ): Promise<HierarchyAssetSummaryList>;
-  requestAssetHierarchy(
+  ) => Promise<HierarchyAssetSummaryList>;
+  requestAssetHierarchy: (
     query: AssetHierarchyQuery,
     observer: {
       next: (assetSummary: HierarchyAssetSummaryList) => void;
       error?: (err: ErrorDetails[]) => void;
     }
-  ): Subscription;
-
-  fetchRootAssets(): Promise<HierarchyAssetSummaryList>;
-  requestRootAssets(observer: {
+  ) => Subscription;
+  fetchRootAssets: () => Promise<HierarchyAssetSummaryList>;
+  requestRootAssets: (observer: {
     next: (assetSummary: HierarchyAssetSummaryList) => void;
     error?: (err: ErrorDetails[]) => void;
-  }): Subscription;
-
-  close(): void;
+  }) => Subscription;
+  close: VoidFunction;
 }

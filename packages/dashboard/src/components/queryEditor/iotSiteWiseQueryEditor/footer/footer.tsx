@@ -10,19 +10,19 @@ import {
 } from '@cloudscape-design/design-tokens';
 import './index.css';
 
-export type ResourceExplorerFooterOptions = {
+export interface ResourceExplorerFooterProps {
   addDisabled?: boolean;
   resetDisabled?: boolean;
-  onReset?: () => void;
-  onAdd?: () => void;
-};
+  onReset?: VoidFunction;
+  onAdd?: VoidFunction;
+}
 
 export const ResourceExplorerFooter = ({
   addDisabled,
   resetDisabled,
   onAdd,
   onReset,
-}: ResourceExplorerFooterOptions) => {
+}: ResourceExplorerFooterProps) => {
   const [componentRef, { width }] = useMeasure<HTMLDivElement>();
   const stickyFooter = {
     backgroundColor: colorBackgroundContainerContent,

@@ -1,12 +1,12 @@
+import type { Action } from 'redux';
 import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
 import { trimRectPosition } from '~/util/trimRectPosition';
-import type { Action } from 'redux';
-import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-type UpdateWidgetsActionPayload = {
-  widgets: DashboardWidget[];
-};
+export interface UpdateWidgetsActionPayload {
+  widgets: readonly WidgetInstance[];
+}
 
 export interface UpdateWidgetsAction extends Action {
   type: 'UPDATE_WIDGET';

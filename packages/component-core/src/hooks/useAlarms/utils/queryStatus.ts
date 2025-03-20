@@ -40,17 +40,14 @@ export const getStatusForQuery = (
   >,
   oldStatus?: AlarmDataStatus
 ): AlarmDataStatus => {
-  let status: AlarmDataStatus = {
+  const status: AlarmDataStatus = {
     isLoading: query.isLoading,
     isRefetching: query.isRefetching,
     isSuccess: query.isSuccess,
     isError: query.isError,
   };
-  if (oldStatus) {
-    status = combineStatuses({ oldStatus, newStatus: status });
-  }
 
-  return status;
+  return oldStatus ? combineStatuses({ oldStatus, newStatus: status }) : status;
 };
 
 /**
@@ -71,16 +68,12 @@ export const combineStatusForQueries = (
   >[],
   oldStatus?: AlarmDataStatus
 ) => {
-  let status: AlarmDataStatus = {
+  const status: AlarmDataStatus = {
     isLoading: queries.some(({ isLoading }) => isLoading),
     isRefetching: queries.some(({ isRefetching }) => isRefetching),
     isSuccess: queries.every(({ isSuccess }) => isSuccess),
     isError: queries.some(({ isError }) => isError),
   };
 
-  if (oldStatus) {
-    status = combineStatuses({ oldStatus, newStatus: status });
-  }
-
-  return status;
+  return oldStatus ? combineStatuses({ oldStatus, newStatus: status }) : status;
 };

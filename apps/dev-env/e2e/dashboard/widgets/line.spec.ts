@@ -1,4 +1,4 @@
-import { expect, test, type Locator } from '@playwright/test';
+import { expect, type Locator, test } from '@playwright/test';
 import { ConfigPanel } from '../configPanel/ConfigPanel';
 import { NEW_PROPERTY_NAME } from '../constants';
 import { createNewDashboardWithWidget } from '../createDashboardWidget';

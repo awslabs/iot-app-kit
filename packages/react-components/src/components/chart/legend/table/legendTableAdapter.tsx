@@ -7,8 +7,8 @@ import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
 import { type MinMaxMap } from '../../store/dataStreamMinMaxStore';
 import type { TableProps } from '@cloudscape-design/components/table';
 import type {
-  AssistantProperty,
   AlarmAssistantContext,
+  AssistantProperty,
 } from '../../../../common/assistantProps';
 
 type LegendTableDataStream = Pick<

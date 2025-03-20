@@ -5,9 +5,6 @@ export {
   IoTEventsToSynchroChartsComparisonOperator,
   type PascalCaseStateName,
 } from './alarms/iotevents';
-export type { HierarchyGroup } from './asset-modules';
-export { BranchReference } from './asset-modules/sitewise-asset-tree/types';
-export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
 export { initialize } from './initialize';
 export type {
   AlarmDataQuery,
@@ -30,5 +27,21 @@ export type {
   SiteWiseAssetQuery,
   SiteWiseDataStreamQuery,
   SiteWisePropertyAliasQuery,
+  Resolution,
+  AutoResolution,
+  RawResolution,
+  AggregateResolution,
+  OneMinuteResolution,
+  FifteenMinuteResolution,
+  OneHourResolution,
+  OneDayResolution,
+} from './time-series-data/types';
+export {
+  AUTO_RESOLUTION,
+  RAW_RESOLUTION,
+  ONE_MINUTE_RESOLUTION,
+  FIFTEEN_MINUTE_RESOLUTION,
+  ONE_HOUR_RESOLUTION,
+  ONE_DAY_RESOLUTION,
 } from './time-series-data/types';
 export { fromId, toId } from './time-series-data/util/dataStreamId';

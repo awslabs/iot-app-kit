@@ -7,7 +7,6 @@ export const Colorizer = (palette: string[] = colorPalette) => {
   let colors = [...palette];
 
   /**
-   *
    * Reset the color rotation back to the original state
    */
   const reset = () => {
@@ -15,13 +14,11 @@ export const Colorizer = (palette: string[] = colorPalette) => {
   };
 
   /**
-   *
    * @returns if the color rotation is empty
    */
   const noColors = () => colors.length === 0;
 
   /**
-   *
    * @param color the color(s) you want to add to the front of the rotation to be used next
    */
   const add = (color: string | string[]) => {
@@ -30,7 +27,6 @@ export const Colorizer = (palette: string[] = colorPalette) => {
   };
 
   /**
-   *
    * @param color the color(s) you want to remove from the rotation so that they are not used in the rotation
    */
   const remove = (color: string | string[]) => {
@@ -40,7 +36,6 @@ export const Colorizer = (palette: string[] = colorPalette) => {
   };
 
   /**
-   *
    * @returns the next color in the rotation
    */
   const next = () => {
@@ -53,7 +48,6 @@ export const Colorizer = (palette: string[] = colorPalette) => {
   };
 
   /**
-   *
    * @param item an object with a color property
    * @returns the object with the color property set to the next color in the rotation
    */

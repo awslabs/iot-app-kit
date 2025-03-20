@@ -2,9 +2,9 @@ import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
 import { type RefreshRate } from '~/components/refreshRate/types';
 
-type UpdateRefreshRateActionPayload = {
+export interface UpdateRefreshRateActionPayload {
   refreshRate: RefreshRate;
-};
+}
 
 export interface UpdateRefreshRateAction extends Action {
   type: 'UPDATE_REFRESH_RATE';

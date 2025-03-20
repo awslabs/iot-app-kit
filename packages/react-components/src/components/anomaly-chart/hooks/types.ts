@@ -9,7 +9,7 @@ export type ConfigurationOptions = {
   mode?: ThemeMode;
   description?: AnomalyDescription;
   loading?: boolean;
-  decimalPlaces?: number;
+  significantDigits?: number;
   tooltipSort?: TooltipSort;
   axis?: {
     showY?: boolean;

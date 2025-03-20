@@ -7,7 +7,7 @@ interface PluginsRegistry {
 }
 
 /**
- * Internal object to hold all of the plugins.
+ * Internal object to hold all of the widget-plugins.
  *
  * @emarks Not exported to encapsulate the registry
  */
@@ -60,9 +60,7 @@ export function registerPlugin<
 export function getPlugin<Namespace extends keyof PluginsRegistry>(
   namespace: Namespace
 ): ReturnType<PluginsRegistry[Namespace]['provider']> {
-  const plugin = pluginsRegistry[namespace].provider() as ReturnType<
+  return pluginsRegistry[namespace].provider() as ReturnType<
     PluginsRegistry[Namespace]['provider']
   >;
-
-  return plugin;
 }

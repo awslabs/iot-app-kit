@@ -1,8 +1,11 @@
-import { type DashboardWidget } from '~/types';
 import { useIsAddButtonDisabled } from './useIsAddButtonDisabled';
-import * as hooks from '../useQuery';
+import * as hooks from '../iotSiteWiseQueryEditor/useQuery/useQuery';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { type RegisteredWidgetType } from '~/features/widget-plugins/registry';
 
-const createMockWidget = (widgetType: string): DashboardWidget => {
+const createMockWidget = <WidgetType extends RegisteredWidgetType>(
+  widgetType: WidgetType
+): WidgetInstance<WidgetType> => {
   return {
     type: widgetType,
     id: 'test-id',
@@ -12,7 +15,7 @@ const createMockWidget = (widgetType: string): DashboardWidget => {
     height: 20,
     width: 20,
     properties: {},
-  };
+  } as WidgetInstance<WidgetType>;
 };
 
 vi.mock('react-redux', async () => ({
@@ -26,7 +29,7 @@ vi.mock('../useQuery', () => ({
 }));
 
 describe('Add button disbale state on widget and resource selection', () => {
-  it('Disabled with no widgets', () => {
+  it('Disabled with no widget-instance', () => {
     expect(useIsAddButtonDisabled([])).toBe(true);
   });
 

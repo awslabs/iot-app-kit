@@ -1,4 +1,4 @@
-import type { MetricsRecorder } from '../metricRecorder/metricsRecorder.interface';
+import type { MetricsRecorder } from '../metricRecorder/metricsRecorder';
 
 export type MetricsRecorderSettings = {
   provider: () => MetricsRecorder | undefined;

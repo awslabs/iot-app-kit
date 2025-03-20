@@ -1,10 +1,10 @@
 import type { Action } from 'redux';
-import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-type DeleteWidgetsActionPayload = {
-  widgets: DashboardWidget[];
-};
+export interface DeleteWidgetsActionPayload {
+  widgetIds: readonly WidgetInstance['id'][];
+}
 
 export interface DeleteWidgetsAction extends Action {
   type: 'DELETE_WIDGETS';
@@ -20,20 +20,18 @@ export const onDeleteWidgetsAction = (
 
 export const deleteWidgets = (
   state: DashboardState,
-  action: DeleteWidgetsAction
+  { payload: { widgetIds } }: DeleteWidgetsAction
 ): DashboardState => {
-  const widgetIdsToDelete = action.payload.widgets.map(({ id }) => id);
-
   return {
     ...state,
     dashboardConfiguration: {
       ...state.dashboardConfiguration,
       widgets: state.dashboardConfiguration.widgets.filter(
-        ({ id }) => !widgetIdsToDelete.includes(id)
+        ({ id }) => !widgetIds.includes(id)
       ),
     },
     selectedWidgets: state.selectedWidgets.filter(
-      ({ id }) => !widgetIdsToDelete.includes(id)
+      ({ id }) => !widgetIds.includes(id)
     ),
   };
 };

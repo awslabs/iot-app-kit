@@ -1,21 +1,12 @@
-import type { Viewport } from '@iot-app-kit/core';
+import type { ComparisonOperator, Viewport } from '@iot-app-kit/core';
 
-export enum COMPARISON_OPERATOR {
-  LESS_THAN = 'LT',
-  GREATER_THAN = 'GT',
-  LESS_THAN_EQUAL = 'LTE',
-  GREATER_THAN_EQUAL = 'GTE',
-  EQUAL = 'EQ',
-  CONTAINS = 'CONTAINS',
-}
-
-export const COMPARATOR_MAP = {
+export const COMPARISON_OPERATOR_TEXT_LABEL_MAP = {
   GTE: '>=',
   GT: '>',
   LTE: '<=',
   LT: '<',
   EQ: '=',
   CONTAINS: 'Contains',
-};
+} satisfies Record<ComparisonOperator, string>;
 
-export const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
+export const DEFAULT_VIEWPORT = { duration: '10m' } satisfies Viewport;

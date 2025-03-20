@@ -1,5 +1,5 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { type Viewport } from '@iot-app-kit/core';
+import { createNonNullableList, type Viewport } from '@iot-app-kit/core';
 import { type AlarmData } from '../types';
 import { extractAssetPropertyId } from '../utils/parseAlarmModels';
 import { useQueryMode } from './useQueryMode';
@@ -8,7 +8,6 @@ import {
   useLatestAssetPropertyValues,
 } from '../../../queries';
 import { combineStatusForQueries } from '../utils/queryStatus';
-import { createNonNullableList } from '@iot-app-kit/core';
 import {
   type OnUpdateAlarmThresholdDataAction,
   useRequestSelector,
@@ -75,9 +74,7 @@ export const useAlarmThreshold = ({
   const historicalQueriesInViewportEnabled =
     enabled && (queryMode === 'LIVE' || queryMode === 'HISTORICAL');
 
-  /**
-   * Fetch only the latest value if there is no viewport present
-   */
+  // Fetch only the latest value if there is no viewport present
   const latestValueQueries = useLatestAssetPropertyValues({
     enabled: latestValueQueriesEnabled,
     iotSiteWiseClient,
@@ -85,10 +82,7 @@ export const useAlarmThreshold = ({
     refreshRate,
   });
 
-  /**
-   * Fetch only the most recent asset property value before the viewport end.
-   * Useful if there is no threshold data within the viewport.
-   */
+  // Fetch only the most recent asset property value before the viewport end.
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
     enabled: mostRecentBeforeEndValueQueriesEnabled,
     iotSiteWiseClient,
@@ -99,9 +93,7 @@ export const useAlarmThreshold = ({
     refreshRate,
   });
 
-  /**
-   * Fetch all asset property values within the viewport
-   */
+  // Fetch all asset property values within the viewport
   const historicalQueriesInViewport = useHistoricalAssetPropertyValues({
     enabled: historicalQueriesInViewportEnabled,
     iotSiteWiseClient,
@@ -121,15 +113,13 @@ export const useAlarmThreshold = ({
           mostRecentBeforeEndValueQueries[index];
         const historicalQueryInViewport = historicalQueriesInViewport[index];
 
-        /**
-         * derive status and data from only those queries
-         * who are enabled. It is possible that disabled
-         * queries return data if they were enabled in other
-         * useAlarms hooks for the same request.
-         * This could lead to a scenario where we return
-         * different data than requested and with a status that
-         * is not accurate.
-         */
+        // derive status and data from only those queries
+        // who are enabled. It is possible that disabled
+        // queries return data if they were enabled in other
+        // useAlarms hooks for the same request.
+        // This could lead to a scenario where we return
+        // different data than requested and with a status that
+        // is not accurate.
         const queries = [
           latestValueQueriesEnabled ? latestValueQuery : undefined,
           mostRecentBeforeEndValueQueriesEnabled

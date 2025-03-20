@@ -1,19 +1,15 @@
-import { type AggregateType } from '@aws-sdk/client-iotsitewise';
-import type { DataStream, DataStreamId } from '../types';
-
-export type DateInterval = { start: Date; end: Date };
-
 export type DurationViewport = { duration: string | number; group?: string };
 export type HistoricalViewport = { start: Date; end: Date; group?: string };
 
 export type Viewport = DurationViewport | HistoricalViewport;
 
-export type DataRequest = {
+export interface DataRequest {
   viewport?: Viewport;
   settings?: TimeSeriesDataRequestSettings;
-};
+}
+
 /**
- * Request Information utilized by consumers of the widgets to connect the `data-provider` to their data source.
+ * Request Information utilized by consumers of the widget-instance to connect the `data-provider` to their data source.
  */
 export interface TimeSeriesDataRequest extends DataRequest {
   viewport: Viewport;
@@ -36,24 +32,6 @@ export interface TimeSeriesDataRequestSettings {
   fetchMostRecentBeforeEnd?: boolean;
 }
 
-export type OnRequestData = (opts: {
-  request: TimeSeriesDataRequest;
-  resolution: number; // milliseconds, 0 for raw data
-  onError: (
-    dataStreamId: DataStreamId,
-    resolution: number,
-    error: string,
-    aggregationType?: AggregateType
-  ) => void;
-  onSuccess: (
-    dataStreamId: DataStreamId,
-    dataStream: DataStream,
-    first: Date,
-    last: Date
-  ) => void;
-  dataStreamId: string;
-}) => void;
-
-export type ResolutionMapping = {
+export interface ResolutionMapping {
   [viewportDuration: number]: number | string;
-};
+}

@@ -1,15 +1,15 @@
-import { type TimeSeriesDataQuery } from '@iot-app-kit/core';
-import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import type { TimeSeriesDataQuery } from '@iot-app-kit/core';
+import type { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 
-export type AxisSettings = {
+export interface AxisSettings {
   showX?: boolean;
   showY?: boolean;
   yAxisLabel?: string;
-};
+}
 
-export type ChartSize = {
+export interface ChartSize {
   width: number;
   height: number;
-};
+}
 
 export type ComponentQuery = AlarmDataQuery | TimeSeriesDataQuery;

@@ -1,41 +1,35 @@
-import { useState } from 'react';
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import { useCallback, useMemo, useState } from 'react';
+import type { RegisteredWidgetType } from '~/features/widget-plugins/registry';
 import {
   gestureable,
   idable,
 } from '../internalDashboard/gestures/determineTargetGestures';
-import DynamicWidgetComponent from './dynamicWidget';
-import WidgetActions from './widgetActions';
-
-import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardMessages } from '~/messages';
-import type { DashboardWidget } from '~/types';
+import { DynamicWidgetComponent } from './dynamicWidget';
+import { WidgetActions } from './widgetActions';
 import './widget.css';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export type WidgetProps = {
+export interface WidgetProps<WidgetType extends RegisteredWidgetType> {
   readOnly: boolean;
   query?: SiteWiseQuery;
   isSelected: boolean;
   numSelected: number;
   cellSize: number;
-  widget: DashboardWidget;
-  messageOverrides: DashboardMessages;
-};
+  widget: WidgetInstance<WidgetType>;
+}
 
 /**
- *
  * Component used to position a widget on the dashboard and
  * mark it with the handles required to capture gestures
- *
  */
-const WidgetComponent: React.FC<WidgetProps> = ({
+export const WidgetComponent = <WidgetType extends RegisteredWidgetType>({
   cellSize,
   widget,
-  messageOverrides,
   isSelected,
   numSelected,
   readOnly,
-}) => {
-  const { x, y, z, width, height } = widget;
+}: WidgetProps<WidgetType>) => {
   const [showActionButtons, setShowActionButtons] = useState(false);
 
   const widgetActions = () => {
@@ -48,28 +42,31 @@ const WidgetComponent: React.FC<WidgetProps> = ({
     }
   };
 
+  const style = useMemo(
+    () => ({
+      ...(!widget.z ? {} : { zIndex: widget.z.toString() }),
+      top: `${cellSize * widget.y}px`,
+      left: `${cellSize * widget.x}px`,
+      width: `${cellSize * widget.width}px`,
+      height: `${cellSize * widget.height}px`,
+    }),
+    [widget.z, widget.y, widget.x, widget.width, widget.height, cellSize]
+  );
+
+  const showActions = useCallback(() => setShowActionButtons(true), []);
+  const hideActions = useCallback(() => setShowActionButtons(false), []);
+
   return (
     <div
       {...gestureable('widget')}
       {...idable(widget.id)}
       className={`widget ${readOnly ? 'widget-readonly' : 'widget-editable'}`}
-      style={{
-        ...(!z ? {} : { zIndex: z.toString() }),
-        top: `${cellSize * y}px`,
-        left: `${cellSize * x}px`,
-        width: `${cellSize * width}px`,
-        height: `${cellSize * height}px`,
-      }}
-      onMouseEnter={() => setShowActionButtons(true)}
-      onMouseLeave={() => setShowActionButtons(false)}
+      style={style}
+      onMouseEnter={showActions}
+      onMouseLeave={hideActions}
     >
       {widgetActions()}
-      <DynamicWidgetComponent
-        widget={widget}
-        widgetsMessages={messageOverrides.widgets}
-      />
+      <DynamicWidgetComponent widget={widget} />
     </div>
   );
 };
-
-export default WidgetComponent;

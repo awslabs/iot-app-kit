@@ -1,7 +1,7 @@
-import { AssetState } from "@aws-sdk/client-iotsitewise";
-import type { DescribeAssetModelResponse } from "@aws-sdk/client-iotsitewise";
+import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import { AssetState } from '@aws-sdk/client-iotsitewise';
 
-export const ASSET_MODEL: DescribeAssetModelResponse = {
+export const ASSET_MODEL = {
   assetModelStatus: undefined,
   assetModelId: 'asset-model-id',
   assetModelArn: 'asset-model-arn',
@@ -10,15 +10,15 @@ export const ASSET_MODEL: DescribeAssetModelResponse = {
   assetModelProperties: [],
   assetModelHierarchies: [],
   assetModelCreationDate: new Date(),
-  assetModelLastUpdateDate: new Date()
-}
-export const ASSET_MODEL_ID = "assetModelABC123";
+  assetModelLastUpdateDate: new Date(),
+} satisfies DescribeAssetModelResponse;
+export const ASSET_MODEL_ID = 'assetModelABC123';
 
-export const sampleAssetModel: DescribeAssetModelResponse = {
+export const sampleAssetModel = {
   assetModelId: ASSET_MODEL_ID,
-  assetModelName: "Asset Model Name",
-  assetModelDescription: "a happy little asset model",
-  assetModelArn: "arn:assetModelArn",
+  assetModelName: 'Asset Model Name',
+  assetModelDescription: 'a happy little asset model',
+  assetModelArn: 'arn:assetModelArn',
   assetModelCreationDate: new Date(2000, 0, 0),
   assetModelLastUpdateDate: new Date(2021, 0, 0),
   assetModelProperties: [],
@@ -28,8 +28,8 @@ export const sampleAssetModel: DescribeAssetModelResponse = {
     error: {
       code: undefined,
       details: undefined,
-      message: undefined
+      message: undefined,
     },
-    state: AssetState.ACTIVE
-  }
-};
+    state: AssetState.ACTIVE,
+  },
+} satisfies DescribeAssetModelResponse;

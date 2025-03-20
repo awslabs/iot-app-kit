@@ -8,11 +8,11 @@ import {
 } from '../state';
 import { getStatusForQuery } from '../utils/queryStatus';
 
-export type UseAlarmSourcesOptions = {
+export interface UseAlarmSourcesOptions {
   iotSiteWiseClient?: IoTSiteWiseClient;
   requests?: Pick<AlarmData, 'assetId' | 'source'>[];
   onUpdateAlarmSourceData: OnUpdateAlarmSourceDataAction;
-};
+}
 
 export const useAlarmSources = ({
   iotSiteWiseClient,

@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
-
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import FormField from '@cloudscape-design/components/form-field';
-
+import { type AssetResource } from '@iot-app-kit/react-components';
+import { useEffect } from 'react';
 import { AssetForAssetModelSelect } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/assetForAssetModelSelect';
 import {
   createInitialAssetModelResource,
@@ -12,17 +11,17 @@ import {
   createInitialAssetResource,
   useSelectedAsset,
 } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/useSelectedAsset';
-import { type AssetResource } from '@iot-app-kit/react-components';
 import { useAssetsForAssetModel } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 
-type AssetModelSelectOptions = {
+export interface AssetModelSelectOptions {
   iotSiteWiseClient: IoTSiteWise;
   assetModelId: string;
   selectedAssetId?: string;
   hideTitle?: boolean;
   controlId?: string;
   updateSelectedAsset: (asset: AssetResource | undefined) => void;
-};
+}
+
 export const AssetModelSelect = ({
   iotSiteWiseClient,
   hideTitle = false,

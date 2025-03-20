@@ -50,10 +50,7 @@ export const updateAlarmInputPropertyData = (
             datastreamsAsQueryResults
           );
 
-          /**
-           * Don't update the reference unless it is
-           * structurally different.
-           */
+          // Don't update the reference unless it is structurally different.
           const getInputPropertyValueQueryStatus = isEqual(
             alarmData.getInputPropertyValueQueryStatus,
             datastreamsAsStatus

@@ -7,23 +7,21 @@ import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Provider } from 'react-redux';
-import { useDashboardPlugins } from '~/customization/api';
 import { configureDashboardStore, toDashboardState } from '~/store';
-import type {
-  AssistantConfiguration,
-  DashboardClientConfiguration,
-  DashboardConfiguration,
-  DashboardToolbar,
-  ViewportChange,
-} from '~/types';
+import type { AssistantConfiguration, DashboardToolbar } from '~/types';
+import type { DashboardClientConfiguration } from '~/features/queries/sdk-clients';
+import type { DashboardConfiguration } from '~/features/dashboard-configuration/dashboard-configuration';
+import type { ViewportChange } from '~/types/dashboard-props';
 import '../../styles/variables.css';
-import InternalDashboard from '../internalDashboard';
+import { InternalDashboard } from '../internalDashboard';
 import { ClientContext } from './clientContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
-import { QueryContext } from './queryContext';
+import { QueryContext } from '~/features/queries/query-context';
 
-export type DashboardViewProperties = {
+import '~/plugins';
+
+export interface DashboardViewProps {
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
   assistantConfiguration?: AssistantConfiguration;
@@ -33,9 +31,11 @@ export type DashboardViewProperties = {
   currentViewport?: Viewport;
   toolbar?: DashboardToolbar;
   timeZone?: string;
-};
+}
 
-const DashboardView: React.FC<DashboardViewProperties> = ({
+export type DashboardViewProperties = DashboardViewProps; // backwards compatible alias
+
+export const DashboardView = ({
   clientConfiguration,
   dashboardConfiguration,
   edgeMode = 'disabled',
@@ -45,10 +45,7 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
   toolbar,
   timeZone,
   assistantConfiguration,
-}) => {
-  // Adding Dnd provider because custom widgets may have a drag and drop context
-  useDashboardPlugins();
-
+}: DashboardViewProps) => {
   const debounceOnViewportChange = onViewportChange
     ? debounce(onViewportChange, 100)
     : undefined;
@@ -102,5 +99,3 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
     </TimeSync>
   );
 };
-
-export default DashboardView;

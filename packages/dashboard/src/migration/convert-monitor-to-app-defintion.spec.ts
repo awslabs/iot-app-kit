@@ -1,20 +1,16 @@
-import {
-  DashboardWidgetType,
-  MonitorWidgetType,
-  type SiteWiseMonitorDashboardDefinition,
-} from './types';
+import { type ForeignDashboardDefinition } from './types';
 import { migrateDashboard } from './convert-monitor-to-app-defintion';
 import {
-  createMonitorChartWidget,
-  metrics,
   createApplicationChartDefinition,
+  createMonitorChartWidget,
   expectedProperties,
+  metrics,
 } from './constants';
 
 describe('Dashboard definition conversion', () => {
   it('converts a single SiteWise Monitor line chart into an application line chart', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [createMonitorChartWidget(MonitorWidgetType.LineChart, metrics)],
+    const lineChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-line-chart', metrics)],
     };
 
     const expectedDefinition = {
@@ -53,8 +49,8 @@ describe('Dashboard definition conversion', () => {
       },
     ];
 
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [createMonitorChartWidget(MonitorWidgetType.LineChart, metrics)],
+    const lineChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-line-chart', metrics)],
     };
 
     const expectedProperties = {
@@ -107,7 +103,7 @@ describe('Dashboard definition conversion', () => {
     const expectedDefinition = {
       widgets: [
         createApplicationChartDefinition(
-          DashboardWidgetType.XYPlot,
+          'monitor-line-chart',
           expectedProperties
         ),
       ],
@@ -126,8 +122,8 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor bar chart into an application bar chart', async () => {
-    const barChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [createMonitorChartWidget(MonitorWidgetType.BarChart, metrics)],
+    const barChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-bar-chart', metrics)],
     };
 
     const expectedProperties = {
@@ -175,10 +171,8 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor scatter chart into an application scatter chart', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [
-        createMonitorChartWidget(MonitorWidgetType.ScatterChart, metrics),
-      ],
+    const lineChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-scatter-chart', metrics)],
     };
 
     const expectedProperties = {
@@ -233,10 +227,8 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor timeline chart into an application timeline chart', async () => {
-    const timelineChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [
-        createMonitorChartWidget(MonitorWidgetType.StatusTimeline, metrics),
-      ],
+    const timelineChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-status-timeline', metrics)],
     };
 
     const expectedProperties = {
@@ -278,8 +270,8 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor table chart into an application table chart', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [createMonitorChartWidget(MonitorWidgetType.Table, metrics)],
+    const lineChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-table', metrics)],
     };
 
     const expectedProperties = {
@@ -319,8 +311,8 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor KPI widget into an application KPI', async () => {
-    const kpiDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [createMonitorChartWidget(MonitorWidgetType.Kpi, metrics)],
+    const kpiDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-kpi', metrics)],
     };
 
     const expectedProperties = {
@@ -396,8 +388,8 @@ describe('Dashboard definition conversion', () => {
       },
     ];
 
-    const kpiDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [createMonitorChartWidget(MonitorWidgetType.Kpi, metrics)],
+    const kpiDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-kpi', metrics)],
     };
 
     const expectedProperties = {
@@ -481,10 +473,8 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor status grid widget into an application status widget', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
-      widgets: [
-        createMonitorChartWidget(MonitorWidgetType.StatusGrid, metrics),
-      ],
+    const lineChartDefinition: ForeignDashboardDefinition = {
+      widgets: [createMonitorChartWidget('monitor-status-grid', metrics)],
     };
 
     const expectedProperties = {
@@ -538,13 +528,9 @@ describe('Dashboard definition conversion', () => {
       ],
     };
 
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+    const lineChartDefinition: ForeignDashboardDefinition = {
       widgets: [
-        createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
-          metrics,
-          annotations
-        ),
+        createMonitorChartWidget('monitor-line-chart', metrics, annotations),
       ],
     };
 
@@ -611,10 +597,10 @@ describe('Dashboard definition conversion', () => {
 
 describe('Widgets dont overlap after migration', () => {
   it('Widgets that are pushed down are migrated correctly ', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+    const lineChartDefinition: ForeignDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -622,7 +608,7 @@ describe('Widgets dont overlap after migration', () => {
           0
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -667,10 +653,10 @@ describe('Widgets dont overlap after migration', () => {
   });
 
   it('Widgets that are pushed up are migrated correctly ', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+    const lineChartDefinition: ForeignDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -678,7 +664,7 @@ describe('Widgets dont overlap after migration', () => {
           5
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -686,7 +672,7 @@ describe('Widgets dont overlap after migration', () => {
           3
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -740,10 +726,10 @@ describe('Widgets dont overlap after migration', () => {
   });
 
   it('Nested overlaps are fixed ', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+    const lineChartDefinition: ForeignDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -751,7 +737,7 @@ describe('Widgets dont overlap after migration', () => {
           0
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -759,7 +745,7 @@ describe('Widgets dont overlap after migration', () => {
           2
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -813,10 +799,10 @@ describe('Widgets dont overlap after migration', () => {
   });
 
   it('Widgets placed at same point in SWM are migrated correctly ', async () => {
-    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+    const lineChartDefinition: ForeignDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -824,7 +810,7 @@ describe('Widgets dont overlap after migration', () => {
           0
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,
@@ -832,7 +818,7 @@ describe('Widgets dont overlap after migration', () => {
           2
         ),
         createMonitorChartWidget(
-          MonitorWidgetType.LineChart,
+          'monitor-line-chart',
           metrics,
           undefined,
           undefined,

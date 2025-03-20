@@ -1,12 +1,10 @@
 import { type DateRangePickerProps } from '@cloudscape-design/components';
 
 /**
- *
  * Range validation function for the cloudscape date range picker
  * uses configurable errorMessages for
  * dateRangeIncomplete: missing start and or end date
  * dateRangeInvalid: start date comes after end date
- *
  */
 export const rangeValidator =
   ({

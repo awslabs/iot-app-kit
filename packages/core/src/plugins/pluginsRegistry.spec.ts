@@ -1,11 +1,13 @@
 import type { Logger } from '../logger/logger.interface';
-import type { MetricsRecorder } from '../metricRecorder/metricsRecorder.interface';
-import { registerPlugin, getPlugin } from './pluginsRegistry';
+import type { MetricsRecorder } from '../metricRecorder/metricsRecorder';
+import { getPlugin, registerPlugin } from './pluginsRegistry';
 
 describe('Logger registry', () => {
   class MockLogClient implements Logger {
     log() {}
+
     error() {}
+
     warn() {}
   }
 

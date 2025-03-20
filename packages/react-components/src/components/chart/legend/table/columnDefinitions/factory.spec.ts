@@ -7,7 +7,7 @@ describe('legend table column definitions', () => {
       trendCursors: [],
       width: 100,
       visibleContent: {},
-      significantDigits: 0,
+      decimalPlaces: 0,
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([expect.toBeObject()])
@@ -31,7 +31,7 @@ describe('legend table column definitions', () => {
       trendCursors,
       width: 100,
       visibleContent: {},
-      significantDigits: 0,
+      decimalPlaces: 0,
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([
@@ -54,7 +54,7 @@ describe('legend table column definitions', () => {
         asset: true,
         latestValue: true,
       },
-      significantDigits: 0,
+      decimalPlaces: 0,
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([
@@ -77,7 +77,7 @@ describe('legend table column definitions', () => {
         latestValue: false,
         asset: false,
       },
-      significantDigits: 0,
+      decimalPlaces: 0,
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([

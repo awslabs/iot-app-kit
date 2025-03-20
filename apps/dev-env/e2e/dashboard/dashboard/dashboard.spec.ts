@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { dragAndDrop } from '../utils/dragAndDrop';
 import { GRID_SIZE, gridUtil } from '../utils/grid';
 import { getBoundingBox } from '../utils/locator';

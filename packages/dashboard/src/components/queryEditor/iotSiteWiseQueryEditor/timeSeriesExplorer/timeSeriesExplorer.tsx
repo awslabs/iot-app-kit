@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import Box from '@cloudscape-design/components/box';
 import { ResourceExplorerFooter } from '../footer/footer';
-import { QueryExtender } from '../queryExtender';
-import { type useQuery } from '../../useQuery';
+import { type useQuery } from '../useQuery/useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
 import {
+  type SelectionMode,
   TimeSeriesExplorer,
   type TimeSeriesExplorerProps,
   type TimeSeriesResource,
-  type SelectionMode,
 } from '@iot-app-kit/react-components';
 import { getPlugin } from '@iot-app-kit/core';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
+import { QueryExtender } from '~/components/queryEditor/iotSiteWiseQueryEditor/queryExtender/queryExtender';
 
-type UnmodeledExplorerProps = {
+export interface UnmodeledExplorerProps {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
   iotSiteWiseClient: IoTSiteWise;
   correctSelectionMode: SelectionMode;
   addButtonDisabled: boolean;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgets: readonly WidgetInstance[];
   timeZone?: string;
   significantDigits?: number;
-};
+}
 
 export const UnmodeledExplorer = ({
   onUpdateQuery,

@@ -38,16 +38,10 @@ export interface ProviderWithViewport<Result> extends Provider<Result> {
 }
 
 export interface Query<Result, Params = void> {
-  /**
-   * Builds the query into a provider
-   * @param sessionId
-   * @param params
-   */
+  /** Builds the query into a provider */
   build(sessionId: string, params?: Params): Provider<Result>;
 
-  /**
-   * Returns a string which is unique to the query
-   */
+  /** Returns a string which is unique to the query */
   toQueryString(): string;
 }
 
@@ -56,33 +50,15 @@ export interface TimeQuery<Result, Params = void>
   build(sessionId: string, params?: Params): ProviderWithViewport<Result>;
 }
 
-export interface TreeProvider<Result, Branch> extends Provider<Result> {
-  expand(branch: Branch): void;
-
-  collapse(branch: Branch): void;
-}
-
-export interface TreeQuery<Result, Branch, Params = void>
-  extends Query<Result, Params> {
-  build(sessionId: string, params?: Params): TreeProvider<Result, Branch>;
-}
-
 export type TimeSeriesDataQuery = TimeQuery<
   TimeSeriesData[],
   TimeSeriesDataRequest
 >;
 
-export type DataModuleSession = {
-  close: () => void;
-};
-export type Session = {
-  close: () => void;
-};
-
-type AnnotationLabel = {
+interface AnnotationLabel {
   text: string;
   show: boolean;
-};
+}
 
 export type AnnotationValue = number | string | boolean | Date;
 export type ThresholdValue = number | string | boolean;
@@ -101,9 +77,9 @@ export interface Annotation<T extends AnnotationValue> {
   // false or undefined = annotation is not draggable
   isEditable?: boolean;
 
-  // optional id that can be set to identify annotations
+  // set to identify annotations
   // for example, this id can be used by an application to identify and update annotations when a widgetConfigurationUpdate is emitted from SynchroCharts
-  id?: string;
+  id: string;
 }
 
 export interface Threshold<T extends ThresholdValue = ThresholdValue>
@@ -113,18 +89,22 @@ export interface Threshold<T extends ThresholdValue = ThresholdValue>
   dataStreamIds?: DataStreamId[];
 }
 
-export type ThresholdStyleType = {
+export interface ThresholdStyleType {
   visible?: boolean;
   fill?: string;
-};
+}
 
 export type StyledThreshold = Threshold & ThresholdStyleType;
 
-export type ThresholdSettings = {
+export interface ThresholdSettings {
   // Specify whether data that is breached by the thresholds will be colored based on the threshold configuration
   colorBreachedData?: boolean;
-};
+}
 
-export type XAnnotation = Annotation<Date>;
+export interface DataModuleSession {
+  close: VoidFunction;
+}
 
-export type YAnnotation = Annotation<number | string | boolean> | Threshold;
+export interface Session {
+  close: VoidFunction;
+}

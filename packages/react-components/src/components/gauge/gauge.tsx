@@ -2,11 +2,11 @@
 import { useEffect, useMemo } from 'react';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 import {
-  useViewport,
-  useTimeSeriesData,
-  useSingleQueryAlarm,
-  getTimeSeriesQueries,
   DEFAULT_VIEWPORT,
+  getTimeSeriesQueries,
+  useSingleQueryAlarm,
+  useTimeSeriesData,
+  useViewport,
 } from '@iot-app-kit/component-core';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { CHART_ALARM_ERROR, ECHARTS_GESTURE } from '../../common/constants';

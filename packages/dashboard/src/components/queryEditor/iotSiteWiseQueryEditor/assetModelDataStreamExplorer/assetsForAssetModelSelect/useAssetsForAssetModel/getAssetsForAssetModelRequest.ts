@@ -1,6 +1,6 @@
 import {
-  ListAssetsCommand,
   type IoTSiteWiseClient,
+  ListAssetsCommand,
 } from '@aws-sdk/client-iotsitewise';
 
 export class GetAssetsForAssetModelRequest {
@@ -26,11 +26,9 @@ export class GetAssetsForAssetModelRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, {
+      return this.#client.send(this.#command, {
         abortSignal: this.#signal,
       });
-
-      return response;
     } catch (error) {
       this.#handleError(error);
     }
@@ -43,13 +41,11 @@ export class GetAssetsForAssetModelRequest {
     assetModelId: string;
     nextToken?: string;
   }) {
-    const command = new ListAssetsCommand({
+    return new ListAssetsCommand({
       assetModelId,
       nextToken,
       maxResults: 250,
     });
-
-    return command;
   }
 
   #handleError(error: unknown): never {

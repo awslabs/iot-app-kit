@@ -1,7 +1,7 @@
-import { type DashboardWidget } from '~/types';
-import { useQuery } from '../useQuery';
+import { useQuery } from '../iotSiteWiseQueryEditor/useQuery/useQuery';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
-export const useIsAddButtonDisabled = (selectedWidgets: DashboardWidget[]) => {
+export const useIsAddButtonDisabled = (selectedWidgets: WidgetInstance[]) => {
   const selectedWidget = selectedWidgets.at(0);
   const [query, _useQuery] = useQuery();
 

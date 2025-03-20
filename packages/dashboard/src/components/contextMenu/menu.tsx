@@ -14,13 +14,13 @@ import { useClickOutside } from '~/hooks/useClickOutside';
 import type { Position } from '~/types';
 import './menu.css';
 
-export type MenuProps = {
+export interface MenuProps {
   position: Position & { z?: number };
   clickOutside?: (event: PointerEvent) => void;
   children: ReactNode;
-};
+}
 
-const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
+export const Menu = ({ position, clickOutside, children }: MenuProps) => {
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
     null
   );
@@ -72,12 +72,10 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
         }}
         {...attributes.popper}
         onPointerDown={(e) => e.stopPropagation()} // prevent the grid from handling click events
-        onPointerUp={(e) => e.stopPropagation()} // prevent the grid from handling click events}
+        onPointerUp={(e) => e.stopPropagation()} // prevent the grid from handling click events
       >
         {children}
       </div>
     </>
   );
 };
-
-export default Menu;

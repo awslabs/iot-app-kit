@@ -5,11 +5,11 @@ import { useReactQueryEffect } from './useReactQueryEffect';
 import { type OnUpdateAlarmTypeDataAction, useRequestSelector } from '../state';
 import { getStatusForQuery } from '../utils/queryStatus';
 
-export type UseAlarmSourcesOptions = {
+export interface UseAlarmSourcesOptions {
   iotSiteWiseClient?: IoTSiteWiseClient;
   requests?: Pick<AlarmData, 'assetId' | 'type'>[];
   onUpdateAlarmTypeData: OnUpdateAlarmTypeDataAction;
-};
+}
 
 export const useAlarmTypes = ({
   iotSiteWiseClient,

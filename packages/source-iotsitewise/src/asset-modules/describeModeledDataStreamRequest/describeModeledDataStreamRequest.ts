@@ -1,5 +1,4 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-
 import { DescribeAssetRequest } from './describeAssetRequest';
 import { SearchAssetPropertyRequest } from './searchAssetPropertyRequest';
 import type {
@@ -52,14 +51,12 @@ export class DescribeModeledDataStreamRequest {
       });
 
       if (assetPropertyOnAsset) {
-        const modeledDataStream = {
+        return {
           ...assetPropertyOnAsset,
           assetId,
           propertyId: assetPropertyId,
           assetName: asset.assetName,
         };
-
-        return modeledDataStream;
       }
 
       const searchedAssetProperty = await this.#searchAssetPropertyRequest.send(
@@ -71,14 +68,12 @@ export class DescribeModeledDataStreamRequest {
       );
 
       if (searchedAssetProperty) {
-        const modeledDataStream = {
+        return {
           ...searchedAssetProperty,
           assetId,
           propertyId: assetPropertyId,
           assetName: asset.assetName,
         };
-
-        return modeledDataStream;
       }
     } catch (error) {
       return this.#handleError(error);

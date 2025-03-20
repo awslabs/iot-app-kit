@@ -350,7 +350,7 @@ describe('kpi with custom settings', () => {
 
   it('kpi widget custom decimal places', () => {
     const DECIMAL_PLACES = 5;
-    render(<KPI query={SUCCESS_QUERY} significantDigits={DECIMAL_PLACES} />);
+    render(<KPI query={SUCCESS_QUERY} decimalPlaces={DECIMAL_PLACES} />);
 
     // KPI value should be visible with 5 decimal places
     expect(
@@ -360,7 +360,7 @@ describe('kpi with custom settings', () => {
 
   it('kpi widget no decimal places', () => {
     const DECIMAL_PLACES = 0;
-    render(<KPI query={SUCCESS_QUERY} significantDigits={DECIMAL_PLACES} />);
+    render(<KPI query={SUCCESS_QUERY} decimalPlaces={DECIMAL_PLACES} />);
 
     // KPI value should be visible with no decimal places
     expect(

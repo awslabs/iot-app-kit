@@ -38,32 +38,10 @@ export enum StatusIconType {
   LATCHED = 'latched',
 }
 
-export const STATUS_ICONS = [
-  StatusIconType.ERROR,
-  StatusIconType.ACTIVE,
-  StatusIconType.NORMAL,
-  StatusIconType.ACKNOWLEDGED,
-  StatusIconType.SNOOZED,
-  StatusIconType.DISABLED,
-  StatusIconType.LATCHED,
-];
-
 export enum DATA_ALIGNMENT {
   EITHER = 'EITHER',
   RIGHT = 'RIGHT',
   LEFT = 'LEFT',
-}
-
-/**
- * To differentiate between points that come from data streams and points that come from trend lines
- */
-export const enum POINT_TYPE {
-  DATA = 'data',
-  TREND = 'trend',
-}
-
-export enum TREND_TYPE {
-  LINEAR = 'linear-regression',
 }
 
 export const DEFAULT_LEGEND: LegendConfig = {

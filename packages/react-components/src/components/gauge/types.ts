@@ -1,15 +1,15 @@
 import {
+  type Primitive,
   type StyleSettingsMap,
   type Threshold,
   type Viewport,
-  type Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
-import { type AssistantProperty } from '../../common/assistantProps';
+import type { AssistantProperty } from '../../common/assistantProps';
 import type { AlarmContent } from '../alarm-components/alarm-content/types';
-import {
-  type AlarmDataStatus,
-  type ComponentQuery,
+import type {
+  AlarmDataStatus,
+  ComponentQuery,
 } from '@iot-app-kit/component-core';
 
 export type GaugeProps = {

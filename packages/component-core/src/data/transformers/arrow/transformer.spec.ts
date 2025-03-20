@@ -1,6 +1,6 @@
 import { type Data, type DataSource } from '../../types';
 import { type ArrowDataSource } from './dataSource';
-import { type ArrowDataSourceValue, FieldType } from './input';
+import { type ArrowDataSourceValue } from './input';
 import { ArrowDataSourceTransformer } from './transformer';
 
 type TestArrowDataValue = {
@@ -22,6 +22,7 @@ class TestArrowTransformer extends ArrowDataSourceTransformer<
   transform(): Data<TestArrowDataValue> {
     throw new Error('Method not implemented.');
   }
+
   describe(): Record<string, string> {
     throw new Error('Method not implemented.');
   }
@@ -38,17 +39,17 @@ const validDataSource: TestArrowDataSource = {
       fields: [
         {
           name: 'time',
-          type: FieldType.time,
+          type: 'time',
           values: [1714676404000, 1714676405000, 1714676407000, 1714676408000],
         },
         {
           name: 'quality',
-          type: FieldType.string,
+          type: 'string',
           values: ['GOOD', 'GOOD', 'GOOD', 'GOOD'],
         },
         {
           name: 'water_temperature',
-          type: FieldType.number,
+          type: 'number',
           values: [1, 1, 1, 1],
         },
       ],
@@ -65,17 +66,17 @@ const validDataSourceWithoutStyles: TestArrowDataSource = {
       fields: [
         {
           name: 'timestamp',
-          type: FieldType.time,
+          type: 'time',
           values: [1714676404000, 1714676405000, 1714676407000, 1714676408000],
         },
         {
           name: 'quality',
-          type: FieldType.string,
+          type: 'string',
           values: ['GOOD', 'GOOD', 'GOOD', 'GOOD'],
         },
         {
           name: 'water_temperature',
-          type: FieldType.number,
+          type: 'number',
           values: [1, 1, 1, 1],
         },
       ],
@@ -93,17 +94,17 @@ const invalidDataSourceDataShape: DataSource = {
       values: [
         {
           name: 'timestamp',
-          type: FieldType.time,
+          type: 'time',
           values: [1714676404000, 1714676405000, 1714676407000, 1714676408000],
         },
         {
           name: 'quality',
-          type: FieldType.string,
+          type: 'string',
           values: ['GOOD', 'GOOD', 'GOOD', 'GOOD'],
         },
         {
           name: 'water_temperature',
-          type: FieldType.number,
+          type: 'number',
           values: [1, 1, 1, 1],
         },
       ],

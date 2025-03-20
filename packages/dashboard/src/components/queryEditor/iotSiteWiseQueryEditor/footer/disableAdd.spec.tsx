@@ -1,5 +1,27 @@
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
-import { type SiteWiseQueryConfig } from '~/customization/widgets/types';
+import type { SiteWiseQueryConfig } from '~/features/queries/queries';
+import type {
+  RegisteredWidgetPlugins,
+  RegisteredWidgetType,
+} from '~/features/widget-plugins/registry';
+import type { WidgetInstance } from '~/features/widget-instance/instance';
+import { nanoid } from 'nanoid';
+
+function mockWidget<WidgetType extends RegisteredWidgetType>(
+  type: WidgetType,
+  properties: RegisteredWidgetPlugins[WidgetType]['properties']
+): WidgetInstance<WidgetType> {
+  return {
+    type,
+    id: nanoid(),
+    x: 0,
+    y: 0,
+    z: 0,
+    properties: properties,
+    height: 500,
+    width: 800,
+  } as WidgetInstance<WidgetType>;
+}
 
 const commonTests = ({
   objectWithoutProperties,
@@ -10,213 +32,50 @@ const commonTests = ({
 }) => {
   it('should return true if no results, with or without properties', () => {
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'status',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithoutProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        0
-      )
+      disableAdd([mockWidget('kpi', objectWithoutProperties)], 0)
     ).toBeTruthy();
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'status',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        0
-      )
+      disableAdd([mockWidget('kpi', objectWithProperties)], 0)
     ).toBeTruthy();
   });
 
-  it('should return true if status/kpi is selected and has a property already added', () => {
+  it('should return true if kpi is selected and has a property already added', () => {
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'status',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
-    ).toBeTruthy();
-    expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'kpi',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
+      disableAdd([mockWidget('kpi', objectWithProperties)], 10)
     ).toBeTruthy();
   });
 
-  it('should return false if status/kpi is selected and has NO property already added', () => {
+  it('should return false if kpi is selected and has NO property already added', () => {
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'status',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithoutProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        1
-      )
-    ).toBeFalsy();
-
-    expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'kpi',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithoutProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        1
-      )
+      disableAdd([mockWidget('kpi', objectWithoutProperties)], 1)
     ).toBeFalsy();
   });
 
-  it('should return false if x-y-plot is selected and has property already added', () => {
+  it('should return false if xy-plot is selected and has property already added', () => {
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'x-y-plot',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithoutProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
+      disableAdd([mockWidget('xy-plot', objectWithoutProperties)], 10)
     ).toBeFalsy();
   });
 
   it('should return true if KPI(with or without property) is selected and more than 1 property selected', () => {
+    expect(disableAdd([mockWidget('kpi', {})], 10)).toBeTruthy();
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'kpi',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: {},
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
-    ).toBeTruthy();
-    expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'kpi',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
+      disableAdd([mockWidget('kpi', objectWithProperties)], 10)
     ).toBeTruthy();
   });
 
-  it('should return false if x-y-plot(with or without properties) is selected and more than 1 property selected', () => {
+  it('should return false if xy-plot(with or without properties) is selected and more than 1 property selected', () => {
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'x-y-plot',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithoutProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
+      disableAdd([mockWidget('xy-plot', objectWithoutProperties)], 10)
     ).toBeFalsy();
 
     expect(
-      disableAdd(
-        [
-          {
-            id: '1',
-            type: 'x-y-plot',
-            x: 0,
-            y: 0,
-            z: 0,
-            properties: objectWithProperties,
-            height: 500,
-            width: 800,
-          },
-        ],
-        10
-      )
+      disableAdd([mockWidget('xy-plot', objectWithProperties)], 10)
     ).toBeFalsy();
   });
 };
 describe(disableAdd, () => {
-  it('should return true if no selected widgets', () => {
+  it('should return true if no selected widget-instance', () => {
     expect(disableAdd([], 0)).toBeTruthy();
   });
 

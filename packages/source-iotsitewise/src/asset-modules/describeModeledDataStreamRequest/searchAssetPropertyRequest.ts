@@ -1,8 +1,7 @@
-import {
-  type IoTSiteWiseClient,
-  type AssetPropertySummary,
+import type {
+  AssetPropertySummary,
+  IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-
 import { SearchAssetPropertyListsRequest } from './searchAssetPropertyListsRequest';
 import { SearchAssetModelPropertyListsRequest } from './searchAssetModelPropertyListsRequest';
 import type { AssetId, AssetModelId, AssetPropertyId } from './types';
@@ -42,12 +41,10 @@ export class SearchAssetPropertyRequest {
 
       if (assetProperty && assetModelProperty) {
         // Asset properties may override asset model properties, so we merge it second.
-        const completeAssetProperty = {
+        return {
           ...assetModelProperty,
           ...assetProperty,
         };
-
-        return completeAssetProperty;
       }
     } catch (error) {
       this.#handleError(error);

@@ -2,10 +2,10 @@ import { colorTextHeadingDefault } from '@cloudscape-design/design-tokens';
 import { type CSSProperties } from 'react';
 import './title.css';
 
-type TitleProps = {
+export interface TitleProps {
   text?: string;
   style?: CSSProperties;
-};
+}
 
 export const getAdjustedChartHeight = (hasTitle: boolean, height: number) => {
   return hasTitle ? height - 30 : height;

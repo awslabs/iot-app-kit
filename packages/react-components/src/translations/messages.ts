@@ -32,7 +32,6 @@ export type MessageKeys =
   | AssistantActionPanelMessageKeys
   | AssistantResultPanelMessageKeys
   | TableMessageKeys;
-export type AllMessages = Messages<MessageKeys>;
 
 // List of all component messages to be merged by locale.
 const componentMessages = [

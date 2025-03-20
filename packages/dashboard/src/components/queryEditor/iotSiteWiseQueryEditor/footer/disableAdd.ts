@@ -1,8 +1,8 @@
 import get from 'lodash-es/get';
-import { type DashboardWidget } from '~/types';
+import { type WidgetInstance } from '~/features/widget-instance/instance';
 
 export const disableAdd = (
-  selectedWidgets: DashboardWidget<Record<string, unknown>>[],
+  selectedWidgets: WidgetInstance[],
   collectionPropsLength?: number
 ) => {
   const selectedWidget = selectedWidgets?.at(0);
@@ -10,7 +10,6 @@ export const disableAdd = (
 
   let widgetBasedDisable = false;
   switch (currWidgetType) {
-    case 'status':
     case 'kpi':
     case 'gauge': {
       const modeledProperties =
@@ -31,6 +30,7 @@ export const disableAdd = (
     }
     default:
   }
+
   return (
     collectionPropsLength === undefined ||
     collectionPropsLength === 0 ||

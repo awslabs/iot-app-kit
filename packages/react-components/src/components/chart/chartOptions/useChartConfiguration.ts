@@ -1,4 +1,5 @@
 import {
+  createNonNullableList,
   type DataPoint,
   type Threshold,
   type ThresholdValue,
@@ -13,7 +14,6 @@ import {
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { createNonNullableList } from '@iot-app-kit/core';
 import {
   DEFAULT_DATA_ZOOM,
   getDefaultChartOption,
