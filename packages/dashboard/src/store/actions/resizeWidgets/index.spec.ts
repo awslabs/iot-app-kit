@@ -25,7 +25,7 @@ it('does nothing if no widgets are provided', () => {
     resizeWidgets(
       setupDashboardState([MOCK_KPI_WIDGET]),
       onResizeWidgetsAction({
-        widgets: [],
+        widgetIds: [],
         vector: { x: 0.1, y: 0 },
         anchor: 'bottom',
       })
@@ -39,7 +39,7 @@ describe('top-left anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'top-left',
         })
@@ -60,7 +60,7 @@ describe('top-left anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -0.2, y: -0.2 },
           anchor: 'top-left',
         })
@@ -90,7 +90,7 @@ describe('top-left anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 1, y: 1 },
           anchor: 'top-left',
         })
@@ -113,21 +113,21 @@ describe('top-left anchor', () => {
       y: 10,
       height: 20,
       width: 20,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 30,
       y: 10,
       height: 20,
       width: 20,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 10, y: 10 },
           anchor: 'top-left',
         })
@@ -157,7 +157,7 @@ describe('top anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'top',
         })
@@ -178,7 +178,7 @@ describe('top anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -100.2, y: -0.2 },
           anchor: 'top',
         })
@@ -208,7 +208,7 @@ describe('top anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 210, y: 1 },
           anchor: 'top',
         })
@@ -231,21 +231,21 @@ describe('top anchor', () => {
       y: 20,
       height: 20,
       width: 20,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 40,
       y: 20,
       height: 20,
       width: 20,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 100, y: 1 },
           anchor: 'top',
         })
@@ -275,7 +275,7 @@ describe('top-right anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'top-right',
         })
@@ -296,7 +296,7 @@ describe('top-right anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 0.2, y: -0.2 },
           anchor: 'top-right',
         })
@@ -326,7 +326,7 @@ describe('top-right anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -1, y: 1 },
           anchor: 'top-right',
         })
@@ -349,21 +349,21 @@ describe('top-right anchor', () => {
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 6,
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 1, y: 1 },
           anchor: 'top-right',
         })
@@ -393,7 +393,7 @@ describe('right anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'right',
         })
@@ -414,7 +414,7 @@ describe('right anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 0.2, y: -110.2 },
           anchor: 'right',
         })
@@ -444,7 +444,7 @@ describe('right anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -1, y: 111 },
           anchor: 'right',
         })
@@ -467,21 +467,21 @@ describe('right anchor', () => {
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 6,
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 1, y: 111 },
           anchor: 'right',
         })
@@ -511,7 +511,7 @@ describe('bottom-right anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'bottom-right',
         })
@@ -532,7 +532,7 @@ describe('bottom-right anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 0.2, y: 0.2 },
           anchor: 'bottom-right',
         })
@@ -562,7 +562,7 @@ describe('bottom-right anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -1, y: -1 },
           anchor: 'bottom-right',
         })
@@ -585,21 +585,21 @@ describe('bottom-right anchor', () => {
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 6,
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 1, y: 1 },
           anchor: 'bottom-right',
         })
@@ -629,7 +629,7 @@ describe('bottom anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'bottom',
         })
@@ -650,7 +650,7 @@ describe('bottom anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 110.2, y: 0.2 },
           anchor: 'bottom',
         })
@@ -680,7 +680,7 @@ describe('bottom anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -111, y: -1 },
           anchor: 'bottom',
         })
@@ -703,21 +703,21 @@ describe('bottom anchor', () => {
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 6,
       y: 2,
       height: 4,
       width: 4,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 111, y: 1 },
           anchor: 'bottom',
         })
@@ -747,7 +747,7 @@ describe('bottom-left anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'bottom-left',
         })
@@ -768,7 +768,7 @@ describe('bottom-left anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -1, y: 1 },
           anchor: 'bottom-left',
         })
@@ -798,7 +798,7 @@ describe('bottom-left anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 1, y: -1 },
           anchor: 'bottom-left',
         })
@@ -821,21 +821,21 @@ describe('bottom-left anchor', () => {
       y: 2,
       height: 2,
       width: 2,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 4,
       y: 2,
       height: 2,
       width: 2,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 1, y: 1 },
           anchor: 'bottom-left',
         })
@@ -865,7 +865,7 @@ describe('left anchor', () => {
       resizeWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onResizeWidgetsAction({
-          widgets: [MOCK_KPI_WIDGET],
+          widgetIds: [MOCK_KPI_WIDGET.id],
           vector: { x: 0, y: 0 },
           anchor: 'left',
         })
@@ -886,7 +886,7 @@ describe('left anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: -1, y: 1 },
           anchor: 'left',
         })
@@ -916,7 +916,7 @@ describe('left anchor', () => {
       resizeWidgets(
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget],
+          widgetIds: [lineChartWidget.id],
           vector: { x: 1, y: -1 },
           anchor: 'left',
         })
@@ -939,21 +939,21 @@ describe('left anchor', () => {
       y: 2,
       height: 2,
       width: 2,
-      id: 'some-id',
+      id: 'widget-1',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
       x: 4,
       y: 2,
       height: 2,
       width: 2,
-      id: 'some-id',
+      id: 'widget-2',
     });
 
     expect(
       resizeWidgets(
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
-          widgets: [lineChartWidget, lineChartWidget2],
+          widgetIds: [lineChartWidget.id, lineChartWidget2.id],
           vector: { x: 1, y: 1 },
           anchor: 'left',
         })

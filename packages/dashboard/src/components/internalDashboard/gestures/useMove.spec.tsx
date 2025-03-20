@@ -32,7 +32,7 @@ it('sets the gesture to move when performing a move gesture', () => {
     () =>
       useMoveGestures({
         setActiveGesture,
-        selectedWidgets: [],
+        selectedWidgetIds: [],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -58,7 +58,7 @@ it('dispatches the move action on gesture move update and end', () => {
     () =>
       useMoveGestures({
         setActiveGesture,
-        selectedWidgets: [],
+        selectedWidgetIds: [],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -78,7 +78,7 @@ it('dispatches the move action on gesture move update and end', () => {
   });
 
   expect(onMoveWidgetsAction).toBeCalledWith({
-    widgets: [],
+    widgetIds: [],
     vector: { x: 1, y: 0 },
     complete: false,
   });
@@ -93,7 +93,7 @@ it('dispatches the move action on gesture move update and end', () => {
   });
 
   expect(onMoveWidgetsAction).toBeCalledWith({
-    widgets: [],
+    widgetIds: [],
     vector: { x: 1, y: 0 },
     complete: true,
   });

@@ -10,7 +10,7 @@ export const DecimalPlaces = ({
 }: {
   significantDigits?: number;
   onSignificantDigitsChange: (newValue: string) => void;
-  shouldClearErrors: boolean | string;
+  shouldClearErrors: boolean;
   showFormFieldLabel?: boolean;
 }) => {
   const { control, setValue, clearErrors } = useForm<{

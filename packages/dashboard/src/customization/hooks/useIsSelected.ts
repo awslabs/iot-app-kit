@@ -1,7 +1,7 @@
 import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
 import { useCallback } from 'react';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgetIds } from '~/hooks/useSelectedWidget';
 import type { DashboardWidget } from '~/types';
 
 /**
@@ -11,12 +11,12 @@ import type { DashboardWidget } from '~/types';
  *
  */
 export const useIsSelected = <T extends DashboardWidget>(widget: T) => {
-  const selectedWidgets = useSelectedWidgets();
+  const selectedWidgets = useSelectedWidgetIds();
 
   const isSelected = useCallback(
     () =>
       includes(
-        map(selectedWidgets, (sw) => sw.id),
+        map(selectedWidgets, (widgetId) => widgetId),
         widget.id
       ),
     [selectedWidgets, widget]

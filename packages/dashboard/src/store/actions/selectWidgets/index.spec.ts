@@ -1,4 +1,5 @@
-import { selectWidgets, onSelectWidgetsAction } from '.';
+import { onSelectWidgetsAction, selectWidgets } from '.';
+import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
 
 import {
@@ -6,7 +7,6 @@ import {
   MOCK_LINE_CHART_WIDGET,
   MOCK_SCATTER_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
 
 const dashboardState: DashboardState = {
   ...initialState,
@@ -25,10 +25,10 @@ it('does nothing if no widgets are provided', () => {
     selectWidgets(
       dashboardState,
       onSelectWidgetsAction({
-        widgets: [],
-        union: false,
+        widgetIds: [],
+        shouldAppend: false,
       })
-    ).selectedWidgets
+    ).selectedWidgetIds
   ).toEqual([]);
 });
 
@@ -37,11 +37,11 @@ it('selects a single widget', () => {
     selectWidgets(
       dashboardState,
       onSelectWidgetsAction({
-        widgets: [MOCK_KPI_WIDGET],
-        union: false,
+        widgetIds: [MOCK_KPI_WIDGET.id],
+        shouldAppend: false,
       })
-    ).selectedWidgets
-  ).toEqual([MOCK_KPI_WIDGET]);
+    ).selectedWidgetIds
+  ).toEqual([MOCK_KPI_WIDGET.id]);
 });
 
 it('selects multiple widget', () => {
@@ -49,19 +49,19 @@ it('selects multiple widget', () => {
     selectWidgets(
       dashboardState,
       onSelectWidgetsAction({
-        widgets: [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
-        union: false,
+        widgetIds: [MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id],
+        shouldAppend: false,
       })
-    ).selectedWidgets
-  ).toEqual([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]);
+    ).selectedWidgetIds
+  ).toEqual([MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id]);
 });
 
 it('adds a single widget to a selection', () => {
   const state = selectWidgets(
     dashboardState,
     onSelectWidgetsAction({
-      widgets: [MOCK_KPI_WIDGET],
-      union: false,
+      widgetIds: [MOCK_KPI_WIDGET.id],
+      shouldAppend: false,
     })
   );
 
@@ -69,19 +69,19 @@ it('adds a single widget to a selection', () => {
     selectWidgets(
       state,
       onSelectWidgetsAction({
-        widgets: [MOCK_LINE_CHART_WIDGET],
-        union: true,
+        widgetIds: [MOCK_LINE_CHART_WIDGET.id],
+        shouldAppend: true,
       })
-    ).selectedWidgets
-  ).toEqual([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]);
+    ).selectedWidgetIds
+  ).toEqual([MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id]);
 });
 
 it('adds multiple widgets to a selection', () => {
   const state = selectWidgets(
     dashboardState,
     onSelectWidgetsAction({
-      widgets: [MOCK_KPI_WIDGET],
-      union: false,
+      widgetIds: [MOCK_KPI_WIDGET.id],
+      shouldAppend: false,
     })
   );
 
@@ -89,13 +89,13 @@ it('adds multiple widgets to a selection', () => {
     selectWidgets(
       state,
       onSelectWidgetsAction({
-        widgets: [MOCK_LINE_CHART_WIDGET, MOCK_SCATTER_CHART_WIDGET],
-        union: true,
+        widgetIds: [MOCK_LINE_CHART_WIDGET.id, MOCK_SCATTER_CHART_WIDGET.id],
+        shouldAppend: true,
       })
-    ).selectedWidgets
+    ).selectedWidgetIds
   ).toEqual([
-    MOCK_KPI_WIDGET,
-    MOCK_LINE_CHART_WIDGET,
-    MOCK_SCATTER_CHART_WIDGET,
+    MOCK_KPI_WIDGET.id,
+    MOCK_LINE_CHART_WIDGET.id,
+    MOCK_SCATTER_CHART_WIDGET.id,
   ]);
 });

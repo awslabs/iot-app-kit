@@ -1,7 +1,7 @@
 import isEqual from 'lodash-es/isEqual';
 import type * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidget';
 import {
   onMoveWidgetsAction,
   onResizeWidgetsAction,
@@ -58,7 +58,6 @@ const NO_SIZE = { height: 0, width: 0 };
 const NO_POSITION = { x: 0, y: 0 };
 
 /**
- *
  * Helper to convert a list of values of 1 type into a Maybe type
  * that represents those a singular value of that list
  *
@@ -78,7 +77,6 @@ const compositeValue = <T>(values: T[]): Maybe<T> =>
   values.every((v) => isEqual(v, values[0])) ? Just(values[0]) : Nothing();
 
 /**
- *
  * the most generic predicate function for a dashboard widget list
  * Is always true. To be used as the default predicate function in useSelection
  */
@@ -87,7 +85,6 @@ export const isDashboardWidget = (
 ): widget is DashboardWidget => !!widget;
 
 /**
- *
  * hook that represents the widget selection
  *
  * returns other hooks to be used in react components
@@ -96,7 +93,6 @@ export const isDashboardWidget = (
  * useProperty: hook that allows you to get and set a value on the selection
  * useSize: hook that allows you to get and set the size of the selection
  * usePosition: hook that allows you to get and set the position of the selection
- *
  */
 export const useSelection = <W extends DashboardWidget>(
   { filter }: { filter?: FilterPredicate<W> } = { filter: undefined }
@@ -105,10 +101,7 @@ export const useSelection = <W extends DashboardWidget>(
   const selectedWidgets = useSelectedWidgets();
   const filteredSelection = selectedWidgets.filter(filter ?? isDashboardWidget);
 
-  /**
-   * selection filter does not apply to entire selection
-   * this means we cannot correctly narrow the selection type
-   */
+  // selection filter does not apply to entire selection this means we cannot correctly narrow the selection type
   if (
     selectedWidgets.length === 0 ||
     !isEqual(selectedWidgets, filteredSelection)
@@ -117,9 +110,7 @@ export const useSelection = <W extends DashboardWidget>(
 
   const selection = filteredSelection;
 
-  /**
-   * TECH DEBT: getSelectionBox should never be null given the above check
-   */
+  // TECH DEBT: getSelectionBox should never be null given the above check
   const { x, y, height, width } = trimRectPosition(
     getSelectionBox(selection) ?? { ...NO_SIZE, ...NO_POSITION }
   );
@@ -133,7 +124,7 @@ export const useSelection = <W extends DashboardWidget>(
       dispatch(
         onResizeWidgetsAction({
           anchor: 'bottom-right',
-          widgets: selection,
+          widgetIds: selection.map(({ id }) => id),
           vector,
         })
       ),
@@ -146,7 +137,7 @@ export const useSelection = <W extends DashboardWidget>(
     (vector) =>
       dispatch(
         onMoveWidgetsAction({
-          widgets: selection,
+          widgetIds: selection.map(({ id }) => id),
           vector,
           complete: true,
         })

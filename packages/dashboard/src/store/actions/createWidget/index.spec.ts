@@ -76,7 +76,7 @@ it('selects the widgets that are created', () => {
     onCreateWidgetsAction({
       widgets: [MOCK_KPI_WIDGET],
     })
-  ).selectedWidgets;
+  ).selectedWidgetIds;
 
-  expect(selectedWidgets).toEqual([MOCK_KPI_WIDGET]);
+  expect(selectedWidgets).toEqual([MOCK_KPI_WIDGET.id]);
 });

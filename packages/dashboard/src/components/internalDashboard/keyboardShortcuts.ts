@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgetIds } from '~/hooks/useSelectedWidget';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import {
   onBringWidgetsToFrontAction,
@@ -19,24 +19,19 @@ export const useKeyboardShortcuts = ({
   onPressDelete,
 }: UseKeyboardShortcutsOptions) => {
   const dispatch = useDispatch();
-  const selectedWidgets = useSelectedWidgets();
+  const widgetWidgetIds = useSelectedWidgetIds();
 
   const onClearSelection = () => {
-    dispatch(
-      onSelectWidgetsAction({
-        widgets: [],
-        union: false,
-      })
-    );
+    dispatch(onSelectWidgetsAction({ widgetIds: [] }));
   };
 
   const copyWidgets = useCallback(() => {
     dispatch(
       onCopyWidgetsAction({
-        widgets: selectedWidgets,
+        widgetIds: widgetWidgetIds,
       })
     );
-  }, [dispatch, selectedWidgets]);
+  }, [dispatch, widgetWidgetIds]);
 
   const pasteWidgets = () => {
     dispatch(onPasteWidgetsAction({ position: undefined }));

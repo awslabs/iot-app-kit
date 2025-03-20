@@ -1,12 +1,10 @@
-import uniqBy from 'lodash-es/uniqBy';
 import type { Action } from 'redux';
-import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
 
-type SelectWidgetsActionPayload = {
-  widgets: DashboardWidget[];
-  union: boolean;
-};
+interface SelectWidgetsActionPayload {
+  widgetIds: readonly string[];
+  shouldAppend?: boolean;
+}
 
 export interface SelectWidgetsAction extends Action {
   type: 'SELECT_WIDGETS';
@@ -22,10 +20,10 @@ export const onSelectWidgetsAction = (
 
 export const selectWidgets = (
   state: DashboardState,
-  action: SelectWidgetsAction
+  { payload: { widgetIds, shouldAppend = false } }: SelectWidgetsAction
 ): DashboardState => ({
   ...state,
-  selectedWidgets: action.payload.union
-    ? uniqBy([...state.selectedWidgets, ...action.payload.widgets], 'id')
-    : action.payload.widgets,
+  selectedWidgetIds: shouldAppend
+    ? [...new Set([...state.selectedWidgetIds, ...widgetIds])]
+    : widgetIds,
 });

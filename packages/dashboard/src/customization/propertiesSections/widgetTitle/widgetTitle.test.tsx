@@ -10,16 +10,16 @@ import { type DashboardWidget } from '~/types';
 import { WidgetTitle } from './index';
 import {
   MOCK_LINE_CHART_WIDGET,
-  MOCK_TEXT_WIDGET,
   MOCK_RECTANGLE_WIDGET,
+  MOCK_TEXT_WIDGET,
 } from '../../../../testing/mocks';
 
-const store = (widgets: DashboardWidget) =>
+const store = (widget: DashboardWidget) =>
   configureDashboardStore({
     dashboardConfiguration: {
-      widgets: [widgets],
+      widgets: [widget],
     },
-    selectedWidgets: [widgets],
+    selectedWidgetIds: [widget.id],
   });
 
 const TestComponent = (widget: DashboardWidget) => (

@@ -1,19 +1,19 @@
 import { sendWidgetsToBack } from '.';
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
+import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
 import type { DashboardWidget } from '~/types';
-import type { DashboardState } from '../../state';
 
 const setupDashboardState = (
   widgets: DashboardWidget[] = [],
-  selectedWidgets: DashboardWidget[] = []
+  selectedWidgetIds: readonly string[] = []
 ): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,
     widgets,
   },
-  selectedWidgets,
+  selectedWidgetIds,
 });
 
 it('does nothing if there are no widgets selected', () => {
@@ -25,8 +25,9 @@ it('does nothing if there are no widgets selected', () => {
 
 it('does nothing if all widgets are selected', () => {
   expect(
-    sendWidgetsToBack(setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET]))
-      .dashboardConfiguration.widgets
+    sendWidgetsToBack(
+      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET.id])
+    ).dashboardConfiguration.widgets
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
@@ -41,7 +42,7 @@ it('moves selected widget to back', () => {
 
   expect(
     sendWidgetsToBack(
-      setupDashboardState([MOCK_WIDGET, MOCK_WIDGET_2], [MOCK_WIDGET])
+      setupDashboardState([MOCK_WIDGET, MOCK_WIDGET_2], [MOCK_WIDGET.id])
     ).dashboardConfiguration.widgets
   ).toEqual(
     expect.arrayContaining([
@@ -70,7 +71,7 @@ it('moves group of widgets and retains their relative order', () => {
     sendWidgetsToBack(
       setupDashboardState(
         [MOCK_WIDGET, MOCK_WIDGET_2, MOCK_WIDGET_3],
-        [MOCK_WIDGET, MOCK_WIDGET_2]
+        [MOCK_WIDGET.id, MOCK_WIDGET_2.id]
       )
     ).dashboardConfiguration.widgets
   ).toEqual(

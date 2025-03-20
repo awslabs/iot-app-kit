@@ -6,7 +6,7 @@ export const useDeleteWidgets = () => {
   const dispatch = useDispatch();
 
   return useCallback(
-    (widgetIds: string[]) => {
+    (widgetIds: readonly string[]) => {
       dispatch(onDeleteWidgetsAction({ widgetIds }));
     },
     [dispatch]

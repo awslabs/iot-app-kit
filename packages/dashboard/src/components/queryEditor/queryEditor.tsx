@@ -2,19 +2,18 @@ import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 import { QueryEditorErrorBoundary } from './queryEditorErrorBoundary';
 import { useQuery } from './useQuery';
 import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { type DashboardWidget } from '~/types';
 import { useIsAddButtonDisabled } from './helpers/useIsAddButtonDisabled';
 import { getCorrectSelectionMode } from './helpers/getCorrectSelectionMode';
 import { useAssetsForAssetModel } from './iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 import { useModelBasedQuery } from './iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidget';
 
-export function QueryEditor({
-  iotSiteWiseClient,
-  selectedWidgets,
-}: {
+export interface QueryEditorProps {
   iotSiteWiseClient: IoTSiteWise;
-  selectedWidgets: DashboardWidget[];
-}) {
+}
+
+export function QueryEditor({ iotSiteWiseClient }: QueryEditorProps) {
+  const selectedWidgets = useSelectedWidgets();
   const [_query, setQuery] = useQuery();
   const addButtonDisabled = useIsAddButtonDisabled(selectedWidgets);
   const correctSelectionMode = getCorrectSelectionMode(selectedWidgets);

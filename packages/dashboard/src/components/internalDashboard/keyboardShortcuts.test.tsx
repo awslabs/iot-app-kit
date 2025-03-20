@@ -97,7 +97,7 @@ it.skip('can clear the selection', () => {
   renderDashboardAndPressKey({ key: 'Escape', meta: false });
 
   expect(onSelectWidgetsAction).toBeCalledWith({
-    widgets: [],
+    widgetIds: [],
     union: false,
   });
 });

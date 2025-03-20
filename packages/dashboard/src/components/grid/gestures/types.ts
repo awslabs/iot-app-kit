@@ -10,7 +10,7 @@ export type DragEvent = {
 export type PointClickEvent = {
   target?: EventTarget;
   position: Position;
-  union: boolean;
+  shouldAppend: boolean;
 };
 
 export type DropEvent = {

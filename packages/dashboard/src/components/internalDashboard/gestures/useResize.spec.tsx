@@ -36,7 +36,7 @@ it('sets the gesture to resize when performing a resize gesture', () => {
     () =>
       useResizeGestures({
         setActiveGesture,
-        selectedWidgets: [],
+        selectedWidgetIds: [],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -62,7 +62,7 @@ it('dispatches the resize action on gesture resize update and end', () => {
     () =>
       useResizeGestures({
         setActiveGesture,
-        selectedWidgets: [],
+        selectedWidgetIds: [],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -82,7 +82,7 @@ it('dispatches the resize action on gesture resize update and end', () => {
   });
 
   expect(onResizeWidgetsAction).toBeCalledWith({
-    widgets: [],
+    widgetIds: [],
     anchor: 'bottom',
     vector: { x: 1, y: 0 },
     complete: false,
@@ -98,7 +98,7 @@ it('dispatches the resize action on gesture resize update and end', () => {
   });
 
   expect(onResizeWidgetsAction).toBeCalledWith({
-    widgets: [],
+    widgetIds: [],
     anchor: 'bottom',
     vector: { x: 1, y: 0 },
     complete: true,
@@ -119,7 +119,7 @@ it('doesnt dispatch the resize action on gesture resize update and end if there 
     () =>
       useResizeGestures({
         setActiveGesture,
-        selectedWidgets: [],
+        selectedWidgetIds: [],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }

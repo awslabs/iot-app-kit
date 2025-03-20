@@ -4,9 +4,9 @@ import type { Action } from 'redux';
 import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
 
-type CreateWidgetsActionPayload = {
+export interface CreateWidgetsActionPayload {
   widgets: DashboardWidget[];
-};
+}
 
 export interface CreateWidgetsAction extends Action {
   type: 'CREATE_WIDGETS';
@@ -39,6 +39,6 @@ export const createWidgets = (
       ...state.dashboardConfiguration,
       widgets: [...state.dashboardConfiguration.widgets, ...widgets],
     },
-    selectedWidgets: widgets,
+    selectedWidgetIds: widgets.map(({ id }) => id),
   };
 };

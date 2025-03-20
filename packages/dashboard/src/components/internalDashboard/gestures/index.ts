@@ -8,17 +8,17 @@ import type { DashboardWidget } from '~/types';
 import type { DragEvent, PointClickEvent } from '../../grid';
 import type { Gesture } from './types';
 
-type GestureHooksProps = {
+export interface UseGesturesOptions {
   dashboardWidgets: DashboardWidget[];
-  selectedWidgets: DashboardWidget[];
+  selectedWidgetIds: readonly string[];
   cellSize: DashboardState['grid']['cellSize'];
-};
+}
 
 export const useGestures = ({
   dashboardWidgets,
-  selectedWidgets,
+  selectedWidgetIds,
   cellSize,
-}: GestureHooksProps) => {
+}: UseGesturesOptions) => {
   const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(
     undefined
   );
@@ -36,12 +36,12 @@ export const useGestures = ({
   });
   const { onMoveStart, onMoveUpdate, onMoveEnd } = useMoveGestures({
     setActiveGesture,
-    selectedWidgets,
+    selectedWidgetIds,
     cellSize: cellSize,
   });
   const { onResizeStart, onResizeUpdate, onResizeEnd } = useResizeGestures({
     setActiveGesture,
-    selectedWidgets,
+    selectedWidgetIds,
     cellSize: cellSize,
   });
 
@@ -62,14 +62,17 @@ export const useGestures = ({
       anchor,
     } = determineTargetGestures(dragEvent);
 
-    const isOnWidgetInSelection = selectedWidgets.some(
-      (widget) => widget.id === widgetId
+    const isOnWidgetInSelection = selectedWidgetIds.some(
+      (id) => id === widgetId
     );
 
     const isMoveGesture = !isUnion && (isOnWidget || isOnSelection);
 
     if (isOnWidget && !isOnSelection && !isOnWidgetInSelection) {
-      onPointSelect({ position: dragEvent.start, union: dragEvent.union });
+      onPointSelect({
+        position: dragEvent.start,
+        shouldAppend: dragEvent.union,
+      });
     }
 
     if (isOnResizeHandle) {

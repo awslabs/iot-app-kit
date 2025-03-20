@@ -10,7 +10,7 @@ const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [MOCK_TEXT_LINK_WIDGET],
   },
-  selectedWidgets: [MOCK_TEXT_LINK_WIDGET],
+  selectedWidgetIds: [MOCK_TEXT_LINK_WIDGET.id],
 };
 
 const TestComponent = () => (

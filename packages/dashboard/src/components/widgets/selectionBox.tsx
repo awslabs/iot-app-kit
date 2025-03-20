@@ -1,22 +1,20 @@
 import { getSelectionBox } from '~/util/getSelectionBox';
 import SelectionBoxAnchor from './selectionBoxAnchor';
-
-import type { DashboardWidget } from '~/types';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { useLayers } from '../internalDashboard/useLayers';
 import './selectionBox.css';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidget';
 
-export type SelectionBoxProps = {
-  selectedWidgets: DashboardWidget[];
+export interface SelectionBoxProps {
   cellSize: number;
   dragEnabled: boolean;
-};
+}
 
 const SelectionBox: React.FC<SelectionBoxProps> = ({
-  selectedWidgets,
   cellSize,
   dragEnabled,
 }) => {
+  const selectedWidgets = useSelectedWidgets();
   const { selectionBoxLayer, selectionGestureLayer } = useLayers();
 
   const rect = getSelectionBox(selectedWidgets);

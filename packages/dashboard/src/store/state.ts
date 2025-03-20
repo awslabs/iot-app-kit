@@ -3,7 +3,6 @@ import type {
   DashboardTimeSeriesSettings,
   DashboardWidget,
 } from '~/types';
-import { deepFreeze } from '~/util/deepFreeze';
 import { v4 as uuid } from 'uuid';
 
 export type DashboardState<
@@ -17,8 +16,8 @@ export type DashboardState<
     cellSize: number;
   };
   readOnly: boolean;
-  selectedWidgets: DashboardWidget<Properties>[];
-  copiedWidgets: DashboardWidget<Properties>[];
+  selectedWidgetIds: readonly string[];
+  copiedWidgetIds: readonly string[];
   pasteCounter: number;
   dashboardConfiguration: {
     widgets: DashboardWidget<Properties>[];
@@ -45,16 +44,7 @@ export type DashboardState<
   };
 };
 
-/**
- * default state for the dashboard to use.
- *
- * We want to prevent modification of this object
- * since it is exported as a singleton and will be
- * used to setup the initial dashboard state between
- * different instances of dashboard.
- *
- */
-export const initialState: DashboardState = deepFreeze({
+export const initialState: DashboardState = {
   isEdgeModeEnabled: false,
   grid: {
     enabled: true,
@@ -63,8 +53,8 @@ export const initialState: DashboardState = deepFreeze({
     cellSize: 20,
   },
   readOnly: false,
-  selectedWidgets: [],
-  copiedWidgets: [],
+  selectedWidgetIds: [],
+  copiedWidgetIds: [],
   pasteCounter: 0,
   dashboardConfiguration: {
     widgets: [],
@@ -80,4 +70,4 @@ export const initialState: DashboardState = deepFreeze({
     mode: 'off',
     selectedQueries: [],
   },
-});
+} satisfies DashboardState;

@@ -4,10 +4,12 @@ import type { Action } from 'redux';
 import { v4 } from 'uuid';
 import type { DashboardWidget, Position } from '~/types';
 import type { DashboardState } from '../../state';
+import { getWidgets } from '~/hooks/useSelectedWidget';
 
-type PasteWidgetsActionPayload = {
+export interface PasteWidgetsActionPayload {
   position?: Position;
-};
+}
+
 export interface PasteWidgetsAction extends Action {
   type: 'PASTE_WIDGETS';
   payload: PasteWidgetsActionPayload;
@@ -27,7 +29,10 @@ export const pasteWidgets = (
   const { position } = action.payload;
 
   const cellSize = state.grid.cellSize;
-  const copyGroup = state.copiedWidgets;
+  const copyGroup = getWidgets(
+    state.copiedWidgetIds,
+    state.dashboardConfiguration.widgets
+  );
   const gridWidth = state.grid.width;
   const gridHeight = state.grid.height;
   let pasteCounter = state.pasteCounter + 1;
@@ -103,6 +108,6 @@ export const pasteWidgets = (
       widgets: [...state.dashboardConfiguration.widgets, ...widgetsToPaste],
     },
     pasteCounter: position !== undefined ? 0 : pasteCounter,
-    selectedWidgets: widgetsToPaste,
+    selectedWidgetIds: widgetsToPaste.map(({ id }) => id),
   };
 };

@@ -37,16 +37,11 @@ export const updateWidgets = (
     return widgets.find((k) => k.id === w.id) || w;
   });
 
-  const updatedSelectedWidgets = state.selectedWidgets.map((w) => {
-    return widgets.find((k) => k.id === w.id) || w;
-  });
-
   return {
     ...state,
     dashboardConfiguration: {
       ...state.dashboardConfiguration,
       widgets: [...updatedWidgets],
     },
-    selectedWidgets: [...updatedSelectedWidgets],
   };
 };

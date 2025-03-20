@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
 import type * as React from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { onSelectWidgetsAction } from '~/store/actions';
-import { getSelectedWidgets, pointSelect, selectedRect } from '~/util/select';
+import { getSelectedWidgetIds, pointSelect, selectedRect } from '~/util/select';
 import type { DashboardState } from '~/store/state';
-import type { Position, Selection, DashboardWidget } from '~/types';
+import type { DashboardWidget, Position, Selection } from '~/types';
 import type { DragEvent } from '../../grid';
 import type { Gesture } from './types';
 
@@ -21,11 +21,11 @@ export const useSelectionGestures = ({
 }: SelectionHooksProps) => {
   const dispatch = useDispatch();
   const selectWidgets = useCallback(
-    (widgets: DashboardWidget[], union: boolean) => {
+    (widgetIds: readonly string[], shouldAppend: boolean) => {
       dispatch(
         onSelectWidgetsAction({
-          widgets,
-          union,
+          widgetIds,
+          shouldAppend,
         })
       );
     },
@@ -37,14 +37,23 @@ export const useSelectionGestures = ({
   );
 
   const onPointSelect = useCallback(
-    ({ position, union }: { position: Position; union: boolean }) => {
+    ({
+      position,
+      shouldAppend,
+    }: {
+      position: Position;
+      shouldAppend: boolean;
+    }) => {
       const intersectedWidget = pointSelect({
         dashboardWidgets,
         cellSize,
         position,
       });
 
-      selectWidgets(intersectedWidget ? [intersectedWidget] : [], union);
+      selectWidgets(
+        intersectedWidget ? [intersectedWidget.id] : [],
+        shouldAppend
+      );
     },
     [dashboardWidgets, cellSize, selectWidgets]
   );
@@ -67,7 +76,7 @@ export const useSelectionGestures = ({
 
       const union = dragEvent.union;
 
-      const intersectedWidgets = getSelectedWidgets({
+      const intersectedWidgets = getSelectedWidgetIds({
         selectedRect: selectedRect(updatedSelection),
         dashboardWidgets,
         cellSize,

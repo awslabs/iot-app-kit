@@ -53,7 +53,7 @@ export const usePointerTracker = ({
     if (e.button === MouseClick.Left) {
       click({
         position: getDashboardPosition(e),
-        union,
+        shouldAppend: union,
       });
     }
   };
