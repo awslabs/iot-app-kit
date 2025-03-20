@@ -15,8 +15,8 @@ import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
 import { type DashboardWidget } from '~/types';
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import {
-  CSVDownloadButton,
   canOnlyDownloadLiveMode,
+  CSVDownloadButton,
   isQueryEmpty,
 } from '../csvDownloadButton';
 import { useClients } from '../dashboard/clientContext';
@@ -60,7 +60,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
     (state: DashboardState) => state.isEdgeModeEnabled
   );
   const { iotSiteWiseClient } = useClients();
-  const { onDelete } = useDeleteWidgets();
+  const deleteWidgets = useDeleteWidgets();
   const metricsRecorder = getPlugin('metricsRecorder');
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
 
@@ -80,7 +80,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
 
   const handleSubmit = () => {
     const widgetType = widget.type;
-    onDelete(widget);
+    deleteWidgets([widget.id]);
     dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
     setVisible(false);
 
