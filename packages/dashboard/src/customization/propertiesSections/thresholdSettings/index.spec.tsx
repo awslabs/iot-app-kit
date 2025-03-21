@@ -37,7 +37,7 @@ const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [widget],
   },
-  selectedWidgets: [widget],
+  selectedWidgetIds: [widget.id],
 };
 
 const TestThresholdSection = () => (

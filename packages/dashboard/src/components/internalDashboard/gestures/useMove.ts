@@ -1,37 +1,37 @@
-import { useCallback } from 'react';
 import type * as React from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { onMoveWidgetsAction } from '~/store/actions';
 import { toGridPosition } from '~/util/position';
 import type { DashboardState } from '~/store/state';
-import type { Position, DashboardWidget } from '~/types';
+import type { Position } from '~/types';
 import type { DragEvent } from '../../grid';
 import type { Gesture } from './types';
 
-type MoveHooksProps = {
+export interface UseMoveGesturesOptions {
   setActiveGesture: React.Dispatch<React.SetStateAction<Gesture>>;
-  selectedWidgets: DashboardWidget[];
+  selectedWidgetIds: readonly string[];
   cellSize: DashboardState['grid']['cellSize'];
-};
+}
 
 export const useMoveGestures = ({
   setActiveGesture,
-  selectedWidgets,
+  selectedWidgetIds,
   cellSize,
-}: MoveHooksProps) => {
+}: UseMoveGesturesOptions) => {
   const dispatch = useDispatch();
 
   const moveWidgets = useCallback(
     (vector: Position, complete?: boolean) => {
       dispatch(
         onMoveWidgetsAction({
-          widgets: selectedWidgets,
+          widgetIds: selectedWidgetIds,
           vector: toGridPosition(vector, cellSize),
           complete,
         })
       );
     },
-    [selectedWidgets, cellSize, dispatch]
+    [selectedWidgetIds, cellSize, dispatch]
   );
 
   const onMoveStart = () => {

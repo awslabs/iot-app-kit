@@ -1,8 +1,8 @@
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
 
-interface DeleteWidgetsActionPayload {
-  widgetIds: string[];
+export interface DeleteWidgetsActionPayload {
+  widgetIds: readonly string[];
 }
 
 export interface DeleteWidgetsAction extends Action {
@@ -29,8 +29,8 @@ export const deleteWidgets = (
         ({ id }) => !widgetIds.includes(id)
       ),
     },
-    selectedWidgets: state.selectedWidgets.filter(
-      ({ id }) => !widgetIds.includes(id)
+    selectedWidgetIds: state.selectedWidgetIds.filter(
+      (id) => !widgetIds.includes(id)
     ),
   };
 };

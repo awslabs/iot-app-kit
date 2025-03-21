@@ -1,16 +1,16 @@
 import { onPasteWidgetsAction, pasteWidgets } from '.';
+import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
 
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
 import type { DashboardWidget } from '~/types';
 
 const setupDashboardState = (
   widgets: DashboardWidget[] = [],
-  copiedWidgets: DashboardWidget[] = []
+  copiedWidgetIds: readonly string[] = []
 ): DashboardState => ({
   ...initialState,
   grid: {
@@ -23,7 +23,7 @@ const setupDashboardState = (
     ...initialState.dashboardConfiguration,
     widgets,
   },
-  copiedWidgets,
+  copiedWidgetIds,
 });
 
 it('does nothing when pasting with nothing in the copy group', () => {
@@ -36,7 +36,7 @@ it('does nothing when pasting with nothing in the copy group', () => {
 it('paste single widget', () => {
   expect(
     pasteWidgets(
-      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET]),
+      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET.id]),
       onPasteWidgetsAction({})
     ).dashboardConfiguration.widgets
   ).toEqual(
@@ -57,7 +57,7 @@ it('paste single widget', () => {
 
 it('paste single widget a second time, shifts the position down', () => {
   const state = pasteWidgets(
-    setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET]),
+    setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET.id]),
     onPasteWidgetsAction({})
   );
 
@@ -89,7 +89,7 @@ it('paste multiple widgets', () => {
     pasteWidgets(
       setupDashboardState(
         [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
-        [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]
+        [MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id]
       ),
       onPasteWidgetsAction({})
     ).dashboardConfiguration.widgets
@@ -122,7 +122,7 @@ it('paste multiple widgets', () => {
 it('pastes a widget at a specific location', () => {
   expect(
     pasteWidgets(
-      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET]),
+      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET.id]),
       onPasteWidgetsAction({
         position: { x: 100, y: 100 },
       })
@@ -148,7 +148,7 @@ it('pastes multiple widgets at a specific location', () => {
     pasteWidgets(
       setupDashboardState(
         [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
-        [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]
+        [MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id]
       ),
       onPasteWidgetsAction({
         position: { x: 100, y: 100 },
@@ -184,50 +184,27 @@ it('selects the widgets that are pasted', () => {
   const selectedWidgets = pasteWidgets(
     setupDashboardState(
       [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
-      [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]
+      [MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id]
     ),
     onPasteWidgetsAction({
       position: { x: 100, y: 100 },
     })
-  ).selectedWidgets;
+  ).selectedWidgetIds;
 
   // the newly pasted widgets are selected
-  expect(selectedWidgets).toEqual(
-    expect.arrayContaining([
-      expect.objectContaining({
-        type: MOCK_KPI_WIDGET.type,
-        x: 10,
-        y: 10,
-      }),
-      expect.objectContaining({
-        type: MOCK_LINE_CHART_WIDGET.type,
-        x: 12,
-        y: 12,
-      }),
-    ])
-  );
+  expect(selectedWidgets).toEqual([expect.any(String), expect.any(String)]);
 
   // the initial copied widgets are not selected
-  expect(selectedWidgets).not.toEqual(
-    expect.arrayContaining([
-      expect.objectContaining({
-        type: MOCK_KPI_WIDGET.type,
-        x: MOCK_KPI_WIDGET.x,
-        y: MOCK_KPI_WIDGET.y,
-      }),
-      expect.objectContaining({
-        type: MOCK_LINE_CHART_WIDGET.type,
-        x: MOCK_LINE_CHART_WIDGET.x,
-        y: MOCK_LINE_CHART_WIDGET.y,
-      }),
-    ])
-  );
+  expect(selectedWidgets).not.toEqual([
+    MOCK_KPI_WIDGET.id,
+    MOCK_LINE_CHART_WIDGET.id,
+  ]);
 });
 
 it('pastes a widget at right edge location', () => {
   expect(
     pasteWidgets(
-      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET]),
+      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET.id]),
       onPasteWidgetsAction({
         position: { x: 1000, y: 1000 },
       })
@@ -253,7 +230,7 @@ it('pastes multiple widgets at right edge location', () => {
     pasteWidgets(
       setupDashboardState(
         [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
-        [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]
+        [MOCK_KPI_WIDGET.id, MOCK_LINE_CHART_WIDGET.id]
       ),
       onPasteWidgetsAction({
         position: { x: 1000, y: 1000 },

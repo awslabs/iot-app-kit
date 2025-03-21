@@ -14,13 +14,8 @@ import { WebglContext } from '@iot-app-kit/react-components';
 import { type CSSProperties, type ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon';
-
 import { selectedRect } from '~/util/select';
-
 import type { ContextMenuProps } from '../contextMenu';
-/**
- * Component imports
- */
 import ContextMenu from '../contextMenu';
 import { useClients } from '../dashboard/clientContext';
 import CustomDragLayer from '../dragLayer';
@@ -32,12 +27,8 @@ import { ResizablePanes } from '../resizablePanes';
 import type { UserSelectionProps } from '../userSelection';
 import UserSelection from '../userSelection';
 import type { WidgetsProps } from '../widgets/list';
-import Widgets from '../widgets/list';
+import { Widgets } from '../widgets/list';
 import DashboardEmptyState from './dashboardEmptyState';
-
-/**
- * Store imports
- */
 import {
   onBringWidgetsToFrontAction,
   onCopyWidgetsAction,
@@ -46,12 +37,10 @@ import {
   onSendWidgetsToBackAction,
 } from '~/store/actions';
 import { widgetCreator } from '~/store/actions/createWidget/presets';
-
 import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
-
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgetIds } from '~/hooks/useSelectedWidget';
 import { DefaultDashboardMessages } from '~/messages';
 import type { DashboardState } from '~/store/state';
 import type {
@@ -65,7 +54,6 @@ import { AssetModelSelection } from '../assetModelSelection/assetModelSelection'
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
 import DashboardHeader from './dashboardHeader';
-
 import { useChatbotPosition } from '~/hooks/useChatbotPosition';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
@@ -122,11 +110,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
   const copiedWidgets = useSelector(
-    (state: DashboardState) => state.copiedWidgets
+    (state: DashboardState) => state.copiedWidgetIds
   );
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const assistant = useSelector((state: DashboardState) => state.assistant);
-  const selectedWidgets = useSelectedWidgets();
+  const selectedWidgetIds = useSelectedWidgetIds();
   const { assetModelId, hasModelBasedQuery } = useModelBasedQuery();
 
   const hasValidAssetModelData = !!(hasModelBasedQuery && assetModelId);
@@ -156,11 +144,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   };
 
   const copyWidgets = () => {
-    dispatch(
-      onCopyWidgetsAction({
-        widgets: selectedWidgets,
-      })
-    );
+    dispatch(onCopyWidgetsAction({ widgetIds: selectedWidgetIds }));
   };
 
   const pasteWidgets = (position?: Position) => {
@@ -182,7 +166,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const deleteWidgets = useDeleteWidgets();
   const onPressDelete = () => setVisible(true);
   const handleDelete = () => {
-    deleteWidgets(selectedWidgets.map(({ id }) => id));
+    deleteWidgets(selectedWidgetIds);
     setVisible(false);
   };
 
@@ -202,7 +186,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     onGestureEnd,
   } = useGestures({
     dashboardWidgets,
-    selectedWidgets,
+    selectedWidgetIds,
     cellSize,
   });
 
@@ -265,7 +249,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const widgetsProps: WidgetsProps = {
     readOnly,
     dashboardConfiguration,
-    selectedWidgets,
     messageOverrides: DefaultDashboardMessages,
     cellSize,
     dragEnabled: grid.enabled,
@@ -283,7 +266,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     sendWidgetsToBack,
     bringWidgetsToFront,
     hasCopiedWidgets: copiedWidgets.length > 0,
-    hasSelectedWidgets: selectedWidgets.length > 0,
+    hasSelectedWidgets: selectedWidgetIds.length > 0,
   };
 
   const dashboardToolbarBottomBorder = {
@@ -350,12 +333,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           </div>
         </div>
         <ResizablePanes
-          leftPane={
-            <QueryEditor
-              iotSiteWiseClient={iotSiteWise}
-              selectedWidgets={selectedWidgets}
-            />
-          }
+          leftPane={<QueryEditor iotSiteWiseClient={iotSiteWise} />}
           centerPane={
             <div
               className='display-area'
@@ -513,7 +491,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
       <ConfirmDeleteModal
         visible={visible}
         headerTitle={`Delete selected widget${
-          selectedWidgets.length > 1 ? 's' : ''
+          selectedWidgetIds.length > 1 ? 's' : ''
         }?`}
         cancelTitle='Cancel'
         submitTitle='Delete'
@@ -521,7 +499,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           <Box>
             <Box variant='p'>
               {`Do you want to delete the selected widget${
-                selectedWidgets.length > 1 ? 's' : ''
+                selectedWidgetIds.length > 1 ? 's' : ''
               }? All changes will be lost.`}
             </Box>
             <Box variant='p' padding={{ top: 'm' }}>

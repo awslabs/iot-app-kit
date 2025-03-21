@@ -47,7 +47,7 @@ it('sets the active gesture to move when moving an unselected widget', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [],
+        selectedWidgetIds: [],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -73,18 +73,7 @@ it('sets the active gesture to move when moving a selected widget', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [
-          {
-            id: 'widget-1',
-            x: 0,
-            y: 0,
-            z: 0,
-            height: 1,
-            width: 1,
-            type: 'kpi',
-            properties: {},
-          },
-        ],
+        selectedWidgetIds: ['widget-id'],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -110,18 +99,7 @@ it('sets the active gesture to resize when moving an anchor', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [
-          {
-            id: 'widget-1',
-            x: 0,
-            y: 0,
-            z: 0,
-            height: 1,
-            width: 1,
-            type: 'kpi',
-            properties: {},
-          },
-        ],
+        selectedWidgetIds: ['widget-1'],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -147,18 +125,7 @@ it('sets the active gesture to select when moving on the grid', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [
-          {
-            id: 'widget-1',
-            x: 0,
-            y: 0,
-            z: 0,
-            height: 1,
-            width: 1,
-            type: 'kpi',
-            properties: {},
-          },
-        ],
+        selectedWidgetIds: ['widget-1'],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -184,18 +151,7 @@ it('resets the active gesture after the gesture ends', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [
-          {
-            id: 'widget-1',
-            x: 0,
-            y: 0,
-            z: 0,
-            height: 1,
-            width: 1,
-            type: 'kpi',
-            properties: {},
-          },
-        ],
+        selectedWidgetIds: ['widget-1'],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }

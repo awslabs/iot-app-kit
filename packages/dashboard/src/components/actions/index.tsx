@@ -66,12 +66,7 @@ const Actions: React.FC<ActionsProps> = ({
 
   const handleOnReadOnly = () => {
     dispatch(onToggleReadOnly());
-    dispatch(
-      onSelectWidgetsAction({
-        widgets: [],
-        union: false,
-      })
-    );
+    dispatch(onSelectWidgetsAction({ widgetIds: [] }));
 
     metricsRecorder?.record({
       // When it is readOnly, it is toggled to Edit; Preview otherwise

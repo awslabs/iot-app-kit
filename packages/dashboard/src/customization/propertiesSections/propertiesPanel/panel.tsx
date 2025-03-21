@@ -1,42 +1,55 @@
-import { useLayoutEffect, useState } from 'react';
 import Box from '@cloudscape-design/components/box';
-import Tabs from '@cloudscape-design/components/tabs';
+import Tabs, { type TabsProps } from '@cloudscape-design/components/tabs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { useSelection } from '../../propertiesSection';
 import { PropertiesPanelEmpty } from './emptyPanel';
 import { StylesSection } from './styleTab';
 import { PropertiesAndAlarmsSettingsConfiguration } from '../propertiesAndAlarmsSettings';
 import { ThresholdSettingsConfiguration } from '../thresholdSettings';
-import { isJust } from '~/util/maybe';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidget';
+import { useCallback, useEffect, useState } from 'react';
+
+const STYLE_TAB_ID = 'style';
+const PROPERTIES_TAB_ID = 'properties';
+const THRESHOLDS_TAB_ID = 'thresholds';
+type SelectedTabId =
+  | typeof STYLE_TAB_ID
+  | typeof PROPERTIES_TAB_ID
+  | typeof THRESHOLDS_TAB_ID;
 
 /** Panel element responsible for rendering chart configuration sections. */
 export const PropertiesPanel = () => {
-  const selection = useSelection();
+  const [selectedTabId, setSelectedTabId] = useState<SelectedTabId>('style');
   const selectedWidgets = useSelectedWidgets();
-  const selectedWidgetId = selectedWidgets[0]?.id;
-  const [activeTabId, setActiveTabId] = useState('style');
+  const firstSelectedWidget = selectedWidgets.at(0);
 
-  useLayoutEffect(() => {
-    setActiveTabId('style'); // Default "Style" tab upon widget selection
-  }, [selectedWidgetId]);
+  useEffect(() => {
+    setSelectedTabId('style');
+  }, [firstSelectedWidget?.id]);
 
-  return selection ? (
+  const handleSelectTab = useCallback(
+    (e: Parameters<NonNullable<TabsProps['onChange']>>[0]) => {
+      setSelectedTabId(e.detail.activeTabId as SelectedTabId);
+    },
+    []
+  );
+
+  return selectedWidgets.length > 0 ? (
     <Box>
       <Tabs
-        onChange={({ detail }) => setActiveTabId(detail.activeTabId)}
-        activeTabId={activeTabId}
         disableContentPaddings
+        activeTabId={selectedTabId}
+        onChange={handleSelectTab}
         tabs={[
           {
             label: 'Style',
-            id: 'style',
+            id: STYLE_TAB_ID,
             content: <StylesSection />,
           },
           {
             label: 'Properties',
-            id: 'properties',
-            disabled: isJust(selection.type) && selection.type.value === 'text',
+            id: PROPERTIES_TAB_ID,
+            // FIXME: Remove widget specific code
+            disabled: firstSelectedWidget?.type === 'text',
             content: (
               <SpaceBetween size='xs' direction='vertical'>
                 <PropertiesAndAlarmsSettingsConfiguration />
@@ -45,8 +58,9 @@ export const PropertiesPanel = () => {
           },
           {
             label: 'Thresholds',
-            id: 'thresholds',
-            disabled: isJust(selection.type) && selection.type.value === 'text',
+            id: THRESHOLDS_TAB_ID,
+            // FIXME: Remove widget specific code
+            disabled: firstSelectedWidget?.type === 'text',
             content: (
               <SpaceBetween size='xs' direction='vertical'>
                 <ThresholdSettingsConfiguration />

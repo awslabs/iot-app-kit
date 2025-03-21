@@ -5,7 +5,7 @@ import './section.css';
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
 import { isNumeric } from '@iot-app-kit/core';
 import DecimalPlaces from '~/components/decimalPlaces';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgetIds } from '~/hooks/useSelectedWidget';
 import {
   FormLabel,
   StyledExpandableSection,
@@ -18,8 +18,8 @@ export const DecimalPlacesSection = ({
   significantDigits: number | undefined;
   updateSignificantDigits: (newValue: number | undefined) => void;
 }) => {
-  const selectedWidgets = useSelectedWidgets();
-  const selectedWidgetId = selectedWidgets[0]?.id;
+  const selectedWidgets = useSelectedWidgetIds();
+  const selectedWidgetId = selectedWidgets.at(0);
 
   const onSignificantDigitsChange = (value: string) => {
     const newValue = isNumeric(value) ? parseInt(value) || 0 : undefined;
@@ -46,7 +46,7 @@ export const DecimalPlacesSection = ({
               <DecimalPlaces
                 onSignificantDigitsChange={onSignificantDigitsChange}
                 significantDigits={significantDigits}
-                shouldClearErrors={selectedWidgetId}
+                shouldClearErrors={Boolean(selectedWidgetId)}
               />
             </div>
           </div>

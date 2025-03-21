@@ -3,6 +3,7 @@ import maxBy from 'lodash-es/maxBy';
 import minBy from 'lodash-es/minBy';
 import xorBy from 'lodash-es/xorBy';
 import type { DashboardState } from '../../state';
+import { getWidgets } from '~/hooks/useSelectedWidget';
 
 export interface BringWidgetsToFrontAction extends PayloadAction<null> {
   type: 'BRING_WIDGETS_TO_FRONT';
@@ -15,8 +16,11 @@ export const onBringWidgetsToFrontAction = (): BringWidgetsToFrontAction => ({
 
 export const bringWidgetsToFront = (state: DashboardState): DashboardState => {
   const widgets = state.dashboardConfiguration.widgets;
-  const selectedWidgets = state.selectedWidgets;
-
+  const selectedWidgetIds = state.selectedWidgetIds;
+  const selectedWidgets = getWidgets(
+    selectedWidgetIds,
+    state.dashboardConfiguration.widgets
+  );
   const unselectedWidgets = xorBy(widgets, selectedWidgets, 'id');
 
   // We don't need to do anything if all widgets are selected
@@ -24,7 +28,6 @@ export const bringWidgetsToFront = (state: DashboardState): DashboardState => {
     return state;
   }
 
-  const selectedWidgetsIds = selectedWidgets.map(({ id }) => id);
   const topZIndex = maxBy(unselectedWidgets, 'z')?.z ?? 0;
   const minSelectedZ = minBy(selectedWidgets, 'z')?.z ?? 0;
 
@@ -32,12 +35,8 @@ export const bringWidgetsToFront = (state: DashboardState): DashboardState => {
 
   const translatedWidgets = widgets.map((widget) => ({
     ...widget,
-    z: selectedWidgetsIds.includes(widget.id) ? widget.z + zOffset : widget.z,
+    z: selectedWidgetIds.includes(widget.id) ? widget.z + zOffset : widget.z,
   }));
-
-  const translatedSelectedWidgets = translatedWidgets.filter((widget) =>
-    selectedWidgetsIds.includes(widget.id)
-  );
 
   return {
     ...state,
@@ -45,6 +44,6 @@ export const bringWidgetsToFront = (state: DashboardState): DashboardState => {
       ...state.dashboardConfiguration,
       widgets: translatedWidgets,
     },
-    selectedWidgets: translatedSelectedWidgets,
+    selectedWidgetIds,
   };
 };

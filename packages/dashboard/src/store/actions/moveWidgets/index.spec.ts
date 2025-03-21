@@ -26,7 +26,7 @@ describe('move', () => {
       moveWidgets(
         setupDashboardState([MOCK_KPI_WIDGET]),
         onMoveWidgetsAction({
-          widgets: [],
+          widgetIds: [],
           vector: { x: 1, y: 0 },
         })
       ).dashboardConfiguration.widgets
@@ -45,7 +45,7 @@ describe('move', () => {
       moveWidgets(
         setupDashboardState([widget]),
         onMoveWidgetsAction({
-          widgets: [widget],
+          widgetIds: [widget.id],
           vector: { x: 0.1, y: 0.1 },
         })
       ).dashboardConfiguration.widgets
@@ -72,7 +72,7 @@ describe('move', () => {
       moveWidgets(
         dashboardState,
         onMoveWidgetsAction({
-          widgets: [widget],
+          widgetIds: [widget.id],
           vector: { x: dashboardState.grid.width, y: 0 },
         })
       ).dashboardConfiguration.widgets
@@ -104,7 +104,7 @@ describe('move', () => {
       moveWidgets(
         setupDashboardState([widget1, widget2]),
         onMoveWidgetsAction({
-          widgets: [widget1],
+          widgetIds: [widget1.id],
           vector: { x: 1, y: 1 },
         })
       ).dashboardConfiguration.widgets
@@ -134,7 +134,7 @@ describe('move', () => {
       moveWidgets(
         setupDashboardState([widget]),
         onMoveWidgetsAction({
-          widgets: [widget],
+          widgetIds: [widget.id],
           vector: { x: 0, y: 0 },
         })
       ).dashboardConfiguration.widgets
@@ -172,7 +172,7 @@ describe('move', () => {
       moveWidgets(
         setupDashboardState([widget1, widget2, widget3]),
         onMoveWidgetsAction({
-          widgets: [widget1, widget2],
+          widgetIds: [widget1.id, widget2.id],
           vector: { x: 1, y: 1 },
         })
       ).dashboardConfiguration.widgets
@@ -206,7 +206,7 @@ describe('move', () => {
       moveWidgets(
         setupDashboardState([widget1]),
         onMoveWidgetsAction({
-          widgets: [widget1],
+          widgetIds: [widget1.id],
           vector: { x: 1.1, y: 1.1 },
           complete: true,
         })
@@ -240,7 +240,7 @@ describe('move', () => {
       moveWidgets(
         dashboardState,
         onMoveWidgetsAction({
-          widgets: [widget1, widget2],
+          widgetIds: [widget1.id, widget2.id],
           vector: {
             x: dashboardState.grid.width,
             y: dashboardState.grid.height,

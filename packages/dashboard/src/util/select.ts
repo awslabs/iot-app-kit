@@ -42,13 +42,10 @@ export const getSelectedWidgetIds = ({
   dashboardWidgets: DashboardWidget[];
 }) =>
   getSelectedWidgets({ selectedRect, cellSize, dashboardWidgets }).map(
-    (widget) => widget.id
+    ({ id }) => id
   );
 
-/**
- *
- * return the first widget that intersects a position
- */
+/** Return the first widget that intersects a position. */
 export const pointSelect = ({
   position,
   cellSize,
@@ -58,10 +55,8 @@ export const pointSelect = ({
   cellSize: number;
   dashboardWidgets: DashboardWidget[];
 }): DashboardWidget | undefined => {
-  /**
-   * TODO edge case where bottom most pixel on a widget does not pick up the intersection
-   * and the top most pixel above a widget picks up the intersection
-   */
+  // TODO: edge case where bottom most pixel on a widget does not pick up the intersection
+  // and the top most pixel above a widget picks up the intersection
   const { x, y } = position;
   const intersectedWidgets = getSelectedWidgets({
     selectedRect: { x, y, width: 1, height: 1 },

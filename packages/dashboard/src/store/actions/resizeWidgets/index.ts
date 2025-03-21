@@ -1,10 +1,11 @@
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
-import type { Position, DashboardWidget } from '~/types';
+import type { DashboardWidget, Position } from '~/types';
 import type { DashboardState } from '../../state';
 import { transformWidget } from '~/util/transformWidget';
 import { resizeSelectionBox } from '~/util/resizeSelectionBox';
+import { getWidgets } from '~/hooks/useSelectedWidget';
 
 export type Anchor =
   | 'top-right'
@@ -15,12 +16,13 @@ export type Anchor =
   | 'right'
   | 'top'
   | 'bottom';
-type ResizeWidgetsActionPayload = {
+
+export interface ResizeWidgetsActionPayload {
+  widgetIds: readonly string[];
   anchor: Anchor;
-  widgets: DashboardWidget[];
   vector: Position;
   complete?: boolean;
-};
+}
 
 export interface ResizeWidgetsAction extends Action {
   type: 'RESIZE_WIDGETS';
@@ -36,13 +38,14 @@ export const onResizeWidgetsAction = (
 
 export const resizeWidgets = (
   state: DashboardState,
-  action: ResizeWidgetsAction
+  { payload: { widgetIds, anchor, vector, complete } }: ResizeWidgetsAction
 ): DashboardState => {
-  const { anchor, widgets, vector, complete } = action.payload;
+  const selectedWidgets = getWidgets(
+    widgetIds,
+    state.dashboardConfiguration.widgets
+  );
 
-  const selectedWidgetIds = widgets.map((w) => w.id);
-
-  const selectionBox = getSelectionBox(widgets);
+  const selectionBox = getSelectionBox(selectedWidgets);
 
   if (!selectionBox) return state;
 
@@ -62,16 +65,17 @@ export const resizeWidgets = (
 
   const updateWidgets = (widgets: DashboardWidget[]) =>
     widgets.map((widget) => {
-      if (!selectedWidgetIds.includes(widget.id)) return widget;
+      if (!widgetIds.includes(widget.id)) return widget;
       return resizer(widget);
     });
+
+  const widgets = updateWidgets(state.dashboardConfiguration.widgets);
 
   return {
     ...state,
     dashboardConfiguration: {
       ...state.dashboardConfiguration,
-      widgets: updateWidgets(state.dashboardConfiguration.widgets),
+      widgets,
     },
-    selectedWidgets: updateWidgets(state.selectedWidgets),
   };
 };

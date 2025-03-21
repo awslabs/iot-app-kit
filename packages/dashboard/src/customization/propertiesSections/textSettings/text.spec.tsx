@@ -22,7 +22,7 @@ const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [widget],
   },
-  selectedWidgets: [widget],
+  selectedWidgetIds: [widget.id],
 };
 
 it('renders font style settings reflecting the initial values passed in', () => {

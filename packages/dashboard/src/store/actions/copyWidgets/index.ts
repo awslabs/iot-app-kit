@@ -1,11 +1,9 @@
-import intersectionBy from 'lodash-es/intersectionBy';
 import type { Action } from 'redux';
-import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
 
-type CopyWidgetsActionPayload = {
-  widgets: DashboardWidget[];
-};
+export interface CopyWidgetsActionPayload {
+  widgetIds: readonly string[];
+}
 
 export interface CopyWidgetsAction extends Action {
   type: 'COPY_WIDGETS';
@@ -21,17 +19,11 @@ export const onCopyWidgetsAction = (
 
 export const copyWidgets = (
   state: DashboardState,
-  action: CopyWidgetsAction
+  { payload: { widgetIds } }: CopyWidgetsAction
 ): DashboardState => {
-  const copiedWidgets = intersectionBy(
-    state.dashboardConfiguration.widgets,
-    action.payload.widgets,
-    'id'
-  );
-
   return {
     ...state,
-    copiedWidgets,
+    copiedWidgetIds: widgetIds,
     pasteCounter: 0,
   };
 };

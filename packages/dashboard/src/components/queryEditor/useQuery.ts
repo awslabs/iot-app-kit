@@ -1,4 +1,4 @@
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidget';
 import { useDispatch } from 'react-redux';
 import { onUpdateWidgetsAction } from '~/store/actions';
 import { type DashboardWidget, type IoTSiteWiseDataStreamQuery } from '~/types';
@@ -65,9 +65,7 @@ export function useQuery(): [
   ) => void
 ] {
   const dispatch = useDispatch();
-  const selectedWidgets = useSelectedWidgets<{
-    queryConfig: { query: IoTSiteWiseDataStreamQuery };
-  }>();
+  const selectedWidgets = useSelectedWidgets();
   const selectedWidget = isOneWidgetSelected(selectedWidgets)
     ? getFirstWidget(selectedWidgets)
     : undefined;
@@ -114,9 +112,9 @@ export function useQuery(): [
 }
 
 function isOneWidgetSelected(
-  widgets: WidgetWithQuery[]
-): widgets is [WidgetWithQuery] {
-  return widgets.length === 1;
+  widgetIds: DashboardWidget[] | WidgetWithQuery[]
+): widgetIds is [WidgetWithQuery] {
+  return widgetIds.length === 1;
 }
 
 function isWidget(

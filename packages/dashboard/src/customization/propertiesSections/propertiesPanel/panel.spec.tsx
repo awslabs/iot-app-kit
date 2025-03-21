@@ -1,82 +1,32 @@
-import { QueryClient } from '@tanstack/react-query';
-
-vi.mock('../../data/query-client', () => ({
-  queryClient: new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  }),
-}));
-
 import {
   IoTSiteWise,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import {
-  type RenderResult,
-  act,
-  waitFor,
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-} from '@testing-library/react';
-import createWrapper from '@cloudscape-design/components/test-utils/dom';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-
 import { PropertiesPanel } from './panel';
 import { configureDashboardStore } from '~/store';
 import { type DashboardState } from '~/store/state';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
+  MOCK_TEXT_WIDGET,
 } from '../../../../testing/mocks';
 import { mockAssetDescription } from '../../../../testing/mocks/siteWiseSDK';
-import { type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import { type QueryWidget } from '~/customization/widgets/types';
 import { type DashboardIotSiteWiseClients } from '~/types';
 import {
   createMockIoTEventsSDK,
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
 import { ClientContext } from '~/components/dashboard/clientContext';
+import { userEvent } from '@testing-library/user-event';
 
-const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
-  assetId: 'mock-id',
-  properties: [
-    { propertyId: 'property-1', refId: 'p1' },
-    { propertyId: 'property-2', refId: 'p2' },
-    { propertyId: 'e70495ff-c016-4175-9012-62c37857e0d1' },
-  ],
-};
-
-const styleSettings = {
-  p1: {
-    color: '#00ff00',
-  },
-  p2: {
-    color: '#0000ff',
-  },
-};
-const MockWidget: QueryWidget = {
-  ...MOCK_LINE_CHART_WIDGET,
-  properties: {
-    queryConfig: {
-      source: 'iotsitewise',
-      query: {
-        assets: [MockAssetQuery],
-      },
-    },
-    styleSettings,
-  },
-};
+const user = userEvent.setup();
 
 type SetupStoreOptions = {
   widgets?: DashboardState['dashboardConfiguration']['widgets'];
-  selectedWidgets?: DashboardState['selectedWidgets'];
+  selectedWidgets?: DashboardState['selectedWidgetIds'];
 };
 
 const setupStore = ({ widgets, selectedWidgets }: SetupStoreOptions) =>
@@ -84,15 +34,12 @@ const setupStore = ({ widgets, selectedWidgets }: SetupStoreOptions) =>
     dashboardConfiguration: {
       widgets,
     },
-    selectedWidgets,
+    selectedWidgetIds: selectedWidgets,
   });
 
-const renderTestComponentAsync = async (
-  options?: SetupStoreOptions
-): Promise<RenderResult> => {
+const renderTestComponent = (options?: SetupStoreOptions) => {
   const optionsWithDefault = {
-    widgets: [MockWidget],
-    selectedWidgets: [MockWidget],
+    widgets: [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_TEXT_WIDGET],
     ...options,
   };
 
@@ -112,14 +59,12 @@ const renderTestComponentAsync = async (
     iotSiteWise: new IoTSiteWise(),
   };
 
-  const element = await waitFor(async () =>
-    render(
-      <ClientContext.Provider value={clientContext}>
-        <Provider store={setupStore({ widgets, selectedWidgets })}>
-          <PropertiesPanel />
-        </Provider>
-      </ClientContext.Provider>
-    )
+  const element = render(
+    <ClientContext.Provider value={clientContext}>
+      <Provider store={setupStore({ widgets, selectedWidgets })}>
+        <PropertiesPanel />
+      </Provider>
+    </ClientContext.Provider>
   );
 
   if (element === undefined) throw new Error('Something went wrong!');
@@ -127,66 +72,171 @@ const renderTestComponentAsync = async (
   return element;
 };
 
-describe(`${PropertiesPanel.name}`, () => {
-  beforeEach(() => {
-    vi.resetAllMocks();
+beforeEach(() => {
+  vi.resetAllMocks();
+});
+
+test('empty state when no component selected', () => {
+  renderTestComponent({ selectedWidgets: [] });
+
+  expect(screen.getByText('Select a widget to configure.')).toBeVisible();
+});
+
+test('tabs rendered when component selected', () => {
+  renderTestComponent({ selectedWidgets: [MOCK_KPI_WIDGET.id] });
+
+  // style tab is selected initially
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeVisible();
+});
+
+test('tab selection', async () => {
+  renderTestComponent({ selectedWidgets: [MOCK_KPI_WIDGET.id] });
+
+  // style tab is selected
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeVisible();
+
+  // select properties tab
+  await user.click(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  );
+
+  // properties tab is selected
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: true })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeVisible();
+
+  // select thresholds tab
+  await user.click(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  );
+
+  // thresholds tab is selected
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: true })
+  ).toBeVisible();
+
+  // select style tab
+  await user.click(screen.getByRole('tab', { name: 'Style', selected: false }));
+
+  // style tab is selected again
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeVisible();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeVisible();
+});
+
+test('should render the style section when switched between widgets', async () => {
+  const { unmount } = renderTestComponent({
+    selectedWidgets: [MOCK_LINE_CHART_WIDGET.id],
   });
 
-  afterEach(cleanup);
+  // style tab is selected
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeVisible();
 
-  it('should render tabs', async () => {
-    await renderTestComponentAsync();
+  // select thresholds tab
+  await user.click(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  );
 
-    expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Properties')).toBeVisible();
-    expect(screen.getByText('Thresholds')).toBeVisible();
+  // thresholds tab is selected
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: true })
+  ).toBeVisible();
+
+  // change selected widget
+  // FIXME: This is a hack to prevent rendering the component multiple times
+  unmount();
+  renderTestComponent({
+    selectedWidgets: [MOCK_KPI_WIDGET.id],
   });
 
-  it('should render an empty selection when nothing is selected', async () => {
-    await renderTestComponentAsync({ selectedWidgets: [] });
+  // style tab is selected again
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeVisible();
+});
 
-    expect(screen.getByText('Select a widget to configure.')).toBeVisible();
+// FIXME: Remove widget specific test
+test('text widget', async () => {
+  renderTestComponent({
+    selectedWidgets: [MOCK_TEXT_WIDGET.id],
   });
 
-  it('should render the style section', async () => {
-    await renderTestComponentAsync();
+  // text widget only supports styles tab
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeEnabled();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeDisabled();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeDisabled();
 
-    expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Axis')).toBeVisible();
-    expect(screen.getByText('Format data')).toBeVisible();
-  });
-  it('should render the style section when switched between widgets', async () => {
-    await renderTestComponentAsync();
+  // try to select properties tab
+  await user.click(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  );
 
-    expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Axis')).toBeVisible();
-    expect(screen.getByText('Format data')).toBeVisible();
+  // nothing happened
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeEnabled();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeDisabled();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeDisabled();
 
-    const thresholdsTab = screen.getByTestId('thresholds');
-    expect(thresholdsTab).toBeVisible();
+  // try to select thresholds tab
+  await user.click(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  );
 
-    fireEvent.click(thresholdsTab);
-    expect(screen.getByText('Add a threshold')).toBeVisible();
-
-    const options = {
-      widgets: [MOCK_KPI_WIDGET],
-      selectedWidgets: [MOCK_KPI_WIDGET],
-    };
-
-    await renderTestComponentAsync(options);
-    expect(screen.getByText('Format data')).toBeVisible();
-  });
-
-  it('should render an empty thresholds section', async () => {
-    const element = await renderTestComponentAsync();
-    const trigger = createWrapper(element.baseElement);
-
-    expect(screen.getByText('Thresholds')).toBeVisible();
-
-    act(() => {
-      trigger.findTabs()?.findTabLinkByIndex(3)?.click();
-    });
-
-    expect(screen.getByText('Add a threshold')).toBeVisible();
-  });
+  // nothing happened
+  expect(
+    screen.getByRole('tab', { name: 'Style', selected: true })
+  ).toBeEnabled();
+  expect(
+    screen.getByRole('tab', { name: 'Properties', selected: false })
+  ).toBeDisabled();
+  expect(
+    screen.getByRole('tab', { name: 'Thresholds', selected: false })
+  ).toBeDisabled();
 });

@@ -69,7 +69,9 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
   const handleDelete: NonNullable<ButtonProps['onClick']> = (e) => {
     e.stopPropagation();
     dispatch(onChangeDashboardGridEnabledAction({ enabled: false }));
-    dispatch(onSelectWidgetsAction({ widgets: [widget], union: false }));
+    dispatch(
+      onSelectWidgetsAction({ widgetIds: [widget.id], shouldAppend: false })
+    );
     setVisible(true);
   };
 
