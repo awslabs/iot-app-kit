@@ -62,7 +62,7 @@
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",
     "vite": "^5.4.12",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.9"
   },
   "peerDependencies": {
     "@aws-sdk/client-iotsitewise": "^3.696.0"
