@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/resource-explorer",
-  "version": "12.5.0",
+  "version": "12.5.1",
   "license": "Apache-2.0",
   "source": "./src/index.ts",
   "type": "module",
@@ -47,8 +47,8 @@
     "pack": "npm pack"
   },
   "devDependencies": {
-    "@iot-app-kit/testing-util": "12.5.0",
-    "@iot-app-kit/ts-config": "12.5.0",
+    "@iot-app-kit/testing-util": "12.5.1",
+    "@iot-app-kit/ts-config": "12.5.1",
     "@playwright/test": "^1.48.2",
     "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addon-links": "^8.4.5",
@@ -68,7 +68,7 @@
     "@vitest/coverage-v8": "^2.1.5",
     "babel-plugin-formatjs": "10.5.3",
     "copyfiles": "^2.4.1",
-    "eslint-config-iot-app-kit": "12.5.0",
+    "eslint-config-iot-app-kit": "12.5.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "jest-extended": "^3.2.4",
     "react": "^18.2.0",
@@ -89,10 +89,10 @@
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.32",
     "@iot-app-kit/charts-core": "^2.1.2",
-    "@iot-app-kit/core": "12.5.0",
-    "@iot-app-kit/core-util": "12.5.0",
-    "@iot-app-kit/component-core": "12.5.0",
-    "@iot-app-kit/source-iotsitewise": "12.5.0",
+    "@iot-app-kit/core": "12.5.1",
+    "@iot-app-kit/core-util": "12.5.1",
+    "@iot-app-kit/component-core": "12.5.1",
+    "@iot-app-kit/source-iotsitewise": "12.5.1",
     "@tanstack/react-query": "^5.32.1",
     "react-use": "17.4.0"
   },
