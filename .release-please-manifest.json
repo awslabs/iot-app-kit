@@ -1,15 +1,15 @@
 {
-  "packages/core": "12.5.0",
-  "packages/dashboard": "12.5.0",
-  "apps/doc-site": "12.5.0",
-  "packages/core-util": "12.5.0",
-  "packages/react-components": "12.5.0",
-  "packages/scene-composer": "12.5.0",
-  "packages/source-iotsitewise": "12.5.0",
-  "packages/source-iottwinmaker": "12.5.0",
-  ".": "12.5.0",
-  "packages/testing-util": "12.5.0",
-  "packages/tools-iottwinmaker": "12.5.0",
-  "configuration/ts-config": "12.5.0",
-  "configuration/eslint-config": "12.5.0"
+  "packages/core": "12.5.1",
+  "packages/dashboard": "12.5.1",
+  "apps/doc-site": "12.5.1",
+  "packages/core-util": "12.5.1",
+  "packages/react-components": "12.5.1",
+  "packages/scene-composer": "12.5.1",
+  "packages/source-iotsitewise": "12.5.1",
+  "packages/source-iottwinmaker": "12.5.1",
+  ".": "12.5.1",
+  "packages/testing-util": "12.5.1",
+  "packages/tools-iottwinmaker": "12.5.1",
+  "configuration/ts-config": "12.5.1",
+  "configuration/eslint-config": "12.5.1"
 }

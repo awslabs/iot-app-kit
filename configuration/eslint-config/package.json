@@ -32,5 +32,5 @@
     "eslint-import-resolver-typescript": "^3.6.0",
     "typescript": "^5.5.4"
   },
-  "version": "12.5.0"
+  "version": "12.5.1"
 }
