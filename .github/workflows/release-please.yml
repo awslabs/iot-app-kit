@@ -28,7 +28,7 @@ jobs:
           lfs: 'true'
 
       - name: Setting up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 18.x
 
