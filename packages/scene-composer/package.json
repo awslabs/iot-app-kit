@@ -123,7 +123,7 @@
     "babel-plugin-formatjs": "10.5.3",
     "copyfiles": "^2.4.1",
     "eslint-config-iot-app-kit": "12.5.1",
-    "happy-dom": "^15.11.6",
+    "happy-dom": "^20.0.0",
     "husky": "8.0.3",
     "jest-extended": "^3.2.4",
     "jsdom": "^25.0.1",
