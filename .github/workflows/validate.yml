@@ -19,7 +19,7 @@ jobs:
           lfs: 'true'
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 18
           cache: 'npm'
@@ -73,7 +73,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 18
           cache: 'npm'
@@ -135,7 +135,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 18
           cache: 'npm'
@@ -219,7 +219,7 @@ jobs:
           lfs: 'true'
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 18
           cache: 'npm'
