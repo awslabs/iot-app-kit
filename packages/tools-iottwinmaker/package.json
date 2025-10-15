@@ -57,7 +57,7 @@
     "pkg": "^5.8.0",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",
-    "vite": "^5.4.19",
+    "vite": "^5.4.20",
     "vitest": "^2.1.5"
   },
   "dependencies": {
