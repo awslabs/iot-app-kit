@@ -55,7 +55,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "@playwright/test": "^1.48.2",
+    "@playwright/test": "^1.56.1",
     "husky": "^8.0.3",
     "rimraf": "^5.0.1",
     "stylelint": "14.16.1",

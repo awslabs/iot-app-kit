@@ -97,7 +97,7 @@
     "@cloudscape-design/global-styles": "^1.0.25",
     "@formatjs/cli": "^6.3.8",
     "@iot-app-kit/ts-config": "12.5.1",
-    "@playwright/test": "^1.48.2",
+    "@playwright/test": "^1.56.1",
     "@react-spring/three": "^9.7.2",
     "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addon-links": "^8.4.5",
