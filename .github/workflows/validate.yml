@@ -27,7 +27,7 @@ jobs:
 
       - name: node_modules cache
         id: npm-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
@@ -81,7 +81,7 @@ jobs:
 
       - name: node_modules cache
         id: npm-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
@@ -96,7 +96,7 @@ jobs:
         run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
 
       - name: Turbo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '.turbo'
           key: ${{ runner.os }}-turbo-unit-${{ matrix.package}}-${{ github.sha }}
@@ -104,7 +104,7 @@ jobs:
             ${{ runner.os }}-turbo-unit-${{ matrix.package}}-
 
       - name: Test and lint cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/.cache'
           key: ${{ runner.os }}-test-lint-${{ matrix.package}}-${{ github.sha }}
@@ -143,7 +143,7 @@ jobs:
 
       - name: node_modules cache
         id: npm-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-node_modules-${{hashFiles('**/package-lock.json')}}
@@ -157,7 +157,7 @@ jobs:
         run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
 
       - name: Turbo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '.turbo'
           key: ${{ runner.os }}-turbo-playwright-${{ matrix.package.name }}-${{ matrix.package.shardIndex }}-${{ github.sha }}
@@ -169,7 +169,7 @@ jobs:
         run: echo "::set-output name=version::$(npm info @playwright/test version)"
 
       - name: Playwright cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: playwright-cache
         with:
           path: |
