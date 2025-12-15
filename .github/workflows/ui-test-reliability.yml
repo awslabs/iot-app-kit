@@ -44,13 +44,13 @@ jobs:
       - name: test reliability
         run: npm run test:reliability --production
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: Playwright failed test-results
           path: packages/**/test-results
           retention-days: 30
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: playwright-report
