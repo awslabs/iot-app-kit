@@ -101,7 +101,7 @@
     "react-dom": "^18.2.0",
     "react-intl": "^6.8.7",
     "rimraf": "^5.0.1",
-    "storybook": "^8.4.5",
+    "storybook": "^8.6.15",
     "storybook-dark-mode": "^3.0.0",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "type-fest": "^4.28.1",
