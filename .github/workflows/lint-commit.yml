@@ -3,6 +3,9 @@ name: "Lint PR title and commit message"
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   main:
     name: Validate PR title
