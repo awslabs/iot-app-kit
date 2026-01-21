@@ -133,7 +133,7 @@
     "dompurify": "^3.2.4",
     "echarts": "^5.4.3",
     "is-hotkey": "^0.2.0",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "luxon": "^3.5.0",
     "parse-duration": "^1.0.3",
     "react-cytoscapejs": "^2.0.0",
