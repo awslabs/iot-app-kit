@@ -34,7 +34,7 @@
     "@types/node": "^18.16.18",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint-config-iot-app-kit": "*",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "msw-storybook-addon": "^2.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
