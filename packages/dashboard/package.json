@@ -112,7 +112,7 @@
     "tiny-invariant": "^1.3.1",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.0",
-    "validator": "^13.15.20"
+    "validator": "^13.15.22"
   },
   "peerDependencies": {
     "@aws-sdk/client-iot-events": "^3.354.0",
