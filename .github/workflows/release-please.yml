@@ -3,6 +3,10 @@ on:
     branches:
       - main
 name: Create release PR
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
