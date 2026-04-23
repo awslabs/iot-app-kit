@@ -23,7 +23,7 @@
     "msw": "^2.6.2",
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",
-    "uuid": "^9.0.0"
+    "uuid": "^14.0.0"
   },
   "msw": {
     "workerDirectory": "public"
