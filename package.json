@@ -60,7 +60,7 @@
     "rimraf": "^5.0.1",
     "stylelint": "14.16.1",
     "stylelint-config-standard": "25.0.0",
-    "turbo": "^2.2.3"
+    "turbo": "^2.9.14"
   },
   "npm-pretty-much": {
     "useWorkspaces": true,
