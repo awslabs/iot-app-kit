@@ -79,7 +79,7 @@
     "type-fest": "^4.28.1",
     "typescript": "^5.5.4",
     "vite": "^6.4.2",
-    "vitest": "^2.1.5"
+    "vitest": "^4.1.0"
   },
   "dependencies": {
     "@cloudscape-design/components": "3.0.693",

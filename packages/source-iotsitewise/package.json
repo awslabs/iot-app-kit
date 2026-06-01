@@ -72,7 +72,7 @@
     "rimraf": "^5.0.1",
     "typescript": "^5.5.4",
     "vite": "^6.4.2",
-    "vitest": "^2.1.5"
+    "vitest": "^4.1.0"
   },
   "peerDependencies": {
     "@aws-sdk/client-iot-events": "^3.354.0",
