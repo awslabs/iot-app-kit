@@ -83,7 +83,10 @@ export default {
 type Story = StoryObj<typeof Dashboard>;
 
 export const Main: Story = {
-  render: (_story, { args }) => {
+  render: (
+    _story: unknown,
+    { args }: { args: React.ComponentProps<typeof Dashboard> }
+  ) => {
     const [dashboardConfig, setDashboardConfig] = useState(
       args.dashboardConfiguration
     );

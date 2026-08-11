@@ -32,6 +32,15 @@ exports[`RadioButton > it should render the Second Option as a radio button 1`] 
 />
 `;
 
+exports[`RadioButton > it should render the Second Option as a radio button 2`] = `
+<input
+  checked=""
+  data-testid="two"
+  type="radio"
+  value="radio two"
+/>
+`;
+
 exports[`RadioButton > it should render the Third Option as a radio button 1`] = `
 <input
   data-testid="three"

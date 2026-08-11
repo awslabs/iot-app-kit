@@ -62,7 +62,10 @@ export default {
 type Story = StoryObj<typeof Dashboard>;
 
 export const Main: Story = {
-  render: (_story, { args }) => {
+  render: (
+    _story: unknown,
+    { args }: { args: React.ComponentProps<typeof Dashboard> }
+  ) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [initialViewMode, setInitialViewMode] = useState<'preview' | 'edit'>(
       'edit'
