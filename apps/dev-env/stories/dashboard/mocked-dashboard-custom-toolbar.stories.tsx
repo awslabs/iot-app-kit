@@ -98,7 +98,10 @@ const ViewportPicker = (props: {
 };
 
 export const EditableDashboard: Story = {
-  render: function EditableDashboard(_story, { args }) {
+  render: function EditableDashboard(
+    _story: unknown,
+    { args }: { args: React.ComponentProps<typeof Dashboard> }
+  ) {
     const [viewmode, setViewmode] = useState<'edit' | 'preview'>('edit');
     const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
     const [dashboardConfiguration, setDashboardConfiguration] =
@@ -171,7 +174,10 @@ export const EditableDashboard: Story = {
 };
 
 export const ViewOnlyDashboard: Story = {
-  render: function ViewOnlyDashboard(_story, { args }) {
+  render: function ViewOnlyDashboard(
+    _story: unknown,
+    { args }: { args: React.ComponentProps<typeof Dashboard> }
+  ) {
     const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
 
     const onViewportChange = (v: Viewport) => {

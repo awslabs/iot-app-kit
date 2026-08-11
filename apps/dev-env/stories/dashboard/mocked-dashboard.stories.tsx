@@ -1,5 +1,5 @@
 import { registerPlugin } from '@iot-app-kit/core';
-import { Dashboard } from '@iot-app-kit/dashboard';
+import { Dashboard, type DashboardConfiguration } from '@iot-app-kit/dashboard';
 import { DEFAULT_REGION } from '@iot-app-kit/data-mocked/constants';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { MOCK_DASHBOARD_CONFIG } from './mockData';
@@ -31,7 +31,7 @@ const meta = {
       },
       widgets: [],
     },
-    onDashboardConfigurationChange: (config) => {
+    onDashboardConfigurationChange: (config: DashboardConfiguration) => {
       console.log('dashboard config changed to: ', config);
     },
     onSave: () => Promise.resolve(),

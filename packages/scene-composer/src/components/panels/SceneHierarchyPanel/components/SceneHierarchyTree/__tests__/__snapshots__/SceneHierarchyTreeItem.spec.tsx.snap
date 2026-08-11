@@ -78,6 +78,85 @@ exports[`SceneHierarchyTreeItem > should bubble up when expanded 1`] = `
 </div>
 `;
 
+exports[`SceneHierarchyTreeItem > should bubble up when expanded 2`] = `
+<div>
+  <li
+    acceptdrop="ModelRef,Camera,Light,Animation,Tag,ModelShader,MotionIndicator,DataOverlay,EntityBinding,PlaneGeometry,Space,default"
+    class="tm-tree-item"
+    data="[object Object]"
+    datatype="modelRef"
+    role="treeitem"
+  >
+    <label
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <input
+        checked=""
+        type="radio"
+        value="Label 1"
+      />
+      <span
+        class="tm-scene-node-label"
+      >
+        <p
+          class="tm-scene-node-label-inner"
+        >
+          Label 1
+        </p>
+        <span
+          class="actions"
+        >
+          <div
+            arialabel="Toggle visibility"
+            class="tm-visibility-toggle visible tm-icon-button"
+            data-mocked="Button"
+            variant="inline-icon"
+          >
+            <div>
+              <span>
+                <svg
+                  fill="none"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    clip-path="url(#show_svg__a)"
+                    fill="currentColor"
+                  >
+                    <path
+                      class="show_svg__center-dot"
+                      d="M8 8.89a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+                      stroke="currentColor"
+                      stroke-miterlimit="10"
+                    />
+                    <path
+                      d="M7.85 3c2.27 0 4.57 1.31 6.85 3.9-1.07 1.22-3.77 3.88-7 3.88-2.25 0-4.42-1.31-6.46-3.9C2.16 5.69 4.61 3 7.85 3m0-1C3.11 2 0 6.89 0 6.89c2.67 3.67 5.33 4.89 7.7 4.89 4.74 0 8.3-4.89 8.3-4.89C13 3.22 10.22 2 7.85 2"
+                    />
+                  </g>
+                  <defs>
+                    <clippath
+                      id="show_svg__a"
+                    >
+                      <path
+                        d="M0 2h16v9.78H0z"
+                        fill="currentColor"
+                      />
+                    </clippath>
+                  </defs>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </span>
+      </span>
+    </label>
+  </li>
+</div>
+`;
+
 exports[`SceneHierarchyTreeItem > should render SubModelTree when item has a model, and not in view mode 1`] = `
 <div>
   <li
@@ -191,6 +270,120 @@ exports[`SceneHierarchyTreeItem > should render SubModelTree when item has a mod
 </div>
 `;
 
+exports[`SceneHierarchyTreeItem > should render SubModelTree when item has a model, and not in view mode 2`] = `
+<div>
+  <li
+    acceptdrop="ModelRef,Camera,Light,Animation,Tag,ModelShader,MotionIndicator,DataOverlay,EntityBinding,PlaneGeometry,Space,default"
+    class="tm-tree-item"
+    data="[object Object]"
+    datatype="ModelRef"
+    role="treeitem"
+  >
+    <label
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <input
+        checked=""
+        type="radio"
+        value="Label 1"
+      />
+      <span
+        class="tm-scene-node-label"
+      >
+        <div
+          data-mocked="Icon"
+        >
+          <div>
+            <svg
+              fill="none"
+              height="14"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                clip-path="url(#modelref_svg__a)"
+                stroke="currentColor"
+                stroke-miterlimit="10"
+              >
+                <path
+                  d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
+                />
+                <path
+                  d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="modelref_svg__a"
+                >
+                  <path
+                    d="M0 0h13.889v14H0z"
+                    fill="#fff"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <p
+          class="tm-scene-node-label-inner"
+        >
+          Label 1
+        </p>
+        <span
+          class="actions"
+        >
+          <div
+            arialabel="Toggle visibility"
+            class="tm-visibility-toggle visible tm-icon-button"
+            data-mocked="Button"
+            variant="inline-icon"
+          >
+            <div>
+              <span>
+                <svg
+                  fill="none"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    clip-path="url(#show_svg__a)"
+                    fill="currentColor"
+                  >
+                    <path
+                      class="show_svg__center-dot"
+                      d="M8 8.89a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+                      stroke="currentColor"
+                      stroke-miterlimit="10"
+                    />
+                    <path
+                      d="M7.85 3c2.27 0 4.57 1.31 6.85 3.9-1.07 1.22-3.77 3.88-7 3.88-2.25 0-4.42-1.31-6.46-3.9C2.16 5.69 4.61 3 7.85 3m0-1C3.11 2 0 6.89 0 6.89c2.67 3.67 5.33 4.89 7.7 4.89 4.74 0 8.3-4.89 8.3-4.89C13 3.22 10.22 2 7.85 2"
+                    />
+                  </g>
+                  <defs>
+                    <clippath
+                      id="show_svg__a"
+                    >
+                      <path
+                        d="M0 2h16v9.78H0z"
+                        fill="currentColor"
+                      />
+                    </clippath>
+                  </defs>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </span>
+      </span>
+    </label>
+  </li>
+</div>
+`;
+
 exports[`SceneHierarchyTreeItem > should render dynamic node with drag and drop 1`] = `
 <div>
   <li
@@ -205,6 +398,111 @@ exports[`SceneHierarchyTreeItem > should render dynamic node with drag and drop 
       class="tm-tree-item-inner selected"
     >
       <input
+        type="radio"
+        value="Label 1"
+      />
+      <span
+        class="tm-scene-node-label"
+      >
+        <div
+          data-mocked="Icon"
+        >
+          <div>
+            <svg
+              fill="none"
+              height="14"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                stroke="currentColor"
+                stroke-miterlimit="10"
+              >
+                <path
+                  d="M7 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M7 13.125A6.125 6.125 0 1 0 7 .875a6.125 6.125 0 0 0 0 12.25Z"
+                  stroke-width="2"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <p
+          class="tm-scene-node-label-inner"
+        >
+          Label 1
+        </p>
+        <span
+          class="actions"
+        >
+          <div
+            arialabel="Toggle visibility"
+            class="tm-visibility-toggle visible tm-icon-button"
+            data-mocked="Button"
+            variant="inline-icon"
+          >
+            <div>
+              <span>
+                <svg
+                  fill="none"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    clip-path="url(#show_svg__a)"
+                    fill="currentColor"
+                  >
+                    <path
+                      class="show_svg__center-dot"
+                      d="M8 8.89a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+                      stroke="currentColor"
+                      stroke-miterlimit="10"
+                    />
+                    <path
+                      d="M7.85 3c2.27 0 4.57 1.31 6.85 3.9-1.07 1.22-3.77 3.88-7 3.88-2.25 0-4.42-1.31-6.46-3.9C2.16 5.69 4.61 3 7.85 3m0-1C3.11 2 0 6.89 0 6.89c2.67 3.67 5.33 4.89 7.7 4.89 4.74 0 8.3-4.89 8.3-4.89C13 3.22 10.22 2 7.85 2"
+                    />
+                  </g>
+                  <defs>
+                    <clippath
+                      id="show_svg__a"
+                    >
+                      <path
+                        d="M0 2h16v9.78H0z"
+                        fill="currentColor"
+                      />
+                    </clippath>
+                  </defs>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </span>
+      </span>
+    </label>
+  </li>
+</div>
+`;
+
+exports[`SceneHierarchyTreeItem > should render dynamic node with drag and drop 2`] = `
+<div>
+  <li
+    acceptdrop="ModelRef,Camera,Light,Animation,Tag,ModelShader,MotionIndicator,DataOverlay,EntityBinding,PlaneGeometry,Space,default"
+    class="tm-tree-item"
+    data="[object Object]"
+    datatype="Tag"
+    role="treeitem"
+  >
+    <label
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <input
+        checked=""
         type="radio"
         value="Label 1"
       />

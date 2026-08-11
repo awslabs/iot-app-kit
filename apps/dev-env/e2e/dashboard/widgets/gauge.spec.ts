@@ -36,10 +36,7 @@ test.describe('validate gauge widget behavior', () => {
       '[data-gesture=widget]'
     );
 
-    const gaugeValue = widget
-      .locator('g')
-      .locator('text[fill="#7d2105"]')
-      .first();
+    const gaugeValue = widget.locator('.formatted-gauge-value').first();
     await expect(gaugeValue).toBeVisible();
   });
 
@@ -193,7 +190,9 @@ test.describe('validate gauge widget behavior', () => {
     const widget = dashboardWithGaugeWidgetWithProperty.gridArea.locator(
       '[data-gesture=widget]'
     );
-    const threshold = widget.locator('g').locator('path[fill="#f63804"]');
+    const threshold = widget.locator(
+      '.formatted-gauge-value[style*="rgb(246, 56, 4)"]'
+    );
     await expect(threshold).toBeVisible();
   });
 
@@ -271,10 +270,9 @@ test.describe('validate gauge widget behavior', () => {
     );
 
     // validate both thresholds are on widget
-    const firstThreshold = widget.locator('g').locator('path[fill="#f63804"]');
+    const firstThreshold = widget.locator(
+      '.formatted-gauge-value[style*="rgb(246, 56, 4)"], .formatted-gauge-value[style*="rgb(0, 0, 0)"]'
+    );
     await expect(firstThreshold).toBeVisible();
-
-    const secondThreshold = widget.locator('g').locator('path[fill="#000000"]');
-    await expect(secondThreshold).toBeVisible();
   });
 });

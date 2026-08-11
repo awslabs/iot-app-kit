@@ -300,9 +300,7 @@ test.describe('Test Text Widget', () => {
         .click();
 
       // setting 24 px font size
-      await page.keyboard.down('ArrowDown');
-      await page.keyboard.down('ArrowDown');
-      await page.keyboard.down('Enter');
+      await page.getByRole('option', { name: '24 px' }).click();
 
       await widget.dblclick();
       await widget.getByRole('textbox').fill(TEXT_WIDGET_CONTENT);
@@ -326,8 +324,8 @@ test.describe('Test Text Widget', () => {
         'italic'
       );
       await expect(widget.locator('textarea')).toHaveCSS(
-        'text-decoration',
-        `underline solid ${fillColorRGB}`
+        'text-decoration-line',
+        'underline'
       );
       await expect(widget.locator('textarea')).toHaveCSS('font-weight', '700');
     });

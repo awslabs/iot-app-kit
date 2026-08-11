@@ -131,6 +131,32 @@ exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"
 </div>
 `;
 
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":false}" 2`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <label
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <input
+        checked=""
+        type="radio"
+        value="Label"
+      />
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label","componentTypes":[""]}
+      </div>
+    </label>
+    Item
+  </li>
+</div>
+`;
+
 exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":true}" 1`] = `
 <div>
   <li
@@ -142,6 +168,38 @@ exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"
       class="tm-tree-item-inner selected"
     >
       <input
+        type="radio"
+        value="Label"
+      />
+      <div
+        arialabel="Expand Label"
+        class="tm-tree-item-expand-btn"
+        data-mocked="Button"
+        iconname="treeview-expand"
+        variant="inline-icon"
+      />
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label","componentTypes":[""]}
+      </div>
+    </label>
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> > should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":true}" 2`] = `
+<div>
+  <li
+    class="tm-tree-item expandable"
+    role="treeitem"
+  >
+    <label
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <input
+        checked=""
         type="radio"
         value="Label"
       />

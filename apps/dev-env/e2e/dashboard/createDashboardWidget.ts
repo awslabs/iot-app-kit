@@ -12,6 +12,9 @@ export const createNewDashboardWithWidget = async (
 ) => {
   const dashboard = new DashboardPage({ page, browser });
   await dashboard.goto();
+  await page.evaluate(() => {
+    localStorage.setItem('USE_SVG_FOR_ECHARTS_PLAYWRIGHT_TEST_ONLY', 'true');
+  });
   await dashboard.addAWidgetByType(type);
   await dashboard.makeViewportToAbsolute();
 
