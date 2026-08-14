@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.5.2](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v12.5.1...source-iotsitewise-v12.5.2) (2026-08-14)
+
+
+### Miscellaneous Chores
+
+* **source-iotsitewise:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.5.1 to 12.5.2
+    * @iot-app-kit/core-util bumped from 12.5.1 to 12.5.2
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from 12.5.1 to 12.5.2
+    * @iot-app-kit/ts-config bumped from 12.5.1 to 12.5.2
+    * eslint-config-iot-app-kit bumped from 12.5.1 to 12.5.2
+
 ## [12.5.1](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v12.5.0...source-iotsitewise-v12.5.1) (2025-03-31)
 
 

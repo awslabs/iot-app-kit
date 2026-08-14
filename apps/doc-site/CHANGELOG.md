@@ -1,5 +1,24 @@
 # Changelog
 
+## [12.5.2](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.5.1...doc-site-v12.5.2) (2026-08-14)
+
+
+### Bug Fixes
+
+* **deps:** update storybook, fix gauge tests and fix type errors ([232a2f5](https://github.com/awslabs/iot-app-kit/commit/232a2f57fc979a18bc844bd325d5349335df488e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 12.5.1 to 12.5.2
+    * @iot-app-kit/react-components bumped from 12.5.1 to 12.5.2
+    * @iot-app-kit/dashboard bumped from 12.5.1 to 12.5.2
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from 12.5.1 to 12.5.2
+    * eslint-config-iot-app-kit bumped from 12.5.1 to 12.5.2
+
 ## [12.5.1](https://github.com/awslabs/iot-app-kit/compare/doc-site-v12.5.0...doc-site-v12.5.1) (2025-03-31)
 
 
