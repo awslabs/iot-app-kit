@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.5.2](https://github.com/awslabs/iot-app-kit/compare/root-v12.5.1...root-v12.5.2) (2026-08-14)
+
+
+### Bug Fixes
+
+* **ci:** update release-please action inputs for v4 compatibility ([3fc382e](https://github.com/awslabs/iot-app-kit/commit/3fc382ef3be9206be3d0af19a5cc0703f6125e41))
+* **ci:** use RELEASE_PLEASE_TOKEN for release-please action ([d5cfc4a](https://github.com/awslabs/iot-app-kit/commit/d5cfc4a8d86887d13de04b1de0482eaa95959e60))
+* **deps:** update storybook, fix gauge tests and fix type errors ([232a2f5](https://github.com/awslabs/iot-app-kit/commit/232a2f57fc979a18bc844bd325d5349335df488e))
+
 ## [12.5.1](https://github.com/awslabs/iot-app-kit/compare/root-v12.5.0...root-v12.5.1) (2025-03-31)
 
 
