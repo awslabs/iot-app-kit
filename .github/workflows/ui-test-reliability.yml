@@ -10,6 +10,9 @@ on:
 env:
   PW_TEST_HTML_REPORT_OPEN: 'never'
 
+permissions:
+  contents: read
+
 jobs:
   test-reliability:
     if: ${{ github.event.label.name == 'test:reliability' }}
