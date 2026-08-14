@@ -10,9 +10,8 @@ jobs:
       - uses: google-github-actions/release-please-action@v4.1.1
         id: release
         with:
-          command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
-          default-branch: main
+          target-branch: main
 
   update-pull-request:
     name: Update pull request
