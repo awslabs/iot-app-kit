@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-iotsitewise": "^3.696.0",
-    "@faker-js/faker": "^8.2.0",
+    "@faker-js/faker": "^10.6.0",
     "@iot-app-kit/ts-config": "*",
     "@types/node": "^18.16.18",
     "eslint-config-iot-app-kit": "*",
