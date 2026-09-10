@@ -156,6 +156,11 @@
     "react": "^18",
     "react-dom": "^18"
   },
+  "peerDependenciesMeta": {
+    "cytoscape": {
+      "optional": true
+    }
+  },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
