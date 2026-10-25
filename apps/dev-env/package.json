@@ -40,7 +40,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.1",
     "rimraf": "^5.0.1",
-    "storybook": "^8.6.17",
+    "storybook": "^8.6.19",
     "typescript": "^5.5.4",
     "uuid": "^14.0.0",
     "vite": "^6.4.3"
