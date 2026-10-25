@@ -58,8 +58,8 @@
     "@playwright/test": "^1.56.1",
     "husky": "^8.0.3",
     "rimraf": "^5.0.1",
-    "stylelint": "14.16.1",
-    "stylelint-config-standard": "25.0.0",
+    "stylelint": "17.16.0",
+    "stylelint-config-standard": "40.0.0",
     "turbo": "^2.9.14"
   },
   "npm-pretty-much": {
