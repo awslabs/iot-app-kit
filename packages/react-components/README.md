@@ -18,5 +18,12 @@ For an example of a real world use case using the IoT App Kit, [visit this tutor
 
 <img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
 
+## Optional peer dependencies
+
+`cytoscape` is only required by the knowledge graph component (`KnowledgeGraphPanel`). It
+is declared as an optional peer dependency, so applications that do not use the knowledge
+graph component do not need to install it and will not see an unmet peer dependency warning.
+If you do use the knowledge graph component, install `cytoscape` alongside this package.
+
 ## License
 This project is licensed under the Apache-2.0 License.
